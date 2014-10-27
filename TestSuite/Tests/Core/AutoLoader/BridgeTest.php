@@ -32,12 +32,12 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(
             $Bridge->loadSourceFile( 'IErrorInterface' )
         );
+
         $this->assertTrue(
             $Bridge->loadSourceFile( __CLASS__ )
         );
-
         $this->assertTrue(
-            $Bridge->loadSourceFile( '\MOC\V\Core\AutoLoader\Component\IBridgeInterface' )
+            $Bridge->loadSourceFile( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface' )
         );
 
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',

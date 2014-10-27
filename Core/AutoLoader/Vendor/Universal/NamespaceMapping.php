@@ -1,6 +1,8 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Vendor\Universal;
 
+use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
+
 /**
  * Class NamespaceMapping
  *
@@ -15,15 +17,22 @@ abstract class NamespaceMapping
     /**
      * @param string $Namespace
      * @param string $Directory
+     *
+     * @throws AutoLoaderException
      */
     final public function addNamespaceMapping( $Namespace, $Directory )
     {
+
+        if (false === ( $Directory = realpath( $Directory ) )) {
+            throw new AutoLoaderException();
+        }
 
         if (!isset( $this->NamespaceMapping[$Namespace] )) {
             $this->NamespaceMapping[$Namespace] = array();
         }
         array_push( $this->NamespaceMapping[$Namespace],
-            trim( str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $Directory ), DIRECTORY_SEPARATOR ) );
+            rtrim( str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $Directory ), DIRECTORY_SEPARATOR )
+        );
     }
 
     /**

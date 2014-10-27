@@ -7,21 +7,16 @@ abstract class NamespaceSearch extends NamespaceMapping
     /**
      * @param array  $DirectoryList
      * @param string $ClassName
+     * @param string $Namespace
      *
      * @return bool
      */
-    protected function searchForClass( $DirectoryList, $ClassName )
+    protected function searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )
     {
 
-        foreach ((array)$DirectoryList as $Directory) {
-            $File = $Directory.DIRECTORY_SEPARATOR.str_replace( '_', DIRECTORY_SEPARATOR, $ClassName ).'.php';
-            if (is_file( $File )) {
-                /** @noinspection PhpIncludeInspection */
-                require_once( $File );
-                return true;
-            }
-        }
-        return false;
+        return $this->searchForInterface( $DirectoryList,
+            trim( preg_replace( '!^'.preg_quote( $Namespace ).'!is', '', $ClassName ), '\\' )
+        );
     }
 
     /**
@@ -40,16 +35,22 @@ abstract class NamespaceSearch extends NamespaceMapping
     /**
      * @param array  $DirectoryList
      * @param string $ClassName
-     * @param string $Namespace
      *
      * @return bool
      */
-    protected function searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )
+    protected function searchForClass( $DirectoryList, $ClassName )
     {
 
-        return $this->searchForInterface( $DirectoryList,
-            trim( preg_replace( '!^'.preg_quote( $Namespace ).'!is', '', $ClassName ), '\\' )
-        );
+        foreach ((array)$DirectoryList as $Directory) {
+            $File = $Directory.DIRECTORY_SEPARATOR.str_replace( array( '_', '\\', '/' ), DIRECTORY_SEPARATOR,
+                    $ClassName ).'.php';
+            if (is_file( $File )) {
+                /** @noinspection PhpIncludeInspection */
+                require_once( $File );
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
