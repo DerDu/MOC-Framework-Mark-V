@@ -45,7 +45,7 @@ class ApiGen extends Bridge implements IBridgeInterface
             // List of allowed file extensions
             'extensions'     => array( 'php' ),
             // Mask to exclude file or directory from processing
-            //'exclude'        => '*/Documentation/Content/*,*/.idea/*,*/.git/*,*/#Trash/*,*/Data/*,*/Library/*,*/3rdParty/*,*/PhpUnit/*,*/jQuery*/*',
+            'exclude' => '*/Documentation/*,*/.idea/*,*/.git/*,*/Vendor/Symfony/*,*/TestSuite/*,*/Vendor/Twig/*,*/Vendor/Doctrine2DBAL/*',
             // Don't generate documentation for classes from file or directory with this mask
             //'skipDocPath' => '',
             // Don't generate documentation for classes with this name prefix
@@ -95,7 +95,7 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Don't display scanning and generating messages
             'quiet'          => true,
             // Display progressbar
-            'progressbar'    => false,
+            'progressbar' => true,
             // Use colors
             'colors'         => false,
             // Check for update
