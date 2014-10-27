@@ -15,7 +15,7 @@ class VendorTest extends \PHPUnit_Framework_TestCase
 
         $Vendor = new Vendor( $MockBridge );
 
-        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
             $Vendor->getBridgeInterface() );
 
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IVendorInterface',

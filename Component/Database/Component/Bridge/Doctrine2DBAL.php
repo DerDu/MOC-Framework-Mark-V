@@ -5,6 +5,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Statement;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
+use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\Option\DatabaseOption;
 use MOC\V\Component\Database\Component\Option\DriverOption;
 use MOC\V\Component\Database\Component\Option\HostOption;
@@ -83,17 +84,6 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @return int
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executeWrite()
-    {
-
-        $Query = $this->prepareQuery();
-        return $this->prepareConnection()->executeUpdate( $Query[0], $Query[1], $Query[2] );
-    }
-
-    /**
      * @return array
      */
     private function prepareQuery()
@@ -119,5 +109,16 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     {
 
         return self::$ConnectionList[count( self::$ConnectionList ) - 1];
+    }
+
+    /**
+     * @return int
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function executeWrite()
+    {
+
+        $Query = $this->prepareQuery();
+        return $this->prepareConnection()->executeUpdate( $Query[0], $Query[1], $Query[2] );
     }
 }

@@ -41,10 +41,10 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
             new PortOption( null )
         );
 
-        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
             $Bridge->prepareStatement( "SELECT * FROM UnitTest WHERE Id = ?" )
         );
-        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
             $Bridge->defineParameter( 1 )
         );
         try {

@@ -1,6 +1,8 @@
 <?php
 namespace MOC\V\Component\Database\Component\Option;
 
+use MOC\V\Component\Database\Component\IOptionInterface;
+
 /**
  * Class PasswordOption
  *

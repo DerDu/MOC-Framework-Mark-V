@@ -23,7 +23,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IVendorInterface',
             $Module->setBridgeInterface( $MockBridge )
         );
-        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
             $Module->getBridgeInterface()
         );
 
@@ -34,7 +34,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         $Database = Database::getDoctrineDatabase( '', '', '', DriverOption::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
-        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Bridge\IBridgeInterface', $Database );
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface', $Database );
     }
 
     /** @runTestsInSeparateProcesses */

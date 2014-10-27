@@ -2,7 +2,7 @@
 namespace MOC\V\Component\Database;
 
 use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
-use MOC\V\Component\Database\Component\Bridge\IBridgeInterface;
+use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\IVendorInterface;
 use MOC\V\Component\Database\Component\Option\DatabaseOption;
 use MOC\V\Component\Database\Component\Option\DriverOption;
@@ -26,47 +26,6 @@ class Database implements IVendorInterface
     {
 
         $this->setVendorInterface( $VendorInterface );
-    }
-
-    /**
-     * @return IVendorInterface
-     */
-    public function getVendorInterface()
-    {
-
-        return $this->VendorInterface;
-    }
-
-    /**
-     * @param IVendorInterface $VendorInterface
-     *
-     * @return IVendorInterface
-     */
-    public function setVendorInterface( IVendorInterface $VendorInterface )
-    {
-
-        $this->VendorInterface = $VendorInterface;
-        return $this;
-    }
-
-    /**
-     * @return \MOC\V\Component\Database\Component\Bridge\IBridgeInterface
-     */
-    public function getBridgeInterface()
-    {
-
-        return $this->VendorInterface->getBridgeInterface();
-    }
-
-    /**
-     * @param IBridgeInterface $BridgeInterface
-     *
-     * @return \MOC\V\Component\Database\Component\Bridge\IBridgeInterface
-     */
-    public function setBridgeInterface( IBridgeInterface $BridgeInterface )
-    {
-
-        return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
     }
 
     /**
@@ -118,5 +77,46 @@ class Database implements IVendorInterface
         );
 
         return $Doctrine->getBridgeInterface();
+    }
+
+    /**
+     * @return \MOC\V\Component\Database\Component\IBridgeInterface
+     */
+    public function getBridgeInterface()
+    {
+
+        return $this->VendorInterface->getBridgeInterface();
+    }
+
+    /**
+     * @return IVendorInterface
+     */
+    public function getVendorInterface()
+    {
+
+        return $this->VendorInterface;
+    }
+
+    /**
+     * @param IVendorInterface $VendorInterface
+     *
+     * @return IVendorInterface
+     */
+    public function setVendorInterface( IVendorInterface $VendorInterface )
+    {
+
+        $this->VendorInterface = $VendorInterface;
+        return $this;
+    }
+
+    /**
+     * @param IBridgeInterface $BridgeInterface
+     *
+     * @return \MOC\V\Component\Database\Component\IBridgeInterface
+     */
+    public function setBridgeInterface( IBridgeInterface $BridgeInterface )
+    {
+
+        return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
     }
 }
