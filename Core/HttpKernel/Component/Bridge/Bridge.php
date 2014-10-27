@@ -1,15 +1,7 @@
 <?php
 namespace MOC\V\Core\HttpKernel\Component\Bridge;
 
-/**
- * Interface IBridgeInterface
- *
- * @package MOC\V\Core\HttpKernel\Component\Bridge
- */
-interface IBridgeInterface
-{
-
-}
+use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
 
 /**
  * Class Bridge

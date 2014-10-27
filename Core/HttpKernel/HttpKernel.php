@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Core\HttpKernel;
 
-use MOC\V\Core\HttpKernel\Component\Bridge\IBridgeInterface;
+use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
 use MOC\V\Core\HttpKernel\Component\IVendorInterface;
 
 /**
@@ -46,7 +46,7 @@ class HttpKernel implements IVendorInterface
     }
 
     /**
-     * @return \MOC\V\Core\HttpKernel\Component\Bridge\IBridgeInterface
+     * @return IBridgeInterface
      */
     public function getBridgeInterface()
     {
@@ -57,7 +57,7 @@ class HttpKernel implements IVendorInterface
     /**
      * @param IBridgeInterface $BridgeInterface
      *
-     * @return \MOC\V\Core\HttpKernel\Component\Bridge\IBridgeInterface
+     * @return IBridgeInterface
      */
     public function setBridgeInterface( IBridgeInterface $BridgeInterface )
     {
