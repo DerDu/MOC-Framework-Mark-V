@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Component\Template\Component\Bridge;
 
+use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\Option\FileOption;
 
 class TwigTemplate extends Bridge implements IBridgeInterface
@@ -11,6 +12,9 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     /** @var null|\Twig_Template $Template */
     private $Template = null;
 
+    /**
+     *
+     */
     function __construct()
     {
 

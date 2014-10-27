@@ -1,9 +1,19 @@
 <?php
 namespace MOC\V\Component\Template\Component\Exception;
 
+/**
+ * Class TypeFileException
+ *
+ * @package MOC\V\Component\Template\Component\Exception
+ */
 class TypeFileException extends ComponentException
 {
 
+    /**
+     * @param string $Message
+     * @param int    $Code
+     * @param null   $Previous
+     */
     public function __construct( $Message = "", $Code = 0, $Previous = null )
     {
 

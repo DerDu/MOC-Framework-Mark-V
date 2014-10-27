@@ -3,6 +3,11 @@ namespace MOC\V\TestSuite\Tests\Component\Template;
 
 use MOC\V\Component\Template\Component\Vendor;
 
+/**
+ * Class VendorTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Template
+ */
 class VendorTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -15,7 +20,7 @@ class VendorTest extends \PHPUnit_Framework_TestCase
 
         $Vendor = new Vendor( $MockBridge );
 
-        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface',
             $Vendor->getBridgeInterface() );
 
         $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IVendorInterface',

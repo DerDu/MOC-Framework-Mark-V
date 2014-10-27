@@ -7,6 +7,11 @@ use MOC\V\Component\Template\Component\Exception\TypeFileException;
 use MOC\V\Component\Template\Exception\TemplateException;
 use MOC\V\Component\Template\Exception\TemplateTypeException;
 
+/**
+ * Class ExceptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Template
+ */
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 

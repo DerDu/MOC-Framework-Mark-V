@@ -3,6 +3,7 @@ namespace MOC\V\Component\Template\Component\Option;
 
 use MOC\V\Component\Template\Component\Exception\EmptyFileException;
 use MOC\V\Component\Template\Component\Exception\TypeFileException;
+use MOC\V\Component\Template\Component\IOptionInterface;
 
 class FileOption extends Option implements IOptionInterface
 {
@@ -19,6 +20,14 @@ class FileOption extends Option implements IOptionInterface
         $this->setFile( $File );
     }
 
+    /**
+     * @return string
+     */
+    public function getFile()
+    {
+
+        return $this->File;
+    }
 
     /**
      * @param string $File
@@ -38,14 +47,5 @@ class FileOption extends Option implements IOptionInterface
                 throw new TypeFileException( $File );
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getFile()
-    {
-
-        return $this->File;
     }
 }

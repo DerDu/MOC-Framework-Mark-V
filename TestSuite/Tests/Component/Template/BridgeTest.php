@@ -4,6 +4,11 @@ namespace MOC\V\TestSuite\Tests\Component\Template;
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
 use MOC\V\Component\Template\Component\Option\FileOption;
 
+/**
+ * Class BridgeTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Template
+ */
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 

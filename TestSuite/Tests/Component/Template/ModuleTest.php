@@ -4,6 +4,11 @@ namespace MOC\V\TestSuite\Tests\Component\Template;
 use MOC\V\Component\Template\Component\Vendor;
 use MOC\V\Component\Template\Template;
 
+/**
+ * Class ModuleTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Template
+ */
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -22,7 +27,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IVendorInterface',
             $Module->setBridgeInterface( $MockBridge )
         );
-        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface',
             $Module->getBridgeInterface()
         );
 
@@ -33,7 +38,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         $Loader = Template::getTwigTemplate( __FILE__ );
-        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\Bridge\IBridgeInterface', $Loader );
+        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface', $Loader );
     }
 
     /** @runTestsInSeparateProcesses */

@@ -3,6 +3,11 @@ namespace MOC\V\TestSuite\Tests\Component\Template;
 
 use MOC\V\Component\Template\Component\Option\FileOption;
 
+/**
+ * Class OptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Template
+ */
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 
