@@ -1,6 +1,8 @@
 <?php
 namespace MOC\V\Component\Router\Component\Option;
 
+use MOC\V\Component\Router\Component\IOptionInterface;
+
 /**
  * Class RouteOption
  *
@@ -29,14 +31,13 @@ class RouteOption extends Option implements IOptionInterface
         $this->setController( $Controller );
     }
 
-
     /**
-     * @return null|string
+     * @param null|string $Path
      */
-    public function getController()
+    private function setPath( $Path )
     {
 
-        return $this->Controller;
+        $this->Path = $Path;
     }
 
     /**
@@ -46,6 +47,15 @@ class RouteOption extends Option implements IOptionInterface
     {
 
         $this->Controller = $Controller;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getController()
+    {
+
+        return $this->Controller;
     }
 
     /**
@@ -93,15 +103,6 @@ class RouteOption extends Option implements IOptionInterface
     {
 
         return $this->Path;
-    }
-
-    /**
-     * @param null|string $Path
-     */
-    private function setPath( $Path )
-    {
-
-        $this->Path = $Path;
     }
 
 }

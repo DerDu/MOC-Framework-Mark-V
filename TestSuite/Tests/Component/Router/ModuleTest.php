@@ -4,6 +4,11 @@ namespace MOC\V\TestSuite\Tests\Component\Router;
 use MOC\V\Component\Router\Component\Vendor;
 use MOC\V\Component\Router\Router;
 
+/**
+ * Class ModuleTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Router
+ */
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -22,7 +27,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IVendorInterface',
             $Module->setBridgeInterface( $MockBridge )
         );
-        $this->assertInstanceOf( 'MOC\V\Component\Router\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IBridgeInterface',
             $Module->getBridgeInterface()
         );
 

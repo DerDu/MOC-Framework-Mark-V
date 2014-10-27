@@ -4,6 +4,11 @@ namespace MOC\V\TestSuite\Tests\Component\Router;
 use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Exception\RouterException;
 
+/**
+ * Class ExceptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Router
+ */
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 

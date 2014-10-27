@@ -2,6 +2,7 @@
 namespace MOC\V\Component\Router\Component\Bridge;
 
 use MOC\V\Component\Router\Component\Exception\ComponentException;
+use MOC\V\Component\Router\Component\IBridgeInterface;
 use MOC\V\Component\Router\Component\Option\RouteOption;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -14,6 +15,11 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * Class SymfonyRouter
+ *
+ * @package MOC\V\Component\Router\Component\Bridge
+ */
 class SymfonyRouter extends Bridge implements IBridgeInterface
 {
 

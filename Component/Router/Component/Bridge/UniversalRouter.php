@@ -1,8 +1,14 @@
 <?php
 namespace MOC\V\Component\Router\Component\Bridge;
 
+use MOC\V\Component\Router\Component\IBridgeInterface;
 use MOC\V\Component\Router\Component\Option\RouteOption;
 
+/**
+ * Class UniversalRouter
+ *
+ * @package MOC\V\Component\Router\Component\Bridge
+ */
 class UniversalRouter extends Bridge implements IBridgeInterface
 {
 
@@ -14,6 +20,7 @@ class UniversalRouter extends Bridge implements IBridgeInterface
     public function addRoute( RouteOption $RouteOption )
     {
         // TODO: Implement addRoute() method.
+        return $this;
     }
 
     /**
@@ -23,6 +30,7 @@ class UniversalRouter extends Bridge implements IBridgeInterface
     public function getRoute()
     {
         // TODO: Implement getRoute() method.
+        return '';
     }
 
 }

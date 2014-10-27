@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Router;
 
-use MOC\V\Component\Router\Component\Bridge\IBridgeInterface;
+use MOC\V\Component\Router\Component\IBridgeInterface;
 use MOC\V\Component\Router\Component\IVendorInterface;
 
 /**
@@ -46,7 +46,7 @@ class Router implements IVendorInterface
     }
 
     /**
-     * @return \MOC\V\Component\Router\Component\Bridge\IBridgeInterface
+     * @return IBridgeInterface
      */
     public function getBridgeInterface()
     {
@@ -57,7 +57,7 @@ class Router implements IVendorInterface
     /**
      * @param IBridgeInterface $BridgeInterface
      *
-     * @return \MOC\V\Component\Router\Component\Bridge\IBridgeInterface
+     * @return IBridgeInterface
      */
     public function setBridgeInterface( IBridgeInterface $BridgeInterface )
     {
