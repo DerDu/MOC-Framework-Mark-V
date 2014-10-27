@@ -10,6 +10,8 @@ use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\FileSystem\FileSystem;
 use MOC\V\Core\HttpKernel\Vendor\Universal\Request;
 
+var_dump( get_declared_classes() );
+
 var_dump( AutoLoader::getNamespaceAutoLoader( '\MOC\V', __DIR__.'/../../' ) );
 var_dump( FileSystem::getFileLoader( __FILE__ ) );
 var_dump( Template::getTemplate( 'index.twig' )->setVariable( 'Foo', 'Bar' )->getContent() );

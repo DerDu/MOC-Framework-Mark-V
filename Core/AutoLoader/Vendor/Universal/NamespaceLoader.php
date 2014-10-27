@@ -18,15 +18,9 @@ class NamespaceLoader extends NamespaceSearch
     {
 
         $ClassName = trim( $ClassName, '\\' );
-
-        if ($this->findSource( $ClassName )) {
+        if ($this->findSource( $ClassName ) || $this->findInclude( $ClassName )) {
             return true;
         }
-
-        if ($this->findInclude( $ClassName )) {
-            return true;
-        }
-
         return false;
     }
 
@@ -48,16 +42,12 @@ class NamespaceLoader extends NamespaceSearch
                 continue;
             }
             $DirectoryList = $this->getNamespaceMapping( $Namespace );
-            if ($this->searchForClass( $DirectoryList, $ClassName )) {
-                return true;
-            }
-            if ($this->searchForClassFallback( $DirectoryList, $ClassName, $Namespace )) {
-                return true;
-            }
-            if ($this->searchForInterface( $DirectoryList, $ClassName )) {
-                return true;
-            }
-            if ($this->searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )) {
+            if (
+                $this->searchForClass( $DirectoryList, $ClassName )
+                || $this->searchForClassFallback( $DirectoryList, $ClassName, $Namespace )
+                || $this->searchForInterface( $DirectoryList, $ClassName )
+                || $this->searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )
+            ) {
                 return true;
             }
         }
