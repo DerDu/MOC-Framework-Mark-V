@@ -2,10 +2,9 @@
 
 namespace Doctrine\Tests\Common\Annotations;
 
-use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
-use Doctrine\Common\Annotations\DocParser;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\Annotation\Target;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\DocParser;
 use Doctrine\Tests\Common\Annotations\Fixtures\AnnotationWithConstants;
 use Doctrine\Tests\Common\Annotations\Fixtures\ClassWithConstants;
 use Doctrine\Tests\Common\Annotations\Fixtures\IntefaceWithConstants;
@@ -30,6 +29,19 @@ class DocParserTest extends \PHPUnit_Framework_TestCase
         $nestedArray = $annot->foo[2];
         $this->assertTrue(isset($nestedArray['key']));
         $this->assertTrue($nestedArray['key'] instanceof Name);
+    }
+
+    public function createTestParser()
+    {
+
+        $parser = new DocParser();
+        $parser->setIgnoreNotImportedAnnotations( true );
+        $parser->setImports( array(
+            'name'          => 'Doctrine\Tests\Common\Annotations\Name',
+            '__NAMESPACE__' => 'Doctrine\Tests\Common\Annotations',
+        ) );
+
+        return $parser;
     }
 
     public function testBasicAnnotations()
@@ -98,6 +110,29 @@ DOCBLOCK;
         $this->assertNull($annot->value);
    }
 
+    public function testDefaultValueAnnotations()
+    {
+
+        $parser = $this->createTestParser();
+
+        // Array as first value
+        $result = $parser->parse( '@Name({"key1"="value1"})' );
+        $annot = $result[0];
+
+        $this->assertTrue( $annot instanceof Name );
+        $this->assertTrue( is_array( $annot->value ) );
+        $this->assertEquals( 'value1', $annot->value['key1'] );
+
+        // Array as first value and additional values
+        $result = $parser->parse( '@Name({"key1"="value1"}, foo="bar")' );
+        $annot = $result[0];
+
+        $this->assertTrue( $annot instanceof Name );
+        $this->assertTrue( is_array( $annot->value ) );
+        $this->assertEquals( 'value1', $annot->value['key1'] );
+        $this->assertEquals( 'bar', $annot->foo );
+    }
+
     public function testNamespacedAnnotations()
     {
         $parser = new DocParser;
@@ -153,7 +188,6 @@ DOCBLOCK;
         $marker = $result[1];
         $this->assertTrue($marker instanceof Marker);
     }
-
 
     public function testAnnotationWithoutConstructor()
     {
@@ -528,7 +562,6 @@ DOCBLOCK;
         }
     }
 
-
     /**
      * @dataProvider getAnnotationVarTypeArrayProviderInvalid
      */
@@ -582,7 +615,6 @@ DOCBLOCK;
             $this->assertContains("[Type Error] Attribute \"$attribute\" of @Doctrine\Tests\Common\Annotations\Fixtures\AnnotationWithAttributes declared on property SomeClassName::invalidProperty. expects a(n) $type, but got $given.", $exc->getMessage());
         }
     }
-
 
    /**
      * @dataProvider getAnnotationVarTypeArrayProviderInvalid
@@ -1036,18 +1068,6 @@ DOCBLOCK;
         $this->assertInstanceOf('Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Autoload', $annotations[0]);
     }
 
-    public function createTestParser()
-    {
-        $parser = new DocParser();
-        $parser->setIgnoreNotImportedAnnotations(true);
-        $parser->setImports(array(
-            'name' => 'Doctrine\Tests\Common\Annotations\Name',
-            '__NAMESPACE__' => 'Doctrine\Tests\Common\Annotations',
-        ));
-
-        return $parser;
-    }
-
     /**
      * @group DDC-78
      * @expectedException \Doctrine\Common\Annotations\AnnotationException
@@ -1284,12 +1304,14 @@ class SomeAnnotationClassNameWithoutConstructor
 /** @Annotation */
 class SomeAnnotationWithConstructorWithoutParams
 {
+
+    public $data;
+    public $name;
+
     function __construct()
     {
         $this->data = "Some data";
     }
-    public $data;
-    public $name;
 }
 
 /** @Annotation */

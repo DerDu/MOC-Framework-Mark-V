@@ -43,18 +43,6 @@ class AnnotationException extends \Exception
     }
 
     /**
-     * Creates a new AnnotationException describing a Semantical error.
-     *
-     * @param string $message Exception message
-     *
-     * @return AnnotationException
-     */
-    public static function semanticalError($message)
-    {
-        return new self('[Semantical Error] ' . $message);
-    }
-
-    /**
      * Creates a new AnnotationException describing an error which occurred during
      * the creation of the annotation.
      *
@@ -67,20 +55,6 @@ class AnnotationException extends \Exception
     public static function creationError($message)
     {
         return new self('[Creation Error] ' . $message);
-    }
-
-    /**
-     * Creates a new AnnotationException describing a type error.
-     *
-     * @since 1.1
-     *
-     * @param string $message
-     *
-     * @return AnnotationException
-     */
-    public static function typeError($message)
-    {
-        return new self('[Type Error] ' . $message);
     }
 
     /**
@@ -100,6 +74,19 @@ class AnnotationException extends \Exception
             $identifier,
             $context ? ', ' . $context : ''
         ));
+    }
+
+    /**
+     * Creates a new AnnotationException describing a Semantical error.
+     *
+     * @param string $message Exception message
+     *
+     * @return AnnotationException
+     */
+    public static function semanticalError( $message )
+    {
+
+        return new self( '[Semantical Error] '.$message );
     }
 
     /**
@@ -125,6 +112,21 @@ class AnnotationException extends \Exception
             $expected,
             is_object($actual) ? 'an instance of ' . get_class($actual) : gettype($actual)
         ));
+    }
+
+    /**
+     * Creates a new AnnotationException describing a type error.
+     *
+     * @since 1.1
+     *
+     * @param string $message
+     *
+     * @return AnnotationException
+     */
+    public static function typeError( $message )
+    {
+
+        return new self( '[Type Error] '.$message );
     }
 
     /**
@@ -167,7 +169,7 @@ class AnnotationException extends \Exception
     {
         return new self(sprintf(
             '[Enum Error] Attribute "%s" of @%s declared on %s accept only [%s], but got %s.',
-            $attributeName, 
+            $attributeName,
             $annotationName,
             $context,
             implode(', ', $available),
@@ -182,6 +184,17 @@ class AnnotationException extends \Exception
     {
         return new self(
             "You have to enable opcache.save_comments=1 or zend_optimizerplus.save_comments=1."
+        );
+    }
+
+    /**
+     * @return AnnotationException
+     */
+    public static function optimizerPlusLoadComments()
+    {
+
+        return new self(
+            "You have to enable opcache.load_comments=1 or zend_optimizerplus.load_comments=1."
         );
     }
 }
