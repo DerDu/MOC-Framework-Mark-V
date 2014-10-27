@@ -27,6 +27,7 @@ use MOC\V\Core\AutoLoader\Component\IVendorInterface;
 use MOC\V\Core\AutoLoader\Component\Option\DirectoryOption;
 use MOC\V\Core\AutoLoader\Component\Option\NamespaceOption;
 use MOC\V\Core\AutoLoader\Component\Vendor;
+use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
 
 /**
  * Class AutoLoader
@@ -46,6 +47,53 @@ class AutoLoader implements IVendorInterface
     {
 
         $this->setVendorInterface( $VendorInterface );
+    }
+
+    /**
+     * @param string $Namespace
+     * @param string $Directory
+     *
+     * @return IBridgeInterface
+     * @throws AutoLoaderException
+     */
+    public static function getNamespaceAutoLoader( $Namespace, $Directory )
+    {
+
+        if (class_exists( '\MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace', true )) {
+            return self::getUniversalNamespaceAutoLoader( $Namespace, $Directory );
+        }
+        throw new AutoLoaderException();
+    }
+
+    /**
+     * @param string $Namespace
+     * @param string $Directory
+     *
+     * @return IBridgeInterface
+     */
+    public static function getUniversalNamespaceAutoLoader( $Namespace, $Directory )
+    {
+
+        $Loader = new AutoLoader(
+            new Vendor(
+                new UniversalNamespace()
+            )
+        );
+        $Loader->getBridgeInterface()->addNamespaceDirectoryMapping(
+            new NamespaceOption( $Namespace ), new DirectoryOption( $Directory )
+        );
+        $Loader->getBridgeInterface()->registerLoader();
+
+        return $Loader->getBridgeInterface();
+    }
+
+    /**
+     * @return IBridgeInterface
+     */
+    public function getBridgeInterface()
+    {
+
+        return $this->VendorInterface->getBridgeInterface();
     }
 
     /**
@@ -70,16 +118,7 @@ class AutoLoader implements IVendorInterface
     }
 
     /**
-     * @return \MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface
-     */
-    public function getBridgeInterface()
-    {
-
-        return $this->VendorInterface->getBridgeInterface();
-    }
-
-    /**
-     * @param \MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface $BridgeInterface
+     * @param IBridgeInterface $BridgeInterface
      *
      * @return IBridgeInterface
      */
@@ -87,27 +126,5 @@ class AutoLoader implements IVendorInterface
     {
 
         return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
-    }
-
-    /**
-     * @param string $Namespace
-     * @param string $Directory
-     *
-     * @return \MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface
-     */
-    public static function getUniversalNamespaceAutoLoader( $Namespace, $Directory )
-    {
-
-        $Loader = new AutoLoader(
-            new Vendor(
-                new UniversalNamespace()
-            )
-        );
-        $Loader->getBridgeInterface()->addNamespaceDirectoryMapping(
-            new NamespaceOption( $Namespace ), new DirectoryOption( $Directory )
-        );
-        $Loader->getBridgeInterface()->registerLoader();
-
-        return $Loader->getBridgeInterface();
     }
 }

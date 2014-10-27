@@ -27,6 +27,5 @@
     <logging>
         <log type="coverage-clover" target="./Report/Coverage.xml"/>
         <log type="coverage-html" target="./Report/Coverage.html"/>
-        <log type="coverage-text" target="./Report/Coverage.txt"/>
     </logging>
 </phpunit>

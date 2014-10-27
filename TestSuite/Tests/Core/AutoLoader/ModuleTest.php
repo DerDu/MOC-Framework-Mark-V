@@ -36,4 +36,13 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface', $Loader );
         $Loader->unregisterLoader();
     }
+
+    /** @runTestsInSeparateProcesses */
+    public function testStaticNamespaceAutoLoader()
+    {
+
+        $Loader = AutoLoader::getNamespaceAutoLoader( __NAMESPACE__, __DIR__ );
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface', $Loader );
+        $Loader->unregisterLoader();
+    }
 }

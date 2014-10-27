@@ -18,7 +18,7 @@ class Request
     function __construct()
     {
 
-        AutoLoader::getUniversalNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../Symfony/Component/' );
+        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../Symfony/Component/' );
 
         $this->SymfonyRequest = SymfonyRequest::create('');
 
