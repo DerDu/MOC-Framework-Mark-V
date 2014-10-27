@@ -1,6 +1,11 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Vendor\Universal;
 
+/**
+ * Class NamespaceLoader
+ *
+ * @package MOC\V\Core\AutoLoader\Vendor\Universal
+ */
 class NamespaceLoader extends NamespaceSearch
 {
 
@@ -62,6 +67,18 @@ class NamespaceLoader extends NamespaceSearch
     /**
      * @param string $ClassName
      *
+     * @return string
+     */
+    protected function getClassNamespace( $ClassName )
+    {
+
+        $Separator = strrpos( $ClassName, '\\' );
+        return trim( substr( $ClassName, 0, $Separator ), '\\' );
+    }
+
+    /**
+     * @param string $ClassName
+     *
      * @return bool
      */
     private function findInclude( $ClassName )
@@ -74,19 +91,6 @@ class NamespaceLoader extends NamespaceSearch
             return true;
         }
         return false;
-    }
-
-
-    /**
-     * @param string $ClassName
-     *
-     * @return string
-     */
-    protected function getClassNamespace( $ClassName )
-    {
-
-        $Separator = strrpos( $ClassName, '\\' );
-        return trim( substr( $ClassName, 0, $Separator ), '\\' );
     }
 
     /**

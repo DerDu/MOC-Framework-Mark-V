@@ -1,6 +1,11 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Vendor\Universal;
 
+/**
+ * Class NamespaceSearch
+ *
+ * @package MOC\V\Core\AutoLoader\Vendor\Universal
+ */
 abstract class NamespaceSearch extends NamespaceMapping
 {
 

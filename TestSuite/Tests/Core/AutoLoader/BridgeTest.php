@@ -30,7 +30,13 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
             $Bridge->loadSourceFile( 'Error' )
         );
         $this->assertFalse(
+            $Bridge->loadSourceFile( 'MOC\V\NotAvailableClass' )
+        );
+        $this->assertFalse(
             $Bridge->loadSourceFile( 'IErrorInterface' )
+        );
+        $this->assertFalse(
+            $Bridge->loadSourceFile( 'MOC\V\INotAvailableInterface' )
         );
 
         $this->assertTrue(
