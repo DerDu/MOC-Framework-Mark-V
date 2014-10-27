@@ -13,6 +13,11 @@ use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 use MOC\V\Component\Database\Component\Vendor;
 use MOC\V\Component\Database\Exception\DatabaseException;
 
+/**
+ * Class Database
+ *
+ * @package MOC\V\Component\Database
+ */
 class Database implements IVendorInterface
 {
 

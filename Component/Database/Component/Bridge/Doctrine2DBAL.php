@@ -14,6 +14,11 @@ use MOC\V\Component\Database\Component\Option\Repository\PortOption;
 use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
+/**
+ * Class Doctrine2DBAL
+ *
+ * @package MOC\V\Component\Database\Component\Bridge
+ */
 class Doctrine2DBAL extends Bridge implements IBridgeInterface
 {
 

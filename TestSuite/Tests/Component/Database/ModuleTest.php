@@ -5,6 +5,11 @@ use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
 use MOC\V\Component\Database\Component\Vendor;
 use MOC\V\Component\Database\Database;
 
+/**
+ * Class ModuleTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Database
+ */
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 

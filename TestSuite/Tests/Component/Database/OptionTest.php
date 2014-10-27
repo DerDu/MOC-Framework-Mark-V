@@ -1,6 +1,11 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Database;
 
+/**
+ * Class OptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Database
+ */
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 

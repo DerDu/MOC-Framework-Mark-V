@@ -10,6 +10,11 @@ use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
 use MOC\V\Component\Database\Component\Option\Repository\PortOption;
 use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 
+/**
+ * Class BridgeTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Database
+ */
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 

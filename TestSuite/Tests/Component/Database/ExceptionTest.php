@@ -4,6 +4,11 @@ namespace MOC\V\TestSuite\Tests\Component\Database;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
 use MOC\V\Component\Database\Exception\DatabaseException;
 
+/**
+ * Class ExceptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Database
+ */
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 

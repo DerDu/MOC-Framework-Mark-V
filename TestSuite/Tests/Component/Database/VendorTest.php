@@ -3,6 +3,11 @@ namespace MOC\V\TestSuite\Tests\Component\Database;
 
 use MOC\V\Component\Database\Component\Vendor;
 
+/**
+ * Class VendorTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Database
+ */
 class VendorTest extends \PHPUnit_Framework_TestCase
 {
 
