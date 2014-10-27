@@ -2,6 +2,7 @@
 namespace MOC\V\Core\AutoLoader\Component\Option;
 
 use MOC\V\Core\AutoLoader\Component\Exception\EmptyNamespaceException;
+use MOC\V\Core\AutoLoader\Component\IOptionInterface;
 
 /**
  * Class NamespaceOption

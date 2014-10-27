@@ -1,15 +1,7 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Component\Option;
 
-/**
- * Interface IOptionInterface
- *
- * @package MOC\V\Core\AutoLoader\Component\Option
- */
-interface IOptionInterface
-{
-
-}
+use MOC\V\Core\AutoLoader\Component\IOptionInterface;
 
 /**
  * Class Option

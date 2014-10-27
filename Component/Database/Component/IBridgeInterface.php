@@ -11,7 +11,7 @@ use MOC\V\Component\Database\Component\Option\UsernameOption;
 /**
  * Interface IBridgeInterface
  *
- * @package MOC\V\Component\Database\Component\Bridge
+ * @package MOC\V\Component\Database\Component
  */
 interface IBridgeInterface
 {

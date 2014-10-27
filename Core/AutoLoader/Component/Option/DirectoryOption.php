@@ -3,6 +3,7 @@ namespace MOC\V\Core\AutoLoader\Component\Option;
 
 use MOC\V\Core\AutoLoader\Component\Exception\DirectoryNotFoundException;
 use MOC\V\Core\AutoLoader\Component\Exception\EmptyDirectoryException;
+use MOC\V\Core\AutoLoader\Component\IOptionInterface;
 
 /**
  * Class DirectoryOption
@@ -24,6 +25,14 @@ class DirectoryOption extends Option implements IOptionInterface
         $this->setDirectory( $Directory );
     }
 
+    /**
+     * @return string
+     */
+    public function getDirectory()
+    {
+
+        return $this->Directory;
+    }
 
     /**
      * @param string $Directory
@@ -42,15 +51,6 @@ class DirectoryOption extends Option implements IOptionInterface
         } else {
             throw new DirectoryNotFoundException( $Directory );
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectory()
-    {
-
-        return $this->Directory;
     }
 
 }

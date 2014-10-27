@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Component\Bridge;
 
+use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\Component\Option\DirectoryOption;
 use MOC\V\Core\AutoLoader\Component\Option\NamespaceOption;
 use MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader;

@@ -1,43 +1,7 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Component\Bridge;
 
-use MOC\V\Core\AutoLoader\Component\Option\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\NamespaceOption;
-
-/**
- * Interface IBridgeInterface
- *
- * @package MOC\V\Core\AutoLoader\Component\Bridge
- */
-interface IBridgeInterface
-{
-
-    /**
-     * @return IBridgeInterface
-     */
-    public function registerLoader();
-
-    /**
-     * @return IBridgeInterface
-     */
-    public function unregisterLoader();
-
-    /**
-     * @param string $ClassName
-     *
-     * @return bool
-     */
-    public function loadSourceFile( $ClassName );
-
-    /**
-     * @param NamespaceOption $Namespace
-     * @param DirectoryOption $Directory
-     *
-     * @return IBridgeInterface
-     */
-    public function addNamespaceDirectoryMapping( NamespaceOption $Namespace, DirectoryOption $Directory );
-}
-
+use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 
 /**
  * Class Bridge

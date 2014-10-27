@@ -14,15 +14,15 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new UniversalNamespace();
 
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->addNamespaceDirectoryMapping(
                 new NamespaceOption( __NAMESPACE__ ), new DirectoryOption( __DIR__ ) )
         );
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->addNamespaceDirectoryMapping(
                 new NamespaceOption( '\MOC\V' ), new DirectoryOption( __DIR__.'/../../../../' ) )
         );
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->registerLoader()
         );
 
@@ -37,10 +37,10 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue(
-            $Bridge->loadSourceFile( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface' )
+            $Bridge->loadSourceFile( '\MOC\V\Core\AutoLoader\Component\IBridgeInterface' )
         );
 
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->unregisterLoader()
         );
 

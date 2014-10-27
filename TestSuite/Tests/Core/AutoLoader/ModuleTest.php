@@ -22,7 +22,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IVendorInterface',
             $Module->setBridgeInterface( $MockBridge )
         );
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Module->getBridgeInterface()
         );
 
@@ -33,7 +33,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         $Loader = AutoLoader::getUniversalNamespaceAutoLoader( __NAMESPACE__, __DIR__ );
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface', $Loader );
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface', $Loader );
         $Loader->unregisterLoader();
     }
 
@@ -42,7 +42,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         $Loader = AutoLoader::getNamespaceAutoLoader( __NAMESPACE__, __DIR__ );
-        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Bridge\IBridgeInterface', $Loader );
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface', $Loader );
         $Loader->unregisterLoader();
     }
 }
