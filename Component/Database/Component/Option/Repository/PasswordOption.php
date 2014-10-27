@@ -1,12 +1,13 @@
 <?php
-namespace MOC\V\Component\Database\Component\Option;
+namespace MOC\V\Component\Database\Component\Option\Repository;
 
 use MOC\V\Component\Database\Component\IOptionInterface;
+use MOC\V\Component\Database\Component\Option\Option;
 
 /**
  * Class PasswordOption
  *
- * @package MOC\V\Component\Database\Component\Option
+ * @package MOC\V\Component\Database\Component\Option\Repository
  */
 class PasswordOption extends Option implements IOptionInterface
 {

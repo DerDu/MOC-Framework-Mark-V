@@ -1,14 +1,15 @@
 <?php
-namespace MOC\V\Core\FileSystem\Component\Option;
+namespace MOC\V\Core\AutoLoader\Component\Option\Repository;
 
-use MOC\V\Core\FileSystem\Component\Exception\EmptyDirectoryException;
-use MOC\V\Core\FileSystem\Component\Exception\TypeDirectoryException;
-use MOC\V\Core\FileSystem\Component\IOptionInterface;
+use MOC\V\Core\AutoLoader\Component\Exception\DirectoryNotFoundException;
+use MOC\V\Core\AutoLoader\Component\Exception\EmptyDirectoryException;
+use MOC\V\Core\AutoLoader\Component\IOptionInterface;
+use MOC\V\Core\AutoLoader\Component\Option\Option;
 
 /**
  * Class DirectoryOption
  *
- * @package MOC\V\Core\FileSystem\Component\Option
+ * @package MOC\V\Core\AutoLoader\Component\Option\Repository
  */
 class DirectoryOption extends Option implements IOptionInterface
 {
@@ -38,19 +39,18 @@ class DirectoryOption extends Option implements IOptionInterface
      * @param string $Directory
      *
      * @throws EmptyDirectoryException
-     * @throws TypeDirectoryException
+     * @throws DirectoryNotFoundException
      */
     public function setDirectory( $Directory )
     {
 
         if (empty( $Directory )) {
             throw new EmptyDirectoryException();
+        }
+        if (is_dir( $Directory )) {
+            $this->Directory = $Directory;
         } else {
-            if (is_dir( $Directory )) {
-                $this->Directory = $Directory;
-            } else {
-                throw new TypeDirectoryException( $Directory );
-            }
+            throw new DirectoryNotFoundException( $Directory );
         }
     }
 

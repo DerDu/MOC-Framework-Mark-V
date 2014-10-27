@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Database;
 
-use MOC\V\Component\Database\Component\Option\DriverOption;
+use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
 use MOC\V\Component\Database\Component\Vendor;
 use MOC\V\Component\Database\Database;
 
@@ -44,12 +44,12 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
          try {
              Database::getDatabase( '', '', '', DriverOption::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
          } catch( \Exception $E ) {
-             $this->assertInstanceOf( 'MOC\V\Component\Database\Exception\DatabaseException', $E );
+
          }
          try {
              Database::getDatabase( '', '', '', 0, 'Wrong' );
          } catch( \Exception $E ) {
-
+             $this->assertInstanceOf( 'MOC\V\Component\Database\Exception\DatabaseException', $E );
          }
      }
 }

@@ -1,12 +1,13 @@
 <?php
-namespace MOC\V\Component\Database\Component\Option;
+namespace MOC\V\Component\Database\Component\Option\Repository;
 
 use MOC\V\Component\Database\Component\IOptionInterface;
+use MOC\V\Component\Database\Component\Option\Option;
 
 /**
  * Class PortOption
  *
- * @package MOC\V\Component\Database\Component\Option
+ * @package MOC\V\Component\Database\Component\Option\Repository
  */
 class PortOption extends Option implements IOptionInterface
 {

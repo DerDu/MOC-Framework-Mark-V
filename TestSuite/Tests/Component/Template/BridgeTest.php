@@ -2,7 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Template;
 
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
-use MOC\V\Component\Template\Component\Option\FileOption;
+use MOC\V\Component\Template\Component\Option\Repository\FileOption;
 
 /**
  * Class BridgeTest

@@ -3,7 +3,7 @@ namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
-use MOC\V\Core\FileSystem\Component\Option\FileOption;
+use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {

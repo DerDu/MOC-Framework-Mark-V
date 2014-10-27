@@ -1,12 +1,13 @@
 <?php
-namespace MOC\V\Component\Router\Component\Option;
+namespace MOC\V\Component\Router\Component\Option\Repository;
 
 use MOC\V\Component\Router\Component\IOptionInterface;
+use MOC\V\Component\Router\Component\Option\Option;
 
 /**
  * Class RouteOption
  *
- * @package MOC\V\Component\Router\Component\Option
+ * @package MOC\V\Component\Router\Component\Option\Repository
  */
 class RouteOption extends Option implements IOptionInterface
 {

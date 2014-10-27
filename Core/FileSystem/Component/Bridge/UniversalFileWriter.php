@@ -2,7 +2,7 @@
 namespace MOC\V\Core\FileSystem\Component\Bridge;
 
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
-use MOC\V\Core\FileSystem\Component\Option\FileOption;
+use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 use MOC\V\Core\FileSystem\Vendor\Universal\FileWriter;
 
 /**

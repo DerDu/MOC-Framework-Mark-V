@@ -2,8 +2,8 @@
 namespace MOC\V\TestSuite\Tests\Core\AutoLoader;
 
 use MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace;
-use MOC\V\Core\AutoLoader\Component\Option\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\NamespaceOption;
+use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
+use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
 
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {

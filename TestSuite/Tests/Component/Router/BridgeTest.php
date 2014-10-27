@@ -3,7 +3,7 @@ namespace MOC\V\TestSuite\Tests\Component\Router;
 
 use MOC\V\Component\Router\Component\Bridge\SymfonyRouter;
 use MOC\V\Component\Router\Component\Bridge\UniversalRouter;
-use MOC\V\Component\Router\Component\Option\RouteOption;
+use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
 
 /**
  * Class BridgeTest

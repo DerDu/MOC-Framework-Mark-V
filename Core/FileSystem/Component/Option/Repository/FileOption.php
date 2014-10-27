@@ -1,14 +1,15 @@
 <?php
-namespace MOC\V\Core\FileSystem\Component\Option;
+namespace MOC\V\Core\FileSystem\Component\Option\Repository;
 
 use MOC\V\Core\FileSystem\Component\Exception\EmptyFileException;
 use MOC\V\Core\FileSystem\Component\Exception\TypeFileException;
 use MOC\V\Core\FileSystem\Component\IOptionInterface;
+use MOC\V\Core\FileSystem\Component\Option\Option;
 
 /**
  * Class FileOption
  *
- * @package MOC\V\Core\FileSystem\Component\Option
+ * @package MOC\V\Core\FileSystem\Component\Option\Repository
  */
 class FileOption extends Option implements IOptionInterface
 {

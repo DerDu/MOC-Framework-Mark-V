@@ -6,12 +6,12 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Statement;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
 use MOC\V\Component\Database\Component\IBridgeInterface;
-use MOC\V\Component\Database\Component\Option\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\DriverOption;
-use MOC\V\Component\Database\Component\Option\HostOption;
-use MOC\V\Component\Database\Component\Option\PasswordOption;
-use MOC\V\Component\Database\Component\Option\PortOption;
-use MOC\V\Component\Database\Component\Option\UsernameOption;
+use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
+use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
+use MOC\V\Component\Database\Component\Option\Repository\HostOption;
+use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
+use MOC\V\Component\Database\Component\Option\Repository\PortOption;
+use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
 class Doctrine2DBAL extends Bridge implements IBridgeInterface
@@ -32,7 +32,7 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
      * @param UsernameOption $Username
      * @param PasswordOption $Password
      * @param DatabaseOption $Database
-     * @param DriverOption   $Driver
+     * @param \MOC\V\Component\Database\Component\Option\Repository\DriverOption $Driver
      * @param HostOption     $Host
      * @param PortOption     $Port
      *

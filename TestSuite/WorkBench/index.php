@@ -3,7 +3,7 @@ namespace Bar;
 
 require_once( __DIR__.'/../../Core/AutoLoader/AutoLoader.php' );
 
-use MOC\V\Component\Database\Component\Option\DriverOption;
+use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
 use MOC\V\Component\Database\Database;
 use MOC\V\Component\Template\Template;
 use MOC\V\Core\AutoLoader\AutoLoader;
@@ -28,7 +28,7 @@ $R = new \MOC\V\Component\Router\Router(
     )
 );
 
-var_dump( $R->getBridgeInterface()->addRoute( new \MOC\V\Component\Router\Component\Option\RouteOption( '/',
+var_dump( $R->getBridgeInterface()->addRoute( new \MOC\V\Component\Router\Component\Option\Repository\RouteOption( '/',
             '\Foo\Bar::Nuff' ) ) );
 var_dump( $R->getBridgeInterface()->getRoute() );
 

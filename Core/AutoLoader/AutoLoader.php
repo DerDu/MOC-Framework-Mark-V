@@ -13,8 +13,8 @@ require_once( __DIR__.'/Component/Vendor.php' );
 
 require_once( __DIR__.'/Component/IOptionInterface.php' );
 require_once( __DIR__.'/Component/Option/Option.php' );
-require_once( __DIR__.'/Component/Option/NamespaceOption.php' );
-require_once( __DIR__.'/Component/Option/DirectoryOption.php' );
+require_once( __DIR__.'/Component/Option/Repository/NamespaceOption.php' );
+require_once( __DIR__.'/Component/Option/Repository/DirectoryOption.php' );
 
 require_once( __DIR__.'/Component/IBridgeInterface.php' );
 require_once( __DIR__.'/Component/Bridge/Bridge.php' );
@@ -27,8 +27,8 @@ require_once( __DIR__.'/Vendor/Universal/NamespaceLoader.php' );
 use MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace;
 use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\Component\IVendorInterface;
-use MOC\V\Core\AutoLoader\Component\Option\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\NamespaceOption;
+use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
+use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
 use MOC\V\Core\AutoLoader\Component\Vendor;
 use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
 

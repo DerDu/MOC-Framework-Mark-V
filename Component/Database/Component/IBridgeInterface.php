@@ -1,12 +1,12 @@
 <?php
 namespace MOC\V\Component\Database\Component;
 
-use MOC\V\Component\Database\Component\Option\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\DriverOption;
-use MOC\V\Component\Database\Component\Option\HostOption;
-use MOC\V\Component\Database\Component\Option\PasswordOption;
-use MOC\V\Component\Database\Component\Option\PortOption;
-use MOC\V\Component\Database\Component\Option\UsernameOption;
+use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
+use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
+use MOC\V\Component\Database\Component\Option\Repository\HostOption;
+use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
+use MOC\V\Component\Database\Component\Option\Repository\PortOption;
+use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 
 /**
  * Interface IBridgeInterface
@@ -17,12 +17,12 @@ interface IBridgeInterface
 {
 
     /**
-     * @param UsernameOption $Username
+     * @param \MOC\V\Component\Database\Component\Option\Repository\UsernameOption $Username
      * @param PasswordOption $Password
      * @param DatabaseOption $Database
-     * @param DriverOption   $Driver
+     * @param \MOC\V\Component\Database\Component\Option\Repository\DriverOption   $Driver
      * @param HostOption     $Host
-     * @param PortOption     $Port
+     * @param \MOC\V\Component\Database\Component\Option\Repository\PortOption     $Port
      *
      * @return IBridgeInterface
      */

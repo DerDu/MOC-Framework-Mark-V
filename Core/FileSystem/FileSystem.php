@@ -5,7 +5,7 @@ use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\IVendorInterface;
-use MOC\V\Core\FileSystem\Component\Option\FileOption;
+use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 use MOC\V\Core\FileSystem\Component\Vendor;
 use MOC\V\Core\FileSystem\Exception\FileSystemException;
 

@@ -2,7 +2,7 @@
 namespace MOC\V\Component\Template\Component\Bridge;
 
 use MOC\V\Component\Template\Component\IBridgeInterface;
-use MOC\V\Component\Template\Component\Option\FileOption;
+use MOC\V\Component\Template\Component\Option\Repository\FileOption;
 
 class TwigTemplate extends Bridge implements IBridgeInterface
 {

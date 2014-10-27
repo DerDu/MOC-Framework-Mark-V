@@ -4,12 +4,12 @@ namespace MOC\V\Component\Database;
 use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\IVendorInterface;
-use MOC\V\Component\Database\Component\Option\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\DriverOption;
-use MOC\V\Component\Database\Component\Option\HostOption;
-use MOC\V\Component\Database\Component\Option\PasswordOption;
-use MOC\V\Component\Database\Component\Option\PortOption;
-use MOC\V\Component\Database\Component\Option\UsernameOption;
+use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
+use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
+use MOC\V\Component\Database\Component\Option\Repository\HostOption;
+use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
+use MOC\V\Component\Database\Component\Option\Repository\PortOption;
+use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 use MOC\V\Component\Database\Component\Vendor;
 use MOC\V\Component\Database\Exception\DatabaseException;
 

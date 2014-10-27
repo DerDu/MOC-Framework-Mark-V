@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
-use MOC\V\Core\FileSystem\Component\Option\DirectoryOption;
-use MOC\V\Core\FileSystem\Component\Option\FileOption;
+use MOC\V\Core\FileSystem\Component\Option\Repository\DirectoryOption;
+use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 
 class OptionTest extends \PHPUnit_Framework_TestCase
 {

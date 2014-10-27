@@ -2,7 +2,7 @@
 namespace MOC\V\Component\Router\Component\Bridge;
 
 use MOC\V\Component\Router\Component\IBridgeInterface;
-use MOC\V\Component\Router\Component\Option\RouteOption;
+use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
 
 /**
  * Class UniversalRouter

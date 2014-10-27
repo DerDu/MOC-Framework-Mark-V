@@ -1,13 +1,14 @@
 <?php
-namespace MOC\V\Core\AutoLoader\Component\Option;
+namespace MOC\V\Core\AutoLoader\Component\Option\Repository;
 
 use MOC\V\Core\AutoLoader\Component\Exception\EmptyNamespaceException;
 use MOC\V\Core\AutoLoader\Component\IOptionInterface;
+use MOC\V\Core\AutoLoader\Component\Option\Option;
 
 /**
  * Class NamespaceOption
  *
- * @package MOC\V\Core\AutoLoader\Component\Option
+ * @package MOC\V\Core\AutoLoader\Component\Option\Repository
  */
 class NamespaceOption extends Option implements IOptionInterface
 {

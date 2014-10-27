@@ -4,7 +4,7 @@ namespace MOC\V\Component\Template;
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\IVendorInterface;
-use MOC\V\Component\Template\Component\Option\FileOption;
+use MOC\V\Component\Template\Component\Option\Repository\FileOption;
 use MOC\V\Component\Template\Component\Vendor;
 use MOC\V\Component\Template\Exception\TemplateTypeException;
 
