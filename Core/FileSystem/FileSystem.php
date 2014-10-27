@@ -38,10 +38,7 @@ class FileSystem implements IVendorInterface
     public static function getFileLoader( $Location )
     {
 
-        if (class_exists( '\MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader', true )) {
-            return self::getUniversalFileLoader( $Location );
-        }
-        throw new FileSystemException();
+        return self::getUniversalFileLoader( $Location );
     }
 
     /**
@@ -81,10 +78,7 @@ class FileSystem implements IVendorInterface
     public static function getFileWriter( $Location )
     {
 
-        if (class_exists( '\MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter', true )) {
-            return self::getUniversalFileWriter( $Location );
-        }
-        throw new FileSystemException();
+        return self::getUniversalFileWriter( $Location );
     }
 
     /**

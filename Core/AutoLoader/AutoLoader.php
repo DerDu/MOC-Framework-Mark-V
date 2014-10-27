@@ -62,10 +62,7 @@ class AutoLoader implements IVendorInterface
     public static function getNamespaceAutoLoader( $Namespace, $Directory )
     {
 
-        if (class_exists( '\MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace', true )) {
-            return self::getUniversalNamespaceAutoLoader( $Namespace, $Directory );
-        }
-        throw new AutoLoaderException();
+        return self::getUniversalNamespaceAutoLoader( $Namespace, $Directory );
     }
 
     /**

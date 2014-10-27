@@ -42,10 +42,7 @@ class Database implements IVendorInterface
     public static function getDatabase( $Username, $Password, $Database, $Driver, $Host, $Port = null )
     {
 
-        if (class_exists( '\MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL', true )) {
-            return self::getDoctrineDatabase( $Username, $Password, $Database, $Driver, $Host, $Port );
-        }
-        throw new DatabaseException();
+        return self::getDoctrineDatabase( $Username, $Password, $Database, $Driver, $Host, $Port );
     }
 
     /**
