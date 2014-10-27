@@ -3,8 +3,13 @@ namespace MOC\V\Core\FileSystem\Component\Option;
 
 use MOC\V\Core\FileSystem\Component\Exception\EmptyDirectoryException;
 use MOC\V\Core\FileSystem\Component\Exception\TypeDirectoryException;
-use MOC\V\Core\FileSystem\Component\Exception\TypeFileException;
+use MOC\V\Core\FileSystem\Component\IOptionInterface;
 
+/**
+ * Class DirectoryOption
+ *
+ * @package MOC\V\Core\FileSystem\Component\Option
+ */
 class DirectoryOption extends Option implements IOptionInterface
 {
 
@@ -20,12 +25,20 @@ class DirectoryOption extends Option implements IOptionInterface
         $this->setDirectory( $Directory );
     }
 
+    /**
+     * @return string
+     */
+    public function getDirectory()
+    {
+
+        return $this->Directory;
+    }
 
     /**
      * @param string $Directory
      *
      * @throws EmptyDirectoryException
-     * @throws TypeFileException
+     * @throws TypeDirectoryException
      */
     public function setDirectory( $Directory )
     {
@@ -39,15 +52,6 @@ class DirectoryOption extends Option implements IOptionInterface
                 throw new TypeDirectoryException( $Directory );
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectory()
-    {
-
-        return $this->Directory;
     }
 
 }

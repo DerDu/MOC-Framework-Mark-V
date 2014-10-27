@@ -1,12 +1,20 @@
 <?php
 namespace MOC\V\Core\FileSystem\Vendor\Universal;
 
+/**
+ * Class FileWriter
+ *
+ * @package MOC\V\Core\FileSystem\Vendor\Universal
+ */
 class FileWriter
 {
 
     /** @var string $Location */
     private $Location = null;
 
+    /**
+     * @param string $Location
+     */
     function __construct( $Location )
     {
 

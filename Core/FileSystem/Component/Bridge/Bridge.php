@@ -1,19 +1,7 @@
 <?php
 namespace MOC\V\Core\FileSystem\Component\Bridge;
 
-/**
- * Interface IBridgeInterface
- *
- * @package MOC\V\Core\FileSystem\Component
- */
-interface IBridgeInterface
-{
-
-    /**
-     * @return string
-     */
-    public function getLocation();
-}
+use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 
 /**
  * Class Bridge

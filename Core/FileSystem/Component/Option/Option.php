@@ -1,15 +1,7 @@
 <?php
 namespace MOC\V\Core\FileSystem\Component\Option;
 
-/**
- * Interface IOptionInterface
- *
- * @package MOC\V\Core\FileSystem\Component\Option
- */
-interface IOptionInterface
-{
-
-}
+use MOC\V\Core\FileSystem\Component\IOptionInterface;
 
 /**
  * Class Option

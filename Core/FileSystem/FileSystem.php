@@ -1,14 +1,19 @@
 <?php
 namespace MOC\V\Core\FileSystem;
 
-use MOC\V\Core\FileSystem\Component\Bridge\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
+use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\IVendorInterface;
 use MOC\V\Core\FileSystem\Component\Option\FileOption;
 use MOC\V\Core\FileSystem\Component\Vendor;
 use MOC\V\Core\FileSystem\Exception\FileSystemException;
 
+/**
+ * Class FileSystem
+ *
+ * @package MOC\V\Core\FileSystem
+ */
 class FileSystem implements IVendorInterface
 {
 
@@ -25,47 +30,6 @@ class FileSystem implements IVendorInterface
     }
 
     /**
-     * @return IVendorInterface
-     */
-    public function getVendorInterface()
-    {
-
-        return $this->VendorInterface;
-    }
-
-    /**
-     * @param IVendorInterface $VendorInterface
-     *
-     * @return IVendorInterface
-     */
-    public function setVendorInterface( IVendorInterface $VendorInterface )
-    {
-
-        $this->VendorInterface = $VendorInterface;
-        return $this;
-    }
-
-    /**
-     * @return IBridgeInterface
-     */
-    public function getBridgeInterface()
-    {
-
-        return $this->VendorInterface->getBridgeInterface();
-    }
-
-    /**
-     * @param IBridgeInterface $BridgeInterface
-     *
-     * @return IBridgeInterface
-     */
-    public function setBridgeInterface( IBridgeInterface $BridgeInterface )
-    {
-
-        return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
-    }
-
-    /**
      * @param string $Location
      *
      * @return IBridgeInterface
@@ -76,21 +40,6 @@ class FileSystem implements IVendorInterface
 
         if (class_exists( '\MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader', true )) {
             return self::getUniversalFileLoader( $Location );
-        }
-        throw new FileSystemException();
-    }
-
-    /**
-     * @param string $Location
-     *
-     * @return IBridgeInterface
-     * @throws FileSystemException
-     */
-    public static function getFileWriter( $Location )
-    {
-
-        if (class_exists( '\MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter', true )) {
-            return self::getUniversalFileWriter( $Location );
         }
         throw new FileSystemException();
     }
@@ -115,6 +64,30 @@ class FileSystem implements IVendorInterface
     }
 
     /**
+     * @return IBridgeInterface
+     */
+    public function getBridgeInterface()
+    {
+
+        return $this->VendorInterface->getBridgeInterface();
+    }
+
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     * @throws FileSystemException
+     */
+    public static function getFileWriter( $Location )
+    {
+
+        if (class_exists( '\MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter', true )) {
+            return self::getUniversalFileWriter( $Location );
+        }
+        throw new FileSystemException();
+    }
+
+    /**
      * @param string $Location
      *
      * @return IBridgeInterface
@@ -131,5 +104,37 @@ class FileSystem implements IVendorInterface
         );
 
         return $Loader->getBridgeInterface();
+    }
+
+    /**
+     * @return IVendorInterface
+     */
+    public function getVendorInterface()
+    {
+
+        return $this->VendorInterface;
+    }
+
+    /**
+     * @param IVendorInterface $VendorInterface
+     *
+     * @return IVendorInterface
+     */
+    public function setVendorInterface( IVendorInterface $VendorInterface )
+    {
+
+        $this->VendorInterface = $VendorInterface;
+        return $this;
+    }
+
+    /**
+     * @param IBridgeInterface $BridgeInterface
+     *
+     * @return IBridgeInterface
+     */
+    public function setBridgeInterface( IBridgeInterface $BridgeInterface )
+    {
+
+        return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
     }
 }

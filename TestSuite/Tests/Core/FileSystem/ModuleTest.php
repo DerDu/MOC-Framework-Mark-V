@@ -22,7 +22,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IVendorInterface',
             $Module->setBridgeInterface( $MockBridge )
         );
-        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Bridge\IBridgeInterface',
+        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface',
             $Module->getBridgeInterface()
         );
 
@@ -42,7 +42,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals( __FILE__, $Loader->getLocation() );
 
-        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Bridge\IBridgeInterface', $Loader );
+        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader );
     }
 
     /** @runTestsInSeparateProcesses */
@@ -59,7 +59,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals( __FILE__, $Writer->getLocation() );
 
-        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Bridge\IBridgeInterface', $Writer );
+        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Writer );
     }
 
     /** @runTestsInSeparateProcesses */

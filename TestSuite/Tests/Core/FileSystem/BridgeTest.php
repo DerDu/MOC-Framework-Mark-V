@@ -12,7 +12,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     public function testUniversalFileLoader()
     {
 
-        $Bridge = new UniversalFileLoader(
+        new UniversalFileLoader(
             new FileOption( __FILE__ )
         );
     }
@@ -21,7 +21,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     public function testUniversalFileWriter()
     {
 
-        $Bridge = new UniversalFileWriter(
+        new UniversalFileWriter(
             new FileOption( __FILE__ )
         );
     }

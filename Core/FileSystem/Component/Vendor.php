@@ -1,30 +1,6 @@
 <?php
 namespace MOC\V\Core\FileSystem\Component;
 
-use MOC\V\Core\FileSystem\Component\Bridge\IBridgeInterface;
-
-/**
- * Interface IVendorInterface
- *
- * @package MOC\V\Core\FileSystem\Component
- */
-interface IVendorInterface
-{
-
-    /**
-     * @return IBridgeInterface
-     */
-    public function getBridgeInterface();
-
-    /**
-     * @param IBridgeInterface $BridgeInterface
-     *
-     * @return IVendorInterface
-     */
-    public function setBridgeInterface( IBridgeInterface $BridgeInterface );
-}
-
-
 /**
  * Class Vendor
  *
