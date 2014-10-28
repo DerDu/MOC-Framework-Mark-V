@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Core\HttpKernel;
 
+use MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest;
 use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
 use MOC\V\Core\HttpKernel\Component\IVendorInterface;
 
@@ -22,6 +23,24 @@ class HttpKernel implements IVendorInterface
     {
 
         $this->setVendorInterface( $VendorInterface );
+    }
+
+    /**
+     * @return IBridgeInterface
+     */
+    public static function getRequest()
+    {
+
+        return self::getUniversalRequest();
+    }
+
+    /**
+     * @return IBridgeInterface
+     */
+    public static function getUniversalRequest()
+    {
+
+        return new UniversalRequest();
     }
 
     /**
@@ -64,5 +83,4 @@ class HttpKernel implements IVendorInterface
 
         return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
     }
-
 }

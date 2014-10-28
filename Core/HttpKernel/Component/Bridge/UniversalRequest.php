@@ -1,13 +1,25 @@
 <?php
-namespace MOC\V\Core\HttpKernel\Component;
+namespace MOC\V\Core\HttpKernel\Component\Bridge;
+
+use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
+use MOC\V\Core\HttpKernel\Vendor\Universal\Request;
 
 /**
- * Interface IBridgeInterface
+ * Class UniversalRequest
  *
- * @package MOC\V\Core\HttpKernel\Component
+ * @package MOC\V\Core\HttpKernel\Component\Bridge
  */
-interface IBridgeInterface
+class UniversalRequest extends Bridge implements IBridgeInterface
 {
+
+    /** @var Request $Instance */
+    private $Instance = null;
+
+    function __construct()
+    {
+
+        $this->Instance = new Request();
+    }
 
     /**
      * Returns the root path from which this request is executed.
@@ -21,7 +33,11 @@ interface IBridgeInterface
      *
      * @return string
      */
-    public function getPathBase();
+    public function getPathBase()
+    {
+
+        return $this->Instance->getSymfonyRequest()->getBasePath();
+    }
 
     /**
      * Returns the path being requested relative to the executed script.
@@ -37,7 +53,11 @@ interface IBridgeInterface
      *
      * @return string
      */
-    public function getPathInfo();
+    public function getPathInfo()
+    {
+
+        return $this->Instance->getSymfonyRequest()->getPathInfo();
+    }
 
     /**
      * Returns the root URL from which this request is executed.
@@ -48,7 +68,11 @@ interface IBridgeInterface
      *
      * @return string
      */
-    public function getUrlBase();
+    public function getUrlBase()
+    {
+
+        return $this->Instance->getSymfonyRequest()->getBaseUrl();
+    }
 
     /**
      * Returns the port on which the request is made.
@@ -57,16 +81,12 @@ interface IBridgeInterface
      * The "X-Forwarded-Port" header must contain the client port.
      * If your reverse proxy uses a different header name than "X-Forwarded-Port", configure it via "setTrustedHeaderName()" with the "client-port" key.
      *
-     * @return int
+     * @return string
      */
-    public function getPort();
+    public function getPort()
+    {
 
-    /*
-     *  *   * getBasePath
-      *   * getBaseUrl
-      *   * getPathInfo
-      *   * getRequestUri
-      *   * getUri
-      *   * getUriForPath
-     */
+        return (string)$this->Instance->getSymfonyRequest()->getPort();
+    }
+
 }
