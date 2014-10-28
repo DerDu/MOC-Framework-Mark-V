@@ -8,20 +8,22 @@ use MOC\V\Core\FileSystem\FileSystem;
 use Nette\Config\Adapters\NeonAdapter;
 
 /**
- * Class ApiGen
+ * Class ApiGenDocumentation
  *
  * @package MOC\V\Component\Documentation\Component\Bridge
  */
-class ApiGen extends Bridge implements IBridgeInterface
+class ApiGenDocumentation extends Bridge implements IBridgeInterface
 {
 
     /** @var DirectoryOption|null $Source */
     private $Source = null;
     /** @var DirectoryOption|null $Destination */
     private $Destination = null;
-    /** @var array $Configuration */
-    private $Configuration = array();
 
+    /**
+     * @param DirectoryOption $Source
+     * @param DirectoryOption $Destination
+     */
     function __construct( DirectoryOption $Source, DirectoryOption $Destination )
     {
 
@@ -31,9 +33,36 @@ class ApiGen extends Bridge implements IBridgeInterface
 
         $this->Source = $Source;
         $this->Destination = $Destination;
-        $this->Configuration = $this->getConfig();
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function createDocumentation()
+    {
+
+        set_time_limit( 0 );
+        $Config = $this->getConfig();
+
+        require_once( __DIR__.'/../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
+        $Neon = new NeonAdapter();
+
+        $File = FileSystem::getFileWriter( __DIR__.'/ApiGenDocumentation.config' );
+        file_put_contents( $File->getLocation(), $Neon->dump( $Config ) );
+
+        $_SERVER['argv'] = array(
+            'DUMMY-SHELL-ARGS',
+            '--config',
+            $File->getLocation()
+        );
+
+        include( __DIR__.'/../../Vendor/ApiGen/apigen.php' );
+
+        return $this->Destination->getDirectory();
+    }
+
+    /** @codeCoverageIgnore */
     private function getConfig()
     {
 
@@ -45,7 +74,7 @@ class ApiGen extends Bridge implements IBridgeInterface
             // List of allowed file extensions
             'extensions'     => array( 'php' ),
             // Mask to exclude file or directory from processing
-            'exclude' => '*/Documentation/*,*/.idea/*,*/.git/*,*/Vendor/Symfony/*,*/TestSuite/*,*/Vendor/Twig/*,*/Vendor/Doctrine2DBAL/*',
+            'exclude'     => '*/Documentation/*,*/.idea/*,*/.git/*,*/Vendor/Symfony/*,*/TestSuite/*,*/Vendor/Twig/*,*/Vendor/Doctrine2DBAL/*',
             // Don't generate documentation for classes from file or directory with this mask
             //'skipDocPath' => '',
             // Don't generate documentation for classes with this name prefix
@@ -95,7 +124,7 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Don't display scanning and generating messages
             'quiet'          => true,
             // Display progressbar
-            'progressbar' => true,
+            'progressbar' => false,
             // Use colors
             'colors'         => false,
             // Check for update
@@ -103,31 +132,5 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Display additional information in case of an error
             'debug'          => false
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function createDocumentation()
-    {
-
-        set_time_limit( 0 );
-        $Config = $this->getConfig();
-
-        require_once( __DIR__.'/../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
-        $Neon = new NeonAdapter();
-
-        $File = FileSystem::getFileWriter( __DIR__.'/ApiGen.config' );
-        file_put_contents( $File->getLocation(), $Neon->dump( $Config ) );
-
-        $_SERVER['argv'] = array(
-            'DUMMY-SHELL-ARGS',
-            '--config',
-            $File->getLocation()
-        );
-
-        include( __DIR__.'/../../Vendor/ApiGen/apigen.php' );
-
-        return $this->Destination->getDirectory();
     }
 }

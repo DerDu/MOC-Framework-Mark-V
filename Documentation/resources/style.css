@@ -631,11 +631,11 @@ dl.tree dd {
 .summary .description.detailed h4 {
     margin-top: 3px;
 }
-
+/*
 .summary .description.detailed {
     display: block;
 }
-
+*/
 .summary dl {
     margin: 0;
 }

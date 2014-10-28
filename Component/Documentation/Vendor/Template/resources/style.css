@@ -632,10 +632,11 @@ dl.tree dd {
     margin-top: 3px;
 }
 
+/*
 .summary .description.detailed {
     display: block;
 }
-
+*/
 .summary dl {
     margin: 0;
 }

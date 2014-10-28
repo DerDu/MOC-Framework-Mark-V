@@ -1,8 +1,10 @@
 <?php
 namespace MOC\V\Component\Documentation;
 
+use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\IVendorInterface;
+use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
 
 /**
  * Class Documentation
@@ -22,6 +24,29 @@ class Documentation implements IVendorInterface
     {
 
         $this->setVendorInterface( $VendorInterface );
+    }
+
+    /**
+     * @return IBridgeInterface
+     */
+    public static function getDocumentation()
+    {
+
+        return self::getApiGenDocumentation();
+    }
+
+    /**
+     * @return IBridgeInterface
+     */
+    public static function getApiGenDocumentation()
+    {
+
+        $Documentation = new ApiGenDocumentation(
+            new DirectoryOption( __DIR__.'/../../' ),
+            new DirectoryOption( __DIR__.'/../../Documentation/' )
+        );
+
+        return $Documentation;
     }
 
     /**
