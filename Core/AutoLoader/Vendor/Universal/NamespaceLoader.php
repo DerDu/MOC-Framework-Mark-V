@@ -77,8 +77,10 @@ class NamespaceLoader extends NamespaceSearch
         $LoadFile = str_replace( '_', DIRECTORY_SEPARATOR, $this->getClassName( $ClassName ) ).'.php';
         if ($File = stream_resolve_include_path( $LoadFile )) {
             /** @noinspection PhpIncludeInspection */
+            // @codeCoverageIgnoreStart
             require_once( $File );
             return true;
+            // @codeCoverageIgnoreEnd
         }
         return false;
     }

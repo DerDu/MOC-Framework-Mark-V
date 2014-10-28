@@ -27,9 +27,10 @@ abstract class NamespaceMapping
         if (!isset( $this->NamespaceMapping[$Namespace] )) {
             $this->NamespaceMapping[$Namespace] = array();
         }
-        array_push( $this->NamespaceMapping[$Namespace],
-            rtrim( str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $Directory ), DIRECTORY_SEPARATOR )
-        );
+        $Directory = rtrim( str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $Directory ), DIRECTORY_SEPARATOR );
+        if (!in_array( $Directory, $this->NamespaceMapping[$Namespace] )) {
+            array_push( $this->NamespaceMapping[$Namespace], $Directory );
+        }
     }
 
     /**
