@@ -6,13 +6,13 @@ use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
 /**
  * Interface IBridgeInterface
  *
- * @package MOC\V\Component\Router\Component\Bridge
+ * @package MOC\V\Component\Router\Component
  */
 interface IBridgeInterface
 {
 
     /**
-     * @param \MOC\V\Component\Router\Component\Option\Repository\RouteOption $RouteOption
+     * @param RouteOption $RouteOption
      *
      * @return IBridgeInterface
      */
