@@ -18,7 +18,8 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new UniversalRouter();
         $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IBridgeInterface',
-            $Bridge->addRoute( new RouteOption( '/', 'Controller' ) )
+            $Bridge->addRoute( new RouteOption( '/',
+                    '\MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest::getParameterArray' ) )
         );
         $this->assertInternalType( 'string', $Bridge->getRoute() );
     }
@@ -28,7 +29,8 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new SymfonyRouter();
         $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IBridgeInterface',
-            $Bridge->addRoute( new RouteOption( '/', 'Controller' ) )
+            $Bridge->addRoute( new RouteOption( '/',
+                    '\MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest::getParameterArray' ) )
         );
         try {
             $Bridge->getRoute();

@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Component\Router\Component\Option\Repository;
 
+use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Component\IOptionInterface;
 use MOC\V\Component\Router\Component\Option\Option;
 
@@ -43,11 +44,26 @@ class RouteOption extends Option implements IOptionInterface
 
     /**
      * @param null|string $Controller
+     *
+     * @throws ComponentException
      */
     private function setController( $Controller )
     {
 
+        if (false === strpos( $Controller, '::' )) {
+            throw new ComponentException( $Controller );
+        }
         $this->Controller = $Controller;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+
+        $List = explode( '::', $this->getController(), 2 );
+        return current( $List );
     }
 
     /**
@@ -57,6 +73,16 @@ class RouteOption extends Option implements IOptionInterface
     {
 
         return $this->Controller;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+
+        $List = explode( '::', $this->getController(), 2 );
+        return end( $List );
     }
 
     /**

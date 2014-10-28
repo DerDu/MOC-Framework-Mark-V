@@ -89,4 +89,12 @@ class UniversalRequest extends Bridge implements IBridgeInterface
         return (string)$this->Instance->getSymfonyRequest()->getPort();
     }
 
+    /**
+     * @return array
+     */
+    public function getParameterArray()
+    {
+
+        return (string)$this->Instance->getSymfonyRequest()->attributes->all();
+    }
 }

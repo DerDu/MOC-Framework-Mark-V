@@ -25,7 +25,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
     public function testRouteOption()
     {
 
-        $Route = new RouteOption( '/', 'NotFound' );
+        $Route = new RouteOption( '/', 'NoClass::NoMethod' );
 
         $this->assertInternalType( 'string', $Route->getController() );
         $Route->setParameterDefault( 'Name', 'Value' );

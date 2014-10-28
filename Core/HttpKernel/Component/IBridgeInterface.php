@@ -61,10 +61,12 @@ interface IBridgeInterface
      */
     public function getPort();
 
+    /**
+     * @return array
+     */
+    public function getParameterArray();
+
     /*
-     *  *   * getBasePath
-      *   * getBaseUrl
-      *   * getPathInfo
       *   * getRequestUri
       *   * getUri
       *   * getUriForPath
