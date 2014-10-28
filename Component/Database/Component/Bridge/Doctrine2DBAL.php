@@ -5,6 +5,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Statement;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
+use MOC\V\Component\Database\Component\Exception\NoConnectionException;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
 use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
@@ -34,12 +35,12 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param UsernameOption $Username
-     * @param PasswordOption $Password
-     * @param DatabaseOption $Database
+     * @param UsernameOption                                                     $Username
+     * @param PasswordOption                                                     $Password
+     * @param DatabaseOption                                                     $Database
      * @param \MOC\V\Component\Database\Component\Option\Repository\DriverOption $Driver
-     * @param HostOption     $Host
-     * @param PortOption     $Port
+     * @param HostOption                                                         $Host
+     * @param PortOption                                                         $Port
      *
      * @throws ComponentException
      * @return IBridgeInterface
@@ -108,12 +109,17 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
+     * @throws ComponentException
      * @return Connection
      */
     private function prepareConnection()
     {
 
-        return self::$ConnectionList[count( self::$ConnectionList ) - 1];
+        $Index = count( self::$ConnectionList ) - 1;
+        if (!isset( self::$ConnectionList[$Index] )) {
+            throw new NoConnectionException( $Index );
+        }
+        return self::$ConnectionList[$Index];
     }
 
     /**
