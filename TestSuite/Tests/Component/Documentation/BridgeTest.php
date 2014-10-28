@@ -17,8 +17,8 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         $Bridge = new ApiGen(
-            new DirectoryOption( __DIR__.'/../' ),
-            new DirectoryOption( __DIR__.'/../../../TestDocumentation/' )
+            new DirectoryOption( __DIR__ ),
+            new DirectoryOption( __DIR__.'/Content/' )
         );
         //$Bridge->createDocumentation();
     }
