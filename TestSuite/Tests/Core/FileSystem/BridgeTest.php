@@ -8,7 +8,6 @@ use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testUniversalFileLoader()
     {
 
@@ -17,7 +16,6 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testUniversalFileWriter()
     {
 

@@ -12,7 +12,6 @@ use MOC\V\Component\Template\Template;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 
@@ -33,7 +32,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticTwigTemplate()
     {
 
@@ -41,7 +39,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface', $Loader );
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticTemplate()
     {
 

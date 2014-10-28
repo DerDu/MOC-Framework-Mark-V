@@ -11,7 +11,6 @@ use MOC\V\Component\Router\Component\Vendor;
 class VendorTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testVendor()
     {
 

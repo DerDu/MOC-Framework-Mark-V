@@ -12,7 +12,6 @@ use MOC\V\Core\HttpKernel\Exception\HttpKernelException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testHttpKernelException()
     {
 

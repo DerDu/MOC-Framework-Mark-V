@@ -1,6 +1,8 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\HttpKernel;
 
+use MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest;
+
 /**
  * Class BridgeTest
  *
@@ -9,10 +11,15 @@ namespace MOC\V\TestSuite\Tests\Core\HttpKernel;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testUniversalRequest()
     {
 
+        $Bridge = new UniversalRequest();
+
+        $this->assertInternalType( 'string', $Bridge->getPathBase() );
+        $this->assertInternalType( 'string', $Bridge->getPathInfo() );
+        $this->assertInternalType( 'string', $Bridge->getUrlBase() );
+        $this->assertInternalType( 'string', $Bridge->getPort() );
     }
 
 }

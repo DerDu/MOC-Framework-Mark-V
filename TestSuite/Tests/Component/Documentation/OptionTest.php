@@ -11,7 +11,6 @@ use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testAbstractOption()
     {
 
@@ -23,7 +22,6 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testDirectoryOption()
     {
 

@@ -12,7 +12,6 @@ use MOC\V\Component\Template\Component\Option\Repository\FileOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testTwigTemplate()
     {
 

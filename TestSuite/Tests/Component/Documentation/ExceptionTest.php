@@ -9,7 +9,6 @@ use MOC\V\Component\Documentation\Exception\DocumentationException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testDocumentationException()
     {
 

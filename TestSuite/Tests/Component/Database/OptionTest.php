@@ -9,7 +9,6 @@ namespace MOC\V\TestSuite\Tests\Component\Database;
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testAbstractOption()
     {
 

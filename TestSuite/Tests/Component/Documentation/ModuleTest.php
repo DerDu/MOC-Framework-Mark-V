@@ -13,7 +13,6 @@ use MOC\V\Component\Documentation\Documentation;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 

@@ -12,7 +12,6 @@ use MOC\V\Core\HttpKernel\HttpKernel;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 
@@ -31,4 +30,19 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             $Module->getBridgeInterface()
         );
     }
+
+    public function testStaticUniversalRequest()
+    {
+
+        $Request = HttpKernel::getUniversalRequest();
+        $this->assertInstanceOf( 'MOC\V\Core\HttpKernel\Component\IBridgeInterface', $Request );
+    }
+
+    public function testStaticRequest()
+    {
+
+        $Request = HttpKernel::getRequest();
+        $this->assertInstanceOf( 'MOC\V\Core\HttpKernel\Component\IBridgeInterface', $Request );
+    }
+
 }

@@ -7,7 +7,6 @@ use MOC\V\Core\FileSystem\FileSystem;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 
@@ -28,7 +27,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticUniversalFileLoader()
     {
 
@@ -45,7 +43,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader );
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticUniversalFileWriter()
     {
 
@@ -62,7 +59,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Writer );
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticFileWriter()
     {
 
@@ -78,7 +74,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticFileLoader()
     {
 

@@ -10,7 +10,6 @@ use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testAutoLoaderException()
     {
 

@@ -8,7 +8,6 @@ use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testUniversalNamespace()
     {
 

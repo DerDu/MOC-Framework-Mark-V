@@ -3,22 +3,19 @@ namespace Bar;
 
 require_once( __DIR__.'/../../Core/AutoLoader/AutoLoader.php' );
 
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Database;
-use MOC\V\Component\Template\Template;
 use MOC\V\Core\AutoLoader\AutoLoader;
-use MOC\V\Core\FileSystem\FileSystem;
-use MOC\V\Core\HttpKernel\Vendor\Universal\Request;
+use MOC\V\Core\HttpKernel\HttpKernel;
 
-var_dump( get_declared_classes() );
+AutoLoader::getNamespaceAutoLoader( '\MOC\V', __DIR__.'/../../' );
 
-var_dump( AutoLoader::getNamespaceAutoLoader( '\MOC\V', __DIR__.'/../../' ) );
-var_dump( FileSystem::getFileLoader( __FILE__ ) );
-var_dump( Template::getTemplate( 'index.twig' )->setVariable( 'Foo', 'Bar' )->getContent() );
-var_dump( Template::getTemplate( 'index.twig' )->setVariable( 'Foo', array( 'Bar', 'Nuff' ) )->getContent() );
-var_dump( Database::getDatabase( 'root', 'kuw', 'ziel2', DriverOption::DRIVER_PDO_MYSQL, '192.168.100.204' ) );
+var_dump(
+    HttpKernel::getRequest()->getPathBase(),
+    HttpKernel::getRequest()->getPathInfo(),
+    HttpKernel::getRequest()->getUrlBase(),
+    HttpKernel::getRequest()->getPort()
+);
 
-new Request();
+//new Request();
 
 
 /*

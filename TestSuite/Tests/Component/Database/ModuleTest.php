@@ -13,7 +13,6 @@ use MOC\V\Component\Database\Database;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 
@@ -34,7 +33,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticDoctrineDatabase()
     {
 
@@ -42,7 +40,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface', $Database );
     }
 
-    /** @runTestsInSeparateProcesses */
      public function testStaticDatabase()
      {
 

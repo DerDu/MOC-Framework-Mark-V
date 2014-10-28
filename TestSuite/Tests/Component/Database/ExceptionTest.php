@@ -12,7 +12,6 @@ use MOC\V\Component\Database\Exception\DatabaseException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testDatabaseException()
     {
 

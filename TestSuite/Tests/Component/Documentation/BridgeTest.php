@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Documentation;
 
-use MOC\V\Component\Documentation\Component\Bridge\ApiGen;
+use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
 use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
 
 /**
@@ -12,15 +12,13 @@ use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testApiGen()
     {
 
-        $Bridge = new ApiGen(
+        new ApiGenDocumentation(
             new DirectoryOption( __DIR__ ),
             new DirectoryOption( __DIR__.'/Content/' )
         );
-        //$Bridge->createDocumentation();
     }
 
 }

@@ -12,7 +12,6 @@ use MOC\V\Component\Router\Router;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 

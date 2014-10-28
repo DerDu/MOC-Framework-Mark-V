@@ -15,7 +15,6 @@ use MOC\V\Component\Template\Exception\TemplateTypeException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testTemplateException()
     {
 

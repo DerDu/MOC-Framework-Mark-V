@@ -18,7 +18,6 @@ use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testDoctrine2DBAL()
     {
 

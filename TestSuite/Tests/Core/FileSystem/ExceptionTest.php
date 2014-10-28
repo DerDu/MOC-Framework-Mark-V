@@ -13,7 +13,6 @@ use MOC\V\Core\FileSystem\Exception\FileSystemException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testFileSystemException()
     {
 

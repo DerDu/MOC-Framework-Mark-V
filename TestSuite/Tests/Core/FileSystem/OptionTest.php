@@ -7,7 +7,6 @@ use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testAbstractOption()
     {
 
@@ -19,7 +18,6 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testFileOption()
     {
 
@@ -40,7 +38,6 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testDirectoryOption()
     {
 

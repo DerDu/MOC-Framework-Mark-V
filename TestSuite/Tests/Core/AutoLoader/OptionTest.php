@@ -6,7 +6,7 @@ use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
 
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
-    /** @runTestsInSeparateProcesses */
+
     public function testAbstractOption()
     {
 
@@ -18,7 +18,6 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testNamespaceOption()
     {
 
@@ -36,7 +35,6 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testDirectoryOption()
     {
 

@@ -12,7 +12,6 @@ use MOC\V\Component\Router\Exception\RouterException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testRouterException()
     {
 

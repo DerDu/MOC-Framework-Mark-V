@@ -9,7 +9,6 @@ namespace MOC\V\TestSuite\Tests\Core\HttpKernel;
 class OptionTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testAbstractOption()
     {
 

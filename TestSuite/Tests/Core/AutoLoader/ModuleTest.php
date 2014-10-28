@@ -7,7 +7,6 @@ use MOC\V\Core\AutoLoader\Component\Vendor;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testModule()
     {
 
@@ -28,7 +27,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticUniversalNamespaceAutoLoader()
     {
 
@@ -37,7 +35,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $Loader->unregisterLoader();
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testStaticNamespaceAutoLoader()
     {
 

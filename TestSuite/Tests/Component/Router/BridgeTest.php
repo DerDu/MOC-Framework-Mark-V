@@ -13,7 +13,6 @@ use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @runTestsInSeparateProcesses */
     public function testUniversalRouter()
     {
 
@@ -24,7 +23,6 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType( 'string', $Bridge->getRoute() );
     }
 
-    /** @runTestsInSeparateProcesses */
     public function testSymfonyRouter()
     {
 
