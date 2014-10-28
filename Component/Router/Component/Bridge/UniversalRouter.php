@@ -3,6 +3,7 @@ namespace MOC\V\Component\Router\Component\Bridge;
 
 use MOC\V\Component\Router\Component\IBridgeInterface;
 use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Core\HttpKernel\HttpKernel;
 
 /**
  * Class UniversalRouter
@@ -12,6 +13,8 @@ use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
 class UniversalRouter extends Bridge implements IBridgeInterface
 {
 
+    private $RouteCollection = array();
+
     /**
      * @param RouteOption $RouteOption
      *
@@ -19,7 +22,8 @@ class UniversalRouter extends Bridge implements IBridgeInterface
      */
     public function addRoute( RouteOption $RouteOption )
     {
-        // TODO: Implement addRoute() method.
+
+        $this->RouteCollection[$RouteOption->getPath()] = $RouteOption;
         return $this;
     }
 
@@ -29,8 +33,8 @@ class UniversalRouter extends Bridge implements IBridgeInterface
      */
     public function getRoute()
     {
-        // TODO: Implement getRoute() method.
-        return '';
+
+        return HttpKernel::getRequest()->getPathInfo();
     }
 
 }
