@@ -35,8 +35,15 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     public function testStaticTwigTemplate()
     {
 
-        $Loader = Template::getTwigTemplate( __FILE__ );
-        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface', $Loader );
+        $Template = Template::getTwigTemplate( __FILE__ );
+        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface', $Template );
+    }
+
+    public function testStaticSmartyTemplate()
+    {
+
+        $Template = Template::getSmartyTemplate( __FILE__ );
+        $this->assertInstanceOf( 'MOC\V\Component\Template\Component\IBridgeInterface', $Template );
     }
 
     public function testStaticTemplate()
@@ -49,6 +56,11 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         }
         try {
             Template::getTemplate( 'Missing.twig' );
+        } catch( \Exception $E ) {
+
+        }
+        try {
+            Template::getTemplate( 'Missing.tpl' );
         } catch( \Exception $E ) {
 
         }

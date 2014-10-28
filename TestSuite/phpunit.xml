@@ -21,6 +21,7 @@
                 <directory>./../Component/Router/Vendor/Symfony</directory>
                 <directory>./../Component/Database/Vendor/Doctrine2DBAL</directory>
                 <directory>./../Component/Template/Vendor/Twig</directory>
+                <directory>./../Component/Template/Vendor/Smarty</directory>
                 <directory>./../Component/Documentation/Vendor/ApiGen</directory>
                 <directory>./../Component/Documentation/Vendor/Template</directory>
             </exclude>

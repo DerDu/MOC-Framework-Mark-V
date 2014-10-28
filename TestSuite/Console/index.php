@@ -3,6 +3,7 @@ namespace Bar;
 
 require_once( __DIR__.'/../../Core/AutoLoader/AutoLoader.php' );
 
+use MOC\V\Component\Template\Template;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\HttpKernel\HttpKernel;
 
@@ -14,6 +15,11 @@ var_dump(
     HttpKernel::getRequest()->getUrlBase(),
     HttpKernel::getRequest()->getPort()
 );
+
+var_dump( Template::getTemplate( 'index.twig' )->setVariable( 'Foo', 'Bar' )->getContent() );
+var_dump( Template::getTemplate( 'index.tpl' )->setVariable( 'Foo', 'Bar' )->getContent() );
+var_dump( Template::getTemplate( 'index.twig' )->setVariable( 'Foo', array( 'Bar', 'Nuff' ) )->getContent() );
+var_dump( Template::getTemplate( 'index.tpl' )->setVariable( 'Foo', array( 'Bar', 'Nuff' ) )->getContent() );
 
 //new Request();
 

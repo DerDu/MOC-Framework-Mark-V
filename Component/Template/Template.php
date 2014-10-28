@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Component\Template;
 
+use MOC\V\Component\Template\Component\Bridge\SmartyTemplate;
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\IVendorInterface;
@@ -42,6 +43,10 @@ class Template implements IVendorInterface
                 return self::getTwigTemplate( $Location );
                 break;
             }
+            case 'TPL': {
+                return self::getSmartyTemplate( $Location );
+                break;
+            }
             default: {
             throw new TemplateTypeException( $Type );
             break;
@@ -75,6 +80,25 @@ class Template implements IVendorInterface
     {
 
         return $this->VendorInterface->getBridgeInterface();
+    }
+
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     */
+    public static function getSmartyTemplate( $Location )
+    {
+
+        $Template = new Template(
+            new Vendor(
+                new SmartyTemplate()
+            )
+        );
+
+        $Template->getBridgeInterface()->loadFile( new FileOption( $Location ) );
+
+        return $Template->getBridgeInterface();
     }
 
     /**
