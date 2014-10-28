@@ -1,3 +1,4 @@
+
 var ApiGen = ApiGen || {};
 ApiGen.config = {
     "require": {"min": "2.8.0"},
@@ -27,8 +28,9 @@ ApiGen.config = {
         }
     },
     "options": {"elementDetailsCollapsed": true, "elementsOrder": "natural"},
-    "config": "W:\\WebProject\\MOC-Framework-Mark-V\\Component\\Documentation\\Vendor\\Template\\config.neon"
+    "config": "D:\\WebProject\\MOC-Framework-Mark-V\\Component\\Documentation\\Vendor\\Template\\config.neon"
 };
+
 
 /*! jQuery v1.7 jquery.com | jquery.org/license */
 (function( a, b )

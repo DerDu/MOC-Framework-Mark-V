@@ -7,9 +7,9 @@
 
     <title>Interface MOC\V\Core\HttpKernel\Component\IBridgeInterface | Mark V</title>
 
-    <script type="text/javascript" src="resources/combined.js?3121078954"></script>
-    <script type="text/javascript" src="elementlist.js?3487606291"></script>
-    <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?1016886928"/>
+    <script type="text/javascript" src="resources/combined.js?2054962197"></script>
+    <script type="text/javascript" src="elementlist.js?3260407946"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3639401462"/>
 
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic|Open+Sans:300' rel='stylesheet'
@@ -278,82 +278,291 @@
 <div id="splitter"></div>
 
 <div id="right">
-    <div id="rightInner">
-        <form id="search">
-            <input type="hidden" name="cx" value=""/>
-            <input type="hidden" name="ie" value="UTF-8"/>
-            <input type="text" name="q" class="text"/>
-            <input type="submit" value="Search" class="Button"/>
-        </form>
+<div id="rightInner">
+<form id="search">
+    <input type="hidden" name="cx" value=""/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <input type="text" name="q" class="text"/>
+    <input type="submit" value="Search" class="Button"/>
+</form>
 
-        <div id="navigation">
-            <ul>
-                <li>
-                    <a href="index.html" title="Overview"><span>Overview</span></a>
-                </li>
-                <li>
-                    <a href="namespace-MOC.V.Core.HttpKernel.Component.html"
-                       title="Summary of MOC\V\Core\HttpKernel\Component"><span>Namespace</span></a>
-                </li>
-                <li class="active">
-                    <span>Class</span></li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="tree.html"
-                       title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
-                </li>
-                <li>
-                    <a href="deprecated.html" title="List of deprecated elements"><span>Deprecated</span></a>
-                </li>
-                <li>
-                    <a href="todo.html" title="Todo list"><span>Todo</span></a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="mark-v-api-documentation.zip"
-                       title="Download documentation as ZIP archive"><span>Download</span></a>
-                </li>
-            </ul>
-        </div>
+<div id="navigation">
+    <ul>
+        <li>
+            <a href="index.html" title="Overview"><span>Overview</span></a>
+        </li>
+        <li>
+            <a href="namespace-MOC.V.Core.HttpKernel.Component.html" title="Summary of MOC\V\Core\HttpKernel\Component"><span>Namespace</span></a>
+        </li>
+        <li class="active">
+            <span>Class</span></li>
+    </ul>
+    <ul>
+        <li>
+            <a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+        </li>
+        <li>
+            <a href="deprecated.html" title="List of deprecated elements"><span>Deprecated</span></a>
+        </li>
+        <li>
+            <a href="todo.html" title="Todo list"><span>Todo</span></a>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <a href="mark-v-api-documentation.zip"
+               title="Download documentation as ZIP archive"><span>Download</span></a>
+        </li>
+    </ul>
+</div>
 
-        <div id="content" class="class">
-            <h1>Interface IBridgeInterface</h1>
+<div id="content" class="class">
+<h1>Interface IBridgeInterface</h1>
 
 
-            <div class="description">
+<div class="description">
 
-                <p>Interface IBridgeInterface</p>
+    <p>Interface IBridgeInterface</p>
 
-            </div>
+</div>
 
 
+<div>
+    <h4>Direct known implementers</h4>
+    <a href="class-MOC.V.Core.HttpKernel.Component.Bridge.Bridge.html">MOC\V\Core\HttpKernel\Component\Bridge\Bridge</a>,
+    <a href="class-MOC.V.Core.HttpKernel.Component.Bridge.UniversalRequest.html">MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest</a>
+</div>
+
+
+<div class="info">
+
+
+    <b>Namespace:</b> <a href="namespace-MOC.html">MOC</a>\<a href="namespace-MOC.V.html">V</a>\<a
+    href="namespace-MOC.V.Core.html">Core</a>\<a href="namespace-MOC.V.Core.HttpKernel.html">HttpKernel</a>\<a
+    href="namespace-MOC.V.Core.HttpKernel.Component.html">Component</a><br/>
+    <b>Package:</b> MOC\V\Core\HttpKernel\Component<br/>
+
+    <b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#4-72"
+                         title="Go to source code">Core/HttpKernel/Component/IBridgeInterface.php</a><br/>
+</div>
+
+
+<table class="summary" id="methods">
+    <caption>Methods summary</caption>
+    <tr data-order="getPathBase" id="_getPathBase">
+
+        <td class="attributes"><code>
+            public
+            string
+
+        </code>
+        </td>
+
+        <td class="name">
             <div>
-                <h4>Direct known implementers</h4>
-                <a href="class-MOC.V.Core.HttpKernel.Component.Bridge.Bridge.html">MOC\V\Core\HttpKernel\Component\Bridge\Bridge</a>
+                <a class="anchor" href="#_getPathBase">#</a>
+                <code><a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#12-24"
+                         title="Go to source code">getPathBase</a>( )</code>
+
+                <div class="description short">
+
+                    <p>Returns the root path from which this request is executed.</p>
+
+                </div>
+
+                <div class="description detailed hidden">
+
+                    <p>Returns the root path from which this request is executed.</p>
+
+                    <p>Suppose that an index.php file instantiates this request object:</p>
+
+                    <ul>
+                        <li><a href="http://localhost/index.php">http://localhost/index.php</a> returns
+                            an empty string
+                        </li>
+
+                        <li><a
+                            href="http://localhost/index.php/page">http://localhost/index.php/page</a>
+                            returns an empty string
+                        </li>
+
+                        <li><a href="http://localhost/web/index.php">http://localhost/web/index.php</a>
+                            returns '/web'
+                        </li>
+
+                        <li><a
+                            href="http://localhost/we%20b/index.php">http://localhost/we%20b/index.php</a>
+                            returns '/we%20b'
+                        </li>
+                    </ul>
+
+
+                    <h4>Returns</h4>
+
+                    <div class="list">
+                        <code>string</code><br/>
+                    </div>
+
+
+                </div>
             </div>
+        </td>
+    </tr>
+    <tr data-order="getPathInfo" id="_getPathInfo">
+
+        <td class="attributes"><code>
+            public
+            string
+
+        </code>
+        </td>
+
+        <td class="name">
+            <div>
+                <a class="anchor" href="#_getPathInfo">#</a>
+                <code><a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#26-40"
+                         title="Go to source code">getPathInfo</a>( )</code>
+
+                <div class="description short">
+
+                    <p>Returns the path being requested relative to the executed script.</p>
+
+                </div>
+
+                <div class="description detailed hidden">
+
+                    <p>Returns the path being requested relative to the executed script.</p>
+
+                    <p>The path info always starts with a /.</p>
+
+                    <p>Suppose this request is instantiated from /mysite on localhost:</p>
+
+                    <ul>
+                        <li><a href="http://localhost/mysite">http://localhost/mysite</a> returns an
+                            empty string
+                        </li>
+
+                        <li><a href="http://localhost/mysite/about">http://localhost/mysite/about</a>
+                            returns '/about'
+                        </li>
+
+                        <li><a
+                            href="http://localhost/mysite/enco%20ded">http://localhost/mysite/enco%20ded</a>
+                            returns '/enco%20ded'
+                        </li>
+
+                        <li><a
+                            href="http://localhost/mysite/about?var=1">http://localhost/mysite/about?var=1</a>
+                            returns '/about'
+                        </li>
+                    </ul>
 
 
-            <div class="info">
+                    <h4>Returns</h4>
+
+                    <div class="list">
+                        <code>string</code><br/>
+                    </div>
 
 
-                <b>Namespace:</b> <a href="namespace-MOC.html">MOC</a>\<a href="namespace-MOC.V.html">V</a>\<a
-                href="namespace-MOC.V.Core.html">Core</a>\<a href="namespace-MOC.V.Core.HttpKernel.html">HttpKernel</a>\<a
-                href="namespace-MOC.V.Core.HttpKernel.Component.html">Component</a><br/>
-                <b>Package:</b> MOC\V\Core\HttpKernel\Component<br/>
-
-                <b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#4-12"
-                                     title="Go to source code">Core/HttpKernel/Component/IBridgeInterface.php</a><br/>
+                </div>
             </div>
+        </td>
+    </tr>
+    <tr data-order="getUrlBase" id="_getUrlBase">
+
+        <td class="attributes"><code>
+            public
+            string
+
+        </code>
+        </td>
+
+        <td class="name">
+            <div>
+                <a class="anchor" href="#_getUrlBase">#</a>
+                <code><a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#42-51"
+                         title="Go to source code">getUrlBase</a>( )</code>
+
+                <div class="description short">
+
+                    <p>Returns the root URL from which this request is executed.</p>
+
+                </div>
+
+                <div class="description detailed hidden">
+
+                    <p>Returns the root URL from which this request is executed.</p>
+
+                    <p>The base URL never ends with a /.</p>
+
+                    <p>This is similar to getPathBase(), except that it also includes the script
+                        filename (e.g. index.php) if one exists.</p>
 
 
-        </div>
+                    <h4>Returns</h4>
 
-        <div id="footer">
-            Mark V API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
-        </div>
-    </div>
+                    <div class="list">
+                        <code>string</code><br/>
+                    </div>
+
+
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr data-order="getPort" id="_getPort">
+
+        <td class="attributes"><code>
+            public
+            integer
+
+        </code>
+        </td>
+
+        <td class="name">
+            <div>
+                <a class="anchor" href="#_getPort">#</a>
+                <code><a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#53-62"
+                         title="Go to source code">getPort</a>( )</code>
+
+                <div class="description short">
+
+                    <p>Returns the port on which the request is made.</p>
+
+                </div>
+
+                <div class="description detailed hidden">
+
+                    <p>Returns the port on which the request is made.</p>
+
+                    <p>This method can read the client port from the "X-Forwarded-Port" header when
+                        trusted proxies were set via "setTrustedProxies()". The "X-Forwarded-Port"
+                        header must contain the client port. If your reverse proxy uses a different
+                        header name than "X-Forwarded-Port", configure it via "setTrustedHeaderName()"
+                        with the "client-port" key.</p>
+
+
+                    <h4>Returns</h4>
+
+                    <div class="list">
+                        <code>integer</code><br/>
+                    </div>
+
+
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</div>
+
+<div id="footer">
+    Mark V API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+</div>
+</div>
 </div>
 
 <div style="clear: both;"></div>

@@ -1,3 +1,4 @@
+
 var ApiGen = ApiGen || {};
 ApiGen.elements = [
     [
@@ -331,6 +332,10 @@ ApiGen.elements = [
     [
         "c",
         "MOC\\V\\Core\\HttpKernel\\Component\\Bridge\\Bridge"
+    ],
+    [
+        "c",
+        "MOC\\V\\Core\\HttpKernel\\Component\\Bridge\\UniversalRequest"
     ],
     [
         "c",
