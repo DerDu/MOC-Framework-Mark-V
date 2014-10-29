@@ -20,8 +20,8 @@ require_once( __DIR__.'/Component/IBridgeInterface.php' );
 require_once( __DIR__.'/Component/Bridge/Bridge.php' );
 require_once( __DIR__.'/Component/Bridge/Repository/UniversalNamespace.php' );
 
-require_once( __DIR__.'/Vendor/Universal/NamespaceMapping.php' );
-require_once( __DIR__.'/Vendor/Universal/NamespaceSearch.php' );
+require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceMapping.php' );
+require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceSearch.php' );
 require_once( __DIR__.'/Vendor/Universal/NamespaceLoader.php' );
 
 use MOC\V\Core\AutoLoader\Component\Bridge\Repository\UniversalNamespace;

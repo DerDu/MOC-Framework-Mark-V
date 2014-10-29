@@ -1,7 +1,5 @@
 <?php
-namespace MOC\V\Core\AutoLoader\Vendor\Universal;
-
-use MOC\V\Core\AutoLoader\Component\Exception\Repository\DirectoryNotFoundException;
+namespace MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader;
 
 /**
  * Class NamespaceMapping

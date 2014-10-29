@@ -1,5 +1,5 @@
 <?php
-namespace MOC\V\Core\AutoLoader\Vendor\Universal;
+namespace MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader;
 
 /**
  * Class NamespaceSearch
