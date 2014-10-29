@@ -11,7 +11,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Bridge\\Doctrine2DBAL"
+        "MOC\\V\\Component\\Database\\Component\\Bridge\\Repository\\Doctrine2DBAL"
     ],
     [
         "c",
@@ -19,11 +19,15 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Database\\Component\\Exception\\Repository\\NoConnectionException"
+    ],
+    [
+        "c",
         "MOC\\V\\Component\\Database\\Component\\IBridgeInterface"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\IOptionInterface"
+        "MOC\\V\\Component\\Database\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -31,35 +35,31 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Option"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\DatabaseOption"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\DatabaseParameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\DriverOption"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\DriverParameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\HostOption"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\HostParameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\PasswordOption"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\PasswordParameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\PortOption"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\PortParameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Database\\Component\\Option\\Repository\\UsernameOption"
-    ],
-    [
-        "c",
-        "MOC\\V\\Component\\Database\\Component\\Vendor"
+        "MOC\\V\\Component\\Database\\Component\\Parameter\\Repository\\UsernameParameter"
     ],
     [
         "c",
@@ -71,15 +71,19 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Database\\Vendor\\Vendor"
+    ],
+    [
+        "c",
         "MOC\\V\\Component\\Router\\Component\\Bridge\\Bridge"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Router\\Component\\Bridge\\SymfonyRouter"
+        "MOC\\V\\Component\\Router\\Component\\Bridge\\Repository\\SymfonyRouter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Router\\Component\\Bridge\\UniversalRouter"
+        "MOC\\V\\Component\\Router\\Component\\Bridge\\Repository\\UniversalRouter"
     ],
     [
         "c",
@@ -87,11 +91,15 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Router\\Component\\Exception\\Repository\\MissingParameterException"
+    ],
+    [
+        "c",
         "MOC\\V\\Component\\Router\\Component\\IBridgeInterface"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Router\\Component\\IOptionInterface"
+        "MOC\\V\\Component\\Router\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -99,15 +107,11 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Router\\Component\\Option\\Option"
+        "MOC\\V\\Component\\Router\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Router\\Component\\Option\\Repository\\RouteOption"
-    ],
-    [
-        "c",
-        "MOC\\V\\Component\\Router\\Component\\Vendor"
+        "MOC\\V\\Component\\Router\\Component\\Parameter\\Repository\\RouteParameter"
     ],
     [
         "c",
@@ -119,11 +123,19 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Router\\Vendor\\Vendor"
+    ],
+    [
+        "c",
         "MOC\\V\\Component\\Template\\Component\\Bridge\\Bridge"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\Bridge\\TwigTemplate"
+        "MOC\\V\\Component\\Template\\Component\\Bridge\\Repository\\SmartyTemplate"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Template\\Component\\Bridge\\Repository\\TwigTemplate"
     ],
     [
         "c",
@@ -131,11 +143,11 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\Exception\\EmptyFileException"
+        "MOC\\V\\Component\\Template\\Component\\Exception\\Repository\\EmptyFileException"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\Exception\\TypeFileException"
+        "MOC\\V\\Component\\Template\\Component\\Exception\\Repository\\TypeFileException"
     ],
     [
         "c",
@@ -143,7 +155,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\IOptionInterface"
+        "MOC\\V\\Component\\Template\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -151,15 +163,11 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\Option\\Option"
+        "MOC\\V\\Component\\Template\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
-        "MOC\\V\\Component\\Template\\Component\\Option\\Repository\\FileOption"
-    ],
-    [
-        "c",
-        "MOC\\V\\Component\\Template\\Component\\Vendor"
+        "MOC\\V\\Component\\Template\\Component\\Parameter\\Repository\\FileParameter"
     ],
     [
         "c",
@@ -175,6 +183,10 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Template\\Vendor\\Vendor"
+    ],
+    [
+        "c",
         "MOC\\V\\Core\\AutoLoader\\AutoLoader"
     ],
     [
@@ -183,7 +195,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Bridge\\UniversalNamespace"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Bridge\\Repository\\UniversalNamespace"
     ],
     [
         "c",
@@ -191,15 +203,15 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\DirectoryNotFoundException"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\Repository\\DirectoryNotFoundException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\EmptyDirectoryException"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\Repository\\EmptyDirectoryException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\EmptyNamespaceException"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Exception\\Repository\\EmptyNamespaceException"
     ],
     [
         "c",
@@ -207,7 +219,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\IOptionInterface"
+        "MOC\\V\\Core\\AutoLoader\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -215,19 +227,15 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Option\\Option"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Option\\Repository\\DirectoryOption"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Parameter\\Repository\\DirectoryParameter"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Option\\Repository\\NamespaceOption"
-    ],
-    [
-        "c",
-        "MOC\\V\\Core\\AutoLoader\\Component\\Vendor"
+        "MOC\\V\\Core\\AutoLoader\\Component\\Parameter\\Repository\\NamespaceParameter"
     ],
     [
         "c",
@@ -247,15 +255,19 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Core\\AutoLoader\\Vendor\\Vendor"
+    ],
+    [
+        "c",
         "MOC\\V\\Core\\FileSystem\\Component\\Bridge\\Bridge"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Bridge\\UniversalFileLoader"
+        "MOC\\V\\Core\\FileSystem\\Component\\Bridge\\Repository\\UniversalFileLoader"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Bridge\\UniversalFileWriter"
+        "MOC\\V\\Core\\FileSystem\\Component\\Bridge\\Repository\\UniversalFileWriter"
     ],
     [
         "c",
@@ -263,27 +275,27 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\EmptyDirectoryException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\EmptyDirectoryException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\EmptyFileException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\EmptyFileException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\MissingDirectoryException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\MissingDirectoryException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\MissingFileException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\MissingFileException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\TypeDirectoryException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\TypeDirectoryException"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\TypeFileException"
+        "MOC\\V\\Core\\FileSystem\\Component\\Exception\\Repository\\TypeFileException"
     ],
     [
         "c",
@@ -291,7 +303,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\IOptionInterface"
+        "MOC\\V\\Core\\FileSystem\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -299,19 +311,15 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Option\\Option"
+        "MOC\\V\\Core\\FileSystem\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Option\\Repository\\DirectoryOption"
+        "MOC\\V\\Core\\FileSystem\\Component\\Parameter\\Repository\\DirectoryParameter"
     ],
     [
         "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Option\\Repository\\FileOption"
-    ],
-    [
-        "c",
-        "MOC\\V\\Core\\FileSystem\\Component\\Vendor"
+        "MOC\\V\\Core\\FileSystem\\Component\\Parameter\\Repository\\FileParameter"
     ],
     [
         "c",
@@ -331,11 +339,15 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Core\\FileSystem\\Vendor\\Vendor"
+    ],
+    [
+        "c",
         "MOC\\V\\Core\\HttpKernel\\Component\\Bridge\\Bridge"
     ],
     [
         "c",
-        "MOC\\V\\Core\\HttpKernel\\Component\\Bridge\\UniversalRequest"
+        "MOC\\V\\Core\\HttpKernel\\Component\\Bridge\\Repository\\UniversalRequest"
     ],
     [
         "c",
@@ -347,7 +359,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\HttpKernel\\Component\\IOptionInterface"
+        "MOC\\V\\Core\\HttpKernel\\Component\\IParameterInterface"
     ],
     [
         "c",
@@ -355,11 +367,7 @@ ApiGen.elements = [
     ],
     [
         "c",
-        "MOC\\V\\Core\\HttpKernel\\Component\\Option\\Option"
-    ],
-    [
-        "c",
-        "MOC\\V\\Core\\HttpKernel\\Component\\Vendor"
+        "MOC\\V\\Core\\HttpKernel\\Component\\Parameter\\Parameter"
     ],
     [
         "c",
@@ -372,5 +380,9 @@ ApiGen.elements = [
     [
         "c",
         "MOC\\V\\Core\\HttpKernel\\Vendor\\Universal\\Request"
+    ],
+    [
+        "c",
+        "MOC\\V\\Core\\HttpKernel\\Vendor\\Vendor"
     ]
 ];
