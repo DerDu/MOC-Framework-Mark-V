@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Database;
 
-use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
+use MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2DBAL;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\IVendorInterface;
 use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;

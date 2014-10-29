@@ -1,9 +1,10 @@
 <?php
-namespace MOC\V\Component\Database\Component\Bridge;
+namespace MOC\V\Component\Database\Component\Bridge\Repository;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Statement;
+use MOC\V\Component\Database\Component\Bridge\Bridge;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
 use MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException;
 use MOC\V\Component\Database\Component\IBridgeInterface;
@@ -29,9 +30,9 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     function __construct()
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'Doctrine\DBAL', __DIR__.'/../../Vendor/Doctrine2DBAL/lib' );
+        AutoLoader::getNamespaceAutoLoader( 'Doctrine\DBAL', __DIR__.'/../../../Vendor/Doctrine2DBAL/lib' );
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\Common',
-            __DIR__.'/../../Vendor/Doctrine2DBAL/vendor/doctrine/common/lib' );
+            __DIR__.'/../../../Vendor/Doctrine2DBAL/vendor/doctrine/common/lib' );
     }
 
     /**

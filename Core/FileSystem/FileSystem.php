@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\Core\FileSystem;
 
-use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
-use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
+use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader;
+use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter;
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\IVendorInterface;
 use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;

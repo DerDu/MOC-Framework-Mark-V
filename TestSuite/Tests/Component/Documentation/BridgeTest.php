@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Documentation;
 
-use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
+use MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation;
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
 
 /**

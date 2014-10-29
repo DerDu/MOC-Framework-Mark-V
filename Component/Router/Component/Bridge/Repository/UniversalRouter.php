@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Component\Router\Component\Bridge;
+namespace MOC\V\Component\Router\Component\Bridge\Repository;
 
+use MOC\V\Component\Router\Component\Bridge\Bridge;
 use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException;
 use MOC\V\Component\Router\Component\IBridgeInterface;

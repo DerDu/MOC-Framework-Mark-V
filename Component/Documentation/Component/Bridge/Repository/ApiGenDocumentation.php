@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Component\Documentation\Component\Bridge;
+namespace MOC\V\Component\Documentation\Component\Bridge\Repository;
 
+use MOC\V\Component\Documentation\Component\Bridge\Bridge;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
@@ -27,9 +28,9 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
     function __construct( DirectoryParameter $Source, DirectoryParameter $Destination )
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'ApiGen', __DIR__.'/../../Vendor/ApiGen' );
-        AutoLoader::getNamespaceAutoLoader( 'TokenReflection', __DIR__.'/../../Vendor/ApiGen/libs/TokenReflection' );
-        AutoLoader::getNamespaceAutoLoader( 'FSHL', __DIR__.'/../../Vendor/ApiGen/libs/FSHL' );
+        AutoLoader::getNamespaceAutoLoader( 'ApiGen', __DIR__.'/../../../Vendor/ApiGen' );
+        AutoLoader::getNamespaceAutoLoader( 'TokenReflection', __DIR__.'/../../../Vendor/ApiGen/libs/TokenReflection' );
+        AutoLoader::getNamespaceAutoLoader( 'FSHL', __DIR__.'/../../../Vendor/ApiGen/libs/FSHL' );
 
         $this->Source = $Source;
         $this->Destination = $Destination;
@@ -45,7 +46,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
         set_time_limit( 0 );
         $Config = $this->getConfig();
 
-        require_once( __DIR__.'/../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
+        require_once( __DIR__.'/../../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
         $Neon = new NeonAdapter();
 
         $File = FileSystem::getFileWriter( __DIR__.'/ApiGenDocumentation.config' );
@@ -57,7 +58,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             $File->getLocation()
         );
 
-        include( __DIR__.'/../../Vendor/ApiGen/apigen.php' );
+        include( __DIR__.'/../../../Vendor/ApiGen/apigen.php' );
 
         return $this->Destination->getDirectory();
     }
@@ -94,7 +95,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // Google Analytics tracking code
             //'googleAnalytics' => '',
             // Template config file
-            'templateConfig' => __DIR__.'/../../Vendor/Template/config.neon',
+            'templateConfig' => __DIR__.'/../../../Vendor/Template/config.neon',
             // Grouping of classes
             'groups'         => 'auto',
             // List of allowed HTML tags in documentation

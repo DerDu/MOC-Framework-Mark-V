@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Core\HttpKernel\Component\Bridge;
+namespace MOC\V\Core\HttpKernel\Component\Bridge\Repository;
 
+use MOC\V\Core\HttpKernel\Component\Bridge\Bridge;
 use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
 use MOC\V\Core\HttpKernel\Vendor\Universal\Request;
 

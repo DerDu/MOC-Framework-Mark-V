@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\AutoLoader;
 
-use MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace;
+use MOC\V\Core\AutoLoader\Component\Bridge\Repository\UniversalNamespace;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 

@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\Component\Template;
 
-use MOC\V\Component\Template\Component\Bridge\SmartyTemplate;
-use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
+use MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate;
+use MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\IVendorInterface;
 use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;

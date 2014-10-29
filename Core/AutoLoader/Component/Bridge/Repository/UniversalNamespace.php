@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Core\AutoLoader\Component\Bridge;
+namespace MOC\V\Core\AutoLoader\Component\Bridge\Repository;
 
+use MOC\V\Core\AutoLoader\Component\Bridge\Bridge;
 use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;

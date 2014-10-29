@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Core\FileSystem\Component\Bridge;
+namespace MOC\V\Core\FileSystem\Component\Bridge\Repository;
 
+use MOC\V\Core\FileSystem\Component\Bridge\Bridge;
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
 use MOC\V\Core\FileSystem\Vendor\Universal\FileLoader;

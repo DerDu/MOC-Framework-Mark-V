@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Component\Template\Component\Bridge;
+namespace MOC\V\Component\Template\Component\Bridge\Repository;
 
+use MOC\V\Component\Template\Component\Bridge\Bridge;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 
@@ -24,7 +25,7 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
     {
 
         if (!defined( 'SMARTY_DIR' )) {
-            define( 'SMARTY_DIR', realpath( __DIR__.'/../../Vendor/Smarty/' ).DIRECTORY_SEPARATOR );
+            define( 'SMARTY_DIR', realpath( __DIR__.'/../../../Vendor/Smarty/' ).DIRECTORY_SEPARATOR );
         }
         /** @noinspection PhpIncludeInspection */
         require_once( SMARTY_DIR.'Smarty.class.php' );

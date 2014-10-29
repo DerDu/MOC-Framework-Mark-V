@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Documentation;
 
-use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
+use MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\IVendorInterface;
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;

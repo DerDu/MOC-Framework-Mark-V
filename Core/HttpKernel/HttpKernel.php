@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Core\HttpKernel;
 
-use MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest;
+use MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest;
 use MOC\V\Core\HttpKernel\Component\IBridgeInterface;
 use MOC\V\Core\HttpKernel\Component\IVendorInterface;
 

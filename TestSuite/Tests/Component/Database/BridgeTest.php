@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Database;
 
-use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
+use MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2DBAL;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
 use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;

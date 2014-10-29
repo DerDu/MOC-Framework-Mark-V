@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Component\Router\Component\Bridge;
+namespace MOC\V\Component\Router\Component\Bridge\Repository;
 
+use MOC\V\Component\Router\Component\Bridge\Bridge;
 use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Component\IBridgeInterface;
 use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
@@ -37,9 +38,9 @@ class SymfonyRouter extends Bridge implements IBridgeInterface
     function __construct( $BaseUrl = '' )
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../../Vendor/Symfony/Component/' );
+        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../../../Vendor/Symfony/Component/' );
         AutoLoader::getNamespaceAutoLoader( 'Symfony\Component',
-            __DIR__.'/../../../../Core/HttpKernel/Vendor/Symfony/Component/' );
+            __DIR__.'/../../../../../Core/HttpKernel/Vendor/Symfony/Component/' );
 
         $this->SymfonyRouteCollection = new RouteCollection();
         $this->SymfonyRequestContext = new RequestContext();

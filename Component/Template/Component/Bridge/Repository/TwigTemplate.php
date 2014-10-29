@@ -1,6 +1,7 @@
 <?php
-namespace MOC\V\Component\Template\Component\Bridge;
+namespace MOC\V\Component\Template\Component\Bridge\Repository;
 
+use MOC\V\Component\Template\Component\Bridge\Bridge;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 
@@ -23,7 +24,7 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     function __construct()
     {
 
-        require_once( __DIR__.'/../../Vendor/Twig/lib/Twig/Autoloader.php' );
+        require_once( __DIR__.'/../../../Vendor/Twig/lib/Twig/Autoloader.php' );
         \Twig_Autoloader::register();
     }
 
