@@ -36,7 +36,10 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     public function loadFile( FileParameter $Location )
     {
 
-        $this->Instance = new \Twig_Environment( new \Twig_Loader_Filesystem( array( dirname( $Location->getFile() ) ) ) );
+        $this->Instance = new \Twig_Environment(
+            new \Twig_Loader_Filesystem( array( dirname( $Location->getFile() ) ) ),
+            array( 'autoescape' => false )
+        );
         $this->Template = $this->Instance->loadTemplate( basename( $Location->getFile() ) );
         return $this;
     }
