@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
-use MOC\V\Core\FileSystem\Component\Vendor;
 use MOC\V\Core\FileSystem\FileSystem;
+use MOC\V\Core\FileSystem\Vendor\Vendor;
 
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,7 +33,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         try {
             FileSystem::getUniversalFileLoader( __DIR__ );
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
         }
 
         $Loader = FileSystem::getUniversalFileLoader( __FILE__ );
@@ -49,7 +49,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         try {
             FileSystem::getUniversalFileWriter( __DIR__ );
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
         }
 
         $Writer = FileSystem::getUniversalFileWriter( __FILE__ );
@@ -65,7 +65,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         try {
             FileSystem::getFileWriter( __DIR__ );
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
         }
         try {
             FileSystem::getFileWriter( __FILE__ );
@@ -80,7 +80,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         try {
             FileSystem::getFileLoader( __DIR__ );
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
         }
         try {
             FileSystem::getFileLoader( __FILE__ );

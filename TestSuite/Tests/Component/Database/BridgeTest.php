@@ -3,12 +3,12 @@ namespace MOC\V\TestSuite\Tests\Component\Database;
 
 use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
-use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Component\Option\Repository\HostOption;
-use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
-use MOC\V\Component\Database\Component\Option\Repository\PortOption;
-use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
+use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PasswordParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PortParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter;
 
 /**
  * Class BridgeTest
@@ -25,24 +25,24 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         try {
             $Bridge->registerConnection(
-                new UsernameOption( '' ),
-                new PasswordOption( '' ),
-                new DatabaseOption( '' ),
-                new DriverOption( DriverOption::DRIVER_PDO_MYSQL ),
-                new HostOption( null ),
-                new PortOption( null )
+                new UsernameParameter( '' ),
+                new PasswordParameter( '' ),
+                new DatabaseParameter( '' ),
+                new DriverParameter( DriverParameter::DRIVER_PDO_MYSQL ),
+                new HostParameter( null ),
+                new PortParameter( null )
             );
         } catch( \Exception $E ) {
             $this->assertInstanceOf( 'MOC\V\Component\Database\Component\Exception\ComponentException', $E );
         }
 
         $Bridge->registerConnection(
-            new UsernameOption( '' ),
-            new PasswordOption( '' ),
-            new DatabaseOption( '' ),
-            new DriverOption( DriverOption::DRIVER_PDO_SQLITE ),
-            new HostOption( 'sqlite::memory:' ),
-            new PortOption( null )
+            new UsernameParameter( '' ),
+            new PasswordParameter( '' ),
+            new DatabaseParameter( '' ),
+            new DriverParameter( DriverParameter::DRIVER_PDO_SQLITE ),
+            new HostParameter( 'sqlite::memory:' ),
+            new PortParameter( null )
         );
 
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',

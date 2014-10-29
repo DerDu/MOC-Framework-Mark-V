@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Vendor\Universal;
 
-use MOC\V\Core\AutoLoader\Component\Exception\DirectoryNotFoundException;
+use MOC\V\Core\AutoLoader\Component\Exception\Repository\DirectoryNotFoundException;
 
 /**
  * Class NamespaceMapping
@@ -18,7 +18,7 @@ abstract class NamespaceMapping
      * @param string $Namespace
      * @param string $Directory
      *
-     * @throws DirectoryNotFoundException
+     * @throws \MOC\V\Core\AutoLoader\Component\Exception\Repository\DirectoryNotFoundException
      */
     final public function addNamespaceMapping( $Namespace, $Directory )
     {

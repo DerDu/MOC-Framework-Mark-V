@@ -2,8 +2,8 @@
 namespace MOC\V\TestSuite\Tests\Component\Template;
 
 use MOC\V\Component\Template\Component\Exception\ComponentException;
-use MOC\V\Component\Template\Component\Exception\EmptyFileException;
-use MOC\V\Component\Template\Component\Exception\TypeFileException;
+use MOC\V\Component\Template\Component\Exception\Repository\EmptyFileException;
+use MOC\V\Component\Template\Component\Exception\Repository\TypeFileException;
 use MOC\V\Component\Template\Exception\TemplateException;
 use MOC\V\Component\Template\Exception\TemplateTypeException;
 
@@ -39,13 +39,14 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         try {
             throw new EmptyFileException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Component\Template\Component\Exception\EmptyFileException', $E );
+            $this->assertInstanceOf( '\MOC\V\Component\Template\Component\Exception\Repository\EmptyFileException',
+                $E );
         }
 
         try {
             throw new TypeFileException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Component\Template\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( '\MOC\V\Component\Template\Component\Exception\Repository\TypeFileException', $E );
         }
 
 

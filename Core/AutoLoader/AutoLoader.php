@@ -4,17 +4,17 @@ namespace MOC\V\Core\AutoLoader;
 require_once( __DIR__.'/Exception/AutoLoaderException.php' );
 
 require_once( __DIR__.'/Component/Exception/ComponentException.php' );
-require_once( __DIR__.'/Component/Exception/DirectoryNotFoundException.php' );
-require_once( __DIR__.'/Component/Exception/EmptyDirectoryException.php' );
-require_once( __DIR__.'/Component/Exception/EmptyNamespaceException.php' );
+require_once( __DIR__.'/Component/Exception/Repository/DirectoryNotFoundException.php' );
+require_once( __DIR__.'/Component/Exception/Repository/EmptyDirectoryException.php' );
+require_once( __DIR__.'/Component/Exception/Repository/EmptyNamespaceException.php' );
 
 require_once( __DIR__.'/Component/IVendorInterface.php' );
-require_once( __DIR__.'/Component/Vendor.php' );
+require_once( __DIR__.'/Vendor/Vendor.php' );
 
-require_once( __DIR__.'/Component/IOptionInterface.php' );
-require_once( __DIR__.'/Component/Option/Option.php' );
-require_once( __DIR__.'/Component/Option/Repository/NamespaceOption.php' );
-require_once( __DIR__.'/Component/Option/Repository/DirectoryOption.php' );
+require_once( __DIR__.'/Component/IParameterInterface.php' );
+require_once( __DIR__.'/Component/Parameter/Parameter.php' );
+require_once( __DIR__.'/Component/Parameter/Repository/NamespaceParameter.php' );
+require_once( __DIR__.'/Component/Parameter/Repository/DirectoryParameter.php' );
 
 require_once( __DIR__.'/Component/IBridgeInterface.php' );
 require_once( __DIR__.'/Component/Bridge/Bridge.php' );
@@ -27,10 +27,10 @@ require_once( __DIR__.'/Vendor/Universal/NamespaceLoader.php' );
 use MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace;
 use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\Component\IVendorInterface;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
-use MOC\V\Core\AutoLoader\Component\Vendor;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
+use MOC\V\Core\AutoLoader\Vendor\Vendor;
 
 /**
  * Class AutoLoader
@@ -80,7 +80,7 @@ class AutoLoader implements IVendorInterface
             )
         );
         $Loader->getBridgeInterface()->addNamespaceDirectoryMapping(
-            new NamespaceOption( $Namespace ), new DirectoryOption( $Directory )
+            new NamespaceParameter( $Namespace ), new DirectoryParameter( $Directory )
         );
         $Loader->getBridgeInterface()->registerLoader();
 

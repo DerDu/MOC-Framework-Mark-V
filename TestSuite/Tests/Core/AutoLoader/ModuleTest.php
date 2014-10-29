@@ -2,7 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Core\AutoLoader;
 
 use MOC\V\Core\AutoLoader\AutoLoader;
-use MOC\V\Core\AutoLoader\Component\Vendor;
+use MOC\V\Core\AutoLoader\Vendor\Vendor;
 
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {

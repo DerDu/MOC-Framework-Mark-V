@@ -2,6 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Router;
 
 use MOC\V\Component\Router\Component\Exception\ComponentException;
+use MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException;
 use MOC\V\Component\Router\Exception\RouterException;
 
 /**
@@ -27,6 +28,12 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf( '\MOC\V\Component\Router\Component\Exception\ComponentException', $E );
         }
 
+        try {
+            throw new MissingParameterException();
+        } catch( \Exception $E ) {
+            $this->assertInstanceOf( '\MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException',
+                $E );
+        }
     }
 
 }

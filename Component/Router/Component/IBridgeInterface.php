@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Router\Component;
 
-use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 
 /**
  * Interface IBridgeInterface
@@ -12,11 +12,11 @@ interface IBridgeInterface
 {
 
     /**
-     * @param RouteOption $RouteOption
+     * @param RouteParameter $RouteOption
      *
      * @return IBridgeInterface
      */
-    public function addRoute( RouteOption $RouteOption );
+    public function addRoute( RouteParameter $RouteOption );
 
     /**
      * @return string

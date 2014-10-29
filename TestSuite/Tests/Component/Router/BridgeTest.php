@@ -3,7 +3,7 @@ namespace MOC\V\TestSuite\Tests\Component\Router;
 
 use MOC\V\Component\Router\Component\Bridge\SymfonyRouter;
 use MOC\V\Component\Router\Component\Bridge\UniversalRouter;
-use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 
 /**
  * Class BridgeTest
@@ -18,10 +18,10 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new UniversalRouter();
         $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IBridgeInterface',
-            $Bridge->addRoute( new RouteOption( '/',
+            $Bridge->addRoute( new RouteParameter( '/',
                     '\MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest::getParameterArray' ) )
         );
-        $this->assertInternalType( 'string', $Bridge->getRoute() );
+        $this->assertInternalType( 'array', $Bridge->getRoute() );
     }
 
     public function testSymfonyRouter()
@@ -29,7 +29,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new SymfonyRouter();
         $this->assertInstanceOf( 'MOC\V\Component\Router\Component\IBridgeInterface',
-            $Bridge->addRoute( new RouteOption( '/',
+            $Bridge->addRoute( new RouteParameter( '/',
                     '\MOC\V\Core\HttpKernel\Component\Bridge\UniversalRequest::getParameterArray' ) )
         );
         try {

@@ -2,8 +2,8 @@
 namespace MOC\V\TestSuite\Tests\Core\AutoLoader;
 
 use MOC\V\Core\AutoLoader\Component\Bridge\UniversalNamespace;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,11 +15,11 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->addNamespaceDirectoryMapping(
-                new NamespaceOption( __NAMESPACE__ ), new DirectoryOption( __DIR__ ) )
+                new NamespaceParameter( __NAMESPACE__ ), new DirectoryParameter( __DIR__ ) )
         );
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->addNamespaceDirectoryMapping(
-                new NamespaceOption( '\MOC\V' ), new DirectoryOption( __DIR__.'/../../../../' ) )
+                new NamespaceParameter( '\MOC\V' ), new DirectoryParameter( __DIR__.'/../../../../' ) )
         );
         $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->registerLoader()

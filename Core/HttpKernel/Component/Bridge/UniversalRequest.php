@@ -36,7 +36,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getPathBase()
     {
 
-        return $this->Instance->getSymfonyRequest()->getBasePath();
+        return (string)$this->Instance->getSymfonyRequest()->getBasePath();
     }
 
     /**
@@ -56,7 +56,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getPathInfo()
     {
 
-        return $this->Instance->getSymfonyRequest()->getPathInfo();
+        return (string)$this->Instance->getSymfonyRequest()->getPathInfo();
     }
 
     /**
@@ -71,7 +71,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getUrlBase()
     {
 
-        return $this->Instance->getSymfonyRequest()->getBaseUrl();
+        return (string)$this->Instance->getSymfonyRequest()->getBaseUrl();
     }
 
     /**
@@ -95,6 +95,36 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getParameterArray()
     {
 
-        return (string)$this->Instance->getSymfonyRequest()->attributes->all();
+        return array_merge(
+            $this->getRequestGETArray(),
+            $this->getRequestPOSTArray(),
+            $this->getRequestCUSTOMArray() );
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestGETArray()
+    {
+
+        return (array)$this->Instance->getSymfonyRequest()->query->all();
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestPOSTArray()
+    {
+
+        return (array)$this->Instance->getSymfonyRequest()->request->all();
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestCUSTOMArray()
+    {
+
+        return (array)$this->Instance->getSymfonyRequest()->attributes->all();
     }
 }

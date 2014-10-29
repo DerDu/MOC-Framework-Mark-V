@@ -2,8 +2,8 @@
 namespace MOC\V\Core\AutoLoader\Component\Bridge;
 
 use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 use MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader;
 
 /**
@@ -35,12 +35,12 @@ class UniversalNamespace extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param NamespaceOption $Namespace
-     * @param DirectoryOption $Directory
+     * @param NamespaceParameter $Namespace
+     * @param DirectoryParameter $Directory
      *
      * @return IBridgeInterface
      */
-    public function addNamespaceDirectoryMapping( NamespaceOption $Namespace, DirectoryOption $Directory )
+    public function addNamespaceDirectoryMapping( NamespaceParameter $Namespace, DirectoryParameter $Directory )
     {
 
         $this->Instance->addNamespaceMapping( $Namespace->getNamespace(), $Directory->getDirectory() );

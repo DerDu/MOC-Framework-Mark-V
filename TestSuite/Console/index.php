@@ -4,7 +4,7 @@ namespace Bar;
 require_once( __DIR__.'/../../Core/AutoLoader/AutoLoader.php' );
 
 use MOC\V\Component\Router\Component\Bridge\UniversalRouter;
-use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\HttpKernel\HttpKernel;
 
@@ -17,37 +17,17 @@ var_dump(
     HttpKernel::getRequest()->getPort()
 );
 
+$_POST['Username'] = 'root';
+$_POST['Password'] = 'kuw';
+$_POST['Database'] = 'ziel2';
+
 $Router = new UniversalRouter();
-$Route = new RouteOption( '/', 'MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL::executeRead' );
-$Route->setParameterDefault( 'Foo', 'Bar' );
+$Route = new RouteParameter( '/', 'MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL::registerConnection' );
+$Route->setParameterDefault( 'Driver', '123' );
+$Route->setParameterDefault( 'Host', '192.168.100.204' );
+$Route->setParameterDefault( 'Port', '3346' );
 $Router->addRoute( $Route );
 
 var_dump( $Router );
 
 var_dump( $Router->getRoute() );
-
-/*
-$R = new \MOC\V\Component\Router\Router(
-    new \MOC\V\Component\Router\Component\Vendor(
-        new \MOC\V\Component\Router\Component\Bridge\SymfonyRouter()
-    )
-);
-
-var_dump( $R->getBridgeInterface()->addRoute( new \MOC\V\Component\Router\Component\Option\Repository\RouteOption( '/',
-            '\Foo\Bar::Nuff' ) ) );
-var_dump( $R->getBridgeInterface()->getRoute() );
-
-namespace Foo;
-
-use MOC\V\Component\Router\Component\Option\ReturnOption;
-
-class Bar
-{
-
-    public function Nuff()
-    {
-
-    }
-}
-
-    /**/

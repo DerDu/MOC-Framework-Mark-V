@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Template\Component;
 
-use MOC\V\Component\Template\Component\Option\Repository\FileOption;
+use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 
 /**
  * Interface IBridgeInterface
@@ -12,11 +12,11 @@ interface IBridgeInterface
 {
 
     /**
-     * @param \MOC\V\Component\Template\Component\Option\Repository\FileOption $Location
+     * @param \MOC\V\Component\Template\Component\Parameter\Repository\FileParameter $Location
      *
      * @return IBridgeInterface
      */
-    public function loadFile( FileOption $Location );
+    public function loadFile( FileParameter $Location );
 
     /**
      * @param string $Identifier

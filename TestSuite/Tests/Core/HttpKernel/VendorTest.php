@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\HttpKernel;
 
-use MOC\V\Core\HttpKernel\Component\Vendor;
+use MOC\V\Core\HttpKernel\Vendor\Vendor;
 
 /**
  * Class VendorTest

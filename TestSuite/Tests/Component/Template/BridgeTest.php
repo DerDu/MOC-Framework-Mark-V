@@ -3,7 +3,7 @@ namespace MOC\V\TestSuite\Tests\Component\Template;
 
 use MOC\V\Component\Template\Component\Bridge\SmartyTemplate;
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
-use MOC\V\Component\Template\Component\Option\Repository\FileOption;
+use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 
 /**
  * Class BridgeTest
@@ -18,7 +18,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new TwigTemplate();
 
-        $Bridge->loadFile( new FileOption( __FILE__ ) );
+        $Bridge->loadFile( new FileParameter( __FILE__ ) );
 
         $Bridge->setVariable( 'Foo', 'Bar' );
         $Bridge->setVariable( 'Foo', array( 'Bar' ) );
@@ -31,7 +31,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new SmartyTemplate();
 
-        $Bridge->loadFile( new FileOption( __FILE__ ) );
+        $Bridge->loadFile( new FileParameter( __FILE__ ) );
 
         $Bridge->setVariable( 'Foo', 'Bar' );
         $Bridge->setVariable( 'Foo', array( 'Bar' ) );

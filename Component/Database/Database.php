@@ -4,14 +4,14 @@ namespace MOC\V\Component\Database;
 use MOC\V\Component\Database\Component\Bridge\Doctrine2DBAL;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\IVendorInterface;
-use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Component\Option\Repository\HostOption;
-use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
-use MOC\V\Component\Database\Component\Option\Repository\PortOption;
-use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
-use MOC\V\Component\Database\Component\Vendor;
+use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PasswordParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PortParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter;
 use MOC\V\Component\Database\Exception\DatabaseException;
+use MOC\V\Component\Database\Vendor\Vendor;
 
 /**
  * Class Database
@@ -70,12 +70,12 @@ class Database implements IVendorInterface
         );
 
         $Doctrine->getBridgeInterface()->registerConnection(
-            new UsernameOption( $Username ),
-            new PasswordOption( $Password ),
-            new DatabaseOption( $Database ),
-            new DriverOption( $Driver ),
-            new HostOption( $Host ),
-            new PortOption( $Port )
+            new UsernameParameter( $Username ),
+            new PasswordParameter( $Password ),
+            new DatabaseParameter( $Database ),
+            new DriverParameter( $Driver ),
+            new HostParameter( $Host ),
+            new PortParameter( $Port )
         );
 
         return $Doctrine->getBridgeInterface();

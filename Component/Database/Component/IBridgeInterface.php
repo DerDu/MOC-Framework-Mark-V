@@ -1,12 +1,12 @@
 <?php
 namespace MOC\V\Component\Database\Component;
 
-use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Component\Option\Repository\HostOption;
-use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
-use MOC\V\Component\Database\Component\Option\Repository\PortOption;
-use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
+use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PasswordParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PortParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter;
 
 /**
  * Interface IBridgeInterface
@@ -17,22 +17,22 @@ interface IBridgeInterface
 {
 
     /**
-     * @param \MOC\V\Component\Database\Component\Option\Repository\UsernameOption $Username
-     * @param PasswordOption $Password
-     * @param DatabaseOption $Database
-     * @param \MOC\V\Component\Database\Component\Option\Repository\DriverOption   $Driver
-     * @param HostOption     $Host
-     * @param \MOC\V\Component\Database\Component\Option\Repository\PortOption     $Port
+     * @param \MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter $Username
+     * @param PasswordParameter                                                          $Password
+     * @param DatabaseParameter                                                          $Database
+     * @param \MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter   $Driver
+     * @param HostParameter                                                              $Host
+     * @param \MOC\V\Component\Database\Component\Parameter\Repository\PortParameter     $Port
      *
      * @return IBridgeInterface
      */
     public function registerConnection(
-        UsernameOption $Username,
-        PasswordOption $Password,
-        DatabaseOption $Database,
-        DriverOption $Driver,
-        HostOption $Host,
-        PortOption $Port
+        UsernameParameter $Username,
+        PasswordParameter $Password,
+        DatabaseParameter $Database,
+        DriverParameter $Driver,
+        HostParameter $Host,
+        PortParameter $Port
     );
 
     /**

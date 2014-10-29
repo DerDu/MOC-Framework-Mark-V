@@ -5,14 +5,14 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Statement;
 use MOC\V\Component\Database\Component\Exception\ComponentException;
-use MOC\V\Component\Database\Component\Exception\NoConnectionException;
+use MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException;
 use MOC\V\Component\Database\Component\IBridgeInterface;
-use MOC\V\Component\Database\Component\Option\Repository\DatabaseOption;
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Component\Option\Repository\HostOption;
-use MOC\V\Component\Database\Component\Option\Repository\PasswordOption;
-use MOC\V\Component\Database\Component\Option\Repository\PortOption;
-use MOC\V\Component\Database\Component\Option\Repository\UsernameOption;
+use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PasswordParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\PortParameter;
+use MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
 /**
@@ -35,23 +35,23 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param UsernameOption                                                     $Username
-     * @param PasswordOption                                                     $Password
-     * @param DatabaseOption                                                     $Database
-     * @param \MOC\V\Component\Database\Component\Option\Repository\DriverOption $Driver
-     * @param HostOption                                                         $Host
-     * @param PortOption                                                         $Port
+     * @param UsernameParameter                                                        $Username
+     * @param PasswordParameter                                                        $Password
+     * @param DatabaseParameter                                                        $Database
+     * @param \MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter $Driver
+     * @param HostParameter                                                            $Host
+     * @param PortParameter                                                            $Port
      *
      * @throws ComponentException
      * @return IBridgeInterface
      */
     public function registerConnection(
-        UsernameOption $Username,
-        PasswordOption $Password,
-        DatabaseOption $Database,
-        DriverOption $Driver,
-        HostOption $Host,
-        PortOption $Port
+        UsernameParameter $Username,
+        PasswordParameter $Password,
+        DatabaseParameter $Database,
+        DriverParameter $Driver,
+        HostParameter $Host,
+        PortParameter $Port
     ) {
 
         try {
@@ -109,7 +109,7 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @throws ComponentException
+     * @throws NoConnectionException
      * @return Connection
      */
     private function prepareConnection()
@@ -117,7 +117,9 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
 
         $Index = count( self::$ConnectionList ) - 1;
         if (!isset( self::$ConnectionList[$Index] )) {
+            // @codeCoverageIgnoreStart
             throw new NoConnectionException( $Index );
+            // @codeCoverageIgnoreEnd
         }
         return self::$ConnectionList[$Index];
     }

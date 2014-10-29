@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
-use MOC\V\Core\FileSystem\Component\Vendor;
+use MOC\V\Core\FileSystem\Vendor\Vendor;
 
 class VendorTest extends \PHPUnit_Framework_TestCase
 {

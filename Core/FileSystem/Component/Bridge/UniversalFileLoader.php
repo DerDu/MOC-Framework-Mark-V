@@ -2,7 +2,7 @@
 namespace MOC\V\Core\FileSystem\Component\Bridge;
 
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
-use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
+use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
 use MOC\V\Core\FileSystem\Vendor\Universal\FileLoader;
 
 /**
@@ -17,9 +17,9 @@ class UniversalFileLoader extends Bridge implements IBridgeInterface
     private $Instance = null;
 
     /**
-     * @param FileOption $FileOption
+     * @param FileParameter $FileOption
      */
-    function __construct( FileOption $FileOption )
+    function __construct( FileParameter $FileOption )
     {
 
         $this->Instance = new FileLoader( $FileOption->getFile() );

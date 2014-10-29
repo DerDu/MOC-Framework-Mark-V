@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Template;
 
-use MOC\V\Component\Template\Component\Vendor;
+use MOC\V\Component\Template\Vendor\Vendor;
 
 /**
  * Class VendorTest

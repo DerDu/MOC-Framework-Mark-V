@@ -2,7 +2,7 @@
 namespace MOC\V\Component\Template\Component\Bridge;
 
 use MOC\V\Component\Template\Component\IBridgeInterface;
-use MOC\V\Component\Template\Component\Option\Repository\FileOption;
+use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 
 /**
  * Class SmartyTemplate
@@ -31,11 +31,11 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param FileOption $Location
+     * @param FileParameter $Location
      *
      * @return IBridgeInterface
      */
-    public function loadFile( FileOption $Location )
+    public function loadFile( FileParameter $Location )
     {
 
         $this->Instance = new \Smarty();

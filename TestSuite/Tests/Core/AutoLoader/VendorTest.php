@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Core\AutoLoader;
 
-use MOC\V\Core\AutoLoader\Component\Vendor;
+use MOC\V\Core\AutoLoader\Vendor\Vendor;
 
 class VendorTest extends \PHPUnit_Framework_TestCase
 {

@@ -3,7 +3,7 @@ namespace MOC\V\Component\Router\Component\Bridge;
 
 use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Component\IBridgeInterface;
-use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,11 +52,11 @@ class SymfonyRouter extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param RouteOption $RouteOption
+     * @param RouteParameter $RouteOption
      *
      * @return IBridgeInterface
      */
-    public function addRoute( RouteOption $RouteOption )
+    public function addRoute( RouteParameter $RouteOption )
     {
 
         $this->SymfonyRouteCollection->add( $RouteOption->getPath(),

@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\Core\AutoLoader\Component;
 
-use MOC\V\Core\AutoLoader\Component\Option\Repository\DirectoryOption;
-use MOC\V\Core\AutoLoader\Component\Option\Repository\NamespaceOption;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 
 /**
  * Interface IBridgeInterface
@@ -30,10 +30,10 @@ interface IBridgeInterface
     public function loadSourceFile( $ClassName );
 
     /**
-     * @param NamespaceOption $Namespace
-     * @param DirectoryOption $Directory
+     * @param NamespaceParameter $Namespace
+     * @param DirectoryParameter $Directory
      *
      * @return IBridgeInterface
      */
-    public function addNamespaceDirectoryMapping( NamespaceOption $Namespace, DirectoryOption $Directory );
+    public function addNamespaceDirectoryMapping( NamespaceParameter $Namespace, DirectoryParameter $Directory );
 }

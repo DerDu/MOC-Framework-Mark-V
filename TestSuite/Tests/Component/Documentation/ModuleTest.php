@@ -1,8 +1,8 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Documentation;
 
-use MOC\V\Component\Documentation\Component\Vendor;
 use MOC\V\Component\Documentation\Documentation;
+use MOC\V\Component\Documentation\Vendor\Vendor;
 
 /**
  * Class ModuleTest

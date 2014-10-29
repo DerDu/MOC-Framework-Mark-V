@@ -1,9 +1,9 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Database;
 
-use MOC\V\Component\Database\Component\Option\Repository\DriverOption;
-use MOC\V\Component\Database\Component\Vendor;
+use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
 use MOC\V\Component\Database\Database;
+use MOC\V\Component\Database\Vendor\Vendor;
 
 /**
  * Class ModuleTest
@@ -36,7 +36,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     public function testStaticDoctrineDatabase()
     {
 
-        $Database = Database::getDoctrineDatabase( '', '', '', DriverOption::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
+        $Database = Database::getDoctrineDatabase( '', '', '', DriverParameter::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface', $Database );
     }
 
@@ -44,7 +44,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
      {
 
          try {
-             Database::getDatabase( '', '', '', DriverOption::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
+             Database::getDatabase( '', '', '', DriverParameter::DRIVER_PDO_SQLITE, 'sqlite::memory:' );
          } catch( \Exception $E ) {
 
          }

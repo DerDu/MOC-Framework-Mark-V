@@ -20,6 +20,11 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType( 'string', $Bridge->getPathInfo() );
         $this->assertInternalType( 'string', $Bridge->getUrlBase() );
         $this->assertInternalType( 'string', $Bridge->getPort() );
+
+        $this->assertInternalType( 'array', $Bridge->getRequestGETArray() );
+        $this->assertInternalType( 'array', $Bridge->getRequestPOSTArray() );
+        $this->assertInternalType( 'array', $Bridge->getRequestCUSTOMArray() );
+        $this->assertInternalType( 'array', $Bridge->getParameterArray() );
     }
 
 }

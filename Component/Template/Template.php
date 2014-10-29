@@ -5,9 +5,9 @@ use MOC\V\Component\Template\Component\Bridge\SmartyTemplate;
 use MOC\V\Component\Template\Component\Bridge\TwigTemplate;
 use MOC\V\Component\Template\Component\IBridgeInterface;
 use MOC\V\Component\Template\Component\IVendorInterface;
-use MOC\V\Component\Template\Component\Option\Repository\FileOption;
-use MOC\V\Component\Template\Component\Vendor;
+use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Template\Exception\TemplateTypeException;
+use MOC\V\Component\Template\Vendor\Vendor;
 
 /**
  * Class Template
@@ -68,7 +68,7 @@ class Template implements IVendorInterface
             )
         );
 
-        $Template->getBridgeInterface()->loadFile( new FileOption( $Location ) );
+        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
 
         return $Template->getBridgeInterface();
     }
@@ -96,7 +96,7 @@ class Template implements IVendorInterface
             )
         );
 
-        $Template->getBridgeInterface()->loadFile( new FileOption( $Location ) );
+        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
 
         return $Template->getBridgeInterface();
     }

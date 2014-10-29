@@ -2,12 +2,12 @@
 namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
 use MOC\V\Core\FileSystem\Component\Exception\ComponentException;
-use MOC\V\Core\FileSystem\Component\Exception\EmptyDirectoryException;
-use MOC\V\Core\FileSystem\Component\Exception\EmptyFileException;
-use MOC\V\Core\FileSystem\Component\Exception\MissingDirectoryException;
-use MOC\V\Core\FileSystem\Component\Exception\MissingFileException;
-use MOC\V\Core\FileSystem\Component\Exception\TypeDirectoryException;
-use MOC\V\Core\FileSystem\Component\Exception\TypeFileException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\EmptyDirectoryException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\EmptyFileException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\MissingDirectoryException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\MissingFileException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\TypeDirectoryException;
+use MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException;
 use MOC\V\Core\FileSystem\Exception\FileSystemException;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
@@ -31,37 +31,40 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         try {
             throw new EmptyDirectoryException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\EmptyDirectoryException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\EmptyDirectoryException',
+                $E );
         }
 
         try {
             throw new EmptyFileException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\EmptyFileException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\EmptyFileException', $E );
         }
 
         try {
             throw new MissingDirectoryException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\MissingDirectoryException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\MissingDirectoryException',
+                $E );
         }
 
         try {
             throw new MissingFileException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\MissingFileException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\MissingFileException', $E );
         }
 
         try {
             throw new TypeDirectoryException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\TypeDirectoryException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\TypeDirectoryException',
+                $E );
         }
 
         try {
             throw new TypeFileException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\TypeFileException', $E );
+            $this->assertInstanceOf( '\MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
         }
 
     }

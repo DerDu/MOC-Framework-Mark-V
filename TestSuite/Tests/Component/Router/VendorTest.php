@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Router;
 
-use MOC\V\Component\Router\Component\Vendor;
+use MOC\V\Component\Router\Vendor\Vendor;
 
 /**
  * Class VendorTest

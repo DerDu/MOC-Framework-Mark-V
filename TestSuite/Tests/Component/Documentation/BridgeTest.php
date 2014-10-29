@@ -2,7 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Documentation;
 
 use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
-use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
 
 /**
  * Class BridgeTest
@@ -16,8 +16,8 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         new ApiGenDocumentation(
-            new DirectoryOption( __DIR__ ),
-            new DirectoryOption( __DIR__.'/Content/' )
+            new DirectoryParameter( __DIR__ ),
+            new DirectoryParameter( __DIR__.'/Content/' )
         );
     }
 

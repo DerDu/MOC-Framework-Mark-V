@@ -5,9 +5,9 @@ use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\IVendorInterface;
-use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
-use MOC\V\Core\FileSystem\Component\Vendor;
+use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
 use MOC\V\Core\FileSystem\Exception\FileSystemException;
+use MOC\V\Core\FileSystem\Vendor\Vendor;
 
 /**
  * Class FileSystem
@@ -52,7 +52,7 @@ class FileSystem implements IVendorInterface
         $Loader = new FileSystem(
             new Vendor(
                 new UniversalFileLoader(
-                    new FileOption( $Location )
+                    new FileParameter( $Location )
                 )
             )
         );
@@ -92,7 +92,7 @@ class FileSystem implements IVendorInterface
         $Loader = new FileSystem(
             new Vendor(
                 new UniversalFileWriter(
-                    new FileOption( $Location )
+                    new FileParameter( $Location )
                 )
             )
         );

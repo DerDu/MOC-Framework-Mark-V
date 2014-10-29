@@ -2,7 +2,7 @@
 namespace MOC\V\Component\Documentation\Component\Bridge;
 
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
-use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\FileSystem\FileSystem;
 use Nette\Config\Adapters\NeonAdapter;
@@ -15,16 +15,16 @@ use Nette\Config\Adapters\NeonAdapter;
 class ApiGenDocumentation extends Bridge implements IBridgeInterface
 {
 
-    /** @var DirectoryOption|null $Source */
+    /** @var DirectoryParameter|null $Source */
     private $Source = null;
-    /** @var DirectoryOption|null $Destination */
+    /** @var DirectoryParameter|null $Destination */
     private $Destination = null;
 
     /**
-     * @param DirectoryOption $Source
-     * @param DirectoryOption $Destination
+     * @param DirectoryParameter $Source
+     * @param DirectoryParameter $Destination
      */
-    function __construct( DirectoryOption $Source, DirectoryOption $Destination )
+    function __construct( DirectoryParameter $Source, DirectoryParameter $Destination )
     {
 
         AutoLoader::getNamespaceAutoLoader( 'ApiGen', __DIR__.'/../../Vendor/ApiGen' );

@@ -4,7 +4,7 @@ namespace MOC\V\Component\Documentation;
 use MOC\V\Component\Documentation\Component\Bridge\ApiGenDocumentation;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\IVendorInterface;
-use MOC\V\Component\Documentation\Component\Option\Repository\DirectoryOption;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
 
 /**
  * Class Documentation
@@ -42,8 +42,8 @@ class Documentation implements IVendorInterface
     {
 
         $Documentation = new ApiGenDocumentation(
-            new DirectoryOption( __DIR__.'/../../' ),
-            new DirectoryOption( __DIR__.'/../../Documentation/' )
+            new DirectoryParameter( __DIR__.'/../../' ),
+            new DirectoryParameter( __DIR__.'/../../Documentation/' )
         );
 
         return $Documentation;

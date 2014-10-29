@@ -2,8 +2,9 @@
 namespace MOC\V\Component\Router\Component\Bridge;
 
 use MOC\V\Component\Router\Component\Exception\ComponentException;
+use MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException;
 use MOC\V\Component\Router\Component\IBridgeInterface;
-use MOC\V\Component\Router\Component\Option\Repository\RouteOption;
+use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 use MOC\V\Core\HttpKernel\HttpKernel;
 
 /**
@@ -17,11 +18,11 @@ class UniversalRouter extends Bridge implements IBridgeInterface
     private $RouteCollection = array();
 
     /**
-     * @param RouteOption $RouteOption
+     * @param \MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter $RouteOption
      *
      * @return IBridgeInterface
      */
-    public function addRoute( RouteOption $RouteOption )
+    public function addRoute( RouteParameter $RouteOption )
     {
 
         $this->RouteCollection[$RouteOption->getPath()] = $RouteOption;
@@ -30,53 +31,63 @@ class UniversalRouter extends Bridge implements IBridgeInterface
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws ComponentException
      */
     public function getRoute()
     {
 
-        $Controller = $this->handleController();
+        /** @var RouteParameter $Route */
+        $Route = $this->RouteCollection[HttpKernel::getRequest()->getPathInfo()];
+
+        $Controller = $this->handleController( $Route );
 
         if (!is_callable( $Controller )) {
+            // @codeCoverageIgnoreStart
             throw new ComponentException( $Controller );
+            // @codeCoverageIgnoreEnd
         }
 
-        $Arguments = $this->handleArguments( $Controller );
+        $Arguments = $this->handleArguments( $Controller, $Route );
         $Response = call_user_func_array( $Controller, $Arguments );
 
         return $Response;
     }
 
     /**
-     * @return callable
+     * @param RouteParameter $Route
+     *
      * @throws ComponentException
+     * @return callable
      */
-    private function handleController()
+    private function handleController( RouteParameter $Route )
     {
 
-        /** @var RouteOption $Route */
-        $Route = $this->RouteCollection[HttpKernel::getRequest()->getPathInfo()];
         $Class = $Route->getClass();
         if (!class_exists( $Class, true )) {
+            // @codeCoverageIgnoreStart
             throw new ComponentException( $Class );
+            // @codeCoverageIgnoreEnd
         }
         $Method = $Route->getMethod();
 
         $Object = new $Class();
         if (!method_exists( $Object, $Method )) {
+            // @codeCoverageIgnoreStart
             throw new ComponentException( $Method );
+            // @codeCoverageIgnoreEnd
         }
 
         return array( $Object, $Method );
     }
 
     /**
-     * @param callable $Controller
+     * @param callable                                                              $Controller
+     * @param \MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter $Route
      *
+     * @throws \MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException
      * @return array
-     * @throws ComponentException
      */
-    private function handleArguments( $Controller )
+    private function handleArguments( $Controller, RouteParameter $Route )
     {
 
         $Reflection = new \ReflectionMethod( $Controller[0], $Controller[1] );
@@ -87,13 +98,14 @@ class UniversalRouter extends Bridge implements IBridgeInterface
         foreach ((array)$MethodParameters as $MethodParameter) {
             if (array_key_exists( $MethodParameter->name, $RequestParameters )) {
                 $MethodArguments[] = $RequestParameters[$MethodParameter->name];
+            } elseif (array_key_exists( $MethodParameter->name, $Route->getParameterDefault() )) {
+                $MethodArguments[] = $Route->getParameterDefault( $MethodParameter->name );
             } elseif ($MethodParameter->isDefaultValueAvailable()) {
                 $MethodArguments[] = $MethodParameter->getDefaultValue();
             } else {
-                throw new ComponentException( $MethodParameter->name );
+                throw new MissingParameterException( $MethodParameter->name );
             }
         }
-
         return $MethodArguments;
     }
 }

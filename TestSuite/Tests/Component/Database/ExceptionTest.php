@@ -2,7 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Database;
 
 use MOC\V\Component\Database\Component\Exception\ComponentException;
-use MOC\V\Component\Database\Component\Exception\NoConnectionException;
+use MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException;
 use MOC\V\Component\Database\Exception\DatabaseException;
 
 /**
@@ -31,7 +31,8 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         try {
             throw new NoConnectionException();
         } catch( \Exception $E ) {
-            $this->assertInstanceOf( '\MOC\V\Component\Database\Component\Exception\NoConnectionException', $E );
+            $this->assertInstanceOf( '\MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException',
+                $E );
         }
 
     }

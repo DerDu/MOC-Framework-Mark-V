@@ -3,7 +3,7 @@ namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\UniversalFileWriter;
-use MOC\V\Core\FileSystem\Component\Option\Repository\FileOption;
+use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
 
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         new UniversalFileLoader(
-            new FileOption( __FILE__ )
+            new FileParameter( __FILE__ )
         );
     }
 
@@ -20,7 +20,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         new UniversalFileWriter(
-            new FileOption( __FILE__ )
+            new FileParameter( __FILE__ )
         );
     }
 }
