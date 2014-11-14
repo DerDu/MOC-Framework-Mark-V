@@ -13,6 +13,18 @@ use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
+    public static function tearDownAfterClass()
+    {
+
+        if (false !== ( $Path = realpath( __DIR__.'/../../../../Component/Template/Component/Bridge/Repository/SmartyTemplate' ) )) {
+            foreach (new \DirectoryIterator( $Path ) as $fileInfo) {
+                if (!$fileInfo->isDot()) {
+                    unlink( $fileInfo->getPathname() );
+                }
+            }
+        }
+    }
+
     public function testTwigTemplate()
     {
 
@@ -38,4 +50,5 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge->getContent();
     }
+
 }

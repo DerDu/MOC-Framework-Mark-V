@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1415969378">
-  <project timestamp="1415969378">
+<coverage generated="1415970777">
+  <project timestamp="1415970777">
     <package name="MOC\V\Component\Database\Component\Bridge">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Database/Component/Bridge/Bridge.php">
         <class name="Bridge" namespace="MOC\V\Component\Database\Component\Bridge" fullPackage="MOC" package="MOC">
@@ -616,23 +616,6 @@
         <metrics loc="56" ncloc="38" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
       </file>
     </package>
-    <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Bridge/Repository/SmartyTemplate/7686a87e1dfd637e99df87e1f97f3390abc3b4db.file.BridgeTest.php.php">
-      <line num="5" type="stmt" count="1"/>
-      <line num="6" type="stmt" count="0"/>
-      <line num="8" type="stmt" count="1"/>
-      <line num="13" type="stmt" count="1"/>
-      <line num="14" type="stmt" count="1"/>
-      <line num="15" type="stmt" count="1"/>
-      <line num="16" type="stmt" count="1"/>
-      <line num="17" type="stmt" count="1"/>
-      <line num="18" type="stmt" count="1"/>
-      <line num="20" type="stmt" count="1"/>
-      <line num="24" type="stmt" count="1"/>
-      <line num="26" type="stmt" count="1"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <metrics loc="64" ncloc="60" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="11" elements="14" coveredelements="11"/>
-    </file>
     <package name="MOC\V\Component\Template\Component\Exception">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Exception/ComponentException.php">
         <class name="ComponentException" namespace="MOC\V\Component\Template\Component\Exception" fullPackage="MOC" package="MOC">
@@ -1689,7 +1672,7 @@
     <package name="MOC\V\TestSuite\Tests\Component\Template">
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Template/BridgeTest.php">
         <class name="BridgeTest" namespace="MOC\V\TestSuite\Tests\Component\Template" fullPackage="MOC" package="MOC">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+          <metrics methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="12" elements="23" coveredelements="14"/>
         </class>
         <line num="16" type="method" name="testTwigTemplate" crap="1" count="1"/>
         <line num="19" type="stmt" count="1"/>
@@ -1705,7 +1688,16 @@
         <line num="37" type="stmt" count="1"/>
         <line num="39" type="stmt" count="1"/>
         <line num="40" type="stmt" count="1"/>
-        <metrics loc="41" ncloc="36" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+        <line num="42" type="method" name="tearDownAfterClass" crap="20" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <metrics loc="54" ncloc="49" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="12" elements="23" coveredelements="14"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Template/ExceptionTest.php">
         <class name="ExceptionTest" namespace="MOC\V\TestSuite\Tests\Component\Template" fullPackage="MOC" package="MOC">
@@ -2186,6 +2178,6 @@
         <metrics loc="28" ncloc="22" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="8" coveredelements="8"/>
       </file>
     </package>
-    <metrics files="112" loc="5535" ncloc="3943" classes="111" methods="273" coveredmethods="267" conditionals="0" coveredconditionals="0" statements="1121" coveredstatements="1104" elements="1394" coveredelements="1371"/>
+    <metrics files="111" loc="5484" ncloc="3896" classes="111" methods="274" coveredmethods="267" conditionals="0" coveredconditionals="0" statements="1115" coveredstatements="1093" elements="1389" coveredelements="1360"/>
   </project>
 </coverage>
