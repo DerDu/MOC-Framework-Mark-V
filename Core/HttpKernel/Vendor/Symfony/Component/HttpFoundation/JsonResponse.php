@@ -50,6 +50,79 @@ class JsonResponse extends Response
     }
 
     /**
+     * Sets the data to be sent as JSON.
+     *
+     * @param mixed $data
+     *
+     * @return JsonResponse
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setData( $data = array() )
+    {
+
+        $this->data = @json_encode( $data, $this->encodingOptions );
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            throw new \InvalidArgumentException( $this->transformJsonError() );
+        }
+
+        return $this->update();
+    }
+
+    private function transformJsonError()
+    {
+
+        if (function_exists( 'json_last_error_msg' )) {
+            return json_last_error_msg();
+        }
+
+        switch (json_last_error()) {
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded.';
+
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch.';
+
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found.';
+
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON.';
+
+            case JSON_ERROR_UTF8:
+                return 'Malformed UTF-8 characters, possibly incorrectly encoded.';
+
+            default:
+                return 'Unknown error.';
+        }
+    }
+
+    /**
+     * Updates the content and headers according to the JSON data and callback.
+     *
+     * @return JsonResponse
+     */
+    protected function update()
+    {
+
+        if (null !== $this->callback) {
+            // Not using application/javascript for compatibility reasons with older browsers.
+            $this->headers->set( 'Content-Type', 'text/javascript' );
+
+            return $this->setContent( sprintf( '/**/%s(%s);', $this->callback, $this->data ) );
+        }
+
+        // Only set the header when there is none or when it equals 'text/javascript' (from a previous update with callback)
+        // in order to not overwrite a custom definition.
+        if (!$this->headers->has( 'Content-Type' ) || 'text/javascript' === $this->headers->get( 'Content-Type' )) {
+            $this->headers->set( 'Content-Type', 'application/json' );
+        }
+
+        return $this->setContent( $this->data );
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function create($data = null, $status = 200, $headers = array())
@@ -85,26 +158,6 @@ class JsonResponse extends Response
     }
 
     /**
-     * Sets the data to be sent as JSON.
-     *
-     * @param mixed $data
-     *
-     * @return JsonResponse
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setData($data = array())
-    {
-        $this->data = @json_encode($data, $this->encodingOptions);
-
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new \InvalidArgumentException($this->transformJsonError());
-        }
-
-        return $this->update();
-    }
-
-    /**
      * Returns options used while encoding data to JSON.
      *
      * @return int
@@ -126,55 +179,5 @@ class JsonResponse extends Response
         $this->encodingOptions = (int) $encodingOptions;
 
         return $this->setData(json_decode($this->data));
-    }
-
-    /**
-     * Updates the content and headers according to the JSON data and callback.
-     *
-     * @return JsonResponse
-     */
-    protected function update()
-    {
-        if (null !== $this->callback) {
-            // Not using application/javascript for compatibility reasons with older browsers.
-            $this->headers->set('Content-Type', 'text/javascript');
-
-            return $this->setContent(sprintf('/**/%s(%s);', $this->callback, $this->data));
-        }
-
-        // Only set the header when there is none or when it equals 'text/javascript' (from a previous update with callback)
-        // in order to not overwrite a custom definition.
-        if (!$this->headers->has('Content-Type') || 'text/javascript' === $this->headers->get('Content-Type')) {
-            $this->headers->set('Content-Type', 'application/json');
-        }
-
-        return $this->setContent($this->data);
-    }
-
-    private function transformJsonError()
-    {
-        if (function_exists('json_last_error_msg')) {
-            return json_last_error_msg();
-        }
-
-        switch (json_last_error()) {
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded.';
-
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch.';
-
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found.';
-
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON.';
-
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded.';
-
-            default:
-                return 'Unknown error.';
-        }
     }
 }

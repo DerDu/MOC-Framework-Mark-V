@@ -33,14 +33,16 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
         ), $options);
     }
 
-    public function setArguments($arguments)
-    {
-        $this->arguments = $arguments;
-    }
-
     public function getArguments()
     {
+
         return $this->arguments;
+    }
+
+    public function setArguments( $arguments )
+    {
+
+        $this->arguments = $arguments;
     }
 
     public function needsEnvironment()

@@ -88,6 +88,65 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
+     * Sets a parameter by name.
+     *
+     * @param string $key   The key
+     * @param mixed  $value The value
+     *
+     * @api
+     */
+    public function set( $key, $value )
+    {
+
+        $this->parameters[$key] = $value;
+    }
+
+    /**
+     * Returns true if the parameter is defined.
+     *
+     * @param string $key The key
+     *
+     * @return bool    true if the parameter exists, false otherwise
+     *
+     * @api
+     */
+    public function has( $key )
+    {
+
+        return array_key_exists( $key, $this->parameters );
+    }
+
+    /**
+     * Removes a parameter.
+     *
+     * @param string $key The key
+     *
+     * @api
+     */
+    public function remove( $key )
+    {
+
+        unset( $this->parameters[$key] );
+    }
+
+    /**
+     * Returns the alphabetic characters of the parameter value.
+     *
+     * @param string $key     The parameter key
+     * @param mixed  $default The default value if the parameter key does not exist
+     * @param bool   $deep    If true, a path like foo[bar] will find deeper items
+     *
+     * @return string The filtered value
+     *
+     * @api
+     */
+    public function getAlpha( $key, $default = '', $deep = false )
+    {
+
+        return preg_replace( '/[^[:alpha:]]/', '', $this->get( $key, $default, $deep ) );
+    }
+
+    /**
      * Returns a parameter by name.
      *
      * @param string  $path    The key
@@ -150,61 +209,6 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Sets a parameter by name.
-     *
-     * @param string $key   The key
-     * @param mixed  $value The value
-     *
-     * @api
-     */
-    public function set($key, $value)
-    {
-        $this->parameters[$key] = $value;
-    }
-
-    /**
-     * Returns true if the parameter is defined.
-     *
-     * @param string $key The key
-     *
-     * @return bool    true if the parameter exists, false otherwise
-     *
-     * @api
-     */
-    public function has($key)
-    {
-        return array_key_exists($key, $this->parameters);
-    }
-
-    /**
-     * Removes a parameter.
-     *
-     * @param string $key The key
-     *
-     * @api
-     */
-    public function remove($key)
-    {
-        unset($this->parameters[$key]);
-    }
-
-    /**
-     * Returns the alphabetic characters of the parameter value.
-     *
-     * @param string  $key     The parameter key
-     * @param mixed   $default The default value if the parameter key does not exist
-     * @param bool    $deep    If true, a path like foo[bar] will find deeper items
-     *
-     * @return string The filtered value
-     *
-     * @api
-     */
-    public function getAlpha($key, $default = '', $deep = false)
-    {
-        return preg_replace('/[^[:alpha:]]/', '', $this->get($key, $default, $deep));
-    }
-
-    /**
      * Returns the alphabetic characters and digits of the parameter value.
      *
      * @param string  $key     The parameter key
@@ -238,22 +242,6 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns the parameter value converted to integer.
-     *
-     * @param string  $key     The parameter key
-     * @param mixed   $default The default value if the parameter key does not exist
-     * @param bool    $deep    If true, a path like foo[bar] will find deeper items
-     *
-     * @return int     The filtered value
-     *
-     * @api
-     */
-    public function getInt($key, $default = 0, $deep = false)
-    {
-        return (int) $this->get($key, $default, $deep);
-    }
-
-    /**
      * Filter key.
      *
      * @param string  $key     Key.
@@ -281,6 +269,23 @@ class ParameterBag implements \IteratorAggregate, \Countable
         }
 
         return filter_var($value, $filter, $options);
+    }
+
+    /**
+     * Returns the parameter value converted to integer.
+     *
+     * @param string $key     The parameter key
+     * @param mixed  $default The default value if the parameter key does not exist
+     * @param bool   $deep    If true, a path like foo[bar] will find deeper items
+     *
+     * @return int     The filtered value
+     *
+     * @api
+     */
+    public function getInt( $key, $default = 0, $deep = false )
+    {
+
+        return (int)$this->get( $key, $default, $deep );
     }
 
     /**

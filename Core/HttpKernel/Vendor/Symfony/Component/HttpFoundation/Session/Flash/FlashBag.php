@@ -86,9 +86,10 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function peekAll()
+    public function has( $type )
     {
-        return $this->flashes;
+
+        return array_key_exists( $type, $this->flashes ) && $this->flashes[$type];
     }
 
     /**
@@ -110,8 +111,54 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
+    public function set( $type, $messages )
+    {
+
+        $this->flashes[$type] = (array)$messages;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAll( array $messages )
+    {
+
+        $this->flashes = $messages;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function keys()
+    {
+
+        return array_keys( $this->flashes );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStorageKey()
+    {
+
+        return $this->storageKey;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+
+        return $this->all();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function all()
     {
+
         $return = $this->peekAll();
         $this->flashes = array();
 
@@ -121,49 +168,10 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function set($type, $messages)
+    public function peekAll()
     {
-        $this->flashes[$type] = (array) $messages;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setAll(array $messages)
-    {
-        $this->flashes = $messages;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function has($type)
-    {
-        return array_key_exists($type, $this->flashes) && $this->flashes[$type];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function keys()
-    {
-        return array_keys($this->flashes);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStorageKey()
-    {
-        return $this->storageKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function clear()
-    {
-        return $this->all();
+        return $this->flashes;
     }
 
     /**

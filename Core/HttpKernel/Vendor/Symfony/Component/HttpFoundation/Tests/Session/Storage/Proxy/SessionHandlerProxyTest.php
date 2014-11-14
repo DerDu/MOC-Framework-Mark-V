@@ -32,18 +32,6 @@ class SessionHandlerProxyTest extends \PHPUnit_Framework_TestCase
      */
     private $proxy;
 
-    protected function setUp()
-    {
-        $this->mock = $this->getMock('SessionHandlerInterface');
-        $this->proxy = new SessionHandlerProxy($this->mock);
-    }
-
-    protected function tearDown()
-    {
-        $this->mock = null;
-        $this->proxy = null;
-    }
-
     public function testOpen()
     {
         $this->mock->expects($this->once())
@@ -122,5 +110,19 @@ class SessionHandlerProxyTest extends \PHPUnit_Framework_TestCase
             ->method('gc');
 
         $this->proxy->gc(86400);
+    }
+
+    protected function setUp()
+    {
+
+        $this->mock = $this->getMock( 'SessionHandlerInterface' );
+        $this->proxy = new SessionHandlerProxy( $this->mock );
+    }
+
+    protected function tearDown()
+    {
+
+        $this->mock = null;
+        $this->proxy = null;
     }
 }

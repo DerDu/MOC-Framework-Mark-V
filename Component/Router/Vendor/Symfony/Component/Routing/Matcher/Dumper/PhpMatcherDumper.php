@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Routing\Matcher\Dumper;
 
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
  * PhpMatcherDumper creates a PHP class able to match URLs for a given set of routes.
@@ -143,6 +143,62 @@ EOF;
         }
 
         return $code;
+    }
+
+    /**
+     * Groups consecutive routes having the same host regex.
+     *
+     * The result is a collection of collections of routes having the same host regex.
+     *
+     * @param RouteCollection $routes A flat RouteCollection
+     *
+     * @return DumperCollection A collection with routes grouped by host regex in sub-collections
+     */
+    private function groupRoutesByHostRegex( RouteCollection $routes )
+    {
+
+        $groups = new DumperCollection();
+
+        $currentGroup = new DumperCollection();
+        $currentGroup->setAttribute( 'host_regex', null );
+        $groups->add( $currentGroup );
+
+        foreach ($routes as $name => $route) {
+            $hostRegex = $route->compile()->getHostRegex();
+            if ($currentGroup->getAttribute( 'host_regex' ) !== $hostRegex) {
+                $currentGroup = new DumperCollection();
+                $currentGroup->setAttribute( 'host_regex', $hostRegex );
+                $groups->add( $currentGroup );
+            }
+            $currentGroup->add( new DumperRoute( $name, $route ) );
+        }
+
+        return $groups;
+    }
+
+    /**
+     * Organizes the routes into a prefix tree.
+     *
+     * Routes order is preserved such that traversing the tree will traverse the
+     * routes in the origin order.
+     *
+     * @param DumperCollection $collection A collection of routes
+     *
+     * @return DumperPrefixCollection
+     */
+    private function buildPrefixTree( DumperCollection $collection )
+    {
+
+        $tree = new DumperPrefixCollection();
+        $current = $tree;
+
+        foreach ($collection as $route) {
+            $current = $current->addPrefixRoute( $route );
+        }
+
+        $tree->mergeSlashNodes();
+
+        return $tree;
     }
 
     /**
@@ -332,60 +388,6 @@ EOF;
         }
 
         return $code;
-    }
-
-    /**
-     * Groups consecutive routes having the same host regex.
-     *
-     * The result is a collection of collections of routes having the same host regex.
-     *
-     * @param RouteCollection $routes A flat RouteCollection
-     *
-     * @return DumperCollection A collection with routes grouped by host regex in sub-collections
-     */
-    private function groupRoutesByHostRegex(RouteCollection $routes)
-    {
-        $groups = new DumperCollection();
-
-        $currentGroup = new DumperCollection();
-        $currentGroup->setAttribute('host_regex', null);
-        $groups->add($currentGroup);
-
-        foreach ($routes as $name => $route) {
-            $hostRegex = $route->compile()->getHostRegex();
-            if ($currentGroup->getAttribute('host_regex') !== $hostRegex) {
-                $currentGroup = new DumperCollection();
-                $currentGroup->setAttribute('host_regex', $hostRegex);
-                $groups->add($currentGroup);
-            }
-            $currentGroup->add(new DumperRoute($name, $route));
-        }
-
-        return $groups;
-    }
-
-    /**
-     * Organizes the routes into a prefix tree.
-     *
-     * Routes order is preserved such that traversing the tree will traverse the
-     * routes in the origin order.
-     *
-     * @param DumperCollection $collection A collection of routes
-     *
-     * @return DumperPrefixCollection
-     */
-    private function buildPrefixTree(DumperCollection $collection)
-    {
-        $tree = new DumperPrefixCollection();
-        $current = $tree;
-
-        foreach ($collection as $route) {
-            $current = $current->addPrefixRoute($route);
-        }
-
-        $tree->mergeSlashNodes();
-
-        return $tree;
     }
 
     private function getExpressionLanguage()

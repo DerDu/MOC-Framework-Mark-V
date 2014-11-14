@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
+use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcherInterface;
 
 /**
  * EventDataCollector.
@@ -62,6 +62,19 @@ class EventDataCollector extends DataCollector implements LateDataCollectorInter
     }
 
     /**
+     * Sets the not called listeners.
+     *
+     * @param array $listeners An array of not called listeners
+     *
+     * @see TraceableEventDispatcherInterface
+     */
+    public function setNotCalledListeners( array $listeners )
+    {
+
+        $this->data['not_called_listeners'] = $listeners;
+    }
+
+    /**
      * Gets the called listeners.
      *
      * @return array An array of called listeners
@@ -70,19 +83,8 @@ class EventDataCollector extends DataCollector implements LateDataCollectorInter
      */
     public function getCalledListeners()
     {
-        return $this->data['called_listeners'];
-    }
 
-    /**
-     * Sets the not called listeners.
-     *
-     * @param array $listeners An array of not called listeners
-     *
-     * @see TraceableEventDispatcherInterface
-     */
-    public function setNotCalledListeners(array $listeners)
-    {
-        $this->data['not_called_listeners'] = $listeners;
+        return $this->data['called_listeners'];
     }
 
     /**

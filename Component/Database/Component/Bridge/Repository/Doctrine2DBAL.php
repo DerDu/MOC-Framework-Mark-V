@@ -27,6 +27,9 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     /** @var Connection[] $ConnectionList */
     private static $ConnectionList = array();
 
+    /**
+     *
+     */
     function __construct()
     {
 
@@ -36,12 +39,12 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param UsernameParameter                                                        $Username
-     * @param PasswordParameter                                                        $Password
-     * @param DatabaseParameter                                                        $Database
-     * @param \MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter $Driver
-     * @param HostParameter                                                            $Host
-     * @param PortParameter                                                            $Port
+     * @param UsernameParameter $Username
+     * @param PasswordParameter $Password
+     * @param DatabaseParameter $Database
+     * @param DriverParameter   $Driver
+     * @param HostParameter     $Host
+     * @param PortParameter     $Port
      *
      * @throws ComponentException
      * @return IBridgeInterface
@@ -134,5 +137,29 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
 
         $Query = $this->prepareQuery();
         return $this->prepareConnection()->executeUpdate( $Query[0], $Query[1], $Query[2] );
+    }
+
+    /**
+     * WARNING: this may be drop out with no replacement
+     *
+     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @throws NoConnectionException
+     */
+    public function getSchemaManager()
+    {
+
+        return $this->prepareConnection()->getSchemaManager();
+    }
+
+    /**
+     * WARNING: this may be drop out with no replacement
+     *
+     * @return Connection
+     * @throws NoConnectionException
+     */
+    public function getConnection()
+    {
+
+        return $this->prepareConnection();
     }
 }

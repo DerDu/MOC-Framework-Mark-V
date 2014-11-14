@@ -11,23 +11,13 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher;
 
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\ApacheUrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
 
 class ApacheUrlMatcherTest extends \PHPUnit_Framework_TestCase
 {
     protected $server;
-
-    protected function setUp()
-    {
-        $this->server = $_SERVER;
-    }
-
-    protected function tearDown()
-    {
-        $_SERVER = $this->server;
-    }
 
     /**
      * @dataProvider getMatchData
@@ -148,5 +138,17 @@ class ApacheUrlMatcherTest extends \PHPUnit_Framework_TestCase
                 ),
             )
         );
+    }
+
+    protected function setUp()
+    {
+
+        $this->server = $_SERVER;
+    }
+
+    protected function tearDown()
+    {
+
+        $_SERVER = $this->server;
     }
 }

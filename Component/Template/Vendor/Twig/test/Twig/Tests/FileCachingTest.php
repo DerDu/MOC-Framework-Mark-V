@@ -29,6 +29,25 @@ class Twig_Tests_FileCachingTest extends PHPUnit_Framework_TestCase
         $this->removeDir($this->tmpDir);
     }
 
+    private function removeDir( $target )
+    {
+
+        $fp = opendir( $target );
+        while (false !== $file = readdir( $fp )) {
+            if (in_array( $file, array( '.', '..' ) )) {
+                continue;
+            }
+
+            if (is_dir( $target.'/'.$file )) {
+                self::removeDir( $target.'/'.$file );
+            } else {
+                unlink( $target.'/'.$file );
+            }
+        }
+        closedir( $fp );
+        rmdir( $target );
+    }
+
     public function testWritingCacheFiles()
     {
         $name = 'This is just text.';
@@ -48,23 +67,5 @@ class Twig_Tests_FileCachingTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(file_exists($cacheFileName), 'Cache file does not exist.');
         $this->env->clearCacheFiles();
         $this->assertFalse(file_exists($cacheFileName), 'Cache file was not cleared.');
-    }
-
-    private function removeDir($target)
-    {
-        $fp = opendir($target);
-        while (false !== $file = readdir($fp)) {
-            if (in_array($file, array('.', '..'))) {
-                continue;
-            }
-
-            if (is_dir($target.'/'.$file)) {
-                self::removeDir($target.'/'.$file);
-            } else {
-                unlink($target.'/'.$file);
-            }
-        }
-        closedir($fp);
-        rmdir($target);
     }
 }

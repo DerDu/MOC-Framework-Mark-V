@@ -102,96 +102,50 @@ class RedisProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Gets the name of the index.
+     *
+     * @return string
      */
-    public function purge()
+    private function getIndexName()
     {
-        // delete only items from index
-        $indexName = $this->getIndexName();
 
-        $indexContent = $this->getValue($indexName, self::REDIS_SERIALIZER_NONE);
+        $name = 'index';
 
-        if (!$indexContent) {
-            return false;
-        }
-
-        $profileList = explode("\n", $indexContent);
-
-        $result = array();
-
-        foreach ($profileList as $item) {
-            if ($item == '') {
-                continue;
-            }
-
-            if (false !== $pos = strpos($item, "\t")) {
-                $result[] = $this->getItemName(substr($item, 0, $pos));
-            }
-        }
-
-        $result[] = $indexName;
-
-        return $this->delete($result);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function read($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $profile = $this->getValue($this->getItemName($token), self::REDIS_SERIALIZER_PHP);
-
-        if (false !== $profile) {
-            $profile = $this->createProfileFromData($token, $profile);
-        }
-
-        return $profile;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function write(Profile $profile)
-    {
-        $data = array(
-            'token'    => $profile->getToken(),
-            'parent'   => $profile->getParentToken(),
-            'children' => array_map(function ($p) { return $p->getToken(); }, $profile->getChildren()),
-            'data'     => $profile->getCollectors(),
-            'ip'       => $profile->getIp(),
-            'method'   => $profile->getMethod(),
-            'url'      => $profile->getUrl(),
-            'time'     => $profile->getTime(),
-        );
-
-        $profileIndexed = false !== $this->getValue($this->getItemName($profile->getToken()));
-
-        if ($this->setValue($this->getItemName($profile->getToken()), $data, $this->lifetime, self::REDIS_SERIALIZER_PHP)) {
-
-            if (!$profileIndexed) {
-                // Add to index
-                $indexName = $this->getIndexName();
-
-                $indexRow = implode("\t", array(
-                    $profile->getToken(),
-                    $profile->getIp(),
-                    $profile->getMethod(),
-                    $profile->getUrl(),
-                    $profile->getTime(),
-                    $profile->getParentToken(),
-                ))."\n";
-
-                return $this->appendValue($indexName, $indexRow, $this->lifetime);
-            }
-
-            return true;
+        if ($this->isItemNameValid( $name )) {
+            return $name;
         }
 
         return false;
+    }
+
+    private function isItemNameValid( $name )
+    {
+
+        $length = strlen( $name );
+
+        if ($length > 2147483648) {
+            throw new \RuntimeException( sprintf( 'The Redis item key "%s" is too long (%s bytes). Allowed maximum size is 2^31 bytes.',
+                    $name, $length ) );
+        }
+
+        return true;
+    }
+
+    /**
+     * Retrieves an item from the Redis server.
+     *
+     * @param string $key
+     * @param int    $serializer
+     *
+     * @return mixed
+     */
+    private function getValue( $key, $serializer = self::REDIS_SERIALIZER_NONE )
+    {
+
+        $redis = $this->getRedis();
+        $redis->setOption( self::REDIS_OPT_SERIALIZER, $serializer );
+
+        return $redis->get( $key );
     }
 
     /**
@@ -243,36 +197,38 @@ class RedisProfilerStorage implements ProfilerStorageInterface
         $this->redis = $redis;
     }
 
-    private function createProfileFromData($token, $data, $parent = null)
+    /**
+     * {@inheritdoc}
+     */
+    public function purge()
     {
-        $profile = new Profile($token);
-        $profile->setIp($data['ip']);
-        $profile->setMethod($data['method']);
-        $profile->setUrl($data['url']);
-        $profile->setTime($data['time']);
-        $profile->setCollectors($data['data']);
 
-        if (!$parent && $data['parent']) {
-            $parent = $this->read($data['parent']);
+        // delete only items from index
+        $indexName = $this->getIndexName();
+
+        $indexContent = $this->getValue( $indexName, self::REDIS_SERIALIZER_NONE );
+
+        if (!$indexContent) {
+            return false;
         }
 
-        if ($parent) {
-            $profile->setParent($parent);
-        }
+        $profileList = explode( "\n", $indexContent );
 
-        foreach ($data['children'] as $token) {
-            if (!$token) {
+        $result = array();
+
+        foreach ($profileList as $item) {
+            if ($item == '') {
                 continue;
             }
 
-            if (!$childProfileData = $this->getValue($this->getItemName($token), self::REDIS_SERIALIZER_PHP)) {
-                continue;
+            if (false !== $pos = strpos( $item, "\t" )) {
+                $result[] = $this->getItemName( substr( $item, 0, $pos ) );
             }
-
-            $profile->addChild($this->createProfileFromData($token, $childProfileData, $profile));
         }
 
-        return $profile;
+        $result[] = $indexName;
+
+        return $this->delete( $result );
     }
 
     /**
@@ -294,46 +250,116 @@ class RedisProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * Gets the name of the index.
+     * Removes the specified keys.
      *
-     * @return string
+     * @param array $keys
+     *
+     * @return bool
      */
-    private function getIndexName()
+    private function delete( array $keys )
     {
-        $name = 'index';
 
-        if ($this->isItemNameValid($name)) {
-            return $name;
-        }
-
-        return false;
-    }
-
-    private function isItemNameValid($name)
-    {
-        $length = strlen($name);
-
-        if ($length > 2147483648) {
-            throw new \RuntimeException(sprintf('The Redis item key "%s" is too long (%s bytes). Allowed maximum size is 2^31 bytes.', $name, $length));
-        }
-
-        return true;
+        return (bool)$this->getRedis()->delete( $keys );
     }
 
     /**
-     * Retrieves an item from the Redis server.
-     *
-     * @param string $key
-     * @param int    $serializer
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    private function getValue($key, $serializer = self::REDIS_SERIALIZER_NONE)
+    public function read( $token )
     {
-        $redis = $this->getRedis();
-        $redis->setOption(self::REDIS_OPT_SERIALIZER, $serializer);
 
-        return $redis->get($key);
+        if (empty( $token )) {
+            return false;
+        }
+
+        $profile = $this->getValue( $this->getItemName( $token ), self::REDIS_SERIALIZER_PHP );
+
+        if (false !== $profile) {
+            $profile = $this->createProfileFromData( $token, $profile );
+        }
+
+        return $profile;
+    }
+
+    private function createProfileFromData( $token, $data, $parent = null )
+    {
+
+        $profile = new Profile( $token );
+        $profile->setIp( $data['ip'] );
+        $profile->setMethod( $data['method'] );
+        $profile->setUrl( $data['url'] );
+        $profile->setTime( $data['time'] );
+        $profile->setCollectors( $data['data'] );
+
+        if (!$parent && $data['parent']) {
+            $parent = $this->read( $data['parent'] );
+        }
+
+        if ($parent) {
+            $profile->setParent( $parent );
+        }
+
+        foreach ($data['children'] as $token) {
+            if (!$token) {
+                continue;
+            }
+
+            if (!$childProfileData = $this->getValue( $this->getItemName( $token ), self::REDIS_SERIALIZER_PHP )) {
+                continue;
+            }
+
+            $profile->addChild( $this->createProfileFromData( $token, $childProfileData, $profile ) );
+        }
+
+        return $profile;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function write( Profile $profile )
+    {
+
+        $data = array(
+            'token'    => $profile->getToken(),
+            'parent'   => $profile->getParentToken(),
+            'children' => array_map( function ( $p ) {
+
+                    return $p->getToken();
+                }, $profile->getChildren() ),
+            'data'     => $profile->getCollectors(),
+            'ip'       => $profile->getIp(),
+            'method'   => $profile->getMethod(),
+            'url'      => $profile->getUrl(),
+            'time'     => $profile->getTime(),
+        );
+
+        $profileIndexed = false !== $this->getValue( $this->getItemName( $profile->getToken() ) );
+
+        if ($this->setValue( $this->getItemName( $profile->getToken() ), $data, $this->lifetime,
+            self::REDIS_SERIALIZER_PHP )
+        ) {
+
+            if (!$profileIndexed) {
+                // Add to index
+                $indexName = $this->getIndexName();
+
+                $indexRow = implode( "\t", array(
+                        $profile->getToken(),
+                        $profile->getIp(),
+                        $profile->getMethod(),
+                        $profile->getUrl(),
+                        $profile->getTime(),
+                        $profile->getParentToken(),
+                    ) )."\n";
+
+                return $this->appendValue( $indexName, $indexRow, $this->lifetime );
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -375,17 +401,5 @@ class RedisProfilerStorage implements ProfilerStorageInterface
         }
 
         return $redis->setex($key, $expiration, $value);
-    }
-
-    /**
-     * Removes the specified keys.
-     *
-     * @param array $keys
-     *
-     * @return bool
-     */
-    private function delete(array $keys)
-    {
-        return (bool) $this->getRedis()->delete($keys);
     }
 }

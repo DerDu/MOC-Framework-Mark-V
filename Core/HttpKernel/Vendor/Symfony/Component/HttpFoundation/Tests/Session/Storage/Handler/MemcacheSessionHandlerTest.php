@@ -24,25 +24,6 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
 
     protected $memcache;
 
-    protected function setUp()
-    {
-        if (!class_exists('Memcache')) {
-            $this->markTestSkipped('Skipped tests Memcache class is not present');
-        }
-
-        $this->memcache = $this->getMock('Memcache');
-        $this->storage = new MemcacheSessionHandler(
-            $this->memcache,
-            array('prefix' => self::PREFIX, 'expiretime' => self::TTL)
-        );
-    }
-
-    protected function tearDown()
-    {
-        $this->memcache = null;
-        $this->storage = null;
-    }
-
     public function testOpenSession()
     {
         $this->assertTrue($this->storage->open('', ''));
@@ -128,5 +109,26 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $this->assertInstanceOf('\Memcache', $method->invoke($this->storage));
+    }
+
+    protected function setUp()
+    {
+
+        if (!class_exists( 'Memcache' )) {
+            $this->markTestSkipped( 'Skipped tests Memcache class is not present' );
+        }
+
+        $this->memcache = $this->getMock( 'Memcache' );
+        $this->storage = new MemcacheSessionHandler(
+            $this->memcache,
+            array( 'prefix' => self::PREFIX, 'expiretime' => self::TTL )
+        );
+    }
+
+    protected function tearDown()
+    {
+
+        $this->memcache = null;
+        $this->storage = null;
     }
 }

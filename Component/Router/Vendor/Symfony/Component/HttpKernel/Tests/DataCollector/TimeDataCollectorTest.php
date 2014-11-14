@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\DataCollector;
 
-use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 
 class TimeDataCollectorTest extends \PHPUnit_Framework_TestCase
 {

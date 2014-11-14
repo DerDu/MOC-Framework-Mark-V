@@ -47,6 +47,26 @@ class Twig_Tests_Extension_SandboxTest extends PHPUnit_Framework_TestCase
         $twig->loadTemplate('1_child')->render(array());
     }
 
+    protected function getEnvironment(
+        $sandboxed,
+        $options,
+        $templates,
+        $tags = array(),
+        $filters = array(),
+        $methods = array(),
+        $properties = array(),
+        $functions = array()
+    ) {
+
+        $loader = new Twig_Loader_Array( $templates );
+        $twig = new Twig_Environment( $loader,
+            array_merge( array( 'debug' => true, 'cache' => false, 'autoescape' => false ), $options ) );
+        $policy = new Twig_Sandbox_SecurityPolicy( $tags, $filters, $methods, $properties, $functions );
+        $twig->addExtension( new Twig_Extension_Sandbox( $policy, $sandboxed ) );
+
+        return $twig;
+    }
+
     public function testSandboxGloballySet()
     {
         $twig = $this->getEnvironment(false, array(), self::$templates);
@@ -173,16 +193,6 @@ EOF
         ), array('macro', 'import'), array('escape'));
 
         $this->assertEquals('<p>username</p>', $twig->loadTemplate('index')->render(array()));
-    }
-
-    protected function getEnvironment($sandboxed, $options, $templates, $tags = array(), $filters = array(), $methods = array(), $properties = array(), $functions = array())
-    {
-        $loader = new Twig_Loader_Array($templates);
-        $twig = new Twig_Environment($loader, array_merge(array('debug' => true, 'cache' => false, 'autoescape' => false), $options));
-        $policy = new Twig_Sandbox_SecurityPolicy($tags, $filters, $methods, $properties, $functions);
-        $twig->addExtension(new Twig_Extension_Sandbox($policy, $sandboxed));
-
-        return $twig;
     }
 }
 

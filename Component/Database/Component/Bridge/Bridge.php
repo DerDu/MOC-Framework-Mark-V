@@ -27,7 +27,11 @@ abstract class Bridge implements IBridgeInterface
     final public function prepareStatement( $Sql )
     {
 
-        array_push( self::$StatementList, $Sql );
+        if (is_array( $Sql )) {
+            static::$StatementList += $Sql;
+        } else {
+            array_push( static::$StatementList, $Sql );
+        }
         return $this;
     }
 
@@ -40,7 +44,7 @@ abstract class Bridge implements IBridgeInterface
     final public function defineParameter( $Value, $Type = null )
     {
 
-        array_push( self::$ParameterList, array( $Value, $Type ) );
+        array_push( static::$ParameterList, array( $Value, $Type ) );
         return $this;
     }
 }

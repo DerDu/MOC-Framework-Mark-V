@@ -16,8 +16,8 @@
  */
 class Twig_Loader_Chain implements Twig_LoaderInterface, Twig_ExistsLoaderInterface
 {
-    private $hasSourceCache = array();
     protected $loaders = array();
+    private $hasSourceCache = array();
 
     /**
      * Constructor.

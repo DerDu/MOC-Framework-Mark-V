@@ -12,9 +12,9 @@
 namespace Symfony\Component\HttpKernel\Fragment;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 
 /**
@@ -116,6 +116,12 @@ class FragmentHandler
         return $this->deliver($this->renderers[$renderer]->render($uri, $request, $options));
     }
 
+    private function getRequest()
+    {
+
+        return $this->requestStack ? $this->requestStack->getCurrentRequest() : $this->request;
+    }
+
     /**
      * Delivers the Response as a string.
      *
@@ -139,10 +145,5 @@ class FragmentHandler
         }
 
         $response->sendContent();
-    }
-
-    private function getRequest()
-    {
-        return $this->requestStack ? $this->requestStack->getCurrentRequest() : $this->request;
     }
 }

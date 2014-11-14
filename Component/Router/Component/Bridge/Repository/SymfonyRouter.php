@@ -83,10 +83,12 @@ class SymfonyRouter extends Bridge implements IBridgeInterface
     }
 
     /**
+     * @param null|string $Path
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function getRoute()
+    public function getRoute( $Path = null )
     {
 
         try {

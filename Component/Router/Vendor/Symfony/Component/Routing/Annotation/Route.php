@@ -70,19 +70,15 @@ class Route
         return $this->path;
     }
 
-    public function setPath($path)
-    {
-        $this->path = $path;
-    }
-
     public function getPath()
     {
         return $this->path;
     }
 
-    public function setHost($pattern)
+    public function setPath( $path )
     {
-        $this->host = $pattern;
+
+        $this->path = $path;
     }
 
     public function getHost()
@@ -90,9 +86,10 @@ class Route
         return $this->host;
     }
 
-    public function setName($name)
+    public function setHost( $pattern )
     {
-        $this->name = $name;
+
+        $this->host = $pattern;
     }
 
     public function getName()
@@ -100,9 +97,10 @@ class Route
         return $this->name;
     }
 
-    public function setRequirements($requirements)
+    public function setName( $name )
     {
-        $this->requirements = $requirements;
+
+        $this->name = $name;
     }
 
     public function getRequirements()
@@ -110,9 +108,10 @@ class Route
         return $this->requirements;
     }
 
-    public function setOptions($options)
+    public function setRequirements( $requirements )
     {
-        $this->options = $options;
+
+        $this->requirements = $requirements;
     }
 
     public function getOptions()
@@ -120,9 +119,10 @@ class Route
         return $this->options;
     }
 
-    public function setDefaults($defaults)
+    public function setOptions( $options )
     {
-        $this->defaults = $defaults;
+
+        $this->options = $options;
     }
 
     public function getDefaults()
@@ -130,9 +130,10 @@ class Route
         return $this->defaults;
     }
 
-    public function setSchemes($schemes)
+    public function setDefaults( $defaults )
     {
-        $this->schemes = is_array($schemes) ? $schemes : array($schemes);
+
+        $this->defaults = $defaults;
     }
 
     public function getSchemes()
@@ -140,9 +141,10 @@ class Route
         return $this->schemes;
     }
 
-    public function setMethods($methods)
+    public function setSchemes( $schemes )
     {
-        $this->methods = is_array($methods) ? $methods : array($methods);
+
+        $this->schemes = is_array( $schemes ) ? $schemes : array( $schemes );
     }
 
     public function getMethods()
@@ -150,13 +152,20 @@ class Route
         return $this->methods;
     }
 
-    public function setCondition($condition)
+    public function setMethods( $methods )
     {
-        $this->condition = $condition;
+
+        $this->methods = is_array( $methods ) ? $methods : array( $methods );
     }
 
     public function getCondition()
     {
         return $this->condition;
+    }
+
+    public function setCondition( $condition )
+    {
+
+        $this->condition = $condition;
     }
 }

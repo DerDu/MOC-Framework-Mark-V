@@ -19,6 +19,16 @@ class Twig_Tests_ParserTest extends PHPUnit_Framework_TestCase
         $parser->setMacro('display', $this->getMock('Twig_Node_Macro', array(), array(), '', null));
     }
 
+    protected function getParser()
+    {
+
+        $parser = new TestParser( new Twig_Environment() );
+        $parser->setParent( new Twig_Node() );
+        $parser->stream = $this->getMockBuilder( 'Twig_TokenStream' )->disableOriginalConstructor()->getMock();
+
+        return $parser;
+    }
+
     /**
      * @expectedException        Twig_Error_Syntax
      * @expectedExceptionMessage Unknown tag name "foo". Did you mean "for" at line 1
@@ -92,6 +102,10 @@ class Twig_Tests_ParserTest extends PHPUnit_Framework_TestCase
         $parser->filterBodyNodes(new Twig_Node_Text(chr(0xEF).chr(0xBB).chr(0xBF), 1));
     }
 
+    // The getVarName() must not depend on the template loaders,
+    // If this test does not throw any exception, that's good.
+    // see https://github.com/symfony/symfony/issues/4218
+
     public function testParseIsReentrant()
     {
         $twig = new Twig_Environment(null, array(
@@ -115,9 +129,6 @@ class Twig_Tests_ParserTest extends PHPUnit_Framework_TestCase
         $this->assertNull($parser->getParent());
     }
 
-    // The getVarName() must not depend on the template loaders,
-    // If this test does not throw any exception, that's good.
-    // see https://github.com/symfony/symfony/issues/4218
     public function testGetVarName()
     {
         $twig = new Twig_Environment(null, array(
@@ -133,15 +144,6 @@ class Twig_Tests_ParserTest extends PHPUnit_Framework_TestCase
 {% endmacro %}
 EOF
         ));
-    }
-
-    protected function getParser()
-    {
-        $parser = new TestParser(new Twig_Environment());
-        $parser->setParent(new Twig_Node());
-        $parser->stream = $this->getMockBuilder('Twig_TokenStream')->disableOriginalConstructor()->getMock();
-
-        return $parser;
     }
 }
 

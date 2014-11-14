@@ -92,23 +92,17 @@ class DumperCollection implements \IteratorAggregate
     }
 
     /**
-     * Returns the parent collection.
+     * Returns an attribute by name.
      *
-     * @return DumperCollection|null The parent collection or null if the collection has no parent
+     * @param string $name    The attribute name
+     * @param mixed  $default Default value is the attribute doesn't exist
+     *
+     * @return mixed The attribute value
      */
-    protected function getParent()
+    public function getAttribute( $name, $default = null )
     {
-        return $this->parent;
-    }
 
-    /**
-     * Sets the parent collection.
-     *
-     * @param DumperCollection $parent The parent collection
-     */
-    protected function setParent(DumperCollection $parent)
-    {
-        $this->parent = $parent;
+        return $this->hasAttribute( $name ) ? $this->attributes[$name] : $default;
     }
 
     /**
@@ -121,19 +115,6 @@ class DumperCollection implements \IteratorAggregate
     public function hasAttribute($name)
     {
         return array_key_exists($name, $this->attributes);
-    }
-
-    /**
-     * Returns an attribute by name.
-     *
-     * @param string $name    The attribute name
-     * @param mixed  $default Default value is the attribute doesn't exist
-     *
-     * @return mixed The attribute value
-     */
-    public function getAttribute($name, $default = null)
-    {
-        return $this->hasAttribute($name) ? $this->attributes[$name] : $default;
     }
 
     /**
@@ -155,5 +136,27 @@ class DumperCollection implements \IteratorAggregate
     public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+    }
+
+    /**
+     * Returns the parent collection.
+     *
+     * @return DumperCollection|null The parent collection or null if the collection has no parent
+     */
+    protected function getParent()
+    {
+
+        return $this->parent;
+    }
+
+    /**
+     * Sets the parent collection.
+     *
+     * @param DumperCollection $parent The parent collection
+     */
+    protected function setParent( DumperCollection $parent )
+    {
+
+        $this->parent = $parent;
     }
 }

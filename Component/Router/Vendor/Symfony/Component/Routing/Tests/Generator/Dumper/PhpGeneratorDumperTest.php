@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Routing\Tests\Generator\Dumper;
 
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 class PhpGeneratorDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,27 +32,6 @@ class PhpGeneratorDumperTest extends \PHPUnit_Framework_TestCase
      * @var string
      */
     private $testTmpFilepath;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->routeCollection = new RouteCollection();
-        $this->generatorDumper = new PhpGeneratorDumper($this->routeCollection);
-        $this->testTmpFilepath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'php_generator.php';
-        @unlink($this->testTmpFilepath);
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        @unlink($this->testTmpFilepath);
-
-        $this->routeCollection = null;
-        $this->generatorDumper = null;
-        $this->testTmpFilepath = null;
-    }
 
     public function testDumpWithRoutes()
     {
@@ -146,5 +125,28 @@ class PhpGeneratorDumperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($absoluteUrlBC, 'https://localhost/app.php/testing_bc');
         $this->assertEquals($relativeUrl, '/app.php/testing');
         $this->assertEquals($relativeUrlBC, '/app.php/testing_bc');
+    }
+
+    protected function setUp()
+    {
+
+        parent::setUp();
+
+        $this->routeCollection = new RouteCollection();
+        $this->generatorDumper = new PhpGeneratorDumper( $this->routeCollection );
+        $this->testTmpFilepath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'php_generator.php';
+        @unlink( $this->testTmpFilepath );
+    }
+
+    protected function tearDown()
+    {
+
+        parent::tearDown();
+
+        @unlink( $this->testTmpFilepath );
+
+        $this->routeCollection = null;
+        $this->generatorDumper = null;
+        $this->testTmpFilepath = null;
     }
 }

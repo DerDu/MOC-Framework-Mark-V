@@ -112,6 +112,14 @@ class MemcacheMock
         return false;
     }
 
+    private function storeData( $key, $value )
+    {
+
+        $this->storage[$key] = serialize( $value );
+
+        return true;
+    }
+
     /**
      * Store data at the server.
      *
@@ -186,6 +194,16 @@ class MemcacheMock
         return $this->getData($key);
     }
 
+    private function getData( $key )
+    {
+
+        if (isset( $this->storage[$key] )) {
+            return unserialize( $this->storage[$key] );
+        }
+
+        return false;
+    }
+
     /**
      * Delete item from the server
      *
@@ -232,22 +250,6 @@ class MemcacheMock
     public function close()
     {
         $this->connected = false;
-
-        return true;
-    }
-
-    private function getData($key)
-    {
-        if (isset($this->storage[$key])) {
-            return unserialize($this->storage[$key]);
-        }
-
-        return false;
-    }
-
-    private function storeData($key, $value)
-    {
-        $this->storage[$key] = serialize($value);
 
         return true;
     }

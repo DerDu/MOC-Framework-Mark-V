@@ -11,14 +11,14 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * RequestDataCollector.
@@ -32,6 +32,12 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
     public function __construct()
     {
         $this->controllers = new \SplObjectStorage();
+    }
+
+    public static function getSubscribedEvents()
+    {
+
+        return array( KernelEvents::CONTROLLER => 'onKernelController' );
     }
 
     /**
@@ -152,6 +158,46 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
             }
             unset($this->controllers[$request]);
         }
+    }
+
+    private function getCookieHeader( $name, $value, $expires, $path, $domain, $secure, $httponly )
+    {
+
+        $cookie = sprintf( '%s=%s', $name, urlencode( $value ) );
+
+        if (0 !== $expires) {
+            if (is_numeric( $expires )) {
+                $expires = (int)$expires;
+            } elseif ($expires instanceof \DateTime) {
+                $expires = $expires->getTimestamp();
+            } else {
+                $tmp = strtotime( $expires );
+                if (false === $tmp || -1 == $tmp) {
+                    throw new \InvalidArgumentException( sprintf( 'The "expires" cookie parameter is not valid (%s).',
+                            $expires ) );
+                }
+                $expires = $tmp;
+            }
+
+            $cookie .= '; expires='.str_replace( '+0000', '', \DateTime::createFromFormat( 'U', $expires,
+                        new \DateTimeZone( 'GMT' ) )->format( 'D, d-M-Y H:i:s T' ) );
+        }
+
+        if ($domain) {
+            $cookie .= '; domain='.$domain;
+        }
+
+        $cookie .= '; path='.$path;
+
+        if ($secure) {
+            $cookie .= '; secure';
+        }
+
+        if ($httponly) {
+            $cookie .= '; httponly';
+        }
+
+        return $cookie;
     }
 
     public function getPathInfo()
@@ -278,53 +324,11 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
         $this->controllers[$event->getRequest()] = $event->getController();
     }
 
-    public static function getSubscribedEvents()
-    {
-        return array(KernelEvents::CONTROLLER => 'onKernelController');
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
         return 'request';
-    }
-
-    private function getCookieHeader($name, $value, $expires, $path, $domain, $secure, $httponly)
-    {
-        $cookie = sprintf('%s=%s', $name, urlencode($value));
-
-        if (0 !== $expires) {
-            if (is_numeric($expires)) {
-                $expires = (int) $expires;
-            } elseif ($expires instanceof \DateTime) {
-                $expires = $expires->getTimestamp();
-            } else {
-                $tmp = strtotime($expires);
-                if (false === $tmp || -1 == $tmp) {
-                    throw new \InvalidArgumentException(sprintf('The "expires" cookie parameter is not valid (%s).', $expires));
-                }
-                $expires = $tmp;
-            }
-
-            $cookie .= '; expires='.str_replace('+0000', '', \DateTime::createFromFormat('U', $expires, new \DateTimeZone('GMT'))->format('D, d-M-Y H:i:s T'));
-        }
-
-        if ($domain) {
-            $cookie .= '; domain='.$domain;
-        }
-
-        $cookie .= '; path='.$path;
-
-        if ($secure) {
-            $cookie .= '; secure';
-        }
-
-        if ($httponly) {
-            $cookie .= '; httponly';
-        }
-
-        return $cookie;
     }
 }

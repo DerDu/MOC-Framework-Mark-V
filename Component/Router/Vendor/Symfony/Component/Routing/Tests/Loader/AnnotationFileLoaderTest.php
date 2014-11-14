@@ -11,21 +11,13 @@
 
 namespace Symfony\Component\Routing\Tests\Loader;
 
-use Symfony\Component\Routing\Loader\AnnotationFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Routing\Loader\AnnotationFileLoader;
 
 class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
 {
     protected $loader;
     protected $reader;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->reader = $this->getReader();
-        $this->loader = new AnnotationFileLoader(new FileLocator(), $this->getClassLoader($this->reader));
-    }
 
     public function testLoad()
     {
@@ -43,5 +35,14 @@ class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
 
         $this->assertTrue($this->loader->supports($fixture, 'annotation'), '->supports() checks the resource type if specified');
         $this->assertFalse($this->loader->supports($fixture, 'foo'), '->supports() checks the resource type if specified');
+    }
+
+    protected function setUp()
+    {
+
+        parent::setUp();
+
+        $this->reader = $this->getReader();
+        $this->loader = new AnnotationFileLoader( new FileLocator(), $this->getClassLoader( $this->reader ) );
     }
 }

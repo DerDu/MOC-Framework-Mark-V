@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * ConfigDataCollector.
@@ -161,13 +161,14 @@ class ConfigDataCollector extends DataCollector
     }
 
     /**
-     * Returns true if EAccelerator is enabled.
+     * Returns true if any accelerator is enabled.
      *
-     * @return bool    true if EAccelerator is enabled, false otherwise
+     * @return bool    true if any accelerator is enabled, false otherwise
      */
-    public function hasEAccelerator()
+    public function hasAccelerator()
     {
-        return $this->data['eaccel_enabled'];
+
+        return $this->hasApc() || $this->hasZendOpcache() || $this->hasEAccelerator() || $this->hasXCache() || $this->hasWinCache();
     }
 
     /**
@@ -191,6 +192,17 @@ class ConfigDataCollector extends DataCollector
     }
 
     /**
+     * Returns true if EAccelerator is enabled.
+     *
+     * @return bool    true if EAccelerator is enabled, false otherwise
+     */
+    public function hasEAccelerator()
+    {
+
+        return $this->data['eaccel_enabled'];
+    }
+
+    /**
      * Returns true if XCache is enabled.
      *
      * @return bool    true if XCache is enabled, false otherwise
@@ -208,16 +220,6 @@ class ConfigDataCollector extends DataCollector
     public function hasWinCache()
     {
         return $this->data['wincache_enabled'];
-    }
-
-    /**
-     * Returns true if any accelerator is enabled.
-     *
-     * @return bool    true if any accelerator is enabled, false otherwise
-     */
-    public function hasAccelerator()
-    {
-        return $this->hasApc() || $this->hasZendOpcache() || $this->hasEAccelerator() || $this->hasXCache() || $this->hasWinCache();
     }
 
     public function getBundles()

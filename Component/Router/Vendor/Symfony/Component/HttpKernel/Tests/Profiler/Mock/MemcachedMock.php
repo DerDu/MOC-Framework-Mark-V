@@ -78,6 +78,14 @@ class MemcachedMock
         return false;
     }
 
+    private function storeData( $key, $value )
+    {
+
+        $this->storage[$key] = serialize( $value );
+
+        return true;
+    }
+
     /**
      * Store data at the server.
      *
@@ -140,6 +148,16 @@ class MemcachedMock
         return $this->getData($key);
     }
 
+    private function getData( $key )
+    {
+
+        if (isset( $this->storage[$key] )) {
+            return unserialize( $this->storage[$key] );
+        }
+
+        return false;
+    }
+
     /**
      * Append data to an existing item
      *
@@ -197,22 +215,6 @@ class MemcachedMock
         }
 
         $this->storage = array();
-
-        return true;
-    }
-
-    private function getData($key)
-    {
-        if (isset($this->storage[$key])) {
-            return unserialize($this->storage[$key]);
-        }
-
-        return false;
-    }
-
-    private function storeData($key, $value)
-    {
-        $this->storage[$key] = serialize($value);
 
         return true;
     }

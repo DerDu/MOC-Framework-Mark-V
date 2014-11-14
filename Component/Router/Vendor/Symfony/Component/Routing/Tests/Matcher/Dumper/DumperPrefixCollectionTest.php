@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher\Dumper;
 
-use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Matcher\Dumper\DumperCollection;
 use Symfony\Component\Routing\Matcher\Dumper\DumperPrefixCollection;
 use Symfony\Component\Routing\Matcher\Dumper\DumperRoute;
-use Symfony\Component\Routing\Matcher\Dumper\DumperCollection;
+use Symfony\Component\Routing\Route;
 
 class DumperPrefixCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,6 +64,22 @@ EOF;
         $this->assertSame($expect, $this->collectionToString($result->getRoot(), '            '));
     }
 
+    private function collectionToString( DumperCollection $collection, $prefix )
+    {
+
+        $string = '';
+        foreach ($collection as $route) {
+            if ($route instanceof DumperCollection) {
+                $string .= sprintf( "%s|-coll %s\n", $prefix, $route->getPrefix() );
+                $string .= $this->collectionToString( $route, $prefix.'| ' );
+            } else {
+                $string .= sprintf( "%s|-route %s %s\n", $prefix, $route->getName(), $route->getRoute()->getPath() );
+            }
+        }
+
+        return $string;
+    }
+
     public function testMergeSlashNodes()
     {
         $coll = new DumperPrefixCollection();
@@ -104,20 +120,5 @@ EOF;
 EOF;
 
         $this->assertSame($expect, $this->collectionToString($result->getRoot(), '            '));
-    }
-
-    private function collectionToString(DumperCollection $collection, $prefix)
-    {
-        $string = '';
-        foreach ($collection as $route) {
-            if ($route instanceof DumperCollection) {
-                $string .= sprintf("%s|-coll %s\n", $prefix, $route->getPrefix());
-                $string .= $this->collectionToString($route, $prefix.'| ');
-            } else {
-                $string .= sprintf("%s|-route %s %s\n", $prefix, $route->getName(), $route->getRoute()->getPath());
-            }
-        }
-
-        return $string;
     }
 }

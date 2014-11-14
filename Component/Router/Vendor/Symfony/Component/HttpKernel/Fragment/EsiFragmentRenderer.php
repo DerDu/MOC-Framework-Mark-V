@@ -78,14 +78,6 @@ class EsiFragmentRenderer extends RoutableFragmentRenderer
         return new Response($tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'esi';
-    }
-
     private function generateSignedFragmentUri($uri, Request $request)
     {
         if (null === $this->signer) {
@@ -96,5 +88,14 @@ class EsiFragmentRenderer extends RoutableFragmentRenderer
         $fragmentUri = $this->signer->sign($this->generateFragmentUri($uri, $request, true));
 
         return substr($fragmentUri, strlen($request->getSchemeAndHttpHost()));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+
+        return 'esi';
     }
 }

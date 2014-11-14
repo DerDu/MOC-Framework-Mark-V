@@ -38,11 +38,13 @@ abstract class Twig_Template implements Twig_TemplateInterface
     }
 
     /**
-     * Returns the template name.
-     *
-     * @return string The template name
+     * This method is only useful when testing Twig. Do not use it.
      */
-    abstract public function getTemplateName();
+    public static function clearCache()
+    {
+
+        self::$cache = array();
+    }
 
     /**
      * {@inheritdoc}
@@ -50,6 +52,58 @@ abstract class Twig_Template implements Twig_TemplateInterface
     public function getEnvironment()
     {
         return $this->env;
+    }
+
+    public function isTraitable()
+    {
+
+        return true;
+    }
+
+    /**
+     * Renders a parent block.
+     *
+     * This method is for internal use only and should never be called
+     * directly.
+     *
+     * @param string $name    The block name to render from the parent
+     * @param array  $context The context
+     * @param array  $blocks  The current set of blocks
+     *
+     * @return string The rendered block
+     */
+    public function renderParentBlock( $name, array $context, array $blocks = array() )
+    {
+
+        ob_start();
+        $this->displayParentBlock( $name, $context, $blocks );
+
+        return ob_get_clean();
+    }
+
+    /**
+     * Displays a parent block.
+     *
+     * This method is for internal use only and should never be called
+     * directly.
+     *
+     * @param string $name    The block name to display from the parent
+     * @param array  $context The context
+     * @param array  $blocks  The current set of blocks
+     */
+    public function displayParentBlock( $name, array $context, array $blocks = array() )
+    {
+
+        $name = (string)$name;
+
+        if (isset( $this->traits[$name] )) {
+            $this->traits[$name][0]->displayBlock( $name, $context, $blocks, false );
+        } elseif (false !== $parent = $this->getParent( $context )) {
+            $parent->displayBlock( $name, $context, $blocks, false );
+        } else {
+            throw new Twig_Error_Runtime( sprintf( 'The template has no parent and no traits defining the "%s" block',
+                    $name ), -1, $this->getTemplateName() );
+        }
     }
 
     /**
@@ -85,32 +139,33 @@ abstract class Twig_Template implements Twig_TemplateInterface
         return false;
     }
 
-    public function isTraitable()
-    {
-        return true;
-    }
+    /**
+     * Returns the template name.
+     *
+     * @return string The template name
+     */
+    abstract public function getTemplateName();
 
     /**
-     * Displays a parent block.
+     * Renders a block.
      *
      * This method is for internal use only and should never be called
      * directly.
      *
-     * @param string $name    The block name to display from the parent
-     * @param array  $context The context
-     * @param array  $blocks  The current set of blocks
+     * @param string $name      The block name to render
+     * @param array  $context   The context
+     * @param array  $blocks    The current set of blocks
+     * @param bool   $useBlocks Whether to use the current set of blocks
+     *
+     * @return string The rendered block
      */
-    public function displayParentBlock($name, array $context, array $blocks = array())
+    public function renderBlock( $name, array $context, array $blocks = array(), $useBlocks = true )
     {
-        $name = (string) $name;
 
-        if (isset($this->traits[$name])) {
-            $this->traits[$name][0]->displayBlock($name, $context, $blocks, false);
-        } elseif (false !== $parent = $this->getParent($context)) {
-            $parent->displayBlock($name, $context, $blocks, false);
-        } else {
-            throw new Twig_Error_Runtime(sprintf('The template has no parent and no traits defining the "%s" block', $name), -1, $this->getTemplateName());
-        }
+        ob_start();
+        $this->displayBlock( $name, $context, $blocks, $useBlocks );
+
+        return ob_get_clean();
     }
 
     /**
@@ -150,47 +205,6 @@ abstract class Twig_Template implements Twig_TemplateInterface
         } elseif (false !== $parent = $this->getParent($context)) {
             $parent->displayBlock($name, $context, array_merge($this->blocks, $blocks), false);
         }
-    }
-
-    /**
-     * Renders a parent block.
-     *
-     * This method is for internal use only and should never be called
-     * directly.
-     *
-     * @param string $name    The block name to render from the parent
-     * @param array  $context The context
-     * @param array  $blocks  The current set of blocks
-     *
-     * @return string The rendered block
-     */
-    public function renderParentBlock($name, array $context, array $blocks = array())
-    {
-        ob_start();
-        $this->displayParentBlock($name, $context, $blocks);
-
-        return ob_get_clean();
-    }
-
-    /**
-     * Renders a block.
-     *
-     * This method is for internal use only and should never be called
-     * directly.
-     *
-     * @param string  $name      The block name to render
-     * @param array   $context   The context
-     * @param array   $blocks    The current set of blocks
-     * @param bool    $useBlocks Whether to use the current set of blocks
-     *
-     * @return string The rendered block
-     */
-    public function renderBlock($name, array $context, array $blocks = array(), $useBlocks = true)
-    {
-        ob_start();
-        $this->displayBlock($name, $context, $blocks, $useBlocks);
-
-        return ob_get_clean();
     }
 
     /**
@@ -248,14 +262,6 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * {@inheritdoc}
      */
-    public function display(array $context, array $blocks = array())
-    {
-        $this->displayWithErrorHandling($this->env->mergeGlobals($context), array_merge($this->blocks, $blocks));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render(array $context)
     {
         $level = ob_get_level();
@@ -271,6 +277,15 @@ abstract class Twig_Template implements Twig_TemplateInterface
         }
 
         return ob_get_clean();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function display( array $context, array $blocks = array() )
+    {
+
+        $this->displayWithErrorHandling( $this->env->mergeGlobals( $context ), array_merge( $this->blocks, $blocks ) );
     }
 
     protected function displayWithErrorHandling(array $context, array $blocks = array())
@@ -473,13 +488,5 @@ abstract class Twig_Template implements Twig_TemplateInterface
         }
 
         return $ret;
-    }
-
-    /**
-     * This method is only useful when testing Twig. Do not use it.
-     */
-    public static function clearCache()
-    {
-        self::$cache = array();
     }
 }

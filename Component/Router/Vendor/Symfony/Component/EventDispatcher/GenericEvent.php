@@ -57,45 +57,13 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Get argument by key.
-     *
-     * @param string $key Key.
-     *
-     * @throws \InvalidArgumentException If key is not found.
-     *
-     * @return mixed Contents of array key.
-     */
-    public function getArgument($key)
-    {
-        if ($this->hasArgument($key)) {
-            return $this->arguments[$key];
-        }
-
-        throw new \InvalidArgumentException(sprintf('%s not found in %s', $key, $this->getName()));
-    }
-
-    /**
-     * Add argument to event.
-     *
-     * @param string $key   Argument name.
-     * @param mixed  $value Value.
-     *
-     * @return GenericEvent
-     */
-    public function setArgument($key, $value)
-    {
-        $this->arguments[$key] = $value;
-
-        return $this;
-    }
-
-    /**
      * Getter for all arguments.
      *
      * @return array
      */
     public function getArguments()
     {
+
         return $this->arguments;
     }
 
@@ -106,11 +74,46 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @return GenericEvent
      */
-    public function setArguments(array $args = array())
+    public function setArguments( array $args = array() )
     {
+
         $this->arguments = $args;
 
         return $this;
+    }
+
+    /**
+     * ArrayAccess for argument getter.
+     *
+     * @param string $key Array key.
+     *
+     * @throws \InvalidArgumentException If key does not exist in $this->args.
+     *
+     * @return mixed
+     */
+    public function offsetGet( $key )
+    {
+
+        return $this->getArgument( $key );
+    }
+
+    /**
+     * Get argument by key.
+     *
+     * @param string $key Key.
+     *
+     * @throws \InvalidArgumentException If key is not found.
+     *
+     * @return mixed Contents of array key.
+     */
+    public function getArgument( $key )
+    {
+
+        if ($this->hasArgument( $key )) {
+            return $this->arguments[$key];
+        }
+
+        throw new \InvalidArgumentException( sprintf( '%s not found in %s', $key, $this->getName() ) );
     }
 
     /**
@@ -126,28 +129,31 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * ArrayAccess for argument getter.
-     *
-     * @param string $key Array key.
-     *
-     * @throws \InvalidArgumentException If key does not exist in $this->args.
-     *
-     * @return mixed
-     */
-    public function offsetGet($key)
-    {
-        return $this->getArgument($key);
-    }
-
-    /**
      * ArrayAccess for argument setter.
      *
      * @param string $key   Array key to set.
      * @param mixed  $value Value.
      */
-    public function offsetSet($key, $value)
+    public function offsetSet( $key, $value )
     {
-        $this->setArgument($key, $value);
+
+        $this->setArgument( $key, $value );
+    }
+
+    /**
+     * Add argument to event.
+     *
+     * @param string $key Argument name.
+     * @param mixed  $value Value.
+     *
+     * @return GenericEvent
+     */
+    public function setArgument( $key, $value )
+    {
+
+        $this->arguments[$key] = $value;
+
+        return $this;
     }
 
     /**

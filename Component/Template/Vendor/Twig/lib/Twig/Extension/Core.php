@@ -69,16 +69,6 @@ class Twig_Extension_Core extends Twig_Extension
     }
 
     /**
-     * Sets the default timezone to be used by the date filter.
-     *
-     * @param DateTimeZone|string $timezone The default timezone string or a DateTimeZone object
-     */
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
-    }
-
-    /**
      * Gets the default timezone to be used by the date filter.
      *
      * @return DateTimeZone The default timezone currently in use
@@ -93,15 +83,14 @@ class Twig_Extension_Core extends Twig_Extension
     }
 
     /**
-     * Sets the default format to be used by the number_format filter.
+     * Sets the default timezone to be used by the date filter.
      *
-     * @param int     $decimal      The number of decimal places to use.
-     * @param string  $decimalPoint The character(s) to use for the decimal point.
-     * @param string  $thousandSep  The character(s) to use for the thousands separator.
+     * @param DateTimeZone|string $timezone The default timezone string or a DateTimeZone object
      */
-    public function setNumberFormat($decimal, $decimalPoint, $thousandSep)
+    public function setTimezone( $timezone )
     {
-        $this->numberFormat = array($decimal, $decimalPoint, $thousandSep);
+
+        $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone( $timezone );
     }
 
     /**
@@ -112,6 +101,19 @@ class Twig_Extension_Core extends Twig_Extension
     public function getNumberFormat()
     {
         return $this->numberFormat;
+    }
+
+    /**
+     * Sets the default format to be used by the number_format filter.
+     *
+     * @param int    $decimal      The number of decimal places to use.
+     * @param string $decimalPoint The character(s) to use for the decimal point.
+     * @param string $thousandSep  The character(s) to use for the thousands separator.
+     */
+    public function setNumberFormat( $decimal, $decimalPoint, $thousandSep )
+    {
+
+        $this->numberFormat = array( $decimal, $decimalPoint, $thousandSep );
     }
 
     /**

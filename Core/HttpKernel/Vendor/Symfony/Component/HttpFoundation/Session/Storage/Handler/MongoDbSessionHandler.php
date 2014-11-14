@@ -97,6 +97,22 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
     }
 
     /**
+     * Return a "MongoCollection" instance
+     *
+     * @return \MongoCollection
+     */
+    private function getCollection()
+    {
+
+        if (null === $this->collection) {
+            $this->collection = $this->mongo->selectCollection( $this->options['database'],
+                $this->options['collection'] );
+        }
+
+        return $this->collection;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function gc($maxlifetime)
@@ -145,20 +161,6 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
         ));
 
         return null === $dbData ? '' : $dbData[$this->options['data_field']]->bin;
-    }
-
-    /**
-     * Return a "MongoCollection" instance
-     *
-     * @return \MongoCollection
-     */
-    private function getCollection()
-    {
-        if (null === $this->collection) {
-            $this->collection = $this->mongo->selectCollection($this->options['database'], $this->options['collection']);
-        }
-
-        return $this->collection;
     }
 
     /**

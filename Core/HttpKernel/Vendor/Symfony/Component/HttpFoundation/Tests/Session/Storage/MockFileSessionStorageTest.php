@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage;
 
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
 /**
  * Test class for MockFileSessionStorage.
@@ -23,30 +23,13 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 class MockFileSessionStorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var string
-     */
-    private $sessionDir;
-
-    /**
      * @var FileMockSessionStorage
      */
     protected $storage;
-
-    protected function setUp()
-    {
-        $this->sessionDir = sys_get_temp_dir().'/sf2test';
-        $this->storage = $this->getStorage();
-    }
-
-    protected function tearDown()
-    {
-        $this->sessionDir = null;
-        $this->storage = null;
-        array_map('unlink', glob($this->sessionDir.'/*.session'));
-        if (is_dir($this->sessionDir)) {
-            rmdir($this->sessionDir);
-        }
-    }
+    /**
+     * @var string
+     */
+    private $sessionDir;
 
     public function testStart()
     {
@@ -115,6 +98,13 @@ class MockFileSessionStorageTest extends \PHPUnit_Framework_TestCase
         $storage1->save();
     }
 
+    protected function setUp()
+    {
+
+        $this->sessionDir = sys_get_temp_dir().'/sf2test';
+        $this->storage = $this->getStorage();
+    }
+
     private function getStorage()
     {
         $storage = new MockFileSessionStorage($this->sessionDir);
@@ -122,5 +112,16 @@ class MockFileSessionStorageTest extends \PHPUnit_Framework_TestCase
         $storage->registerBag(new AttributeBag());
 
         return $storage;
+    }
+
+    protected function tearDown()
+    {
+
+        $this->sessionDir = null;
+        $this->storage = null;
+        array_map( 'unlink', glob( $this->sessionDir.'/*.session' ) );
+        if (is_dir( $this->sessionDir )) {
+            rmdir( $this->sessionDir );
+        }
     }
 }

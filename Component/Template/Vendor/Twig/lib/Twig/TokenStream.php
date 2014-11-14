@@ -50,29 +50,32 @@ class Twig_TokenStream
     }
 
     /**
+     * Tests a token, sets the pointer to the next one and returns it or throws a syntax error.
+     *
+     * @return Twig_Token|null The next token if the condition is true, null otherwise
+     */
+    public function nextIf( $primary, $secondary = null )
+    {
+
+        if ($this->tokens[$this->current]->test( $primary, $secondary )) {
+            return $this->next();
+        }
+    }
+
+    /**
      * Sets the pointer to the next token and returns the old one.
      *
      * @return Twig_Token
      */
     public function next()
     {
-        if (!isset($this->tokens[++$this->current])) {
-            throw new Twig_Error_Syntax('Unexpected end of template', $this->tokens[$this->current - 1]->getLine(), $this->filename);
+
+        if (!isset( $this->tokens[++$this->current] )) {
+            throw new Twig_Error_Syntax( 'Unexpected end of template', $this->tokens[$this->current - 1]->getLine(),
+                $this->filename );
         }
 
         return $this->tokens[$this->current - 1];
-    }
-
-    /**
-     * Tests a token, sets the pointer to the next one and returns it or throws a syntax error.
-     *
-     * @return Twig_Token|null The next token if the condition is true, null otherwise
-     */
-    public function nextIf($primary, $secondary = null)
-    {
-        if ($this->tokens[$this->current]->test($primary, $secondary)) {
-            return $this->next();
-        }
     }
 
     /**

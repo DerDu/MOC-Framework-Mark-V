@@ -64,33 +64,36 @@ class RequestMatcher implements RequestMatcherInterface
     }
 
     /**
-     * Adds a check for the URL host name.
-     *
-     * @param string $regexp A Regexp
-     */
-    public function matchHost($regexp)
-    {
-        $this->host = $regexp;
-    }
-
-    /**
      * Adds a check for the URL path info.
      *
      * @param string $regexp A Regexp
      */
-    public function matchPath($regexp)
+    public function matchPath( $regexp )
     {
+
         $this->path = $regexp;
     }
 
     /**
-     * Adds a check for the client IP.
+     * Adds a check for the URL host name.
      *
-     * @param string $ip A specific IP address or a range specified using IP/netmask like 192.168.1.0/24
+     * @param string $regexp A Regexp
      */
-    public function matchIp($ip)
+    public function matchHost( $regexp )
     {
-        $this->matchIps($ip);
+
+        $this->host = $regexp;
+    }
+
+    /**
+     * Adds a check for the HTTP method.
+     *
+     * @param string|string[]|null $method An HTTP method or an array of HTTP methods
+     */
+    public function matchMethod( $method )
+    {
+
+        $this->methods = array_map( 'strtoupper', (array)$method );
     }
 
     /**
@@ -104,24 +107,26 @@ class RequestMatcher implements RequestMatcherInterface
     }
 
     /**
-     * Adds a check for the HTTP method.
-     *
-     * @param string|string[]|null $method An HTTP method or an array of HTTP methods
-     */
-    public function matchMethod($method)
-    {
-        $this->methods = array_map('strtoupper', (array) $method);
-    }
-
-    /**
      * Adds a check for request attribute.
      *
      * @param string $key    The request attribute name
      * @param string $regexp A Regexp
      */
-    public function matchAttribute($key, $regexp)
+    public function matchAttribute( $key, $regexp )
     {
+
         $this->attributes[$key] = $regexp;
+    }
+
+    /**
+     * Adds a check for the client IP.
+     *
+     * @param string $ip A specific IP address or a range specified using IP/netmask like 192.168.1.0/24
+     */
+    public function matchIp( $ip )
+    {
+
+        $this->matchIps( $ip );
     }
 
     /**

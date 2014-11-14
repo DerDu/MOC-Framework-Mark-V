@@ -54,6 +54,23 @@ class MockFileSessionStorage extends MockArraySessionStorage
     /**
      * {@inheritdoc}
      */
+    public function regenerate( $destroy = false, $lifetime = null )
+    {
+
+        if (!$this->started) {
+            $this->start();
+        }
+
+        if ($destroy) {
+            $this->destroy();
+        }
+
+        return parent::regenerate( $destroy, $lifetime );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function start()
     {
         if ($this->started) {
@@ -72,36 +89,26 @@ class MockFileSessionStorage extends MockArraySessionStorage
     }
 
     /**
-     * {@inheritdoc}
+     * Reads session from storage and loads session.
      */
-    public function regenerate($destroy = false, $lifetime = null)
+    private function read()
     {
-        if (!$this->started) {
-            $this->start();
-        }
 
-        if ($destroy) {
-            $this->destroy();
-        }
+        $filePath = $this->getFilePath();
+        $this->data = is_readable( $filePath ) && is_file( $filePath ) ? unserialize( file_get_contents( $filePath ) ) : array();
 
-        return parent::regenerate($destroy, $lifetime);
+        $this->loadSession();
     }
 
     /**
-     * {@inheritdoc}
+     * Calculate path to file.
+     *
+     * @return string File path
      */
-    public function save()
+    private function getFilePath()
     {
-        if (!$this->started) {
-            throw new \RuntimeException("Trying to save a session that was not started yet or was already closed");
-        }
 
-        file_put_contents($this->getFilePath(), serialize($this->data));
-
-        // this is needed for Silex, where the session object is re-used across requests
-        // in functional tests. In Symfony, the container is rebooted, so we don't have
-        // this issue
-        $this->started = false;
+        return $this->savePath.'/'.$this->id.'.mocksess';
     }
 
     /**
@@ -116,23 +123,20 @@ class MockFileSessionStorage extends MockArraySessionStorage
     }
 
     /**
-     * Calculate path to file.
-     *
-     * @return string File path
+     * {@inheritdoc}
      */
-    private function getFilePath()
+    public function save()
     {
-        return $this->savePath.'/'.$this->id.'.mocksess';
-    }
 
-    /**
-     * Reads session from storage and loads session.
-     */
-    private function read()
-    {
-        $filePath = $this->getFilePath();
-        $this->data = is_readable($filePath) && is_file($filePath) ? unserialize(file_get_contents($filePath)) : array();
+        if (!$this->started) {
+            throw new \RuntimeException( "Trying to save a session that was not started yet or was already closed" );
+        }
 
-        $this->loadSession();
+        file_put_contents( $this->getFilePath(), serialize( $this->data ) );
+
+        // this is needed for Silex, where the session object is re-used across requests
+        // in functional tests. In Symfony, the container is rebooted, so we don't have
+        // this issue
+        $this->started = false;
     }
 }

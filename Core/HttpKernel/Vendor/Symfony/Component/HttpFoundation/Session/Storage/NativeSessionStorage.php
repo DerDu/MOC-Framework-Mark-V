@@ -13,8 +13,8 @@ namespace Symfony\Component\HttpFoundation\Session\Storage;
 
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeSessionHandler;
-use Symfony\Component\HttpFoundation\Session\Storage\Proxy\NativeProxy;
 use Symfony\Component\HttpFoundation\Session\Storage\Proxy\AbstractProxy;
+use Symfony\Component\HttpFoundation\Session\Storage\Proxy\NativeProxy;
 use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
 
 /**
@@ -112,49 +112,52 @@ class NativeSessionStorage implements SessionStorageInterface
     }
 
     /**
-     * Gets the save handler instance.
+     * Sets session.* ini variables.
      *
-     * @return AbstractProxy
+     * For convenience we omit 'session.' from the beginning of the keys.
+     * Explicitly ignores other ini keys.
+     *
+     * @param array $options Session ini directives array(key => value).
+     *
+     * @see http://php.net/session.configuration
      */
-    public function getSaveHandler()
+    public function setOptions( array $options )
     {
-        return $this->saveHandler;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function start()
-    {
-        if ($this->started && !$this->closed) {
-            return true;
+        $validOptions = array_flip( array(
+            'cache_limiter',
+            'cookie_domain',
+            'cookie_httponly',
+            'cookie_lifetime',
+            'cookie_path',
+            'cookie_secure',
+            'entropy_file',
+            'entropy_length',
+            'gc_divisor',
+            'gc_maxlifetime',
+            'gc_probability',
+            'hash_bits_per_character',
+            'hash_function',
+            'name',
+            'referer_check',
+            'serialize_handler',
+            'use_cookies',
+            'use_only_cookies',
+            'use_trans_sid',
+            'upload_progress.enabled',
+            'upload_progress.cleanup',
+            'upload_progress.prefix',
+            'upload_progress.name',
+            'upload_progress.freq',
+            'upload_progress.min-freq',
+            'url_rewriter.tags',
+        ) );
+
+        foreach ($options as $key => $value) {
+            if (isset( $validOptions[$key] )) {
+                ini_set( 'session.'.$key, $value );
+            }
         }
-
-        if (version_compare(phpversion(), '5.4.0', '>=') && \PHP_SESSION_ACTIVE === session_status()) {
-            throw new \RuntimeException('Failed to start the session: already started by PHP.');
-        }
-
-        if (version_compare(phpversion(), '5.4.0', '<') && isset($_SESSION) && session_id()) {
-            // not 100% fool-proof, but is the most reliable way to determine if a session is active in PHP 5.3
-            throw new \RuntimeException('Failed to start the session: already started by PHP ($_SESSION is set).');
-        }
-
-        if (ini_get('session.use_cookies') && headers_sent($file, $line)) {
-            throw new \RuntimeException(sprintf('Failed to start the session because headers have already been sent by "%s" at line %d.', $file, $line));
-        }
-
-        // ok to try and start the session
-        if (!session_start()) {
-            throw new \RuntimeException('Failed to start the session');
-        }
-
-        $this->loadSession();
-        if (!$this->saveHandler->isWrapper() && !$this->saveHandler->isSessionHandlerInterface()) {
-            // This condition matches only PHP 5.3 with internal save handlers
-            $this->saveHandler->setActive(true);
-        }
-
-        return true;
     }
 
     /**
@@ -226,125 +229,14 @@ class NativeSessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function save()
-    {
-        session_write_close();
-
-        if (!$this->saveHandler->isWrapper() && !$this->saveHandler->isSessionHandlerInterface()) {
-            // This condition matches only PHP 5.3 with internal save handlers
-            $this->saveHandler->setActive(false);
-        }
-
-        $this->closed = true;
-        $this->started = false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function clear()
-    {
-        // clear out the bags
-        foreach ($this->bags as $bag) {
-            $bag->clear();
-        }
-
-        // clear out the session
-        $_SESSION = array();
-
-        // reconnect the bags to the session
-        $this->loadSession();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function registerBag(SessionBagInterface $bag)
-    {
-        $this->bags[$bag->getName()] = $bag;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBag($name)
-    {
-        if (!isset($this->bags[$name])) {
-            throw new \InvalidArgumentException(sprintf('The SessionBagInterface %s is not registered.', $name));
-        }
-
-        if ($this->saveHandler->isActive() && !$this->started) {
-            $this->loadSession();
-        } elseif (!$this->started) {
-            $this->start();
-        }
-
-        return $this->bags[$name];
-    }
-
-    /**
-     * Sets the MetadataBag.
+     * Gets the save handler instance.
      *
-     * @param MetadataBag $metaBag
+     * @return AbstractProxy
      */
-    public function setMetadataBag(MetadataBag $metaBag = null)
+    public function getSaveHandler()
     {
-        if (null === $metaBag) {
-            $metaBag = new MetadataBag();
-        }
 
-        $this->metadataBag = $metaBag;
-    }
-
-    /**
-     * Gets the MetadataBag.
-     *
-     * @return MetadataBag
-     */
-    public function getMetadataBag()
-    {
-        return $this->metadataBag;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isStarted()
-    {
-        return $this->started;
-    }
-
-    /**
-     * Sets session.* ini variables.
-     *
-     * For convenience we omit 'session.' from the beginning of the keys.
-     * Explicitly ignores other ini keys.
-     *
-     * @param array $options Session ini directives array(key => value).
-     *
-     * @see http://php.net/session.configuration
-     */
-    public function setOptions(array $options)
-    {
-        $validOptions = array_flip(array(
-            'cache_limiter', 'cookie_domain', 'cookie_httponly',
-            'cookie_lifetime', 'cookie_path', 'cookie_secure',
-            'entropy_file', 'entropy_length', 'gc_divisor',
-            'gc_maxlifetime', 'gc_probability', 'hash_bits_per_character',
-            'hash_function', 'name', 'referer_check',
-            'serialize_handler', 'use_cookies',
-            'use_only_cookies', 'use_trans_sid', 'upload_progress.enabled',
-            'upload_progress.cleanup', 'upload_progress.prefix', 'upload_progress.name',
-            'upload_progress.freq', 'upload_progress.min-freq', 'url_rewriter.tags',
-        ));
-
-        foreach ($options as $key => $value) {
-            if (isset($validOptions[$key])) {
-                ini_set('session.'.$key, $value);
-            }
-        }
+        return $this->saveHandler;
     }
 
     /**
@@ -429,5 +321,141 @@ class NativeSessionStorage implements SessionStorageInterface
 
         $this->started = true;
         $this->closed = false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save()
+    {
+
+        session_write_close();
+
+        if (!$this->saveHandler->isWrapper() && !$this->saveHandler->isSessionHandlerInterface()) {
+            // This condition matches only PHP 5.3 with internal save handlers
+            $this->saveHandler->setActive( false );
+        }
+
+        $this->closed = true;
+        $this->started = false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+
+        // clear out the bags
+        foreach ($this->bags as $bag) {
+            $bag->clear();
+        }
+
+        // clear out the session
+        $_SESSION = array();
+
+        // reconnect the bags to the session
+        $this->loadSession();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function registerBag( SessionBagInterface $bag )
+    {
+
+        $this->bags[$bag->getName()] = $bag;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBag( $name )
+    {
+
+        if (!isset( $this->bags[$name] )) {
+            throw new \InvalidArgumentException( sprintf( 'The SessionBagInterface %s is not registered.', $name ) );
+        }
+
+        if ($this->saveHandler->isActive() && !$this->started) {
+            $this->loadSession();
+        } elseif (!$this->started) {
+            $this->start();
+        }
+
+        return $this->bags[$name];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function start()
+    {
+
+        if ($this->started && !$this->closed) {
+            return true;
+        }
+
+        if (version_compare( phpversion(), '5.4.0', '>=' ) && \PHP_SESSION_ACTIVE === session_status()) {
+            throw new \RuntimeException( 'Failed to start the session: already started by PHP.' );
+        }
+
+        if (version_compare( phpversion(), '5.4.0', '<' ) && isset( $_SESSION ) && session_id()) {
+            // not 100% fool-proof, but is the most reliable way to determine if a session is active in PHP 5.3
+            throw new \RuntimeException( 'Failed to start the session: already started by PHP ($_SESSION is set).' );
+        }
+
+        if (ini_get( 'session.use_cookies' ) && headers_sent( $file, $line )) {
+            throw new \RuntimeException( sprintf( 'Failed to start the session because headers have already been sent by "%s" at line %d.',
+                    $file, $line ) );
+        }
+
+        // ok to try and start the session
+        if (!session_start()) {
+            throw new \RuntimeException( 'Failed to start the session' );
+        }
+
+        $this->loadSession();
+        if (!$this->saveHandler->isWrapper() && !$this->saveHandler->isSessionHandlerInterface()) {
+            // This condition matches only PHP 5.3 with internal save handlers
+            $this->saveHandler->setActive( true );
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the MetadataBag.
+     *
+     * @return MetadataBag
+     */
+    public function getMetadataBag()
+    {
+
+        return $this->metadataBag;
+    }
+
+    /**
+     * Sets the MetadataBag.
+     *
+     * @param MetadataBag $metaBag
+     */
+    public function setMetadataBag( MetadataBag $metaBag = null )
+    {
+
+        if (null === $metaBag) {
+            $metaBag = new MetadataBag();
+        }
+
+        $this->metadataBag = $metaBag;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isStarted()
+    {
+
+        return $this->started;
     }
 }

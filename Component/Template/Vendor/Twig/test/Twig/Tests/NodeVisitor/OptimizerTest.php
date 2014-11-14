@@ -63,6 +63,27 @@ class Twig_Tests_NodeVisitor_OptimizerTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function checkForConfiguration( Twig_NodeInterface $node = null, $target, $withLoop )
+    {
+
+        if (null === $node) {
+            return;
+        }
+
+        foreach ($node as $n) {
+            if ($n instanceof Twig_Node_For) {
+                if ($target === $n->getNode( 'value_target' )->getAttribute( 'name' )) {
+                    return $withLoop == $n->getAttribute( 'with_loop' );
+                }
+            }
+
+            $ret = $this->checkForConfiguration( $n, $target, $withLoop );
+            if (null !== $ret) {
+                return $ret;
+            }
+        }
+    }
+
     public function getTestsForForOptimizer()
     {
         return array(
@@ -90,25 +111,5 @@ class Twig_Tests_NodeVisitor_OptimizerTest extends PHPUnit_Framework_TestCase
 
             array('{% for i in foo %}{% for j in foo %}{{ loop["parent"].loop.index }}{% endfor %}{% endfor %}', array('i' => true, 'j' => true)),
         );
-    }
-
-    public function checkForConfiguration(Twig_NodeInterface $node = null, $target, $withLoop)
-    {
-        if (null === $node) {
-            return;
-        }
-
-        foreach ($node as $n) {
-            if ($n instanceof Twig_Node_For) {
-                if ($target === $n->getNode('value_target')->getAttribute('name')) {
-                    return $withLoop == $n->getAttribute('with_loop');
-                }
-            }
-
-            $ret = $this->checkForConfiguration($n, $target, $withLoop);
-            if (null !== $ret) {
-                return $ret;
-            }
-        }
     }
 }

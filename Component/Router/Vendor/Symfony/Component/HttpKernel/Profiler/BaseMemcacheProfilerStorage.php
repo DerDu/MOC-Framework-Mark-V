@@ -101,6 +101,45 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
+     * Get name of index
+     *
+     * @return string
+     */
+    private function getIndexName()
+    {
+
+        $name = self::TOKEN_PREFIX.'index';
+
+        if ($this->isItemNameValid( $name )) {
+            return $name;
+        }
+
+        return false;
+    }
+
+    private function isItemNameValid( $name )
+    {
+
+        $length = strlen( $name );
+
+        if ($length > 250) {
+            throw new \RuntimeException( sprintf( 'The memcache item key "%s" is too long (%s bytes). Allowed maximum size is 250 bytes.',
+                    $name, $length ) );
+        }
+
+        return true;
+    }
+
+    /**
+     * Retrieve item from the memcache server
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    abstract protected function getValue( $key );
+
+    /**
      * {@inheritdoc}
      */
     public function purge()
@@ -130,6 +169,34 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
+     * Delete item from the memcache server
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    abstract protected function delete( $key );
+
+    /**
+     * Get item name
+     *
+     * @param string $token
+     *
+     * @return string
+     */
+    private function getItemName( $token )
+    {
+
+        $name = self::TOKEN_PREFIX.$token;
+
+        if ($this->isItemNameValid( $name )) {
+            return $name;
+        }
+
+        return false;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function read($token)
@@ -142,6 +209,39 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
 
         if (false !== $profile) {
             $profile = $this->createProfileFromData($token, $profile);
+        }
+
+        return $profile;
+    }
+
+    private function createProfileFromData( $token, $data, $parent = null )
+    {
+
+        $profile = new Profile( $token );
+        $profile->setIp( $data['ip'] );
+        $profile->setMethod( $data['method'] );
+        $profile->setUrl( $data['url'] );
+        $profile->setTime( $data['time'] );
+        $profile->setCollectors( $data['data'] );
+
+        if (!$parent && $data['parent']) {
+            $parent = $this->read( $data['parent'] );
+        }
+
+        if ($parent) {
+            $profile->setParent( $parent );
+        }
+
+        foreach ($data['children'] as $token) {
+            if (!$token) {
+                continue;
+            }
+
+            if (!$childProfileData = $this->getValue( $this->getItemName( $token ) )) {
+                continue;
+            }
+
+            $profile->addChild( $this->createProfileFromData( $token, $childProfileData, $profile ) );
         }
 
         return $profile;
@@ -190,15 +290,6 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * Retrieve item from the memcache server
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    abstract protected function getValue($key);
-
-    /**
      * Store an item on the memcache server under the specified key
      *
      * @param string $key
@@ -210,15 +301,6 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     abstract protected function setValue($key, $value, $expiration = 0);
 
     /**
-     * Delete item from the memcache server
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    abstract protected function delete($key);
-
-    /**
      * Append data to an existing item on the memcache server
      * @param string $key
      * @param string $value
@@ -227,82 +309,5 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
      * @return bool
      */
     abstract protected function appendValue($key, $value, $expiration = 0);
-
-    private function createProfileFromData($token, $data, $parent = null)
-    {
-        $profile = new Profile($token);
-        $profile->setIp($data['ip']);
-        $profile->setMethod($data['method']);
-        $profile->setUrl($data['url']);
-        $profile->setTime($data['time']);
-        $profile->setCollectors($data['data']);
-
-        if (!$parent && $data['parent']) {
-            $parent = $this->read($data['parent']);
-        }
-
-        if ($parent) {
-            $profile->setParent($parent);
-        }
-
-        foreach ($data['children'] as $token) {
-            if (!$token) {
-                continue;
-            }
-
-            if (!$childProfileData = $this->getValue($this->getItemName($token))) {
-                continue;
-            }
-
-            $profile->addChild($this->createProfileFromData($token, $childProfileData, $profile));
-        }
-
-        return $profile;
-    }
-
-    /**
-     * Get item name
-     *
-     * @param string $token
-     *
-     * @return string
-     */
-    private function getItemName($token)
-    {
-        $name = self::TOKEN_PREFIX.$token;
-
-        if ($this->isItemNameValid($name)) {
-            return $name;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get name of index
-     *
-     * @return string
-     */
-    private function getIndexName()
-    {
-        $name = self::TOKEN_PREFIX.'index';
-
-        if ($this->isItemNameValid($name)) {
-            return $name;
-        }
-
-        return false;
-    }
-
-    private function isItemNameValid($name)
-    {
-        $length = strlen($name);
-
-        if ($length > 250) {
-            throw new \RuntimeException(sprintf('The memcache item key "%s" is too long (%s bytes). Allowed maximum size is 250 bytes.', $name, $length));
-        }
-
-        return true;
-    }
 
 }

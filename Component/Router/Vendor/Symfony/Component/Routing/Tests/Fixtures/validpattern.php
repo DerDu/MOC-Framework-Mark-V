@@ -1,6 +1,6 @@
 <?php
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 $collection = new RouteCollection();
 $collection->add('blog_show', new Route(

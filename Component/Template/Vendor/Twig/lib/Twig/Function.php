@@ -31,14 +31,16 @@ abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCal
         ), $options);
     }
 
-    public function setArguments($arguments)
-    {
-        $this->arguments = $arguments;
-    }
-
     public function getArguments()
     {
+
         return $this->arguments;
+    }
+
+    public function setArguments( $arguments )
+    {
+
+        $this->arguments = $arguments;
     }
 
     public function needsEnvironment()

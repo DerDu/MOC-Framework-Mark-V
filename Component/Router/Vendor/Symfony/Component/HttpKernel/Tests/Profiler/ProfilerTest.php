@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Profiler;
 
-use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
-use Symfony\Component\HttpKernel\Profiler\SqliteProfilerStorage;
-use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\HttpKernel\Profiler\SqliteProfilerStorage;
 
 class ProfilerTest extends \PHPUnit_Framework_TestCase
 {

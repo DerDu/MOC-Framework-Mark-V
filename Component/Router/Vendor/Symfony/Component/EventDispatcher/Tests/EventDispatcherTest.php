@@ -30,18 +30,6 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 
     private $listener;
 
-    protected function setUp()
-    {
-        $this->dispatcher = new EventDispatcher();
-        $this->listener = new TestEventListener();
-    }
-
-    protected function tearDown()
-    {
-        $this->dispatcher = null;
-        $this->listener = null;
-    }
-
     public function testInitialState()
     {
         $this->assertEquals(array(), $this->dispatcher->getListeners());
@@ -295,6 +283,20 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->dispatcher->hasListeners('foo'));
         $this->assertFalse($this->dispatcher->hasListeners());
+    }
+
+    protected function setUp()
+    {
+
+        $this->dispatcher = new EventDispatcher();
+        $this->listener = new TestEventListener();
+    }
+
+    protected function tearDown()
+    {
+
+        $this->dispatcher = null;
+        $this->listener = null;
     }
 }
 

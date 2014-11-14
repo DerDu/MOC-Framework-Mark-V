@@ -32,24 +32,13 @@ class NativeSessionStorageTest extends \PHPUnit_Framework_TestCase
 {
     private $savePath;
 
-    protected function setUp()
+    public function testBag()
     {
-        ini_set('session.save_handler', 'files');
-        ini_set('session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test');
-        if (!is_dir($this->savePath)) {
-            mkdir($this->savePath);
-        }
-    }
 
-    protected function tearDown()
-    {
-        session_write_close();
-        array_map('unlink', glob($this->savePath.'/*'));
-        if (is_dir($this->savePath)) {
-            rmdir($this->savePath);
-        }
-
-        $this->savePath = null;
+        $storage = $this->getStorage();
+        $bag = new FlashBag();
+        $storage->registerBag( $bag );
+        $this->assertSame( $bag, $storage->getBag( $bag->getName() ) );
     }
 
     /**
@@ -63,14 +52,6 @@ class NativeSessionStorageTest extends \PHPUnit_Framework_TestCase
         $storage->registerBag(new AttributeBag());
 
         return $storage;
-    }
-
-    public function testBag()
-    {
-        $storage = $this->getStorage();
-        $bag = new FlashBag();
-        $storage->registerBag($bag);
-        $this->assertSame($bag, $storage->getBag($bag->getName()));
     }
 
     /**
@@ -253,5 +234,27 @@ class NativeSessionStorageTest extends \PHPUnit_Framework_TestCase
         $key = $storage->getMetadataBag()->getStorageKey();
         $this->assertFalse(isset($_SESSION[$key]));
         $storage->start();
+    }
+
+    protected function setUp()
+    {
+
+        ini_set( 'session.save_handler', 'files' );
+        ini_set( 'session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test' );
+        if (!is_dir( $this->savePath )) {
+            mkdir( $this->savePath );
+        }
+    }
+
+    protected function tearDown()
+    {
+
+        session_write_close();
+        array_map( 'unlink', glob( $this->savePath.'/*' ) );
+        if (is_dir( $this->savePath )) {
+            rmdir( $this->savePath );
+        }
+
+        $this->savePath = null;
     }
 }

@@ -425,14 +425,6 @@ class Twig_TemplateTest extends Twig_Template
         return array();
     }
 
-    protected function doGetParent(array $context)
-    {
-    }
-
-    protected function doDisplay(array $context, array $blocks = array())
-    {
-    }
-
     public function getAttribute($object, $item, array $arguments = array(), $type = Twig_Template::ANY_CALL, $isDefinedTest = false, $ignoreStrictCheck = false)
     {
         if ($this->useExtGetAttribute) {
@@ -441,12 +433,18 @@ class Twig_TemplateTest extends Twig_Template
             return parent::getAttribute($object, $item, $arguments, $type, $isDefinedTest, $ignoreStrictCheck);
         }
     }
+
+    protected function doGetParent( array $context )
+    {
+    }
+
+    protected function doDisplay( array $context, array $blocks = array() )
+    {
+    }
 }
 
 class Twig_TemplateArrayAccessObject implements ArrayAccess
 {
-    protected $protected = 'protected';
-
     public $attributes = array(
         'defined' => 'defined',
         'zero'    => 0,
@@ -456,6 +454,7 @@ class Twig_TemplateArrayAccessObject implements ArrayAccess
         '09'      => '09',
         '+4'      => '+4',
     );
+    protected $protected = 'protected';
 
     public function offsetExists($name)
     {
@@ -532,14 +531,16 @@ class Twig_TemplatePropertyObjectAndArrayAccess extends Twig_TemplatePropertyObj
 {
     private $data = array();
 
-    public function offsetExists($offset)
+    public function offsetGet( $offset )
     {
-        return array_key_exists($offset, $this->data);
+
+        return $this->offsetExists( $offset ) ? $this->data[$offset] : 'n/a';
     }
 
-    public function offsetGet($offset)
+    public function offsetExists( $offset )
     {
-        return $this->offsetExists($offset) ? $this->data[$offset] : 'n/a';
+
+        return array_key_exists( $offset, $this->data );
     }
 
     public function offsetSet($offset, $value)
@@ -563,6 +564,13 @@ class Twig_TemplatePropertyObjectDefinedWithUndefinedValue
 
 class Twig_TemplateMethodObject
 {
+
+    public static function getStatic()
+    {
+
+        return 'static';
+    }
+
     public function getDefined()
     {
         return 'defined';
@@ -596,28 +604,25 @@ class Twig_TemplateMethodObject
     {
         return 'protected';
     }
-
-    public static function getStatic()
-    {
-        return 'static';
-    }
 }
 
 class Twig_TemplateMethodAndPropObject
 {
+
+    public $b = 'b_prop';
     private $a = 'a_prop';
+    private $c = 'c_prop';
+
     public function getA()
     {
         return 'a';
     }
 
-    public $b = 'b_prop';
     public function getB()
     {
         return 'b';
     }
 
-    private $c = 'c_prop';
     private function getC()
     {
         return 'c';

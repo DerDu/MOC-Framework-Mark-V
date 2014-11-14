@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
-use Symfony\Component\HttpKernel\EventListener\FragmentListener;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\EventListener\FragmentListener;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\UriSigner;
 
 class FragmentListenerTest extends \PHPUnit_Framework_TestCase
@@ -32,6 +32,13 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $request->attributes->all());
         $this->assertTrue($request->query->has('_path'));
+    }
+
+    private function createGetResponseEvent( Request $request )
+    {
+
+        return new GetResponseEvent( $this->getMock( 'Symfony\Component\HttpKernel\HttpKernelInterface' ), $request,
+            HttpKernelInterface::MASTER_REQUEST );
     }
 
     /**
@@ -72,10 +79,5 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('foo' => 'bar', '_controller' => 'foo'), $request->attributes->get('_route_params'));
         $this->assertFalse($request->query->has('_path'));
-    }
-
-    private function createGetResponseEvent(Request $request)
-    {
-        return new GetResponseEvent($this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface'), $request, HttpKernelInterface::MASTER_REQUEST);
     }
 }

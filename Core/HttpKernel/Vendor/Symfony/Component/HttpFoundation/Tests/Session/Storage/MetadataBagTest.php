@@ -28,19 +28,6 @@ class MetadataBagTest extends \PHPUnit_Framework_TestCase
      */
     protected $array = array();
 
-    protected function setUp()
-    {
-        $this->bag = new MetadataBag();
-        $this->array = array(MetadataBag::CREATED => 1234567, MetadataBag::UPDATED => 12345678, MetadataBag::LIFETIME => 0);
-        $this->bag->initialize($this->array);
-    }
-
-    protected function tearDown()
-    {
-        $this->array = array();
-        $this->bag = null;
-    }
-
     public function testInitialize()
     {
         $sessionMetadata = array();
@@ -131,5 +118,23 @@ class MetadataBagTest extends \PHPUnit_Framework_TestCase
         $bag->initialize($sessionMetadata);
 
         $this->assertEquals($timeStamp, $sessionMetadata[MetadataBag::UPDATED]);
+    }
+
+    protected function setUp()
+    {
+
+        $this->bag = new MetadataBag();
+        $this->array = array( MetadataBag::CREATED  => 1234567,
+                              MetadataBag::UPDATED  => 12345678,
+                              MetadataBag::LIFETIME => 0
+        );
+        $this->bag->initialize( $this->array );
+    }
+
+    protected function tearDown()
+    {
+
+        $this->array = array();
+        $this->bag = null;
     }
 }

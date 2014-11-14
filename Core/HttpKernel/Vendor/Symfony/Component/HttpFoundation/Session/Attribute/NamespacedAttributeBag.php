@@ -54,47 +54,6 @@ class NamespacedAttributeBag extends AttributeBag
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function get($name, $default = null)
-    {
-        $attributes = $this->resolveAttributePath($name);
-        $name = $this->resolveKey($name);
-
-        if (null === $attributes) {
-            return $default;
-        }
-
-        return array_key_exists($name, $attributes) ? $attributes[$name] : $default;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function set($name, $value)
-    {
-        $attributes = & $this->resolveAttributePath($name, true);
-        $name = $this->resolveKey($name);
-        $attributes[$name] = $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function remove($name)
-    {
-        $retval = null;
-        $attributes = & $this->resolveAttributePath($name);
-        $name = $this->resolveKey($name);
-        if (null !== $attributes && array_key_exists($name, $attributes)) {
-            $retval = $attributes[$name];
-            unset($attributes[$name]);
-        }
-
-        return $retval;
-    }
-
-    /**
      * Resolves a path in attributes property and returns it as a reference.
      *
      * This method allows structured namespacing of session attributes.
@@ -154,5 +113,49 @@ class NamespacedAttributeBag extends AttributeBag
         }
 
         return $name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get( $name, $default = null )
+    {
+
+        $attributes = $this->resolveAttributePath( $name );
+        $name = $this->resolveKey( $name );
+
+        if (null === $attributes) {
+            return $default;
+        }
+
+        return array_key_exists( $name, $attributes ) ? $attributes[$name] : $default;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function set( $name, $value )
+    {
+
+        $attributes = &$this->resolveAttributePath( $name, true );
+        $name = $this->resolveKey( $name );
+        $attributes[$name] = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function remove( $name )
+    {
+
+        $retval = null;
+        $attributes = &$this->resolveAttributePath( $name );
+        $name = $this->resolveKey( $name );
+        if (null !== $attributes && array_key_exists( $name, $attributes )) {
+            $retval = $attributes[$name];
+            unset( $attributes[$name] );
+        }
+
+        return $retval;
     }
 }

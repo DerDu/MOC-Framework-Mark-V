@@ -47,50 +47,6 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function purge()
-    {
-        $this->getMongo()->remove(array());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function read($token)
-    {
-        $profile = $this->getMongo()->findOne(array('_id' => $token, 'data' => array('$exists' => true)));
-
-        if (null !== $profile) {
-            $profile = $this->createProfileFromData($this->getData($profile));
-        }
-
-        return $profile;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function write(Profile $profile)
-    {
-        $this->cleanup();
-
-        $record = array(
-            '_id' => $profile->getToken(),
-            'parent' => $profile->getParentToken(),
-            'data' => base64_encode(serialize($profile->getCollectors())),
-            'ip' => $profile->getIp(),
-            'method' => $profile->getMethod(),
-            'url' => $profile->getUrl(),
-            'time' => $profile->getTime()
-        );
-
-        $result = $this->getMongo()->update(array('_id' => $profile->getToken()), array_filter($record, function ($v) { return !empty($v); }), array('upsert' => true));
-
-        return (bool) (isset($result['ok']) ? $result['ok'] : $result);
-    }
-
-    /**
      * Internal convenience method that returns the instance of the MongoDB Collection
      *
      * @return \MongoCollection
@@ -115,46 +71,27 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * @param array $data
+     * @param string $dsn
      *
-     * @return Profile
+     * @return null|array Array($server, $database, $collection)
      */
-    protected function createProfileFromData(array $data)
+    private function parseDsn( $dsn )
     {
-        $profile = $this->getProfile($data);
 
-        if ($data['parent']) {
-            $parent = $this->getMongo()->findOne(array('_id' => $data['parent'], 'data' => array('$exists' => true)));
-            if ($parent) {
-                $profile->setParent($this->getProfile($this->getData($parent)));
-            }
+        if (!preg_match( '#^(mongodb://.*)/(.*)/(.*)$#', $dsn, $matches )) {
+            return;
         }
 
-        $profile->setChildren($this->readChildren($data['token']));
+        $server = $matches[1];
+        $database = $matches[2];
+        $collection = $matches[3];
+        preg_match( '#^mongodb://(([^:]+):?(.*)(?=@))?@?([^/]*)(.*)$#', $server, $matchesServer );
 
-        return $profile;
-    }
-
-    /**
-     * @param string $token
-     *
-     * @return Profile[] An array of Profile instances
-     */
-    protected function readChildren($token)
-    {
-        $profiles = array();
-
-        $cursor = $this->getMongo()->find(array('parent' => $token, 'data' => array('$exists' => true)));
-        foreach ($cursor as $d) {
-            $profiles[] = $this->getProfile($this->getData($d));
+        if ('' == $matchesServer[5] && '' != $matches[2]) {
+            $server .= '/'.$matches[2];
         }
 
-        return $profiles;
-    }
-
-    protected function cleanup()
-    {
-        $this->getMongo()->remove(array('time' => array('$lt' => time() - $this->lifetime)));
+        return array( $server, $database, $collection );
     }
 
     /**
@@ -216,6 +153,54 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function purge()
+    {
+
+        $this->getMongo()->remove( array() );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function read( $token )
+    {
+
+        $profile = $this->getMongo()->findOne( array( '_id' => $token, 'data' => array( '$exists' => true ) ) );
+
+        if (null !== $profile) {
+            $profile = $this->createProfileFromData( $this->getData( $profile ) );
+        }
+
+        return $profile;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Profile
+     */
+    protected function createProfileFromData( array $data )
+    {
+
+        $profile = $this->getProfile( $data );
+
+        if ($data['parent']) {
+            $parent = $this->getMongo()->findOne( array( '_id'  => $data['parent'],
+                                                         'data' => array( '$exists' => true )
+                ) );
+            if ($parent) {
+                $profile->setParent( $this->getProfile( $this->getData( $parent ) ) );
+            }
+        }
+
+        $profile->setChildren( $this->readChildren( $data['token'] ) );
+
+        return $profile;
+    }
+
+    /**
      * @param array $data
      *
      * @return Profile
@@ -233,25 +218,53 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * @param string $dsn
+     * @param string $token
      *
-     * @return null|array Array($server, $database, $collection)
+     * @return Profile[] An array of Profile instances
      */
-    private function parseDsn($dsn)
+    protected function readChildren( $token )
     {
-        if (!preg_match('#^(mongodb://.*)/(.*)/(.*)$#', $dsn, $matches)) {
-            return;
+
+        $profiles = array();
+
+        $cursor = $this->getMongo()->find( array( 'parent' => $token, 'data' => array( '$exists' => true ) ) );
+        foreach ($cursor as $d) {
+            $profiles[] = $this->getProfile( $this->getData( $d ) );
         }
 
-        $server = $matches[1];
-        $database = $matches[2];
-        $collection = $matches[3];
-        preg_match('#^mongodb://(([^:]+):?(.*)(?=@))?@?([^/]*)(.*)$#', $server, $matchesServer);
+        return $profiles;
+    }
 
-        if ('' == $matchesServer[5] && '' != $matches[2]) {
-            $server .= '/'.$matches[2];
-        }
+    /**
+     * {@inheritdoc}
+     */
+    public function write( Profile $profile )
+    {
 
-        return array($server, $database, $collection);
+        $this->cleanup();
+
+        $record = array(
+            '_id'    => $profile->getToken(),
+            'parent' => $profile->getParentToken(),
+            'data'   => base64_encode( serialize( $profile->getCollectors() ) ),
+            'ip'     => $profile->getIp(),
+            'method' => $profile->getMethod(),
+            'url'    => $profile->getUrl(),
+            'time'   => $profile->getTime()
+        );
+
+        $result = $this->getMongo()->update( array( '_id' => $profile->getToken() ),
+            array_filter( $record, function ( $v ) {
+
+                    return !empty( $v );
+                } ), array( 'upsert' => true ) );
+
+        return (bool)( isset( $result['ok'] ) ? $result['ok'] : $result );
+    }
+
+    protected function cleanup()
+    {
+
+        $this->getMongo()->remove( array( 'time' => array( '$lt' => time() - $this->lifetime ) ) );
     }
 }

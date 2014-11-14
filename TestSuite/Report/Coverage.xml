@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1414581683">
-  <project timestamp="1414581683">
+<coverage generated="1415966907">
+  <project timestamp="1415966907">
     <package name="MOC\V\Component\Database\Component\Bridge">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Database/Component/Bridge/Bridge.php">
         <class name="Bridge" namespace="MOC\V\Component\Database\Component\Bridge" fullPackage="MOC" package="MOC">

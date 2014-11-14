@@ -11,17 +11,36 @@
 
 namespace Symfony\Component\HttpKernel\Tests\DataCollector;
 
-use Symfony\Component\HttpKernel\HttpKernel;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Dummy method used as controller callable
+     */
+    public static function staticControllerMethod()
+    {
+
+        throw new \LogicException( 'Unexpected method call' );
+    }
+
+    /**
+     * Magic method to allow non existing methods to be called and delegated.
+     */
+    public static function __callStatic( $method, $args )
+    {
+
+        throw new \LogicException( 'Unexpected method call' );
+    }
+
     public function testCollect()
     {
         $c = new RequestDataCollector();
@@ -49,6 +68,32 @@ class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('OK', $c->getStatusText());
         $this->assertSame(200, $c->getStatusCode());
         $this->assertSame('application/json', $c->getContentType());
+    }
+
+    protected function createRequest()
+    {
+
+        $request = Request::create( 'http://test.com/foo?bar=baz' );
+        $request->attributes->set( 'foo', 'bar' );
+        $request->attributes->set( '_route', 'foobar' );
+        $request->attributes->set( '_route_params', array( 'name' => 'foo' ) );
+        $request->attributes->set( 'resource', fopen( __FILE__, 'r' ) );
+        $request->attributes->set( 'object', new \stdClass() );
+
+        return $request;
+    }
+
+    protected function createResponse()
+    {
+
+        $response = new Response();
+        $response->setStatusCode( 200 );
+        $response->headers->set( 'Content-Type', 'application/json' );
+        $response->headers->setCookie( new Cookie( 'foo', 'bar', 1, '/foo', 'localhost', true, true ) );
+        $response->headers->setCookie( new Cookie( 'bar', 'foo', new \DateTime( '@946684800' ) ) );
+        $response->headers->setCookie( new Cookie( 'bazz', 'foo', '2000-12-12' ) );
+
+        return $response;
     }
 
     /**
@@ -144,30 +189,6 @@ class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function createRequest()
-    {
-        $request = Request::create('http://test.com/foo?bar=baz');
-        $request->attributes->set('foo', 'bar');
-        $request->attributes->set('_route', 'foobar');
-        $request->attributes->set('_route_params', array('name' => 'foo'));
-        $request->attributes->set('resource', fopen(__FILE__, 'r'));
-        $request->attributes->set('object', new \stdClass());
-
-        return $request;
-    }
-
-    protected function createResponse()
-    {
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->setCookie(new Cookie('foo','bar',1,'/foo','localhost',true,true));
-        $response->headers->setCookie(new Cookie('bar','foo',new \DateTime('@946684800')));
-        $response->headers->setCookie(new Cookie('bazz','foo','2000-12-12'));
-
-        return $response;
-    }
-
     /**
      * Inject the given controller callable into the data collector.
      */
@@ -180,25 +201,9 @@ class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Dummy method used as controller callable
-     */
-    public static function staticControllerMethod()
-    {
-        throw new \LogicException('Unexpected method call');
-    }
-
-    /**
      * Magic method to allow non existing methods to be called and delegated.
      */
     public function __call($method, $args)
-    {
-        throw new \LogicException('Unexpected method call');
-    }
-
-    /**
-     * Magic method to allow non existing methods to be called and delegated.
-     */
-    public static function __callStatic($method, $args)
     {
         throw new \LogicException('Unexpected method call');
     }

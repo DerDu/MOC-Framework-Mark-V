@@ -11,15 +11,15 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * ProfilerListener collects data for the current request by listening to the onKernelResponse event.
@@ -56,6 +56,19 @@ class ProfilerListener implements EventSubscriberInterface
         $this->profiles = new \SplObjectStorage();
         $this->parents = new \SplObjectStorage();
         $this->requestStack = $requestStack;
+    }
+
+    public static function getSubscribedEvents()
+    {
+
+        return array(
+            // kernel.request must be registered as early as possible to not break
+            // when an exception is thrown in any other kernel.request listener
+            KernelEvents::REQUEST   => array( 'onKernelRequest', 1024 ),
+            KernelEvents::RESPONSE  => array( 'onKernelResponse', -100 ),
+            KernelEvents::EXCEPTION => 'onKernelException',
+            KernelEvents::TERMINATE => array( 'onKernelTerminate', -1024 ),
+        );
     }
 
     /**
@@ -142,17 +155,5 @@ class ProfilerListener implements EventSubscriberInterface
         $this->profiles = new \SplObjectStorage();
         $this->parents = new \SplObjectStorage();
         $this->requests = array();
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return array(
-            // kernel.request must be registered as early as possible to not break
-            // when an exception is thrown in any other kernel.request listener
-            KernelEvents::REQUEST => array('onKernelRequest', 1024),
-            KernelEvents::RESPONSE => array('onKernelResponse', -100),
-            KernelEvents::EXCEPTION => 'onKernelException',
-            KernelEvents::TERMINATE => array('onKernelTerminate', -1024),
-        );
     }
 }

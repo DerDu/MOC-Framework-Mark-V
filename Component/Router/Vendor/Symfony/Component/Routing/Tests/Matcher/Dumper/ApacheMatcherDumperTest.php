@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher\Dumper;
 
+use Symfony\Component\Routing\Matcher\Dumper\ApacheMatcherDumper;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Matcher\Dumper\ApacheMatcherDumper;
 
 class ApacheMatcherDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,35 +29,6 @@ class ApacheMatcherDumperTest extends \PHPUnit_Framework_TestCase
         $dumper = new ApacheMatcherDumper($this->getRouteCollection());
 
         $this->assertStringEqualsFile(self::$fixturesPath.'/dumper/url_matcher1.apache', $dumper->dump(), '->dump() dumps basic routes to the correct apache format.');
-    }
-
-    /**
-     * @dataProvider provideEscapeFixtures
-     */
-    public function testEscapePattern($src, $dest, $char, $with, $message)
-    {
-        $r = new \ReflectionMethod(new ApacheMatcherDumper($this->getRouteCollection()), 'escape');
-        $r->setAccessible(true);
-        $this->assertEquals($dest, $r->invoke(null, $src, $char, $with), $message);
-    }
-
-    public function provideEscapeFixtures()
-    {
-        return array(
-            array('foo', 'foo', ' ', '-', 'Preserve string that should not be escaped'),
-            array('fo-o', 'fo-o', ' ', '-', 'Preserve string that should not be escaped'),
-            array('fo o', 'fo- o', ' ', '-', 'Escape special characters'),
-            array('fo-- o', 'fo--- o', ' ', '-', 'Escape special characters'),
-            array('fo- o', 'fo- o', ' ', '-', 'Do not escape already escaped string'),
-        );
-    }
-
-    public function testEscapeScriptName()
-    {
-        $collection = new RouteCollection();
-        $collection->add('foo', new Route('/foo'));
-        $dumper = new ApacheMatcherDumper($collection);
-        $this->assertStringEqualsFile(self::$fixturesPath.'/dumper/url_matcher2.apache', $dumper->dump(array('script_name' => 'ap p_d\ ev.php')));
     }
 
     private function getRouteCollection()
@@ -192,5 +163,38 @@ class ApacheMatcherDumperTest extends \PHPUnit_Framework_TestCase
         $collection->addCollection($collection1);
 
         return $collection;
+    }
+
+    /**
+     * @dataProvider provideEscapeFixtures
+     */
+    public function testEscapePattern( $src, $dest, $char, $with, $message )
+    {
+
+        $r = new \ReflectionMethod( new ApacheMatcherDumper( $this->getRouteCollection() ), 'escape' );
+        $r->setAccessible( true );
+        $this->assertEquals( $dest, $r->invoke( null, $src, $char, $with ), $message );
+    }
+
+    public function provideEscapeFixtures()
+    {
+
+        return array(
+            array( 'foo', 'foo', ' ', '-', 'Preserve string that should not be escaped' ),
+            array( 'fo-o', 'fo-o', ' ', '-', 'Preserve string that should not be escaped' ),
+            array( 'fo o', 'fo- o', ' ', '-', 'Escape special characters' ),
+            array( 'fo-- o', 'fo--- o', ' ', '-', 'Escape special characters' ),
+            array( 'fo- o', 'fo- o', ' ', '-', 'Do not escape already escaped string' ),
+        );
+    }
+
+    public function testEscapeScriptName()
+    {
+
+        $collection = new RouteCollection();
+        $collection->add( 'foo', new Route( '/foo' ) );
+        $dumper = new ApacheMatcherDumper( $collection );
+        $this->assertStringEqualsFile( self::$fixturesPath.'/dumper/url_matcher2.apache',
+            $dumper->dump( array( 'script_name' => 'ap p_d\ ev.php' ) ) );
     }
 }

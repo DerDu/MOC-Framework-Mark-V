@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\HttpCache;
 
-use Symfony\Component\HttpKernel\HttpCache\Esi;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpCache\Esi;
 
 class EsiTest extends \PHPUnit_Framework_TestCase
 {
@@ -165,6 +165,27 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $esi->handle($cache, '/', '/alt', true));
     }
 
+    protected function getCache( $request, $response )
+    {
+
+        $cache = $this->getMock( 'Symfony\Component\HttpKernel\HttpCache\HttpCache', array( 'getRequest', 'handle' ),
+            array(), '', false );
+        $cache->expects( $this->any() )
+            ->method( 'getRequest' )
+            ->will( $this->returnValue( $request ) );
+        if (is_array( $response )) {
+            $cache->expects( $this->any() )
+                ->method( 'handle' )
+                ->will( call_user_func_array( array( $this, 'onConsecutiveCalls' ), $response ) );
+        } else {
+            $cache->expects( $this->any() )
+                ->method( 'handle' )
+                ->will( $this->returnValue( $response ) );
+        }
+
+        return $cache;
+    }
+
     /**
      * @expectedException \RuntimeException
      */
@@ -194,27 +215,5 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $response2 = new Response('bar');
         $cache = $this->getCache(Request::create('/'), array($response1, $response2));
         $this->assertEquals('bar', $esi->handle($cache, '/', '/alt', false));
-    }
-
-    protected function getCache($request, $response)
-    {
-        $cache = $this->getMock('Symfony\Component\HttpKernel\HttpCache\HttpCache', array('getRequest', 'handle'), array(), '', false);
-        $cache->expects($this->any())
-              ->method('getRequest')
-              ->will($this->returnValue($request))
-        ;
-        if (is_array($response)) {
-            $cache->expects($this->any())
-                  ->method('handle')
-                  ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), $response))
-            ;
-        } else {
-            $cache->expects($this->any())
-                  ->method('handle')
-                  ->will($this->returnValue($response))
-            ;
-        }
-
-        return $cache;
     }
 }

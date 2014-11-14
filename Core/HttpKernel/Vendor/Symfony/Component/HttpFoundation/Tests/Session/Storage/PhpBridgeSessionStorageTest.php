@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage;
 
-use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
 /**
  * Test class for PhpSessionStorage.
@@ -26,37 +26,6 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 class PhpBridgeSessionStorageTest extends \PHPUnit_Framework_TestCase
 {
     private $savePath;
-
-    protected function setUp()
-    {
-        ini_set('session.save_handler', 'files');
-        ini_set('session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test');
-        if (!is_dir($this->savePath)) {
-            mkdir($this->savePath);
-        }
-    }
-
-    protected function tearDown()
-    {
-        session_write_close();
-        array_map('unlink', glob($this->savePath.'/*'));
-        if (is_dir($this->savePath)) {
-            rmdir($this->savePath);
-        }
-
-        $this->savePath = null;
-    }
-
-    /**
-     * @return PhpBridgeSessionStorage
-     */
-    protected function getStorage()
-    {
-        $storage = new PhpBridgeSessionStorage();
-        $storage->registerBag(new AttributeBag());
-
-        return $storage;
-    }
 
     public function testPhpSession53()
     {
@@ -80,6 +49,18 @@ class PhpBridgeSessionStorageTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($_SESSION[$key]));
         $storage->start();
         $this->assertTrue(isset($_SESSION[$key]));
+    }
+
+    /**
+     * @return PhpBridgeSessionStorage
+     */
+    protected function getStorage()
+    {
+
+        $storage = new PhpBridgeSessionStorage();
+        $storage->registerBag( new AttributeBag() );
+
+        return $storage;
     }
 
     public function testPhpSession54()
@@ -119,5 +100,27 @@ class PhpBridgeSessionStorageTest extends \PHPUnit_Framework_TestCase
         $storage->clear();
         $this->assertEquals($_SESSION[$key], array());
         $this->assertEquals($_SESSION['drak'], 'loves symfony');
+    }
+
+    protected function setUp()
+    {
+
+        ini_set( 'session.save_handler', 'files' );
+        ini_set( 'session.save_path', $this->savePath = sys_get_temp_dir().'/sf2test' );
+        if (!is_dir( $this->savePath )) {
+            mkdir( $this->savePath );
+        }
+    }
+
+    protected function tearDown()
+    {
+
+        session_write_close();
+        array_map( 'unlink', glob( $this->savePath.'/*' ) );
+        if (is_dir( $this->savePath )) {
+            rmdir( $this->savePath );
+        }
+
+        $this->savePath = null;
     }
 }

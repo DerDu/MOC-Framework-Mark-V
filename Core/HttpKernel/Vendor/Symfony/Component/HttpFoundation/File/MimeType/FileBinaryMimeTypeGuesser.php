@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\HttpFoundation\File\MimeType;
 
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Guesses the mime type with the binary "file" (only available on *nix)
@@ -36,16 +36,6 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
     public function __construct($cmd = 'file -b --mime %s 2>/dev/null')
     {
         $this->cmd = $cmd;
-    }
-
-    /**
-     * Returns whether this guesser is supported on the current OS
-     *
-     * @return bool
-     */
-    public static function isSupported()
-    {
-        return !defined('PHP_WINDOWS_VERSION_BUILD') && function_exists('passthru') && function_exists('escapeshellarg');
     }
 
     /**
@@ -83,5 +73,16 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
         }
 
         return $match[1];
+    }
+
+    /**
+     * Returns whether this guesser is supported on the current OS
+     *
+     * @return bool
+     */
+    public static function isSupported()
+    {
+
+        return !defined( 'PHP_WINDOWS_VERSION_BUILD' ) && function_exists( 'passthru' ) && function_exists( 'escapeshellarg' );
     }
 }

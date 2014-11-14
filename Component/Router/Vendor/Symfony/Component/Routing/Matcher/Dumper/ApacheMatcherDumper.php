@@ -111,6 +111,54 @@ class ApacheMatcherDumper extends MatcherDumper
     }
 
     /**
+     * Escapes a string.
+     *
+     * @param string $string The string to be escaped
+     * @param string $char   The character to be escaped
+     * @param string $with   The character to be used for escaping
+     *
+     * @return string The escaped string
+     */
+    private static function escape( $string, $char, $with )
+    {
+
+        $escaped = false;
+        $output = '';
+        foreach (str_split( $string ) as $symbol) {
+            if ($escaped) {
+                $output .= $symbol;
+                $escaped = false;
+                continue;
+            }
+            if ($symbol === $char) {
+                $output .= $with.$char;
+                continue;
+            }
+            if ($symbol === $with) {
+                $escaped = true;
+            }
+            $output .= $symbol;
+        }
+
+        return $output;
+    }
+
+    /**
+     * Converts a regex to make it suitable for mod_rewrite
+     *
+     * @param string $regex The regex
+     *
+     * @return string The converted regex
+     */
+    private function regexToApacheRegex( $regex )
+    {
+
+        $regexPatternEnd = strrpos( $regex, $regex[0] );
+
+        return preg_replace( '/\?P<.+?>/', '', substr( $regex, 1, $regexPatternEnd - 1 ) );
+    }
+
+    /**
      * Dumps a single route
      *
      * @param  string $name Route name
@@ -208,52 +256,6 @@ class ApacheMatcherDumper extends MatcherDumper
         }
 
         return $methods;
-    }
-
-    /**
-     * Converts a regex to make it suitable for mod_rewrite
-     *
-     * @param string  $regex The regex
-     *
-     * @return string The converted regex
-     */
-    private function regexToApacheRegex($regex)
-    {
-        $regexPatternEnd = strrpos($regex, $regex[0]);
-
-        return preg_replace('/\?P<.+?>/', '', substr($regex, 1, $regexPatternEnd - 1));
-    }
-
-    /**
-     * Escapes a string.
-     *
-     * @param string $string The string to be escaped
-     * @param string $char   The character to be escaped
-     * @param string $with   The character to be used for escaping
-     *
-     * @return string The escaped string
-     */
-    private static function escape($string, $char, $with)
-    {
-        $escaped = false;
-        $output = '';
-        foreach (str_split($string) as $symbol) {
-            if ($escaped) {
-                $output .= $symbol;
-                $escaped = false;
-                continue;
-            }
-            if ($symbol === $char) {
-                $output .= $with.$char;
-                continue;
-            }
-            if ($symbol === $with) {
-                $escaped = true;
-            }
-            $output .= $symbol;
-        }
-
-        return $output;
     }
 
     /**

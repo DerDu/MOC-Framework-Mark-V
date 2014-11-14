@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
-use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,24 +51,6 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
         $handler->render('/', 'bar');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Error when rendering "http://localhost/" (Status code is 404).
-     */
-    public function testDeliverWithUnsuccessfulResponse()
-    {
-        $handler = $this->getHandler($this->returnValue(new Response('foo', 404)));
-
-        $handler->render('/', 'foo');
-    }
-
-    public function testRender()
-    {
-        $handler = $this->getHandler($this->returnValue(new Response('foo')), array('/', Request::create('/'), array('foo' => 'foo', 'ignore_errors' => true)));
-
-        $this->assertEquals('foo', $handler->render('/', 'foo', array('foo' => 'foo')));
-    }
-
     protected function getHandler($returnValue, $arguments = array())
     {
         $renderer = $this->getMock('Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface');
@@ -91,5 +73,26 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
         $handler->addRenderer($renderer);
 
         return $handler;
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Error when rendering "http://localhost/" (Status code is 404).
+     */
+    public function testDeliverWithUnsuccessfulResponse()
+    {
+
+        $handler = $this->getHandler( $this->returnValue( new Response( 'foo', 404 ) ) );
+
+        $handler->render( '/', 'foo' );
+    }
+
+    public function testRender()
+    {
+
+        $handler = $this->getHandler( $this->returnValue( new Response( 'foo' ) ),
+            array( '/', Request::create( '/' ), array( 'foo' => 'foo', 'ignore_errors' => true ) ) );
+
+        $this->assertEquals( 'foo', $handler->render( '/', 'foo', array( 'foo' => 'foo' ) ) );
     }
 }

@@ -34,16 +34,17 @@ class ErrorsLoggerListener implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
+    public static function getSubscribedEvents()
+    {
+
+        return array( KernelEvents::REQUEST => array( 'injectLogger', 2048 ) );
+    }
+
     public function injectLogger()
     {
         if (null !== $this->logger) {
             ErrorHandler::setLogger($this->logger, $this->channel);
             $this->logger = null;
         }
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return array(KernelEvents::REQUEST => array('injectLogger', 2048));
     }
 }

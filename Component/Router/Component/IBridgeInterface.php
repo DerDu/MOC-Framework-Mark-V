@@ -1,6 +1,7 @@
 <?php
 namespace MOC\V\Component\Router\Component;
 
+use MOC\V\Component\Router\Component\Exception\ComponentException;
 use MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter;
 
 /**
@@ -19,8 +20,15 @@ interface IBridgeInterface
     public function addRoute( RouteParameter $RouteOption );
 
     /**
+     * @param null|string $Path
+     *
      * @return string
-     * @throws \Exception
+     * @throws ComponentException
      */
-    public function getRoute();
+    public function getRoute( $Path = null );
+
+    /**
+     * @return array
+     */
+    public function getRouteList();
 }

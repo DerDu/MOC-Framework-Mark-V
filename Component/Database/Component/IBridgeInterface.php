@@ -1,6 +1,8 @@
 <?php
 namespace MOC\V\Component\Database\Component;
 
+use Doctrine\DBAL\Connection;
+use MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException;
 use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
@@ -61,4 +63,20 @@ interface IBridgeInterface
      * @return int
      */
     public function executeWrite();
+
+    /**
+     * WARNING: this may be drop out with no replacement
+     *
+     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @throws NoConnectionException
+     */
+    public function getSchemaManager();
+
+    /**
+     * WARNING: this may be drop out with no replacement
+     *
+     * @return Connection
+     * @throws NoConnectionException
+     */
+    public function getConnection();
 }
