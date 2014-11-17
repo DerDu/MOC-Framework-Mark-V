@@ -51,6 +51,9 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
             $Bridge->defineParameter( 1 )
         );
+        $this->assertInstanceOf( 'MOC\V\Component\Database\Component\IBridgeInterface',
+            $Bridge->prepareStatement( array( "SELECT * FROM UnitTest", "SELECT * FROM UnitTest" ) )
+        );
         try {
             try {
                 $Bridge->executeRead();

@@ -13,7 +13,7 @@ use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
-    public static function tearDownAfterClass()
+    public function tearDown()
     {
 
         if (false !== ( $Path = realpath( __DIR__.'/../../../../Component/Template/Component/Bridge/Repository/SmartyTemplate' ) )) {

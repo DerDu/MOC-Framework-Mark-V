@@ -140,10 +140,11 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * WARNING: this may be drop out with no replacement
+     * WARNING: this may drop out with no replacement
      *
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
      * @throws NoConnectionException
+     * @codeCoverageIgnore
      */
     public function getSchemaManager()
     {
@@ -152,10 +153,11 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * WARNING: this may be drop out with no replacement
+     * WARNING: this may drop out with no replacement
      *
      * @return Connection
      * @throws NoConnectionException
+     * @codeCoverageIgnore
      */
     public function getConnection()
     {

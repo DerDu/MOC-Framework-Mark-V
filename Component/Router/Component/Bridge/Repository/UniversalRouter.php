@@ -44,7 +44,9 @@ class UniversalRouter extends Bridge implements IBridgeInterface
             $Route = $this->RouteCollection[HttpKernel::getRequest()->getPathInfo()];
         } else {
             /** @var RouteParameter $Route */
+            // @codeCoverageIgnoreStart
             $Route = $this->RouteCollection[$Path];
+            // @codeCoverageIgnoreEnd
         }
         $Controller = $this->handleController( $Route );
 
@@ -103,6 +105,7 @@ class UniversalRouter extends Bridge implements IBridgeInterface
         $MethodArguments = array();
         /** @var \ReflectionParameter $MethodParameter */
         foreach ((array)$MethodParameters as $MethodParameter) {
+            // @codeCoverageIgnoreStart
             if (array_key_exists( $MethodParameter->name, $RequestParameters )) {
                 $MethodArguments[] = $RequestParameters[$MethodParameter->name];
             } elseif (array_key_exists( $MethodParameter->name, $Route->getParameterDefault() )) {
@@ -112,12 +115,15 @@ class UniversalRouter extends Bridge implements IBridgeInterface
             } else {
                 throw new MissingParameterException( $MethodParameter->name );
             }
+            // @codeCoverageIgnoreEnd
         }
         return $MethodArguments;
     }
 
     /**
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     public function getRouteList()
     {
