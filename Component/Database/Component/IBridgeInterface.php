@@ -2,6 +2,8 @@
 namespace MOC\V\Component\Database\Component;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use MOC\V\Component\Database\Component\Exception\Repository\NoConnectionException;
 use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\DriverParameter;
@@ -65,15 +67,23 @@ interface IBridgeInterface
     public function executeWrite();
 
     /**
-     * WARNING: this may be drop out with no replacement
+     * WARNING: this may drop out with no replacement
      *
-     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @return AbstractSchemaManager
      * @throws NoConnectionException
      */
     public function getSchemaManager();
 
     /**
-     * WARNING: this may be drop out with no replacement
+     * WARNING: this may drop out with no replacement
+     *
+     * @return QueryBuilder
+     * @throws NoConnectionException
+     */
+    public function getQueryBuilder();
+
+    /**
+     * WARNING: this may drop out with no replacement
      *
      * @return Connection
      * @throws NoConnectionException

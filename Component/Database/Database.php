@@ -1,7 +1,7 @@
 <?php
 namespace MOC\V\Component\Database;
 
-use MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2DBAL;
+use MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Component\Database\Component\IVendorInterface;
 use MOC\V\Component\Database\Component\Parameter\Repository\DatabaseParameter;
@@ -65,7 +65,7 @@ class Database implements IVendorInterface
 
         $Doctrine = new Database(
             new Vendor(
-                new Doctrine2DBAL()
+                new Doctrine2ORM()
             )
         );
 
