@@ -21,6 +21,8 @@ class Doctrine2ORM extends Doctrine2DBAL implements IBridgeInterface
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\ORM', __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/lib' );
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\Common',
             __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/vendor/doctrine/common/lib' );
+
+        parent::__construct();
     }
 
 }
