@@ -25,8 +25,8 @@ use MOC\V\Core\AutoLoader\AutoLoader;
 class Doctrine2DBAL extends Bridge implements IBridgeInterface
 {
 
-    /** @var Connection[] $ConnectionList */
-    private static $ConnectionList = array();
+    /** @var Connection $Connection */
+    private $Connection = null;
 
     /**
      *
@@ -79,19 +79,73 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
             throw new ComponentException( $E->getMessage(), $E->getCode(), $E );
         }
 
-        array_push( self::$ConnectionList, $Connection );
+        $this->Connection = $Connection;
         return $this;
     }
 
     /**
-     * @return array
+     * WARNING: this may drop out with no replacement
+     *
+     * @return Connection
+     * @throws NoConnectionException
+     * @codeCoverageIgnore
+     */
+    public function getConnection()
+    {
+
+        return $this->prepareConnection();
+    }
+
+    /**
+     * @throws NoConnectionException
+     * @return Connection
+     */
+    private function prepareConnection()
+    {
+
+        if (null === $this->Connection) {
+            // @codeCoverageIgnoreStart
+            throw new NoConnectionException();
+            // @codeCoverageIgnoreEnd
+        }
+        return $this->Connection;
+    }
+
+    /**
+     * WARNING: this may drop out with no replacement
+     *
+     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @throws NoConnectionException
+     * @codeCoverageIgnore
+     */
+    public function getSchemaManager()
+    {
+
+        return $this->prepareConnection()->getSchemaManager();
+    }
+
+    /**
+     * WARNING: this may drop out with no replacement
+     *
+     * @return QueryBuilder
+     * @throws NoConnectionException
+     * @codeCoverageIgnore
+     */
+    public function getQueryBuilder()
+    {
+
+        return $this->prepareConnection()->createQueryBuilder();
+    }
+
+    /**
+     * @return int
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function executeRead()
+    public function executeWrite()
     {
 
         $Query = $this->prepareQuery();
-        return $this->prepareConnection()->executeQuery( $Query[0], $Query[1], $Query[2] )->fetchAll();
+        return $this->prepareConnection()->executeUpdate( $Query[0], $Query[1], $Query[2] );
     }
 
     /**
@@ -114,68 +168,13 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @throws NoConnectionException
-     * @return Connection
-     */
-    private function prepareConnection()
-    {
-
-        $Index = count( self::$ConnectionList ) - 1;
-        if (!isset( self::$ConnectionList[$Index] )) {
-            // @codeCoverageIgnoreStart
-            throw new NoConnectionException( $Index );
-            // @codeCoverageIgnoreEnd
-        }
-        return self::$ConnectionList[$Index];
-    }
-
-    /**
-     * @return int
+     * @return array
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function executeWrite()
+    public function executeRead()
     {
 
         $Query = $this->prepareQuery();
-        return $this->prepareConnection()->executeUpdate( $Query[0], $Query[1], $Query[2] );
-    }
-
-    /**
-     * WARNING: this may drop out with no replacement
-     *
-     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
-     * @throws NoConnectionException
-     * @codeCoverageIgnore
-     */
-    public function getSchemaManager()
-    {
-
-        return $this->prepareConnection()->getSchemaManager();
-    }
-
-    /**
-     * WARNING: this may drop out with no replacement
-     *
-     * @return Connection
-     * @throws NoConnectionException
-     * @codeCoverageIgnore
-     */
-    public function getConnection()
-    {
-
-        return $this->prepareConnection();
-    }
-
-    /**
-     * WARNING: this may drop out with no replacement
-     *
-     * @return QueryBuilder
-     * @throws NoConnectionException
-     * @codeCoverageIgnore
-     */
-    public function getQueryBuilder()
-    {
-
-        return $this->prepareConnection()->createQueryBuilder();
+        return $this->prepareConnection()->executeQuery( $Query[0], $Query[1], $Query[2] )->fetchAll();
     }
 }
