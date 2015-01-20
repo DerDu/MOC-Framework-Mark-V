@@ -1,7 +1,6 @@
 <?php
 namespace MOC\V\Component\Database\Component\Bridge\Repository;
 
-use Doctrine\DBAL\Connection;
 use MOC\V\Component\Database\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
@@ -12,9 +11,6 @@ use MOC\V\Core\AutoLoader\AutoLoader;
  */
 class Doctrine2ORM extends Doctrine2DBAL implements IBridgeInterface
 {
-
-    /** @var Connection $Connection */
-    private $Connection = null;
 
     /**
      *
