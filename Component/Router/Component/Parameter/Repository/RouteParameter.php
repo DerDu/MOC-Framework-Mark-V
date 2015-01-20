@@ -103,11 +103,14 @@ class RouteParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Name
      * @param mixed  $Value
+     *
+     * @return RouteParameter
      */
     public function setParameterDefault( $Name, $Value )
     {
 
         $this->ParameterDefault[$Name] = $Value;
+        return $this;
     }
 
     /**
