@@ -1,8 +1,13 @@
 <?php
 namespace MOC\V\Component\Document;
 
+use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
+use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Component\Document\Component\IBridgeInterface;
 use MOC\V\Component\Document\Component\IVendorInterface;
+use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
+use MOC\V\Component\Document\Exception\DocumentTypeException;
+use MOC\V\Component\Document\Vendor\Vendor;
 
 /**
  * Class Document
@@ -24,14 +29,75 @@ class Document implements IVendorInterface
         $this->setVendorInterface( $VendorInterface );
     }
 
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     * @throws DocumentTypeException
+     */
+    public static function getDocument( $Location )
+    {
+
+        $FileInfo = new \SplFileInfo( $Location );
+        switch ($FileInfo->getExtension()) {
+            case 'pdf': {
+                return self::getPdfDocument( $Location );
+            }
+            case 'csv':
+            case 'xls':
+            case 'xlsx': {
+                return self::getExcelDocument( $Location );
+            }
+            default:
+                throw new DocumentTypeException();
+        }
+    }
 
     /**
-     * @return \MOC\V\Component\Database\Component\IBridgeInterface
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     */
+    public static function getPdfDocument( $Location )
+    {
+
+        $Document = new Document(
+            new Vendor(
+                new DomPdf()
+            )
+        );
+
+        $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+
+        return $Document->getBridgeInterface();
+    }
+
+    /**
+     * @return IBridgeInterface
      */
     public function getBridgeInterface()
     {
 
         return $this->VendorInterface->getBridgeInterface();
+    }
+
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     */
+    public static function getExcelDocument( $Location )
+    {
+
+        $Document = new Document(
+            new Vendor(
+                new PhpExcel()
+            )
+        );
+
+        $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+
+        return $Document->getBridgeInterface();
     }
 
     /**
@@ -58,7 +124,7 @@ class Document implements IVendorInterface
     /**
      * @param IBridgeInterface $BridgeInterface
      *
-     * @return \MOC\V\Component\Database\Component\IBridgeInterface
+     * @return IBridgeInterface
      */
     public function setBridgeInterface( IBridgeInterface $BridgeInterface )
     {

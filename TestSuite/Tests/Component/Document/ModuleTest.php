@@ -31,4 +31,48 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         );
 
     }
+
+    public function testStaticExcelDocument()
+    {
+
+        $Document = Document::getExcelDocument( __FILE__ );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+    }
+
+    public function testStaticPdfDocument()
+    {
+
+        $Document = Document::getPdfDocument( __FILE__ );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+    }
+
+    public function testStaticDocument()
+    {
+
+        try {
+            Document::getDocument( __FILE__ );
+        } catch( \Exception $E ) {
+            $this->assertInstanceOf( 'MOC\V\Component\Document\Exception\DocumentTypeException', $E );
+        }
+        try {
+            Document::getDocument( 'Missing.pdf' );
+        } catch( \Exception $E ) {
+
+        }
+        try {
+            Document::getDocument( 'Missing.xls' );
+        } catch( \Exception $E ) {
+
+        }
+        try {
+            Document::getDocument( 'Missing.xlsx' );
+        } catch( \Exception $E ) {
+
+        }
+        try {
+            Document::getDocument( 'Missing.csv' );
+        } catch( \Exception $E ) {
+
+        }
+    }
 }

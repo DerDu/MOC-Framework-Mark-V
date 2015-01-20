@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./phpunit.php" colors="true"
-         verbose="true" backupGlobals="true" backupStaticAttributes="false" stopOnError="true" stopOnFailure="true"
+         verbose="true" backupGlobals="true" backupStaticAttributes="false" stopOnError="false" stopOnFailure="false"
          stopOnIncomplete="false" stopOnSkipped="false" timeoutForLargeTests="120" timeoutForMediumTests="30"
          timeoutForSmallTests="10" xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.2/phpunit.xsd"
          processIsolation="false">
@@ -9,8 +9,8 @@
             <directory suffix=".php">./Tests/Core</directory>
             <directory suffix=".php">./Tests/Component</directory>
         </testsuite>
-        <!--<testsuite name="Single">-->
-        <!--<file>./Tests/Component/Template/BridgeTest.php</file>-->
+        <!--<testsuite name="Development">-->
+        <!--<directory suffix=".php">./Tests/Component/Document</directory>-->
         <!--</testsuite>-->
     </testsuites>
     <filter>
