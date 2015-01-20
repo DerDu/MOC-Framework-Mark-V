@@ -2,6 +2,8 @@
 namespace MOC\V\TestSuite\Tests\Component\Document;
 
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
+use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter;
+use MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter;
 
 /**
  * Class ParameterTest
@@ -42,4 +44,29 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testPaperOrientationParameter()
+    {
+
+        try {
+            new PaperOrientationParameter( null );
+        } catch( \Exception $E ) {
+            $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Exception\ComponentException', $E );
+        }
+
+        $Parameter = new PaperOrientationParameter();
+        $this->assertEquals( 'PORTRAIT', $Parameter->getOrientation() );
+    }
+
+    public function testPaperSizeParameter()
+    {
+
+        try {
+            new PaperSizeParameter( null );
+        } catch( \Exception $E ) {
+            $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Exception\ComponentException', $E );
+        }
+
+        $Parameter = new PaperSizeParameter();
+        $this->assertEquals( 'A4', $Parameter->getSize() );
+    }
 }
