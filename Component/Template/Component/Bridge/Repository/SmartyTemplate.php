@@ -33,14 +33,15 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
 
     /**
      * @param FileParameter $Location
+     * @param bool          $Reload
      *
      * @return IBridgeInterface
      */
-    public function loadFile( FileParameter $Location )
+    public function loadFile( FileParameter $Location, $Reload = false )
     {
 
         $this->Instance = new \Smarty();
-        $this->Instance->caching = false;
+        $this->Instance->caching = !$Reload;
         $this->Instance->compile_dir = __DIR__.'/SmartyTemplate';
         $this->Template = $Location->getFile();
         return $this;

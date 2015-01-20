@@ -12,11 +12,12 @@ interface IBridgeInterface
 {
 
     /**
-     * @param \MOC\V\Component\Template\Component\Parameter\Repository\FileParameter $Location
+     * @param FileParameter $Location
+     * @param bool          $Reload
      *
      * @return IBridgeInterface
      */
-    public function loadFile( FileParameter $Location );
+    public function loadFile( FileParameter $Location, $Reload = false );
 
     /**
      * @param string $Identifier
