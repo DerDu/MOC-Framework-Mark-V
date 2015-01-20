@@ -19,8 +19,7 @@ class NamespaceLoader extends NamespaceSearch
     public function loadClass( $ClassName )
     {
 
-        $ClassName = trim( $ClassName, '\\' );
-        if ($this->findSource( $ClassName ) || $this->findInclude( $ClassName )) {
+        if ($this->findSource( $ClassName )) {
             return true;
         }
         return false;
@@ -44,12 +43,16 @@ class NamespaceLoader extends NamespaceSearch
                 continue;
             }
             $DirectoryList = $this->getNamespaceMapping( $Namespace );
-            if (
-                $this->searchForClass( $DirectoryList, $ClassName )
-                || $this->searchForClassFallback( $DirectoryList, $ClassName, $Namespace )
-                || $this->searchForInterface( $DirectoryList, $ClassName )
-                || $this->searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )
-            ) {
+            if ($this->searchForClass( $DirectoryList, $ClassName )) {
+                return true;
+            }
+            if ($this->searchForClassFallback( $DirectoryList, $ClassName, $Namespace )) {
+                return true;
+            }
+            if ($this->searchForInterface( $DirectoryList, $ClassName )) {
+                return true;
+            }
+            if ($this->searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )) {
                 return true;
             }
         }
@@ -64,39 +67,7 @@ class NamespaceLoader extends NamespaceSearch
     protected function getClassNamespace( $ClassName )
     {
 
-        $Separator = strrpos( $ClassName, '\\' );
-        return trim( substr( $ClassName, 0, $Separator ), '\\' );
-    }
-
-    /**
-     * @param string $ClassName
-     *
-     * @return bool
-     */
-    private function findInclude( $ClassName )
-    {
-
-        $LoadFile = str_replace( '_', DIRECTORY_SEPARATOR, $this->getClassName( $ClassName ) ).'.php';
-        if ($File = stream_resolve_include_path( $LoadFile )) {
-            /** @noinspection PhpIncludeInspection */
-            // @codeCoverageIgnoreStart
-            require_once( $File );
-            return true;
-            // @codeCoverageIgnoreEnd
-        }
-        return false;
-    }
-
-    /**
-     * @param string $ClassName
-     *
-     * @return string
-     */
-    protected function getClassName( $ClassName )
-    {
-
-        $Separator = strrpos( $ClassName, '\\' );
-        return ( false === $Separator ) ? $ClassName : trim( substr( $ClassName, $Separator + 1 ), '\\' );
+        return substr( $ClassName, 0, strrpos( $ClassName, '\\' ) );
     }
 }
 
