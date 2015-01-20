@@ -13,6 +13,9 @@ use MOC\V\Component\Template\Component\Parameter\Repository\FileParameter;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function tearDown()
     {
 
