@@ -9,7 +9,7 @@
     <title>File Component/Documentation/Component/Bridge/Repository/ApiGenDocumentation.php | Mark V</title>
 
     <script type="text/javascript" src="resources/combined.js?4076080066"></script>
-    <script type="text/javascript" src="elementlist.js?151721625"></script>
+    <script type="text/javascript" src="elementlist.js?2957170291"></script>
     <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?1143814050" />
 
 
@@ -95,11 +95,16 @@
 				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Bridge.Repository.html">Repository</a>
 						</li>
 							</ul></li>
-				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Exception.html">Exception</a>
-						</li>
-				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Parameter.html">Parameter</a>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Exception.html">Exception<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Exception.Repository.html">Repository</a>
 						</li>
 							</ul></li>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Parameter.html">Parameter<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Component.Parameter.Repository.html">Repository</a>
+						</li>
+							</ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Component.Document.Exception.html">Exception</a>
 						</li>
 				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.html">Vendor</a>
@@ -394,7 +399,7 @@
 </span><span id="75" class="l"><a class="l" href="#75"> 75: </a>            <span class="php-comment">// List of allowed file extensions</span>
 </span><span id="76" class="l"><a class="l" href="#76"> 76: </a>            <span class="php-quote">'extensions'</span>     =&gt; <span class="php-keyword1">array</span>( <span class="php-quote">'php'</span> ),
 </span><span id="77" class="l"><a class="l" href="#77"> 77: </a>            <span class="php-comment">// Mask to exclude file or directory from processing</span>
-</span><span id="78" class="l"><a class="l" href="#78"> 78: </a>            <span class="php-quote">'exclude'</span> =&gt; <span class="php-quote">'/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*'</span>,
+</span><span id="78" class="l"><a class="l" href="#78"> 78: </a>            <span class="php-quote">'exclude'</span> =&gt; <span class="php-quote">'/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*,*/Vendor/DomPdf/*'</span>,
 </span><span id="79" class="l"><a class="l" href="#79"> 79: </a>            <span class="php-comment">// Don't generate documentation for classes from file or directory with this mask</span>
 </span><span id="80" class="l"><a class="l" href="#80"> 80: </a>            <span class="php-comment">//'skipDocPath' =&gt; '',</span>
 </span><span id="81" class="l"><a class="l" href="#81"> 81: </a>            <span class="php-comment">// Don't generate documentation for classes with this name prefix</span>
@@ -438,11 +443,11 @@
 </span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-comment">// Add a link to download documentation as a ZIP archive</span>
 </span><span id="120" class="l"><a class="l" href="#120">120: </a>            <span class="php-quote">'download'</span>       =&gt; <span class="php-keyword1">true</span>,
 </span><span id="121" class="l"><a class="l" href="#121">121: </a>            <span class="php-comment">// Save a check style report of poorly documented elements into a file</span>
-</span><span id="122" class="l"><a class="l" href="#122">122: </a>            <span class="php-quote">'report'</span>         =&gt; <span class="php-var">$this</span>-&gt;Destination-&gt;getDirectory().<span class="php-quote">'_improve.xml'</span>,
+</span><span id="122" class="l"><a class="l" href="#122">122: </a>            <span class="php-quote">'report'</span>      =&gt; <span class="php-var">$this</span>-&gt;Destination-&gt;getDirectory().<span class="php-quote">'_improve.xml'</span>,
 </span><span id="123" class="l"><a class="l" href="#123">123: </a>            <span class="php-comment">// Wipe out the destination directory first</span>
 </span><span id="124" class="l"><a class="l" href="#124">124: </a>            <span class="php-quote">'wipeout'</span>        =&gt; <span class="php-keyword1">true</span>,
 </span><span id="125" class="l"><a class="l" href="#125">125: </a>            <span class="php-comment">// Don't display scanning and generating messages</span>
-</span><span id="126" class="l"><a class="l" href="#126">126: </a>            <span class="php-quote">'quiet'</span>          =&gt; <span class="php-keyword1">false</span>,
+</span><span id="126" class="l"><a class="l" href="#126">126: </a>            <span class="php-quote">'quiet'</span>       =&gt; <span class="php-keyword1">false</span>,
 </span><span id="127" class="l"><a class="l" href="#127">127: </a>            <span class="php-comment">// Display progressbar</span>
 </span><span id="128" class="l"><a class="l" href="#128">128: </a>            <span class="php-quote">'progressbar'</span> =&gt; <span class="php-keyword1">true</span>,
 </span><span id="129" class="l"><a class="l" href="#129">129: </a>            <span class="php-comment">// Use colors</span>
