@@ -30,6 +30,7 @@
                 <directory>./../Component/Documentation/Vendor/ApiGen</directory>
                 <directory>./../Component/Documentation/Vendor/Template</directory>
                 <directory>./../Component/Document/Vendor/PhpExcel</directory>
+                <directory>./../Component/Document/Vendor/DomPdf</directory>
             </exclude>
         </whitelist>
     </filter>

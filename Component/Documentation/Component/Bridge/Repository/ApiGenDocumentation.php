@@ -75,7 +75,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // List of allowed file extensions
             'extensions'     => array( 'php' ),
             // Mask to exclude file or directory from processing
-            'exclude'     => '/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*',
+            'exclude' => '/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*,*/Vendor/DomPdf/*',
             // Don't generate documentation for classes from file or directory with this mask
             //'skipDocPath' => '',
             // Don't generate documentation for classes with this name prefix
