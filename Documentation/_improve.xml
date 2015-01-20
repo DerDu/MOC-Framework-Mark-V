@@ -12,12 +12,7 @@
 		<error severity="error" line="172" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2DBAL::executeRead()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Database\Component\Bridge\Repository\Doctrine2ORM.php">
-		<error severity="error" line="30" message="Missing documentation of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="53" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::registerConnection()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="110" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::prepareConnection()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="151" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::executeWrite()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="162" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::prepareQuery()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="181" message="Missing description of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::executeRead()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="19" message="Missing documentation of method MOC\V\Component\Database\Component\Bridge\Repository\Doctrine2ORM::__construct()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Database\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Database\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -92,22 +87,28 @@
 		<error severity="error" line="36" message="Missing description of method MOC\V\Component\Database\Vendor\Vendor::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Bridge.php">
-		<error severity="error" line="18" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::getFileParameter()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="27" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::setFileParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="24" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::getPaperOrientationParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="33" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::setPaperOrientationParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="45" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::getPaperSizeParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="54" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::setPaperSizeParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="66" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::getFileParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="75" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Bridge::setFileParameter()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\DomPdf.php">
-		<error severity="error" line="14" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="23" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="35" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::setContent()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="47" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::getContent()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="59" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="17" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::setPaperSizeParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="40" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::setPaperOrientationParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="51" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::loadFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="63" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::setContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="75" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="92" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\DomPdf::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\PhpExcel.php">
-		<error severity="error" line="12" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="warning" line="18" message="Existing documentation &quot;IBridgeInterface&quot; of nonexistent return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="18" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="warning" line="28" message="Existing documentation &quot;IBridgeInterface&quot; of nonexistent return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::saveFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="28" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::loadFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="32" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="43" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setPaperOrientationParameter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="54" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setPaperSizeParameter()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Document\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -130,6 +131,16 @@
 		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\FileParameter::__construct()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\FileParameter::getFile()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\FileParameter::setFile()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter.php">
+		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter::getOrientation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter::setOrientation()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Parameter\Repository\PaperSizeParameter.php">
+		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter::getSize()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter::setSize()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Document.php">
 		<error severity="error" line="23" message="Missing description of method MOC\V\Component\Document\Document::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -259,7 +270,7 @@
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Bridge\Repository\SmartyTemplate.php">
 		<error severity="error" line="21" message="Missing documentation of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::__construct()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="34" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="50" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="51" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Bridge\Repository\TwigTemplate.php">
 		<error severity="error" line="21" message="Missing documentation of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::__construct()" source="ApiGen.Documentation.Documentation"/>
