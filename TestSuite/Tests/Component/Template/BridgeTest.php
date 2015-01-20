@@ -17,9 +17,32 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         if (false !== ( $Path = realpath( __DIR__.'/../../../../Component/Template/Component/Bridge/Repository/SmartyTemplate' ) )) {
-            foreach (new \DirectoryIterator( $Path ) as $fileInfo) {
-                if (!$fileInfo->isDot()) {
-                    unlink( $fileInfo->getPathname() );
+            $Iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator( $Path, \RecursiveDirectoryIterator::SKIP_DOTS ),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            /** @var \SplFileInfo $FileInfo */
+            foreach ($Iterator as $FileInfo) {
+                if ($FileInfo->getBasename() != 'README.md') {
+                    unlink( $FileInfo->getPathname() );
+                }
+            }
+        }
+
+        if (false !== ( $Path = realpath( __DIR__.'/../../../../Component/Template/Component/Bridge/Repository/TwigTemplate' ) )) {
+            $Iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator( $Path, \RecursiveDirectoryIterator::SKIP_DOTS ),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            /** @var \SplFileInfo $FileInfo */
+            foreach ($Iterator as $FileInfo) {
+                if ($FileInfo->getBasename() != 'README.md') {
+                    if ($FileInfo->isFile()) {
+                        unlink( $FileInfo->getPathname() );
+                    }
+                    if ($FileInfo->isDir()) {
+                        rmdir( $FileInfo->getPathname() );
+                    }
                 }
             }
         }
@@ -30,7 +53,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new TwigTemplate();
 
-        $Bridge->loadFile( new FileParameter( __FILE__ ) );
+        $Bridge->loadFile( new FileParameter( __FILE__ ), true );
 
         $Bridge->setVariable( 'Foo', 'Bar' );
         $Bridge->setVariable( 'Foo', array( 'Bar' ) );
@@ -43,7 +66,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new SmartyTemplate();
 
-        $Bridge->loadFile( new FileParameter( __FILE__ ) );
+        $Bridge->loadFile( new FileParameter( __FILE__ ), true );
 
         $Bridge->setVariable( 'Foo', 'Bar' );
         $Bridge->setVariable( 'Foo', array( 'Bar' ) );

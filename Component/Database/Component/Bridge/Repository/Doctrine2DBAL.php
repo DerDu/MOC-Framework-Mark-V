@@ -70,7 +70,9 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
             ) );
         } catch
         ( \Exception $E ) {
+            // @codeCoverageIgnoreStart
             throw new ComponentException( $E->getMessage(), $E->getCode(), $E );
+            // @codeCoverageIgnoreEnd
         }
 
         try {
