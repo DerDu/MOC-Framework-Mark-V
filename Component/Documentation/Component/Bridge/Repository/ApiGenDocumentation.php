@@ -75,7 +75,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // List of allowed file extensions
             'extensions'     => array( 'php' ),
             // Mask to exclude file or directory from processing
-            'exclude' => '*/Documentation/*,*/.idea/*,*/.git/*,*/Vendor/Symfony/*,*/TestSuite/*,*/Vendor/Twig/*,*/Vendor/Smarty/*,*/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*',
+            'exclude'     => '/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*',
             // Don't generate documentation for classes from file or directory with this mask
             //'skipDocPath' => '',
             // Don't generate documentation for classes with this name prefix
@@ -119,13 +119,13 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // Add a link to download documentation as a ZIP archive
             'download'       => true,
             // Save a check style report of poorly documented elements into a file
-            'report'         => '',
+            'report'      => $this->Destination->getDirectory().'_improve.xml',
             // Wipe out the destination directory first
             'wipeout'        => true,
             // Don't display scanning and generating messages
-            'quiet'          => true,
+            'quiet'       => false,
             // Display progressbar
-            'progressbar' => false,
+            'progressbar' => true,
             // Use colors
             'colors'         => false,
             // Check for update
