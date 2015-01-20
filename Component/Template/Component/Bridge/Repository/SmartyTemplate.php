@@ -43,6 +43,7 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
         $this->Instance = new \Smarty();
         $this->Instance->caching = !$Reload;
         $this->Instance->compile_dir = __DIR__.'/SmartyTemplate';
+        $this->Instance->cache_dir = __DIR__.'/SmartyTemplate';
         $this->Template = $Location->getFile();
         return $this;
     }

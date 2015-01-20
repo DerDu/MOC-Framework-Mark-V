@@ -48,8 +48,8 @@ class Template implements IVendorInterface
                 break;
             }
             default: {
-            throw new TemplateTypeException( $Type );
-            break;
+                throw new TemplateTypeException( ( $Type ? $Type : '-NA-' ) );
+                break;
             }
         }
     }
