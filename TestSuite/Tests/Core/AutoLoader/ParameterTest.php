@@ -22,11 +22,14 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
     {
 
         try {
-            new NamespaceParameter( null );
+            new NamespaceParameter( '' );
         } catch( \Exception $E ) {
             $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\Exception\Repository\EmptyNamespaceException',
                 $E );
         }
+
+        $Parameter = new NamespaceParameter( null );
+        $this->assertEquals( null, $Parameter->getNamespace() );
 
         $Parameter = new NamespaceParameter( __NAMESPACE__ );
         $this->assertEquals( __NAMESPACE__, $Parameter->getNamespace() );

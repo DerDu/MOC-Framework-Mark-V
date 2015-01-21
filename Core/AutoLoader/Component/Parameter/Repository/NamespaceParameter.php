@@ -36,18 +36,22 @@ class NamespaceParameter extends Parameter implements IParameterInterface
     }
 
     /**
-     * @param string $Namespace
+     * @param null|string $Namespace
      *
-     * @throws \MOC\V\Core\AutoLoader\Component\Exception\Repository\EmptyNamespaceException
+     * @throws EmptyNamespaceException
      */
     public function setNamespace( $Namespace )
     {
 
-        $Namespace = trim( $Namespace, '\\' );
-        if (empty( $Namespace )) {
-            throw new EmptyNamespaceException();
+        if (null === $Namespace) {
+            $this->Namespace = null;
         } else {
-            $this->Namespace = $Namespace;
+            $Namespace = trim( $Namespace, '\\' );
+            if (empty( $Namespace )) {
+                throw new EmptyNamespaceException();
+            } else {
+                $this->Namespace = $Namespace;
+            }
         }
     }
 

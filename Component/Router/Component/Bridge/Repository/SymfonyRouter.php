@@ -38,9 +38,8 @@ class SymfonyRouter extends Bridge implements IBridgeInterface
     function __construct( $BaseUrl = '' )
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../../../Vendor/Symfony/Component/' );
-        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component',
-            __DIR__.'/../../../../../Core/HttpKernel/Vendor/Symfony/Component/' );
+        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../../../Vendor/' );
+        AutoLoader::getNamespaceAutoLoader( 'Symfony\Component', __DIR__.'/../../../../../Core/HttpKernel/Vendor/' );
 
         $this->SymfonyRouteCollection = new RouteCollection();
         $this->SymfonyRequestContext = new RequestContext();

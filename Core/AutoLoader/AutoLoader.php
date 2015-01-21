@@ -18,20 +18,20 @@ require_once( __DIR__.'/Component/Parameter/Repository/DirectoryParameter.php' )
 
 require_once( __DIR__.'/Component/IBridgeInterface.php' );
 require_once( __DIR__.'/Component/Bridge/Bridge.php' );
+require_once( __DIR__.'/Component/Bridge/Repository/MultitonNamespace.php' );
 require_once( __DIR__.'/Component/Bridge/Repository/UniversalNamespace.php' );
-require_once( __DIR__.'/Component/Bridge/Repository/SymfonyClassLoader.php' );
 
+require_once( __DIR__.'/Vendor/Multiton/NamespaceLoader.php' );
 require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceMapping.php' );
 require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceSearch.php' );
 require_once( __DIR__.'/Vendor/Universal/NamespaceLoader.php' );
 
-use MOC\V\Core\AutoLoader\Component\Bridge\Repository\SymfonyClassLoader;
+use MOC\V\Core\AutoLoader\Component\Bridge\Repository\MultitonNamespace;
 use MOC\V\Core\AutoLoader\Component\Bridge\Repository\UniversalNamespace;
 use MOC\V\Core\AutoLoader\Component\IBridgeInterface;
 use MOC\V\Core\AutoLoader\Component\IVendorInterface;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
-use MOC\V\Core\AutoLoader\Exception\AutoLoaderException;
 use MOC\V\Core\AutoLoader\Vendor\Vendor;
 
 /**
@@ -55,34 +55,35 @@ class AutoLoader implements IVendorInterface
     }
 
     /**
-     * @param string $Namespace
-     * @param string $Directory
+     * @param string      $Namespace
+     * @param string      $Directory
+     * @param null|string $Prefix
      *
      * @return IBridgeInterface
-     * @throws AutoLoaderException
      */
-    public static function getNamespaceAutoLoader( $Namespace, $Directory )
+    public static function getNamespaceAutoLoader( $Namespace, $Directory, $Prefix = null )
     {
 
-        return self::getUniversalNamespaceAutoLoader( $Namespace, $Directory );
+        return self::getMultitonNamespaceAutoLoader( $Namespace, $Directory, $Prefix );
     }
 
     /**
-     * @param string $Namespace
-     * @param string $Directory
+     * @param string      $Namespace
+     * @param string      $Directory
+     * @param null|string $Prefix
      *
      * @return IBridgeInterface
      */
-    public static function getUniversalNamespaceAutoLoader( $Namespace, $Directory )
+    public static function getMultitonNamespaceAutoLoader( $Namespace, $Directory, $Prefix = null )
     {
 
         $Loader = new AutoLoader(
             new Vendor(
-                new UniversalNamespace()
+                new MultitonNamespace(
+                    new NamespaceParameter( $Namespace ),
+                    new DirectoryParameter( $Directory ),
+                    new NamespaceParameter( $Prefix ) )
             )
-        );
-        $Loader->getBridgeInterface()->addNamespaceDirectoryMapping(
-            new NamespaceParameter( $Namespace ), new DirectoryParameter( $Directory )
         );
         $Loader->getBridgeInterface()->registerLoader();
 
@@ -104,12 +105,12 @@ class AutoLoader implements IVendorInterface
      *
      * @return IBridgeInterface
      */
-    public static function getSymfonyClassLoader( $Namespace, $Directory )
+    public static function getUniversalNamespaceAutoLoader( $Namespace, $Directory )
     {
 
         $Loader = new AutoLoader(
             new Vendor(
-                new SymfonyClassLoader()
+                new UniversalNamespace()
             )
         );
         $Loader->getBridgeInterface()->addNamespaceDirectoryMapping(

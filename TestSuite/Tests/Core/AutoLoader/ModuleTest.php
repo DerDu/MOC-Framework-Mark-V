@@ -35,6 +35,14 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $Loader->unregisterLoader();
     }
 
+    public function testStaticMultitonNamespaceAutoLoader()
+    {
+
+        $Loader = AutoLoader::getMultitonNamespaceAutoLoader( __NAMESPACE__, __DIR__ );
+        $this->assertInstanceOf( 'MOC\V\Core\AutoLoader\Component\IBridgeInterface', $Loader );
+        $Loader->unregisterLoader();
+    }
+
     public function testStaticNamespaceAutoLoader()
     {
 
