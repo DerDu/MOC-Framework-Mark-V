@@ -4,12 +4,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="ApiGen 2.8.0" />
-    <meta name="robots" content="noindex" />
 
-    <title>File Core/AutoLoader/Component/Bridge/Repository/SymfonyClassLoader.php | Mark V</title>
+    <title>Class MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader | Mark V</title>
 
     <script type="text/javascript" src="resources/combined.js?4076080066"></script>
-    <script type="text/javascript" src="elementlist.js?3819155596"></script>
+    <script type="text/javascript" src="elementlist.js?1829318251"></script>
     <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?1143814050" />
 
 
@@ -186,11 +185,11 @@
 						<ul>
 				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.html">AutoLoader<span></span></a>
 						<ul>
-				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.Component.html">Component<span></span></a>
+				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Component.html">Component<span></span></a>
 						<ul>
-				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.Component.Bridge.html">Bridge<span></span></a>
+				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Component.Bridge.html">Bridge<span></span></a>
 						<ul>
-				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.Component.Bridge.Repository.html">Repository</a>
+				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Component.Bridge.Repository.html">Repository</a>
 						</li>
 							</ul></li>
 				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Component.Exception.html">Exception<span></span></a>
@@ -205,8 +204,10 @@
 							</ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Exception.html">Exception</a>
 						</li>
-				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Vendor.html">Vendor<span></span></a>
+				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.Vendor.html">Vendor<span></span></a>
 						<ul>
+				<li class="active main"><a href="namespace-MOC.V.Core.AutoLoader.Vendor.Multiton.html">Multiton</a>
+						</li>
 				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Vendor.Universal.html">Universal<span></span></a>
 						<ul>
 				<li class="main"><a href="namespace-MOC.V.Core.AutoLoader.Vendor.Universal.NamespaceLoader.html">NamespaceLoader</a>
@@ -270,8 +271,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li class="active"><a href="class-MOC.V.Core.AutoLoader.Component.Bridge.Repository.SymfonyClassLoader.html">SymfonyClassLoader</a></li>
-				<li><a href="class-MOC.V.Core.AutoLoader.Component.Bridge.Repository.UniversalNamespace.html">UniversalNamespace</a></li>
+				<li class="active"><a href="class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html">NamespaceLoader</a></li>
 			</ul>
 
 
@@ -299,11 +299,10 @@
 				<a href="index.html" title="Overview"><span>Overview</span></a>
 			</li>
 			<li>
-				<a href="namespace-MOC.V.Core.AutoLoader.Component.Bridge.Repository.html" title="Summary of MOC\V\Core\AutoLoader\Component\Bridge\Repository"><span>Namespace</span></a>
+				<a href="namespace-MOC.V.Core.AutoLoader.Vendor.Multiton.html" title="Summary of MOC\V\Core\AutoLoader\Vendor\Multiton"><span>Namespace</span></a>
 			</li>
-			<li>
-				<a href="class-MOC.V.Core.AutoLoader.Component.Bridge.Repository.SymfonyClassLoader.html" title="Summary of MOC\V\Core\AutoLoader\Component\Bridge\Repository\SymfonyClassLoader"><span>Class</span></a>
-			</li>
+			<li class="active">
+<span>Class</span>			</li>
 		</ul>
 		<ul>
 			<li>
@@ -323,60 +322,340 @@
 		</ul>
 	</div>
 
-<pre><code><span id="1" class="l"><a class="l" href="#1"> 1: </a><span class="xlang">&lt;?php</span>
-</span><span id="2" class="l"><a class="l" href="#2"> 2: </a><span class="php-keyword1">namespace</span> MOC\V\Core\AutoLoader\Component\Bridge\Repository;
-</span><span id="3" class="l"><a class="l" href="#3"> 3: </a>
-</span><span id="4" class="l"><a class="l" href="#4"> 4: </a><span class="php-keyword1">use</span> MOC\V\Core\AutoLoader\Component\Bridge\Bridge;
-</span><span id="5" class="l"><a class="l" href="#5"> 5: </a><span class="php-keyword1">use</span> MOC\V\Core\AutoLoader\Component\IBridgeInterface;
-</span><span id="6" class="l"><a class="l" href="#6"> 6: </a><span class="php-keyword1">use</span> MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
-</span><span id="7" class="l"><a class="l" href="#7"> 7: </a><span class="php-keyword1">use</span> MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
-</span><span id="8" class="l"><a class="l" href="#8"> 8: </a><span class="php-keyword1">use</span> Symfony\Component\ClassLoader\ClassLoader;
-</span><span id="9" class="l"><a class="l" href="#9"> 9: </a>
-</span><span id="10" class="l"><a class="l" href="#10">10: </a><span class="php-comment">/**
-</span></span><span id="11" class="l"><a class="l" href="#11">11: </a><span class="php-comment"> * Class SymfonyClassLoader
-</span></span><span id="12" class="l"><a class="l" href="#12">12: </a><span class="php-comment"> *
-</span></span><span id="13" class="l"><a class="l" href="#13">13: </a><span class="php-comment"> * @package MOC\V\Core\AutoLoader\Component\Bridge
-</span></span><span id="14" class="l"><a class="l" href="#14">14: </a><span class="php-comment"> */</span>
-</span><span id="15" class="l"><a class="l" href="#15">15: </a><span class="php-keyword1">class</span> <a id="SymfonyClassLoader" href="#SymfonyClassLoader">SymfonyClassLoader</a> <span class="php-keyword1">extends</span> Bridge <span class="php-keyword1">implements</span> IBridgeInterface
-</span><span id="16" class="l"><a class="l" href="#16">16: </a>{
-</span><span id="17" class="l"><a class="l" href="#17">17: </a>
-</span><span id="18" class="l"><a class="l" href="#18">18: </a>    <span class="php-comment">/** @var ClassLoader $Instance */</span>
-</span><span id="19" class="l"><a class="l" href="#19">19: </a>    <span class="php-keyword1">private</span> <span class="php-var"><a id="$Instance" href="#$Instance">$Instance</a></span> = <span class="php-keyword1">null</span>;
-</span><span id="20" class="l"><a class="l" href="#20">20: </a>
-</span><span id="21" class="l"><a class="l" href="#21">21: </a>    <span class="php-keyword1">function</span> <a id="___construct" href="#___construct">__construct</a>()
-</span><span id="22" class="l"><a class="l" href="#22">22: </a>    {
-</span><span id="23" class="l"><a class="l" href="#23">23: </a>
-</span><span id="24" class="l"><a class="l" href="#24">24: </a>        <span class="php-keyword1">require_once</span>( __DIR__.<span class="php-quote">'/../../../Vendor/Symfony/Component/ClassLoader/ClassLoader.php'</span> );
-</span><span id="25" class="l"><a class="l" href="#25">25: </a>
-</span><span id="26" class="l"><a class="l" href="#26">26: </a>        <span class="php-var">$this</span>-&gt;Instance = <span class="php-keyword1">new</span> ClassLoader();
-</span><span id="27" class="l"><a class="l" href="#27">27: </a>        <span class="php-var">$this</span>-&gt;Instance-&gt;setUseIncludePath( <span class="php-keyword1">true</span> );
-</span><span id="28" class="l"><a class="l" href="#28">28: </a>    }
-</span><span id="29" class="l"><a class="l" href="#29">29: </a>
-</span><span id="30" class="l"><a class="l" href="#30">30: </a>    <span class="php-comment">/**
-</span></span><span id="31" class="l"><a class="l" href="#31">31: </a><span class="php-comment">     * @param string $ClassName
-</span></span><span id="32" class="l"><a class="l" href="#32">32: </a><span class="php-comment">     *
-</span></span><span id="33" class="l"><a class="l" href="#33">33: </a><span class="php-comment">     * @return bool
-</span></span><span id="34" class="l"><a class="l" href="#34">34: </a><span class="php-comment">     */</span>
-</span><span id="35" class="l"><a class="l" href="#35">35: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_loadSourceFile" href="#_loadSourceFile">loadSourceFile</a>( <span class="php-var">$ClassName</span> )
-</span><span id="36" class="l"><a class="l" href="#36">36: </a>    {
-</span><span id="37" class="l"><a class="l" href="#37">37: </a>
-</span><span id="38" class="l"><a class="l" href="#38">38: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;Instance-&gt;loadClass( <span class="php-keyword2">trim</span>( <span class="php-var">$ClassName</span>, <span class="php-quote">'\\'</span> ) ) ? <span class="php-keyword1">true</span> : <span class="php-keyword1">false</span>;
-</span><span id="39" class="l"><a class="l" href="#39">39: </a>    }
-</span><span id="40" class="l"><a class="l" href="#40">40: </a>
-</span><span id="41" class="l"><a class="l" href="#41">41: </a>    <span class="php-comment">/**
-</span></span><span id="42" class="l"><a class="l" href="#42">42: </a><span class="php-comment">     * @param NamespaceParameter $Namespace
-</span></span><span id="43" class="l"><a class="l" href="#43">43: </a><span class="php-comment">     * @param DirectoryParameter $Directory
-</span></span><span id="44" class="l"><a class="l" href="#44">44: </a><span class="php-comment">     *
-</span></span><span id="45" class="l"><a class="l" href="#45">45: </a><span class="php-comment">     * @return IBridgeInterface
-</span></span><span id="46" class="l"><a class="l" href="#46">46: </a><span class="php-comment">     */</span>
-</span><span id="47" class="l"><a class="l" href="#47">47: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_addNamespaceDirectoryMapping" href="#_addNamespaceDirectoryMapping">addNamespaceDirectoryMapping</a>( NamespaceParameter <span class="php-var">$Namespace</span>, DirectoryParameter <span class="php-var">$Directory</span> )
-</span><span id="48" class="l"><a class="l" href="#48">48: </a>    {
-</span><span id="49" class="l"><a class="l" href="#49">49: </a>
-</span><span id="50" class="l"><a class="l" href="#50">50: </a>        <span class="php-var">$this</span>-&gt;Instance-&gt;addPrefix( <span class="php-var">$Namespace</span>-&gt;getNamespace(), <span class="php-var">$Directory</span>-&gt;getDirectory() );
-</span><span id="51" class="l"><a class="l" href="#51">51: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
-</span><span id="52" class="l"><a class="l" href="#52">52: </a>    }
-</span><span id="53" class="l"><a class="l" href="#53">53: </a>}
-</span><span id="54" class="l"><a class="l" href="#54">54: </a></span></code></pre>
+<div id="content" class="class">
+	<h1>Class NamespaceLoader</h1>
+
+
+	<div class="description">
+	
+<p>Class NamespaceLoader</p>
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-MOC.html">MOC</a>\<a href="namespace-MOC.V.html">V</a>\<a href="namespace-MOC.V.Core.html">Core</a>\<a href="namespace-MOC.V.Core.AutoLoader.html">AutoLoader</a>\<a href="namespace-MOC.V.Core.AutoLoader.Vendor.html">Vendor</a>\<a href="namespace-MOC.V.Core.AutoLoader.Vendor.Multiton.html">Multiton</a><br />
+		<b>Package:</b> MOC\V\Core\AutoLoader\Vendor\Multiton<br />
+
+		<b>Located at</b> <a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#4-95" title="Go to source code">Core/AutoLoader/Vendor/Multiton/NamespaceLoader.php</a><br />
+	</div>
+
+
+
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#23-31" title="Go to source code">__construct</a>( <span>mixed <var>$Namespace</var></span>, <span>mixed <var>$Path</var></span>, <span>mixed <var>$Prefix</var> = <span class="php-keyword1">null</span> </span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="loadClass" id="_loadClass">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_loadClass">#</a>
+		<code><a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#34-56" title="Go to source code">loadClass</a>( <span>string <var>$ClassName</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$ClassName</var></dt>
+					<dd><code>string</code><br>$ClassName</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="checkExists" id="_checkExists">
+
+		<td class="attributes"><code>
+			 private 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_checkExists">#</a>
+		<code><a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#58-70" title="Go to source code">checkExists</a>( <span>string <var>$Name</var></span>, <span>boolean <var>$Load</var> = <span class="php-keyword1">false</span> </span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$Name</var></dt>
+					<dd><code>string</code><br>$Name</dd>
+					<dt><var>$Load</var></dt>
+					<dd><code>boolean</code><br>$Load</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="checkCanLoadClass" id="_checkCanLoadClass">
+
+		<td class="attributes"><code>
+			 public 
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_checkCanLoadClass">#</a>
+		<code><a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#72-94" title="Go to source code">checkCanLoadClass</a>( <span>string <var>$ClassName</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$ClassName</var></dt>
+					<dd><code>string</code><br>$ClassName</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>boolean</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="Namespace" id="$Namespace">
+		<td class="attributes"><code>
+			private  
+			null|string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#12-13" title="Go to source code"><var>$Namespace</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$Namespace" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>$Namespace</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>$Namespace</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="Path" id="$Path">
+		<td class="attributes"><code>
+			private  
+			null|string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#14-15" title="Go to source code"><var>$Path</var></a>
+		</td>
+		<td class="value"><code><span class="php-keyword1">null</span></code></td>
+		<td class="description"><div>
+			<a href="#$Path" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>$Path</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>$Path</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="Separator" id="$Separator">
+		<td class="attributes"><code>
+			private  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#16-17" title="Go to source code"><var>$Separator</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">'\\'</span></code></td>
+		<td class="description"><div>
+			<a href="#$Separator" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>$Separator</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>$Separator</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="Extension" id="$Extension">
+		<td class="attributes"><code>
+			private  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#18-19" title="Go to source code"><var>$Extension</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">'.php'</span></code></td>
+		<td class="description"><div>
+			<a href="#$Extension" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>$Extension</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>$Extension</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="Prefix" id="$Prefix">
+		<td class="attributes"><code>
+			private  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-MOC.V.Core.AutoLoader.Vendor.Multiton.NamespaceLoader.html#20-21" title="Go to source code"><var>$Prefix</var></a>
+		</td>
+		<td class="value"><code><span class="php-quote">'MOC\V'</span></code></td>
+		<td class="description"><div>
+			<a href="#$Prefix" class="anchor">#</a>
+
+			<div class="description short">
+				
+<p>$Prefix</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>$Prefix</p>
+
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
 
 	<div id="footer">
 		Mark V API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
