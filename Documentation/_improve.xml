@@ -163,11 +163,10 @@
 		<error severity="error" line="27" message="Missing description of method MOC\V\Component\Document\Vendor\Vendor::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="36" message="Missing description of method MOC\V\Component\Document\Vendor\Vendor::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
-	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation.php">
-		<error severity="error" line="24" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="39" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation::createDocumentation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="66" message="Missing documentation of return value of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation::getConfig()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="66" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation::getConfig()" source="ApiGen.Documentation.Documentation"/>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Bridge\Repository\ApiGen.php">
+		<error severity="error" line="27" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="70" message="Missing documentation of return value of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="70" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Documentation\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -178,9 +177,6 @@
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Exception\Repository\TypeDirectoryException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Documentation\Component\Exception\Repository\TypeDirectoryException::__construct()" source="ApiGen.Documentation.Documentation"/>
 	</file>
-	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\IBridgeInterface.php">
-		<error severity="error" line="12" message="Missing description of method MOC\V\Component\Documentation\Component\IBridgeInterface::createDocumentation()" source="ApiGen.Documentation.Documentation"/>
-	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\IVendorInterface.php">
 		<error severity="error" line="12" message="Missing description of method MOC\V\Component\Documentation\Component\IVendorInterface::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="17" message="Missing description of method MOC\V\Component\Documentation\Component\IVendorInterface::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
@@ -190,14 +186,19 @@
 		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter::getDirectory()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter::setDirectory()" source="ApiGen.Documentation.Documentation"/>
 	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter.php">
+		<error severity="error" line="15" message="Missing description of method MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="24" message="Missing description of method MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter::getGlobList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="33" message="Missing description of method MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter::setGlobList()" source="ApiGen.Documentation.Documentation"/>
+	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Documentation.php">
-		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Documentation\Documentation::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Documentation\Documentation::getDocumentation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Documentation\Documentation::getApiGenDocumentation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="52" message="Missing description of method MOC\V\Component\Documentation\Documentation::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="61" message="Missing description of method MOC\V\Component\Documentation\Documentation::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="70" message="Missing description of method MOC\V\Component\Documentation\Documentation::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="82" message="Missing description of method MOC\V\Component\Documentation\Documentation::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="21" message="Missing description of method MOC\V\Component\Documentation\Documentation::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="30" message="Missing description of method MOC\V\Component\Documentation\Documentation::getDocumentation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="50" message="Missing description of method MOC\V\Component\Documentation\Documentation::getApiGenDocumentation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="70" message="Missing description of method MOC\V\Component\Documentation\Documentation::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="79" message="Missing description of method MOC\V\Component\Documentation\Documentation::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="88" message="Missing description of method MOC\V\Component\Documentation\Documentation::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="100" message="Missing description of method MOC\V\Component\Documentation\Documentation::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Exception\DocumentationException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Documentation\Exception\DocumentationException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -390,7 +391,7 @@
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Vendor\Universal\NamespaceLoader.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader::loadClass()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="28" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader::findSource()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="62" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader::getClassNamespace()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="70" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader::getClassNamespace()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Vendor\Universal\NamespaceLoader\NamespaceMapping.php">
 		<error severity="error" line="15" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader\NamespaceMapping::addNamespaceMapping()" source="ApiGen.Documentation.Documentation"/>
