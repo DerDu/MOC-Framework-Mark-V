@@ -43,6 +43,8 @@ class ApiGen extends Bridge implements IBridgeInterface
         AutoLoader::getNamespaceAutoLoader( 'TokenReflection', __DIR__.'/../../../Vendor/ApiGen/libs/TokenReflection' );
         AutoLoader::getNamespaceAutoLoader( 'FSHL', __DIR__.'/../../../Vendor/ApiGen/libs/FSHL' );
         AutoLoader::getNamespaceAutoLoader( 'Nette', __DIR__.'/../../../Vendor/ApiGen/libs/Nette' );
+        AutoLoader::getNamespaceAutoLoader( 'Nette', __DIR__.'/../../../Vendor/ApiGen/libs/Nette/Nette/common',
+            'Nette' );
 
         $this->Project = $Project;
         $this->Title = $Title;
