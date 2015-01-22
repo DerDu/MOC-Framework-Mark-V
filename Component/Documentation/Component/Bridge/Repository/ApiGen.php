@@ -4,44 +4,50 @@ namespace MOC\V\Component\Documentation\Component\Bridge\Repository;
 use MOC\V\Component\Documentation\Component\Bridge\Bridge;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\FileSystem\FileSystem;
 use Nette\Config\Adapters\NeonAdapter;
 
-/**
- * Class ApiGenDocumentation
- *
- * @package MOC\V\Component\Documentation\Component\Bridge
- */
-class ApiGenDocumentation extends Bridge implements IBridgeInterface
+class ApiGen extends Bridge implements IBridgeInterface
 {
 
+    /** @var string $Project */
+    private $Project = '';
+    /** @var string $Title */
+    private $Title = '';
     /** @var DirectoryParameter|null $Source */
     private $Source = null;
     /** @var DirectoryParameter|null $Destination */
     private $Destination = null;
+    /** @var ExcludeParameter|null $Exclude */
+    private $Exclude = null;
+
 
     /**
-     * @param DirectoryParameter $Source
-     * @param DirectoryParameter $Destination
+     * @param string                $Project
+     * @param string                $Title
+     * @param DirectoryParameter    $Source
+     * @param DirectoryParameter    $Destination
+     * @param null|ExcludeParameter $Exclude
      */
-    function __construct( DirectoryParameter $Source, DirectoryParameter $Destination )
-    {
+    public function __construct(
+        $Project,
+        $Title,
+        DirectoryParameter $Source,
+        DirectoryParameter $Destination,
+        ExcludeParameter $Exclude = null
+    ) {
 
         AutoLoader::getNamespaceAutoLoader( 'ApiGen', __DIR__.'/../../../Vendor/ApiGen' );
         AutoLoader::getNamespaceAutoLoader( 'TokenReflection', __DIR__.'/../../../Vendor/ApiGen/libs/TokenReflection' );
         AutoLoader::getNamespaceAutoLoader( 'FSHL', __DIR__.'/../../../Vendor/ApiGen/libs/FSHL' );
 
+        $this->Project = $Project;
+        $this->Title = $Title;
         $this->Source = $Source;
         $this->Destination = $Destination;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return string
-     */
-    public function createDocumentation()
-    {
+        $this->Exclude = $Exclude;
 
         set_time_limit( 0 );
         $Config = $this->getConfig();
@@ -49,7 +55,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
         require_once( __DIR__.'/../../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
         $Neon = new NeonAdapter();
 
-        $File = FileSystem::getFileWriter( __DIR__.'/ApiGenDocumentation.config' );
+        $File = FileSystem::getFileWriter( __DIR__.'/ApiGen.config' );
         file_put_contents( $File->getLocation(), $Neon->dump( $Config ) );
 
         $_SERVER['argv'] = array(
@@ -59,15 +65,13 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
         );
 
         include( __DIR__.'/../../../Vendor/ApiGen/apigen.php' );
-
-        return $this->Destination->getDirectory();
     }
 
     /** @codeCoverageIgnore */
     private function getConfig()
     {
 
-        return array(
+        $Default = array(
             // Source file or directory to parse
             'source'         => $this->Source->getDirectory(),
             // Directory where to save the generated documentation
@@ -75,7 +79,7 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // List of allowed file extensions
             'extensions'     => array( 'php' ),
             // Mask to exclude file or directory from processing
-            'exclude' => '/.idea/*,/.git/*,/Documentation/*,*/TestSuite/*,*/Vendor/Symfony/*,*/Vendor/ApiGen/*,*/Vendor/Twig/*,*/Repository/TwigTemplate/*,*/Vendor/Smarty/*,*/Repository/SmartyTemplate/*,*/Vendor/Doctrine2DBAL/*,*/Vendor/Doctrine2ORM/*,*/Vendor/PhpExcel/*,*/Vendor/DomPdf/*',
+            // 'exclude'        => "'".$this->Exclude->getGlobList()."'",
             // Don't generate documentation for classes from file or directory with this mask
             //'skipDocPath' => '',
             // Don't generate documentation for classes with this name prefix
@@ -83,9 +87,9 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // Character set of source files
             'charset'        => 'auto',
             // Main project name prefix
-            'main'           => 'MOC',
+            'main'           => $this->Project,
             // Title of generated documentation
-            'title'          => 'Mark V',
+            'title'          => $this->Title,
             // Documentation base URL
             //'baseUrl' => '',
             // Google Custom Search ID
@@ -119,13 +123,13 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // Add a link to download documentation as a ZIP archive
             'download'       => true,
             // Save a check style report of poorly documented elements into a file
-            'report'      => $this->Destination->getDirectory().'_improve.xml',
+            'report'         => $this->Destination->getDirectory().'_improve.xml',
             // Wipe out the destination directory first
             'wipeout'        => true,
             // Don't display scanning and generating messages
-            'quiet'       => false,
+            'quiet'          => true,
             // Display progressbar
-            'progressbar' => true,
+            'progressbar'    => false,
             // Use colors
             'colors'         => false,
             // Check for update
@@ -133,5 +137,12 @@ class ApiGenDocumentation extends Bridge implements IBridgeInterface
             // Display additional information in case of an error
             'debug'          => false
         );
+        if (null === $this->Exclude) {
+            return $Default;
+        } else {
+            return array_merge( $Default, array(
+                'exclude' => "'".$this->Exclude->getGlobList()."'"
+            ) );
+        }
     }
 }

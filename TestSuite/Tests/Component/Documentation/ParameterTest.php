@@ -2,6 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Documentation;
 
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter;
 
 /**
  * Class ParameterTest
@@ -42,5 +43,12 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
                 $E );
         }
 
+    }
+
+    public function testExcludeParameter()
+    {
+
+        $Parameter = new ExcludeParameter( array( '/Test1/*', '/Test2/*' ) );
+        $this->assertEquals( '/Test1/*,/Test2/*', $Parameter->getGlobList() );
     }
 }

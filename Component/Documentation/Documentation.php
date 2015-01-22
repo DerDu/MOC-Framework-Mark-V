@@ -1,10 +1,11 @@
 <?php
 namespace MOC\V\Component\Documentation;
 
-use MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGenDocumentation;
+use MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen;
 use MOC\V\Component\Documentation\Component\IBridgeInterface;
 use MOC\V\Component\Documentation\Component\IVendorInterface;
 use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParameter;
+use MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter;
 
 /**
  * Class Documentation
@@ -27,26 +28,43 @@ class Documentation implements IVendorInterface
     }
 
     /**
+     * @param string                $Project
+     * @param string                $Title
+     * @param DirectoryParameter    $Source
+     * @param DirectoryParameter    $Destination
+     * @param null|ExcludeParameter $Exclude
+     *
      * @return IBridgeInterface
      */
-    public static function getDocumentation()
-    {
+    public static function getDocumentation(
+        $Project,
+        $Title,
+        DirectoryParameter $Source,
+        DirectoryParameter $Destination,
+        ExcludeParameter $Exclude = null
+    ) {
 
-        return self::getApiGenDocumentation();
+        return self::getApiGenDocumentation( $Project, $Title, $Source, $Destination, $Exclude );
     }
 
     /**
+     * @param string                $Project
+     * @param string                $Title
+     * @param DirectoryParameter    $Source
+     * @param DirectoryParameter    $Destination
+     * @param null|ExcludeParameter $Exclude
+     *
      * @return IBridgeInterface
      */
-    public static function getApiGenDocumentation()
-    {
+    public static function getApiGenDocumentation(
+        $Project,
+        $Title,
+        DirectoryParameter $Source,
+        DirectoryParameter $Destination,
+        ExcludeParameter $Exclude = null
+    ) {
 
-        $Documentation = new ApiGenDocumentation(
-            new DirectoryParameter( __DIR__.'/../../' ),
-            new DirectoryParameter( __DIR__.'/../../Documentation/' )
-        );
-
-        return $Documentation;
+        return new ApiGen( $Project, $Title, $Source, $Destination, $Exclude );
     }
 
     /**

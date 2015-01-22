@@ -9,8 +9,4 @@ namespace MOC\V\Component\Documentation\Component;
 interface IBridgeInterface
 {
 
-    /**
-     * @return string
-     */
-    public function createDocumentation();
 }
