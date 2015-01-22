@@ -44,16 +44,24 @@ class NamespaceLoader extends NamespaceSearch
             }
             $DirectoryList = $this->getNamespaceMapping( $Namespace );
             if ($this->searchForClass( $DirectoryList, $ClassName )) {
+                // @codeCoverageIgnoreStart
                 return true;
+                // @codeCoverageIgnoreEnd
             }
             if ($this->searchForClassFallback( $DirectoryList, $ClassName, $Namespace )) {
+                // @codeCoverageIgnoreStart
                 return true;
+                // @codeCoverageIgnoreEnd
             }
             if ($this->searchForInterface( $DirectoryList, $ClassName )) {
+                // @codeCoverageIgnoreStart
                 return true;
+                // @codeCoverageIgnoreEnd
             }
             if ($this->searchForInterfaceFallback( $DirectoryList, $ClassName, $Namespace )) {
+                // @codeCoverageIgnoreStart
                 return true;
+                // @codeCoverageIgnoreEnd
             }
         }
         return false;

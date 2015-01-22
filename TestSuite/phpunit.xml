@@ -6,12 +6,15 @@
          processIsolation="false">
     <testsuites>
         <testsuite name="MOC\V">
-            <directory suffix=".php">./Tests/Core</directory>
-            <directory suffix=".php">./Tests/Component</directory>
+            <directory suffix=".php">./Tests/Core/AutoLoader</directory>
+            <directory suffix=".php">./Tests/Core/FileSystem</directory>
+            <directory suffix=".php">./Tests/Core/HttpKernel</directory>
+            <directory suffix=".php">./Tests/Component/Router</directory>
+            <directory suffix=".php">./Tests/Component/Template</directory>
+            <directory suffix=".php">./Tests/Component/Database</directory>
+            <directory suffix=".php">./Tests/Component/Document</directory>
+            <directory suffix=".php">./Tests/Component/Documentation</directory>
         </testsuite>
-        <!--<testsuite name="Development">-->
-        <!--<directory suffix=".php">./Tests/Core/AutoLoader</directory>-->
-        <!--</testsuite>-->
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="false">

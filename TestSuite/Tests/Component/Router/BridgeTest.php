@@ -35,7 +35,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
         try {
             $Bridge->getRoute();
         } catch( \Exception $E ) {
-
+            $this->assertInstanceOf( 'MOC\V\Component\Router\Component\Exception\ComponentException', $E );
         }
         $this->assertInternalType( 'array', $Bridge->getRouteList() );
     }

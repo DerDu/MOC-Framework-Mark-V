@@ -16,6 +16,38 @@ use MOC\V\Component\Template\Template;
 class BridgeTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @codeCoverageIgnore
+     */
+    public function tearDown()
+    {
+
+        if (false !== ( $Path = realpath( __DIR__.'/Content' ) )) {
+            $Iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator( $Path, \RecursiveDirectoryIterator::SKIP_DOTS ),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            /** @var \SplFileInfo $FileInfo */
+            foreach ($Iterator as $FileInfo) {
+                if (
+                    $FileInfo->getBasename() != 'README.md'
+                    && $FileInfo->getBasename() != 'BridgeTest.tpl'
+                    && $FileInfo->getBasename() != 'BridgeTest.twig'
+                ) {
+                    if ($FileInfo->isFile()) {
+                        unlink( $FileInfo->getPathname() );
+                    }
+                    if ($FileInfo->isDir()) {
+                        rmdir( $FileInfo->getPathname() );
+                    }
+                }
+            }
+        }
+
+        $Template = new \MOC\V\TestSuite\Tests\Component\Template\BridgeTest();
+        $Template->tearDown();
+    }
+
     public function testPhpExcelDocument()
     {
 
