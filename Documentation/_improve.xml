@@ -165,8 +165,8 @@
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Bridge\Repository\ApiGen.php">
 		<error severity="error" line="27" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="70" message="Missing documentation of return value of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="70" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="73" message="Missing documentation of return value of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="73" message="Missing description of method MOC\V\Component\Documentation\Component\Bridge\Repository\ApiGen::getConfig()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Documentation\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Documentation\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
