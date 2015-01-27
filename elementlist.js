@@ -15,6 +15,10 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Component\\Database\\Component\\Bridge\\Repository\\Doctrine2ORM"
+    ],
+    [
+        "c",
         "MOC\\V\\Component\\Database\\Component\\Exception\\ComponentException"
     ],
     [
@@ -72,6 +76,130 @@ ApiGen.elements = [
     [
         "c",
         "MOC\\V\\Component\\Database\\Vendor\\Vendor"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Bridge\\Bridge"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Bridge\\Repository\\DomPdf"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Bridge\\Repository\\PhpExcel"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Exception\\ComponentException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Exception\\Repository\\EmptyFileException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Exception\\Repository\\TypeFileException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\IBridgeInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\IParameterInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\IVendorInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Parameter\\Parameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Parameter\\Repository\\FileParameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Parameter\\Repository\\PaperOrientationParameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Component\\Parameter\\Repository\\PaperSizeParameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Document"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Exception\\DocumentException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Exception\\DocumentTypeException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Document\\Vendor\\Vendor"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Bridge\\Bridge"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Bridge\\Repository\\ApiGen"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Exception\\ComponentException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Exception\\Repository\\EmptyDirectoryException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Exception\\Repository\\TypeDirectoryException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\IBridgeInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\IParameterInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\IVendorInterface"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Parameter\\Parameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Parameter\\Repository\\DirectoryParameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Component\\Parameter\\Repository\\ExcludeParameter"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Documentation"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Exception\\DocumentationException"
+    ],
+    [
+        "c",
+        "MOC\\V\\Component\\Documentation\\Vendor\\Vendor"
     ],
     [
         "c",
@@ -195,6 +323,10 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Core\\AutoLoader\\Component\\Bridge\\Repository\\MultitonNamespace"
+    ],
+    [
+        "c",
         "MOC\\V\\Core\\AutoLoader\\Component\\Bridge\\Repository\\UniversalNamespace"
     ],
     [
@@ -243,15 +375,19 @@ ApiGen.elements = [
     ],
     [
         "c",
+        "MOC\\V\\Core\\AutoLoader\\Vendor\\Multiton\\NamespaceLoader"
+    ],
+    [
+        "c",
         "MOC\\V\\Core\\AutoLoader\\Vendor\\Universal\\NamespaceLoader"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Vendor\\Universal\\NamespaceMapping"
+        "MOC\\V\\Core\\AutoLoader\\Vendor\\Universal\\NamespaceLoader\\NamespaceMapping"
     ],
     [
         "c",
-        "MOC\\V\\Core\\AutoLoader\\Vendor\\Universal\\NamespaceSearch"
+        "MOC\\V\\Core\\AutoLoader\\Vendor\\Universal\\NamespaceLoader\\NamespaceSearch"
     ],
     [
         "c",
