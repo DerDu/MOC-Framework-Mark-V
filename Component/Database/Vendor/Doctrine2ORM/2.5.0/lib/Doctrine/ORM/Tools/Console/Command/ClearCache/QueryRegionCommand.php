@@ -109,7 +109,7 @@ EOT
             $queryRegion->getCache()->flushAll();
 
             $output->writeln( sprintf( 'Flushing cache provider configured for second-level cache query region named <info>"%s"</info>',
-                    $name ) );
+                $name ) );
 
             return;
         }

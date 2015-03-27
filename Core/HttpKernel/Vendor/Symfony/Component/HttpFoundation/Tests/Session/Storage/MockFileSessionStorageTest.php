@@ -76,6 +76,16 @@ class MockFileSessionStorageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('test'), $storage->getBag('flashes')->peek('newkey'));
     }
 
+    private function getStorage()
+    {
+
+        $storage = new MockFileSessionStorage( $this->sessionDir );
+        $storage->registerBag( new FlashBag() );
+        $storage->registerBag( new AttributeBag() );
+
+        return $storage;
+    }
+
     public function testMultipleInstances()
     {
         $storage1 = $this->getStorage();
@@ -103,15 +113,6 @@ class MockFileSessionStorageTest extends \PHPUnit_Framework_TestCase
 
         $this->sessionDir = sys_get_temp_dir().'/sf2test';
         $this->storage = $this->getStorage();
-    }
-
-    private function getStorage()
-    {
-        $storage = new MockFileSessionStorage($this->sessionDir);
-        $storage->registerBag(new FlashBag());
-        $storage->registerBag(new AttributeBag());
-
-        return $storage;
     }
 
     protected function tearDown()

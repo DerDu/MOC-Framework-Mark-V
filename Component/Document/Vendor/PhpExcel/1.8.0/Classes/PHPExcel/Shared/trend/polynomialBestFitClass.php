@@ -159,30 +159,6 @@ class PHPExcel_Polynomial_Best_Fit extends PHPExcel_Best_Fit
     }    //	function getValueOfXForY()
 
     /**
-     * Return the order of this polynomial
-     *
-     * @return     int
-     **/
-    public function getOrder()
-    {
-
-        return $this->_order;
-    }    //	function getEquation()
-
-    /**
-     * Return the X-Value for a specified value of Y
-     *
-     * @param     float $yValue Y-Value
-     *
-     * @return     float                        X-Value
-     **/
-    public function getValueOfXForY( $yValue )
-    {
-
-        return ( $yValue - $this->getIntersect() ) / $this->getSlope();
-    }    //	function getSlope()
-
-    /**
      * Return the Slope of the line
      *
      * @param     int $dp Number of places of decimal precision to display
@@ -200,6 +176,30 @@ class PHPExcel_Polynomial_Best_Fit extends PHPExcel_Best_Fit
             return $coefficients;
         }
         return $this->_slope;
+    }    //	function getEquation()
+
+    /**
+     * Return the order of this polynomial
+     *
+     * @return     int
+     **/
+    public function getOrder()
+    {
+
+        return $this->_order;
+    }    //	function getSlope()
+
+    /**
+     * Return the X-Value for a specified value of Y
+     *
+     * @param     float $yValue Y-Value
+     *
+     * @return     float                        X-Value
+     **/
+    public function getValueOfXForY( $yValue )
+    {
+
+        return ( $yValue - $this->getIntersect() ) / $this->getSlope();
     }    //	function getCoefficients()
 
     /**

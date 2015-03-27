@@ -419,9 +419,9 @@ class CommandTest extends AbstractCommandTest
             ->getMock();
         $v->expects( $this->any() )->method( 'validate' )->will( $this->returnValue( false ) );
         $v->expects( $this->any() )->method( 'getErrors' )->will( $this->returnValue( array(
-                    '[Foo] Baz',
-                    '[Bar] Boo'
-                ) ) );
+            '[Foo] Baz',
+            '[Bar] Boo'
+        ) ) );
         $command->setValidator( $v );
         $command->prepare();
     }

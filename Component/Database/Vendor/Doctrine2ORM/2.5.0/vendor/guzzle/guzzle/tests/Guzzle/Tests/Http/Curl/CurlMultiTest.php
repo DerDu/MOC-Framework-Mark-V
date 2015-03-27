@@ -212,12 +212,12 @@ class CurlMultiTest extends \Guzzle\Tests\GuzzleTestCase
         $client = new Client( $this->getServer()->getUrl() );
         $r = $client->get();
         $r->getEventDispatcher()->addListener( 'request.receive.status_line',
-        function ( Event $event ) use ( $client ) {
+            function ( Event $event ) use ( $client ) {
 
-            // Create a request using a queued response
-            $request = $client->get()->setResponse( new Response( 200 ), true );
-            $request->send();
-        } );
+                // Create a request using a queued response
+                $request = $client->get()->setResponse( new Response( 200 ), true );
+                $request->send();
+            } );
         $r->send();
         $this->assertEquals( 1, count( $this->getServer()->getReceivedRequests( false ) ) );
     }

@@ -25,8 +25,8 @@ if (isset( $_POST["html"] ) && $is_local) {
 ?>
 <?php include( "head.inc" ); ?>
 
-    <a name="demo"> </a>
-    <h2>Demo</h2>
+<a name="demo"> </a>
+<h2>Demo</h2>
 
 <?php if ($is_local) { ?>
 

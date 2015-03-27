@@ -410,7 +410,7 @@ class Table
         $content = sprintf( $this->style->getCellRowContentFormat(), $cell );
 
         $this->output->write( sprintf( $cellFormat,
-                str_pad( $content, $width, $this->style->getPaddingChar(), $this->style->getPadType() ) ) );
+            str_pad( $content, $width, $this->style->getPaddingChar(), $this->style->getPadType() ) ) );
     }
 
     /**

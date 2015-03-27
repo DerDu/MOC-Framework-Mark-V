@@ -195,7 +195,7 @@ class SchemaValidator
                         $ce[] = "The inverse join columns of the many-to-many table '".$assoc['joinTable']['name']."' ".
                             "have to contain to ALL identifier columns of the target entity '".$targetMetadata->name."', ".
                             "however '".implode( ", ", array_diff( $targetMetadata->getIdentifierColumnNames(),
-                                    array_values( $assoc['relationToTargetKeyColumns'] ) ) ).
+                                array_values( $assoc['relationToTargetKeyColumns'] ) ) ).
                             "' are missing.";
                     }
 
@@ -203,7 +203,7 @@ class SchemaValidator
                         $ce[] = "The join columns of the many-to-many table '".$assoc['joinTable']['name']."' ".
                             "have to contain to ALL identifier columns of the source entity '".$class->name."', ".
                             "however '".implode( ", ", array_diff( $class->getIdentifierColumnNames(),
-                                    array_values( $assoc['relationToSourceKeyColumns'] ) ) ).
+                                array_values( $assoc['relationToSourceKeyColumns'] ) ) ).
                             "' are missing.";
                     }
 

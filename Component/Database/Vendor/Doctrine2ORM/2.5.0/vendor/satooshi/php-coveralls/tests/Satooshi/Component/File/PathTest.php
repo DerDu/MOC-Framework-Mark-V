@@ -305,6 +305,16 @@ class PathTest extends \PHPUnit_Framework_TestCase
         chmod( $this->unreadablePath, 0377 );
     }
 
+    protected function rmFile( $file )
+    {
+
+        if (is_file( $file )) {
+            unlink( $file );
+        }
+    }
+
+    // isRealFileExist()
+
     /**
      * @test
      */
@@ -315,8 +325,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue( $this->object->isRealFileReadable( $this->existingFile ) );
     }
-
-    // isRealFileExist()
 
     /**
      * @test
@@ -340,6 +348,8 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $this->object->isRealFileWritable( $this->unwritablePath ) );
     }
 
+    // isRealFileReadable()
+
     protected function touchUnwritableFile()
     {
 
@@ -348,8 +358,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
         touch( $this->unwritablePath );
         chmod( $this->unwritablePath, 0577 );
     }
-
-    // isRealFileReadable()
 
     /**
      * @test
@@ -373,6 +381,8 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $this->object->isRealDirExist( $path ) );
     }
 
+    // isRealFileWritable()
+
     /**
      * @test
      */
@@ -383,8 +393,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse( $this->object->isRealDirExist( $this->existingFile ) );
     }
-
-    // isRealFileWritable()
 
     /**
      * @test
@@ -408,6 +416,8 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $this->object->isRealDirWritable( $path ) );
     }
 
+    // isRealDirExist()
+
     /**
      * @test
      */
@@ -419,8 +429,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse( $this->object->isRealDirWritable( $this->unwritableDir ) );
     }
 
-    // isRealDirExist()
-
     protected function mkdirUnwritableDir()
     {
 
@@ -429,6 +437,16 @@ class PathTest extends \PHPUnit_Framework_TestCase
         mkdir( $this->unwritableDir );
         chmod( $this->unwritableDir, 0577 );
     }
+
+    protected function rmDir( $dir )
+    {
+
+        if (is_dir( $dir )) {
+            rmdir( $dir );
+        }
+    }
+
+    // isRealDirWritable()
 
     /**
      * @test
@@ -452,8 +470,6 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->object = new Path();
     }
 
-    // isRealDirWritable()
-
     protected function tearDown()
     {
 
@@ -462,21 +478,5 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->rmFile( $this->unwritablePath );
 
         $this->rmDir( $this->unwritableDir );
-    }
-
-    protected function rmFile( $file )
-    {
-
-        if (is_file( $file )) {
-            unlink( $file );
-        }
-    }
-
-    protected function rmDir( $dir )
-    {
-
-        if (is_dir( $dir )) {
-            rmdir( $dir );
-        }
     }
 }

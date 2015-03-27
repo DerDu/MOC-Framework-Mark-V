@@ -206,6 +206,72 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
     }
 
     /**
+     * Fill built-in format codes
+     */
+    private static function fillBuiltInFormatCodes()
+    {
+
+        // Built-in format codes
+        if (is_null( self::$_builtInFormats )) {
+            self::$_builtInFormats = array();
+
+            // General
+            self::$_builtInFormats[0] = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+            self::$_builtInFormats[1] = '0';
+            self::$_builtInFormats[2] = '0.00';
+            self::$_builtInFormats[3] = '#,##0';
+            self::$_builtInFormats[4] = '#,##0.00';
+
+            self::$_builtInFormats[9] = '0%';
+            self::$_builtInFormats[10] = '0.00%';
+            self::$_builtInFormats[11] = '0.00E+00';
+            self::$_builtInFormats[12] = '# ?/?';
+            self::$_builtInFormats[13] = '# ??/??';
+            self::$_builtInFormats[14] = 'mm-dd-yy';
+            self::$_builtInFormats[15] = 'd-mmm-yy';
+            self::$_builtInFormats[16] = 'd-mmm';
+            self::$_builtInFormats[17] = 'mmm-yy';
+            self::$_builtInFormats[18] = 'h:mm AM/PM';
+            self::$_builtInFormats[19] = 'h:mm:ss AM/PM';
+            self::$_builtInFormats[20] = 'h:mm';
+            self::$_builtInFormats[21] = 'h:mm:ss';
+            self::$_builtInFormats[22] = 'm/d/yy h:mm';
+
+            self::$_builtInFormats[37] = '#,##0 ;(#,##0)';
+            self::$_builtInFormats[38] = '#,##0 ;[Red](#,##0)';
+            self::$_builtInFormats[39] = '#,##0.00;(#,##0.00)';
+            self::$_builtInFormats[40] = '#,##0.00;[Red](#,##0.00)';
+
+            self::$_builtInFormats[44] = '_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)';
+            self::$_builtInFormats[45] = 'mm:ss';
+            self::$_builtInFormats[46] = '[h]:mm:ss';
+            self::$_builtInFormats[47] = 'mmss.0';
+            self::$_builtInFormats[48] = '##0.0E+0';
+            self::$_builtInFormats[49] = '@';
+
+            // CHT
+            self::$_builtInFormats[27] = '[$-404]e/m/d';
+            self::$_builtInFormats[30] = 'm/d/yy';
+            self::$_builtInFormats[36] = '[$-404]e/m/d';
+            self::$_builtInFormats[50] = '[$-404]e/m/d';
+            self::$_builtInFormats[57] = '[$-404]e/m/d';
+
+            // THA
+            self::$_builtInFormats[59] = 't0';
+            self::$_builtInFormats[60] = 't0.00';
+            self::$_builtInFormats[61] = 't#,##0';
+            self::$_builtInFormats[62] = 't#,##0.00';
+            self::$_builtInFormats[67] = 't0%';
+            self::$_builtInFormats[68] = 't0.00%';
+            self::$_builtInFormats[69] = 't# ?/?';
+            self::$_builtInFormats[70] = 't# ??/??';
+
+            // Flip array (for faster lookups)
+            self::$_flippedBuiltInFormats = array_flip( self::$_builtInFormats );
+        }
+    }
+
+    /**
      * Convert a value in a pre-defined format to a PHP string
      *
      * @param mixed  $value    Value to format
@@ -618,72 +684,6 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         }
 
         return '';
-    }
-
-    /**
-     * Fill built-in format codes
-     */
-    private static function fillBuiltInFormatCodes()
-    {
-
-        // Built-in format codes
-        if (is_null( self::$_builtInFormats )) {
-            self::$_builtInFormats = array();
-
-            // General
-            self::$_builtInFormats[0] = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
-            self::$_builtInFormats[1] = '0';
-            self::$_builtInFormats[2] = '0.00';
-            self::$_builtInFormats[3] = '#,##0';
-            self::$_builtInFormats[4] = '#,##0.00';
-
-            self::$_builtInFormats[9] = '0%';
-            self::$_builtInFormats[10] = '0.00%';
-            self::$_builtInFormats[11] = '0.00E+00';
-            self::$_builtInFormats[12] = '# ?/?';
-            self::$_builtInFormats[13] = '# ??/??';
-            self::$_builtInFormats[14] = 'mm-dd-yy';
-            self::$_builtInFormats[15] = 'd-mmm-yy';
-            self::$_builtInFormats[16] = 'd-mmm';
-            self::$_builtInFormats[17] = 'mmm-yy';
-            self::$_builtInFormats[18] = 'h:mm AM/PM';
-            self::$_builtInFormats[19] = 'h:mm:ss AM/PM';
-            self::$_builtInFormats[20] = 'h:mm';
-            self::$_builtInFormats[21] = 'h:mm:ss';
-            self::$_builtInFormats[22] = 'm/d/yy h:mm';
-
-            self::$_builtInFormats[37] = '#,##0 ;(#,##0)';
-            self::$_builtInFormats[38] = '#,##0 ;[Red](#,##0)';
-            self::$_builtInFormats[39] = '#,##0.00;(#,##0.00)';
-            self::$_builtInFormats[40] = '#,##0.00;[Red](#,##0.00)';
-
-            self::$_builtInFormats[44] = '_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)';
-            self::$_builtInFormats[45] = 'mm:ss';
-            self::$_builtInFormats[46] = '[h]:mm:ss';
-            self::$_builtInFormats[47] = 'mmss.0';
-            self::$_builtInFormats[48] = '##0.0E+0';
-            self::$_builtInFormats[49] = '@';
-
-            // CHT
-            self::$_builtInFormats[27] = '[$-404]e/m/d';
-            self::$_builtInFormats[30] = 'm/d/yy';
-            self::$_builtInFormats[36] = '[$-404]e/m/d';
-            self::$_builtInFormats[50] = '[$-404]e/m/d';
-            self::$_builtInFormats[57] = '[$-404]e/m/d';
-
-            // THA
-            self::$_builtInFormats[59] = 't0';
-            self::$_builtInFormats[60] = 't0.00';
-            self::$_builtInFormats[61] = 't#,##0';
-            self::$_builtInFormats[62] = 't#,##0.00';
-            self::$_builtInFormats[67] = 't0%';
-            self::$_builtInFormats[68] = 't0.00%';
-            self::$_builtInFormats[69] = 't# ?/?';
-            self::$_builtInFormats[70] = 't# ??/??';
-
-            // Flip array (for faster lookups)
-            self::$_flippedBuiltInFormats = array_flip( self::$_builtInFormats );
-        }
     }
 
     /**

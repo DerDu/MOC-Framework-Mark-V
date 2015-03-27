@@ -188,10 +188,11 @@ class YamlDriver extends FileDriver
                         'columnDefinition' => isset( $discrColumn['columnDefinition'] ) ? (string)$discrColumn['columnDefinition'] : null
                     ) );
                 } else {
-                    $metadata->setDiscriminatorColumn( array( 'name'   => 'dtype',
-                                                              'type'   => 'string',
-                                                              'length' => 255
-                        ) );
+                    $metadata->setDiscriminatorColumn( array(
+                        'name'   => 'dtype',
+                        'type'   => 'string',
+                        'length' => 255
+                    ) );
                 }
 
                 // Evaluate discriminatorMap

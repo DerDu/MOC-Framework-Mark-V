@@ -511,7 +511,7 @@ class Request
 
         if (!array_key_exists( $key, self::$trustedHeaders )) {
             throw new \InvalidArgumentException( sprintf( 'Unable to set the trusted header name for key "%s".',
-                    $key ) );
+                $key ) );
         }
 
         self::$trustedHeaders[$key] = $value;
@@ -531,7 +531,7 @@ class Request
 
         if (!array_key_exists( $key, self::$trustedHeaders )) {
             throw new \InvalidArgumentException( sprintf( 'Unable to get the trusted header name for key "%s".',
-                    $key ) );
+                $key ) );
         }
 
         return self::$trustedHeaders[$key];
@@ -744,7 +744,7 @@ class Request
                     $this->method = strtoupper( $method );
                 } elseif (self::$httpMethodParameterOverride) {
                     $this->method = strtoupper( $this->request->get( '_method',
-                            $this->query->get( '_method', 'POST' ) ) );
+                        $this->query->get( '_method', 'POST' ) ) );
                 }
             }
         }

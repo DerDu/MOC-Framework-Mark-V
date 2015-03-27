@@ -177,10 +177,11 @@ class XmlDriver extends FileDriver
                         'columnDefinition' => isset( $discrColumn['column-definition'] ) ? (string)$discrColumn['column-definition'] : null
                     ) );
                 } else {
-                    $metadata->setDiscriminatorColumn( array( 'name'   => 'dtype',
-                                                              'type'   => 'string',
-                                                              'length' => 255
-                        ) );
+                    $metadata->setDiscriminatorColumn( array(
+                        'name'   => 'dtype',
+                        'type'   => 'string',
+                        'length' => 255
+                    ) );
                 }
 
                 // Evaluate <discriminator-map...>

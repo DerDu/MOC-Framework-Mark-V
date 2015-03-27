@@ -187,9 +187,10 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
         $profile = $this->getProfile( $data );
 
         if ($data['parent']) {
-            $parent = $this->getMongo()->findOne( array( '_id'  => $data['parent'],
-                                                         'data' => array( '$exists' => true )
-                ) );
+            $parent = $this->getMongo()->findOne( array(
+                '_id'  => $data['parent'],
+                'data' => array( '$exists' => true )
+            ) );
             if ($parent) {
                 $profile->setParent( $this->getProfile( $this->getData( $parent ) ) );
             }
@@ -256,8 +257,8 @@ class MongoDbProfilerStorage implements ProfilerStorageInterface
         $result = $this->getMongo()->update( array( '_id' => $profile->getToken() ),
             array_filter( $record, function ( $v ) {
 
-                    return !empty( $v );
-                } ), array( 'upsert' => true ) );
+                return !empty( $v );
+            } ), array( 'upsert' => true ) );
 
         return (bool)( isset( $result['ok'] ) ? $result['ok'] : $result );
     }

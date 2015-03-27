@@ -212,7 +212,7 @@ class XmlFileLoader extends FileLoader
 
         if ('' === $resource = $node->getAttribute( 'resource' )) {
             throw new \InvalidArgumentException( sprintf( 'The <import> element in file "%s" must have a "resource" attribute.',
-                    $path ) );
+                $path ) );
         }
 
         $type = $node->getAttribute( 'type' );

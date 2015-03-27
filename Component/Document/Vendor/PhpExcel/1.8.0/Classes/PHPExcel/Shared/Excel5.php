@@ -131,7 +131,7 @@ class PHPExcel_Shared_Excel5
      * @param PHPExcel_Worksheet $sheet
      * @param integer            $startRow (1-based)
      * @param integer            $startOffsetY Offset within start cell measured in 1/256 of the cell height
-     * @param integer            $endRow (1-based)
+     * @param integer $endRow (1-based)
      * @param integer            $endOffsetY Offset within end cell measured in 1/256 of the cell height
      *
      * @return integer Vertical distance measured in pixels

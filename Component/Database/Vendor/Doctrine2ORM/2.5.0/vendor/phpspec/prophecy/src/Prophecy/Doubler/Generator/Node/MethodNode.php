@@ -114,8 +114,8 @@ class MethodNode
             'return parent::%s(%s);', $this->getName(), implode( ', ',
                 array_map( function ( ArgumentNode $arg ) {
 
-                        return '$'.$arg->getName();
-                    }, $this->arguments )
+                    return '$'.$arg->getName();
+                }, $this->arguments )
             )
         );
     }

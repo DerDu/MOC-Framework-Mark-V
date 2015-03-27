@@ -3359,8 +3359,8 @@ class UnitOfWork implements PropertyChangedListener
 
         $countArray = array_map( function ( $item ) {
 
-                return count( $item );
-            }, $this->identityMap );
+            return count( $item );
+        }, $this->identityMap );
 
         return array_sum( $countArray );
     }

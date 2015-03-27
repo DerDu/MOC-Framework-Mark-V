@@ -30,8 +30,8 @@ class CallbackCanCacheStrategyTest extends \Guzzle\Tests\GuzzleTestCase
 
         $c = new CallbackCanCacheStrategy( function ( $request ) {
 
-                return true;
-            } );
+            return true;
+        } );
         $this->assertTrue( $c->canCacheRequest( new Request( 'DELETE', 'http://www.foo.com' ) ) );
     }
 

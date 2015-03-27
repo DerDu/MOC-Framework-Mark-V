@@ -121,7 +121,7 @@ abstract class Twig_Test_IntegrationTestCase extends PHPUnit_Framework_TestCase
 
             if (preg_match( '/
                     --TEST--\s*(.*?)\s*(?:--CONDITION--\s*(.*))?\s*((?:--TEMPLATE(?:\(.*?\))?--(?:.*?))+)\s*(?:--DATA--\s*(.*))?\s*--EXCEPTION--\s*(.*)/sx',
-            $test, $match )) {
+                $test, $match )) {
                 $message = $match[1];
                 $condition = $match[2];
                 $templates = $this->parseTemplates( $match[3] );
@@ -137,7 +137,7 @@ abstract class Twig_Test_IntegrationTestCase extends PHPUnit_Framework_TestCase
                     $outputs, PREG_SET_ORDER );
             } else {
                 throw new InvalidArgumentException( sprintf( 'Test "%s" is not valid.',
-                        str_replace( $fixturesDir.'/', '', $file ) ) );
+                    str_replace( $fixturesDir.'/', '', $file ) ) );
             }
 
             $tests[] = array(

@@ -436,6 +436,12 @@ class Request extends AbstractMessage implements RequestInterface
         return $this;
     }
 
+    public function getCurlOptions()
+    {
+
+        return $this->curlOptions;
+    }
+
     public function getState()
     {
 
@@ -478,12 +484,6 @@ class Request extends AbstractMessage implements RequestInterface
         }
 
         return $this->state;
-    }
-
-    public function getCurlOptions()
-    {
-
-        return $this->curlOptions;
     }
 
     public function startResponse( Response $response )

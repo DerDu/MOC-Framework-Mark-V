@@ -55,7 +55,7 @@ abstract class Descriptor implements DescriptorInterface
                 break;
             default:
                 throw new \InvalidArgumentException( sprintf( 'Object of type "%s" is not describable.',
-                        get_class( $object ) ) );
+                    get_class( $object ) ) );
         }
     }
 

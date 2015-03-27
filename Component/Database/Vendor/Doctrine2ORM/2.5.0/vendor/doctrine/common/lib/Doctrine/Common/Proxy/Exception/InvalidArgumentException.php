@@ -51,7 +51,7 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
     {
 
         return new self( sprintf( 'The class "%s" is not part of the proxy namespace "%s"', $className,
-                $proxyNamespace ) );
+            $proxyNamespace ) );
     }
 
     /**
@@ -63,7 +63,7 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
     {
 
         return new self( sprintf( 'Provided placeholder for "%s" must be either a string or a valid callable',
-                $name ) );
+            $name ) );
     }
 
     /**

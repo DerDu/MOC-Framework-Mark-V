@@ -20,9 +20,9 @@ class CallbackBackoffStrategy extends AbstractBackoffStrategy
     protected $decision;
 
     /**
-     * @param \Closure|array|mixed $callback Callable method to invoke
-     * @param bool $decision                 Set to true if this strategy makes a backoff decision
-     * @param BackoffStrategyInterface $next The optional next strategy
+     * @param \Closure|array|mixed     $callback Callable method to invoke
+     * @param bool                     $decision Set to true if this strategy makes a backoff decision
+     * @param BackoffStrategyInterface $next     The optional next strategy
      *
      * @throws InvalidArgumentException
      */

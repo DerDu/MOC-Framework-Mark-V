@@ -111,7 +111,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
         if (!isset( $this->connections[$name] )) {
             throw new \InvalidArgumentException( sprintf( 'Doctrine %s Connection named "%s" does not exist.',
-                    $this->name, $name ) );
+                $this->name, $name ) );
         }
 
         return $this->getService( $this->connections[$name] );
@@ -241,7 +241,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
         if (!isset( $this->managers[$name] )) {
             throw new \InvalidArgumentException( sprintf( 'Doctrine %s Manager named "%s" does not exist.', $this->name,
-                    $name ) );
+                $name ) );
         }
 
         return $this->getService( $this->managers[$name] );
@@ -259,7 +259,7 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
 
         if (!isset( $this->managers[$name] )) {
             throw new \InvalidArgumentException( sprintf( 'Doctrine %s Manager named "%s" does not exist.', $this->name,
-                    $name ) );
+                $name ) );
         }
 
         // force the creation of a new document manager

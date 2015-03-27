@@ -1499,8 +1499,8 @@ class ClassMetadataInfo implements ClassMetadata
             $joinColumns = $this->associationMappings[$idProperty]['joinColumns'];
             $assocColumnNames = array_map( function ( $joinColumn ) {
 
-                    return $joinColumn['name'];
-                }, $joinColumns );
+                return $joinColumn['name'];
+            }, $joinColumns );
 
             $columnNames = array_merge( $columnNames, $assocColumnNames );
         }
@@ -2003,7 +2003,7 @@ class ClassMetadataInfo implements ClassMetadata
         }
 
         if (count( $cascades ) !== count( array_intersect( $cascades,
-                    array( 'remove', 'persist', 'refresh', 'merge', 'detach' ) ) )
+                array( 'remove', 'persist', 'refresh', 'merge', 'detach' ) ) )
         ) {
             throw MappingException::invalidCascadeOption(
                 array_diff( $cascades,

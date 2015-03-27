@@ -34,9 +34,10 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     function __construct()
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'Doctrine\DBAL', __DIR__.'/../../../Vendor/Doctrine2DBAL/2.5.0/lib' );
+        AutoLoader::getNamespaceAutoLoader( 'Doctrine\DBAL',
+            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/vendor/doctrine/dbal/lib' );
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\Common',
-            __DIR__.'/../../../Vendor/Doctrine2DBAL/2.5.0/vendor/doctrine/common/lib' );
+            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/vendor/doctrine/common/lib' );
     }
 
     /**

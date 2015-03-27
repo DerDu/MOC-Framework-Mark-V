@@ -18,6 +18,9 @@ class UniversalNamespace extends Bridge implements IBridgeInterface
     /** @var NamespaceLoader $Instance */
     private $Instance = null;
 
+    /**
+     *
+     */
     function __construct()
     {
 
@@ -46,5 +49,14 @@ class UniversalNamespace extends Bridge implements IBridgeInterface
 
         $this->Instance->addNamespaceMapping( $Namespace->getNamespace(), $Directory->getDirectory() );
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoaderHash()
+    {
+
+        return $this->Instance->getLoaderHash();
     }
 }

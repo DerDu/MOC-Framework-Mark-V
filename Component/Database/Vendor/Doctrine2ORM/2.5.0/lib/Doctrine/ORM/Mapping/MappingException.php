@@ -766,7 +766,7 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
 
         return new self( sprintf( 'Entity Listener "%s" declared on "%s" has no method "%s".', $listenerName,
-                $className, $methodName ) );
+            $className, $methodName ) );
     }
 
     /**
@@ -780,7 +780,7 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
 
         return new self( sprintf( 'Entity Listener "%s#%s()" in "%s" was already declared, but it must be declared only once.',
-                $listenerName, $methodName, $className ) );
+            $listenerName, $methodName, $className ) );
     }
 
     /**
@@ -831,8 +831,8 @@ class MappingException extends \Doctrine\ORM\ORMException
 
         $cascades = implode( ", ", array_map( function ( $e ) {
 
-                    return "'".$e."'";
-                }, $cascades ) );
+            return "'".$e."'";
+        }, $cascades ) );
         return new self( sprintf(
             "You have specified invalid cascade options for %s::$%s: %s; available options: 'remove', 'persist', 'refresh', 'merge', and 'detach'",
             $className,

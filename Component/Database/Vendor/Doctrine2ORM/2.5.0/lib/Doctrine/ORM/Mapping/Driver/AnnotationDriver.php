@@ -265,10 +265,10 @@ class AnnotationDriver extends AbstractAnnotationDriver
                     ) );
                 } else {
                     $metadata->setDiscriminatorColumn( array(
-                            'name'   => 'dtype',
-                            'type'   => 'string',
-                            'length' => 255
-                        ) );
+                        'name'   => 'dtype',
+                        'type'   => 'string',
+                        'length' => 255
+                    ) );
                 }
 
                 // Evaluate DiscriminatorMap annotation

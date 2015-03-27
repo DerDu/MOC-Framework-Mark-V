@@ -67,8 +67,8 @@ class ApplicationTesterTest extends \PHPUnit_Framework_TestCase
             ->addArgument( 'foo' )
             ->setCode( function ( $input, $output ) {
 
-                    $output->writeln( 'foo' );
-                } );
+                $output->writeln( 'foo' );
+            } );
 
         $this->tester = new ApplicationTester( $this->application );
         $this->tester->run( array( 'command' => 'foo', 'foo' => 'bar' ),

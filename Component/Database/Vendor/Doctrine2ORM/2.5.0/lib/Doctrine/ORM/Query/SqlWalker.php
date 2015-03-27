@@ -353,7 +353,7 @@ class SqlWalker implements TreeWalker
 
         $sql = 'SELECT '.( ( $selectClause->isDistinct ) ? 'DISTINCT ' : '' );
         $sqlSelectExpressions = array_filter( array_map( array( $this, 'walkSelectExpression' ),
-                $selectClause->selectExpressions ) );
+            $selectClause->selectExpressions ) );
 
         if ($this->query->getHint( Query::HINT_INTERNAL_ITERATION ) == true && $selectClause->isDistinct) {
             $this->query->setHint( self::HINT_DISTINCT, true );

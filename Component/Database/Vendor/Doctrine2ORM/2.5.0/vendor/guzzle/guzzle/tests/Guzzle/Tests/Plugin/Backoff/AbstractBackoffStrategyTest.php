@@ -76,20 +76,20 @@ class AbstractBackoffStrategyTest extends \Guzzle\Tests\GuzzleTestCase
 
         $a = new CallbackBackoffStrategy( function () {
 
-                return null;
-            }, true );
+            return null;
+        }, true );
         $b = new CallbackBackoffStrategy( function () {
 
-                return true;
-            }, true );
+            return true;
+        }, true );
         $c = new CallbackBackoffStrategy( function () {
 
-                return null;
-            }, true );
+            return null;
+        }, true );
         $d = new CallbackBackoffStrategy( function () {
 
-                return 10;
-            }, false );
+            return 10;
+        }, false );
         $a->setNext( $b );
         $b->setNext( $c );
         $c->setNext( $d );
@@ -101,12 +101,12 @@ class AbstractBackoffStrategyTest extends \Guzzle\Tests\GuzzleTestCase
 
         $a = new CallbackBackoffStrategy( function () {
 
-                return null;
-            }, true );
+            return null;
+        }, true );
         $b = new CallbackBackoffStrategy( function () {
 
-                return true;
-            }, true );
+            return true;
+        }, true );
         $a->setNext( $b );
         $this->assertSame( 0, $a->getBackoffPeriod( 2, new Request( 'GET', 'http://www.foo.com' ) ) );
     }

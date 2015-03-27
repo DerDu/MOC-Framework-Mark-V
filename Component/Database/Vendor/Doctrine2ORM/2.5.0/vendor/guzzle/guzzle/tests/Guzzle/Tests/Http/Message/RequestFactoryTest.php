@@ -123,16 +123,16 @@ class HttpRequestFactoryTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Use a collection
         $request = RequestFactory::getInstance()->create( 'POST', 'http://www.google.com/path?q=1&v=2', null,
-        new Collection( array(
-            'a' => 'b'
-        ) ) );
+            new Collection( array(
+                'a' => 'b'
+            ) ) );
         $this->assertEquals( array( 'a' => 'b' ), $request->getPostFields()->getAll() );
 
         // Use a QueryString
         $request = RequestFactory::getInstance()->create( 'POST', 'http://www.google.com/path?q=1&v=2', null,
-        new QueryString( array(
-            'a' => 'b'
-        ) ) );
+            new QueryString( array(
+                'a' => 'b'
+            ) ) );
         $this->assertEquals( array( 'a' => 'b' ), $request->getPostFields()->getAll() );
 
         $request = RequestFactory::getInstance()->create( 'POST', 'http://www.test.com/', null, array(
@@ -494,7 +494,7 @@ class HttpRequestFactoryTest extends \Guzzle\Tests\GuzzleTestCase
 
         $client = new Client();
         $client->getEventDispatcher()->addListener( 'request.error', function () {
-            } );
+        } );
         $request = $client->get( '/', array(), array(
             'plugins'    => array( new MockPlugin( array( new Response( 500 ) ) ) ),
             'exceptions' => false

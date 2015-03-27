@@ -121,7 +121,7 @@ class ORMException extends Exception
     {
 
         return new self( sprintf( 'Found entity of type %s on association %s#%s, but expecting %s', $given, $class,
-                $association, $expected ) );
+            $association, $expected ) );
     }
 
     /**

@@ -135,6 +135,43 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     }
 
     /**
+     * @param  string $string
+     *
+     * @return string
+     */
+    public static function negate( $string )
+    {
+
+        return str_replace(
+            array(
+                'contains ',
+                'exists',
+                'has ',
+                'is ',
+                'are ',
+                'matches ',
+                'starts with ',
+                'ends with ',
+                'reference ',
+                'not not '
+            ),
+            array(
+                'does not contain ',
+                'does not exist',
+                'does not have ',
+                'is not ',
+                'are not ',
+                'does not match ',
+                'starts not with ',
+                'ends not with ',
+                'don\'t reference ',
+                'not '
+            ),
+            $string
+        );
+    }
+
+    /**
      * Counts the number of constraint elements.
      *
      * @return integer
@@ -173,42 +210,5 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
             );
             }
         }
-    }
-
-    /**
-     * @param  string $string
-     *
-     * @return string
-     */
-    public static function negate( $string )
-    {
-
-        return str_replace(
-            array(
-                'contains ',
-                'exists',
-                'has ',
-                'is ',
-                'are ',
-                'matches ',
-                'starts with ',
-                'ends with ',
-                'reference ',
-                'not not '
-            ),
-            array(
-                'does not contain ',
-                'does not exist',
-                'does not have ',
-                'is not ',
-                'are not ',
-                'does not match ',
-                'starts not with ',
-                'ends not with ',
-                'don\'t reference ',
-                'not '
-            ),
-            $string
-        );
     }
 }

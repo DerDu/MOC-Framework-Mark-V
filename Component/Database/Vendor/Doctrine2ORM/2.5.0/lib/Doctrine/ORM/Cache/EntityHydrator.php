@@ -41,10 +41,10 @@ interface EntityHydrator
     public function buildCacheEntry( ClassMetadata $metadata, EntityCacheKey $key, $entity );
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata The entity metadata.
-     * @param \Doctrine\ORM\Cache\EntityCacheKey $key       The entity cache key.
-     * @param \Doctrine\ORM\Cache\EntityCacheEntry $entry   The entity cache entry.
-     * @param object $entity                                The entity to load the cache into. If not specified, a new entity is created.
+     * @param \Doctrine\ORM\Mapping\ClassMetadata  $metadata The entity metadata.
+     * @param \Doctrine\ORM\Cache\EntityCacheKey   $key      The entity cache key.
+     * @param \Doctrine\ORM\Cache\EntityCacheEntry $entry    The entity cache entry.
+     * @param object                               $entity   The entity to load the cache into. If not specified, a new entity is created.
      */
     public function loadCacheEntry(
         ClassMetadata $metadata,

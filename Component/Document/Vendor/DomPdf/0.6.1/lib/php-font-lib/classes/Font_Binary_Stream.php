@@ -167,6 +167,16 @@ class Font_Binary_Stream
         return $a["n"];
     }
 
+    public function read( $n )
+    {
+
+        if ($n < 1) {
+            return "";
+        }
+
+        return fread( $this->f, $n );
+    }
+
     public function writeUFWord( $data )
     {
 
@@ -177,6 +187,16 @@ class Font_Binary_Stream
     {
 
         return $this->write( pack( "n", $data ), 2 );
+    }
+
+    public function write( $data, $length = null )
+    {
+
+        if ($data === null || $data === "") {
+            return 0;
+        }
+
+        return fwrite( $this->f, $data, $length );
     }
 
     public function readFWord()
@@ -277,6 +297,12 @@ class Font_Binary_Stream
         }
     }
 
+    public function readUInt8()
+    {
+
+        return ord( $this->read( 1 ) );
+    }
+
     public function readInt8()
     {
 
@@ -289,20 +315,11 @@ class Font_Binary_Stream
         return $v;
     }
 
-    public function readUInt8()
+    public function readUInt32()
     {
 
-        return ord( $this->read( 1 ) );
-    }
-
-    public function read( $n )
-    {
-
-        if ($n < 1) {
-            return "";
-        }
-
-        return fread( $this->f, $n );
+        $a = unpack( "NN", $this->read( 4 ) );
+        return $a["N"];
     }
 
     public function readFixed()
@@ -320,13 +337,6 @@ class Font_Binary_Stream
         $date = $this->readUInt32() - 2082844800;
 
         return strftime( "%Y-%m-%d %H:%M:%S", $date );
-    }
-
-    public function readUInt32()
-    {
-
-        $a = unpack( "NN", $this->read( 4 ) );
-        return $a["N"];
     }
 
     public function pack( $def, $data )
@@ -394,6 +404,12 @@ class Font_Binary_Stream
         }
     }
 
+    public function writeUInt8( $data )
+    {
+
+        return $this->write( chr( $data ), 1 );
+    }
+
     public function writeInt8( $data )
     {
 
@@ -404,20 +420,10 @@ class Font_Binary_Stream
         return $this->writeUInt8( $data );
     }
 
-    public function writeUInt8( $data )
+    public function writeUInt32( $data )
     {
 
-        return $this->write( chr( $data ), 1 );
-    }
-
-    public function write( $data, $length = null )
-    {
-
-        if ($data === null || $data === "") {
-            return 0;
-        }
-
-        return fwrite( $this->f, $data, $length );
+        return $this->write( pack( "N", $data ), 4 );
     }
 
     public function writeFixed( $data )
@@ -435,12 +441,6 @@ class Font_Binary_Stream
         $date += 2082844800;
 
         return $this->writeUInt32( 0 ) + $this->writeUInt32( $date );
-    }
-
-    public function writeUInt32( $data )
-    {
-
-        return $this->write( pack( "N", $data ), 4 );
     }
 
     /**

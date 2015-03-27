@@ -43,6 +43,21 @@ class Filesystem
     }
 
     /**
+     * @param mixed $files
+     *
+     * @return \Traversable
+     */
+    private function toIterator( $files )
+    {
+
+        if (!$files instanceof \Traversable) {
+            $files = new \ArrayObject( is_array( $files ) ? $files : array( $files ) );
+        }
+
+        return $files;
+    }
+
+    /**
      * Change the owner of an array of files or directories
      *
      * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change owner
@@ -139,7 +154,7 @@ class Filesystem
                     }
                 }
                 throw new IOException( sprintf( 'Failed to create symbolic link from "%s" to "%s".', $originDir,
-                        $targetDir ), 0, null, $targetDir );
+                    $targetDir ), 0, null, $targetDir );
             }
 
             if (!file_exists( $targetDir )) {
@@ -283,6 +298,36 @@ class Filesystem
     }
 
     /**
+     * Creates a directory recursively.
+     *
+     * @param string|array|\Traversable $dirs The directory path
+     * @param int                       $mode The directory mode
+     *
+     * @throws IOException On any directory creation failure
+     */
+    public function mkdir( $dirs, $mode = 0777 )
+    {
+
+        foreach ($this->toIterator( $dirs ) as $dir) {
+            if (is_dir( $dir )) {
+                continue;
+            }
+
+            if (true !== @mkdir( $dir, $mode, true )) {
+                $error = error_get_last();
+                if (!is_dir( $dir )) {
+                    // The directory was not created by a concurrent process. Let's throw an exception with a developer friendly error message if we have one
+                    if ($error) {
+                        throw new IOException( sprintf( 'Failed to create "%s": %s.', $dir, $error['message'] ), 0,
+                            null, $dir );
+                    }
+                    throw new IOException( sprintf( 'Failed to create "%s"', $dir ), 0, null, $dir );
+                }
+            }
+        }
+    }
+
+    /**
      * Copies a file.
      *
      * This method only copies the file if the origin file is newer than the target file.
@@ -316,7 +361,7 @@ class Filesystem
             // https://bugs.php.net/bug.php?id=64634
             if (false === $source = @fopen( $originFile, 'r' )) {
                 throw new IOException( sprintf( 'Failed to copy "%s" to "%s" because source file could not be opened for reading.',
-                        $originFile, $targetFile ), 0, null, $originFile );
+                    $originFile, $targetFile ), 0, null, $originFile );
             }
 
             // Stream context created to allow files overwrite when using FTP stream wrapper - disabled by default
@@ -324,7 +369,7 @@ class Filesystem
                     stream_context_create( array( 'ftp' => array( 'overwrite' => true ) ) ) )
             ) {
                 throw new IOException( sprintf( 'Failed to copy "%s" to "%s" because target file could not be opened for writing.',
-                        $originFile, $targetFile ), 0, null, $originFile );
+                    $originFile, $targetFile ), 0, null, $originFile );
             }
 
             $bytesCopied = stream_copy_to_stream( $source, $target );
@@ -339,54 +384,9 @@ class Filesystem
 
             if (stream_is_local( $originFile ) && $bytesCopied !== filesize( $originFile )) {
                 throw new IOException( sprintf( 'Failed to copy the whole content of "%s" to "%s %g bytes copied".',
-                        $originFile, $targetFile, $bytesCopied ), 0, null, $originFile );
+                    $originFile, $targetFile, $bytesCopied ), 0, null, $originFile );
             }
         }
-    }
-
-    /**
-     * Creates a directory recursively.
-     *
-     * @param string|array|\Traversable $dirs The directory path
-     * @param int                       $mode The directory mode
-     *
-     * @throws IOException On any directory creation failure
-     */
-    public function mkdir( $dirs, $mode = 0777 )
-    {
-
-        foreach ($this->toIterator( $dirs ) as $dir) {
-            if (is_dir( $dir )) {
-                continue;
-            }
-
-            if (true !== @mkdir( $dir, $mode, true )) {
-                $error = error_get_last();
-                if (!is_dir( $dir )) {
-                    // The directory was not created by a concurrent process. Let's throw an exception with a developer friendly error message if we have one
-                    if ($error) {
-                        throw new IOException( sprintf( 'Failed to create "%s": %s.', $dir, $error['message'] ), 0,
-                            null, $dir );
-                    }
-                    throw new IOException( sprintf( 'Failed to create "%s"', $dir ), 0, null, $dir );
-                }
-            }
-        }
-    }
-
-    /**
-     * @param mixed $files
-     *
-     * @return \Traversable
-     */
-    private function toIterator( $files )
-    {
-
-        if (!$files instanceof \Traversable) {
-            $files = new \ArrayObject( is_array( $files ) ? $files : array( $files ) );
-        }
-
-        return $files;
     }
 
     /**

@@ -474,22 +474,22 @@ class ProgressBar
         $output = $this->output;
         $messages = $this->messages;
         $this->overwrite( preg_replace_callback( "{%([a-z\-_]+)(?:\:([^%]+))?%}i",
-        function ( $matches ) use ( $self, $output, $messages ) {
+            function ( $matches ) use ( $self, $output, $messages ) {
 
-            if ($formatter = $self::getPlaceholderFormatterDefinition( $matches[1] )) {
-                $text = call_user_func( $formatter, $self, $output );
-            } elseif (isset( $messages[$matches[1]] )) {
-                $text = $messages[$matches[1]];
-            } else {
-                return $matches[0];
-            }
+                if ($formatter = $self::getPlaceholderFormatterDefinition( $matches[1] )) {
+                    $text = call_user_func( $formatter, $self, $output );
+                } elseif (isset( $messages[$matches[1]] )) {
+                    $text = $messages[$matches[1]];
+                } else {
+                    return $matches[0];
+                }
 
-            if (isset( $matches[2] )) {
-                $text = sprintf( '%'.$matches[2], $text );
-            }
+                if (isset( $matches[2] )) {
+                    $text = sprintf( '%'.$matches[2], $text );
+                }
 
-            return $text;
-        }, $this->format ) );
+                return $text;
+            }, $this->format ) );
     }
 
     /**

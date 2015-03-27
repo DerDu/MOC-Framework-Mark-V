@@ -303,12 +303,12 @@ class Response
     {
 
         if (null !== $content && !is_string( $content ) && !is_numeric( $content ) && !is_callable( array(
-                    $content,
-                    '__toString'
-                ) )
+                $content,
+                '__toString'
+            ) )
         ) {
             throw new \UnexpectedValueException( sprintf( 'The Response content must be a string or object implementing __toString(), "%s" given.',
-                    gettype( $content ) ) );
+                gettype( $content ) ) );
         }
 
         $this->content = (string)$content;
@@ -509,8 +509,8 @@ class Response
      *
      * Resulting level can be greater than target level if a non-removable buffer has been encountered.
      *
-     * @param int $targetLevel The target output buffering level
-     * @param bool $flush      Whether to flush or clean the buffers
+     * @param int  $targetLevel The target output buffering level
+     * @param bool $flush       Whether to flush or clean the buffers
      */
     public static function closeOutputBuffers( $targetLevel, $flush )
     {

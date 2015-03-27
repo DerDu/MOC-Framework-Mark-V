@@ -171,7 +171,7 @@ class File_Iterator extends FilterIterator
 
     /**
      * @param  string $filename
-     * @param  array $subString
+     * @param  array  $subString
      * @param  integer $type
      *
      * @return boolean

@@ -568,7 +568,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         foreach ($application->all() as $command) {
             $command->setHelp( str_replace( '%command.full_name%', 'app/console %command.name%',
-                    $command->getHelp() ) );
+                $command->getHelp() ) );
         }
     }
 
@@ -850,7 +850,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
             ->register( 'foo' )
             ->setDefinition( array( $def ) )
             ->setCode( function ( InputInterface $input, OutputInterface $output ) {
-                } );
+            } );
 
         $input = new ArrayInput( array( 'command' => 'foo' ) );
         $output = new NullOutput();
@@ -968,8 +968,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $application->setCatchExceptions( false );
 
         $application->setDefinition( new InputDefinition( array(
-                    new InputOption( '--custom', '-c', InputOption::VALUE_NONE, 'Set the custom input definition.' )
-                ) ) );
+            new InputOption( '--custom', '-c', InputOption::VALUE_NONE, 'Set the custom input definition.' )
+        ) ) );
 
         $inputDefinition = $application->getDefinition();
 
@@ -1146,8 +1146,8 @@ class CustomApplication extends Application
     {
 
         return new InputDefinition( array(
-                new InputOption( '--custom', '-c', InputOption::VALUE_NONE, 'Set the custom input definition.' )
-            ) );
+            new InputOption( '--custom', '-c', InputOption::VALUE_NONE, 'Set the custom input definition.' )
+        ) );
     }
 
     /**

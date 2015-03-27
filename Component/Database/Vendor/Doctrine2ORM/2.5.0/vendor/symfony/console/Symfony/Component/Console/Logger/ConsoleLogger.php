@@ -95,7 +95,7 @@ class ConsoleLogger extends AbstractLogger
 
         if ($output->getVerbosity() >= $this->verbosityLevelMap[$level]) {
             $output->writeln( sprintf( '<%1$s>[%2$s] %3$s</%1$s>', $this->formatLevelMap[$level], $level,
-                    $this->interpolate( $message, $context ) ) );
+                $this->interpolate( $message, $context ) ) );
         }
     }
 

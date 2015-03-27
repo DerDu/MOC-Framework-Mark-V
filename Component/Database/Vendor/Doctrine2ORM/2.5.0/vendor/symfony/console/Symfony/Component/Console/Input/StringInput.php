@@ -70,7 +70,7 @@ class StringInput extends ArgvInput
             } elseif (preg_match( '/([^="\'\s]+?)(=?)('.self::REGEX_QUOTED_STRING.'+)/A', $input, $match, null,
                 $cursor )) {
                 $tokens[] = $match[1].$match[2].stripcslashes( str_replace( array( '"\'', '\'"', '\'\'', '""' ), '',
-                            substr( $match[3], 1, strlen( $match[3] ) - 2 ) ) );
+                        substr( $match[3], 1, strlen( $match[3] ) - 2 ) ) );
             } elseif (preg_match( '/'.self::REGEX_QUOTED_STRING.'/A', $input, $match, null, $cursor )) {
                 $tokens[] = stripcslashes( substr( $match[0], 1, strlen( $match[0] ) - 2 ) );
             } elseif (preg_match( '/'.self::REGEX_STRING.'/A', $input, $match, null, $cursor )) {
@@ -78,7 +78,7 @@ class StringInput extends ArgvInput
             } else {
                 // should never happen
                 throw new \InvalidArgumentException( sprintf( 'Unable to parse input near "... %s ..."',
-                        substr( $input, $cursor, 10 ) ) );
+                    substr( $input, $cursor, 10 ) ) );
             }
 
             $cursor += strlen( $match[0] );

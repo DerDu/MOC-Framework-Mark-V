@@ -45,7 +45,7 @@ class LoaderResolverTest extends \PHPUnit_Framework_TestCase
         $loader->expects( $this->once() )->method( 'supports' )->will( $this->returnValue( true ) );
         $resolver = new LoaderResolver( array( $loader ) );
         $this->assertEquals( $loader, $resolver->resolve( function () {
-                } ), '->resolve() returns the loader for the given resource' );
+        } ), '->resolve() returns the loader for the given resource' );
     }
 
     /**

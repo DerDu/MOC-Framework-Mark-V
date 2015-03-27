@@ -189,7 +189,7 @@ class Twig_Loader_Filesystem implements Twig_LoaderInterface, Twig_ExistsLoaderI
         if (isset( $name[0] ) && '@' == $name[0]) {
             if (false === $pos = strpos( $name, '/' )) {
                 throw new Twig_Error_Loader( sprintf( 'Malformed namespaced template name "%s" (expecting "@namespace/template_name").',
-                        $name ) );
+                    $name ) );
             }
 
             $namespace = substr( $name, 1, $pos - 1 );

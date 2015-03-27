@@ -68,10 +68,10 @@ class DriverChainTest extends DoctrineTestCase
         $driver2->expects( $this->once() )
             ->method( 'getAllClassNames' )
             ->will( $this->returnValue( array(
-                        'Doctrine\Tests\ORM\Mapping\Bar',
-                        'Doctrine\Tests\ORM\Mapping\Baz',
-                        'FooBarBaz'
-                    ) ) );
+                'Doctrine\Tests\ORM\Mapping\Bar',
+                'Doctrine\Tests\ORM\Mapping\Baz',
+                'FooBarBaz'
+            ) ) );
 
         $chain->addDriver( $driver1, 'Doctrine\Tests\Models\Company' );
         $chain->addDriver( $driver2, 'Doctrine\Tests\ORM\Mapping' );

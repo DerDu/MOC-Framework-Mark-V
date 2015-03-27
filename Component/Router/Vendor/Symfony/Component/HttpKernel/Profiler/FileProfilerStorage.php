@@ -249,8 +249,8 @@ class FileProfilerStorage implements ProfilerStorageInterface
             'parent'   => $profile->getParentToken(),
             'children' => array_map( function ( $p ) {
 
-                    return $p->getToken();
-                }, $profile->getChildren() ),
+                return $p->getToken();
+            }, $profile->getChildren() ),
             'data'     => $profile->getCollectors(),
             'ip'       => $profile->getIp(),
             'method'   => $profile->getMethod(),

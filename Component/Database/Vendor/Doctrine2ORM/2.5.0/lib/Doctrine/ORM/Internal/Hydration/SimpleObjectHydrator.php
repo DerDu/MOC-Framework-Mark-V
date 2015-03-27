@@ -108,7 +108,7 @@ class SimpleObjectHydrator extends AbstractHydrator
             // An ObjectHydrator should be used instead of SimpleObjectHydrator
             if (isset( $this->_rsm->relationMap[$column] )) {
                 throw new \Exception( sprintf( 'Unable to retrieve association information for column "%s"',
-                        $column ) );
+                    $column ) );
             }
 
             $cacheKeyInfo = $this->hydrateColumnInfo( $column );

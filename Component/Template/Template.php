@@ -68,7 +68,7 @@ class Template implements IVendorInterface
             )
         );
 
-        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ), false );
 
         return $Template->getBridgeInterface();
     }
@@ -96,7 +96,7 @@ class Template implements IVendorInterface
             )
         );
 
-        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+        $Template->getBridgeInterface()->loadFile( new FileParameter( $Location ), false );
 
         return $Template->getBridgeInterface();
     }

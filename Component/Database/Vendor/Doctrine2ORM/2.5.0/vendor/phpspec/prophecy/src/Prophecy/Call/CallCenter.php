@@ -88,8 +88,8 @@ class CallCenter
         // Sort matches by their score value
         @usort( $matches, function ( $match1, $match2 ) {
 
-                return $match2[0] - $match1[0];
-            } );
+            return $match2[0] - $match1[0];
+        } );
 
         // If Highest rated method prophecy has a promise - execute it or return null instead
         $returnValue = null;

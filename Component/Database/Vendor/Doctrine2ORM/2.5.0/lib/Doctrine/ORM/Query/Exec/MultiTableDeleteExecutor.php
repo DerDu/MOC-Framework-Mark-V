@@ -82,8 +82,8 @@ class MultiTableDeleteExecutor extends AbstractSqlExecutor
 
         $rangeDecl = new AST\RangeVariableDeclaration( $primaryClass->name, $primaryDqlAlias );
         $fromClause = new AST\FromClause( array(
-                new AST\IdentificationVariableDeclaration( $rangeDecl, null, array() )
-            ) );
+            new AST\IdentificationVariableDeclaration( $rangeDecl, null, array() )
+        ) );
         $this->_insertSql .= $sqlWalker->walkFromClause( $fromClause );
 
         // Append WHERE clause, if there is one.

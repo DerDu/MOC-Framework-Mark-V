@@ -19,7 +19,7 @@ class UniversalRouter extends Bridge implements IBridgeInterface
     private $RouteCollection = array();
 
     /**
-     * @param \MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter $RouteOption
+     * @param RouteParameter $RouteOption
      *
      * @return IBridgeInterface
      */
@@ -49,16 +49,13 @@ class UniversalRouter extends Bridge implements IBridgeInterface
             // @codeCoverageIgnoreEnd
         }
         $Controller = $this->handleController( $Route );
-
         if (!is_callable( $Controller )) {
             // @codeCoverageIgnoreStart
             throw new ComponentException( $Controller );
             // @codeCoverageIgnoreEnd
         }
-
         $Arguments = $this->handleArguments( $Controller, $Route );
         $Response = call_user_func_array( $Controller, $Arguments );
-
         return $Response;
     }
 
@@ -90,10 +87,10 @@ class UniversalRouter extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param callable                                                              $Controller
-     * @param \MOC\V\Component\Router\Component\Parameter\Repository\RouteParameter $Route
+     * @param callable       $Controller
+     * @param RouteParameter $Route
      *
-     * @throws \MOC\V\Component\Router\Component\Exception\Repository\MissingParameterException
+     * @throws MissingParameterException
      * @return array
      */
     private function handleArguments( $Controller, RouteParameter $Route )

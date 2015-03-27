@@ -3546,7 +3546,7 @@ class Parser
 
             if ($class->getConstructor()->getNumberOfRequiredParameters() > count( $args )) {
                 $this->semanticalError( sprintf( 'Number of arguments does not match with "%s" constructor declaration.',
-                        $className ), $token );
+                    $className ), $token );
             }
         }
     }

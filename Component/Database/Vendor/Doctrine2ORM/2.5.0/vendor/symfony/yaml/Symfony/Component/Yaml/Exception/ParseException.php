@@ -34,9 +34,9 @@ class ParseException extends RuntimeException
     /**
      * Constructor.
      *
-     * @param string     $message The error message
+     * @param string $message The error message
      * @param int        $parsedLine The line where the error occurred
-     * @param int        $snippet The snippet of code near the problem
+     * @param int    $snippet The snippet of code near the problem
      * @param string     $parsedFile The file name where the error occurred
      * @param \Exception $previous The previous exception
      */

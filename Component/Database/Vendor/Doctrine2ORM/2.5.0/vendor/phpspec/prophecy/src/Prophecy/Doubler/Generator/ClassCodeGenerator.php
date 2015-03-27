@@ -39,8 +39,8 @@ class ClassCodeGenerator
             $classname, $class->getParentClass(), implode( ', ',
                 array_map( function ( $interface ) {
 
-                        return '\\'.$interface;
-                    }, $class->getInterfaces() )
+                    return '\\'.$interface;
+                }, $class->getInterfaces() )
             )
         );
 

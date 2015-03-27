@@ -95,8 +95,8 @@ class MultiTableUpdateExecutor extends AbstractSqlExecutor
         $rangeDecl = new AST\RangeVariableDeclaration( $primaryClass->name,
             $updateClause->aliasIdentificationVariable );
         $fromClause = new AST\FromClause( array(
-                new AST\IdentificationVariableDeclaration( $rangeDecl, null, array() )
-            ) );
+            new AST\IdentificationVariableDeclaration( $rangeDecl, null, array() )
+        ) );
 
         $this->_insertSql .= $sqlWalker->walkFromClause( $fromClause );
 

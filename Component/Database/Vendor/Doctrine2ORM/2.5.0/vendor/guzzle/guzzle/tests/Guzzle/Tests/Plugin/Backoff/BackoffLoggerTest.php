@@ -111,7 +111,7 @@ class BackoffLoggerTest extends \Guzzle\Tests\GuzzleTestCase
     {
 
         $l = new BackoffLogger( new ClosureLogAdapter( function () {
-                } ) );
+        } ) );
         $l->setTemplate( 'foo' );
         $t = $this->readAttribute( $l, 'formatter' );
         $this->assertEquals( 'foo', $this->readAttribute( $t, 'template' ) );

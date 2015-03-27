@@ -61,4 +61,13 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
 
         throw new AutoLoaderException( __METHOD__.' MUST NOT be used!' );
     }
+
+    /**
+     * @return string
+     */
+    public function getLoaderHash()
+    {
+
+        return $this->Instance->getLoaderHash();
+    }
 }

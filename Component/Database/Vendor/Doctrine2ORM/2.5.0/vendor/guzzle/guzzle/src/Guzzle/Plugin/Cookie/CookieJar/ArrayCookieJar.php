@@ -80,6 +80,25 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
         }, $this->all( null, null, null, true, true ) ) );
     }
 
+    public function all( $domain = null, $path = null, $name = null, $skipDiscardable = false, $skipExpired = true )
+    {
+
+        return array_values( array_filter( $this->cookies, function ( Cookie $cookie ) use (
+            $domain,
+            $path,
+            $name,
+            $skipDiscardable,
+            $skipExpired
+        ) {
+
+            return false === ( ( $name && $cookie->getName() != $name ) ||
+                ( $skipExpired && $cookie->isExpired() ) ||
+                ( $skipDiscardable && ( $cookie->getDiscard() || !$cookie->getExpires() ) ) ||
+                ( $path && !$cookie->matchesPath( $path ) ) ||
+                ( $domain && !$cookie->matchesDomain( $domain ) ) );
+        } ) );
+    }
+
     /**
      * Unserializes the cookie cookieJar
      */
@@ -220,25 +239,6 @@ class ArrayCookieJar implements CookieJarInterface, \Serializable
         } );
 
         return $this;
-    }
-
-    public function all( $domain = null, $path = null, $name = null, $skipDiscardable = false, $skipExpired = true )
-    {
-
-        return array_values( array_filter( $this->cookies, function ( Cookie $cookie ) use (
-            $domain,
-            $path,
-            $name,
-            $skipDiscardable,
-            $skipExpired
-        ) {
-
-            return false === ( ( $name && $cookie->getName() != $name ) ||
-                ( $skipExpired && $cookie->isExpired() ) ||
-                ( $skipDiscardable && ( $cookie->getDiscard() || !$cookie->getExpires() ) ) ||
-                ( $path && !$cookie->matchesPath( $path ) ) ||
-                ( $domain && !$cookie->matchesDomain( $domain ) ) );
-        } ) );
     }
 
     public function getMatchingCookies( RequestInterface $request )

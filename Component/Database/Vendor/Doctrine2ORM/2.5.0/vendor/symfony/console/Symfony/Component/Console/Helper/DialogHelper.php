@@ -64,36 +64,36 @@ class DialogHelper extends InputAwareHelper
         $output->writeln( $messages );
 
         $result = $this->askAndValidate( $output, '> ',
-        function ( $picked ) use ( $choices, $errorMessage, $multiselect ) {
+            function ( $picked ) use ( $choices, $errorMessage, $multiselect ) {
 
-            // Collapse all spaces.
-            $selectedChoices = str_replace( " ", "", $picked );
+                // Collapse all spaces.
+                $selectedChoices = str_replace( " ", "", $picked );
 
-            if ($multiselect) {
-                // Check for a separated comma values
-                if (!preg_match( '/^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/', $selectedChoices, $matches )) {
-                    throw new \InvalidArgumentException( sprintf( $errorMessage, $picked ) );
+                if ($multiselect) {
+                    // Check for a separated comma values
+                    if (!preg_match( '/^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/', $selectedChoices, $matches )) {
+                        throw new \InvalidArgumentException( sprintf( $errorMessage, $picked ) );
                 }
-                $selectedChoices = explode( ",", $selectedChoices );
-            } else {
-                $selectedChoices = array( $picked );
-            }
-
-            $multiselectChoices = array();
-
-            foreach ($selectedChoices as $value) {
-                if (empty( $choices[$value] )) {
-                    throw new \InvalidArgumentException( sprintf( $errorMessage, $value ) );
+                    $selectedChoices = explode( ",", $selectedChoices );
+                } else {
+                    $selectedChoices = array( $picked );
                 }
-                array_push( $multiselectChoices, $value );
-            }
 
-            if ($multiselect) {
-                return $multiselectChoices;
-            }
+                $multiselectChoices = array();
 
-            return $picked;
-        }, $attempts, $default );
+                foreach ($selectedChoices as $value) {
+                    if (empty( $choices[$value] )) {
+                        throw new \InvalidArgumentException( sprintf( $errorMessage, $value ) );
+                }
+                    array_push( $multiselectChoices, $value );
+                }
+
+                if ($multiselect) {
+                    return $multiselectChoices;
+                }
+
+                return $picked;
+            }, $attempts, $default );
 
         return $result;
     }
@@ -304,7 +304,7 @@ class DialogHelper extends InputAwareHelper
         while (false === $attempts || $attempts--) {
             if (null !== $error) {
                 $output->writeln( $this->getHelperSet()->get( 'formatter' )->formatBlock( $error->getMessage(),
-                        'error' ) );
+                    'error' ) );
             }
 
             try {

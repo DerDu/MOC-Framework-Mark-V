@@ -1,14 +1,14 @@
 <?php include( "head.inc" ); ?>
 
-    <a name="setup"> </a>
-    <h2>Setup</h2>
+<a name="setup"> </a>
+<h2>Setup</h2>
 
-    <ul>
-        <li style="list-style-image: url('images/star_02.gif');"><a href="#system">System Configuration</a></li>
-        <li style="list-style-image: url('images/star_02.gif');"><a href="#dompdf-config">DOMPDF Configuration</a></li>
-    </ul>
+<ul>
+    <li style="list-style-image: url('images/star_02.gif');"><a href="#system">System Configuration</a></li>
+    <li style="list-style-image: url('images/star_02.gif');"><a href="#dompdf-config">DOMPDF Configuration</a></li>
+</ul>
 
-    <h3 id="system">System Configuration</h3>
+<h3 id="system">System Configuration</h3>
 
 <?php
 require_once( "../dompdf_config.inc.php" );
@@ -78,39 +78,39 @@ if (( $gm = extension_loaded( "gmagick" ) ) || ( $im = extension_loaded( "imagic
 
 ?>
 
-    <table class="setup">
+<table class="setup">
         <tr>
             <th></th>
             <th>Required</th>
             <th>Present</th>
         </tr>
 
-        <?php foreach ($server_configs as $label => $server_config) { ?>
-            <tr>
-                <td class="title"><?php echo $label; ?></td>
-                <td><?php echo( $server_config["required"] === true ? "Yes" : $server_config["required"] ); ?></td>
-                <td class="<?php echo( $server_config["result"] ? "ok" : ( isset( $server_config["fallback"] ) ? "warning" : "failed" ) ); ?>">
-                    <?php
-                    echo $server_config["value"];
-                    if ($server_config["result"] && !$server_config["value"]) {
-                        echo "Yes";
+    <?php foreach ($server_configs as $label => $server_config) { ?>
+        <tr>
+            <td class="title"><?php echo $label; ?></td>
+            <td><?php echo( $server_config["required"] === true ? "Yes" : $server_config["required"] ); ?></td>
+            <td class="<?php echo( $server_config["result"] ? "ok" : ( isset( $server_config["fallback"] ) ? "warning" : "failed" ) ); ?>">
+                <?php
+                echo $server_config["value"];
+                if ($server_config["result"] && !$server_config["value"]) {
+                    echo "Yes";
                     }
-                    if (!$server_config["result"]) {
-                        if (isset( $server_config["fallback"] )) {
-                            echo "<div>No. ".$server_config["fallback"]."</div>";
-                        }
-                        if (isset( $server_config["failure"] )) {
-                            echo "<div>".$server_config["failure"]."</div>";
-                        }
+                if (!$server_config["result"]) {
+                    if (isset( $server_config["fallback"] )) {
+                        echo "<div>No. ".$server_config["fallback"]."</div>";
                     }
-                    ?>
-                </td>
-            </tr>
-        <?php } ?>
+                    if (isset( $server_config["failure"] )) {
+                        echo "<div>".$server_config["failure"]."</div>";
+                    }
+                }
+                ?>
+            </td>
+        </tr>
+    <?php } ?>
 
-    </table>
+</table>
 
-    <h3 id="dompdf-config">DOMPDF Configuration</h3>
+<h3 id="dompdf-config">DOMPDF Configuration</h3>
 
 <?php
 $dompdf_constants = array();
@@ -232,7 +232,7 @@ $constants = array(
 );
 ?>
 
-    <table class="setup">
+<table class="setup">
         <tr>
             <th>Config name</th>
             <th>Value</th>
@@ -240,64 +240,64 @@ $constants = array(
             <th>Status</th>
         </tr>
 
-        <?php foreach ($defined_constants["user"] as $const => $value) { ?>
-            <tr>
-                <td class="title"><?php echo $const; ?></td>
-                <td>
-                    <?php
-                    if (isset( $constants[$const]["secret"] )) {
-                        echo "******";
-                    } else {
-                        var_export( $value );
-                    }
-                    ?>
-                </td>
-                <td><?php if (isset( $constants[$const]["desc"] )) {
-                        echo $constants[$const]["desc"];
-                    } ?></td>
-                <td <?php
-                $message = "";
-                if (isset( $constants[$const]["success"] )) {
-                    switch ($constants[$const]["success"]) {
-                        case "read":
-                            $success = is_readable( $value );
-                            $message = ( $success ? "Readable" : "Not readable" );
-                            break;
-                        case "write":
-                            $success = is_writable( $value );
-                            $message = ( $success ? "Writable" : "Not writable" );
-                            break;
-                        case "remote":
-                            $success = ini_get( "allow_url_fopen" );
-                            $message = ( $success ? "allow_url_fopen enabled" : "allow_url_fopen disabled" );
-                            break;
-                        case "backend":
-                            switch (strtolower( $value )) {
-                                case "cpdf":
-                                    $success = true;
-                                    break;
-                                case "pdflib":
-                                    $success = function_exists( "PDF_begin_document" );
-                                    $message = "The PDFLib backend needs the PDF PECL extension";
-                                    break;
-                                case "gd":
-                                    $success = function_exists( "imagecreate" );
-                                    $message = "The GD backend requires GD2";
-                                    break;
-                            }
-                            break;
-                        case "auth":
-                            $success = !in_array( $value, array( "admin", "password" ) );
-                            $message = ( $success ? "OK" : "Password should be changed" );
-                            break;
-                    }
-                    echo 'class="'.( $success ? "ok" : "failed" ).'"';
+    <?php foreach ($defined_constants["user"] as $const => $value) { ?>
+        <tr>
+            <td class="title"><?php echo $const; ?></td>
+            <td>
+                <?php
+                if (isset( $constants[$const]["secret"] )) {
+                    echo "******";
+                } else {
+                    var_export( $value );
                 }
-                ?>><?php echo $message; ?></td>
-            </tr>
-        <?php } ?>
+                ?>
+            </td>
+            <td><?php if (isset( $constants[$const]["desc"] )) {
+                    echo $constants[$const]["desc"];
+                } ?></td>
+            <td <?php
+            $message = "";
+            if (isset( $constants[$const]["success"] )) {
+                switch ($constants[$const]["success"]) {
+                    case "read":
+                        $success = is_readable( $value );
+                        $message = ( $success ? "Readable" : "Not readable" );
+                        break;
+                    case "write":
+                        $success = is_writable( $value );
+                        $message = ( $success ? "Writable" : "Not writable" );
+                        break;
+                    case "remote":
+                        $success = ini_get( "allow_url_fopen" );
+                        $message = ( $success ? "allow_url_fopen enabled" : "allow_url_fopen disabled" );
+                        break;
+                    case "backend":
+                        switch (strtolower( $value )) {
+                            case "cpdf":
+                                $success = true;
+                                break;
+                            case "pdflib":
+                                $success = function_exists( "PDF_begin_document" );
+                                $message = "The PDFLib backend needs the PDF PECL extension";
+                                break;
+                            case "gd":
+                                $success = function_exists( "imagecreate" );
+                                $message = "The GD backend requires GD2";
+                                break;
+                        }
+                        break;
+                    case "auth":
+                        $success = !in_array( $value, array( "admin", "password" ) );
+                        $message = ( $success ? "OK" : "Password should be changed" );
+                        break;
+                }
+                echo 'class="'.( $success ? "ok" : "failed" ).'"';
+            }
+            ?>><?php echo $message; ?></td>
+        </tr>
+    <?php } ?>
 
-    </table>
+</table>
 
 
 <?php include( "foot.inc" ); ?>

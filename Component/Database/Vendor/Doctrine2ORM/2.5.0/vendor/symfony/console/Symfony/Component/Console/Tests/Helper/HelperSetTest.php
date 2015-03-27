@@ -99,9 +99,9 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $helper_01 = $this->getGenericMockHelper( 'fake_helper_01' );
         $helper_02 = $this->getGenericMockHelper( 'fake_helper_02' );
         $helperset = new HelperSet( array(
-                'fake_helper_01_alias' => $helper_01,
-                'fake_helper_02_alias' => $helper_02
-            ) );
+            'fake_helper_01_alias' => $helper_01,
+            'fake_helper_02_alias' => $helper_02
+        ) );
         $this->assertEquals( $helper_01, $helperset->get( 'fake_helper_01' ),
             '->get() returns correct helper by name' );
         $this->assertEquals( $helper_01, $helperset->get( 'fake_helper_01_alias' ),

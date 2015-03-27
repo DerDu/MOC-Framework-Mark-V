@@ -143,7 +143,7 @@ class ResponseHeaderBag extends HeaderBag
 
         if (!in_array( $format, array( self::COOKIES_FLAT, self::COOKIES_ARRAY ) )) {
             throw new \InvalidArgumentException( sprintf( 'Format "%s" invalid (%s).', $format,
-                    implode( ', ', array( self::COOKIES_FLAT, self::COOKIES_ARRAY ) ) ) );
+                implode( ', ', array( self::COOKIES_FLAT, self::COOKIES_ARRAY ) ) ) );
         }
 
         if (self::COOKIES_ARRAY === $format) {

@@ -142,8 +142,8 @@ class MessageFormatterTest extends \Guzzle\Tests\GuzzleTestCase
         $formatter = new MessageFormatter( '{connect_time}/{total_time}' );
         $adapter = new ClosureLogAdapter( function ( $m ) use ( &$out ) {
 
-                $out .= $m;
-            } );
+            $out .= $m;
+        } );
         $log = new LogPlugin( $adapter, $formatter );
         $this->getServer()->enqueue( "HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nHI" );
         $client = new Client( $this->getServer()->getUrl() );

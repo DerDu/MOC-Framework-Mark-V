@@ -171,7 +171,7 @@ class Application
 
         if (null === $command->getDefinition()) {
             throw new \LogicException( sprintf( 'Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.',
-                    get_class( $command ) ) );
+                get_class( $command ) ) );
         }
 
         $this->commands[$command->getName()] = $command;
@@ -477,8 +477,8 @@ class Application
         $allCommands = array_keys( $this->commands );
         $expr = preg_replace_callback( '{([^:]+|)}', function ( $matches ) {
 
-                return preg_quote( $matches[1] ).'[^:]*';
-            }, $name );
+            return preg_quote( $matches[1] ).'[^:]*';
+        }, $name );
         $commands = preg_grep( '{^'.$expr.'}', $allCommands );
 
         if (empty( $commands ) || count( preg_grep( '{^'.$expr.'$}', $commands ) ) < 1) {
@@ -537,8 +537,8 @@ class Application
         $allNamespaces = $this->getNamespaces();
         $expr = preg_replace_callback( '{([^:]+|)}', function ( $matches ) {
 
-                return preg_quote( $matches[1] ).'[^:]*';
-            }, $namespace );
+            return preg_quote( $matches[1] ).'[^:]*';
+        }, $namespace );
         $namespaces = preg_grep( '{^'.$expr.'}', $allNamespaces );
 
         if (empty( $namespaces )) {
@@ -560,7 +560,7 @@ class Application
         $exact = in_array( $namespace, $namespaces, true );
         if (count( $namespaces ) > 1 && !$exact) {
             throw new \InvalidArgumentException( sprintf( 'The namespace "%s" is ambiguous (%s).', $namespace,
-                    $this->getAbbreviationSuggestions( array_values( $namespaces ) ) ) );
+                $this->getAbbreviationSuggestions( array_values( $namespaces ) ) ) );
         }
 
         return $exact ? $namespace : reset( $namespaces );
@@ -655,8 +655,8 @@ class Application
 
         $alternatives = array_filter( $alternatives, function ( $lev ) use ( $threshold ) {
 
-                return $lev < 2 * $threshold;
-            } );
+            return $lev < 2 * $threshold;
+        } );
         asort( $alternatives );
 
         return array_keys( $alternatives );
@@ -785,7 +785,7 @@ class Application
                 foreach ($this->splitStringByWidth( $line, $width - 4 ) as $line) {
                     // pre-format lines to get the right string length
                     $lineLength = $this->stringWidth( preg_replace( '/\[[^m]*m/', '',
-                                $formatter->format( $line ) ) ) + 4;
+                            $formatter->format( $line ) ) ) + 4;
                     $lines[] = array( $line, $lineLength );
 
                     $len = max( $lineLength, $len );
@@ -795,10 +795,10 @@ class Application
             $messages = array( '', '' );
             $messages[] = $emptyLine = $formatter->format( sprintf( '<error>%s</error>', str_repeat( ' ', $len ) ) );
             $messages[] = $formatter->format( sprintf( '<error>%s%s</error>', $title,
-                    str_repeat( ' ', max( 0, $len - $this->stringWidth( $title ) ) ) ) );
+                str_repeat( ' ', max( 0, $len - $this->stringWidth( $title ) ) ) ) );
             foreach ($lines as $line) {
                 $messages[] = $formatter->format( sprintf( '<error>  %s  %s</error>', $line[0],
-                        str_repeat( ' ', $len - $line[1] ) ) );
+                    str_repeat( ' ', $len - $line[1] ) ) );
             }
             $messages[] = $emptyLine;
             $messages[] = '';
@@ -826,7 +826,7 @@ class Application
                     $line = isset( $trace[$i]['line'] ) ? $trace[$i]['line'] : 'n/a';
 
                     $output->writeln( sprintf( ' %s%s%s() at <info>%s:%s</info>', $class, $type, $function, $file,
-                            $line ) );
+                        $line ) );
                 }
 
                 $output->writeln( "" );
@@ -836,7 +836,7 @@ class Application
 
         if (null !== $this->runningCommand) {
             $output->writeln( sprintf( '<info>%s</info>',
-                    sprintf( $this->runningCommand->getSynopsis(), $this->getName() ) ) );
+                sprintf( $this->runningCommand->getSynopsis(), $this->getName() ) ) );
             $output->writeln( "" );
             $output->writeln( "" );
         }

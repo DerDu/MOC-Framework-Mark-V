@@ -112,7 +112,7 @@ EOT
             $collectionRegion->getCache()->flushAll();
 
             $output->writeln( sprintf( 'Flushing cache provider configured for <info>"%s#%s"</info>', $ownerClass,
-                    $assoc ) );
+                $assoc ) );
 
             return;
         }
@@ -127,14 +127,14 @@ EOT
 
         if ($ownerId) {
             $output->writeln( sprintf( 'Clearing second-level cache entry for collection <info>"%s#%s"</info> owner entity identified by <info>"%s"</info>',
-                    $ownerClass, $assoc, $ownerId ) );
+                $ownerClass, $assoc, $ownerId ) );
             $cache->evictCollection( $ownerClass, $assoc, $ownerId );
 
             return;
         }
 
         $output->writeln( sprintf( 'Clearing second-level cache for collection <info>"%s#%s"</info>', $ownerClass,
-                $assoc ) );
+            $assoc ) );
         $cache->evictCollectionRegion( $ownerClass, $assoc );
     }
 }

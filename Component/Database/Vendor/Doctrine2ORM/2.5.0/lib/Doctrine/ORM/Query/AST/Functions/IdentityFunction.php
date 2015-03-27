@@ -81,7 +81,7 @@ class IdentityFunction extends FunctionNode
 
             if ($joinColumn === null) {
                 throw new QueryException( sprintf( 'Unable to resolve the reference field mapping "%s"',
-                        $this->fieldMapping ) );
+                    $this->fieldMapping ) );
             }
         }
 

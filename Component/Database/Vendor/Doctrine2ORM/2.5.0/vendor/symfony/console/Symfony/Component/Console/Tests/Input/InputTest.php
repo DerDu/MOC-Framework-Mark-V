@@ -42,9 +42,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
             '->getOptions() returns all option values' );
 
         $input = new ArrayInput( array( '--name' => 'foo' ), new InputDefinition( array(
-                    new InputOption( 'name' ),
-                    new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
-                ) ) );
+            new InputOption( 'name' ),
+            new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
+        ) ) );
         $this->assertEquals( 'default', $input->getOption( 'bar' ),
             '->getOption() returns the default value for optional options' );
         $this->assertEquals( array( 'name' => 'foo', 'bar' => 'default' ), $input->getOptions(),
@@ -59,9 +59,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
 
         $input = new ArrayInput( array( '--name' => 'foo' ), new InputDefinition( array(
-                    new InputOption( 'name' ),
-                    new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
-                ) ) );
+            new InputOption( 'name' ),
+            new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
+        ) ) );
         $input->setOption( 'foo', 'bar' );
     }
 
@@ -73,9 +73,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
 
         $input = new ArrayInput( array( '--name' => 'foo' ), new InputDefinition( array(
-                    new InputOption( 'name' ),
-                    new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
-                ) ) );
+            new InputOption( 'name' ),
+            new InputOption( 'bar', '', InputOption::VALUE_OPTIONAL, '', 'default' )
+        ) ) );
         $input->getOption( 'foo' );
     }
 
@@ -94,9 +94,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
             '->getArguments() returns all argument values' );
 
         $input = new ArrayInput( array( 'name' => 'foo' ), new InputDefinition( array(
-                    new InputArgument( 'name' ),
-                    new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
-                ) ) );
+            new InputArgument( 'name' ),
+            new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
+        ) ) );
         $this->assertEquals( 'default', $input->getArgument( 'bar' ),
             '->getArgument() returns the default value for optional arguments' );
         $this->assertEquals( array( 'name' => 'foo', 'bar' => 'default' ), $input->getArguments(),
@@ -111,9 +111,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
 
         $input = new ArrayInput( array( 'name' => 'foo' ), new InputDefinition( array(
-                    new InputArgument( 'name' ),
-                    new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
-                ) ) );
+            new InputArgument( 'name' ),
+            new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
+        ) ) );
         $input->setArgument( 'foo', 'bar' );
     }
 
@@ -125,9 +125,9 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
 
         $input = new ArrayInput( array( 'name' => 'foo' ), new InputDefinition( array(
-                    new InputArgument( 'name' ),
-                    new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
-                ) ) );
+            new InputArgument( 'name' ),
+            new InputArgument( 'bar', InputArgument::OPTIONAL, '', 'default' )
+        ) ) );
         $input->getArgument( 'foo' );
     }
 

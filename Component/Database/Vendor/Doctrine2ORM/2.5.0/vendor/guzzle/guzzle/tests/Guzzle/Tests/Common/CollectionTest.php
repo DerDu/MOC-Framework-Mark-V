@@ -286,14 +286,14 @@ class CollectionTest extends \Guzzle\Tests\GuzzleTestCase
         ) );
 
         $this->assertInstanceOf( 'Guzzle\\Http\\QueryString', $qs->map( function ( $a, $b ) {
-                } ) );
+        } ) );
         $this->assertInstanceOf( 'Guzzle\\Common\\Collection', $qs->map( function ( $a, $b ) {
-                }, array(), false ) );
+        }, array(), false ) );
 
         $this->assertInstanceOf( 'Guzzle\\Http\\QueryString', $qs->filter( function ( $a, $b ) {
-                } ) );
+        } ) );
         $this->assertInstanceOf( 'Guzzle\\Common\\Collection', $qs->filter( function ( $a, $b ) {
-                }, false ) );
+        }, false ) );
     }
 
     public function testCanReplaceAllData()

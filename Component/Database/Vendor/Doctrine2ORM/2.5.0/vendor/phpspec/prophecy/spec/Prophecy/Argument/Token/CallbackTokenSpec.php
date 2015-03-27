@@ -30,8 +30,8 @@ class CallbackTokenSpec extends ObjectBehavior
 
         $this->beConstructedWith( function ( $argument ) {
 
-                return 2 === $argument;
-            } );
+            return 2 === $argument;
+        } );
 
         $this->scoreArgument( 2 )->shouldReturn( 7 );
     }
@@ -41,8 +41,8 @@ class CallbackTokenSpec extends ObjectBehavior
 
         $this->beConstructedWith( function ( $argument ) {
 
-                return 2 === $argument;
-            } );
+            return 2 === $argument;
+        } );
 
         $this->scoreArgument( 5 )->shouldReturn( false );
     }

@@ -268,7 +268,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
         } catch( \Exception $e ) {
             if (null !== $this->logger) {
                 $this->logger->info( sprintf( 'An exception was thrown while getting the uncalled listeners (%s)',
-                        $e->getMessage() ), array( 'exception' => $e ) );
+                    $e->getMessage() ), array( 'exception' => $e ) );
             }
 
             // unable to retrieve the uncalled listeners

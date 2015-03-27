@@ -112,7 +112,7 @@ class YamlFileLoader extends FileLoader
 
         if (!is_array( $config )) {
             throw new \InvalidArgumentException( sprintf( 'The definition of "%s" in "%s" must be a YAML array.', $name,
-                    $path ) );
+                $path ) );
         }
         if ($extraKeys = array_diff( array_keys( $config ), self::$availableKeys )) {
             throw new \InvalidArgumentException( sprintf(

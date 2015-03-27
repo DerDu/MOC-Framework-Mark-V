@@ -143,6 +143,16 @@ XML;
         $this->assertSame( $config, $object->getConfiguration() );
     }
 
+    protected function createConfiguration()
+    {
+
+        $config = new Configuration();
+
+        return $config
+            ->setSrcDir( $this->srcDir )
+            ->addCloverXmlPath( $this->cloverXmlPath );
+    }
+
     /**
      * @test
      */
@@ -236,6 +246,8 @@ XML;
         $this->assertNull( $git );
     }
 
+    // getJsonFile()
+
     /**
      * @test
      */
@@ -259,7 +271,7 @@ XML;
         return $object;
     }
 
-    // getJsonFile()
+    // setJsonFile()
 
     /**
      * @test
@@ -277,7 +289,7 @@ XML;
         return $jsonFile;
     }
 
-    // setJsonFile()
+    // getConfiguration()
 
     /**
      * @test
@@ -294,7 +306,7 @@ XML;
         return $object;
     }
 
-    // getConfiguration()
+    // getHttpClient()
 
     /**
      * @test
@@ -310,8 +322,6 @@ XML;
         return $jsonFile;
     }
 
-    // getHttpClient()
-
     /**
      * @test
      * @depends shouldHaveJsonFileAfterCollectGitInfo
@@ -323,6 +333,8 @@ XML;
 
         $this->assertNotNull( $git );
     }
+
+    // setHttpClient()
 
     /**
      * @test
@@ -349,7 +361,7 @@ XML;
             ->send();
     }
 
-    // setHttpClient()
+    // collectCloverXml()
 
     protected function createJobsWith()
     {
@@ -364,8 +376,6 @@ XML;
 
         return new Jobs( $this->config, $this->client );
     }
-
-    // collectCloverXml()
 
     protected function createAdapterMockWith( $url, $filename, $jsonPath )
     {
@@ -481,6 +491,8 @@ XML;
             ->send();
     }
 
+    // collectGitInfo()
+
     /**
      * @test
      */
@@ -505,8 +517,6 @@ XML;
             ->dumpJsonFile()
             ->send();
     }
-
-    // collectGitInfo()
 
     /**
      * @test
@@ -551,6 +561,8 @@ XML;
             ->send();
     }
 
+    // send()
+
     /**
      * @test
      */
@@ -573,8 +585,6 @@ XML;
             ->dumpJsonFile()
             ->send();
     }
-
-    // send()
 
     /**
      * @test
@@ -692,15 +702,5 @@ XML;
         }
 
         return new CiEnvVarsCollector( $config );
-    }
-
-    protected function createConfiguration()
-    {
-
-        $config = new Configuration();
-
-        return $config
-            ->setSrcDir( $this->srcDir )
-            ->addCloverXmlPath( $this->cloverXmlPath );
     }
 }

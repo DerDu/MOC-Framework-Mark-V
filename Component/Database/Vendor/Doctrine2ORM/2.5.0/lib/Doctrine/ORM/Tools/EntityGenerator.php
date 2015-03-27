@@ -1444,7 +1444,7 @@ public function __construct(<params>)
 
         if ($collections) {
             return $this->prefixCodeWithSpaces( str_replace( "<collections>",
-                    implode( "\n".$this->spaces, $collections ), static::$constructorMethodTemplate ) );
+                implode( "\n".$this->spaces, $collections ), static::$constructorMethodTemplate ) );
         }
 
         return '';

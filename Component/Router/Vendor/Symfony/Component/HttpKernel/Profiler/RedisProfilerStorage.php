@@ -125,7 +125,7 @@ class RedisProfilerStorage implements ProfilerStorageInterface
 
         if ($length > 2147483648) {
             throw new \RuntimeException( sprintf( 'The Redis item key "%s" is too long (%s bytes). Allowed maximum size is 2^31 bytes.',
-                    $name, $length ) );
+                $name, $length ) );
         }
 
         return true;
@@ -325,8 +325,8 @@ class RedisProfilerStorage implements ProfilerStorageInterface
             'parent'   => $profile->getParentToken(),
             'children' => array_map( function ( $p ) {
 
-                    return $p->getToken();
-                }, $profile->getChildren() ),
+                return $p->getToken();
+            }, $profile->getChildren() ),
             'data'     => $profile->getCollectors(),
             'ip'       => $profile->getIp(),
             'method'   => $profile->getMethod(),

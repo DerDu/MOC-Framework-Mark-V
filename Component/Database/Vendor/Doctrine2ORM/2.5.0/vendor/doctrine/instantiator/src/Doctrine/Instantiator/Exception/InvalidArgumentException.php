@@ -40,7 +40,7 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements E
 
         if (interface_exists( $className )) {
             return new self( sprintf( 'The provided type "%s" is an interface, and can not be instantiated',
-                    $className ) );
+                $className ) );
         }
 
         if (PHP_VERSION_ID >= 50400 && trait_exists( $className )) {

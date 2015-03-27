@@ -744,8 +744,8 @@ XML;
         $paths = array_keys( $sourceFiles );
         $filenames = array_map( function ( $path ) use ( $srcDir ) {
 
-                return str_replace( $srcDir, '', $path );
-            }, $paths );
+            return str_replace( $srcDir, '', $path );
+        }, $paths );
 
         $this->assertContains( 'test.php', $filenames );
         $this->assertContains( 'test2.php', $filenames );
@@ -762,8 +762,8 @@ XML;
         $paths = array_keys( $sourceFiles );
         $filenames = array_map( function ( $path ) use ( $srcDir ) {
 
-                return str_replace( $srcDir, '', $path );
-            }, $paths );
+            return str_replace( $srcDir, '', $path );
+        }, $paths );
 
         $this->assertContains( 'test.php', $filenames );
         $this->assertContains( 'test2.php', $filenames );

@@ -181,7 +181,7 @@ class Twig_ExpressionParser
             ) {
                 if (!$arg instanceof Twig_Node_Expression_Constant) {
                     throw new Twig_Error_Syntax( sprintf( 'Dynamic macro names are not supported (called on "%s")',
-                            $node->getAttribute( 'name' ) ), $token->getLine(), $this->parser->getFilename() );
+                        $node->getAttribute( 'name' ) ), $token->getLine(), $this->parser->getFilename() );
                 }
 
                 $node = new Twig_Node_Expression_MethodCall( $node, 'get'.$arg->getAttribute( 'value' ), $arguments,
@@ -260,7 +260,7 @@ class Twig_ExpressionParser
             if ($namedArguments && $token = $stream->nextIf( Twig_Token::OPERATOR_TYPE, '=' )) {
                 if (!$value instanceof Twig_Node_Expression_Name) {
                     throw new Twig_Error_Syntax( sprintf( 'A parameter name must be a string, "%s" given',
-                            get_class( $value ) ), $token->getLine(), $this->parser->getFilename() );
+                        get_class( $value ) ), $token->getLine(), $this->parser->getFilename() );
                 }
                 $name = $value->getAttribute( 'name' );
 

@@ -124,7 +124,7 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
 
         if ($length > 250) {
             throw new \RuntimeException( sprintf( 'The memcache item key "%s" is too long (%s bytes). Allowed maximum size is 250 bytes.',
-                    $name, $length ) );
+                $name, $length ) );
         }
 
         return true;

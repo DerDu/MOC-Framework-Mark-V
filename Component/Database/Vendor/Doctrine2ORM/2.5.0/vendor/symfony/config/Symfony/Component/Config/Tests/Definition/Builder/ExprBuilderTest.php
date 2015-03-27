@@ -104,8 +104,8 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
         $test = $this->getTestBuilder()
             ->ifTrue( function ( $v ) {
 
-                    return true;
-                } )
+                return true;
+            } )
             ->then( $this->returnClosure( 'new_value' ) )
             ->end();
         $this->assertFinalizedValueIs( 'new_value', $test );
@@ -113,8 +113,8 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
         $test = $this->getTestBuilder()
             ->ifTrue( function ( $v ) {
 
-                    return false;
-                } )
+                return false;
+            } )
             ->then( $this->returnClosure( 'new_value' ) )
             ->end();
         $this->assertFinalizedValueIs( 'value', $test );

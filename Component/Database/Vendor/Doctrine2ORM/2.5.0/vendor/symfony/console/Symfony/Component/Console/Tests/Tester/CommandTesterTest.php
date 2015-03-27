@@ -68,8 +68,8 @@ class CommandTesterTest extends \PHPUnit_Framework_TestCase
         $command = new Command( 'foo' );
         $command->setCode( function ( $input, $output ) {
 
-                $output->writeln( 'foo' );
-            } );
+            $output->writeln( 'foo' );
+        } );
 
         $application->add( $command );
 
@@ -87,8 +87,8 @@ class CommandTesterTest extends \PHPUnit_Framework_TestCase
         $this->command->addArgument( 'foo' );
         $this->command->setCode( function ( $input, $output ) {
 
-                $output->writeln( 'foo' );
-            } );
+            $output->writeln( 'foo' );
+        } );
 
         $this->tester = new CommandTester( $this->command );
         $this->tester->execute( array( 'foo' => 'bar' ),

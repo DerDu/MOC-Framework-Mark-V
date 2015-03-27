@@ -205,8 +205,8 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
 
         return array_map( function ( $v ) {
 
-                return $v['schema_name'];
-            }, $rows );
+            return $v['schema_name'];
+        }, $rows );
     }
 
     /**

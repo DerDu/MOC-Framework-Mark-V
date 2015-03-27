@@ -61,24 +61,27 @@ class ArrayCookieJarTest extends \Guzzle\Tests\GuzzleTestCase
     {
 
         return array(
-            new Cookie( array( 'name'    => 'foo',
-                               'value'   => 'bar',
-                               'domain'  => 'foo.com',
-                               'path'    => '/',
-                               'discard' => true
-                ) ),
-            new Cookie( array( 'name'    => 'test',
-                               'value'   => '123',
-                               'domain'  => 'baz.com',
-                               'path'    => '/foo',
-                               'expires' => 2
-                ) ),
-            new Cookie( array( 'name'    => 'you',
-                               'value'   => '123',
-                               'domain'  => 'bar.com',
-                               'path'    => '/boo',
-                               'expires' => time() + 1000
-                ) )
+            new Cookie( array(
+                'name'    => 'foo',
+                'value'   => 'bar',
+                'domain'  => 'foo.com',
+                'path'    => '/',
+                'discard' => true
+            ) ),
+            new Cookie( array(
+                'name'    => 'test',
+                'value'   => '123',
+                'domain'  => 'baz.com',
+                'path'    => '/foo',
+                'expires' => 2
+            ) ),
+            new Cookie( array(
+                'name'    => 'you',
+                'value'   => '123',
+                'domain'  => 'bar.com',
+                'path'    => '/boo',
+                'expires' => time() + 1000
+            ) )
         );
     }
 

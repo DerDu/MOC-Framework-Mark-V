@@ -461,8 +461,8 @@ class InputDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals( '[foo1] ... [fooN]', $definition->getSynopsis(),
             '->getSynopsis() returns a synopsis of arguments and options' );
         $definition = new InputDefinition( array(
-                new InputArgument( 'foo', InputArgument::REQUIRED | InputArgument::IS_ARRAY )
-            ) );
+            new InputArgument( 'foo', InputArgument::REQUIRED | InputArgument::IS_ARRAY )
+        ) );
         $this->assertEquals( 'foo1 ... [fooN]', $definition->getSynopsis(),
             '->getSynopsis() returns a synopsis of arguments and options' );
     }

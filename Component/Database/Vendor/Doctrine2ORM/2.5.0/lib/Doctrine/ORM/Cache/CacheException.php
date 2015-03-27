@@ -73,6 +73,6 @@ class CacheException extends ORMException
     {
 
         return new self( sprintf( 'Entity association field "%s#%s" not configured as part of the second-level cache.',
-                $entityName, $field ) );
+            $entityName, $field ) );
     }
 }

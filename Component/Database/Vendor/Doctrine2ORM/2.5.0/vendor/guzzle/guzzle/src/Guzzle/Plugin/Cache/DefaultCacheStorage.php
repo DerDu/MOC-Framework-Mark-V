@@ -152,8 +152,8 @@ class DefaultCacheStorage implements CacheStorageInterface
         // Cast the headers to a string
         $headers = array_map( function ( $h ) {
 
-                return (string)$h;
-            }, $headers );
+            return (string)$h;
+        }, $headers );
 
         return $headers;
     }

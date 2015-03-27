@@ -3163,7 +3163,7 @@ abstract class AbstractPlatform
             }
             if ($offset > 0 && !$this->supportsLimitOffset()) {
                 throw new DBALException( sprintf( "Platform %s does not support offset values in limit queries.",
-                        $this->getName() ) );
+                    $this->getName() ) );
             }
         }
 

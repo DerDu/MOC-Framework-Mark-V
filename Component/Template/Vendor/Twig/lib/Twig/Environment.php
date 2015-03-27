@@ -125,7 +125,7 @@ class Twig_Environment
 
         if ($this->extensionInitialized) {
             throw new LogicException( sprintf( 'Unable to register extension "%s" as extensions have already been initialized.',
-                    $extension->getName() ) );
+                $extension->getName() ) );
         }
 
         $this->extensions[$extension->getName()] = $extension;
@@ -285,25 +285,6 @@ class Twig_Environment
     }
 
     /**
-     * Gets the cache filename for a given template.
-     *
-     * @param string $name The template name
-     *
-     * @return string|false The cache file name or false when caching is disabled
-     */
-    public function getCacheFilename( $name )
-    {
-
-        if (false === $this->cache) {
-            return false;
-        }
-
-        $class = substr( $this->getTemplateClass( $name ), strlen( $this->templateClassPrefix ) );
-
-        return $this->getCache().'/'.substr( $class, 0, 2 ).'/'.substr( $class, 2, 2 ).'/'.substr( $class, 4 ).'.php';
-    }
-
-    /**
      * Gets the template class associated with the given string.
      *
      * @param string $name  The name for which to calculate the template class name
@@ -342,6 +323,25 @@ class Twig_Environment
     {
 
         $this->loader = $loader;
+    }
+
+    /**
+     * Gets the cache filename for a given template.
+     *
+     * @param string $name The template name
+     *
+     * @return string|false The cache file name or false when caching is disabled
+     */
+    public function getCacheFilename( $name )
+    {
+
+        if (false === $this->cache) {
+            return false;
+        }
+
+        $class = substr( $this->getTemplateClass( $name ), strlen( $this->templateClassPrefix ) );
+
+        return $this->getCache().'/'.substr( $class, 0, 2 ).'/'.substr( $class, 2, 2 ).'/'.substr( $class, 4 ).'.php';
     }
 
     /**
@@ -387,7 +387,7 @@ class Twig_Environment
             throw $e;
         } catch( Exception $e ) {
             throw new Twig_Error_Syntax( sprintf( 'An exception has been thrown during the compilation of a template ("%s").',
-                    $e->getMessage() ), -1, $name, $e );
+                $e->getMessage() ), -1, $name, $e );
         }
     }
 
@@ -661,7 +661,7 @@ class Twig_Environment
         }
 
         throw new Twig_Error_Loader( sprintf( 'Unable to find one of the following templates: "%s".',
-                implode( '", "', $names ) ) );
+            implode( '", "', $names ) ) );
     }
 
     /**
@@ -888,7 +888,7 @@ class Twig_Environment
         if ($operators = $extension->getOperators()) {
             if (2 !== count( $operators )) {
                 throw new InvalidArgumentException( sprintf( '"%s::getOperators()" does not return a valid operators array.',
-                        get_class( $extension ) ) );
+                    get_class( $extension ) ) );
             }
 
             $this->unaryOperators = array_merge( $this->unaryOperators, $operators[0] );
@@ -1199,7 +1199,7 @@ class Twig_Environment
             $extGlob = $extension->getGlobals();
             if (!is_array( $extGlob )) {
                 throw new UnexpectedValueException( sprintf( '"%s::getGlobals()" must return an array of globals.',
-                        get_class( $extension ) ) );
+                    get_class( $extension ) ) );
             }
 
             $globals[] = $extGlob;

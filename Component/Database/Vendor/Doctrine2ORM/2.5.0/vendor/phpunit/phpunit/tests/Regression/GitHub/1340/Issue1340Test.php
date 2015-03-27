@@ -13,6 +13,12 @@ class Issue1340Test extends PHPUnit_Framework_TestCase
         error_log( "\nshutdown: stderr:".self::get4KB() );
     }
 
+    private static function get4KB()
+    {
+
+        return str_repeat( '1', 4096 + 1 );
+    }
+
     /**
      * Also fails despite no isolation, because a phpt test is executed in
      * subprocess on its own.
@@ -25,12 +31,6 @@ class Issue1340Test extends PHPUnit_Framework_TestCase
         // @see https://github.com/sebastianbergmann/phpunit/issues/1169
         error_log( "\n".__FUNCTION__.": stderr:".self::get4KB()."\n" );
         $this->assertTrue( true );
-    }
-
-    private static function get4KB()
-    {
-
-        return str_repeat( '1', 4096 + 1 );
     }
 
     /**

@@ -1754,6 +1754,21 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
     }
 
     /**
+     * Get the mock object generator, creating it if it doesn't exist.
+     *
+     * @return   PHPUnit_Framework_MockObject_Generator
+     */
+    protected function getMockObjectGenerator()
+    {
+
+        if (null === $this->mockObjectGenerator) {
+            $this->mockObjectGenerator = new PHPUnit_Framework_MockObject_Generator;
+        }
+
+        return $this->mockObjectGenerator;
+    }
+
+    /**
      * Returns a mock object for the specified trait with all abstract methods
      * of the trait mocked. Concrete methods to mock can be specified with the
      * `$mockedMethods` parameter.
@@ -2000,21 +2015,6 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
         $this->mockObjects[] = $mockObject;
 
         return $mockObject;
-    }
-
-    /**
-     * Get the mock object generator, creating it if it doesn't exist.
-     *
-     * @return   PHPUnit_Framework_MockObject_Generator
-     */
-    protected function getMockObjectGenerator()
-    {
-
-        if (null === $this->mockObjectGenerator) {
-            $this->mockObjectGenerator = new PHPUnit_Framework_MockObject_Generator;
-        }
-
-        return $this->mockObjectGenerator;
     }
 
     /**

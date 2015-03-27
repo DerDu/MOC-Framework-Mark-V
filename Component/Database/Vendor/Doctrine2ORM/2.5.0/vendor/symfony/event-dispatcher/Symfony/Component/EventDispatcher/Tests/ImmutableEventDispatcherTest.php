@@ -73,8 +73,8 @@ class ImmutableEventDispatcherTest extends \PHPUnit_Framework_TestCase
 
         $this->dispatcher->addListener( 'event', function () {
 
-                return 'foo';
-            } );
+            return 'foo';
+        } );
     }
 
     /**
@@ -96,8 +96,8 @@ class ImmutableEventDispatcherTest extends \PHPUnit_Framework_TestCase
 
         $this->dispatcher->removeListener( 'event', function () {
 
-                return 'foo';
-            } );
+            return 'foo';
+        } );
     }
 
     /**

@@ -223,7 +223,7 @@ class DefaultCache implements Cache
         }
 
         return $persister->getCacheRegion()->contains( $this->buildCollectionCacheKey( $metadata, $association,
-                $ownerIdentifier ) );
+            $ownerIdentifier ) );
     }
 
     /**
@@ -257,7 +257,7 @@ class DefaultCache implements Cache
         }
 
         $persister->getCacheRegion()->evict( $this->buildCollectionCacheKey( $metadata, $association,
-                $ownerIdentifier ) );
+            $ownerIdentifier ) );
     }
 
     /**

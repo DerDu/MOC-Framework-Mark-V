@@ -102,7 +102,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
             $parent->displayBlock( $name, $context, $blocks, false );
         } else {
             throw new Twig_Error_Runtime( sprintf( 'The template has no parent and no traits defining the "%s" block',
-                    $name ), -1, $this->getTemplateName() );
+                $name ), -1, $this->getTemplateName() );
         }
     }
 

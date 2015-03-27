@@ -66,12 +66,12 @@ class RegisterListenersPass implements CompilerPassInterface
             $def = $container->getDefinition( $id );
             if (!$def->isPublic()) {
                 throw new \InvalidArgumentException( sprintf( 'The service "%s" must be public as event listeners are lazy-loaded.',
-                        $id ) );
+                    $id ) );
             }
 
             if ($def->isAbstract()) {
                 throw new \InvalidArgumentException( sprintf( 'The service "%s" must not be abstract as event listeners are lazy-loaded.',
-                        $id ) );
+                    $id ) );
             }
 
             foreach ($events as $event) {
@@ -79,7 +79,7 @@ class RegisterListenersPass implements CompilerPassInterface
 
                 if (!isset( $event['event'] )) {
                     throw new \InvalidArgumentException( sprintf( 'Service "%s" must define the "event" attribute on "%s" tags.',
-                            $id, $this->listenerTag ) );
+                        $id, $this->listenerTag ) );
                 }
 
                 if (!isset( $event['method'] )) {
@@ -102,7 +102,7 @@ class RegisterListenersPass implements CompilerPassInterface
             $def = $container->getDefinition( $id );
             if (!$def->isPublic()) {
                 throw new \InvalidArgumentException( sprintf( 'The service "%s" must be public as event subscribers are lazy-loaded.',
-                        $id ) );
+                    $id ) );
             }
 
             // We must assume that the class value has been correctly filled, even if the service is created by a factory
@@ -112,7 +112,7 @@ class RegisterListenersPass implements CompilerPassInterface
             $interface = 'Symfony\Component\EventDispatcher\EventSubscriberInterface';
             if (!$refClass->implementsInterface( $interface )) {
                 throw new \InvalidArgumentException( sprintf( 'Service "%s" must implement interface "%s".', $id,
-                        $interface ) );
+                    $interface ) );
             }
 
             $definition->addMethodCall( 'addSubscriberService', array( $id, $class ) );

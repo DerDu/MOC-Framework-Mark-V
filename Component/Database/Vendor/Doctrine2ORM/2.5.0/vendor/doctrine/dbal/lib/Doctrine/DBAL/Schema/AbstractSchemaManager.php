@@ -134,7 +134,7 @@ abstract class AbstractSchemaManager
         $tableNames = array_map( 'strtolower', (array)$tableNames );
 
         return count( $tableNames ) == count( \array_intersect( $tableNames,
-                array_map( 'strtolower', $this->listTableNames() ) ) );
+            array_map( 'strtolower', $this->listTableNames() ) ) );
     }
 
     /**
@@ -608,7 +608,7 @@ abstract class AbstractSchemaManager
     {
 
         $this->_execSql( $this->_platform->getCreateViewSQL( $view->getQuotedName( $this->_platform ),
-                $view->getSql() ) );
+            $view->getSql() ) );
     }
 
     /* alterTable() Methods */

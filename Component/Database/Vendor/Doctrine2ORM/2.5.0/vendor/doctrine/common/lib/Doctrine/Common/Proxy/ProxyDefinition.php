@@ -54,8 +54,8 @@ class ProxyDefinition
 
     /**
      * @param string $proxyClassName
-     * @param array $identifierFields
-     * @param array $reflectionFields
+     * @param array  $identifierFields
+     * @param array  $reflectionFields
      * @param callable $initializer
      * @param callable $cloner
      */

@@ -113,7 +113,7 @@ class DefaultQueryCache implements QueryCache
         foreach ($entry->result as $index => $entry) {
 
             if (( $entityEntry = $region->get( $entityKey = new EntityCacheKey( $entityName,
-                        $entry['identifier'] ) ) ) === null
+                    $entry['identifier'] ) ) ) === null
             ) {
 
                 if ($this->cacheLogger !== null) {
@@ -145,7 +145,7 @@ class DefaultQueryCache implements QueryCache
                 if ($assoc['type'] & ClassMetadata::TO_ONE) {
 
                     if (( $assocEntry = $assocRegion->get( $assocKey = new EntityCacheKey( $assoc['targetEntity'],
-                                $assoc['identifier'] ) ) ) === null
+                            $assoc['identifier'] ) ) ) === null
                     ) {
 
                         if ($this->cacheLogger !== null) {
@@ -175,7 +175,7 @@ class DefaultQueryCache implements QueryCache
                 foreach ($assoc['list'] as $assocIndex => $assocId) {
 
                     if (( $assocEntry = $assocRegion->get( $assocKey = new EntityCacheKey( $assoc['targetEntity'],
-                                $assocId ) ) ) === null
+                            $assocId ) ) ) === null
                     ) {
 
                         if ($this->cacheLogger !== null) {
@@ -250,7 +250,7 @@ class DefaultQueryCache implements QueryCache
             $data[$index]['associations'] = array();
 
             if (( $key->cacheMode & Cache::MODE_REFRESH ) || !$region->contains( $entityKey = new EntityCacheKey( $entityName,
-                        $identifier ) )
+                    $identifier ) )
             ) {
                 // Cancel put result if entity put fail
                 if (!$persister->storeEntityCache( $entity, $entityKey )) {
@@ -286,7 +286,7 @@ class DefaultQueryCache implements QueryCache
                     $assocIdentifier = $this->uow->getEntityIdentifier( $assocValue );
 
                     if (( $key->cacheMode & Cache::MODE_REFRESH ) || !$assocRegion->contains( $entityKey = new EntityCacheKey( $assocMetadata->rootEntityName,
-                                $assocIdentifier ) )
+                            $assocIdentifier ) )
                     ) {
 
                         // Cancel put result if association entity put fail
@@ -311,7 +311,7 @@ class DefaultQueryCache implements QueryCache
                     $assocIdentifier = $this->uow->getEntityIdentifier( $assocItem );
 
                     if (( $key->cacheMode & Cache::MODE_REFRESH ) || !$assocRegion->contains( $entityKey = new EntityCacheKey( $assocMetadata->rootEntityName,
-                                $assocIdentifier ) )
+                            $assocIdentifier ) )
                     ) {
 
                         // Cancel put result if entity put fail

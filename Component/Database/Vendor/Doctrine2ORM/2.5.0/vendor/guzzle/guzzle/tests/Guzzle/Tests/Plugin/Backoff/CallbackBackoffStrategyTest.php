@@ -25,15 +25,15 @@ class CallbackBackoffStrategyTest extends \Guzzle\Tests\GuzzleTestCase
         $request = $this->getMock( 'Guzzle\Http\Message\Request', array(), array(), '', false );
         $strategy = new CallbackBackoffStrategy( function () {
 
-                return 10;
-            }, true );
+            return 10;
+        }, true );
         $this->assertTrue( $strategy->makesDecision() );
         $this->assertEquals( 10, $strategy->getBackoffPeriod( 0, $request ) );
         // Ensure it chains correctly when null is returned
         $strategy = new CallbackBackoffStrategy( function () {
 
-                return null;
-            }, false );
+            return null;
+        }, false );
         $this->assertFalse( $strategy->makesDecision() );
         $this->assertFalse( $strategy->getBackoffPeriod( 0, $request ) );
     }

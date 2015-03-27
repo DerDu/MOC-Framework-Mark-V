@@ -260,7 +260,7 @@ EOT
         }
 
         throw new \InvalidArgumentException( sprintf( 'Do not know how to format value "%s"',
-                print_r( $value, true ) ) );
+            print_r( $value, true ) ) );
     }
 
     /**

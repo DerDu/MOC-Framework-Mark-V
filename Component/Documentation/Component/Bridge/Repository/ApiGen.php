@@ -42,9 +42,6 @@ class ApiGen extends Bridge implements IBridgeInterface
         AutoLoader::getNamespaceAutoLoader( 'ApiGen', __DIR__.'/../../../Vendor/ApiGen' );
         AutoLoader::getNamespaceAutoLoader( 'TokenReflection', __DIR__.'/../../../Vendor/ApiGen/libs/TokenReflection' );
         AutoLoader::getNamespaceAutoLoader( 'FSHL', __DIR__.'/../../../Vendor/ApiGen/libs/FSHL' );
-        AutoLoader::getNamespaceAutoLoader( 'Nette', __DIR__.'/../../../Vendor/ApiGen/libs/Nette' );
-        AutoLoader::getNamespaceAutoLoader( 'Nette', __DIR__.'/../../../Vendor/ApiGen/libs/Nette/Nette/common',
-            'Nette' );
 
         $this->Project = $Project;
         $this->Title = $Title;
@@ -126,11 +123,11 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Add a link to download documentation as a ZIP archive
             'download'       => true,
             // Save a check style report of poorly documented elements into a file
-            'report' => $this->Destination->getDirectory().DIRECTORY_SEPARATOR.'_improve.xml',
+            'report'  => $this->Destination->getDirectory().DIRECTORY_SEPARATOR.'_improve.xml',
             // Wipe out the destination directory first
-            'wipeout'        => true,
+            'wipeout' => false,
             // Don't display scanning and generating messages
-            'quiet'          => true,
+            'quiet'   => false,
             // Display progressbar
             'progressbar'    => false,
             // Use colors

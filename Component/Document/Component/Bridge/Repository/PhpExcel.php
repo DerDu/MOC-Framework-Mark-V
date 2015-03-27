@@ -8,9 +8,17 @@ use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationPara
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
+/**
+ * Class PhpExcel
+ *
+ * @package MOC\V\Component\Document\Component\Bridge\Repository
+ */
 class PhpExcel extends Bridge implements IBridgeInterface
 {
 
+    /**
+     *
+     */
     function __construct()
     {
 

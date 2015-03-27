@@ -28,15 +28,15 @@ function to_bytes( $string )
 
 ?>
 
-    <a name="setup"> </a>
-    <h2>Font manager</h2>
+<a name="setup"> </a>
+<h2>Font manager</h2>
 
-    <ul>
-        <li style="list-style-image: url('images/star_02.gif');"><a href="#installed-fonts">Installed fonts</a></li>
-        <li style="list-style-image: url('images/star_02.gif');"><a href="#install-fonts">Install new fonts</a></li>
-    </ul>
+<ul>
+    <li style="list-style-image: url('images/star_02.gif');"><a href="#installed-fonts">Installed fonts</a></li>
+    <li style="list-style-image: url('images/star_02.gif');"><a href="#install-fonts">Install new fonts</a></li>
+</ul>
 
-    <h3 id="installed-fonts">Installed fonts</h3>
+<h3 id="installed-fonts">Installed fonts</h3>
 
 <?php
 Font_Metrics::init();
@@ -44,36 +44,36 @@ $fonts = Font_Metrics::get_font_families();
 $extensions = array( "ttf", "afm", "afm.php", "ufm", "ufm.php" );
 ?>
 
-    <button
-        onclick="$('#clear-font-cache-message').load('controller.php?cmd=clear-font-cache', function(){ location.reload(); })">
-        Clear font cache
-    </button>
-    <span id="clear-font-cache-message"></span>
+<button
+    onclick="$('#clear-font-cache-message').load('controller.php?cmd=clear-font-cache', function(){ location.reload(); })">
+    Clear font cache
+</button>
+<span id="clear-font-cache-message"></span>
 
-    <table class="setup">
-        <tr>
-            <th rowspan="2">Font family</th>
-            <th rowspan="2">Variants</th>
-            <th colspan="6">File versions</th>
-        </tr>
-        <tr>
-            <th>TTF</th>
-            <th>AFM</th>
-            <th>AFM cache</th>
-            <th>UFM</th>
-            <th>UFM cache</th>
-        </tr>
-        <?php foreach ($fonts as $family => $variants) { ?>
-        <tr>
-            <td class="title" rowspan="<?php echo count( $variants ); ?>">
-                <?php
-                echo htmlentities( $family );
-                if ($family == DOMPDF_DEFAULT_FONT) {
-                    echo ' <strong>(default)</strong>';
-                }
-                ?>
-            </td>
+<table class="setup">
+    <tr>
+        <th rowspan="2">Font family</th>
+        <th rowspan="2">Variants</th>
+        <th colspan="6">File versions</th>
+    </tr>
+    <tr>
+        <th>TTF</th>
+        <th>AFM</th>
+        <th>AFM cache</th>
+        <th>UFM</th>
+        <th>UFM cache</th>
+    </tr>
+    <?php foreach ($fonts as $family => $variants) { ?>
+    <tr>
+        <td class="title" rowspan="<?php echo count( $variants ); ?>">
             <?php
+            echo htmlentities( $family );
+            if ($family == DOMPDF_DEFAULT_FONT) {
+                echo ' <strong>(default)</strong>';
+            }
+            ?>
+        </td>
+        <?php
             $i = 0;
             foreach ($variants as $name => $path) {
                 if ($i > 0) {
@@ -122,14 +122,14 @@ $extensions = array( "ttf", "afm", "afm.php", "ufm", "ufm.php" );
                 $i++;
             }
             ?>
-            <?php } ?>
+        <?php } ?>
 
-    </table>
+</table>
 
-    <h3 id="install-fonts">Install new fonts</h3>
+<h3 id="install-fonts">Install new fonts</h3>
 
-    <script type="text/javascript">
-        function checkFileName( form )
+<script type="text/javascript">
+    function checkFileName( form )
         {
             var fields = {
                 normal: "Normal",
@@ -163,7 +163,7 @@ $extensions = array( "ttf", "afm", "afm.php", "ufm", "ufm.php" );
 
             return ok;
         }
-    </script>
+</script>
 
 <?php
 

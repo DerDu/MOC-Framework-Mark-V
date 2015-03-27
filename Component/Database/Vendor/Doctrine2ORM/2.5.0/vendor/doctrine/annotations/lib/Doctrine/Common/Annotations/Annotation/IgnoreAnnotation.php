@@ -49,7 +49,7 @@ final class IgnoreAnnotation
         }
         if (!is_array( $values['value'] )) {
             throw new \RuntimeException( sprintf( '@IgnoreAnnotation expects either a string name, or an array of strings, but got %s.',
-                    json_encode( $values['value'] ) ) );
+                json_encode( $values['value'] ) ) );
         }
 
         $this->names = $values['value'];

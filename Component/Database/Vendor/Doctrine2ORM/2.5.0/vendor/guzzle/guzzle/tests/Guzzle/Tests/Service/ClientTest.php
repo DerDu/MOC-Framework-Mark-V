@@ -307,11 +307,11 @@ class ClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         $client = new Mock\MockClient( 'http://foobaz.com' );
         $mock = new MockPlugin( array(
-                new Response( 200 ),
-                new Response( 200 ),
-                new Response( 404 ),
-                new Response( 500 )
-            ) );
+            new Response( 200 ),
+            new Response( 200 ),
+            new Response( 404 ),
+            new Response( 500 )
+        ) );
         $client->addSubscriber( $mock );
 
         $cmds = array( new MockCommand(), new MockCommand(), new MockCommand(), new MockCommand() );

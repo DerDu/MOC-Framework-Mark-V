@@ -86,7 +86,7 @@ class ProcessHelper extends Helper
 
         if ($verbosity <= $output->getVerbosity()) {
             $output->write( $formatter->start( spl_object_hash( $process ),
-                    $this->escapeString( $process->getCommandLine() ) ) );
+                $this->escapeString( $process->getCommandLine() ) ) );
         }
 
         if ($output->isDebug()) {
@@ -138,7 +138,7 @@ class ProcessHelper extends Helper
         return function ( $type, $buffer ) use ( $output, $process, $callback, $formatter, $that ) {
 
             $output->write( $formatter->progress( spl_object_hash( $process ), $that->escapeString( $buffer ),
-                    Process::ERR === $type ) );
+                Process::ERR === $type ) );
 
             if (null !== $callback) {
                 call_user_func( $callback, $type, $buffer );

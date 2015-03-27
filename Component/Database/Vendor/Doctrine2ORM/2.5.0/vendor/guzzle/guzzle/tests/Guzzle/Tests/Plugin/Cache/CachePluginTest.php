@@ -53,9 +53,9 @@ class CachePluginTest extends \Guzzle\Tests\GuzzleTestCase
 
         $this->assertNotEmpty( CachePlugin::getSubscribedEvents() );
         $plugin = new CachePlugin( array(
-                'can_cache' => function () {
-                }
-            ) );
+            'can_cache' => function () {
+            }
+        ) );
         $this->assertInstanceOf(
             'Guzzle\Plugin\Cache\CallbackCanCacheStrategy',
             $this->readAttribute( $plugin, 'canCache' )
@@ -252,8 +252,8 @@ class CachePluginTest extends \Guzzle\Tests\GuzzleTestCase
             'storage'   => $storage,
             'can_cache' => new CallbackCanCacheStrategy( function () {
 
-                    return false;
-                } )
+                return false;
+            } )
         ) );
 
         $plugin->onRequestBeforeSend( new Event( array(
@@ -420,27 +420,27 @@ class CachePluginTest extends \Guzzle\Tests\GuzzleTestCase
                 false,
                 array( 'Cache-Control' => 'no-store' ),
                 new Response( 200, array(
-                        'Date'          => $date->format( 'D, d M Y H:i:s T' ),
-                        'Cache-Control' => 'max-age=5, stale-if-error'
-                    ), 'foo' ),
+                    'Date'          => $date->format( 'D, d M Y H:i:s T' ),
+                    'Cache-Control' => 'max-age=5, stale-if-error'
+                ), 'foo' ),
             ),
             // request expired
             array(
                 true,
                 array( 'Cache-Control' => 'stale-if-error=4' ),
                 new Response( 200, array(
-                        'Date'          => $date->format( 'D, d M Y H:i:s T' ),
-                        'Cache-Control' => 'max-age=5, stale-if-error'
-                    ), 'foo' ),
+                    'Date'          => $date->format( 'D, d M Y H:i:s T' ),
+                    'Cache-Control' => 'max-age=5, stale-if-error'
+                ), 'foo' ),
             ),
             // response expired
             array(
                 true,
                 array( 'Cache-Control' => 'stale-if-error' ),
                 new Response( 200, array(
-                        'Date'          => $date->format( 'D, d M Y H:i:s T' ),
-                        'Cache-Control' => 'max-age=5, stale-if-error=4'
-                    ), 'foo' ),
+                    'Date'          => $date->format( 'D, d M Y H:i:s T' ),
+                    'Cache-Control' => 'max-age=5, stale-if-error=4'
+                ), 'foo' ),
             ),
         );
     }

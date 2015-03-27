@@ -110,7 +110,7 @@ EOT
             $entityRegion->getCache()->flushAll();
 
             $output->writeln( sprintf( 'Flushing cache provider configured for entity named <info>"%s"</info>',
-                    $entityClass ) );
+                $entityClass ) );
 
             return;
         }
@@ -125,7 +125,7 @@ EOT
 
         if ($entityId) {
             $output->writeln( sprintf( 'Clearing second-level cache entry for entity <info>"%s"</info> identified by <info>"%s"</info>',
-                    $entityClass, $entityId ) );
+                $entityClass, $entityId ) );
             $cache->evictEntity( $entityClass, $entityId );
 
             return;

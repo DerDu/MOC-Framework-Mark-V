@@ -8,6 +8,11 @@ use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationPara
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter;
 use MOC\V\Component\Template\Component\IBridgeInterface as IBridgeInterface_Template;
 
+/**
+ * Class DomPdf
+ *
+ * @package MOC\V\Component\Document\Component\Bridge\Repository
+ */
 class DomPdf extends Bridge implements IBridgeInterface
 {
 

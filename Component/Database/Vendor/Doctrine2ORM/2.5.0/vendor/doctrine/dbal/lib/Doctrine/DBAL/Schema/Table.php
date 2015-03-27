@@ -605,7 +605,7 @@ class Table extends AbstractAsset
     ) {
 
         $constraintName = $constraintName ?: $this->_generateIdentifierName( array_merge( (array)$this->getName(),
-                $localColumnNames ), "fk", $this->_getMaxIdentifierLength() );
+            $localColumnNames ), "fk", $this->_getMaxIdentifierLength() );
 
         return $this->addNamedForeignKeyConstraint( $constraintName, $foreignTable, $localColumnNames,
             $foreignColumnNames, $options );

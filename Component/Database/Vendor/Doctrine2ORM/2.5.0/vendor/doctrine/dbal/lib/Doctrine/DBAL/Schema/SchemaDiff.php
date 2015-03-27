@@ -96,9 +96,9 @@ class SchemaDiff
     /**
      * Constructs an SchemaDiff object.
      *
-     * @param \Doctrine\DBAL\Schema\Table[] $newTables
+     * @param \Doctrine\DBAL\Schema\Table[]     $newTables
      * @param \Doctrine\DBAL\Schema\TableDiff[] $changedTables
-     * @param \Doctrine\DBAL\Schema\Table[] $removedTables
+     * @param \Doctrine\DBAL\Schema\Table[]     $removedTables
      * @param \Doctrine\DBAL\Schema\Schema|null $fromSchema
      */
     public function __construct(

@@ -13,6 +13,11 @@ interface IBridgeInterface
 {
 
     /**
+     * @return string
+     */
+    public function getLoaderHash();
+
+    /**
      * @return IBridgeInterface
      */
     public function registerLoader();

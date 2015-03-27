@@ -372,7 +372,7 @@ class QuestionHelper extends Helper
         while (null === $attempts || $attempts--) {
             if (null !== $error) {
                 $output->writeln( $this->getHelperSet()->get( 'formatter' )->formatBlock( $error->getMessage(),
-                        'error' ) );
+                    'error' ) );
             }
 
             try {

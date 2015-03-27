@@ -617,9 +617,9 @@ class ClientTest extends \Guzzle\Tests\GuzzleTestCase
 
         $client = new Client();
         $request = $client->createRequest( 'GET', 'http://www.foo.com?test=hello', array( 'Foo' => 'Test' ), null,
-        array(
-            'cookies' => array( 'michael' => 'test' )
-        ) );
+            array(
+                'cookies' => array( 'michael' => 'test' )
+            ) );
         $this->assertEquals( 'test', $request->getCookie( 'michael' ) );
     }
 

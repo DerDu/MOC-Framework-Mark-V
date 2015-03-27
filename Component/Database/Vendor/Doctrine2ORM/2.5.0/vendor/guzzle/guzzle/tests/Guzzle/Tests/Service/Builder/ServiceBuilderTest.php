@@ -228,10 +228,10 @@ class ServiceBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         // Add an event listener to pick up client creation events
         $emits = 0;
         $builder->getEventDispatcher()->addListener( 'service_builder.create_client',
-        function ( $event ) use ( &$emits ) {
+            function ( $event ) use ( &$emits ) {
 
-            $emits++;
-        } );
+                $emits++;
+            } );
 
         // Get the 'a' client by name
         $client = $builder->get( 'a' );

@@ -64,7 +64,7 @@ class FileLockRegion implements ConcurrentRegion
 
         if (!is_dir( $directory ) && !@mkdir( $directory, 0777, true )) {
             throw new \InvalidArgumentException( sprintf( 'The directory "%s" does not exist and could not be created.',
-                    $directory ) );
+                $directory ) );
         }
 
         if (!is_writable( $directory )) {

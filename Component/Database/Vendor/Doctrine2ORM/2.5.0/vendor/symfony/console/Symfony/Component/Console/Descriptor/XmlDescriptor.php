@@ -229,7 +229,7 @@ class XmlDescriptor extends Descriptor
     {
 
         $this->writeDocument( $this->getApplicationDocument( $application,
-                isset( $options['namespace'] ) ? $options['namespace'] : null ) );
+            isset( $options['namespace'] ) ? $options['namespace'] : null ) );
     }
 
     /**

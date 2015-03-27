@@ -250,7 +250,7 @@ class JobsRepository implements LoggerAwareInterface
         $numFiles = count( $sourceFiles );
 
         $this->logger->info( sprintf( 'Found <info>%s</info> source file%s:', number_format( $numFiles ),
-                $numFiles > 1 ? 's' : '' ) );
+            $numFiles > 1 ? 's' : '' ) );
 
         foreach ($sourceFiles as $sourceFile) {
             /* @var $sourceFile \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile */
@@ -265,7 +265,7 @@ class JobsRepository implements LoggerAwareInterface
         $metrics = $jsonFile->getMetrics();
 
         $this->logger->info( sprintf( $template, $coverage, $metrics->getCoveredStatements(),
-                $metrics->getStatements() ) );
+            $metrics->getStatements() ) );
     }
 
     /**

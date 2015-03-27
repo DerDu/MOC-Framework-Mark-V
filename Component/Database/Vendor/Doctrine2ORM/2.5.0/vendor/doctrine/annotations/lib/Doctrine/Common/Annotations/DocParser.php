@@ -563,13 +563,13 @@ final class DocParser
                 }
 
                 throw AnnotationException::semanticalError( sprintf( 'The annotation "@%s" in %s was never imported. Did you maybe forget to add a "use" statement for this annotation?',
-                        $name, $this->context ) );
+                    $name, $this->context ) );
             }
         }
 
         if (!$this->classExists( $name )) {
             throw AnnotationException::semanticalError( sprintf( 'The annotation "@%s" in %s does not exist, or could not be auto-loaded.',
-                    $name, $this->context ) );
+                $name, $this->context ) );
         }
 
         // at this point, $name contains the fully qualified class name of the
@@ -588,7 +588,7 @@ final class DocParser
             }
 
             throw AnnotationException::semanticalError( sprintf( 'The class "%s" is not annotated with @Annotation. Are you sure this class can be used as annotation? If so, then you need to add @Annotation to the _class_ doc comment of "%s". If it is indeed no annotation, then you need to add @IgnoreAnnotation("%s") to the _class_ doc comment of %s.',
-                    $name, $name, $originalName, $this->context ) );
+                $name, $name, $originalName, $this->context ) );
         }
 
         //if target is nested annotation
@@ -669,14 +669,14 @@ final class DocParser
             if (!isset( self::$annotationMetadata[$name]['properties'][$property] )) {
                 if ('value' !== $property) {
                     throw AnnotationException::creationError( sprintf( 'The annotation @%s declared on %s does not have a property named "%s". Available properties: %s',
-                            $originalName, $this->context, $property,
-                            implode( ', ', self::$annotationMetadata[$name]['properties'] ) ) );
+                        $originalName, $this->context, $property,
+                        implode( ', ', self::$annotationMetadata[$name]['properties'] ) ) );
                 }
 
                 // handle the case if the property has no annotations
                 if (!$property = self::$annotationMetadata[$name]['default_property']) {
                     throw AnnotationException::creationError( sprintf( 'The annotation @%s declared on %s does not accept any values, but got %s.',
-                            $originalName, $this->context, json_encode( $values ) ) );
+                        $originalName, $this->context, json_encode( $values ) ) );
                 }
             }
 

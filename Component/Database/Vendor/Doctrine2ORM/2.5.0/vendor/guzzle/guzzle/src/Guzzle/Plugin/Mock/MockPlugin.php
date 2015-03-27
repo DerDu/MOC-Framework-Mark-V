@@ -241,14 +241,14 @@ class MockPlugin extends AbstractHasDispatcher implements EventSubscriberInterfa
         if ($item instanceof Response) {
             if ($this->readBodies && $request instanceof EntityEnclosingRequestInterface) {
                 $request->getEventDispatcher()->addListener( 'request.sent',
-                $f = function ( Event $event ) use ( &$f ) {
+                    $f = function ( Event $event ) use ( &$f ) {
 
-                    while ($data = $event['request']->getBody()->read( 8096 )) {
-                        ;
-                    }
-                    // Remove the listener after one-time use
-                    $event['request']->getEventDispatcher()->removeListener( 'request.sent', $f );
-                } );
+                        while ($data = $event['request']->getBody()->read( 8096 )) {
+                            ;
+                        }
+                        // Remove the listener after one-time use
+                        $event['request']->getEventDispatcher()->removeListener( 'request.sent', $f );
+                    } );
             }
             $request->setResponse( $item );
         } elseif ($item instanceof CurlException) {

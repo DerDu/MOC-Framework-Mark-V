@@ -229,7 +229,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
             if ($listener->wasCalled()) {
                 if (null !== $this->logger) {
                     $this->logger->debug( sprintf( 'Notified event "%s" to listener "%s".', $eventName,
-                            $info['pretty'] ) );
+                        $info['pretty'] ) );
                 }
 
                 if (!isset( $this->called[$eventName] )) {
@@ -241,13 +241,13 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
 
             if (null !== $this->logger && $skipped) {
                 $this->logger->debug( sprintf( 'Listener "%s" was not called for event "%s".', $info['pretty'],
-                        $eventName ) );
+                    $eventName ) );
             }
 
             if ($listener->stoppedPropagation()) {
                 if (null !== $this->logger) {
                     $this->logger->debug( sprintf( 'Listener "%s" stopped propagation of the event "%s".',
-                            $info['pretty'], $eventName ) );
+                        $info['pretty'], $eventName ) );
                 }
 
                 $skipped = true;
@@ -283,7 +283,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
         } catch( \Exception $e ) {
             if (null !== $this->logger) {
                 $this->logger->info( sprintf( 'An exception was thrown while getting the uncalled listeners (%s)',
-                        $e->getMessage() ), array( 'exception' => $e ) );
+                    $e->getMessage() ), array( 'exception' => $e ) );
             }
 
             // unable to retrieve the uncalled listeners

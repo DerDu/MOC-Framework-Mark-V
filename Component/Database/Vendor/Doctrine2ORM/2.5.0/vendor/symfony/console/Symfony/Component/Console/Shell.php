@@ -117,7 +117,7 @@ EOF
 
             if (0 !== $ret) {
                 $this->output->writeln( sprintf( '<error>The command terminated with an error status (%s)</error>',
-                        $ret ) );
+                    $ret ) );
             }
         }
     }

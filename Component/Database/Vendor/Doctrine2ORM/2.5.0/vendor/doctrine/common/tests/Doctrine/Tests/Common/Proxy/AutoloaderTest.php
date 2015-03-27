@@ -66,11 +66,11 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         }
 
         $autoloader = Autoloader::register( sys_get_temp_dir(), 'ProxyAutoloaderTest',
-        function ( $proxyDir, $proxyNamespace, $className ) {
+            function ( $proxyDir, $proxyNamespace, $className ) {
 
-            file_put_contents( sys_get_temp_dir()."/AutoloaderTestClass.php",
-                "<?php namespace ProxyAutoloaderTest; class AutoloaderTestClass {} " );
-        } );
+                file_put_contents( sys_get_temp_dir()."/AutoloaderTestClass.php",
+                    "<?php namespace ProxyAutoloaderTest; class AutoloaderTestClass {} " );
+            } );
 
         $this->assertTrue( class_exists( 'ProxyAutoloaderTest\AutoloaderTestClass', true ) );
         unlink( sys_get_temp_dir()."/AutoloaderTestClass.php" );

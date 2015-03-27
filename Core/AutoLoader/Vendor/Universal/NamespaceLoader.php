@@ -12,6 +12,19 @@ class NamespaceLoader extends NamespaceSearch
 {
 
     /**
+     * @return string
+     */
+    public function getLoaderHash()
+    {
+
+        return sha1(
+            serialize(
+                get_object_vars( $this )
+            )
+        );
+    }
+
+    /**
      * @param string $ClassName
      *
      * @return bool

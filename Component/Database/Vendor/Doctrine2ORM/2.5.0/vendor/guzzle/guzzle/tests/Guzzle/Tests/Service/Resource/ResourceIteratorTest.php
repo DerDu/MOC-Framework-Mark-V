@@ -46,9 +46,9 @@ class ResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
 
         // Create a new resource iterator using the IterableCommand mock
         $ri = new MockCommandIterator( $this->getServiceBuilder()->get( 'mock' )->getCommand( 'iterable_command' ),
-        array(
-            'page_size' => 3
-        ) );
+            array(
+                'page_size' => 3
+            ) );
 
         // Ensure that no requests have been sent yet
         $this->assertEquals( 0, count( $this->getServer()->getReceivedRequests( false ) ) );
@@ -88,10 +88,10 @@ class ResourceIteratorTest extends \Guzzle\Tests\GuzzleTestCase
         ) );
 
         $ri = new MockCommandIterator( $this->getServiceBuilder()->get( 'mock' )->getCommand( 'iterable_command' ),
-        array(
-            'page_size' => 3,
-            'limit'     => 7
-        ) );
+            array(
+                'page_size' => 3,
+                'limit'     => 7
+            ) );
 
         $this->assertEquals( array( 'd', 'e', 'f', 'g', 'h', 'i', 'j' ), $ri->toArray() );
         $requests = $this->getServer()->getReceivedRequests( true );

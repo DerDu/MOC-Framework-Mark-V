@@ -215,9 +215,9 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $command = new \TestCommand();
         $command->setApplication( $application1 );
         $command->setDefinition( $definition = new InputDefinition( array(
-                    new InputArgument( 'bar' ),
-                    new InputOption( 'foo' )
-                ) ) );
+            new InputArgument( 'bar' ),
+            new InputOption( 'foo' )
+        ) ) );
 
         $r = new \ReflectionObject( $command );
         $m = $r->getMethod( 'mergeApplicationDefinition' );

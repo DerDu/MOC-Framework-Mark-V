@@ -68,7 +68,7 @@ abstract class AbstractDescriptorTest extends \PHPUnit_Framework_TestCase
         // and can not be tested against.
         foreach ($application->all() as $command) {
             $command->setHelp( str_replace( '%command.full_name%', 'app/console %command.name%',
-                    $command->getHelp() ) );
+                $command->getHelp() ) );
         }
 
         $this->assertDescription( $expectedDescription, $application );

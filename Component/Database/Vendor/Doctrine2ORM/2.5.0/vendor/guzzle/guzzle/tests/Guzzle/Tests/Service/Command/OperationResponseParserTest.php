@@ -39,7 +39,7 @@ class OperationResponseParserTest extends \Guzzle\Tests\GuzzleTestCase
         $op = new OperationCommand( array(), $operation );
         $op->setResponseParser( $p )->setClient( new Client() );
         $op->prepare()->setResponse( new Response( 200, array( 'Content-Type' => 'application/xml' ),
-                '<F><B>C</B></F>' ), true );
+            '<F><B>C</B></F>' ), true );
         $this->assertInstanceOf( 'SimpleXMLElement', $op->execute() );
     }
 

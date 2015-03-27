@@ -62,7 +62,7 @@ class BatchBuilderTest extends \Guzzle\Tests\GuzzleTestCase
     {
 
         $batch = $this->getMockBatchBuilder()->notify( function () {
-            } )->build();
+        } )->build();
         $this->assertInstanceOf( 'Guzzle\Batch\NotifyingBatch', $batch );
     }
 

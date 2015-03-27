@@ -33,8 +33,8 @@ class NormalizationTest extends \PHPUnit_Framework_TestCase
             ->prototype( 'array' )
             ->beforeNormalization()->ifString()->then( function ( $v ) {
 
-                    return array( 'algorithm' => $v );
-                } )->end()
+                return array( 'algorithm' => $v );
+            } )->end()
             ->children()
             ->node( 'algorithm', 'scalar' )->end()
             ->end()
@@ -149,8 +149,8 @@ class NormalizationTest extends \PHPUnit_Framework_TestCase
 
         return array_map( function ( $v ) {
 
-                return array( $v );
-            }, $configs );
+            return array( $v );
+        }, $configs );
     }
 
     /**
@@ -207,8 +207,8 @@ class NormalizationTest extends \PHPUnit_Framework_TestCase
 
         return array_map( function ( $v ) {
 
-                return array( $v );
-            }, $configs );
+            return array( $v );
+        }, $configs );
     }
 
     /**

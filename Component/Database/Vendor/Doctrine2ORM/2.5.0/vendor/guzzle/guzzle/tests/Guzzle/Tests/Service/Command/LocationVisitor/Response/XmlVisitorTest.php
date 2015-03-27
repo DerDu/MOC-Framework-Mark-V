@@ -39,7 +39,7 @@ class XmlVisitorTest extends AbstractResponseVisitorTest
         $command->expects( $this->once() )
             ->method( 'getResponse' )
             ->will( $this->returnValue( new Response( 200, null,
-                        '<foo xmlns="urn:foo"><bar:Bar xmlns:bar="urn:bar">test</bar:Bar></foo>' ) ) );
+                '<foo xmlns="urn:foo"><bar:Bar xmlns:bar="urn:bar">test</bar:Bar></foo>' ) ) );
         $result = array();
         $visitor->before( $command, $result );
         $this->assertEquals( array( 'Bar' => 'test' ), $result );
