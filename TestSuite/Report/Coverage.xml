@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1421929806">
-  <project timestamp="1421929806">
+<coverage generated="1428671567">
+  <project timestamp="1428671567">
     <package name="MOC\V\Component\Database\Component\Bridge">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Database/Component/Bridge/Bridge.php">
         <class name="Bridge" namespace="MOC\V\Component\Database\Component\Bridge" fullPackage="MOC" package="MOC">
@@ -21,15 +21,15 @@
     <package name="MOC\V\Component\Database\Component\Bridge\Repository">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Database/Component/Bridge/Repository/Doctrine2DBAL.php">
         <class name="Doctrine2DBAL" namespace="MOC\V\Component\Database\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="34" coveredstatements="34" elements="40" coveredelements="40"/>
+          <metrics methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="41" coveredelements="41"/>
         </class>
         <line num="34" type="method" name="__construct" crap="1" count="4"/>
         <line num="37" type="stmt" count="4"/>
         <line num="38" type="stmt" count="4"/>
         <line num="39" type="stmt" count="4"/>
         <line num="40" type="stmt" count="4"/>
-        <line num="53" type="method" name="registerConnection" crap="3" count="4"/>
-        <line num="63" type="stmt" count="4"/>
+        <line num="41" type="stmt" count="4"/>
+        <line num="54" type="method" name="registerConnection" crap="3" count="4"/>
         <line num="64" type="stmt" count="4"/>
         <line num="65" type="stmt" count="4"/>
         <line num="66" type="stmt" count="4"/>
@@ -37,20 +37,20 @@
         <line num="68" type="stmt" count="4"/>
         <line num="69" type="stmt" count="4"/>
         <line num="70" type="stmt" count="4"/>
-        <line num="72" type="stmt" count="4"/>
-        <line num="79" type="stmt" count="4"/>
+        <line num="71" type="stmt" count="4"/>
+        <line num="73" type="stmt" count="4"/>
         <line num="80" type="stmt" count="4"/>
-        <line num="81" type="stmt" count="2"/>
-        <line num="84" type="stmt" count="4"/>
+        <line num="81" type="stmt" count="4"/>
+        <line num="82" type="stmt" count="2"/>
         <line num="85" type="stmt" count="4"/>
-        <line num="105" type="method" name="prepareConnection" crap="2" count="2"/>
-        <line num="108" type="stmt" count="2"/>
-        <line num="113" type="stmt" count="2"/>
-        <line num="146" type="method" name="executeWrite" crap="1" count="2"/>
-        <line num="149" type="stmt" count="2"/>
+        <line num="86" type="stmt" count="4"/>
+        <line num="106" type="method" name="prepareConnection" crap="2" count="2"/>
+        <line num="109" type="stmt" count="2"/>
+        <line num="114" type="stmt" count="2"/>
+        <line num="147" type="method" name="executeWrite" crap="1" count="2"/>
         <line num="150" type="stmt" count="2"/>
-        <line num="156" type="method" name="prepareQuery" crap="2" count="2"/>
-        <line num="160" type="stmt" count="2"/>
+        <line num="151" type="stmt" count="2"/>
+        <line num="157" type="method" name="prepareQuery" crap="2" count="2"/>
         <line num="161" type="stmt" count="2"/>
         <line num="162" type="stmt" count="2"/>
         <line num="163" type="stmt" count="2"/>
@@ -60,14 +60,15 @@
         <line num="167" type="stmt" count="2"/>
         <line num="168" type="stmt" count="2"/>
         <line num="169" type="stmt" count="2"/>
-        <line num="176" type="method" name="executeRead" crap="1" count="2"/>
-        <line num="179" type="stmt" count="2"/>
+        <line num="170" type="stmt" count="2"/>
+        <line num="177" type="method" name="executeRead" crap="1" count="2"/>
         <line num="180" type="stmt" count="2"/>
-        <metrics loc="182" ncloc="117" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="34" coveredstatements="34" elements="40" coveredelements="40"/>
+        <line num="181" type="stmt" count="2"/>
+        <metrics loc="183" ncloc="118" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="41" coveredelements="41"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Database/Component/Bridge/Repository/Doctrine2ORM.php">
         <class name="Doctrine2ORM" namespace="MOC\V\Component\Database\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="16" coveredelements="16"/>
+          <metrics methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="14" coveredelements="14"/>
         </class>
         <line num="18" type="method" name="__construct" crap="1" count="3"/>
         <line num="21" type="stmt" count="3"/>
@@ -81,11 +82,9 @@
         <line num="29" type="stmt" count="3"/>
         <line num="30" type="stmt" count="3"/>
         <line num="31" type="stmt" count="3"/>
-        <line num="32" type="stmt" count="3"/>
         <line num="33" type="stmt" count="3"/>
-        <line num="35" type="stmt" count="3"/>
-        <line num="36" type="stmt" count="3"/>
-        <metrics loc="38" ncloc="30" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="16" coveredelements="16"/>
+        <line num="34" type="stmt" count="3"/>
+        <metrics loc="36" ncloc="28" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="14" coveredelements="14"/>
       </file>
     </package>
     <package name="MOC\V\Component\Database\Component\Exception">
@@ -285,16 +284,16 @@
         </class>
         <line num="27" type="method" name="getPaperOrientationParameter" crap="1" count="1"/>
         <line num="30" type="stmt" count="1"/>
-        <line num="38" type="method" name="setPaperOrientationParameter" crap="1" count="4"/>
-        <line num="41" type="stmt" count="4"/>
-        <line num="42" type="stmt" count="4"/>
+        <line num="38" type="method" name="setPaperOrientationParameter" crap="1" count="3"/>
+        <line num="41" type="stmt" count="3"/>
+        <line num="42" type="stmt" count="3"/>
         <line num="48" type="method" name="getPaperSizeParameter" crap="1" count="1"/>
         <line num="51" type="stmt" count="1"/>
-        <line num="59" type="method" name="setPaperSizeParameter" crap="1" count="4"/>
-        <line num="62" type="stmt" count="4"/>
-        <line num="63" type="stmt" count="4"/>
-        <line num="69" type="method" name="getFileParameter" crap="1" count="1"/>
-        <line num="72" type="stmt" count="1"/>
+        <line num="59" type="method" name="setPaperSizeParameter" crap="1" count="3"/>
+        <line num="62" type="stmt" count="3"/>
+        <line num="63" type="stmt" count="3"/>
+        <line num="69" type="method" name="getFileParameter" crap="1" count="3"/>
+        <line num="72" type="stmt" count="3"/>
         <line num="80" type="method" name="setFileParameter" crap="1" count="5"/>
         <line num="83" type="stmt" count="5"/>
         <line num="84" type="stmt" count="5"/>
@@ -303,59 +302,156 @@
     </package>
     <package name="MOC\V\Component\Document\Component\Bridge\Repository">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Bridge/Repository/DomPdf.php">
-        <class name="DomPdf" namespace="MOC\V\Component\Document\Component\Bridge\Repository">
+        <class name="DomPdf" namespace="MOC\V\Component\Document\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
         </class>
-        <line num="20" type="method" name="__construct" crap="1" count="3"/>
-        <line num="23" type="stmt" count="3"/>
-        <line num="25" type="stmt" count="3"/>
-        <line num="26" type="stmt" count="3"/>
-        <line num="27" type="stmt" count="3"/>
-        <line num="34" type="method" name="setPaperSizeParameter" crap="1" count="3"/>
-        <line num="37" type="stmt" count="3"/>
-        <line num="45" type="method" name="setPaperOrientationParameter" crap="1" count="3"/>
-        <line num="48" type="stmt" count="3"/>
-        <line num="56" type="method" name="loadFile" crap="1" count="3"/>
-        <line num="59" type="stmt" count="3"/>
-        <line num="60" type="stmt" count="3"/>
-        <line num="68" type="method" name="setContent" crap="1" count="1"/>
-        <line num="71" type="stmt" count="1"/>
-        <line num="72" type="stmt" count="1"/>
-        <line num="80" type="method" name="saveFile" crap="2" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="84" type="stmt" count="1"/>
-        <line num="85" type="stmt" count="1"/>
-        <line num="86" type="stmt" count="1"/>
-        <line num="87" type="stmt" count="1"/>
+        <line num="25" type="method" name="__construct" crap="1" count="3"/>
+        <line num="28" type="stmt" count="3"/>
+        <line num="30" type="stmt" count="3"/>
+        <line num="31" type="stmt" count="3"/>
+        <line num="32" type="stmt" count="3"/>
+        <line num="39" type="method" name="setPaperSizeParameter" crap="1" count="3"/>
+        <line num="42" type="stmt" count="3"/>
+        <line num="50" type="method" name="setPaperOrientationParameter" crap="1" count="3"/>
+        <line num="53" type="stmt" count="3"/>
+        <line num="61" type="method" name="loadFile" crap="1" count="2"/>
+        <line num="64" type="stmt" count="2"/>
+        <line num="65" type="stmt" count="2"/>
+        <line num="73" type="method" name="setContent" crap="1" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="77" type="stmt" count="1"/>
+        <line num="85" type="method" name="saveFile" crap="2" count="1"/>
+        <line num="88" type="stmt" count="1"/>
         <line num="89" type="stmt" count="1"/>
-        <line num="95" type="method" name="getContent" crap="1" count="1"/>
-        <line num="98" type="stmt" count="1"/>
-        <line num="99" type="stmt" count="1"/>
-        <line num="100" type="stmt" count="1"/>
-        <line num="101" type="stmt" count="1"/>
-        <line num="102" type="stmt" count="1"/>
+        <line num="90" type="stmt" count="1"/>
+        <line num="91" type="stmt" count="1"/>
+        <line num="92" type="stmt" count="1"/>
+        <line num="94" type="stmt" count="1"/>
+        <line num="100" type="method" name="getContent" crap="1" count="1"/>
         <line num="103" type="stmt" count="1"/>
         <line num="104" type="stmt" count="1"/>
         <line num="105" type="stmt" count="1"/>
-        <metrics loc="108" ncloc="76" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
+        <line num="106" type="stmt" count="1"/>
+        <line num="107" type="stmt" count="1"/>
+        <line num="108" type="stmt" count="1"/>
+        <line num="109" type="stmt" count="1"/>
+        <line num="110" type="stmt" count="1"/>
+        <metrics loc="113" ncloc="76" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Bridge/Repository/PhpExcel.php">
-        <class name="PhpExcel" namespace="MOC\V\Component\Document\Component\Bridge\Repository">
-          <metrics methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="12" coveredelements="12"/>
+        <class name="PhpExcel" namespace="MOC\V\Component\Document\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
+          <metrics methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="14" elements="88" coveredelements="18"/>
         </class>
-        <line num="14" type="method" name="__construct" crap="1" count="3"/>
-        <line num="17" type="stmt" count="3"/>
-        <line num="18" type="stmt" count="3"/>
-        <line num="25" type="method" name="loadFile" crap="1" count="3"/>
+        <line num="25" type="method" name="__construct" crap="1" count="3"/>
         <line num="28" type="stmt" count="3"/>
         <line num="29" type="stmt" count="3"/>
-        <line num="37" type="method" name="saveFile" crap="1" count="1"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="48" type="method" name="setPaperOrientationParameter" crap="1" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="59" type="method" name="setPaperSizeParameter" crap="1" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <metrics loc="64" ncloc="44" classes="1" methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="12" coveredelements="12"/>
+        <line num="37" type="method" name="getCell" crap="6" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="54" type="method" name="setValue" crap="2" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="66" type="method" name="getValue" crap="2" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="78" type="method" name="newFile" crap="1" count="1"/>
+        <line num="81" type="stmt" count="1"/>
+        <line num="82" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="92" type="method" name="loadFile" crap="1" count="2"/>
+        <line num="95" type="stmt" count="2"/>
+        <line num="96" type="stmt" count="2"/>
+        <line num="97" type="stmt" count="2"/>
+        <line num="98" type="stmt" count="1"/>
+        <line num="106" type="method" name="saveFile" crap="306" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="139" type="stmt" count="0"/>
+        <line num="140" type="stmt" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="143" type="stmt" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <line num="145" type="stmt" count="0"/>
+        <line num="146" type="stmt" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="153" type="stmt" count="0"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="164" type="method" name="setPaperOrientationParameter" crap="2" count="0"/>
+        <line num="167" type="stmt" count="0"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="0"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="178" type="method" name="setPaperSizeParameter" crap="2" count="0"/>
+        <line num="181" type="stmt" count="0"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="183" type="stmt" count="0"/>
+        <line num="184" type="stmt" count="0"/>
+        <line num="190" type="method" name="setConfiguration" crap="1" count="3"/>
+        <line num="193" type="stmt" count="3"/>
+        <line num="194" type="stmt" count="3"/>
+        <line num="195" type="stmt" count="3"/>
+        <line num="197" type="stmt" count="3"/>
+        <metrics loc="198" ncloc="142" classes="1" methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="14" elements="88" coveredelements="18"/>
+      </file>
+    </package>
+    <package name="MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel">
+      <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Bridge/Repository/PhpExcel/Cell.php">
+        <class name="Cell" namespace="MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel" fullPackage="MOC" package="MOC">
+          <metrics methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
+        </class>
+        <line num="21" type="method" name="__construct" crap="2" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="31" type="method" name="getColumn" crap="2" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="40" type="method" name="getRow" crap="2" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <metrics loc="45" ncloc="28" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
       </file>
     </package>
     <package name="MOC\V\Component\Document\Component\Exception">
@@ -411,13 +507,13 @@
     <package name="MOC\V\Component\Document\Component\Parameter\Repository">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Parameter/Repository/FileParameter.php">
         <class name="FileParameter" namespace="MOC\V\Component\Document\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
+          <metrics methods="5" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="11" elements="17" coveredelements="15"/>
         </class>
         <line num="23" type="method" name="__construct" crap="1" count="6"/>
         <line num="26" type="stmt" count="6"/>
         <line num="27" type="stmt" count="6"/>
-        <line num="32" type="method" name="getFile" crap="1" count="2"/>
-        <line num="35" type="stmt" count="2"/>
+        <line num="32" type="method" name="getFile" crap="1" count="6"/>
+        <line num="35" type="stmt" count="6"/>
         <line num="44" type="method" name="setFile" crap="3" count="6"/>
         <line num="47" type="stmt" count="6"/>
         <line num="48" type="stmt" count="1"/>
@@ -426,51 +522,59 @@
         <line num="52" type="stmt" count="6"/>
         <line num="53" type="stmt" count="1"/>
         <line num="56" type="stmt" count="6"/>
-        <metrics loc="57" ncloc="39" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
+        <line num="61" type="method" name="getFileInfo" crap="2" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="70" type="method" name="__toString" crap="1" count="4"/>
+        <line num="73" type="stmt" count="4"/>
+        <metrics loc="75" ncloc="51" classes="1" methods="5" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="11" elements="17" coveredelements="15"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Parameter/Repository/PaperOrientationParameter.php">
         <class name="PaperOrientationParameter" namespace="MOC\V\Component\Document\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+          <metrics methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="11" elements="16" coveredelements="14"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="5"/>
-        <line num="26" type="stmt" count="5"/>
-        <line num="27" type="stmt" count="5"/>
+        <line num="23" type="method" name="__construct" crap="1" count="4"/>
+        <line num="26" type="stmt" count="4"/>
+        <line num="27" type="stmt" count="4"/>
         <line num="32" type="method" name="getOrientation" crap="1" count="2"/>
         <line num="35" type="stmt" count="2"/>
-        <line num="44" type="method" name="setOrientation" crap="3" count="5"/>
-        <line num="47" type="stmt" count="5"/>
-        <line num="48" type="stmt" count="5"/>
-        <line num="49" type="stmt" count="5"/>
-        <line num="50" type="stmt" count="5"/>
-        <line num="51" type="stmt" count="5"/>
+        <line num="44" type="method" name="setOrientation" crap="3" count="4"/>
+        <line num="47" type="stmt" count="4"/>
+        <line num="48" type="stmt" count="4"/>
+        <line num="49" type="stmt" count="4"/>
+        <line num="50" type="stmt" count="4"/>
+        <line num="51" type="stmt" count="4"/>
         <line num="53" type="stmt" count="1"/>
         <line num="54" type="stmt" count="1"/>
         <line num="55" type="stmt" count="1"/>
-        <metrics loc="58" ncloc="40" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+        <line num="62" type="method" name="__toString" crap="2" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <metrics loc="67" ncloc="46" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="11" elements="16" coveredelements="14"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Component/Parameter/Repository/PaperSizeParameter.php">
         <class name="PaperSizeParameter" namespace="MOC\V\Component\Document\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="12" coveredelements="12"/>
+          <metrics methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="14" coveredelements="12"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="5"/>
-        <line num="26" type="stmt" count="5"/>
-        <line num="27" type="stmt" count="5"/>
+        <line num="23" type="method" name="__construct" crap="1" count="4"/>
+        <line num="26" type="stmt" count="4"/>
+        <line num="27" type="stmt" count="4"/>
         <line num="32" type="method" name="getSize" crap="1" count="2"/>
         <line num="35" type="stmt" count="2"/>
-        <line num="44" type="method" name="setSize" crap="2" count="5"/>
-        <line num="48" type="stmt" count="5"/>
-        <line num="49" type="stmt" count="5"/>
-        <line num="50" type="stmt" count="5"/>
+        <line num="44" type="method" name="setSize" crap="2" count="4"/>
+        <line num="48" type="stmt" count="4"/>
+        <line num="49" type="stmt" count="4"/>
+        <line num="50" type="stmt" count="4"/>
         <line num="52" type="stmt" count="1"/>
         <line num="53" type="stmt" count="1"/>
         <line num="54" type="stmt" count="1"/>
-        <metrics loc="57" ncloc="39" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="12" coveredelements="12"/>
+        <line num="61" type="method" name="__toString" crap="2" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <metrics loc="66" ncloc="45" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="14" coveredelements="12"/>
       </file>
     </package>
     <package name="MOC\V\Component\Document">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Document/Document.php">
         <class name="Document" namespace="MOC\V\Component\Document" fullPackage="MOC" package="MOC">
-          <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="40" coveredelements="40"/>
+          <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="38" elements="46" coveredelements="46"/>
         </class>
         <line num="26" type="method" name="__construct" crap="1" count="4"/>
         <line num="29" type="stmt" count="4"/>
@@ -487,32 +591,38 @@
         <line num="51" type="stmt" count="1"/>
         <line num="52" type="stmt" count="1"/>
         <line num="53" type="stmt" count="1"/>
-        <line num="61" type="method" name="getPdfDocument" crap="1" count="2"/>
+        <line num="61" type="method" name="getPdfDocument" crap="2" count="2"/>
         <line num="64" type="stmt" count="2"/>
         <line num="65" type="stmt" count="2"/>
         <line num="66" type="stmt" count="2"/>
         <line num="67" type="stmt" count="2"/>
         <line num="68" type="stmt" count="2"/>
         <line num="70" type="stmt" count="2"/>
-        <line num="72" type="stmt" count="2"/>
-        <line num="78" type="method" name="getBridgeInterface" crap="1" count="4"/>
-        <line num="81" type="stmt" count="4"/>
-        <line num="89" type="method" name="getExcelDocument" crap="1" count="2"/>
-        <line num="92" type="stmt" count="2"/>
-        <line num="93" type="stmt" count="2"/>
+        <line num="71" type="stmt" count="1"/>
+        <line num="72" type="stmt" count="1"/>
+        <line num="74" type="stmt" count="2"/>
+        <line num="80" type="method" name="getBridgeInterface" crap="1" count="4"/>
+        <line num="83" type="stmt" count="4"/>
+        <line num="91" type="method" name="getExcelDocument" crap="2" count="2"/>
         <line num="94" type="stmt" count="2"/>
         <line num="95" type="stmt" count="2"/>
         <line num="96" type="stmt" count="2"/>
+        <line num="97" type="stmt" count="2"/>
         <line num="98" type="stmt" count="2"/>
         <line num="100" type="stmt" count="2"/>
-        <line num="106" type="method" name="getVendorInterface" crap="1" count="1"/>
-        <line num="109" type="stmt" count="1"/>
-        <line num="117" type="method" name="setVendorInterface" crap="1" count="4"/>
-        <line num="120" type="stmt" count="4"/>
-        <line num="121" type="stmt" count="4"/>
-        <line num="129" type="method" name="setBridgeInterface" crap="1" count="1"/>
-        <line num="132" type="stmt" count="1"/>
-        <metrics loc="134" ncloc="93" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="40" coveredelements="40"/>
+        <line num="101" type="stmt" count="2"/>
+        <line num="102" type="stmt" count="1"/>
+        <line num="103" type="stmt" count="1"/>
+        <line num="104" type="stmt" count="1"/>
+        <line num="107" type="stmt" count="2"/>
+        <line num="113" type="method" name="getVendorInterface" crap="1" count="1"/>
+        <line num="116" type="stmt" count="1"/>
+        <line num="124" type="method" name="setVendorInterface" crap="1" count="4"/>
+        <line num="127" type="stmt" count="4"/>
+        <line num="128" type="stmt" count="4"/>
+        <line num="136" type="method" name="setBridgeInterface" crap="1" count="1"/>
+        <line num="139" type="stmt" count="1"/>
+        <metrics loc="141" ncloc="99" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="38" elements="46" coveredelements="46"/>
       </file>
     </package>
     <package name="MOC\V\Component\Document\Exception">
@@ -565,28 +675,28 @@
         <class name="ApiGen" namespace="MOC\V\Component\Documentation\Component\Bridge\Repository">
           <metrics methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="21" elements="22" coveredelements="22"/>
         </class>
-        <line num="34" type="method" name="__construct" crap="1" count="1"/>
-        <line num="42" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="1"/>
-        <line num="44" type="stmt" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="1"/>
-        <line num="48" type="stmt" count="1"/>
-        <line num="49" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="1"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="59" type="stmt" count="1"/>
-        <line num="61" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="63" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="65" type="stmt" count="1"/>
-        <line num="67" type="stmt" count="1"/>
-        <line num="68" type="stmt" count="1"/>
+        <line num="34" type="method" name="__construct" crap="1" count="3"/>
+        <line num="42" type="stmt" count="3"/>
+        <line num="43" type="stmt" count="3"/>
+        <line num="44" type="stmt" count="3"/>
+        <line num="46" type="stmt" count="3"/>
+        <line num="47" type="stmt" count="3"/>
+        <line num="48" type="stmt" count="3"/>
+        <line num="49" type="stmt" count="3"/>
+        <line num="50" type="stmt" count="3"/>
+        <line num="52" type="stmt" count="3"/>
+        <line num="53" type="stmt" count="3"/>
+        <line num="55" type="stmt" count="3"/>
+        <line num="56" type="stmt" count="3"/>
+        <line num="58" type="stmt" count="3"/>
+        <line num="59" type="stmt" count="3"/>
+        <line num="61" type="stmt" count="3"/>
+        <line num="62" type="stmt" count="3"/>
+        <line num="63" type="stmt" count="3"/>
+        <line num="64" type="stmt" count="3"/>
+        <line num="65" type="stmt" count="3"/>
+        <line num="67" type="stmt" count="3"/>
+        <line num="68" type="stmt" count="3"/>
         <metrics loc="148" ncloc="57" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="21" elements="22" coveredelements="22"/>
       </file>
     </package>
@@ -645,19 +755,19 @@
         <class name="DirectoryParameter" namespace="MOC\V\Component\Documentation\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="2"/>
-        <line num="26" type="stmt" count="2"/>
-        <line num="27" type="stmt" count="2"/>
-        <line num="32" type="method" name="getDirectory" crap="1" count="2"/>
-        <line num="35" type="stmt" count="2"/>
-        <line num="44" type="method" name="setDirectory" crap="3" count="2"/>
-        <line num="47" type="stmt" count="2"/>
+        <line num="23" type="method" name="__construct" crap="1" count="4"/>
+        <line num="26" type="stmt" count="4"/>
+        <line num="27" type="stmt" count="4"/>
+        <line num="32" type="method" name="getDirectory" crap="1" count="4"/>
+        <line num="35" type="stmt" count="4"/>
+        <line num="44" type="method" name="setDirectory" crap="3" count="4"/>
+        <line num="47" type="stmt" count="4"/>
         <line num="48" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="2"/>
-        <line num="51" type="stmt" count="2"/>
-        <line num="52" type="stmt" count="2"/>
+        <line num="50" type="stmt" count="4"/>
+        <line num="51" type="stmt" count="4"/>
+        <line num="52" type="stmt" count="4"/>
         <line num="53" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="2"/>
+        <line num="56" type="stmt" count="4"/>
         <metrics loc="58" ncloc="40" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Documentation/Component/Parameter/Repository/ExcludeParameter.php">
@@ -678,15 +788,15 @@
     <package name="MOC\V\Component\Documentation">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Documentation/Documentation.php">
         <class name="Documentation" namespace="MOC\V\Component\Documentation" fullPackage="MOC" package="MOC">
-          <metrics methods="7" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="7" elements="16" coveredelements="12"/>
+          <metrics methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="16" coveredelements="16"/>
         </class>
         <line num="24" type="method" name="__construct" crap="1" count="1"/>
         <line num="27" type="stmt" count="1"/>
         <line num="28" type="stmt" count="1"/>
-        <line num="39" type="method" name="getDocumentation" crap="2" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="59" type="method" name="getApiGenDocumentation" crap="2" count="0"/>
-        <line num="67" type="stmt" count="0"/>
+        <line num="39" type="method" name="getDocumentation" crap="1" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="59" type="method" name="getApiGenDocumentation" crap="1" count="2"/>
+        <line num="67" type="stmt" count="2"/>
         <line num="73" type="method" name="getBridgeInterface" crap="1" count="1"/>
         <line num="76" type="stmt" count="1"/>
         <line num="82" type="method" name="getVendorInterface" crap="1" count="1"/>
@@ -696,7 +806,7 @@
         <line num="97" type="stmt" count="1"/>
         <line num="105" type="method" name="setBridgeInterface" crap="1" count="1"/>
         <line num="108" type="stmt" count="1"/>
-        <metrics loc="110" ncloc="67" classes="1" methods="7" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="7" elements="16" coveredelements="12"/>
+        <metrics loc="110" ncloc="67" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="16" coveredelements="16"/>
       </file>
     </package>
     <package name="MOC\V\Component\Documentation\Exception">
@@ -782,26 +892,26 @@
         <line num="44" type="stmt" count="1"/>
         <line num="45" type="stmt" count="1"/>
         <line num="51" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
         <line num="59" type="stmt" count="1"/>
-        <line num="60" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="71" type="method" name="handleController" crap="3" count="1"/>
-        <line num="74" type="stmt" count="1"/>
-        <line num="75" type="stmt" count="1"/>
+        <line num="68" type="method" name="handleController" crap="3" count="1"/>
+        <line num="71" type="stmt" count="1"/>
+        <line num="72" type="stmt" count="1"/>
+        <line num="77" type="stmt" count="1"/>
+        <line num="79" type="stmt" count="1"/>
         <line num="80" type="stmt" count="1"/>
-        <line num="82" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="89" type="stmt" count="1"/>
-        <line num="99" type="method" name="handleArguments" crap="5" count="1"/>
+        <line num="86" type="stmt" count="1"/>
+        <line num="96" type="method" name="handleArguments" crap="5" count="1"/>
+        <line num="99" type="stmt" count="1"/>
+        <line num="100" type="stmt" count="1"/>
+        <line num="101" type="stmt" count="1"/>
         <line num="102" type="stmt" count="1"/>
-        <line num="103" type="stmt" count="1"/>
         <line num="104" type="stmt" count="1"/>
-        <line num="105" type="stmt" count="1"/>
-        <line num="107" type="stmt" count="1"/>
-        <line num="119" type="stmt" count="1"/>
-        <line num="120" type="stmt" count="1"/>
-        <metrics loc="133" ncloc="76" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="27" coveredelements="27"/>
+        <line num="116" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="1"/>
+        <metrics loc="130" ncloc="73" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="27" coveredelements="27"/>
       </file>
     </package>
     <package name="MOC\V\Component\Router\Component\Exception">
@@ -989,88 +1099,6 @@
         <metrics loc="59" ncloc="40" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="15" coveredelements="15"/>
       </file>
     </package>
-    <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Bridge/Repository/SmartyTemplate/5296e5f9bbf991e480c1c8d8dccbeddab687beb3.BridgeTest.tpl.php">
-      <line num="2" type="stmt" count="0"/>
-      <line num="3" type="stmt" count="0"/>
-      <line num="4" type="stmt" count="0"/>
-      <line num="5" type="stmt" count="0"/>
-      <line num="6" type="stmt" count="0"/>
-      <line num="7" type="stmt" count="0"/>
-      <line num="8" type="stmt" count="0"/>
-      <line num="9" type="stmt" count="0"/>
-      <line num="10" type="stmt" count="0"/>
-      <line num="11" type="stmt" count="0"/>
-      <line num="12" type="stmt" count="0"/>
-      <line num="13" type="stmt" count="0"/>
-      <line num="14" type="stmt" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <line num="16" type="stmt" count="0"/>
-      <line num="19" type="stmt" count="0"/>
-      <line num="21" type="stmt" count="0"/>
-      <line num="22" type="stmt" count="0"/>
-      <line num="23" type="stmt" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="25" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <line num="29" type="stmt" count="0"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
-      <metrics loc="32" ncloc="30" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="26" coveredstatements="0" elements="26" coveredelements="0"/>
-    </file>
-    <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Bridge/Repository/SmartyTemplate/5296e5f9bbf991e480c1c8d8dccbeddab687beb3.file.BridgeTest.tpl.cache.php">
-      <line num="4" type="stmt" count="0"/>
-      <line num="5" type="stmt" count="0"/>
-      <line num="6" type="stmt" count="0"/>
-      <line num="7" type="stmt" count="0"/>
-      <line num="8" type="stmt" count="0"/>
-      <line num="9" type="stmt" count="0"/>
-      <line num="10" type="stmt" count="0"/>
-      <line num="11" type="stmt" count="0"/>
-      <line num="12" type="stmt" count="0"/>
-      <line num="13" type="stmt" count="0"/>
-      <line num="14" type="stmt" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <line num="16" type="stmt" count="0"/>
-      <line num="17" type="stmt" count="0"/>
-      <line num="18" type="stmt" count="0"/>
-      <line num="19" type="stmt" count="0"/>
-      <line num="20" type="stmt" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <line num="29" type="stmt" count="0"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="32" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="36" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <metrics loc="38" ncloc="34" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="27" coveredelements="0"/>
-    </file>
-    <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Bridge/Repository/TwigTemplate/a3/07/3d295f2f4d27836f4efda8795b9c4c18d3a9cbdba0987016557602db3c96.php">
-      <class name="__TwigTemplate_a3073d295f2f4d27836f4efda8795b9c4c18d3a9cbdba0987016557602db3c96" namespace="global" fullPackage="..TwigTemplate">
-        <metrics methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="9" elements="17" coveredelements="11"/>
-      </class>
-      <line num="6" type="method" name="__construct" crap="1" count="1"/>
-      <line num="8" type="stmt" count="1"/>
-      <line num="10" type="stmt" count="1"/>
-      <line num="12" type="stmt" count="1"/>
-      <line num="13" type="stmt" count="1"/>
-      <line num="14" type="stmt" count="1"/>
-      <line num="16" type="method" name="doDisplay" crap="1" count="1"/>
-      <line num="29" type="stmt" count="1"/>
-      <line num="31" type="stmt" count="1"/>
-      <line num="36" type="stmt" count="1"/>
-      <line num="37" type="stmt" count="1"/>
-      <line num="39" type="method" name="getTemplateName" crap="2" count="0"/>
-      <line num="41" type="stmt" count="0"/>
-      <line num="44" type="method" name="isTraitable" crap="2" count="0"/>
-      <line num="46" type="stmt" count="0"/>
-      <line num="49" type="method" name="getDebugInfo" crap="2" count="0"/>
-      <line num="51" type="stmt" count="0"/>
-      <metrics loc="53" ncloc="48" classes="1" methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="9" elements="17" coveredelements="11"/>
-    </file>
     <package name="MOC\V\Component\Template\Component\Exception">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Component/Exception/ComponentException.php">
         <class name="ComponentException" namespace="MOC\V\Component\Template\Component\Exception" fullPackage="MOC" package="MOC">
@@ -1166,16 +1194,17 @@
     <package name="MOC\V\Component\Template">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Template/Template.php">
         <class name="Template" namespace="MOC\V\Component\Template" fullPackage="MOC" package="MOC">
-          <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="29" elements="37" coveredelements="37"/>
+          <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="30" elements="38" coveredelements="38"/>
         </class>
         <line num="26" type="method" name="__construct" crap="1" count="5"/>
         <line num="29" type="stmt" count="5"/>
         <line num="30" type="stmt" count="5"/>
-        <line num="38" type="method" name="getTemplate" crap="4" count="2"/>
+        <line num="38" type="method" name="getTemplate" crap="4" count="3"/>
         <line num="41" type="stmt" count="2"/>
         <line num="42" type="stmt" count="2"/>
         <line num="43" type="stmt" count="2"/>
-        <line num="46" type="stmt" count="2"/>
+        <line num="45" type="stmt" count="3"/>
+        <line num="46" type="stmt" count="3"/>
         <line num="47" type="stmt" count="2"/>
         <line num="50" type="stmt" count="1"/>
         <line num="51" type="stmt" count="1"/>
@@ -1205,7 +1234,7 @@
         <line num="122" type="stmt" count="5"/>
         <line num="130" type="method" name="setBridgeInterface" crap="1" count="1"/>
         <line num="133" type="stmt" count="1"/>
-        <metrics loc="135" ncloc="94" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="29" elements="37" coveredelements="37"/>
+        <metrics loc="135" ncloc="94" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="30" elements="38" coveredelements="38"/>
       </file>
     </package>
     <package name="MOC\V\Component\Template\Vendor">
@@ -1229,24 +1258,24 @@
         <class name="AutoLoader" namespace="MOC\V\Core\AutoLoader" fullPackage="MOC" package="MOC">
           <metrics methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="36" coveredelements="36"/>
         </class>
-        <line num="51" type="method" name="__construct" crap="1" count="17"/>
-        <line num="54" type="stmt" count="17"/>
-        <line num="55" type="stmt" count="17"/>
-        <line num="64" type="method" name="getNamespaceAutoLoader" crap="1" count="14"/>
-        <line num="67" type="stmt" count="14"/>
-        <line num="77" type="method" name="getMultitonNamespaceAutoLoader" crap="1" count="15"/>
-        <line num="80" type="stmt" count="15"/>
-        <line num="81" type="stmt" count="15"/>
-        <line num="82" type="stmt" count="15"/>
-        <line num="83" type="stmt" count="15"/>
-        <line num="84" type="stmt" count="15"/>
-        <line num="85" type="stmt" count="15"/>
-        <line num="86" type="stmt" count="15"/>
-        <line num="87" type="stmt" count="15"/>
-        <line num="88" type="stmt" count="15"/>
-        <line num="90" type="stmt" count="15"/>
-        <line num="96" type="method" name="getBridgeInterface" crap="1" count="17"/>
-        <line num="99" type="stmt" count="17"/>
+        <line num="51" type="method" name="__construct" crap="1" count="16"/>
+        <line num="54" type="stmt" count="16"/>
+        <line num="55" type="stmt" count="16"/>
+        <line num="64" type="method" name="getNamespaceAutoLoader" crap="1" count="13"/>
+        <line num="67" type="stmt" count="13"/>
+        <line num="77" type="method" name="getMultitonNamespaceAutoLoader" crap="1" count="14"/>
+        <line num="80" type="stmt" count="14"/>
+        <line num="81" type="stmt" count="14"/>
+        <line num="82" type="stmt" count="14"/>
+        <line num="83" type="stmt" count="14"/>
+        <line num="84" type="stmt" count="14"/>
+        <line num="85" type="stmt" count="14"/>
+        <line num="86" type="stmt" count="14"/>
+        <line num="87" type="stmt" count="14"/>
+        <line num="88" type="stmt" count="14"/>
+        <line num="90" type="stmt" count="14"/>
+        <line num="96" type="method" name="getBridgeInterface" crap="1" count="16"/>
+        <line num="99" type="stmt" count="16"/>
         <line num="108" type="method" name="getUniversalNamespaceAutoLoader" crap="1" count="1"/>
         <line num="111" type="stmt" count="1"/>
         <line num="112" type="stmt" count="1"/>
@@ -1260,9 +1289,9 @@
         <line num="121" type="stmt" count="1"/>
         <line num="127" type="method" name="getVendorInterface" crap="1" count="1"/>
         <line num="130" type="stmt" count="1"/>
-        <line num="138" type="method" name="setVendorInterface" crap="1" count="17"/>
-        <line num="141" type="stmt" count="17"/>
-        <line num="142" type="stmt" count="17"/>
+        <line num="138" type="method" name="setVendorInterface" crap="1" count="16"/>
+        <line num="141" type="stmt" count="16"/>
+        <line num="142" type="stmt" count="16"/>
         <line num="150" type="method" name="setBridgeInterface" crap="1" count="1"/>
         <line num="153" type="stmt" count="1"/>
         <metrics loc="155" ncloc="110" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="36" coveredelements="36"/>
@@ -1271,48 +1300,69 @@
     <package name="MOC\V\Core\AutoLoader\Component\Bridge">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/Bridge/Bridge.php">
         <class name="Bridge" namespace="MOC\V\Core\AutoLoader\Component\Bridge" fullPackage="MOC" package="MOC">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
+          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="17" coveredelements="17"/>
         </class>
-        <line num="17" type="method" name="registerLoader" crap="1" count="17"/>
-        <line num="20" type="stmt" count="17"/>
-        <line num="21" type="stmt" count="17"/>
-        <line num="27" type="method" name="unregisterLoader" crap="1" count="5"/>
-        <line num="30" type="stmt" count="5"/>
-        <line num="31" type="stmt" count="5"/>
-        <metrics loc="34" ncloc="23" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
+        <line num="17" type="method" name="registerLoader" crap="6" count="16"/>
+        <line num="23" type="stmt" count="16"/>
+        <line num="24" type="stmt" count="16"/>
+        <line num="25" type="method" name="anonymous function" crap="4" count="16"/>
+        <line num="27" type="stmt" count="16"/>
+        <line num="28" type="stmt" count="16"/>
+        <line num="29" type="stmt" count="16"/>
+        <line num="30" type="stmt" count="16"/>
+        <line num="32" type="stmt" count="16"/>
+        <line num="33" type="stmt" count="16"/>
+        <line num="34" type="stmt" count="9"/>
+        <line num="35" type="stmt" count="9"/>
+        <line num="36" type="stmt" count="16"/>
+        <line num="37" type="stmt" count="16"/>
+        <line num="38" type="stmt" count="16"/>
+        <line num="39" type="stmt" count="16"/>
+        <line num="47" type="stmt" count="16"/>
+        <line num="48" type="stmt" count="9"/>
+        <line num="49" type="stmt" count="9"/>
+        <line num="50" type="stmt" count="16"/>
+        <line num="56" type="method" name="unregisterLoader" crap="1" count="5"/>
+        <line num="59" type="stmt" count="5"/>
+        <line num="60" type="stmt" count="5"/>
+        <metrics loc="63" ncloc="42" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="23" coveredelements="23"/>
       </file>
     </package>
     <package name="MOC\V\Core\AutoLoader\Component\Bridge\Repository">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/Bridge/Repository/MultitonNamespace.php">
         <class name="MultitonNamespace" namespace="MOC\V\Core\AutoLoader\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="11" coveredelements="11"/>
+          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="13" coveredelements="13"/>
         </class>
-        <line num="27" type="method" name="__construct" crap="2" count="16"/>
-        <line num="33" type="stmt" count="16"/>
-        <line num="34" type="stmt" count="16"/>
-        <line num="35" type="stmt" count="16"/>
-        <line num="36" type="stmt" count="16"/>
-        <line num="37" type="stmt" count="16"/>
-        <line num="38" type="stmt" count="16"/>
-        <line num="46" type="method" name="loadSourceFile" crap="1" count="33"/>
-        <line num="49" type="stmt" count="33"/>
+        <line num="27" type="method" name="__construct" crap="2" count="15"/>
+        <line num="33" type="stmt" count="15"/>
+        <line num="34" type="stmt" count="15"/>
+        <line num="35" type="stmt" count="15"/>
+        <line num="36" type="stmt" count="15"/>
+        <line num="37" type="stmt" count="15"/>
+        <line num="38" type="stmt" count="15"/>
+        <line num="46" type="method" name="loadSourceFile" crap="1" count="34"/>
+        <line num="49" type="stmt" count="34"/>
         <line num="59" type="method" name="addNamespaceDirectoryMapping" crap="1" count="1"/>
         <line num="62" type="stmt" count="1"/>
-        <metrics loc="64" ncloc="40" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="11" coveredelements="11"/>
+        <line num="68" type="method" name="getLoaderHash" crap="1" count="16"/>
+        <line num="71" type="stmt" count="16"/>
+        <metrics loc="73" ncloc="46" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="13" coveredelements="13"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/Bridge/Repository/UniversalNamespace.php">
         <class name="UniversalNamespace" namespace="MOC\V\Core\AutoLoader\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
+          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="10" coveredelements="10"/>
         </class>
-        <line num="21" type="method" name="__construct" crap="1" count="2"/>
-        <line num="24" type="stmt" count="2"/>
-        <line num="25" type="stmt" count="2"/>
-        <line num="32" type="method" name="loadSourceFile" crap="1" count="1"/>
-        <line num="35" type="stmt" count="1"/>
-        <line num="44" type="method" name="addNamespaceDirectoryMapping" crap="1" count="2"/>
-        <line num="47" type="stmt" count="2"/>
-        <line num="48" type="stmt" count="2"/>
-        <metrics loc="50" ncloc="33" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
+        <line num="24" type="method" name="__construct" crap="1" count="2"/>
+        <line num="27" type="stmt" count="2"/>
+        <line num="28" type="stmt" count="2"/>
+        <line num="35" type="method" name="loadSourceFile" crap="1" count="1"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="47" type="method" name="addNamespaceDirectoryMapping" crap="1" count="2"/>
+        <line num="50" type="stmt" count="2"/>
+        <line num="51" type="stmt" count="2"/>
+        <line num="57" type="method" name="getLoaderHash" crap="1" count="2"/>
+        <line num="60" type="stmt" count="2"/>
+        <metrics loc="62" ncloc="39" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="10" coveredelements="10"/>
       </file>
     </package>
     <package name="MOC\V\Core\AutoLoader\Component\Exception">
@@ -1356,7 +1406,7 @@
       </file>
     </package>
     <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/IBridgeInterface.php">
-      <metrics loc="39" ncloc="17" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      <metrics loc="44" ncloc="19" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/IParameterInterface.php">
       <metrics loc="12" ncloc="7" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -1377,40 +1427,40 @@
         <class name="DirectoryParameter" namespace="MOC\V\Core\AutoLoader\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="19"/>
-        <line num="26" type="stmt" count="19"/>
-        <line num="27" type="stmt" count="19"/>
-        <line num="32" type="method" name="getDirectory" crap="1" count="19"/>
-        <line num="35" type="stmt" count="19"/>
-        <line num="44" type="method" name="setDirectory" crap="3" count="19"/>
-        <line num="47" type="stmt" count="19"/>
+        <line num="23" type="method" name="__construct" crap="1" count="18"/>
+        <line num="26" type="stmt" count="18"/>
+        <line num="27" type="stmt" count="18"/>
+        <line num="32" type="method" name="getDirectory" crap="1" count="18"/>
+        <line num="35" type="stmt" count="18"/>
+        <line num="44" type="method" name="setDirectory" crap="3" count="18"/>
+        <line num="47" type="stmt" count="18"/>
         <line num="48" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="19"/>
-        <line num="51" type="stmt" count="19"/>
-        <line num="52" type="stmt" count="19"/>
-        <line num="53" type="stmt" count="19"/>
+        <line num="50" type="stmt" count="18"/>
+        <line num="51" type="stmt" count="18"/>
+        <line num="52" type="stmt" count="18"/>
+        <line num="53" type="stmt" count="18"/>
         <line num="54" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="19"/>
+        <line num="56" type="stmt" count="18"/>
         <metrics loc="58" ncloc="40" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Component/Parameter/Repository/NamespaceParameter.php">
         <class name="NamespaceParameter" namespace="MOC\V\Core\AutoLoader\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
         </class>
-        <line num="22" type="method" name="__construct" crap="1" count="19"/>
-        <line num="25" type="stmt" count="19"/>
-        <line num="27" type="stmt" count="19"/>
-        <line num="32" type="method" name="getNamespace" crap="1" count="19"/>
-        <line num="35" type="stmt" count="19"/>
-        <line num="43" type="method" name="setNamespace" crap="3" count="19"/>
-        <line num="46" type="stmt" count="19"/>
-        <line num="47" type="stmt" count="16"/>
-        <line num="48" type="stmt" count="16"/>
-        <line num="49" type="stmt" count="19"/>
-        <line num="50" type="stmt" count="19"/>
+        <line num="22" type="method" name="__construct" crap="1" count="18"/>
+        <line num="25" type="stmt" count="18"/>
+        <line num="27" type="stmt" count="18"/>
+        <line num="32" type="method" name="getNamespace" crap="1" count="18"/>
+        <line num="35" type="stmt" count="18"/>
+        <line num="43" type="method" name="setNamespace" crap="3" count="18"/>
+        <line num="46" type="stmt" count="18"/>
+        <line num="47" type="stmt" count="15"/>
+        <line num="48" type="stmt" count="15"/>
+        <line num="49" type="stmt" count="18"/>
+        <line num="50" type="stmt" count="18"/>
         <line num="51" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="19"/>
-        <line num="56" type="stmt" count="19"/>
+        <line num="53" type="stmt" count="18"/>
+        <line num="56" type="stmt" count="18"/>
         <metrics loc="58" ncloc="41" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
       </file>
     </package>
@@ -1428,70 +1478,81 @@
     <package name="MOC\V\Core\AutoLoader\Vendor\Multiton">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Vendor/Multiton/NamespaceLoader.php">
         <class name="NamespaceLoader" namespace="MOC\V\Core\AutoLoader\Vendor\Multiton" fullPackage="MOC" package="MOC">
-          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="27" elements="31" coveredelements="31"/>
+          <metrics methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="40" coveredelements="40"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="2" count="16"/>
-        <line num="26" type="stmt" count="16"/>
-        <line num="27" type="stmt" count="16"/>
-        <line num="28" type="stmt" count="16"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="30" type="stmt" count="1"/>
-        <line num="31" type="stmt" count="16"/>
-        <line num="39" type="method" name="loadClass" crap="3" count="33"/>
-        <line num="42" type="stmt" count="33"/>
-        <line num="43" type="stmt" count="1"/>
-        <line num="45" type="stmt" count="33"/>
-        <line num="46" type="stmt" count="9"/>
-        <line num="50" type="stmt" count="31"/>
-        <line num="51" type="stmt" count="31"/>
-        <line num="52" type="stmt" count="31"/>
-        <line num="53" type="stmt" count="31"/>
-        <line num="54" type="stmt" count="31"/>
-        <line num="55" type="stmt" count="31"/>
-        <line num="64" type="method" name="checkExists" crap="4" count="33"/>
-        <line num="67" type="stmt" count="33"/>
-        <line num="68" type="stmt" count="33"/>
-        <line num="69" type="stmt" count="33"/>
-        <line num="77" type="method" name="checkCanLoadClass" crap="4" count="33"/>
-        <line num="80" type="stmt" count="33"/>
-        <line num="81" type="stmt" count="9"/>
-        <line num="83" type="stmt" count="32"/>
-        <line num="84" type="stmt" count="32"/>
-        <line num="85" type="stmt" count="32"/>
-        <line num="87" type="stmt" count="32"/>
-        <line num="88" type="stmt" count="32"/>
-        <line num="89" type="stmt" count="32"/>
-        <metrics loc="96" ncloc="65" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="27" elements="31" coveredelements="31"/>
+        <line num="28" type="method" name="__construct" crap="2" count="15"/>
+        <line num="29" type="stmt" count="2"/>
+        <line num="31" type="stmt" count="15"/>
+        <line num="32" type="stmt" count="15"/>
+        <line num="33" type="stmt" count="15"/>
+        <line num="34" type="stmt" count="2"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="36" type="stmt" count="15"/>
+        <line num="43" type="method" name="loadClass" crap="7" count="34"/>
+        <line num="46" type="stmt" count="34"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="34"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="62" type="stmt" count="34"/>
+        <line num="63" type="stmt" count="11"/>
+        <line num="68" type="stmt" count="31"/>
+        <line num="69" type="stmt" count="31"/>
+        <line num="70" type="stmt" count="31"/>
+        <line num="71" type="stmt" count="31"/>
+        <line num="72" type="stmt" count="31"/>
+        <line num="73" type="stmt" count="31"/>
+        <line num="82" type="method" name="checkExists" crap="2" count="34"/>
+        <line num="85" type="stmt" count="34"/>
+        <line num="86" type="stmt" count="34"/>
+        <line num="87" type="stmt" count="34"/>
+        <line num="95" type="method" name="checkCanLoadClass" crap="4" count="34"/>
+        <line num="98" type="stmt" count="34"/>
+        <line num="99" type="stmt" count="11"/>
+        <line num="101" type="stmt" count="32"/>
+        <line num="102" type="stmt" count="32"/>
+        <line num="103" type="stmt" count="32"/>
+        <line num="105" type="stmt" count="32"/>
+        <line num="106" type="stmt" count="32"/>
+        <line num="107" type="stmt" count="32"/>
+        <line num="117" type="method" name="getLoaderHash" crap="1" count="16"/>
+        <line num="120" type="stmt" count="16"/>
+        <line num="121" type="stmt" count="16"/>
+        <line num="122" type="stmt" count="16"/>
+        <line num="123" type="stmt" count="16"/>
+        <line num="124" type="stmt" count="16"/>
+        <metrics loc="127" ncloc="83" classes="1" methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="40" coveredelements="40"/>
       </file>
     </package>
     <package name="MOC\V\Core\AutoLoader\Vendor\Universal">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Core/AutoLoader/Vendor/Universal/NamespaceLoader.php">
         <class name="NamespaceLoader" namespace="MOC\V\Core\AutoLoader\Vendor\Universal" fullPackage="MOC" package="MOC">
-          <metrics methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="16" elements="22" coveredelements="18"/>
+          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="24" coveredelements="24"/>
         </class>
-        <line num="19" type="method" name="loadClass" crap="2" count="1"/>
-        <line num="22" type="stmt" count="1"/>
-        <line num="23" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
-        <line num="33" type="method" name="findSource" crap="9.65" count="1"/>
+        <line num="17" type="method" name="getLoaderHash" crap="1" count="2"/>
+        <line num="20" type="stmt" count="2"/>
+        <line num="21" type="stmt" count="2"/>
+        <line num="22" type="stmt" count="2"/>
+        <line num="23" type="stmt" count="2"/>
+        <line num="24" type="stmt" count="2"/>
+        <line num="32" type="method" name="loadClass" crap="2" count="1"/>
+        <line num="35" type="stmt" count="1"/>
         <line num="36" type="stmt" count="1"/>
-        <line num="41" type="stmt" count="1"/>
-        <line num="42" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="1"/>
-        <line num="45" type="stmt" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="46" type="method" name="findSource" crap="9" count="1"/>
         <line num="49" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="1"/>
         <line num="55" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="1"/>
         <line num="58" type="stmt" count="1"/>
         <line num="59" type="stmt" count="1"/>
-        <line num="67" type="method" name="getClassNamespace" crap="1" count="1"/>
-        <line num="70" type="stmt" count="1"/>
-        <metrics loc="73" ncloc="49" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="16" elements="22" coveredelements="18"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="69" type="stmt" count="1"/>
+        <line num="74" type="stmt" count="1"/>
+        <line num="79" type="stmt" count="1"/>
+        <line num="80" type="stmt" count="1"/>
+        <line num="88" type="method" name="getClassNamespace" crap="1" count="1"/>
+        <line num="91" type="stmt" count="1"/>
+        <metrics loc="94" ncloc="51" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="24" coveredelements="24"/>
       </file>
     </package>
     <package name="MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader">
@@ -1547,14 +1608,14 @@
         <class name="Vendor" namespace="MOC\V\Core\AutoLoader\Vendor" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
         </class>
-        <line num="21" type="method" name="__construct" crap="1" count="18"/>
-        <line num="24" type="stmt" count="18"/>
-        <line num="25" type="stmt" count="18"/>
-        <line num="30" type="method" name="getBridgeInterface" crap="1" count="18"/>
-        <line num="33" type="stmt" count="18"/>
-        <line num="41" type="method" name="setBridgeInterface" crap="1" count="18"/>
-        <line num="44" type="stmt" count="18"/>
-        <line num="45" type="stmt" count="18"/>
+        <line num="21" type="method" name="__construct" crap="1" count="17"/>
+        <line num="24" type="stmt" count="17"/>
+        <line num="25" type="stmt" count="17"/>
+        <line num="30" type="method" name="getBridgeInterface" crap="1" count="17"/>
+        <line num="33" type="stmt" count="17"/>
+        <line num="41" type="method" name="setBridgeInterface" crap="1" count="17"/>
+        <line num="44" type="stmt" count="17"/>
+        <line num="45" type="stmt" count="17"/>
         <metrics loc="47" ncloc="30" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
       </file>
     </package>
@@ -1582,11 +1643,11 @@
         <class name="UniversalFileWriter" namespace="MOC\V\Core\FileSystem\Component\Bridge\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="4"/>
-        <line num="26" type="stmt" count="4"/>
-        <line num="27" type="stmt" count="4"/>
-        <line num="32" type="method" name="getLocation" crap="1" count="2"/>
-        <line num="35" type="stmt" count="2"/>
+        <line num="23" type="method" name="__construct" crap="1" count="6"/>
+        <line num="26" type="stmt" count="6"/>
+        <line num="27" type="stmt" count="6"/>
+        <line num="32" type="method" name="getLocation" crap="1" count="4"/>
+        <line num="35" type="stmt" count="4"/>
         <metrics loc="38" ncloc="26" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
       </file>
     </package>
@@ -1704,19 +1765,19 @@
         <class name="FileParameter" namespace="MOC\V\Core\FileSystem\Component\Parameter\Repository" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
         </class>
-        <line num="23" type="method" name="__construct" crap="1" count="8"/>
-        <line num="26" type="stmt" count="8"/>
-        <line num="27" type="stmt" count="8"/>
-        <line num="32" type="method" name="getFile" crap="1" count="8"/>
-        <line num="35" type="stmt" count="8"/>
-        <line num="44" type="method" name="setFile" crap="3" count="8"/>
-        <line num="47" type="stmt" count="8"/>
+        <line num="23" type="method" name="__construct" crap="1" count="10"/>
+        <line num="26" type="stmt" count="10"/>
+        <line num="27" type="stmt" count="10"/>
+        <line num="32" type="method" name="getFile" crap="1" count="10"/>
+        <line num="35" type="stmt" count="10"/>
+        <line num="44" type="method" name="setFile" crap="3" count="10"/>
+        <line num="47" type="stmt" count="10"/>
         <line num="48" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="8"/>
-        <line num="51" type="stmt" count="8"/>
-        <line num="52" type="stmt" count="8"/>
+        <line num="50" type="stmt" count="10"/>
+        <line num="51" type="stmt" count="10"/>
+        <line num="52" type="stmt" count="10"/>
         <line num="53" type="stmt" count="5"/>
-        <line num="56" type="stmt" count="8"/>
+        <line num="56" type="stmt" count="10"/>
         <metrics loc="57" ncloc="39" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="10" elements="13" coveredelements="13"/>
       </file>
     </package>
@@ -1736,9 +1797,9 @@
         <class name="FileSystem" namespace="MOC\V\Core\FileSystem" fullPackage="MOC" package="MOC">
           <metrics methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="25" elements="34" coveredelements="34"/>
         </class>
-        <line num="26" type="method" name="__construct" crap="1" count="6"/>
-        <line num="29" type="stmt" count="6"/>
-        <line num="30" type="stmt" count="6"/>
+        <line num="26" type="method" name="__construct" crap="1" count="8"/>
+        <line num="29" type="stmt" count="8"/>
+        <line num="30" type="stmt" count="8"/>
         <line num="38" type="method" name="getFileLoader" crap="1" count="1"/>
         <line num="41" type="stmt" count="1"/>
         <line num="49" type="method" name="getUniversalFileLoader" crap="1" count="2"/>
@@ -1750,24 +1811,24 @@
         <line num="57" type="stmt" count="2"/>
         <line num="58" type="stmt" count="2"/>
         <line num="60" type="stmt" count="2"/>
-        <line num="66" type="method" name="getBridgeInterface" crap="1" count="6"/>
-        <line num="69" type="stmt" count="6"/>
-        <line num="78" type="method" name="getFileWriter" crap="1" count="2"/>
-        <line num="81" type="stmt" count="2"/>
-        <line num="89" type="method" name="getUniversalFileWriter" crap="1" count="3"/>
-        <line num="92" type="stmt" count="3"/>
-        <line num="93" type="stmt" count="3"/>
-        <line num="94" type="stmt" count="3"/>
-        <line num="95" type="stmt" count="3"/>
-        <line num="96" type="stmt" count="3"/>
-        <line num="97" type="stmt" count="3"/>
-        <line num="98" type="stmt" count="3"/>
-        <line num="100" type="stmt" count="3"/>
+        <line num="66" type="method" name="getBridgeInterface" crap="1" count="8"/>
+        <line num="69" type="stmt" count="8"/>
+        <line num="78" type="method" name="getFileWriter" crap="1" count="4"/>
+        <line num="81" type="stmt" count="4"/>
+        <line num="89" type="method" name="getUniversalFileWriter" crap="1" count="5"/>
+        <line num="92" type="stmt" count="5"/>
+        <line num="93" type="stmt" count="5"/>
+        <line num="94" type="stmt" count="5"/>
+        <line num="95" type="stmt" count="5"/>
+        <line num="96" type="stmt" count="5"/>
+        <line num="97" type="stmt" count="5"/>
+        <line num="98" type="stmt" count="5"/>
+        <line num="100" type="stmt" count="5"/>
         <line num="106" type="method" name="getVendorInterface" crap="1" count="1"/>
         <line num="109" type="stmt" count="1"/>
-        <line num="117" type="method" name="setVendorInterface" crap="1" count="6"/>
-        <line num="120" type="stmt" count="6"/>
-        <line num="121" type="stmt" count="6"/>
+        <line num="117" type="method" name="setVendorInterface" crap="1" count="8"/>
+        <line num="120" type="stmt" count="8"/>
+        <line num="121" type="stmt" count="8"/>
         <line num="129" type="method" name="setBridgeInterface" crap="1" count="1"/>
         <line num="132" type="stmt" count="1"/>
         <metrics loc="134" ncloc="87" classes="1" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="25" elements="34" coveredelements="34"/>
@@ -1792,14 +1853,14 @@
         <class name="FileWriter" namespace="MOC\V\Core\FileSystem\Vendor\Universal" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
         </class>
-        <line num="18" type="method" name="__construct" crap="1" count="4"/>
-        <line num="21" type="stmt" count="4"/>
-        <line num="22" type="stmt" count="4"/>
-        <line num="27" type="method" name="getLocation" crap="1" count="2"/>
-        <line num="30" type="stmt" count="2"/>
-        <line num="36" type="method" name="setLocation" crap="1" count="4"/>
-        <line num="39" type="stmt" count="4"/>
-        <line num="40" type="stmt" count="4"/>
+        <line num="18" type="method" name="__construct" crap="1" count="6"/>
+        <line num="21" type="stmt" count="6"/>
+        <line num="22" type="stmt" count="6"/>
+        <line num="27" type="method" name="getLocation" crap="1" count="4"/>
+        <line num="30" type="stmt" count="4"/>
+        <line num="36" type="method" name="setLocation" crap="1" count="6"/>
+        <line num="39" type="stmt" count="6"/>
+        <line num="40" type="stmt" count="6"/>
         <metrics loc="43" ncloc="28" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
       </file>
     </package>
@@ -1808,14 +1869,14 @@
         <class name="Vendor" namespace="MOC\V\Core\FileSystem\Vendor" fullPackage="MOC" package="MOC">
           <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
         </class>
-        <line num="21" type="method" name="__construct" crap="1" count="7"/>
-        <line num="24" type="stmt" count="7"/>
-        <line num="25" type="stmt" count="7"/>
-        <line num="30" type="method" name="getBridgeInterface" crap="1" count="7"/>
-        <line num="33" type="stmt" count="7"/>
-        <line num="41" type="method" name="setBridgeInterface" crap="1" count="7"/>
-        <line num="44" type="stmt" count="7"/>
-        <line num="45" type="stmt" count="7"/>
+        <line num="21" type="method" name="__construct" crap="1" count="9"/>
+        <line num="24" type="stmt" count="9"/>
+        <line num="25" type="stmt" count="9"/>
+        <line num="30" type="method" name="getBridgeInterface" crap="1" count="9"/>
+        <line num="33" type="stmt" count="9"/>
+        <line num="41" type="method" name="setBridgeInterface" crap="1" count="9"/>
+        <line num="44" type="stmt" count="9"/>
+        <line num="45" type="stmt" count="9"/>
         <metrics loc="47" ncloc="30" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
       </file>
     </package>
@@ -2115,37 +2176,34 @@
     <package name="MOC\V\TestSuite\Tests\Component\Document">
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Document/BridgeTest.php">
         <class name="BridgeTest" namespace="MOC\V\TestSuite\Tests\Component\Document" fullPackage="MOC" package="MOC">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="63" coveredstatements="63" elements="65" coveredelements="65"/>
+          <metrics methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="63" coveredstatements="43" elements="65" coveredelements="44"/>
         </class>
-        <line num="48" type="method" name="testPhpExcelDocument" crap="1" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
+        <line num="51" type="method" name="testPhpExcelDocument" crap="1.66" count="1"/>
         <line num="54" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
         <line num="56" type="stmt" count="1"/>
         <line num="57" type="stmt" count="1"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="59" type="stmt" count="1"/>
-        <line num="60" type="stmt" count="1"/>
-        <line num="61" type="stmt" count="1"/>
-        <line num="63" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="65" type="stmt" count="1"/>
-        <line num="66" type="stmt" count="1"/>
-        <line num="67" type="stmt" count="1"/>
-        <line num="68" type="stmt" count="1"/>
-        <line num="69" type="stmt" count="1"/>
-        <line num="70" type="stmt" count="1"/>
-        <line num="71" type="stmt" count="1"/>
-        <line num="72" type="stmt" count="1"/>
-        <line num="73" type="stmt" count="1"/>
-        <line num="74" type="stmt" count="1"/>
-        <line num="76" type="stmt" count="1"/>
-        <line num="78" type="method" name="testDomPdfDocument" crap="1" count="1"/>
-        <line num="81" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="81" type="method" name="testDomPdfDocument" crap="1" count="2"/>
         <line num="84" type="stmt" count="1"/>
-        <line num="85" type="stmt" count="1"/>
         <line num="86" type="stmt" count="1"/>
         <line num="87" type="stmt" count="1"/>
         <line num="88" type="stmt" count="1"/>
@@ -2155,16 +2213,16 @@
         <line num="92" type="stmt" count="1"/>
         <line num="93" type="stmt" count="1"/>
         <line num="94" type="stmt" count="1"/>
+        <line num="95" type="stmt" count="1"/>
         <line num="96" type="stmt" count="1"/>
-        <line num="98" type="stmt" count="1"/>
+        <line num="97" type="stmt" count="2"/>
         <line num="99" type="stmt" count="1"/>
-        <line num="100" type="stmt" count="1"/>
         <line num="101" type="stmt" count="1"/>
         <line num="102" type="stmt" count="1"/>
         <line num="103" type="stmt" count="1"/>
+        <line num="104" type="stmt" count="1"/>
         <line num="105" type="stmt" count="1"/>
         <line num="106" type="stmt" count="1"/>
-        <line num="107" type="stmt" count="1"/>
         <line num="108" type="stmt" count="1"/>
         <line num="109" type="stmt" count="1"/>
         <line num="110" type="stmt" count="1"/>
@@ -2174,15 +2232,18 @@
         <line num="114" type="stmt" count="1"/>
         <line num="115" type="stmt" count="1"/>
         <line num="116" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="1"/>
         <line num="118" type="stmt" count="1"/>
-        <line num="120" type="stmt" count="1"/>
+        <line num="119" type="stmt" count="1"/>
         <line num="121" type="stmt" count="1"/>
-        <line num="122" type="stmt" count="1"/>
         <line num="123" type="stmt" count="1"/>
         <line num="124" type="stmt" count="1"/>
         <line num="125" type="stmt" count="1"/>
         <line num="126" type="stmt" count="1"/>
-        <metrics loc="127" ncloc="118" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="63" coveredstatements="63" elements="65" coveredelements="65"/>
+        <line num="127" type="stmt" count="1"/>
+        <line num="128" type="stmt" count="1"/>
+        <line num="129" type="stmt" count="1"/>
+        <metrics loc="130" ncloc="121" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="63" coveredstatements="43" elements="65" coveredelements="44"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Document/ExceptionTest.php">
         <class name="ExceptionTest" namespace="MOC\V\TestSuite\Tests\Component\Document" fullPackage="MOC" package="MOC">
@@ -2200,7 +2261,7 @@
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Document/ModuleTest.php">
         <class name="ModuleTest" namespace="MOC\V\TestSuite\Tests\Component\Document" fullPackage="MOC" package="MOC">
-          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="31" elements="35" coveredelements="35"/>
+          <metrics methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="36" coveredelements="36"/>
         </class>
         <line num="15" type="method" name="testModule" crap="1" count="1"/>
         <line num="19" type="stmt" count="1"/>
@@ -2225,6 +2286,7 @@
         <line num="46" type="stmt" count="1"/>
         <line num="47" type="stmt" count="1"/>
         <line num="49" type="method" name="testStaticDocument" crap="6" count="1"/>
+        <line num="52" type="stmt" count="1"/>
         <line num="53" type="stmt" count="1"/>
         <line num="54" type="stmt" count="1"/>
         <line num="55" type="stmt" count="1"/>
@@ -2237,7 +2299,7 @@
         <line num="73" type="stmt" count="1"/>
         <line num="74" type="stmt" count="1"/>
         <line num="77" type="stmt" count="1"/>
-        <metrics loc="78" ncloc="72" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="31" elements="35" coveredelements="35"/>
+        <metrics loc="78" ncloc="72" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="36" coveredelements="36"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Document/ParameterTest.php">
         <class name="ParameterTest" namespace="MOC\V\TestSuite\Tests\Component\Document" fullPackage="MOC" package="MOC">
@@ -2258,10 +2320,10 @@
         <line num="41" type="stmt" count="1"/>
         <line num="42" type="stmt" count="1"/>
         <line num="45" type="stmt" count="1"/>
-        <line num="47" type="method" name="testPaperOrientationParameter" crap="2" count="1"/>
+        <line num="47" type="method" name="testPaperOrientationParameter" crap="2" count="2"/>
         <line num="51" type="stmt" count="1"/>
         <line num="52" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
+        <line num="53" type="stmt" count="2"/>
         <line num="56" type="stmt" count="1"/>
         <line num="57" type="stmt" count="1"/>
         <line num="58" type="stmt" count="1"/>
@@ -2328,23 +2390,37 @@
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Documentation/ModuleTest.php">
         <class name="ModuleTest" namespace="MOC\V\TestSuite\Tests\Component\Documentation" fullPackage="MOC" package="MOC">
-          <metrics methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="14" coveredelements="14"/>
+          <metrics methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="25" elements="28" coveredelements="28"/>
         </class>
-        <line num="15" type="method" name="testModule" crap="1" count="1"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="20" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="1"/>
-        <line num="23" type="stmt" count="1"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
-        <line num="26" type="stmt" count="1"/>
-        <line num="27" type="stmt" count="1"/>
-        <line num="28" type="stmt" count="1"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="30" type="stmt" count="1"/>
-        <line num="31" type="stmt" count="1"/>
-        <line num="32" type="stmt" count="1"/>
-        <metrics loc="33" ncloc="27" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="14" coveredelements="14"/>
+        <line num="41" type="method" name="testModule" crap="1" count="1"/>
+        <line num="45" type="stmt" count="1"/>
+        <line num="46" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="53" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="1"/>
+        <line num="55" type="stmt" count="1"/>
+        <line num="56" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="60" type="method" name="testStaticApiGenDocumentation" crap="1" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="65" type="stmt" count="1"/>
+        <line num="66" type="stmt" count="1"/>
+        <line num="67" type="stmt" count="1"/>
+        <line num="68" type="stmt" count="1"/>
+        <line num="70" type="method" name="testStaticDocumentation" crap="1" count="1"/>
+        <line num="73" type="stmt" count="1"/>
+        <line num="74" type="stmt" count="1"/>
+        <line num="75" type="stmt" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="77" type="stmt" count="1"/>
+        <line num="78" type="stmt" count="1"/>
+        <metrics loc="79" ncloc="69" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="25" coveredstatements="25" elements="28" coveredelements="28"/>
       </file>
       <file name="D:\WebProject\MOC-Framework-Mark-V/TestSuite/Tests/Component/Documentation/ParameterTest.php">
         <class name="ParameterTest" namespace="MOC\V\TestSuite\Tests\Component\Documentation" fullPackage="MOC" package="MOC">
@@ -3050,6 +3126,6 @@
         <metrics loc="28" ncloc="22" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="8" coveredelements="8"/>
       </file>
     </package>
-    <metrics files="172" loc="7973" ncloc="5572" classes="146" methods="342" coveredmethods="336" conditionals="0" coveredconditionals="0" statements="1587" coveredstatements="1526" elements="1929" coveredelements="1862"/>
+    <metrics files="170" loc="8229" ncloc="5710" classes="146" methods="356" coveredmethods="343" conditionals="0" coveredconditionals="0" statements="1653" coveredstatements="1556" elements="2009" coveredelements="1899"/>
   </project>
 </coverage>

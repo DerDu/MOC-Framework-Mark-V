@@ -29,6 +29,15 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
     /**
      * @return string
      */
+    function __toString()
+    {
+
+        return $this->getSize();
+    }
+
+    /**
+     * @return string
+     */
     public function getSize()
     {
 

@@ -12,6 +12,38 @@ use MOC\V\Component\Document\Vendor\Vendor;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @codeCoverageIgnore
+     */
+    public function tearDown()
+    {
+
+        if (false !== ( $Path = realpath( __DIR__.'/Content' ) )) {
+            $Iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator( $Path, \RecursiveDirectoryIterator::SKIP_DOTS ),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            /** @var \SplFileInfo $FileInfo */
+            foreach ($Iterator as $FileInfo) {
+                if (
+                    $FileInfo->getBasename() != 'README.md'
+                    && $FileInfo->getBasename() != 'BridgeTest.tpl'
+                    && $FileInfo->getBasename() != 'BridgeTest.twig'
+                ) {
+                    if ($FileInfo->isFile()) {
+                        unlink( $FileInfo->getPathname() );
+                    }
+                    if ($FileInfo->isDir()) {
+                        rmdir( $FileInfo->getPathname() );
+                    }
+                }
+            }
+        }
+
+        $Template = new BridgeTest();
+        $Template->tearDown();
+    }
+
     public function testModule()
     {
 
@@ -35,7 +67,16 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     public function testStaticExcelDocument()
     {
 
-        $Document = Document::getExcelDocument( __FILE__ );
+        $Document = Document::getExcelDocument( __DIR__.'/Content/test.xls' );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Document->saveFile()
+        );
+        $Document = Document::getExcelDocument( __DIR__.'/Content/test.xls' );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+        $Document = Document::getExcelDocument( __DIR__.'/Content/test.xlsx' );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+        $Document = Document::getExcelDocument( __DIR__.'/Content/test.csv' );
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
     }
 

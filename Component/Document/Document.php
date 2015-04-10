@@ -67,7 +67,9 @@ class Document implements IVendorInterface
             )
         );
 
-        $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+        if (file_exists( new FileParameter( $Location ) )) {
+            $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+        }
 
         return $Document->getBridgeInterface();
     }
@@ -94,10 +96,15 @@ class Document implements IVendorInterface
                 new PhpExcel()
             )
         );
+        /** @var PhpExcel $Bridge */
+        $Bridge = $Document->getBridgeInterface();
+        if (file_exists( new FileParameter( $Location ) )) {
+            $Bridge->loadFile( new FileParameter( $Location ) );
+        } else {
+            $Bridge->newFile( new FileParameter( $Location ) );
+        }
 
-        $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
-
-        return $Document->getBridgeInterface();
+        return $Bridge;
     }
 
     /**

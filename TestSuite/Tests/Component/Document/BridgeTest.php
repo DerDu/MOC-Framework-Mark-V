@@ -53,9 +53,14 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
 
         $Bridge = new PhpExcel();
 
-        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile( new FileParameter( __FILE__ ) )
-        );
+        try {
+            $Bridge->loadFile( new FileParameter( __FILE__ ) );
+        } catch( \Exception $Exception ) {
+            $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Exception\Repository\TypeFileException',
+                $Exception );
+        }
+        $Bridge->newFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel.xlsx' ) );
+
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter( new PaperSizeParameter( 'A4' ) )
         );
@@ -63,17 +68,81 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
             $Bridge->setPaperOrientationParameter( new PaperOrientationParameter( 'PORTRAIT' ) )
         );
 
+        /**
+         * Cell Index
+         */
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell',
+            $Cell = $Bridge->getCell( 'A1' )
+        );
+        $this->assertEquals( 0, $Cell->getColumn() );
+        $this->assertEquals( 1, $Cell->getRow() );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell',
+            $Cell = $Bridge->getCell( 'B2' )
+        );
+        $this->assertEquals( 1, $Cell->getColumn() );
+        $this->assertEquals( 2, $Cell->getRow() );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell',
+            $Cell = $Bridge->getCell( 0, 0 )
+        );
+        $this->assertEquals( 0, $Cell->getColumn() );
+        $this->assertEquals( 1, $Cell->getRow() );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell',
+            $Cell = $Bridge->getCell( 1, 1 )
+        );
+        $this->assertEquals( 1, $Cell->getColumn() );
+        $this->assertEquals( 2, $Cell->getRow() );
+
+        /**
+         * Cell Value
+         */
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setValue( $Cell, '01' )
+        );
+        $this->assertEquals( '01', $Bridge->getValue( $Cell ) );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setValue( $Cell, 'öäüß' )
+        );
+        $this->assertEquals( 'öäüß', $Bridge->getValue( $Cell ) );
+
+        /**
+         * Save File
+         */
+
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->saveFile()
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel.xlsx' ) )
         );
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.csv' ) )
         );
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.csv' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.xls' ) )
         );
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.xls' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.xlsx' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.xlsx' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.html' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Excel-As.html' ) )
         );
 
     }

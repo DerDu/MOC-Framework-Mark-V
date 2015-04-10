@@ -29,6 +29,15 @@ class PaperOrientationParameter extends Parameter implements IParameterInterface
     /**
      * @return string
      */
+    function __toString()
+    {
+
+        return $this->getOrientation();
+    }
+
+    /**
+     * @return string
+     */
     public function getOrientation()
     {
 
