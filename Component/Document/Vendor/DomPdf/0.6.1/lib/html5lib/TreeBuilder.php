@@ -3851,6 +3851,75 @@ class HTML5_TreeBuilder
         return $el;
     }
 
+    private function appendToRealParent( $node )
+    {
+
+        // this is only for the foster_parent case
+        /* If the current node is a table, tbody, tfoot, thead, or tr
+        element, then, whenever a node would be inserted into the current
+        node, it must instead be inserted into the foster parent element. */
+        if (!$this->foster_parent || !in_array( end( $this->stack )->tagName,
+                array( 'table', 'tbody', 'tfoot', 'thead', 'tr' ) )
+        ) {
+            end( $this->stack )->appendChild( $node );
+        } else {
+            $this->fosterParent( $node );
+        }
+    }
+
+    public function fosterParent( $node )
+    {
+
+        $foster_parent = $this->getFosterParent();
+        $table = $this->getCurrentTable(); // almost equivalent to last table element, except it can be html
+        /* When a node node is to be foster parented, the node node must be
+         * be inserted into the foster parent element. */
+        /* If the foster parent element is the parent element of the last table
+         * element in the stack of open elements, then node must be inserted
+         * immediately before the last table element in the stack of open
+         * elements in the foster parent element; otherwise, node must be
+         * appended to the foster parent element. */
+        if ($table->tagName === 'table' && $table->parentNode->isSameNode( $foster_parent )) {
+            $foster_parent->insertBefore( $node, $table );
+        } else {
+            $foster_parent->appendChild( $node );
+        }
+    }
+
+    private function getFosterParent()
+    {
+
+        /* The foster parent element is the parent element of the last
+        table element in the stack of open elements, if there is a
+        table element and it has such a parent element. If there is no
+        table element in the stack of open elements (innerHTML case),
+        then the foster parent element is the first element in the
+        stack of open elements (the html  element). Otherwise, if there
+        is a table element in the stack of open elements, but the last
+        table element in the stack of open elements has no parent, or
+        its parent node is not an element, then the foster parent
+        element is the element before the last table element in the
+        stack of open elements. */
+        for ($n = count( $this->stack ) - 1; $n >= 0; $n--) {
+            if ($this->stack[$n]->tagName === 'table') {
+                $table = $this->stack[$n];
+                break;
+            }
+        }
+
+        if (isset( $table ) && $table->parentNode !== null) {
+            return $table->parentNode;
+
+        } elseif (!isset( $table )) {
+            return $this->stack[0];
+
+        } elseif (isset( $table ) && ( $table->parentNode === null ||
+                $table->parentNode->nodeType !== XML_ELEMENT_NODE )
+        ) {
+            return $this->stack[$n - 1];
+        }
+    }
+
     private function insertComment( $data )
     {
 
@@ -4097,75 +4166,6 @@ class HTML5_TreeBuilder
          * namespace, that is a parse error. Similarly, if the newly created
          * element has an xmlns:xlink attribute in the XMLNS namespace whose
          * value is not the XLink Namespace, that is a parse error. */
-    }
-
-    private function appendToRealParent( $node )
-    {
-
-        // this is only for the foster_parent case
-        /* If the current node is a table, tbody, tfoot, thead, or tr
-        element, then, whenever a node would be inserted into the current
-        node, it must instead be inserted into the foster parent element. */
-        if (!$this->foster_parent || !in_array( end( $this->stack )->tagName,
-                array( 'table', 'tbody', 'tfoot', 'thead', 'tr' ) )
-        ) {
-            end( $this->stack )->appendChild( $node );
-        } else {
-            $this->fosterParent( $node );
-        }
-    }
-
-    public function fosterParent( $node )
-    {
-
-        $foster_parent = $this->getFosterParent();
-        $table = $this->getCurrentTable(); // almost equivalent to last table element, except it can be html
-        /* When a node node is to be foster parented, the node node must be
-         * be inserted into the foster parent element. */
-        /* If the foster parent element is the parent element of the last table
-         * element in the stack of open elements, then node must be inserted
-         * immediately before the last table element in the stack of open
-         * elements in the foster parent element; otherwise, node must be
-         * appended to the foster parent element. */
-        if ($table->tagName === 'table' && $table->parentNode->isSameNode( $foster_parent )) {
-            $foster_parent->insertBefore( $node, $table );
-        } else {
-            $foster_parent->appendChild( $node );
-        }
-    }
-
-    private function getFosterParent()
-    {
-
-        /* The foster parent element is the parent element of the last
-        table element in the stack of open elements, if there is a
-        table element and it has such a parent element. If there is no
-        table element in the stack of open elements (innerHTML case),
-        then the foster parent element is the first element in the
-        stack of open elements (the html  element). Otherwise, if there
-        is a table element in the stack of open elements, but the last
-        table element in the stack of open elements has no parent, or
-        its parent node is not an element, then the foster parent
-        element is the element before the last table element in the
-        stack of open elements. */
-        for ($n = count( $this->stack ) - 1; $n >= 0; $n--) {
-            if ($this->stack[$n]->tagName === 'table') {
-                $table = $this->stack[$n];
-                break;
-            }
-        }
-
-        if (isset( $table ) && $table->parentNode !== null) {
-            return $table->parentNode;
-
-        } elseif (!isset( $table )) {
-            return $this->stack[0];
-
-        } elseif (isset( $table ) && ( $table->parentNode === null ||
-                $table->parentNode->nodeType !== XML_ELEMENT_NODE )
-        ) {
-            return $this->stack[$n - 1];
-        }
     }
 
     public function adjustSVGAttributes( $token )

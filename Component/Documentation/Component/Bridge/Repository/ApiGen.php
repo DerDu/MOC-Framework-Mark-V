@@ -123,7 +123,7 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Add a link to download documentation as a ZIP archive
             'download'       => true,
             // Save a check style report of poorly documented elements into a file
-            'report'  => $this->Destination->getDirectory().DIRECTORY_SEPARATOR.'_improve.xml',
+            'report' => $this->Destination->getDirectory().DIRECTORY_SEPARATOR.'_improve.xml',
             // Wipe out the destination directory first
             'wipeout' => false,
             // Don't display scanning and generating messages
