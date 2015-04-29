@@ -2,6 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Document;
 
 use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
+use MOC\V\Component\Document\Component\Bridge\Repository\mPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter;
@@ -151,6 +152,56 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     {
 
         $Bridge = new DomPdf();
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Twig.pdf' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setPaperSizeParameter( new PaperSizeParameter( 'A4' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setPaperOrientationParameter( new PaperOrientationParameter( 'PORTRAIT' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setContent( Template::getTemplate( __DIR__.'/Content/BridgeTest.twig' ) )
+        );
+
+        $this->assertStringStartsWith( '%PDF-', $Bridge->getContent() );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile()
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Twig-As.pdf' ) )
+        );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Tpl.pdf' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setPaperSizeParameter( new PaperSizeParameter( 'A4' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setPaperOrientationParameter( new PaperOrientationParameter( 'PORTRAIT' ) )
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->setContent( Template::getTemplate( __DIR__.'/Content/BridgeTest.tpl' ) )
+        );
+
+        $this->assertStringStartsWith( '%PDF-', $Bridge->getContent() );
+
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile()
+        );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Tpl-As.pdf' ) )
+        );
+    }
+
+    public function testMPdfDocument()
+    {
+
+        $Bridge = new mPdf();
 
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Twig.pdf' ) )

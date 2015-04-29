@@ -85,6 +85,9 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         $Document = Document::getPdfDocument( __FILE__ );
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
+
+        $Document = Document::getPdfCreator( __FILE__ );
+        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface', $Document );
     }
 
     public function testStaticDocument()

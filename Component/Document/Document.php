@@ -2,6 +2,7 @@
 namespace MOC\V\Component\Document;
 
 use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
+use MOC\V\Component\Document\Component\Bridge\Repository\mPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Component\Document\Component\IBridgeInterface;
 use MOC\V\Component\Document\Component\IVendorInterface;
@@ -64,6 +65,27 @@ class Document implements IVendorInterface
         $Document = new Document(
             new Vendor(
                 new DomPdf()
+            )
+        );
+
+        if (file_exists( new FileParameter( $Location ) )) {
+            $Document->getBridgeInterface()->loadFile( new FileParameter( $Location ) );
+        }
+
+        return $Document->getBridgeInterface();
+    }
+
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     */
+    public static function getPdfCreator( $Location )
+    {
+
+        $Document = new Document(
+            new Vendor(
+                new mPdf()
             )
         );
 
