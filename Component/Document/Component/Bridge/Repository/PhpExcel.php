@@ -144,6 +144,7 @@ class PhpExcel extends Bridge implements IBridgeInterface
             case 'html':
                 $ReaderType = 'HTML';
                 break;
+            case 'txt':
             case 'csv':
                 $ReaderType = 'CSV';
                 break;
@@ -152,7 +153,43 @@ class PhpExcel extends Bridge implements IBridgeInterface
                 break;
         }
         if ($ReaderType) {
+            /** @var \PHPExcel_Reader_IReader|\PHPExcel_Reader_CSV $Reader */
             $Reader = \PHPExcel_IOFactory::createReader( $ReaderType );
+            /**
+             * Find CSV Delimiter
+             */
+            if ('CSV' == $ReaderType) {
+                $Delimiter = array(
+                    ',',
+                    ';',
+                    "\t"
+                );
+                $Result = array();
+                $Content = file( $Location );
+                for ($Line = 0; $Line < 5; $Line++) {
+                    if (isset( $Content[$Line] )) {
+                        foreach ($Delimiter as $Char) {
+                            $Result[$Char][$Line] = substr_count( $Content[$Line], $Char );
+                        }
+                    }
+                }
+                foreach ($Result as $Delimiter => $Count) {
+                    if (0 == array_sum( $Count )) {
+                        $Result[$Delimiter] = false;
+                    } else {
+                        $Count = array_unique( $Count );
+                        if (1 == count( $Count )) {
+                            $Result[$Delimiter] = true;
+                        } else {
+                            $Result[$Delimiter] = false;
+                        }
+                    }
+                }
+                $Result = array_filter( $Result );
+                if (1 == count( $Result )) {
+                    $Reader->setDelimiter( key( $Result ) );
+                }
+            }
             $this->Source = $Reader->load( $Location->getFile() );
         } else {
             throw new TypeFileException( 'No Reader for '.$Info->getExtension().' available!' );

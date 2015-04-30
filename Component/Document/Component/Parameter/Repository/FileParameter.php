@@ -23,7 +23,7 @@ class FileParameter extends Parameter implements IParameterInterface
     function __construct( $File )
     {
 
-        $this->setFile( $File );
+        $this->setFile( (string)$File );
     }
 
     /**

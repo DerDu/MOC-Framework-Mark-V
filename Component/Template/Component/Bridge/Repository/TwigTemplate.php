@@ -29,6 +29,22 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     }
 
     /**
+     * @param string $String
+     * @param bool   $Reload
+     *
+     * @return IBridgeInterface
+     */
+    public function loadString( $String, $Reload = false )
+    {
+
+        $TemplateName = 'Source'.sha1( $String ).'.twig';
+        if (!file_exists( __DIR__.'/TwigTemplate/'.$TemplateName )) {
+            file_put_contents( __DIR__.'/TwigTemplate/'.$TemplateName, $String );
+        }
+        return $this->loadFile( new FileParameter( __DIR__.'/TwigTemplate/'.$TemplateName ), $Reload );
+    }
+
+    /**
      * @param FileParameter $Location
      * @param bool          $Reload
      *

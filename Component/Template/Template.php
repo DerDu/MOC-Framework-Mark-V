@@ -102,6 +102,24 @@ class Template implements IVendorInterface
     }
 
     /**
+     * @param string $String
+     *
+     * @return IBridgeInterface
+     */
+    public static function getTwigTemplateString( $String )
+    {
+
+        $Template = new Template(
+            new Vendor(
+                new TwigTemplate()
+            )
+        );
+        $Template->getBridgeInterface()->loadString( $String, true );
+
+        return $Template->getBridgeInterface();
+    }
+
+    /**
      * @return IVendorInterface
      */
     public function getVendorInterface()
