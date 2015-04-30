@@ -24,7 +24,22 @@ class EdenPhpImap extends Bridge implements IBridgeInterface
     function __construct()
     {
 
-        AutoLoader::getNamespaceAutoLoader( 'Eden\Mail', __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master' );
+        AutoLoader::getNamespaceAutoLoader( 'Eden\Mail',
+            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master',
+            'Eden\Mail'
+        );
+        AutoLoader::getNamespaceAutoLoader( 'Eden\Core',
+            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/core/Eden/Core',
+            'Eden\Core'
+        );
+        AutoLoader::getNamespaceAutoLoader( 'Eden\System',
+            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/system/Eden/System',
+            'Eden\System'
+        );
+        AutoLoader::getNamespaceAutoLoader( 'Eden\Type',
+            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/type/Eden/Type',
+            'Eden\Type'
+        );
     }
 
     /**

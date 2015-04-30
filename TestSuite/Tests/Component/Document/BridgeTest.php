@@ -2,7 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Component\Document;
 
 use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
-use MOC\V\Component\Document\Component\Bridge\Repository\mPdf;
+use MOC\V\Component\Document\Component\Bridge\Repository\MPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter;
@@ -201,7 +201,7 @@ class BridgeTest extends \PHPUnit_Framework_TestCase
     public function testMPdfDocument()
     {
 
-        $Bridge = new mPdf();
+        $Bridge = new MPdf();
 
         $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->loadFile( new FileParameter( __DIR__.'/Content/BridgeTest-Twig.pdf' ) )

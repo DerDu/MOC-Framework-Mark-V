@@ -16,7 +16,7 @@ class MailException extends Exception
      * @param int    $Code
      * @param null   $Previous
      */
-    public function __construct( $Message = "", $Code = 0, $Previous = null )
+    public function __construct( $Message = "", $Code = 0, \Exception $Previous = null )
     {
 
         parent::__construct( $Message, $Code, $Previous );
