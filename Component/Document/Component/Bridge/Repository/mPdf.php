@@ -9,11 +9,11 @@ use MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter;
 use MOC\V\Component\Template\Component\IBridgeInterface as IBridgeInterface_Template;
 
 /**
- * Class mPdf
+ * Class MPdf
  *
  * @package MOC\V\Component\Document\Component\Bridge\Repository
  */
-class mPdf extends Bridge implements IBridgeInterface
+class MPdf extends Bridge implements IBridgeInterface
 {
 
     /** @var string $Source */
@@ -100,12 +100,13 @@ class mPdf extends Bridge implements IBridgeInterface
     public function getContent()
     {
 
-        $Renderer = new \mPdf(
-            '',
-            substr( $this->getPaperSizeParameter(), 0, 1 ),
+        $Renderer = new \mPDF(
+            'utf-8',
+            $this->getPaperSizeParameter()->getSize(),
             0, '', 15, 15, 16, 16, 9, 9,
-            substr( $this->getPaperOrientationParameter(), 0, 1 )
+            substr( $this->getPaperOrientationParameter()->getOrientation(), 0, 1 )
         );
+        $Renderer->debug = true;
         $Renderer->WriteHTML( $this->Source );
         return $Renderer->Output( '', 'S' );
     }
