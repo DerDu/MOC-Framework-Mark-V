@@ -29,6 +29,7 @@ namespace Doctrine\Common\Persistence;
  */
 interface ObjectRepository
 {
+
     /**
      * Finds an object by its primary key / identifier.
      *
@@ -36,7 +37,7 @@ interface ObjectRepository
      *
      * @return object The object.
      */
-    public function find($id);
+    public function find( $id );
 
     /**
      * Finds all objects in the repository.
@@ -61,7 +62,7 @@ interface ObjectRepository
      *
      * @throws \UnexpectedValueException
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
+    public function findBy( array $criteria, array $orderBy = null, $limit = null, $offset = null );
 
     /**
      * Finds a single object by a set of criteria.
@@ -70,7 +71,7 @@ interface ObjectRepository
      *
      * @return object The object.
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy( array $criteria );
 
     /**
      * Returns the class name of the object managed by the repository.

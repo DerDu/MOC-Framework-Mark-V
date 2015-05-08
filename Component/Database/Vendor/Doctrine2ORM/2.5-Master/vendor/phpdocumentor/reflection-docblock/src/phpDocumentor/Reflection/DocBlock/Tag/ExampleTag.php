@@ -23,7 +23,8 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ExampleTag extends SourceTag
 {
-    /** 
+
+    /**
      * @var string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
@@ -40,26 +41,41 @@ class ExampleTag extends SourceTag
      */
     public function getContent()
     {
+
         if (null === $this->content) {
-            $filePath = '"' . $this->filePath . '"';
+            $filePath = '"'.$this->filePath.'"';
             if ($this->isURI) {
-                $filePath = $this->isUriRelative($this->filePath)
-                    ? str_replace('%2F', '/', rawurlencode($this->filePath))
-                    :$this->filePath;
+                $filePath = $this->isUriRelative( $this->filePath )
+                    ? str_replace( '%2F', '/', rawurlencode( $this->filePath ) )
+                    : $this->filePath;
             }
 
-            $this->content = $filePath . ' ' . parent::getContent();
+            $this->content = $filePath.' '.parent::getContent();
         }
 
         return $this->content;
     }
 
     /**
+     * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
+     *
+     * @param string $uri
+     *
+     * @return bool
+     */
+    private function isUriRelative( $uri )
+    {
+
+        return false === strpos( $uri, ':' );
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public function setContent( $content )
     {
-        Tag::setContent($content);
+
+        Tag::setContent( $content );
         if (preg_match(
             '/^
                 # File component
@@ -77,18 +93,43 @@ class ExampleTag extends SourceTag
             $matches
         )) {
             if ('' !== $matches[1]) {
-                $this->setFilePath($matches[1]);
+                $this->setFilePath( $matches[1] );
             } else {
-                $this->setFileURI($matches[2]);
+                $this->setFileURI( $matches[2] );
             }
 
-            if (isset($matches[3])) {
-                parent::setContent($matches[3]);
+            if (isset( $matches[3] )) {
+                parent::setContent( $matches[3] );
             } else {
-                $this->setDescription('');
+                $this->setDescription( '' );
             }
             $this->content = $content;
         }
+
+        return $this;
+    }
+
+    /**
+     * Sets the file path as an URI.
+     *
+     * This function is equivalent to {@link setFilePath()}, except that it
+     * converts an URI to a file path before that.
+     *
+     * There is no getFileURI(), as {@link getFilePath()} is compatible.
+     *
+     * @param string $uri The new file URI to use as an example.
+     *
+     * @return $this
+     */
+    public function setFileURI( $uri )
+    {
+
+        $this->isURI = true;
+        $this->content = null;
+
+        $this->filePath = $this->isUriRelative( $uri )
+            ? rawurldecode( str_replace( array( '/', '\\' ), '%2F', $uri ) )
+            : $this->filePath = $uri;
 
         return $this;
     }
@@ -101,58 +142,24 @@ class ExampleTag extends SourceTag
      */
     public function getFilePath()
     {
+
         return $this->filePath;
     }
-    
+
     /**
      * Sets the file path.
-     * 
+     *
      * @param string $filePath The new file path to use for the example.
-     * 
+     *
      * @return $this
      */
-    public function setFilePath($filePath)
+    public function setFilePath( $filePath )
     {
+
         $this->isURI = false;
-        $this->filePath = trim($filePath);
+        $this->filePath = trim( $filePath );
 
         $this->content = null;
         return $this;
-    }
-    
-    /**
-     * Sets the file path as an URI.
-     * 
-     * This function is equivalent to {@link setFilePath()}, except that it
-     * converts an URI to a file path before that.
-     * 
-     * There is no getFileURI(), as {@link getFilePath()} is compatible.
-     * 
-     * @param string $uri The new file URI to use as an example.
-     *
-     * @return $this
-     */
-    public function setFileURI($uri)
-    {
-        $this->isURI   = true;
-        $this->content = null;
-
-        $this->filePath = $this->isUriRelative($uri)
-            ? rawurldecode(str_replace(array('/', '\\'), '%2F', $uri))
-            : $this->filePath = $uri;
-
-        return $this;
-    }
-
-    /**
-     * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
-     *
-     * @param string $uri
-     *
-     * @return bool
-     */
-    private function isUriRelative($uri)
-    {
-        return false === strpos($uri, ':');
     }
 }

@@ -29,14 +29,15 @@ namespace Doctrine\ORM\Tools\Export;
  */
 class ClassMetadataExporter
 {
+
     /**
      * @var array
      */
     private static $_exporterDrivers = array(
-        'xml' => 'Doctrine\ORM\Tools\Export\Driver\XmlExporter',
+        'xml'  => 'Doctrine\ORM\Tools\Export\Driver\XmlExporter',
         'yaml' => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'yml' => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'php' => 'Doctrine\ORM\Tools\Export\Driver\PhpExporter',
+        'yml'  => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
+        'php'  => 'Doctrine\ORM\Tools\Export\Driver\PhpExporter',
         'annotation' => 'Doctrine\ORM\Tools\Export\Driver\AnnotationExporter'
     );
 
@@ -48,8 +49,9 @@ class ClassMetadataExporter
      *
      * @return void
      */
-    public static function registerExportDriver($name, $class)
+    public static function registerExportDriver( $name, $class )
     {
+
         self::$_exporterDrivers[$name] = $class;
     }
 
@@ -63,14 +65,15 @@ class ClassMetadataExporter
      *
      * @throws ExportException
      */
-    public function getExporter($type, $dest = null)
+    public function getExporter( $type, $dest = null )
     {
-        if ( ! isset(self::$_exporterDrivers[$type])) {
-            throw ExportException::invalidExporterDriverType($type);
+
+        if (!isset( self::$_exporterDrivers[$type] )) {
+            throw ExportException::invalidExporterDriverType( $type );
         }
 
         $class = self::$_exporterDrivers[$type];
 
-        return new $class($dest);
+        return new $class( $dest );
     }
 }

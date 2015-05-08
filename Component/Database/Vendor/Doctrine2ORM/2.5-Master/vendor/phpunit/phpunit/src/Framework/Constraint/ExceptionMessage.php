@@ -21,6 +21,7 @@
  */
 class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var integer
      */
@@ -29,10 +30,20 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
     /**
      * @param string $expected
      */
-    public function __construct($expected)
+    public function __construct( $expected )
     {
+
         parent::__construct();
         $this->expectedMessage = $expected;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+
+        return 'exception message contains ';
     }
 
     /**
@@ -40,11 +51,13 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      * constraint is met, false otherwise.
      *
      * @param  Exception $other
+     *
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches( $other )
     {
-        return strpos($other->getMessage(), $this->expectedMessage) !== false;
+
+        return strpos( $other->getMessage(), $this->expectedMessage ) !== false;
     }
 
     /**
@@ -53,23 +66,17 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed  $other Evaluated value or object.
+     * @param  mixed $other Evaluated value or object.
+     *
      * @return string
      */
-    protected function failureDescription($other)
+    protected function failureDescription( $other )
     {
+
         return sprintf(
             "exception message '%s' contains '%s'",
             $other->getMessage(),
             $this->expectedMessage
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function toString()
-    {
-        return 'exception message contains ';
     }
 }

@@ -23,13 +23,15 @@
  */
 interface PHPUnit_Framework_MockObject_Builder_Namespace
 {
+
     /**
      * Looks up the match builder with identification $id and returns it.
      *
-     * @param  string                                     $id The identifiction of the match builder.
+     * @param  string $id The identifiction of the match builder.
+     *
      * @return PHPUnit_Framework_MockObject_Builder_Match
      */
-    public function lookupId($id);
+    public function lookupId( $id );
 
     /**
      * Registers the match builder $builder with the identification $id. The
@@ -41,5 +43,5 @@ interface PHPUnit_Framework_MockObject_Builder_Namespace
      * @param PHPUnit_Framework_MockObject_Builder_Match $builder
      *                                                            The builder which is being registered.
      */
-    public function registerId($id, PHPUnit_Framework_MockObject_Builder_Match $builder);
+    public function registerId( $id, PHPUnit_Framework_MockObject_Builder_Match $builder );
 }

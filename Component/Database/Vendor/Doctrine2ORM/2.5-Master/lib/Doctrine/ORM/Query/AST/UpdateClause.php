@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class UpdateClause extends Node
 {
+
     /**
      * @var string
      */
@@ -49,8 +50,9 @@ class UpdateClause extends Node
      * @param string $abstractSchemaName
      * @param array  $updateItems
      */
-    public function __construct($abstractSchemaName, array $updateItems)
+    public function __construct( $abstractSchemaName, array $updateItems )
     {
+
         $this->abstractSchemaName = $abstractSchemaName;
         $this->updateItems = $updateItems;
     }
@@ -58,8 +60,9 @@ class UpdateClause extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkUpdateClause($this);
+
+        return $sqlWalker->walkUpdateClause( $this );
     }
 }

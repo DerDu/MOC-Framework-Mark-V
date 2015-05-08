@@ -29,6 +29,7 @@ namespace Doctrine\Common\Persistence\Mapping;
  */
 interface ClassMetadata
 {
+
     /**
      * Gets the fully-qualified class name of this persistent class.
      *
@@ -59,7 +60,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function isIdentifier($fieldName);
+    public function isIdentifier( $fieldName );
 
     /**
      * Checks if the given field is a mapped property for this class.
@@ -68,7 +69,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function hasField($fieldName);
+    public function hasField( $fieldName );
 
     /**
      * Checks if the given field is a mapped association for this class.
@@ -77,7 +78,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function hasAssociation($fieldName);
+    public function hasAssociation( $fieldName );
 
     /**
      * Checks if the given field is a mapped single valued association for this class.
@@ -86,7 +87,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function isSingleValuedAssociation($fieldName);
+    public function isSingleValuedAssociation( $fieldName );
 
     /**
      * Checks if the given field is a mapped collection valued association for this class.
@@ -95,7 +96,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function isCollectionValuedAssociation($fieldName);
+    public function isCollectionValuedAssociation( $fieldName );
 
     /**
      * A numerically indexed list of field names of this persistent class.
@@ -132,7 +133,7 @@ interface ClassMetadata
      *
      * @return string
      */
-    public function getTypeOfField($fieldName);
+    public function getTypeOfField( $fieldName );
 
     /**
      * Returns the target class name of the given association.
@@ -141,7 +142,7 @@ interface ClassMetadata
      *
      * @return string
      */
-    public function getAssociationTargetClass($assocName);
+    public function getAssociationTargetClass( $assocName );
 
     /**
      * Checks if the association is the inverse side of a bidirectional association.
@@ -150,7 +151,7 @@ interface ClassMetadata
      *
      * @return boolean
      */
-    public function isAssociationInverseSide($assocName);
+    public function isAssociationInverseSide( $assocName );
 
     /**
      * Returns the target field of the owning side of the association.
@@ -159,7 +160,7 @@ interface ClassMetadata
      *
      * @return string
      */
-    public function getAssociationMappedByTargetField($assocName);
+    public function getAssociationMappedByTargetField( $assocName );
 
     /**
      * Returns the identifier of this object as an array with field name as key.
@@ -170,5 +171,5 @@ interface ClassMetadata
      *
      * @return array
      */
-    public function getIdentifierValues($object);
+    public function getIdentifierValues( $object );
 }

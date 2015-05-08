@@ -29,13 +29,15 @@ namespace Doctrine\ORM\Mapping\Builder;
  */
 class OneToManyAssociationBuilder extends AssociationBuilder
 {
+
     /**
      * @param array $fieldNames
      *
      * @return OneToManyAssociationBuilder
      */
-    public function setOrderBy(array $fieldNames)
+    public function setOrderBy( array $fieldNames )
     {
+
         $this->mapping['orderBy'] = $fieldNames;
         return $this;
     }
@@ -45,8 +47,9 @@ class OneToManyAssociationBuilder extends AssociationBuilder
      *
      * @return OneToManyAssociationBuilder
      */
-    public function setIndexBy($fieldName)
+    public function setIndexBy( $fieldName )
     {
+
         $this->mapping['indexBy'] = $fieldName;
         return $this;
     }
@@ -56,12 +59,13 @@ class OneToManyAssociationBuilder extends AssociationBuilder
      */
     public function build()
     {
+
         $mapping = $this->mapping;
         if ($this->joinColumns) {
             $mapping['joinColumns'] = $this->joinColumns;
         }
         $cm = $this->builder->getClassMetadata();
-        $cm->mapOneToMany($mapping);
+        $cm->mapOneToMany( $mapping );
         return $this->builder;
     }
 }

@@ -8,6 +8,7 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity;
  */
 class Metrics
 {
+
     /**
      * Number of statements.
      *
@@ -34,30 +35,33 @@ class Metrics
      *
      * @param array $coverage Coverage data.
      */
-    public function __construct(array $coverage = array())
+    public function __construct( array $coverage = array() )
     {
-        if (!empty($coverage)) {
+
+        if (!empty( $coverage )) {
             // statements
             // not null
             $statementsArray = array_filter(
                 $coverage,
-                function ($line) {
+                function ( $line ) {
+
                     return $line !== null;
                 }
             );
-            $this->statements = count($statementsArray);
+            $this->statements = count( $statementsArray );
 
             // coveredstatements
             // gt 0
             $coveredArray = array_filter(
                 $statementsArray,
-                function ($line) {
+                function ( $line ) {
+
                     return $line > 0;
                 }
             );
-            $this->coveredStatements = count($coveredArray);
+            $this->coveredStatements = count( $coveredArray );
         } else {
-            $this->statements        = 0;
+            $this->statements = 0;
             $this->coveredStatements = 0;
         }
     }
@@ -71,33 +75,15 @@ class Metrics
      *
      * @return void
      */
-    public function merge(Metrics $that)
+    public function merge( Metrics $that )
     {
-        $this->statements        += $that->statements;
+
+        $this->statements += $that->statements;
         $this->coveredStatements += $that->coveredStatements;
-        $this->lineCoverage       = null; // clear previous data
+        $this->lineCoverage = null; // clear previous data
     }
 
     // internal method
-
-    /**
-     * Calculate line coverage.
-     *
-     * @param integer $statements        Number of statements.
-     * @param integer $coveredStatements Number of covered statements.
-     *
-     * @return float
-     */
-    protected function calculateLineCoverage($statements, $coveredStatements)
-    {
-        if ($statements === 0) {
-            return 0;
-        }
-
-        return ($coveredStatements / $statements) * 100;
-    }
-
-    // accessor
 
     /**
      * Return whether the source file has executable statements.
@@ -106,8 +92,11 @@ class Metrics
      */
     public function hasStatements()
     {
+
         return $this->statements !== 0;
     }
+
+    // accessor
 
     /**
      * Return number of statements.
@@ -116,6 +105,7 @@ class Metrics
      */
     public function getStatements()
     {
+
         return $this->statements;
     }
 
@@ -126,6 +116,7 @@ class Metrics
      */
     public function getCoveredStatements()
     {
+
         return $this->coveredStatements;
     }
 
@@ -136,10 +127,29 @@ class Metrics
      */
     public function getLineCoverage()
     {
-        if (!isset($this->lineCoverage)) {
-            $this->lineCoverage = $this->calculateLineCoverage($this->statements, $this->coveredStatements);
+
+        if (!isset( $this->lineCoverage )) {
+            $this->lineCoverage = $this->calculateLineCoverage( $this->statements, $this->coveredStatements );
         }
 
         return $this->lineCoverage;
+    }
+
+    /**
+     * Calculate line coverage.
+     *
+     * @param integer $statements        Number of statements.
+     * @param integer $coveredStatements Number of covered statements.
+     *
+     * @return float
+     */
+    protected function calculateLineCoverage( $statements, $coveredStatements )
+    {
+
+        if ($statements === 0) {
+            return 0;
+        }
+
+        return ( $coveredStatements / $statements ) * 100;
     }
 }

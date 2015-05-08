@@ -31,6 +31,7 @@ namespace Doctrine\DBAL\Logging;
  */
 class DebugStack implements SQLLogger
 {
+
     /**
      * Executed SQL queries.
      *
@@ -58,11 +59,17 @@ class DebugStack implements SQLLogger
     /**
      * {@inheritdoc}
      */
-    public function startQuery($sql, array $params = null, array $types = null)
+    public function startQuery( $sql, array $params = null, array $types = null )
     {
+
         if ($this->enabled) {
-            $this->start = microtime(true);
-            $this->queries[++$this->currentQuery] = array('sql' => $sql, 'params' => $params, 'types' => $types, 'executionMS' => 0);
+            $this->start = microtime( true );
+            $this->queries[++$this->currentQuery] = array(
+                'sql'         => $sql,
+                'params'      => $params,
+                'types'       => $types,
+                'executionMS' => 0
+            );
         }
     }
 
@@ -71,8 +78,9 @@ class DebugStack implements SQLLogger
      */
     public function stopQuery()
     {
+
         if ($this->enabled) {
-            $this->queries[$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
+            $this->queries[$this->currentQuery]['executionMS'] = microtime( true ) - $this->start;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Doctrine\Common;
  */
 interface Comparable
 {
+
     /**
      * Compares the current object to the passed $other.
      *
@@ -42,5 +43,5 @@ interface Comparable
      *
      * @return int
      */
-    public function compareTo($other);
+    public function compareTo( $other );
 }

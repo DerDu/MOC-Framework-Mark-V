@@ -29,6 +29,7 @@ namespace Doctrine\Common\Persistence;
  */
 interface ObjectManager
 {
+
     /**
      * Finds an object by its identifier.
      *
@@ -39,7 +40,7 @@ interface ObjectManager
      *
      * @return object The found object.
      */
-    public function find($className, $id);
+    public function find( $className, $id );
 
     /**
      * Tells the ObjectManager to make an instance managed and persistent.
@@ -53,7 +54,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function persist($object);
+    public function persist( $object );
 
     /**
      * Removes an object instance.
@@ -64,7 +65,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function remove($object);
+    public function remove( $object );
 
     /**
      * Merges the state of a detached object into the persistence context
@@ -75,7 +76,7 @@ interface ObjectManager
      *
      * @return object
      */
-    public function merge($object);
+    public function merge( $object );
 
     /**
      * Clears the ObjectManager. All objects that are currently managed
@@ -85,7 +86,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function clear($objectName = null);
+    public function clear( $objectName = null );
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to
@@ -98,7 +99,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function detach($object);
+    public function detach( $object );
 
     /**
      * Refreshes the persistent state of an object from the database,
@@ -108,7 +109,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function refresh($object);
+    public function refresh( $object );
 
     /**
      * Flushes all changes to objects that have been queued up to now to the database.
@@ -126,7 +127,7 @@ interface ObjectManager
      *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getRepository($className);
+    public function getRepository( $className );
 
     /**
      * Returns the ClassMetadata descriptor for a class.
@@ -138,7 +139,7 @@ interface ObjectManager
      *
      * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata
      */
-    public function getClassMetadata($className);
+    public function getClassMetadata( $className );
 
     /**
      * Gets the metadata factory used to gather the metadata of classes.
@@ -156,7 +157,7 @@ interface ObjectManager
      *
      * @return void
      */
-    public function initializeObject($obj);
+    public function initializeObject( $obj );
 
     /**
      * Checks if the object is part of the current UnitOfWork and therefore managed.
@@ -165,5 +166,5 @@ interface ObjectManager
      *
      * @return bool
      */
-    public function contains($object);
+    public function contains( $object );
 }

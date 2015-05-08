@@ -13,6 +13,7 @@ namespace Prophecy\Exception\Doubler;
 
 class MethodNotFoundException extends DoubleException
 {
+
     /**
      * @var string
      */
@@ -34,27 +35,31 @@ class MethodNotFoundException extends DoubleException
      * @param string $methodName
      * @param null|Argument\ArgumentsWildcard|array $arguments
      */
-    public function __construct($message, $classname, $methodName, $arguments = null)
+    public function __construct( $message, $classname, $methodName, $arguments = null )
     {
-        parent::__construct($message);
 
-        $this->classname  = $classname;
+        parent::__construct( $message );
+
+        $this->classname = $classname;
         $this->methodName = $methodName;
         $this->arguments = $arguments;
     }
 
     public function getClassname()
     {
+
         return $this->classname;
     }
 
     public function getMethodName()
     {
+
         return $this->methodName;
     }
 
     public function getArguments()
     {
+
         return $this->arguments;
     }
 }

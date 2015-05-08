@@ -9,6 +9,7 @@ use Guzzle\Common\ToArrayInterface;
  */
 interface OperationInterface extends ToArrayInterface
 {
+
     const TYPE_PRIMITIVE = 'primitive';
     const TYPE_CLASS = 'class';
     const TYPE_DOCUMENTATION = 'documentation';
@@ -28,7 +29,7 @@ interface OperationInterface extends ToArrayInterface
      *
      * @return self
      */
-    public function setServiceDescription(ServiceDescriptionInterface $description);
+    public function setServiceDescription( ServiceDescriptionInterface $description );
 
     /**
      * Get the params of the operation
@@ -51,7 +52,7 @@ interface OperationInterface extends ToArrayInterface
      *
      * @return bool
      */
-    public function hasParam($name);
+    public function hasParam( $name );
 
     /**
      * Get a single parameter of the operation
@@ -60,7 +61,7 @@ interface OperationInterface extends ToArrayInterface
      *
      * @return Parameter|null
      */
-    public function getParam($param);
+    public function getParam( $param );
 
     /**
      * Get the HTTP method of the operation
@@ -155,5 +156,5 @@ interface OperationInterface extends ToArrayInterface
      *
      * @return mixed|null
      */
-    public function getData($name);
+    public function getData( $name );
 }

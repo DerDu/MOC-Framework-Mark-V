@@ -15,10 +15,12 @@ use Symfony\Component\Config\Definition\EnumNode;
 
 class EnumNodeTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testFinalizeValue()
     {
-        $node = new EnumNode('foo', null, array('foo', 'bar'));
-        $this->assertSame('foo', $node->finalize('foo'));
+
+        $node = new EnumNode( 'foo', null, array( 'foo', 'bar' ) );
+        $this->assertSame( 'foo', $node->finalize( 'foo' ) );
     }
 
     /**
@@ -26,7 +28,8 @@ class EnumNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructionWithOneValue()
     {
-        new EnumNode('foo', null, array('foo', 'foo'));
+
+        new EnumNode( 'foo', null, array( 'foo', 'foo' ) );
     }
 
     /**
@@ -35,7 +38,8 @@ class EnumNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testFinalizeWithInvalidValue()
     {
-        $node = new EnumNode('foo', null, array('foo', 'bar'));
-        $node->finalize('foobar');
+
+        $node = new EnumNode( 'foo', null, array( 'foo', 'bar' ) );
+        $node->finalize( 'foobar' );
     }
 }

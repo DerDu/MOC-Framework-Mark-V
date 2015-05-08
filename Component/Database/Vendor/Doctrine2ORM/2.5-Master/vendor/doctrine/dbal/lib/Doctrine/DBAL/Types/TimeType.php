@@ -28,45 +28,51 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class TimeType extends Type
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSQLDeclaration( array $fieldDeclaration, AbstractPlatform $platform )
+    {
+
+        return $platform->getTimeTypeDeclarationSQL( $fieldDeclaration );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToDatabaseValue( $value, AbstractPlatform $platform )
+    {
+
+        return ( $value !== null )
+            ? $value->format( $platform->getTimeFormatString() ) : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToPHPValue( $value, AbstractPlatform $platform )
+    {
+
+        if ($value === null || $value instanceof \DateTime) {
+            return $value;
+        }
+
+        $val = \DateTime::createFromFormat( '!'.$platform->getTimeFormatString(), $value );
+        if (!$val) {
+            throw ConversionException::conversionFailedFormat( $value, $this->getName(),
+                $platform->getTimeFormatString() );
+        }
+
+        return $val;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
+
         return Type::TIME;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
-    {
-        return $platform->getTimeTypeDeclarationSQL($fieldDeclaration);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
-    {
-        return ($value !== null)
-            ? $value->format($platform->getTimeFormatString()) : null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        if ($value === null || $value instanceof \DateTime) {
-            return $value;
-        }
-
-        $val = \DateTime::createFromFormat('!' . $platform->getTimeFormatString(), $value);
-        if ( ! $val) {
-            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getTimeFormatString());
-        }
-
-        return $val;
     }
 }

@@ -30,6 +30,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 interface Constraint
 {
+
     /**
      * @return string
      */
@@ -40,7 +41,7 @@ interface Constraint
      *
      * @return string
      */
-    public function getQuotedName(AbstractPlatform $platform);
+    public function getQuotedName( AbstractPlatform $platform );
 
     /**
      * Returns the names of the referencing table columns
@@ -62,5 +63,5 @@ interface Constraint
      *
      * @return array
      */
-    public function getQuotedColumns(AbstractPlatform $platform);
+    public function getQuotedColumns( AbstractPlatform $platform );
 }

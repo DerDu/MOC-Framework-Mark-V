@@ -11,16 +11,14 @@ use Satooshi\ProjectTestCase;
  */
 class SourceFileTest extends ProjectTestCase
 {
-    protected function setUp()
+
+    /**
+     * @test
+     */
+    public function shouldHaveNameOnConstruction()
     {
-        $this->projectDir = realpath(__DIR__ . '/../../../..');
 
-        $this->setUpDir($this->projectDir);
-
-        $this->filename = 'test.php';
-        $this->path     = $this->srcDir . DIRECTORY_SEPARATOR . $this->filename;
-
-        $this->object = new SourceFile($this->path, $this->filename);
+        $this->assertEquals( $this->filename, $this->object->getName() );
     }
 
     // getName()
@@ -28,9 +26,12 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldHaveNameOnConstruction()
+    public function shouldHaveSourceOnConstruction()
     {
-        $this->assertEquals($this->filename, $this->object->getName());
+
+        $expected = trim( file_get_contents( $this->path ) );
+
+        $this->assertEquals( $expected, $this->object->getSource() );
     }
 
     // getSource()
@@ -38,11 +39,12 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldHaveSourceOnConstruction()
+    public function shouldHaveNullCoverageOnConstruction()
     {
-        $expected = trim(file_get_contents($this->path));
 
-        $this->assertEquals($expected, $this->object->getSource());
+        $expected = array_fill( 0, 9, null );
+
+        $this->assertEquals( $expected, $this->object->getCoverage() );
     }
 
     // getCoverage()
@@ -50,11 +52,10 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldHaveNullCoverageOnConstruction()
+    public function shouldHavePathOnConstruction()
     {
-        $expected = array_fill(0, 9, null);
 
-        $this->assertEquals($expected, $this->object->getCoverage());
+        $this->assertEquals( $this->path, $this->object->getPath() );
     }
 
     // getPath()
@@ -62,9 +63,10 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldHavePathOnConstruction()
+    public function shouldHaveFileLinesOnConstruction()
     {
-        $this->assertEquals($this->path, $this->object->getPath());
+
+        $this->assertEquals( 9, $this->object->getFileLines() );
     }
 
     // getFileLines()
@@ -72,9 +74,17 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldHaveFileLinesOnConstruction()
+    public function shouldConvertToArray()
     {
-        $this->assertEquals(9, $this->object->getFileLines());
+
+        $expected = array(
+            'name'     => $this->filename,
+            'source'   => trim( file_get_contents( $this->path ) ),
+            'coverage' => array_fill( 0, 9, null ),
+        );
+
+        $this->assertEquals( $expected, $this->object->toArray() );
+        $this->assertEquals( json_encode( $expected ), (string)$this->object );
     }
 
     // toArray()
@@ -82,16 +92,15 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldConvertToArray()
+    public function shouldAddCoverage()
     {
-        $expected = array(
-            'name'     => $this->filename,
-            'source'   => trim(file_get_contents($this->path)),
-            'coverage' => array_fill(0, 9, null),
-        );
 
-        $this->assertEquals($expected, $this->object->toArray());
-        $this->assertEquals(json_encode($expected), (string)$this->object);
+        $this->object->addCoverage( 5, 1 );
+
+        $expected = array_fill( 0, 9, null );
+        $expected[5] = 1;
+
+        $this->assertEquals( $expected, $this->object->getCoverage() );
     }
 
     // addCoverage()
@@ -99,14 +108,15 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldAddCoverage()
+    public function shouldReportLineCoverage0PercentWithoutAddingCoverage()
     {
-        $this->object->addCoverage(5, 1);
 
-        $expected = array_fill(0, 9, null);
-        $expected[5] = 1;
+        $metrics = $this->object->getMetrics();
 
-        $this->assertEquals($expected, $this->object->getCoverage());
+        $this->assertEquals( 0, $metrics->getStatements() );
+        $this->assertEquals( 0, $metrics->getCoveredStatements() );
+        $this->assertEquals( 0, $metrics->getLineCoverage() );
+        $this->assertEquals( 0, $this->object->reportLineCoverage() );
     }
 
     // getMetrics()
@@ -115,28 +125,29 @@ class SourceFileTest extends ProjectTestCase
     /**
      * @test
      */
-    public function shouldReportLineCoverage0PercentWithoutAddingCoverage()
-    {
-        $metrics = $this->object->getMetrics();
-
-        $this->assertEquals(0, $metrics->getStatements());
-        $this->assertEquals(0, $metrics->getCoveredStatements());
-        $this->assertEquals(0, $metrics->getLineCoverage());
-        $this->assertEquals(0, $this->object->reportLineCoverage());
-    }
-
-    /**
-     * @test
-     */
     public function shouldReportLineCoverage100PercentAfterAddingCoverage()
     {
-        $this->object->addCoverage(6, 1);
+
+        $this->object->addCoverage( 6, 1 );
 
         $metrics = $this->object->getMetrics();
 
-        $this->assertEquals(1, $metrics->getStatements());
-        $this->assertEquals(1, $metrics->getCoveredStatements());
-        $this->assertEquals(100, $metrics->getLineCoverage());
-        $this->assertEquals(100, $this->object->reportLineCoverage());
+        $this->assertEquals( 1, $metrics->getStatements() );
+        $this->assertEquals( 1, $metrics->getCoveredStatements() );
+        $this->assertEquals( 100, $metrics->getLineCoverage() );
+        $this->assertEquals( 100, $this->object->reportLineCoverage() );
+    }
+
+    protected function setUp()
+    {
+
+        $this->projectDir = realpath( __DIR__.'/../../../..' );
+
+        $this->setUpDir( $this->projectDir );
+
+        $this->filename = 'test.php';
+        $this->path = $this->srcDir.DIRECTORY_SEPARATOR.$this->filename;
+
+        $this->object = new SourceFile( $this->path, $this->filename );
     }
 }

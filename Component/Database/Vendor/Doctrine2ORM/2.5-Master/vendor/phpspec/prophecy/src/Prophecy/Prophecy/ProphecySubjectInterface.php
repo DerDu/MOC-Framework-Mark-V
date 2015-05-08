@@ -18,12 +18,13 @@ namespace Prophecy\Prophecy;
  */
 interface ProphecySubjectInterface
 {
+
     /**
      * Sets subject prophecy.
      *
      * @param ProphecyInterface $prophecy
      */
-    public function setProphecy(ProphecyInterface $prophecy);
+    public function setProphecy( ProphecyInterface $prophecy );
 
     /**
      * Returns subject prophecy.

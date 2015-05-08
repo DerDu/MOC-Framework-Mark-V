@@ -35,6 +35,7 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
  */
 class StaticPHPDriver implements MappingDriver
 {
+
     /**
      * Paths of entity directories.
      *
@@ -54,9 +55,10 @@ class StaticPHPDriver implements MappingDriver
      *
      * @param array|string $paths
      */
-    public function __construct($paths)
+    public function __construct( $paths )
     {
-        $this->addPaths((array) $paths);
+
+        $this->addPaths( (array)$paths );
     }
 
     /**
@@ -66,17 +68,19 @@ class StaticPHPDriver implements MappingDriver
      *
      * @return void
      */
-    public function addPaths(array $paths)
+    public function addPaths( array $paths )
     {
-        $this->paths = array_unique(array_merge($this->paths, $paths));
+
+        $this->paths = array_unique( array_merge( $this->paths, $paths ) );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function loadMetadataForClass($className, ClassMetadata $metadata)
+    public function loadMetadataForClass( $className, ClassMetadata $metadata )
     {
-        $className::loadMetadata($metadata);
+
+        $className::loadMetadata( $metadata );
     }
 
     /**
@@ -85,6 +89,7 @@ class StaticPHPDriver implements MappingDriver
      */
     public function getAllClassNames()
     {
+
         if ($this->classNames !== null) {
             return $this->classNames;
         }
@@ -97,21 +102,21 @@ class StaticPHPDriver implements MappingDriver
         $includedFiles = array();
 
         foreach ($this->paths as $path) {
-            if (!is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+            if (!is_dir( $path )) {
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath( $path );
             }
 
             $iterator = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path),
+                new \RecursiveDirectoryIterator( $path ),
                 \RecursiveIteratorIterator::LEAVES_ONLY
             );
 
             foreach ($iterator as $file) {
-                if ($file->getBasename('.php') == $file->getBasename()) {
+                if ($file->getBasename( '.php' ) == $file->getBasename()) {
                     continue;
                 }
 
-                $sourceFile = realpath($file->getPathName());
+                $sourceFile = realpath( $file->getPathName() );
                 require_once $sourceFile;
                 $includedFiles[] = $sourceFile;
             }
@@ -120,9 +125,9 @@ class StaticPHPDriver implements MappingDriver
         $declared = get_declared_classes();
 
         foreach ($declared as $className) {
-            $rc = new \ReflectionClass($className);
+            $rc = new \ReflectionClass( $className );
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
+            if (in_array( $sourceFile, $includedFiles ) && !$this->isTransient( $className )) {
                 $classes[] = $className;
             }
         }
@@ -135,8 +140,9 @@ class StaticPHPDriver implements MappingDriver
     /**
      * {@inheritdoc}
      */
-    public function isTransient($className)
+    public function isTransient( $className )
     {
-        return ! method_exists($className, 'loadMetadata');
+
+        return !method_exists( $className, 'loadMetadata' );
     }
 }

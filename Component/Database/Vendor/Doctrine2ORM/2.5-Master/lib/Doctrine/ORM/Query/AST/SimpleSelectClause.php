@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class SimpleSelectClause extends Node
 {
+
     /**
      * @var bool
      */
@@ -44,8 +45,9 @@ class SimpleSelectClause extends Node
      * @param SimpleSelectExpression $simpleSelectExpression
      * @param bool                   $isDistinct
      */
-    public function __construct($simpleSelectExpression, $isDistinct)
+    public function __construct( $simpleSelectExpression, $isDistinct )
     {
+
         $this->simpleSelectExpression = $simpleSelectExpression;
         $this->isDistinct = $isDistinct;
     }
@@ -53,8 +55,9 @@ class SimpleSelectClause extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkSimpleSelectClause($this);
+
+        return $sqlWalker->walkSimpleSelectClause( $this );
     }
 }

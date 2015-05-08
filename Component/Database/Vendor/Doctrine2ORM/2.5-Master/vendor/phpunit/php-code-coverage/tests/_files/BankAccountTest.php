@@ -3,19 +3,16 @@ require_once 'BankAccount.php';
 
 class BankAccountTest extends PHPUnit_Framework_TestCase
 {
-    protected $ba;
 
-    protected function setUp()
-    {
-        $this->ba = new BankAccount;
-    }
+    protected $ba;
 
     /**
      * @covers BankAccount::getBalance
      */
     public function testBalanceIsInitiallyZero()
     {
-        $this->assertEquals(0, $this->ba->getBalance());
+
+        $this->assertEquals( 0, $this->ba->getBalance() );
     }
 
     /**
@@ -23,10 +20,11 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative()
     {
+
         try {
-            $this->ba->withdrawMoney(1);
-        } catch (RuntimeException $e) {
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->ba->withdrawMoney( 1 );
+        } catch( RuntimeException $e ) {
+            $this->assertEquals( 0, $this->ba->getBalance() );
 
             return;
         }
@@ -39,10 +37,11 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative2()
     {
+
         try {
-            $this->ba->depositMoney(-1);
-        } catch (RuntimeException $e) {
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->ba->depositMoney( -1 );
+        } catch( RuntimeException $e ) {
+            $this->assertEquals( 0, $this->ba->getBalance() );
 
             return;
         }
@@ -57,10 +56,17 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testDepositWithdrawMoney()
     {
-        $this->assertEquals(0, $this->ba->getBalance());
-        $this->ba->depositMoney(1);
-        $this->assertEquals(1, $this->ba->getBalance());
-        $this->ba->withdrawMoney(1);
-        $this->assertEquals(0, $this->ba->getBalance());
+
+        $this->assertEquals( 0, $this->ba->getBalance() );
+        $this->ba->depositMoney( 1 );
+        $this->assertEquals( 1, $this->ba->getBalance() );
+        $this->ba->withdrawMoney( 1 );
+        $this->assertEquals( 0, $this->ba->getBalance() );
+    }
+
+    protected function setUp()
+    {
+
+        $this->ba = new BankAccount;
     }
 }

@@ -18,6 +18,7 @@ namespace Symfony\Component\Config\Loader;
  */
 interface LoaderResolverInterface
 {
+
     /**
      * Returns a loader able to load the resource.
      *
@@ -26,5 +27,5 @@ interface LoaderResolverInterface
      *
      * @return LoaderInterface|false The loader or false if none is able to load the resource
      */
-    public function resolve($resource, $type = null);
+    public function resolve( $resource, $type = null );
 }

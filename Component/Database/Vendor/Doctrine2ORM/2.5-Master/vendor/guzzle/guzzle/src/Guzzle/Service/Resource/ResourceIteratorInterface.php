@@ -10,6 +10,7 @@ use Guzzle\Common\ToArrayInterface;
  */
 interface ResourceIteratorInterface extends ToArrayInterface, HasDispatcherInterface, \Iterator, \Countable
 {
+
     /**
      * Retrieve the NextToken that can be used in other iterators.
      *
@@ -26,7 +27,7 @@ interface ResourceIteratorInterface extends ToArrayInterface, HasDispatcherInter
      *
      * @return ResourceIteratorInterface
      */
-    public function setLimit($limit);
+    public function setLimit( $limit );
 
     /**
      * Attempt to limit the total number of resources retrieved per request by  the iterator.
@@ -38,7 +39,7 @@ interface ResourceIteratorInterface extends ToArrayInterface, HasDispatcherInter
      *
      * @return ResourceIteratorInterface
      */
-    public function setPageSize($pageSize);
+    public function setPageSize( $pageSize );
 
     /**
      * Get a data option from the iterator
@@ -47,7 +48,7 @@ interface ResourceIteratorInterface extends ToArrayInterface, HasDispatcherInter
      *
      * @return mixed|null Returns NULL if not set or the value if set
      */
-    public function get($key);
+    public function get( $key );
 
     /**
      * Set a data option on the iterator
@@ -57,5 +58,5 @@ interface ResourceIteratorInterface extends ToArrayInterface, HasDispatcherInter
      *
      * @return ResourceIteratorInterface
      */
-    public function set($key, $value);
+    public function set( $key, $value );
 }

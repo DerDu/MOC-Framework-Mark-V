@@ -28,6 +28,7 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 abstract class KeywordList
 {
+
     /**
      * @var array|null
      */
@@ -40,13 +41,14 @@ abstract class KeywordList
      *
      * @return boolean
      */
-    public function isKeyword($word)
+    public function isKeyword( $word )
     {
+
         if ($this->keywords === null) {
             $this->initializeKeywords();
         }
 
-        return isset($this->keywords[strtoupper($word)]);
+        return isset( $this->keywords[strtoupper( $word )] );
     }
 
     /**
@@ -54,7 +56,8 @@ abstract class KeywordList
      */
     protected function initializeKeywords()
     {
-        $this->keywords = array_flip(array_map('strtoupper', $this->getKeywords()));
+
+        $this->keywords = array_flip( array_map( 'strtoupper', $this->getKeywords() ) );
     }
 
     /**

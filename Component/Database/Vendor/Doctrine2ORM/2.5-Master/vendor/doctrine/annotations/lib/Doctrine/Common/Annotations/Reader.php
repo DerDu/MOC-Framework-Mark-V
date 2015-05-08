@@ -26,6 +26,7 @@ namespace Doctrine\Common\Annotations;
  */
 interface Reader
 {
+
     /**
      * Gets the annotations applied to a class.
      *
@@ -34,7 +35,7 @@ interface Reader
      *
      * @return array An array of Annotations.
      */
-    function getClassAnnotations(\ReflectionClass $class);
+    function getClassAnnotations( \ReflectionClass $class );
 
     /**
      * Gets a class annotation.
@@ -45,7 +46,7 @@ interface Reader
      *
      * @return object|null The Annotation or NULL, if the requested annotation does not exist.
      */
-    function getClassAnnotation(\ReflectionClass $class, $annotationName);
+    function getClassAnnotation( \ReflectionClass $class, $annotationName );
 
     /**
      * Gets the annotations applied to a method.
@@ -55,7 +56,7 @@ interface Reader
      *
      * @return array An array of Annotations.
      */
-    function getMethodAnnotations(\ReflectionMethod $method);
+    function getMethodAnnotations( \ReflectionMethod $method );
 
     /**
      * Gets a method annotation.
@@ -65,7 +66,7 @@ interface Reader
      *
      * @return object|null The Annotation or NULL, if the requested annotation does not exist.
      */
-    function getMethodAnnotation(\ReflectionMethod $method, $annotationName);
+    function getMethodAnnotation( \ReflectionMethod $method, $annotationName );
 
     /**
      * Gets the annotations applied to a property.
@@ -75,7 +76,7 @@ interface Reader
      *
      * @return array An array of Annotations.
      */
-    function getPropertyAnnotations(\ReflectionProperty $property);
+    function getPropertyAnnotations( \ReflectionProperty $property );
 
     /**
      * Gets a property annotation.
@@ -85,5 +86,5 @@ interface Reader
      *
      * @return object|null The Annotation or NULL, if the requested annotation does not exist.
      */
-    function getPropertyAnnotation(\ReflectionProperty $property, $annotationName);
+    function getPropertyAnnotation( \ReflectionProperty $property, $annotationName );
 }

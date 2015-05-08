@@ -21,6 +21,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class CoverallsConfiguration implements ConfigurationInterface
 {
+
     // ConfigurationInterface
 
     /**
@@ -30,37 +31,37 @@ class CoverallsConfiguration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
+
         // define configuration
 
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('coveralls');
+        $rootNode = $treeBuilder->root( 'coveralls' );
 
         $rootNode
             ->children()
-                // same as ruby lib
-                ->scalarNode('repo_token')
-                    ->defaultNull()
-                ->end()
-                ->scalarNode('repo_secret_token')
-                    ->defaultNull()
-                ->end()
-                ->scalarNode('service_name')
-                    ->defaultNull()
-                ->end()
-
-                // for php lib
-                ->scalarNode('src_dir')
-                    ->defaultValue('src')
-                ->end()
-                ->variableNode('coverage_clover')
-                    ->defaultValue('build/logs/clover.xml')
-                ->end()
-                ->scalarNode('json_path')
-                    ->defaultValue('build/logs/coveralls-upload.json')
-                ->end()
-                ->booleanNode('exclude_no_stmt')
-                    ->defaultFalse()
-                ->end()
+            // same as ruby lib
+            ->scalarNode( 'repo_token' )
+            ->defaultNull()
+            ->end()
+            ->scalarNode( 'repo_secret_token' )
+            ->defaultNull()
+            ->end()
+            ->scalarNode( 'service_name' )
+            ->defaultNull()
+            ->end()
+            // for php lib
+            ->scalarNode( 'src_dir' )
+            ->defaultValue( 'src' )
+            ->end()
+            ->variableNode( 'coverage_clover' )
+            ->defaultValue( 'build/logs/clover.xml' )
+            ->end()
+            ->scalarNode( 'json_path' )
+            ->defaultValue( 'build/logs/coveralls-upload.json' )
+            ->end()
+            ->booleanNode( 'exclude_no_stmt' )
+            ->defaultFalse()
+            ->end()
             ->end();
 
         return $treeBuilder;

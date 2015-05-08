@@ -11,6 +11,7 @@ use Guzzle\Service\Command\LocationVisitor\Response\ResponseVisitorInterface;
  */
 class VisitorFlyweight
 {
+
     /** @var self Singleton instance of self */
     protected static $instance;
 
@@ -40,25 +41,27 @@ class VisitorFlyweight
     protected $cache = array();
 
     /**
+     * @param array $mappings Array mapping request.name and response.name to location visitor classes. Leave null to
+     *                        use the default values.
+     */
+    public function __construct( array $mappings = null )
+    {
+
+        $this->mappings = $mappings === null ? self::$defaultMappings : $mappings;
+    }
+
+    /**
      * @return self
      * @codeCoverageIgnore
      */
     public static function getInstance()
     {
+
         if (!self::$instance) {
             self::$instance = new self();
         }
 
         return self::$instance;
-    }
-
-    /**
-     * @param array $mappings Array mapping request.name and response.name to location visitor classes. Leave null to
-     *                        use the default values.
-     */
-    public function __construct(array $mappings = null)
-    {
-        $this->mappings = $mappings === null ? self::$defaultMappings : $mappings;
     }
 
     /**
@@ -68,9 +71,32 @@ class VisitorFlyweight
      *
      * @return RequestVisitorInterface
      */
-    public function getRequestVisitor($visitor)
+    public function getRequestVisitor( $visitor )
     {
-        return $this->getKey('request.' . $visitor);
+
+        return $this->getKey( 'request.'.$visitor );
+    }
+
+    /**
+     * Get a visitor by key value name
+     *
+     * @param string $key Key name to retrieve
+     *
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
+    private function getKey( $key )
+    {
+
+        if (!isset( $this->cache[$key] )) {
+            if (!isset( $this->mappings[$key] )) {
+                list( $type, $name ) = explode( '.', $key );
+                throw new InvalidArgumentException( "No {$type} visitor has been mapped for {$name}" );
+            }
+            $this->cache[$key] = new $this->mappings[$key];
+        }
+
+        return $this->cache[$key];
     }
 
     /**
@@ -80,9 +106,10 @@ class VisitorFlyweight
      *
      * @return ResponseVisitorInterface
      */
-    public function getResponseVisitor($visitor)
+    public function getResponseVisitor( $visitor )
     {
-        return $this->getKey('response.' . $visitor);
+
+        return $this->getKey( 'response.'.$visitor );
     }
 
     /**
@@ -93,9 +120,10 @@ class VisitorFlyweight
      *
      * @return self
      */
-    public function addRequestVisitor($name, RequestVisitorInterface $visitor)
+    public function addRequestVisitor( $name, RequestVisitorInterface $visitor )
     {
-        $this->cache['request.' . $name] = $visitor;
+
+        $this->cache['request.'.$name] = $visitor;
 
         return $this;
     }
@@ -108,31 +136,11 @@ class VisitorFlyweight
      *
      * @return self
      */
-    public function addResponseVisitor($name, ResponseVisitorInterface $visitor)
+    public function addResponseVisitor( $name, ResponseVisitorInterface $visitor )
     {
-        $this->cache['response.' . $name] = $visitor;
+
+        $this->cache['response.'.$name] = $visitor;
 
         return $this;
-    }
-
-    /**
-     * Get a visitor by key value name
-     *
-     * @param string $key Key name to retrieve
-     *
-     * @return mixed
-     * @throws InvalidArgumentException
-     */
-    private function getKey($key)
-    {
-        if (!isset($this->cache[$key])) {
-            if (!isset($this->mappings[$key])) {
-                list($type, $name) = explode('.', $key);
-                throw new InvalidArgumentException("No {$type} visitor has been mapped for {$name}");
-            }
-            $this->cache[$key] = new $this->mappings[$key];
-        }
-
-        return $this->cache[$key];
     }
 }

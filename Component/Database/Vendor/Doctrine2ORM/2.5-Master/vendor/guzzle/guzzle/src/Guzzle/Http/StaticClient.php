@@ -2,16 +2,15 @@
 
 namespace Guzzle\Http;
 
-use Guzzle\Http\Client;
-use Guzzle\Http\ClientInterface;
-use Guzzle\Stream\StreamRequestFactoryInterface;
 use Guzzle\Stream\PhpStreamRequestFactory;
+use Guzzle\Stream\StreamRequestFactoryInterface;
 
 /**
  * Simplified interface to Guzzle that does not require a class to be instantiated
  */
 final class StaticClient
 {
+
     /** @var Client Guzzle client */
     private static $client;
 
@@ -21,40 +20,13 @@ final class StaticClient
      * @param string          $className Class name to use to mount
      * @param ClientInterface $client    Client used to send requests
      */
-    public static function mount($className = 'Guzzle', ClientInterface $client = null)
+    public static function mount( $className = 'Guzzle', ClientInterface $client = null )
     {
-        class_alias(__CLASS__, $className);
+
+        class_alias( __CLASS__, $className );
         if ($client) {
             self::$client = $client;
         }
-    }
-
-    /**
-     * @param  string $method  HTTP request method (GET, POST, HEAD, DELETE, PUT, etc)
-     * @param  string $url     URL of the request
-     * @param  array  $options Options to use with the request. See: Guzzle\Http\Message\RequestFactory::applyOptions()
-     * @return \Guzzle\Http\Message\Response|\Guzzle\Stream\Stream
-     */
-    public static function request($method, $url, $options = array())
-    {
-        // @codeCoverageIgnoreStart
-        if (!self::$client) {
-            self::$client = new Client();
-        }
-        // @codeCoverageIgnoreEnd
-
-        $request = self::$client->createRequest($method, $url, null, null, $options);
-
-        if (isset($options['stream'])) {
-            if ($options['stream'] instanceof StreamRequestFactoryInterface) {
-                return $options['stream']->fromRequest($request);
-            } elseif ($options['stream'] == true) {
-                $streamFactory = new PhpStreamRequestFactory();
-                return $streamFactory->fromRequest($request);
-            }
-        }
-
-        return $request->send();
     }
 
     /**
@@ -66,9 +38,40 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function get($url, $options = array())
+    public static function get( $url, $options = array() )
     {
-        return self::request('GET', $url, $options);
+
+        return self::request( 'GET', $url, $options );
+    }
+
+    /**
+     * @param  string $method  HTTP request method (GET, POST, HEAD, DELETE, PUT, etc)
+     * @param  string $url     URL of the request
+     * @param  array  $options Options to use with the request. See: Guzzle\Http\Message\RequestFactory::applyOptions()
+     *
+     * @return \Guzzle\Http\Message\Response|\Guzzle\Stream\Stream
+     */
+    public static function request( $method, $url, $options = array() )
+    {
+
+        // @codeCoverageIgnoreStart
+        if (!self::$client) {
+            self::$client = new Client();
+        }
+        // @codeCoverageIgnoreEnd
+
+        $request = self::$client->createRequest( $method, $url, null, null, $options );
+
+        if (isset( $options['stream'] )) {
+            if ($options['stream'] instanceof StreamRequestFactoryInterface) {
+                return $options['stream']->fromRequest( $request );
+            } elseif ($options['stream'] == true) {
+                $streamFactory = new PhpStreamRequestFactory();
+                return $streamFactory->fromRequest( $request );
+            }
+        }
+
+        return $request->send();
     }
 
     /**
@@ -80,9 +83,10 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function head($url, $options = array())
+    public static function head( $url, $options = array() )
     {
-        return self::request('HEAD', $url, $options);
+
+        return self::request( 'HEAD', $url, $options );
     }
 
     /**
@@ -94,9 +98,10 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function delete($url, $options = array())
+    public static function delete( $url, $options = array() )
     {
-        return self::request('DELETE', $url, $options);
+
+        return self::request( 'DELETE', $url, $options );
     }
 
     /**
@@ -108,9 +113,10 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function post($url, $options = array())
+    public static function post( $url, $options = array() )
     {
-        return self::request('POST', $url, $options);
+
+        return self::request( 'POST', $url, $options );
     }
 
     /**
@@ -122,9 +128,10 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function put($url, $options = array())
+    public static function put( $url, $options = array() )
     {
-        return self::request('PUT', $url, $options);
+
+        return self::request( 'PUT', $url, $options );
     }
 
     /**
@@ -136,9 +143,10 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function patch($url, $options = array())
+    public static function patch( $url, $options = array() )
     {
-        return self::request('PATCH', $url, $options);
+
+        return self::request( 'PATCH', $url, $options );
     }
 
     /**
@@ -150,8 +158,9 @@ final class StaticClient
      * @return \Guzzle\Http\Message\Response
      * @see Guzzle::request for a list of available options
      */
-    public static function options($url, $options = array())
+    public static function options( $url, $options = array() )
     {
-        return self::request('OPTIONS', $url, $options);
+
+        return self::request( 'OPTIONS', $url, $options );
     }
 }

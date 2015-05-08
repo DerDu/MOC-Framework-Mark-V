@@ -28,7 +28,8 @@ class ExceptionMessageRegExpTest extends PHPUnit_Framework_TestCase
      */
     public function testRegexMessage()
     {
-        throw new Exception("A polymorphic exception message");
+
+        throw new Exception( "A polymorphic exception message" );
     }
 
     /**
@@ -37,10 +38,11 @@ class ExceptionMessageRegExpTest extends PHPUnit_Framework_TestCase
      */
     public function testRegexMessageExtreme()
     {
-        throw new Exception("A polymorphic exception message");
+
+        throw new Exception( "A polymorphic exception message" );
     }
 
-     /**
+    /**
      * @runInSeparateProcess
      * @requires extension xdebug
      * @expectedException \Exception
@@ -48,8 +50,9 @@ class ExceptionMessageRegExpTest extends PHPUnit_Framework_TestCase
      */
     public function testMessageXdebugScreamCompatibility()
     {
-        ini_set('xdebug.scream', '1');
-        throw new Exception("Screaming preg_match");
+
+        ini_set( 'xdebug.scream', '1' );
+        throw new Exception( "Screaming preg_match" );
     }
 
     /**
@@ -59,6 +62,7 @@ class ExceptionMessageRegExpTest extends PHPUnit_Framework_TestCase
      */
     public function testSimultaneousLiteralAndRegExpExceptionMessage()
     {
-        throw new Exception("A variadic exception message");
+
+        throw new Exception( "A variadic exception message" );
     }
 }

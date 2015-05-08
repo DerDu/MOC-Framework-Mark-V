@@ -29,6 +29,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ConditionalTerm extends Node
 {
+
     /**
      * @var array
      */
@@ -37,16 +38,18 @@ class ConditionalTerm extends Node
     /**
      * @param array $conditionalFactors
      */
-    public function __construct(array $conditionalFactors)
+    public function __construct( array $conditionalFactors )
     {
+
         $this->conditionalFactors = $conditionalFactors;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkConditionalTerm($this);
+
+        return $sqlWalker->walkConditionalTerm( $this );
     }
 }

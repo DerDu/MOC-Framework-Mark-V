@@ -21,6 +21,7 @@
  */
 class PHPUnit_Framework_AssertionFailedError extends PHPUnit_Framework_Exception implements PHPUnit_Framework_SelfDescribing
 {
+
     /**
      * Wrapper for getMessage() which is declared as final.
      *
@@ -28,6 +29,7 @@ class PHPUnit_Framework_AssertionFailedError extends PHPUnit_Framework_Exception
      */
     public function toString()
     {
+
         return $this->getMessage();
     }
 }

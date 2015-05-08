@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class SimpleArithmeticExpression extends Node
 {
+
     /**
      * @var array
      */
@@ -38,16 +39,18 @@ class SimpleArithmeticExpression extends Node
     /**
      * @param array $arithmeticTerms
      */
-    public function __construct(array $arithmeticTerms)
+    public function __construct( array $arithmeticTerms )
     {
+
         $this->arithmeticTerms = $arithmeticTerms;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkSimpleArithmeticExpression($this);
+
+        return $sqlWalker->walkSimpleArithmeticExpression( $this );
     }
 }

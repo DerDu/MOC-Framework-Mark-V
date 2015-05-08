@@ -19,6 +19,7 @@
  */
 class PHP_CodeCoverage_Report_XML_Node
 {
+
     /**
      * @var DOMDocument
      */
@@ -29,29 +30,15 @@ class PHP_CodeCoverage_Report_XML_Node
      */
     private $contextNode;
 
-    public function __construct(DOMElement $context)
+    public function __construct( DOMElement $context )
     {
-        $this->setContextNode($context);
-    }
 
-    protected function setContextNode(DOMElement $context)
-    {
-        $this->dom         = $context->ownerDocument;
-        $this->contextNode = $context;
-    }
-
-    public function getDom()
-    {
-        return $this->dom;
-    }
-
-    protected function getContextNode()
-    {
-        return $this->contextNode;
+        $this->setContextNode( $context );
     }
 
     public function getTotals()
     {
+
         $totalsContainer = $this->getContextNode()->firstChild;
 
         if (!$totalsContainer) {
@@ -63,33 +50,54 @@ class PHP_CodeCoverage_Report_XML_Node
             );
         }
 
-        return new PHP_CodeCoverage_Report_XML_Totals($totalsContainer);
+        return new PHP_CodeCoverage_Report_XML_Totals( $totalsContainer );
     }
 
-    public function addDirectory($name)
+    protected function getContextNode()
     {
+
+        return $this->contextNode;
+    }
+
+    protected function setContextNode( DOMElement $context )
+    {
+
+        $this->dom = $context->ownerDocument;
+        $this->contextNode = $context;
+    }
+
+    public function addDirectory( $name )
+    {
+
         $dirNode = $this->getDom()->createElementNS(
             'http://schema.phpunit.de/coverage/1.0',
             'directory'
         );
 
-        $dirNode->setAttribute('name', $name);
-        $this->getContextNode()->appendChild($dirNode);
+        $dirNode->setAttribute( 'name', $name );
+        $this->getContextNode()->appendChild( $dirNode );
 
-        return new PHP_CodeCoverage_Report_XML_Directory($dirNode);
+        return new PHP_CodeCoverage_Report_XML_Directory( $dirNode );
     }
 
-    public function addFile($name, $href)
+    public function getDom()
     {
+
+        return $this->dom;
+    }
+
+    public function addFile( $name, $href )
+    {
+
         $fileNode = $this->getDom()->createElementNS(
             'http://schema.phpunit.de/coverage/1.0',
             'file'
         );
 
-        $fileNode->setAttribute('name', $name);
-        $fileNode->setAttribute('href', $href);
-        $this->getContextNode()->appendChild($fileNode);
+        $fileNode->setAttribute( 'name', $name );
+        $fileNode->setAttribute( 'href', $href );
+        $this->getContextNode()->appendChild( $fileNode );
 
-        return new PHP_CodeCoverage_Report_XML_File($fileNode);
+        return new PHP_CodeCoverage_Report_XML_File( $fileNode );
     }
 }

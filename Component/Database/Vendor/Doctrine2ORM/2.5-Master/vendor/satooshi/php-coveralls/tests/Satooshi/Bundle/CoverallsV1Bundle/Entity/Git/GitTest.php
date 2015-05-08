@@ -9,35 +9,32 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity\Git;
  */
 class GitTest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        $this->branchName = 'branch_name';
-        $this->commit     = $this->createCommit();
-        $this->remote     = $this->createRemote();
 
-        $this->object = new Git($this->branchName, $this->commit, array($this->remote));
+    /**
+     * @test
+     */
+    public function shouldHaveBranchNameOnConstruction()
+    {
+
+        $this->assertEquals( $this->branchName, $this->object->getBranch() );
     }
 
-    protected function createRemote($name = 'name', $url  = 'url')
+    /**
+     * @test
+     */
+    public function shouldHaveHeadCommitOnConstruction()
     {
-        $remote = new Remote();
 
-        return $remote
-        ->setName($name)
-        ->setUrl($url);
+        $this->assertSame( $this->commit, $this->object->getHead() );
     }
 
-    protected function createCommit($id = 'id', $authorName  = 'author_name', $authorEmail = 'author_email', $committerName = 'committer_name', $committerEmail = 'committer_email', $message = 'message')
+    /**
+     * @test
+     */
+    public function shouldHaveRemotesOnConstruction()
     {
-        $commit = new Commit();
 
-        return $commit
-        ->setId($id)
-        ->setAuthorName($authorName)
-        ->setAuthorEmail($authorEmail)
-        ->setCommitterName($committerName)
-        ->setCommitterEmail($committerEmail)
-        ->setMessage($message);
+        $this->assertSame( array( $this->remote ), $this->object->getRemotes() );
     }
 
     // getBranch()
@@ -45,45 +42,62 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldHaveBranchNameOnConstruction()
+    public function shouldConvertToArray()
     {
-        $this->assertEquals($this->branchName, $this->object->getBranch());
+
+        $expected = array(
+            'branch'  => $this->branchName,
+            'head'    => $this->commit->toArray(),
+            'remotes' => array( $this->remote->toArray() ),
+        );
+
+        $this->assertSame( $expected, $this->object->toArray() );
+        $this->assertSame( json_encode( $expected ), (string)$this->object );
     }
 
     // getHead()
 
-    /**
-     * @test
-     */
-    public function shouldHaveHeadCommitOnConstruction()
+    protected function setUp()
     {
-        $this->assertSame($this->commit, $this->object->getHead());
+
+        $this->branchName = 'branch_name';
+        $this->commit = $this->createCommit();
+        $this->remote = $this->createRemote();
+
+        $this->object = new Git( $this->branchName, $this->commit, array( $this->remote ) );
     }
 
     // getRemotes()
 
-    /**
-     * @test
-     */
-    public function shouldHaveRemotesOnConstruction()
-    {
-        $this->assertSame(array($this->remote), $this->object->getRemotes());
+    protected function createCommit(
+        $id = 'id',
+        $authorName = 'author_name',
+        $authorEmail = 'author_email',
+        $committerName = 'committer_name',
+        $committerEmail = 'committer_email',
+        $message = 'message'
+    ) {
+
+        $commit = new Commit();
+
+        return $commit
+            ->setId( $id )
+            ->setAuthorName( $authorName )
+            ->setAuthorEmail( $authorEmail )
+            ->setCommitterName( $committerName )
+            ->setCommitterEmail( $committerEmail )
+            ->setMessage( $message );
     }
 
     // toArray()
 
-    /**
-     * @test
-     */
-    public function shouldConvertToArray()
+    protected function createRemote( $name = 'name', $url = 'url' )
     {
-        $expected = array(
-            'branch'  => $this->branchName,
-            'head'    => $this->commit->toArray(),
-            'remotes' => array($this->remote->toArray()),
-        );
 
-        $this->assertSame($expected, $this->object->toArray());
-        $this->assertSame(json_encode($expected), (string)$this->object);
+        $remote = new Remote();
+
+        return $remote
+            ->setName( $name )
+            ->setUrl( $url );
     }
 }

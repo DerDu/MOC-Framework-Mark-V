@@ -7,6 +7,7 @@ namespace Guzzle\Stream;
  */
 interface StreamInterface
 {
+
     /**
      * Convert the stream to a string if the stream is readable and the stream is seekable.
      *
@@ -26,7 +27,7 @@ interface StreamInterface
      *
      * @return array|mixed|null
      */
-    public function getMetaData($key = null);
+    public function getMetaData( $key = null );
 
     /**
      * Get the stream resource
@@ -43,7 +44,7 @@ interface StreamInterface
      *
      * @return self
      */
-    public function setStream($stream, $size = null);
+    public function setStream( $stream, $size = null );
 
     /**
      * Detach the current stream resource
@@ -143,7 +144,7 @@ interface StreamInterface
      *
      * @return self
      */
-    public function setSize($size);
+    public function setSize( $size );
 
     /**
      * Seek to a position in the stream
@@ -154,7 +155,7 @@ interface StreamInterface
      * @return bool Returns TRUE on success or FALSE on failure
      * @link   http://www.php.net/manual/en/function.fseek.php
      */
-    public function seek($offset, $whence = SEEK_SET);
+    public function seek( $offset, $whence = SEEK_SET );
 
     /**
      * Read data from the stream
@@ -163,7 +164,7 @@ interface StreamInterface
      *
      * @return string|bool Returns the data read from the stream or FALSE on failure or EOF
      */
-    public function read($length);
+    public function read( $length );
 
     /**
      * Write data to the stream
@@ -172,7 +173,7 @@ interface StreamInterface
      *
      * @return int|bool Returns the number of bytes written to the stream on success or FALSE on failure.
      */
-    public function write($string);
+    public function write( $string );
 
     /**
      * Returns the current position of the file read/write pointer
@@ -195,7 +196,7 @@ interface StreamInterface
      *
      * @return string|bool
      */
-    public function readLine($maxLength = null);
+    public function readLine( $maxLength = null );
 
     /**
      * Set custom data on the stream
@@ -205,7 +206,7 @@ interface StreamInterface
      *
      * @return self
      */
-    public function setCustomData($key, $value);
+    public function setCustomData( $key, $value );
 
     /**
      * Get custom data from the stream
@@ -214,5 +215,5 @@ interface StreamInterface
      *
      * @return null|mixed
      */
-    public function getCustomData($key);
+    public function getCustomData( $key );
 }

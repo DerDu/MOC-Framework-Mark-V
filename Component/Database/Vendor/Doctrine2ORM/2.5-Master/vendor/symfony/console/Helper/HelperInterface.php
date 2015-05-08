@@ -20,6 +20,7 @@ namespace Symfony\Component\Console\Helper;
  */
 interface HelperInterface
 {
+
     /**
      * Sets the helper set associated with this helper.
      *
@@ -27,7 +28,7 @@ interface HelperInterface
      *
      * @api
      */
-    public function setHelperSet(HelperSet $helperSet = null);
+    public function setHelperSet( HelperSet $helperSet = null );
 
     /**
      * Gets the helper set associated with this helper.

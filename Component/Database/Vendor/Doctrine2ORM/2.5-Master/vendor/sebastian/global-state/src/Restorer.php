@@ -22,23 +22,26 @@ use ReflectionProperty;
  */
 class Restorer
 {
+
     /**
      * Deletes function definitions that are not defined in a snapshot.
      *
      * @param  Snapshot $snapshot
+     *
      * @throws RuntimeException when the uopz_delete() function is not available
      * @see    https://github.com/krakjoe/uopz
      */
-    public function restoreFunctions(Snapshot $snapshot)
+    public function restoreFunctions( Snapshot $snapshot )
     {
-        if (!function_exists('uopz_delete')) {
-            throw new RuntimeException('The uopz_delete() function is required for this operation');
+
+        if (!function_exists( 'uopz_delete' )) {
+            throw new RuntimeException( 'The uopz_delete() function is required for this operation' );
         }
 
         $functions = get_defined_functions();
 
-        foreach (array_diff($functions['user'], $snapshot->functions()) as $function) {
-            uopz_delete($function);
+        foreach (array_diff( $functions['user'], $snapshot->functions() ) as $function) {
+            uopz_delete( $function );
         }
     }
 
@@ -47,24 +50,58 @@ class Restorer
      *
      * @param Snapshot $snapshot
      */
-    public function restoreGlobalVariables(Snapshot $snapshot)
+    public function restoreGlobalVariables( Snapshot $snapshot )
     {
+
         $superGlobalArrays = $snapshot->superGlobalArrays();
 
         foreach ($superGlobalArrays as $superGlobalArray) {
-            $this->restoreSuperGlobalArray($snapshot, $superGlobalArray);
+            $this->restoreSuperGlobalArray( $snapshot, $superGlobalArray );
         }
 
         $globalVariables = $snapshot->globalVariables();
 
-        foreach (array_keys($GLOBALS) as $key) {
+        foreach (array_keys( $GLOBALS ) as $key) {
             if ($key != 'GLOBALS' &&
-                !in_array($key, $superGlobalArrays) &&
-                !$snapshot->blacklist()->isGlobalVariableBlacklisted($key)) {
-                if (isset($globalVariables[$key])) {
+                !in_array( $key, $superGlobalArrays ) &&
+                !$snapshot->blacklist()->isGlobalVariableBlacklisted( $key )
+            ) {
+                if (isset( $globalVariables[$key] )) {
                     $GLOBALS[$key] = $globalVariables[$key];
                 } else {
-                    unset($GLOBALS[$key]);
+                    unset( $GLOBALS[$key] );
+                }
+            }
+        }
+    }
+
+    /**
+     * Restores a super-global variable array from this snapshot.
+     *
+     * @param Snapshot $snapshot
+     * @param          $superGlobalArray
+     */
+    private function restoreSuperGlobalArray( Snapshot $snapshot, $superGlobalArray )
+    {
+
+        $superGlobalVariables = $snapshot->superGlobalVariables();
+
+        if (isset( $GLOBALS[$superGlobalArray] ) &&
+            is_array( $GLOBALS[$superGlobalArray] ) &&
+            isset( $superGlobalVariables[$superGlobalArray] )
+        ) {
+            $keys = array_keys(
+                array_merge(
+                    $GLOBALS[$superGlobalArray],
+                    $superGlobalVariables[$superGlobalArray]
+                )
+            );
+
+            foreach ($keys as $key) {
+                if (isset( $superGlobalVariables[$superGlobalArray][$key] )) {
+                    $GLOBALS[$superGlobalArray][$key] = $superGlobalVariables[$superGlobalArray][$key];
+                } else {
+                    unset( $GLOBALS[$superGlobalArray][$key] );
                 }
             }
         }
@@ -75,43 +112,14 @@ class Restorer
      *
      * @param Snapshot $snapshot
      */
-    public function restoreStaticAttributes(Snapshot $snapshot)
+    public function restoreStaticAttributes( Snapshot $snapshot )
     {
+
         foreach ($snapshot->staticAttributes() as $className => $staticAttributes) {
             foreach ($staticAttributes as $name => $value) {
-                $reflector = new ReflectionProperty($className, $name);
-                $reflector->setAccessible(true);
-                $reflector->setValue($value);
-            }
-        }
-    }
-
-    /**
-     * Restores a super-global variable array from this snapshot.
-     *
-     * @param Snapshot $snapshot
-     * @param $superGlobalArray
-     */
-    private function restoreSuperGlobalArray(Snapshot $snapshot, $superGlobalArray)
-    {
-        $superGlobalVariables = $snapshot->superGlobalVariables();
-
-        if (isset($GLOBALS[$superGlobalArray]) &&
-            is_array($GLOBALS[$superGlobalArray]) &&
-            isset($superGlobalVariables[$superGlobalArray])) {
-            $keys = array_keys(
-                array_merge(
-                    $GLOBALS[$superGlobalArray],
-                    $superGlobalVariables[$superGlobalArray]
-                )
-            );
-
-            foreach ($keys as $key) {
-                if (isset($superGlobalVariables[$superGlobalArray][$key])) {
-                    $GLOBALS[$superGlobalArray][$key] = $superGlobalVariables[$superGlobalArray][$key];
-                } else {
-                    unset($GLOBALS[$superGlobalArray][$key]);
-                }
+                $reflector = new ReflectionProperty( $className, $name );
+                $reflector->setAccessible( true );
+                $reflector->setValue( $value );
             }
         }
     }

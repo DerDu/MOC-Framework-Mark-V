@@ -30,6 +30,7 @@ use Doctrine\ORM\Cache\Logging\CacheLogger;
  */
 class CacheConfiguration
 {
+
     /**
      * @var \Doctrine\ORM\Cache\CacheFactory|null
      */
@@ -55,6 +56,7 @@ class CacheConfiguration
      */
     public function getCacheFactory()
     {
+
         return $this->cacheFactory;
     }
 
@@ -63,8 +65,9 @@ class CacheConfiguration
      *
      * @return void
      */
-    public function setCacheFactory(CacheFactory $factory)
+    public function setCacheFactory( CacheFactory $factory )
     {
+
         $this->cacheFactory = $factory;
     }
 
@@ -73,14 +76,16 @@ class CacheConfiguration
      */
     public function getCacheLogger()
     {
-         return $this->cacheLogger;
+
+        return $this->cacheLogger;
     }
 
     /**
      * @param \Doctrine\ORM\Cache\Logging\CacheLogger $logger
      */
-    public function setCacheLogger(CacheLogger $logger)
+    public function setCacheLogger( CacheLogger $logger )
     {
+
         $this->cacheLogger = $logger;
     }
 
@@ -89,6 +94,7 @@ class CacheConfiguration
      */
     public function getRegionsConfiguration()
     {
+
         if ($this->regionsConfig === null) {
             $this->regionsConfig = new RegionsConfiguration();
         }
@@ -99,8 +105,9 @@ class CacheConfiguration
     /**
      * @param \Doctrine\ORM\Cache\RegionsConfiguration $regionsConfig
      */
-    public function setRegionsConfiguration(RegionsConfiguration $regionsConfig)
+    public function setRegionsConfiguration( RegionsConfiguration $regionsConfig )
     {
+
         $this->regionsConfig = $regionsConfig;
     }
 
@@ -109,18 +116,20 @@ class CacheConfiguration
      */
     public function getQueryValidator()
     {
+
         if ($this->queryValidator === null) {
             $this->queryValidator = new TimestampQueryCacheValidator();
         }
 
-         return $this->queryValidator;
+        return $this->queryValidator;
     }
 
     /**
      * @param \Doctrine\ORM\Cache\QueryCacheValidator $validator
      */
-    public function setQueryValidator(QueryCacheValidator $validator)
+    public function setQueryValidator( QueryCacheValidator $validator )
     {
+
         $this->queryValidator = $validator;
     }
 }

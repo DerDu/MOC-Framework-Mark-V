@@ -29,7 +29,7 @@ class MethodTag extends ReturnTag
 
     /** @var string */
     protected $arguments = '';
-    
+
     /** @var bool */
     protected $isStatic = false;
 
@@ -38,13 +38,14 @@ class MethodTag extends ReturnTag
      */
     public function getContent()
     {
+
         if (null === $this->content) {
             $this->content = '';
             if ($this->isStatic) {
                 $this->content .= 'static ';
             }
-            $this->content .= $this->type .
-                " {$this->method_name}({$this->arguments}) " .
+            $this->content .= $this->type.
+                " {$this->method_name}({$this->arguments}) ".
                 $this->description;
         }
 
@@ -54,9 +55,10 @@ class MethodTag extends ReturnTag
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public function setContent( $content )
     {
-        Tag::setContent($content);
+
+        Tag::setContent( $content );
         // 1. none or more whitespace
         // 2. optionally the keyword "static" followed by whitespace
         // 3. optionally a word with underscores followed by whitespace : as
@@ -101,7 +103,7 @@ class MethodTag extends ReturnTag
                 $this->method_name,
                 $this->arguments,
                 $this->description
-            ) = $matches;
+                ) = $matches;
             if ($static) {
                 if (!$this->type) {
                     $this->type = 'static';
@@ -120,40 +122,27 @@ class MethodTag extends ReturnTag
     }
 
     /**
-     * Sets the name of this method.
-     *
-     * @param string $method_name The name of the method.
-     *
-     * @return $this
-     */
-    public function setMethodName($method_name)
-    {
-        $this->method_name = $method_name;
-
-        $this->content = null;
-        return $this;
-    }
-
-    /**
      * Retrieves the method name.
      *
      * @return string
      */
     public function getMethodName()
     {
+
         return $this->method_name;
     }
 
     /**
-     * Sets the arguments for this method.
+     * Sets the name of this method.
      *
-     * @param string $arguments A comma-separated arguments line.
+     * @param string $method_name The name of the method.
      *
-     * @return void
+     * @return $this
      */
-    public function setArguments($arguments)
+    public function setMethodName( $method_name )
     {
-        $this->arguments = $arguments;
+
+        $this->method_name = $method_name;
 
         $this->content = null;
         return $this;
@@ -169,38 +158,57 @@ class MethodTag extends ReturnTag
      */
     public function getArguments()
     {
-        if (empty($this->arguments)) {
+
+        if (empty( $this->arguments )) {
             return array();
         }
 
-        $arguments = explode(',', $this->arguments);
+        $arguments = explode( ',', $this->arguments );
         foreach ($arguments as $key => $value) {
-            $arguments[$key] = explode(' ', trim($value));
+            $arguments[$key] = explode( ' ', trim( $value ) );
         }
 
         return $arguments;
     }
-    
+
+    /**
+     * Sets the arguments for this method.
+     *
+     * @param string $arguments A comma-separated arguments line.
+     *
+     * @return void
+     */
+    public function setArguments( $arguments )
+    {
+
+        $this->arguments = $arguments;
+
+        $this->content = null;
+        return $this;
+    }
+
     /**
      * Checks whether the method tag describes a static method or not.
-     * 
+     *
      * @return bool TRUE if the method declaration is for a static method, FALSE
      *     otherwise.
      */
     public function isStatic()
     {
+
         return $this->isStatic;
     }
-    
+
     /**
      * Sets a new value for whether the method is static or not.
-     * 
+     *
      * @param bool $isStatic The new value to set.
-     * 
+     *
      * @return $this
      */
-    public function setIsStatic($isStatic)
+    public function setIsStatic( $isStatic )
     {
+
         $this->isStatic = $isStatic;
 
         $this->content = null;

@@ -35,19 +35,22 @@ namespace Doctrine\DBAL\Platforms;
  */
 class SQLServer2005Platform extends SQLServerPlatform
 {
+
     /**
      * {@inheritDoc}
      */
     public function supportsLimitOffset()
     {
+
         return true;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getClobTypeDeclarationSQL(array $field)
+    public function getClobTypeDeclarationSQL( array $field )
     {
+
         return 'VARCHAR(MAX)';
     }
 
@@ -58,6 +61,7 @@ class SQLServer2005Platform extends SQLServerPlatform
      */
     protected function getReservedKeywordsClass()
     {
+
         return 'Doctrine\DBAL\Platforms\Keywords\SQLServer2005Keywords';
     }
 }

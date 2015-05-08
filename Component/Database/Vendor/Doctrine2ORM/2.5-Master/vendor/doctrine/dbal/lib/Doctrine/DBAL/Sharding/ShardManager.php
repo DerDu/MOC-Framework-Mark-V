@@ -39,6 +39,7 @@ namespace Doctrine\DBAL\Sharding;
  */
 interface ShardManager
 {
+
     /**
      * Selects global database with global data.
      *
@@ -58,7 +59,7 @@ interface ShardManager
      *
      * @throws \Doctrine\DBAL\Sharding\ShardingException If no value is passed as shard identifier.
      */
-    function selectShard($distributionValue);
+    function selectShard( $distributionValue );
 
     /**
      * Gets the distribution value currently used for sharding.
@@ -89,5 +90,5 @@ interface ShardManager
      *
      * @return array
      */
-    function queryAll($sql, array $params, array $types);
+    function queryAll( $sql, array $params, array $types );
 }

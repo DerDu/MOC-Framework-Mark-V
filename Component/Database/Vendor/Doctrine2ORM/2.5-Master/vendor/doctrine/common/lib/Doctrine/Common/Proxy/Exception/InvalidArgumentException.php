@@ -31,12 +31,14 @@ use InvalidArgumentException as BaseInvalidArgumentException;
  */
 class InvalidArgumentException extends BaseInvalidArgumentException implements ProxyException
 {
+
     /**
      * @return self
      */
     public static function proxyDirectoryRequired()
     {
-        return new self('You must configure a proxy directory. See docs for details');
+
+        return new self( 'You must configure a proxy directory. See docs for details' );
     }
 
     /**
@@ -45,9 +47,11 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
      *
      * @return self
      */
-    public static function notProxyClass($className, $proxyNamespace)
+    public static function notProxyClass( $className, $proxyNamespace )
     {
-        return new self(sprintf('The class "%s" is not part of the proxy namespace "%s"', $className, $proxyNamespace));
+
+        return new self( sprintf( 'The class "%s" is not part of the proxy namespace "%s"', $className,
+            $proxyNamespace ) );
     }
 
     /**
@@ -55,9 +59,11 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
      *
      * @return self
      */
-    public static function invalidPlaceholder($name)
+    public static function invalidPlaceholder( $name )
     {
-        return new self(sprintf('Provided placeholder for "%s" must be either a string or a valid callable', $name));
+
+        return new self( sprintf( 'Provided placeholder for "%s" must be either a string or a valid callable',
+            $name ) );
     }
 
     /**
@@ -65,7 +71,8 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
      */
     public static function proxyNamespaceRequired()
     {
-        return new self('You must configure a proxy namespace');
+
+        return new self( 'You must configure a proxy namespace' );
     }
 
     /**
@@ -73,9 +80,10 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
      *
      * @return self
      */
-    public static function unitializedProxyExpected(Proxy $proxy)
+    public static function unitializedProxyExpected( Proxy $proxy )
     {
-        return new self(sprintf('Provided proxy of type "%s" must not be initialized.', get_class($proxy)));
+
+        return new self( sprintf( 'Provided proxy of type "%s" must not be initialized.', get_class( $proxy ) ) );
     }
 
     /**
@@ -83,10 +91,11 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
      *
      * @return self
      */
-    public static function invalidClassNotFoundCallback($callback)
+    public static function invalidClassNotFoundCallback( $callback )
     {
-        $type = is_object($callback) ? get_class($callback) : gettype($callback);
 
-        return new self(sprintf('Invalid \$notFoundCallback given: must be a callable, "%s" given', $type));
+        $type = is_object( $callback ) ? get_class( $callback ) : gettype( $callback );
+
+        return new self( sprintf( 'Invalid \$notFoundCallback given: must be a callable, "%s" given', $type ) );
     }
 }

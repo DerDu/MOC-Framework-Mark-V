@@ -28,32 +28,35 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class BlobType extends Type
 {
+
     /**
      * {@inheritdoc}
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration( array $fieldDeclaration, AbstractPlatform $platform )
     {
-        return $platform->getBlobTypeDeclarationSQL($fieldDeclaration);
+
+        return $platform->getBlobTypeDeclarationSQL( $fieldDeclaration );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue( $value, AbstractPlatform $platform )
     {
+
         if (null === $value) {
             return null;
         }
 
-        if (is_string($value)) {
-            $fp = fopen('php://temp', 'rb+');
-            fwrite($fp, $value);
-            fseek($fp, 0);
+        if (is_string( $value )) {
+            $fp = fopen( 'php://temp', 'rb+' );
+            fwrite( $fp, $value );
+            fseek( $fp, 0 );
             $value = $fp;
         }
 
-        if ( ! is_resource($value)) {
-            throw ConversionException::conversionFailed($value, self::BLOB);
+        if (!is_resource( $value )) {
+            throw ConversionException::conversionFailed( $value, self::BLOB );
         }
 
         return $value;
@@ -64,6 +67,7 @@ class BlobType extends Type
      */
     public function getName()
     {
+
         return Type::BLOB;
     }
 
@@ -72,6 +76,7 @@ class BlobType extends Type
      */
     public function getBindingType()
     {
+
         return \PDO::PARAM_LOB;
     }
 }

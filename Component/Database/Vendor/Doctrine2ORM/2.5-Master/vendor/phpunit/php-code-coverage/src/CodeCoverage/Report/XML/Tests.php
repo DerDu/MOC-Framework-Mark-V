@@ -19,6 +19,7 @@
  */
 class PHP_CodeCoverage_Report_XML_Tests
 {
+
     private $contextNode;
 
     private $codeMap = array(
@@ -30,22 +31,24 @@ class PHP_CodeCoverage_Report_XML_Tests
         5 => 'RISKY'       // PHPUnit_Runner_BaseTestRunner::STATUS_RISKY
     );
 
-    public function __construct(DOMElement $context)
+    public function __construct( DOMElement $context )
     {
+
         $this->contextNode = $context;
     }
 
-    public function addTest($test, $result)
+    public function addTest( $test, $result )
     {
+
         $node = $this->contextNode->appendChild(
             $this->contextNode->ownerDocument->createElementNS(
                 'http://schema.phpunit.de/coverage/1.0',
                 'test'
             )
         );
-        $node->setAttribute('name', $test);
-        $node->setAttribute('result', (int) $result);
-        $node->setAttribute('status', $this->codeMap[(int) $result]);
+        $node->setAttribute( 'name', $test );
+        $node->setAttribute( 'result', (int)$result );
+        $node->setAttribute( 'status', $this->codeMap[(int)$result] );
 
     }
 }

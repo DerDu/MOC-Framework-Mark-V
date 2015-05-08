@@ -11,10 +11,10 @@
 // Workaround for http://bugs.php.net/bug.php?id=47987,
 // see https://github.com/sebastianbergmann/phpunit/issues#issue/125 for details
 // Use dirname(__DIR__) instead of using /../ because of https://github.com/facebook/hhvm/issues/5215
-require_once dirname(__DIR__) . '/Framework/Error.php';
-require_once dirname(__DIR__) . '/Framework/Error/Notice.php';
-require_once dirname(__DIR__) . '/Framework/Error/Warning.php';
-require_once dirname(__DIR__) . '/Framework/Error/Deprecated.php';
+require_once dirname( __DIR__ ).'/Framework/Error.php';
+require_once dirname( __DIR__ ).'/Framework/Error/Notice.php';
+require_once dirname( __DIR__ ).'/Framework/Error/Warning.php';
+require_once dirname( __DIR__ ).'/Framework/Error/Deprecated.php';
 
 /**
  * Error handler that converts PHP errors and warnings to exceptions.
@@ -29,6 +29,7 @@ require_once dirname(__DIR__) . '/Framework/Error/Deprecated.php';
  */
 class PHPUnit_Util_ErrorHandler
 {
+
     protected static $errorStack = array();
 
     /**
@@ -38,26 +39,29 @@ class PHPUnit_Util_ErrorHandler
      */
     public static function getErrorStack()
     {
+
         return self::$errorStack;
     }
 
     /**
-     * @param  integer                 $errno
-     * @param  string                  $errstr
-     * @param  string                  $errfile
-     * @param  integer                 $errline
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     *
      * @throws PHPUnit_Framework_Error
      */
-    public static function handleError($errno, $errstr, $errfile, $errline)
+    public static function handleError( $errno, $errstr, $errfile, $errline )
     {
-        if (!($errno & error_reporting())) {
+
+        if (!( $errno & error_reporting() )) {
             return false;
         }
 
-        self::$errorStack[] = array($errno, $errstr, $errfile, $errline);
+        self::$errorStack[] = array( $errno, $errstr, $errfile, $errline );
 
-        $trace = debug_backtrace(false);
-        array_shift($trace);
+        $trace = debug_backtrace( false );
+        array_shift( $trace );
 
         foreach ($trace as $frame) {
             if ($frame['function'] == '__toString') {
@@ -87,19 +91,23 @@ class PHPUnit_Util_ErrorHandler
             $exception = 'PHPUnit_Framework_Error';
         }
 
-        throw new $exception($errstr, $errno, $errfile, $errline);
+        throw new $exception( $errstr, $errno, $errfile, $errline );
     }
 
     /**
      * Registers an error handler and returns a function that will restore
      * the previous handler when invoked
-     * @param  integer   $severity PHP predefined error constant
+     *
+     * @param  integer $severity PHP predefined error constant
+     *
      * @link   http://www.php.net/manual/en/errorfunc.constants.php
      * @throws Exception if event of specified severity is emitted
      */
-    public static function handleErrorOnce($severity = E_WARNING)
+    public static function handleErrorOnce( $severity = E_WARNING )
     {
+
         $terminator = function () {
+
             static $expired = false;
             if (!$expired) {
                 $expired = true;
@@ -108,13 +116,14 @@ class PHPUnit_Util_ErrorHandler
             }
         };
 
-        set_error_handler(function ($errno, $errstr) use ($severity) {
+        set_error_handler( function ( $errno, $errstr ) use ( $severity ) {
+
             if ($errno === $severity) {
                 return;
             }
 
             return false;
-        });
+        } );
 
         return $terminator;
     }

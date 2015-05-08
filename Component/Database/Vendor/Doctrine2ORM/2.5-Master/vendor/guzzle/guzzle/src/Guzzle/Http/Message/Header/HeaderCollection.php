@@ -9,16 +9,19 @@ use Guzzle\Common\ToArrayInterface;
  */
 class HeaderCollection implements \IteratorAggregate, \Countable, \ArrayAccess, ToArrayInterface
 {
+
     /** @var array */
     protected $headers;
 
-    public function __construct($headers = array())
+    public function __construct( $headers = array() )
     {
+
         $this->headers = $headers;
     }
 
     public function __clone()
     {
+
         foreach ($this->headers as &$header) {
             $header = clone $header;
         }
@@ -29,21 +32,8 @@ class HeaderCollection implements \IteratorAggregate, \Countable, \ArrayAccess, 
      */
     public function clear()
     {
+
         $this->headers = array();
-    }
-
-    /**
-     * Set a header on the collection
-     *
-     * @param HeaderInterface $header Header to add
-     *
-     * @return self
-     */
-    public function add(HeaderInterface $header)
-    {
-        $this->headers[strtolower($header->getName())] = $header;
-
-        return $this;
     }
 
     /**
@@ -53,51 +43,75 @@ class HeaderCollection implements \IteratorAggregate, \Countable, \ArrayAccess, 
      */
     public function getAll()
     {
+
         return $this->headers;
     }
 
     /**
      * Alias of offsetGet
      */
-    public function get($key)
+    public function get( $key )
     {
-        return $this->offsetGet($key);
+
+        return $this->offsetGet( $key );
+    }
+
+    public function offsetGet( $offset )
+    {
+
+        $l = strtolower( $offset );
+
+        return isset( $this->headers[$l] ) ? $this->headers[$l] : null;
     }
 
     public function count()
     {
-        return count($this->headers);
+
+        return count( $this->headers );
     }
 
-    public function offsetExists($offset)
+    public function offsetExists( $offset )
     {
-        return isset($this->headers[strtolower($offset)]);
+
+        return isset( $this->headers[strtolower( $offset )] );
     }
 
-    public function offsetGet($offset)
+    public function offsetSet( $offset, $value )
     {
-        $l = strtolower($offset);
 
-        return isset($this->headers[$l]) ? $this->headers[$l] : null;
+        $this->add( $value );
     }
 
-    public function offsetSet($offset, $value)
+    /**
+     * Set a header on the collection
+     *
+     * @param HeaderInterface $header Header to add
+     *
+     * @return self
+     */
+    public function add( HeaderInterface $header )
     {
-        $this->add($value);
+
+        $this->headers[strtolower( $header->getName() )] = $header;
+
+        return $this;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset( $offset )
     {
-        unset($this->headers[strtolower($offset)]);
+
+        unset( $this->headers[strtolower( $offset )] );
     }
 
     public function getIterator()
     {
-        return new \ArrayIterator($this->headers);
+
+        return new \ArrayIterator( $this->headers );
     }
 
     public function toArray()
     {
+
         $result = array();
         foreach ($this->headers as $header) {
             $result[$header->getName()] = $header->toArray();

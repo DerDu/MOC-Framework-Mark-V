@@ -31,6 +31,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class InstanceOfExpression extends Node
 {
+
     /**
      * @var bool
      */
@@ -49,16 +50,18 @@ class InstanceOfExpression extends Node
     /**
      * @param string $identVariable
      */
-    public function __construct($identVariable)
+    public function __construct( $identVariable )
     {
+
         $this->identificationVariable = $identVariable;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkInstanceOfExpression($this);
+
+        return $sqlWalker->walkInstanceOfExpression( $this );
     }
 }

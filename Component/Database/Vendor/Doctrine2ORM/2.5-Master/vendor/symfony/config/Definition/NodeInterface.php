@@ -21,6 +21,7 @@ namespace Symfony\Component\Config\Definition;
  */
 interface NodeInterface
 {
+
     /**
      * Returns the name of the node.
      *
@@ -65,7 +66,7 @@ interface NodeInterface
      *
      * @return mixed The normalized value
      */
-    public function normalize($value);
+    public function normalize( $value );
 
     /**
      * Merges two values together.
@@ -75,7 +76,7 @@ interface NodeInterface
      *
      * @return mixed The merged values
      */
-    public function merge($leftSide, $rightSide);
+    public function merge( $leftSide, $rightSide );
 
     /**
      * Finalizes a value.
@@ -84,5 +85,5 @@ interface NodeInterface
      *
      * @return mixed The finalized value
      */
-    public function finalize($value);
+    public function finalize( $value );
 }

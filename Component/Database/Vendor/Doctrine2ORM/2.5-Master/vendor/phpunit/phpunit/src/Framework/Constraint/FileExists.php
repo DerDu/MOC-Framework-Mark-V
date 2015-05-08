@@ -24,34 +24,6 @@
  */
 class PHPUnit_Framework_Constraint_FileExists extends PHPUnit_Framework_Constraint
 {
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * @param  mixed $other Value or object to evaluate.
-     * @return bool
-     */
-    protected function matches($other)
-    {
-        return file_exists($other);
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed  $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        return sprintf(
-            'file "%s" exists',
-            $other
-        );
-    }
 
     /**
      * Returns a string representation of the constraint.
@@ -60,6 +32,40 @@ class PHPUnit_Framework_Constraint_FileExists extends PHPUnit_Framework_Constrai
      */
     public function toString()
     {
+
         return 'file exists';
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param  mixed $other Value or object to evaluate.
+     *
+     * @return bool
+     */
+    protected function matches( $other )
+    {
+
+        return file_exists( $other );
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed $other Evaluated value or object.
+     *
+     * @return string
+     */
+    protected function failureDescription( $other )
+    {
+
+        return sprintf(
+            'file "%s" exists',
+            $other
+        );
     }
 }

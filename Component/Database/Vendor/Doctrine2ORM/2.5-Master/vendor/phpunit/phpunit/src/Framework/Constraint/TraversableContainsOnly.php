@@ -23,6 +23,7 @@
  */
 class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var PHPUnit_Framework_Constraint
      */
@@ -37,12 +38,13 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      * @param string  $type
      * @param boolean $isNativeType
      */
-    public function __construct($type, $isNativeType = true)
+    public function __construct( $type, $isNativeType = true )
     {
+
         parent::__construct();
 
         if ($isNativeType) {
-            $this->constraint = new PHPUnit_Framework_Constraint_IsType($type);
+            $this->constraint = new PHPUnit_Framework_Constraint_IsType( $type );
         } else {
             $this->constraint = new PHPUnit_Framework_Constraint_IsInstanceOf(
                 $type
@@ -62,18 +64,20 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed                                        $other        Value or object to evaluate.
-     * @param  string                                       $description  Additional information about the test
-     * @param  bool                                         $returnResult Whether to return a result or throw an exception
+     * @param  mixed  $other        Value or object to evaluate.
+     * @param  string $description  Additional information about the test
+     * @param  bool   $returnResult Whether to return a result or throw an exception
+     *
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate($other, $description = '', $returnResult = false)
+    public function evaluate( $other, $description = '', $returnResult = false )
     {
+
         $success = true;
 
         foreach ($other as $item) {
-            if (!$this->constraint->evaluate($item, '', true)) {
+            if (!$this->constraint->evaluate( $item, '', true )) {
                 $success = false;
                 break;
             }
@@ -84,7 +88,7 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
         }
 
         if (!$success) {
-            $this->fail($other, $description);
+            $this->fail( $other, $description );
         }
     }
 
@@ -95,6 +99,7 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      */
     public function toString()
     {
-        return 'contains only values of type "' . $this->type . '"';
+
+        return 'contains only values of type "'.$this->type.'"';
     }
 }

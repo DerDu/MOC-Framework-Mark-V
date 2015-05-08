@@ -28,6 +28,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class JoinAssociationDeclaration extends Node
 {
+
     /**
      * @var JoinAssociationPathExpression
      */
@@ -48,18 +49,20 @@ class JoinAssociationDeclaration extends Node
      * @param string                        $aliasIdentificationVariable
      * @param IndexBy|null                  $indexBy
      */
-    public function __construct($joinAssociationPathExpression, $aliasIdentificationVariable, $indexBy)
+    public function __construct( $joinAssociationPathExpression, $aliasIdentificationVariable, $indexBy )
     {
+
         $this->joinAssociationPathExpression = $joinAssociationPathExpression;
-        $this->aliasIdentificationVariable   = $aliasIdentificationVariable;
-        $this->indexBy                       = $indexBy;
+        $this->aliasIdentificationVariable = $aliasIdentificationVariable;
+        $this->indexBy = $indexBy;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkJoinAssociationDeclaration($this);
+
+        return $sqlWalker->walkJoinAssociationDeclaration( $this );
     }
 }

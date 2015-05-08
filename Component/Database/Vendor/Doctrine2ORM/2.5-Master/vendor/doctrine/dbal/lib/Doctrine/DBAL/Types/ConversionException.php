@@ -31,6 +31,7 @@ namespace Doctrine\DBAL\Types;
 
 class ConversionException extends \Doctrine\DBAL\DBALException
 {
+
     /**
      * Thrown when a Database to Doctrine Type Conversion fails.
      *
@@ -39,11 +40,12 @@ class ConversionException extends \Doctrine\DBAL\DBALException
      *
      * @return \Doctrine\DBAL\Types\ConversionException
      */
-    static public function conversionFailed($value, $toType)
+    static public function conversionFailed( $value, $toType )
     {
-        $value = (strlen($value) > 32) ? substr($value, 0, 20) . "..." : $value;
 
-        return new self('Could not convert database value "' . $value . '" to Doctrine Type ' . $toType);
+        $value = ( strlen( $value ) > 32 ) ? substr( $value, 0, 20 )."..." : $value;
+
+        return new self( 'Could not convert database value "'.$value.'" to Doctrine Type '.$toType );
     }
 
     /**
@@ -56,13 +58,14 @@ class ConversionException extends \Doctrine\DBAL\DBALException
      *
      * @return \Doctrine\DBAL\Types\ConversionException
      */
-    static public function conversionFailedFormat($value, $toType, $expectedFormat)
+    static public function conversionFailedFormat( $value, $toType, $expectedFormat )
     {
-        $value = (strlen($value) > 32) ? substr($value, 0, 20) . "..." : $value;
+
+        $value = ( strlen( $value ) > 32 ) ? substr( $value, 0, 20 )."..." : $value;
 
         return new self(
-            'Could not convert database value "' . $value . '" to Doctrine Type ' .
-            $toType . '. Expected format: ' . $expectedFormat
+            'Could not convert database value "'.$value.'" to Doctrine Type '.
+            $toType.'. Expected format: '.$expectedFormat
         );
     }
 }

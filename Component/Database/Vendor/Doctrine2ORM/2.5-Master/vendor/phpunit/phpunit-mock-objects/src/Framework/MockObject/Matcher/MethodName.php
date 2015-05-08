@@ -25,6 +25,7 @@
  */
 class PHPUnit_Framework_MockObject_Matcher_MethodName extends PHPUnit_Framework_MockObject_Matcher_StatelessInvocation
 {
+
     /**
      * @var PHPUnit_Framework_Constraint
      */
@@ -32,17 +33,19 @@ class PHPUnit_Framework_MockObject_Matcher_MethodName extends PHPUnit_Framework_
 
     /**
      * @param  PHPUnit_Framework_Constraint|string
+     *
      * @throws PHPUnit_Framework_Constraint
      */
-    public function __construct($constraint)
+    public function __construct( $constraint )
     {
+
         if (!$constraint instanceof PHPUnit_Framework_Constraint) {
-            if (!is_string($constraint)) {
-                throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            if (!is_string( $constraint )) {
+                throw PHPUnit_Util_InvalidArgumentHelper::factory( 1, 'string' );
             }
 
             $constraint = new PHPUnit_Framework_Constraint_IsEqual(
-              $constraint, 0, 10, FALSE, TRUE
+                $constraint, 0, 10, false, true
             );
         }
 
@@ -54,15 +57,18 @@ class PHPUnit_Framework_MockObject_Matcher_MethodName extends PHPUnit_Framework_
      */
     public function toString()
     {
-        return 'method name ' . $this->constraint->toString();
+
+        return 'method name '.$this->constraint->toString();
     }
 
     /**
      * @param  PHPUnit_Framework_MockObject_Invocation $invocation
+     *
      * @return boolean
      */
-    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
-        return $this->constraint->evaluate($invocation->methodName, '', TRUE);
+
+        return $this->constraint->evaluate( $invocation->methodName, '', true );
     }
 }

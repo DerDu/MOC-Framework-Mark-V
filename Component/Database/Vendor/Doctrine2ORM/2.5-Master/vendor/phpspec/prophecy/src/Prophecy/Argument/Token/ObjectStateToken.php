@@ -11,9 +11,9 @@
 
 namespace Prophecy\Argument\Token;
 
-use SebastianBergmann\Comparator\ComparisonFailure;
 use Prophecy\Comparator\Factory as ComparatorFactory;
 use Prophecy\Util\StringUtil;
+use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * Object state-checker token.
@@ -22,6 +22,7 @@ use Prophecy\Util\StringUtil;
  */
 class ObjectStateToken implements TokenInterface
 {
+
     private $name;
     private $value;
     private $util;
@@ -31,7 +32,7 @@ class ObjectStateToken implements TokenInterface
      * Initializes token.
      *
      * @param string            $methodName
-     * @param mixed             $value             Expected return value
+     * @param mixed             $value Expected return value
      * @param null|StringUtil   $util
      * @param ComparatorFactory $comparatorFactory
      */
@@ -41,9 +42,10 @@ class ObjectStateToken implements TokenInterface
         StringUtil $util = null,
         ComparatorFactory $comparatorFactory = null
     ) {
-        $this->name  = $methodName;
+
+        $this->name = $methodName;
         $this->value = $value;
-        $this->util  = $util ?: new StringUtil;
+        $this->util = $util ?: new StringUtil;
 
         $this->comparatorFactory = $comparatorFactory ?: ComparatorFactory::getInstance();
     }
@@ -55,24 +57,25 @@ class ObjectStateToken implements TokenInterface
      *
      * @return bool|int
      */
-    public function scoreArgument($argument)
+    public function scoreArgument( $argument )
     {
-        if (is_object($argument) && method_exists($argument, $this->name)) {
-            $actual = call_user_func(array($argument, $this->name));
+
+        if (is_object( $argument ) && method_exists( $argument, $this->name )) {
+            $actual = call_user_func( array( $argument, $this->name ) );
 
             $comparator = $this->comparatorFactory->getComparatorFor(
                 $actual, $this->value
             );
 
             try {
-                $comparator->assertEquals($actual, $this->value);
+                $comparator->assertEquals( $actual, $this->value );
                 return 8;
-            } catch (ComparisonFailure $failure) {
+            } catch( ComparisonFailure $failure ) {
                 return false;
             }
         }
 
-        if (is_object($argument) && property_exists($argument, $this->name)) {
+        if (is_object( $argument ) && property_exists( $argument, $this->name )) {
             return $argument->{$this->name} === $this->value ? 8 : false;
         }
 
@@ -86,6 +89,7 @@ class ObjectStateToken implements TokenInterface
      */
     public function isLast()
     {
+
         return false;
     }
 
@@ -96,9 +100,10 @@ class ObjectStateToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('state(%s(), %s)',
+
+        return sprintf( 'state(%s(), %s)',
             $this->name,
-            $this->util->stringify($this->value)
+            $this->util->stringify( $this->value )
         );
     }
 }

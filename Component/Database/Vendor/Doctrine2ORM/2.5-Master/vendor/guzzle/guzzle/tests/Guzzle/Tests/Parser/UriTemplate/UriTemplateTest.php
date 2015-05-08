@@ -9,43 +9,49 @@ use Guzzle\Parser\UriTemplate\UriTemplate;
  */
 class UriTemplateTest extends AbstractUriTemplateTest
 {
+
     /**
      * @dataProvider templateProvider
      */
-    public function testExpandsUriTemplates($template, $expansion, $params)
+    public function testExpandsUriTemplates( $template, $expansion, $params )
     {
-        $uri = new UriTemplate($template);
-        $this->assertEquals($expansion, $uri->expand($template, $params));
+
+        $uri = new UriTemplate( $template );
+        $this->assertEquals( $expansion, $uri->expand( $template, $params ) );
     }
 
     public function expressionProvider()
     {
+
         return array(
             array(
-                '{+var*}', array(
+                '{+var*}',
+                array(
                     'operator' => '+',
                     'values'   => array(
-                        array('value' => 'var', 'modifier' => '*')
+                        array( 'value' => 'var', 'modifier' => '*' )
                     )
                 ),
             ),
             array(
-                '{?keys,var,val}', array(
+                '{?keys,var,val}',
+                array(
                     'operator' => '?',
                     'values'   => array(
-                        array('value' => 'keys', 'modifier' => ''),
-                        array('value' => 'var', 'modifier' => ''),
-                        array('value' => 'val', 'modifier' => '')
+                        array( 'value' => 'keys', 'modifier' => '' ),
+                        array( 'value' => 'var', 'modifier' => '' ),
+                        array( 'value' => 'val', 'modifier' => '' )
                     )
                 ),
             ),
             array(
-                '{+x,hello,y}', array(
+                '{+x,hello,y}',
+                array(
                     'operator' => '+',
                     'values'   => array(
-                        array('value' => 'x', 'modifier' => ''),
-                        array('value' => 'hello', 'modifier' => ''),
-                        array('value' => 'y', 'modifier' => '')
+                        array( 'value' => 'x', 'modifier' => '' ),
+                        array( 'value' => 'hello', 'modifier' => '' ),
+                        array( 'value' => 'y', 'modifier' => '' )
                     )
                 )
             )
@@ -55,17 +61,18 @@ class UriTemplateTest extends AbstractUriTemplateTest
     /**
      * @dataProvider expressionProvider
      */
-    public function testParsesExpressions($exp, $data)
+    public function testParsesExpressions( $exp, $data )
     {
-        $template = new UriTemplate($exp);
+
+        $template = new UriTemplate( $exp );
 
         // Access the config object
-        $class = new \ReflectionClass($template);
-        $method = $class->getMethod('parseExpression');
-        $method->setAccessible(true);
+        $class = new \ReflectionClass( $template );
+        $method = $class->getMethod( 'parseExpression' );
+        $method->setAccessible( true );
 
-        $exp = substr($exp, 1, -1);
-        $this->assertEquals($data, $method->invokeArgs($template, array($exp)));
+        $exp = substr( $exp, 1, -1 );
+        $this->assertEquals( $data, $method->invokeArgs( $template, array( $exp ) ) );
     }
 
     /**
@@ -73,25 +80,27 @@ class UriTemplateTest extends AbstractUriTemplateTest
      */
     public function testAllowsNestedArrayExpansion()
     {
+
         $template = new UriTemplate();
 
-        $result = $template->expand('http://example.com{+path}{/segments}{?query,data*,foo*}', array(
+        $result = $template->expand( 'http://example.com{+path}{/segments}{?query,data*,foo*}', array(
             'path'     => '/foo/bar',
-            'segments' => array('one', 'two'),
+            'segments' => array( 'one', 'two' ),
             'query'    => 'test',
             'data'     => array(
-                'more' => array('fun', 'ice cream')
+                'more' => array( 'fun', 'ice cream' )
             ),
-            'foo' => array(
+            'foo'      => array(
                 'baz' => array(
                     'bar'  => 'fizz',
                     'test' => 'buzz'
                 ),
                 'bam' => 'boo'
             )
-        ));
+        ) );
 
-        $this->assertEquals('http://example.com/foo/bar/one,two?query=test&more%5B0%5D=fun&more%5B1%5D=ice%20cream&baz%5Bbar%5D=fizz&baz%5Btest%5D=buzz&bam=boo', $result);
+        $this->assertEquals( 'http://example.com/foo/bar/one,two?query=test&more%5B0%5D=fun&more%5B1%5D=ice%20cream&baz%5Bbar%5D=fizz&baz%5Btest%5D=buzz&bam=boo',
+            $result );
     }
 
     /**
@@ -99,8 +108,9 @@ class UriTemplateTest extends AbstractUriTemplateTest
      */
     public function testSetRegex()
     {
+
         $template = new UriTemplate();
-        $template->setRegex('/\<\$(.+)\>/');
-        $this->assertSame('/foo', $template->expand('/<$a>', array('a' => 'foo')));
+        $template->setRegex( '/\<\$(.+)\>/' );
+        $this->assertSame( '/foo', $template->expand( '/<$a>', array( 'a' => 'foo' ) ) );
     }
 }

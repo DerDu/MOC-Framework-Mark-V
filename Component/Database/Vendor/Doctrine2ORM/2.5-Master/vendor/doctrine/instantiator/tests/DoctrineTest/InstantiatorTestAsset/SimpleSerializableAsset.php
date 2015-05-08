@@ -29,6 +29,7 @@ use Serializable;
  */
 class SimpleSerializableAsset implements Serializable
 {
+
     /**
      * Constructor - should not be called
      *
@@ -36,7 +37,8 @@ class SimpleSerializableAsset implements Serializable
      */
     public function __construct()
     {
-        throw new BadMethodCallException('Not supposed to be called!');
+
+        throw new BadMethodCallException( 'Not supposed to be called!' );
     }
 
     /**
@@ -44,6 +46,7 @@ class SimpleSerializableAsset implements Serializable
      */
     public function serialize()
     {
+
         return '';
     }
 
@@ -54,8 +57,9 @@ class SimpleSerializableAsset implements Serializable
      *
      * @throws BadMethodCallException
      */
-    public function unserialize($serialized)
+    public function unserialize( $serialized )
     {
-        throw new BadMethodCallException('Not supposed to be called!');
+
+        throw new BadMethodCallException( 'Not supposed to be called!' );
     }
 }

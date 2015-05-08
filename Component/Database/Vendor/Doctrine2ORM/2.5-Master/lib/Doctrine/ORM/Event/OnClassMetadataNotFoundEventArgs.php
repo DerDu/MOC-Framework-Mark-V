@@ -34,6 +34,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class OnClassMetadataNotFoundEventArgs extends ManagerEventArgs
 {
+
     /**
      * @var string
      */
@@ -50,19 +51,12 @@ class OnClassMetadataNotFoundEventArgs extends ManagerEventArgs
      * @param string        $className
      * @param ObjectManager $objectManager
      */
-    public function __construct($className, ObjectManager $objectManager)
+    public function __construct( $className, ObjectManager $objectManager )
     {
-        $this->className = (string) $className;
 
-        parent::__construct($objectManager);
-    }
+        $this->className = (string)$className;
 
-    /**
-     * @param ClassMetadata|null $classMetadata
-     */
-    public function setFoundMetadata(ClassMetadata $classMetadata = null)
-    {
-        $this->foundMetadata = $classMetadata;
+        parent::__construct( $objectManager );
     }
 
     /**
@@ -70,7 +64,17 @@ class OnClassMetadataNotFoundEventArgs extends ManagerEventArgs
      */
     public function getFoundMetadata()
     {
+
         return $this->foundMetadata;
+    }
+
+    /**
+     * @param ClassMetadata|null $classMetadata
+     */
+    public function setFoundMetadata( ClassMetadata $classMetadata = null )
+    {
+
+        $this->foundMetadata = $classMetadata;
     }
 
     /**
@@ -80,6 +84,7 @@ class OnClassMetadataNotFoundEventArgs extends ManagerEventArgs
      */
     public function getClassName()
     {
+
         return $this->className;
     }
 }

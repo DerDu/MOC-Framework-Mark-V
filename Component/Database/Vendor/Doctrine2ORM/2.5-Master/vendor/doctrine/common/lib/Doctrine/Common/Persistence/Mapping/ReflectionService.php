@@ -29,6 +29,7 @@ namespace Doctrine\Common\Persistence\Mapping;
  */
 interface ReflectionService
 {
+
     /**
      * Returns an array of the parent classes (not interfaces) for the given class.
      *
@@ -38,7 +39,7 @@ interface ReflectionService
      *
      * @return array
      */
-    public function getParentClasses($class);
+    public function getParentClasses( $class );
 
     /**
      * Returns the shortname of a class.
@@ -47,14 +48,14 @@ interface ReflectionService
      *
      * @return string
      */
-    public function getClassShortName($class);
+    public function getClassShortName( $class );
 
     /**
      * @param string $class
      *
      * @return string
      */
-    public function getClassNamespace($class);
+    public function getClassNamespace( $class );
 
     /**
      * Returns a reflection class instance or null.
@@ -63,7 +64,7 @@ interface ReflectionService
      *
      * @return \ReflectionClass|null
      */
-    public function getClass($class);
+    public function getClass( $class );
 
     /**
      * Returns an accessible property (setAccessible(true)) or null.
@@ -73,7 +74,7 @@ interface ReflectionService
      *
      * @return \ReflectionProperty|null
      */
-    public function getAccessibleProperty($class, $property);
+    public function getAccessibleProperty( $class, $property );
 
     /**
      * Checks if the class have a public method with the given name.
@@ -83,5 +84,5 @@ interface ReflectionService
      *
      * @return bool
      */
-    public function hasPublicMethod($class, $method);
+    public function hasPublicMethod( $class, $method );
 }

@@ -22,6 +22,7 @@
  */
 class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var PHPUnit_Framework_Constraint[]
      */
@@ -30,12 +31,13 @@ class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
     /**
      * @param PHPUnit_Framework_Constraint[] $constraints
      */
-    public function setConstraints(array $constraints)
+    public function setConstraints( array $constraints )
     {
+
         $this->constraints = array();
 
         foreach ($constraints as $constraint) {
-            if (!($constraint instanceof PHPUnit_Framework_Constraint)) {
+            if (!( $constraint instanceof PHPUnit_Framework_Constraint )) {
                 $constraint = new PHPUnit_Framework_Constraint_IsEqual(
                     $constraint
                 );
@@ -55,19 +57,21 @@ class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed                                        $other        Value or object to evaluate.
-     * @param  string                                       $description  Additional information about the test
-     * @param  bool                                         $returnResult Whether to return a result or throw an exception
+     * @param  mixed  $other        Value or object to evaluate.
+     * @param  string $description  Additional information about the test
+     * @param  bool   $returnResult Whether to return a result or throw an exception
+     *
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate($other, $description = '', $returnResult = false)
+    public function evaluate( $other, $description = '', $returnResult = false )
     {
+
         $success = false;
         $constraint = null;
 
         foreach ($this->constraints as $constraint) {
-            if ($constraint->evaluate($other, $description, true)) {
+            if ($constraint->evaluate( $other, $description, true )) {
                 $success = true;
                 break;
             }
@@ -78,7 +82,7 @@ class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
         }
 
         if (!$success) {
-            $this->fail($other, $description);
+            $this->fail( $other, $description );
         }
     }
 
@@ -89,6 +93,7 @@ class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
+
         $text = '';
 
         foreach ($this->constraints as $key => $constraint) {
@@ -110,10 +115,11 @@ class PHPUnit_Framework_Constraint_Or extends PHPUnit_Framework_Constraint
      */
     public function count()
     {
+
         $count = 0;
 
         foreach ($this->constraints as $constraint) {
-            $count += count($constraint);
+            $count += count( $constraint );
         }
 
         return $count;

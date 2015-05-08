@@ -28,6 +28,7 @@ namespace Doctrine\ORM\Cache;
  */
 interface QueryCacheValidator
 {
+
     /**
      * Checks if the query entry is valid
      *
@@ -36,5 +37,5 @@ interface QueryCacheValidator
      *
      * @return boolean
      */
-    public function isValid(QueryCacheKey $key, QueryCacheEntry $entry);
+    public function isValid( QueryCacheKey $key, QueryCacheEntry $entry );
 }

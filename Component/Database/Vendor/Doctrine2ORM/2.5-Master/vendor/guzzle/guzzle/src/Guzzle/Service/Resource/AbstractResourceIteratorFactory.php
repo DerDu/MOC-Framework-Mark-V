@@ -10,20 +10,23 @@ use Guzzle\Service\Command\CommandInterface;
  */
 abstract class AbstractResourceIteratorFactory implements ResourceIteratorFactoryInterface
 {
-    public function build(CommandInterface $command, array $options = array())
+
+    public function build( CommandInterface $command, array $options = array() )
     {
-        if (!$this->canBuild($command)) {
-            throw new InvalidArgumentException('Iterator was not found for ' . $command->getName());
+
+        if (!$this->canBuild( $command )) {
+            throw new InvalidArgumentException( 'Iterator was not found for '.$command->getName() );
         }
 
-        $className = $this->getClassName($command);
+        $className = $this->getClassName( $command );
 
-        return new $className($command, $options);
+        return new $className( $command, $options );
     }
 
-    public function canBuild(CommandInterface $command)
+    public function canBuild( CommandInterface $command )
     {
-        return (bool) $this->getClassName($command);
+
+        return (bool)$this->getClassName( $command );
     }
 
     /**
@@ -33,5 +36,5 @@ abstract class AbstractResourceIteratorFactory implements ResourceIteratorFactor
      *
      * @return string
      */
-    abstract protected function getClassName(CommandInterface $command);
+    abstract protected function getClassName( CommandInterface $command );
 }

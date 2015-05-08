@@ -13,6 +13,7 @@ use Satooshi\Component\System\Git\GitCommand;
  */
 class GitInfoCollector
 {
+
     /**
      * Git command.
      *
@@ -25,8 +26,9 @@ class GitInfoCollector
      *
      * @param GitCommand $gitCommand Git command
      */
-    public function __construct(GitCommand $command)
+    public function __construct( GitCommand $command )
     {
+
         $this->command = $command;
     }
 
@@ -39,11 +41,12 @@ class GitInfoCollector
      */
     public function collect()
     {
-        $branch  = $this->collectBranch();
-        $commit  = $this->collectCommit();
+
+        $branch = $this->collectBranch();
+        $commit = $this->collectCommit();
         $remotes = $this->collectRemotes();
 
-        return new Git($branch, $commit, $remotes);
+        return new Git( $branch, $commit, $remotes );
     }
 
     // internal method
@@ -57,11 +60,12 @@ class GitInfoCollector
      */
     protected function collectBranch()
     {
+
         $branchesResult = $this->command->getBranches();
 
         foreach ($branchesResult as $result) {
-            if (strpos($result, '* ') === 0) {
-                $exploded = explode('* ', $result, 2);
+            if (strpos( $result, '* ' ) === 0) {
+                $exploded = explode( '* ', $result, 2 );
 
                 return $exploded[1];
             }
@@ -79,21 +83,22 @@ class GitInfoCollector
      */
     protected function collectCommit()
     {
+
         $commitResult = $this->command->getHeadCommit();
 
-        if (count($commitResult) !== 6 || array_keys($commitResult) !== range(0, 5)) {
+        if (count( $commitResult ) !== 6 || array_keys( $commitResult ) !== range( 0, 5 )) {
             throw new \RuntimeException();
         }
 
         $commit = new Commit();
 
         return $commit
-        ->setId($commitResult[0])
-        ->setAuthorName($commitResult[1])
-        ->setAuthorEmail($commitResult[2])
-        ->setCommitterName($commitResult[3])
-        ->setCommitterEmail($commitResult[4])
-        ->setMessage($commitResult[5]);
+            ->setId( $commitResult[0] )
+            ->setAuthorName( $commitResult[1] )
+            ->setAuthorEmail( $commitResult[2] )
+            ->setCommitterName( $commitResult[3] )
+            ->setCommitterEmail( $commitResult[4] )
+            ->setMessage( $commitResult[5] );
     }
 
     /**
@@ -105,9 +110,10 @@ class GitInfoCollector
      */
     protected function collectRemotes()
     {
+
         $remotesResult = $this->command->getRemotes();
 
-        if (count($remotesResult) === 0) {
+        if (count( $remotesResult ) === 0) {
             throw new \RuntimeException();
         }
 
@@ -115,25 +121,25 @@ class GitInfoCollector
         $results = array();
 
         foreach ($remotesResult as $result) {
-            if (strpos($result, ' ') !== false) {
-                list($remote) = explode(' ', $result, 2);
+            if (strpos( $result, ' ' ) !== false) {
+                list( $remote ) = explode( ' ', $result, 2 );
 
                 $results[] = $remote;
             }
         }
 
         // filter
-        $results = array_unique($results);
+        $results = array_unique( $results );
 
         // create Remote instances
         $remotes = array();
 
         foreach ($results as $result) {
-            if (strpos($result, "\t") !== false) {
-                list($name, $url) = explode("\t", $result, 2);
+            if (strpos( $result, "\t" ) !== false) {
+                list( $name, $url ) = explode( "\t", $result, 2 );
 
                 $remote = new Remote();
-                $remotes[] = $remote->setName($name)->setUrl($url);
+                $remotes[] = $remote->setName( $name )->setUrl( $url );
             }
         }
 
@@ -149,6 +155,7 @@ class GitInfoCollector
      */
     public function getCommand()
     {
+
         return $this->command;
     }
 }

@@ -20,6 +20,7 @@ use Symfony\Component\Config\Exception\FileLoaderLoadException;
  */
 abstract class Loader implements LoaderInterface
 {
+
     protected $resolver;
 
     /**
@@ -27,14 +28,16 @@ abstract class Loader implements LoaderInterface
      */
     public function getResolver()
     {
+
         return $this->resolver;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setResolver(LoaderResolverInterface $resolver)
+    public function setResolver( LoaderResolverInterface $resolver )
     {
+
         $this->resolver = $resolver;
     }
 
@@ -46,9 +49,10 @@ abstract class Loader implements LoaderInterface
      *
      * @return mixed
      */
-    public function import($resource, $type = null)
+    public function import( $resource, $type = null )
     {
-        return $this->resolve($resource, $type)->load($resource, $type);
+
+        return $this->resolve( $resource, $type )->load( $resource, $type );
     }
 
     /**
@@ -61,16 +65,17 @@ abstract class Loader implements LoaderInterface
      *
      * @throws FileLoaderLoadException If no loader is found
      */
-    public function resolve($resource, $type = null)
+    public function resolve( $resource, $type = null )
     {
-        if ($this->supports($resource, $type)) {
+
+        if ($this->supports( $resource, $type )) {
             return $this;
         }
 
-        $loader = null === $this->resolver ? false : $this->resolver->resolve($resource, $type);
+        $loader = null === $this->resolver ? false : $this->resolver->resolve( $resource, $type );
 
         if (false === $loader) {
-            throw new FileLoaderLoadException($resource);
+            throw new FileLoaderLoadException( $resource );
         }
 
         return $loader;

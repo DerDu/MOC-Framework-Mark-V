@@ -29,11 +29,13 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class SQLServer2008Keywords extends SQLServer2005Keywords
 {
+
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
+
         return 'SQLServer2008';
     }
 
@@ -44,8 +46,9 @@ class SQLServer2008Keywords extends SQLServer2005Keywords
      */
     protected function getKeywords()
     {
-        return array_merge(parent::getKeywords(), array(
+
+        return array_merge( parent::getKeywords(), array(
             'MERGE'
-        ));
+        ) );
     }
 }

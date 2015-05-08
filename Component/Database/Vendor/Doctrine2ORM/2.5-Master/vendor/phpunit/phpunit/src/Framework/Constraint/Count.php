@@ -22,6 +22,7 @@
  */
 class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var integer
      */
@@ -30,32 +31,49 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
     /**
      * @param integer $expected
      */
-    public function __construct($expected)
+    public function __construct( $expected )
     {
+
         parent::__construct();
         $this->expectedCount = $expected;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+
+        return sprintf(
+            'count matches %d',
+            $this->expectedCount
+        );
     }
 
     /**
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param  mixed   $other
+     * @param  mixed $other
+     *
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches( $other )
     {
-        return $this->expectedCount === $this->getCountOf($other);
+
+        return $this->expectedCount === $this->getCountOf( $other );
     }
 
     /**
-     * @param  mixed   $other
+     * @param  mixed $other
+     *
      * @return boolean
      */
-    protected function getCountOf($other)
+    protected function getCountOf( $other )
     {
-        if ($other instanceof Countable || is_array($other)) {
-            return count($other);
+
+        if ($other instanceof Countable || is_array( $other )) {
+            return count( $other );
         } elseif ($other instanceof Traversable) {
             if ($other instanceof IteratorAggregate) {
                 $iterator = $other->getIterator();
@@ -64,7 +82,7 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
             }
 
             $key = $iterator->key();
-            $count = iterator_count($iterator);
+            $count = iterator_count( $iterator );
 
             // manually rewind $iterator to previous key, since iterator_count
             // moves pointer
@@ -85,25 +103,16 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed  $other Evaluated value or object.
+     * @param  mixed $other Evaluated value or object.
+     *
      * @return string
      */
-    protected function failureDescription($other)
+    protected function failureDescription( $other )
     {
+
         return sprintf(
             'actual size %d matches expected size %d',
-            $this->getCountOf($other),
-            $this->expectedCount
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function toString()
-    {
-        return sprintf(
-            'count matches %d',
+            $this->getCountOf( $other ),
             $this->expectedCount
         );
     }

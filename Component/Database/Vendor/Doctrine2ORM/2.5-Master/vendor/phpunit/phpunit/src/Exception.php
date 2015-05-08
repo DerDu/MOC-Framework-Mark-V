@@ -21,4 +21,5 @@
  */
 interface PHPUnit_Exception
 {
+
 }

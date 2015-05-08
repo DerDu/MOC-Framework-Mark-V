@@ -20,6 +20,7 @@ use Prophecy\Doubler\Generator\Node\ClassNode;
  */
 class KeywordPatch implements ClassPatchInterface
 {
+
     /**
      * Support any class
      *
@@ -27,8 +28,9 @@ class KeywordPatch implements ClassPatchInterface
      *
      * @return boolean
      */
-    public function supports(ClassNode $node)
+    public function supports( ClassNode $node )
     {
+
         return true;
     }
 
@@ -37,22 +39,14 @@ class KeywordPatch implements ClassPatchInterface
      *
      * @param ClassNode $node
      */
-    public function apply(ClassNode $node)
+    public function apply( ClassNode $node )
     {
-        $methodNames = array_keys($node->getMethods());
-        $methodsToRemove = array_intersect($methodNames, $this->getKeywords());
-        foreach ($methodsToRemove as $methodName) {
-            $node->removeMethod($methodName);
-        }
-    }
 
-    /**
-     * Returns patch priority, which determines when patch will be applied.
-     *
-     * @return int Priority number (higher - earlier)
-     */
-    public function getPriority() {
-        return 49;
+        $methodNames = array_keys( $node->getMethods() );
+        $methodsToRemove = array_intersect( $methodNames, $this->getKeywords() );
+        foreach ($methodsToRemove as $methodName) {
+            $node->removeMethod( $methodName );
+        }
     }
 
     /**
@@ -60,7 +54,8 @@ class KeywordPatch implements ClassPatchInterface
      *
      * @return array
      */
-    private function getKeywords() {
+    private function getKeywords()
+    {
 
         return array(
             '__halt_compiler',
@@ -131,5 +126,16 @@ class KeywordPatch implements ClassPatchInterface
             'xor',
             'yield',
         );
+    }
+
+    /**
+     * Returns patch priority, which determines when patch will be applied.
+     *
+     * @return int Priority number (higher - earlier)
+     */
+    public function getPriority()
+    {
+
+        return 49;
     }
 }

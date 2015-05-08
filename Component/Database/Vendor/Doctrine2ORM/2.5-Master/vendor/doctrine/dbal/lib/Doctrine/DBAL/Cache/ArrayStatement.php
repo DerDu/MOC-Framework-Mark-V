@@ -24,6 +24,7 @@ use PDO;
 
 class ArrayStatement implements \IteratorAggregate, ResultStatement
 {
+
     /**
      * @var array
      */
@@ -47,11 +48,12 @@ class ArrayStatement implements \IteratorAggregate, ResultStatement
     /**
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct( array $data )
     {
+
         $this->data = $data;
-        if (count($data)) {
-            $this->columnCount = count($data[0]);
+        if (count( $data )) {
+            $this->columnCount = count( $data[0] );
         }
     }
 
@@ -60,7 +62,8 @@ class ArrayStatement implements \IteratorAggregate, ResultStatement
      */
     public function closeCursor()
     {
-        unset ($this->data);
+
+        unset ( $this->data );
     }
 
     /**
@@ -68,16 +71,18 @@ class ArrayStatement implements \IteratorAggregate, ResultStatement
      */
     public function columnCount()
     {
+
         return $this->columnCount;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+    public function setFetchMode( $fetchMode, $arg2 = null, $arg3 = null )
     {
+
         if ($arg2 !== null || $arg3 !== null) {
-            throw new \InvalidArgumentException("Caching layer does not support 2nd/3rd argument to setFetchMode()");
+            throw new \InvalidArgumentException( "Caching layer does not support 2nd/3rd argument to setFetchMode()" );
         }
 
         $this->defaultFetchMode = $fetchMode;
@@ -90,42 +95,20 @@ class ArrayStatement implements \IteratorAggregate, ResultStatement
      */
     public function getIterator()
     {
+
         $data = $this->fetchAll();
 
-        return new \ArrayIterator($data);
+        return new \ArrayIterator( $data );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetch($fetchMode = null)
+    public function fetchAll( $fetchMode = null )
     {
-        if (isset($this->data[$this->num])) {
-            $row = $this->data[$this->num++];
-            $fetchMode = $fetchMode ?: $this->defaultFetchMode;
-            if ($fetchMode === PDO::FETCH_ASSOC) {
-                return $row;
-            } elseif ($fetchMode === PDO::FETCH_NUM) {
-                return array_values($row);
-            } elseif ($fetchMode === PDO::FETCH_BOTH) {
-                return array_merge($row, array_values($row));
-            } elseif ($fetchMode === PDO::FETCH_COLUMN) {
-                return reset($row);
-            } else {
-                throw new \InvalidArgumentException("Invalid fetch-style given for fetching result.");
-            }
-        }
 
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchAll($fetchMode = null)
-    {
         $rows = array();
-        while ($row = $this->fetch($fetchMode)) {
+        while ($row = $this->fetch( $fetchMode )) {
             $rows[] = $row;
         }
 
@@ -135,10 +118,36 @@ class ArrayStatement implements \IteratorAggregate, ResultStatement
     /**
      * {@inheritdoc}
      */
-    public function fetchColumn($columnIndex = 0)
+    public function fetch( $fetchMode = null )
     {
-        $row = $this->fetch(PDO::FETCH_NUM);
-        if (!isset($row[$columnIndex])) {
+
+        if (isset( $this->data[$this->num] )) {
+            $row = $this->data[$this->num++];
+            $fetchMode = $fetchMode ?: $this->defaultFetchMode;
+            if ($fetchMode === PDO::FETCH_ASSOC) {
+                return $row;
+            } elseif ($fetchMode === PDO::FETCH_NUM) {
+                return array_values( $row );
+            } elseif ($fetchMode === PDO::FETCH_BOTH) {
+                return array_merge( $row, array_values( $row ) );
+            } elseif ($fetchMode === PDO::FETCH_COLUMN) {
+                return reset( $row );
+            } else {
+                throw new \InvalidArgumentException( "Invalid fetch-style given for fetching result." );
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchColumn( $columnIndex = 0 )
+    {
+
+        $row = $this->fetch( PDO::FETCH_NUM );
+        if (!isset( $row[$columnIndex] )) {
             // TODO: verify this is correct behavior
             return false;
         }

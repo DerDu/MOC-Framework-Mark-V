@@ -27,51 +27,46 @@ namespace Doctrine\Tests\Common\Proxy;
  */
 class LazyLoadableObject
 {
+
     /**
      * @var string
      */
     public $publicIdentifierField;
-
+    /**
+     * @var string
+     */
+    public $publicTransientField = 'publicTransientFieldValue';
+    /**
+     * @var string
+     */
+    public $publicPersistentField = 'publicPersistentFieldValue';
+    /**
+     * @var string
+     */
+    public $publicAssociation = 'publicAssociationValue';
     /**
      * @var string
      */
     protected $protectedIdentifierField;
-
     /**
      * @var string
      */
-    public $publicTransientField            = 'publicTransientFieldValue';
-
+    protected $protectedTransientField = 'protectedTransientFieldValue';
     /**
      * @var string
      */
-    protected $protectedTransientField      = 'protectedTransientFieldValue';
-
+    protected $protectedPersistentField = 'protectedPersistentFieldValue';
     /**
      * @var string
      */
-    public $publicPersistentField           = 'publicPersistentFieldValue';
-
-    /**
-     * @var string
-     */
-    protected $protectedPersistentField     = 'protectedPersistentFieldValue';
-
-    /**
-     * @var string
-     */
-    public $publicAssociation               = 'publicAssociationValue';
-
-    /**
-     * @var string
-     */
-    protected $protectedAssociation         = 'protectedAssociationValue';
+    protected $protectedAssociation = 'protectedAssociationValue';
 
     /**
      * @return string
      */
     public function getProtectedIdentifierField()
     {
+
         return $this->protectedIdentifierField;
     }
 
@@ -80,6 +75,7 @@ class LazyLoadableObject
      */
     public function testInitializationTriggeringMethod()
     {
+
         return 'testInitializationTriggeringMethod';
     }
 
@@ -88,13 +84,14 @@ class LazyLoadableObject
      */
     public function getProtectedAssociation()
     {
+
         return $this->protectedAssociation;
     }
 
     /**
      * @param \stdClass $param
      */
-    public function publicTypeHintedMethod(\stdClass $param)
+    public function publicTypeHintedMethod( \stdClass $param )
     {
     }
 
@@ -109,7 +106,7 @@ class LazyLoadableObject
      * @param mixed $thisIsNotByRef
      * @param &mixed $thisIsByRef
      */
-    public function byRefParamMethod($thisIsNotByRef, &$thisIsByRef)
+    public function byRefParamMethod( $thisIsNotByRef, &$thisIsByRef )
     {
     }
 }

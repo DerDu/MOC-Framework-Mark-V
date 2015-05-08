@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Cache;
  */
 interface MultiGetRegion
 {
+
     /**
      * Get all items from the cache identified by $keys.
      * It returns NULL if some elements can not be found.
@@ -38,5 +39,5 @@ interface MultiGetRegion
      *
      * @return CacheEntry[]|null The cached entries or NULL if one or more entries can not be found
      */
-    public function getMultiple(CollectionCacheEntry $collection);
+    public function getMultiple( CollectionCacheEntry $collection );
 }

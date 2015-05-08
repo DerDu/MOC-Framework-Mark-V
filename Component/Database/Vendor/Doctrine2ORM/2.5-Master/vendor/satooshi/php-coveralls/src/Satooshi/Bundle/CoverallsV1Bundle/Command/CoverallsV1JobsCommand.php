@@ -1,13 +1,13 @@
 <?php
 namespace Satooshi\Bundle\CoverallsV1Bundle\Command;
 
+use Guzzle\Http\Client;
+use Psr\Log\NullLogger;
 use Satooshi\Bundle\CoverallsV1Bundle\Api\Jobs;
 use Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration;
 use Satooshi\Bundle\CoverallsV1Bundle\Config\Configurator;
 use Satooshi\Bundle\CoverallsV1Bundle\Repository\JobsRepository;
 use Satooshi\Component\Log\ConsoleLogger;
-use Guzzle\Http\Client;
-use Psr\Log\NullLogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,6 +21,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 class CoverallsV1JobsCommand extends Command
 {
+
     /**
      * Path to project root directory.
      *
@@ -38,67 +39,82 @@ class CoverallsV1JobsCommand extends Command
     // internal method
 
     /**
+     * Set root directory.
+     *
+     * @param string $rootDir Path to project root directory.
+     *
+     * @return void
+     */
+    public function setRootDir( $rootDir )
+    {
+
+        $this->rootDir = $rootDir;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @see \Symfony\Component\Console\Command\Command::configure()
      */
     protected function configure()
     {
+
         $this
-        ->setName('coveralls:v1:jobs')
-        ->setDescription('Coveralls Jobs API v1')
-        ->addOption(
-            'config',
-            '-c',
-            InputOption::VALUE_OPTIONAL,
-            '.coveralls.yml path',
-            '.coveralls.yml'
-        )
-        ->addOption(
-            'dry-run',
-            null,
-            InputOption::VALUE_NONE,
-            'Do not send json_file to Jobs API'
-        )
-        ->addOption(
-            'exclude-no-stmt',
-            null,
-            InputOption::VALUE_NONE,
-            'Exclude source files that have no executable statements'
-        )
-        ->addOption(
-            'env',
-            '-e',
-            InputOption::VALUE_OPTIONAL,
-            'Runtime environment name: test, dev, prod',
-            'prod'
-        );
+            ->setName( 'coveralls:v1:jobs' )
+            ->setDescription( 'Coveralls Jobs API v1' )
+            ->addOption(
+                'config',
+                '-c',
+                InputOption::VALUE_OPTIONAL,
+                '.coveralls.yml path',
+                '.coveralls.yml'
+            )
+            ->addOption(
+                'dry-run',
+                null,
+                InputOption::VALUE_NONE,
+                'Do not send json_file to Jobs API'
+            )
+            ->addOption(
+                'exclude-no-stmt',
+                null,
+                InputOption::VALUE_NONE,
+                'Exclude source files that have no executable statements'
+            )
+            ->addOption(
+                'env',
+                '-e',
+                InputOption::VALUE_OPTIONAL,
+                'Runtime environment name: test, dev, prod',
+                'prod'
+            );
     }
+
+    // for Jobs API
 
     /**
      * {@inheritdoc}
      *
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute( InputInterface $input, OutputInterface $output )
     {
+
         $stopwatch = new Stopwatch();
-        $stopwatch->start(__CLASS__);
+        $stopwatch->start( __CLASS__ );
 
-        $config = $this->loadConfiguration($input, $this->rootDir);
-        $this->logger = $config->isVerbose() && !$config->isTestEnv() ? new ConsoleLogger($output) : new NullLogger();
+        $config = $this->loadConfiguration( $input, $this->rootDir );
+        $this->logger = $config->isVerbose() && !$config->isTestEnv() ? new ConsoleLogger( $output ) : new NullLogger();
 
-        $this->executeApi($config);
+        $this->executeApi( $config );
 
-        $event = $stopwatch->stop(__CLASS__);
-        $time  = number_format($event->getDuration() / 1000, 3);        // sec
-        $mem   = number_format($event->getMemory() / (1024 * 1024), 2); // MB
-        $this->logger->info(sprintf('elapsed time: <info>%s</info> sec memory: <info>%s</info> MB', $time, $mem));
+        $event = $stopwatch->stop( __CLASS__ );
+        $time = number_format( $event->getDuration() / 1000, 3 );        // sec
+        $mem = number_format( $event->getMemory() / ( 1024 * 1024 ), 2 ); // MB
+        $this->logger->info( sprintf( 'elapsed time: <info>%s</info> sec memory: <info>%s</info> MB', $time, $mem ) );
 
         return 0;
     }
-
-    // for Jobs API
 
     /**
      * Load configuration.
@@ -108,20 +124,23 @@ class CoverallsV1JobsCommand extends Command
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    protected function loadConfiguration(InputInterface $input, $rootDir)
+    protected function loadConfiguration( InputInterface $input, $rootDir )
     {
-        $coverallsYmlPath = $input->getOption('config');
 
-        $ymlPath      = $this->rootDir . DIRECTORY_SEPARATOR . $coverallsYmlPath;
+        $coverallsYmlPath = $input->getOption( 'config' );
+
+        $ymlPath = $this->rootDir.DIRECTORY_SEPARATOR.$coverallsYmlPath;
         $configurator = new Configurator();
 
         return $configurator
-        ->load($ymlPath, $rootDir)
-        ->setDryRun($input->getOption('dry-run'))
-        ->setExcludeNoStatementsUnlessFalse($input->getOption('exclude-no-stmt'))
-        ->setVerbose($input->getOption('verbose'))
-        ->setEnv($input->getOption('env'));
+            ->load( $ymlPath, $rootDir )
+            ->setDryRun( $input->getOption( 'dry-run' ) )
+            ->setExcludeNoStatementsUnlessFalse( $input->getOption( 'exclude-no-stmt' ) )
+            ->setVerbose( $input->getOption( 'verbose' ) )
+            ->setEnv( $input->getOption( 'env' ) );
     }
+
+    // accessor
 
     /**
      * Execute Jobs API.
@@ -130,27 +149,14 @@ class CoverallsV1JobsCommand extends Command
      *
      * @return void
      */
-    protected function executeApi(Configuration $config)
+    protected function executeApi( Configuration $config )
     {
-        $client     = new Client();
-        $api        = new Jobs($config, $client);
-        $repository = new JobsRepository($api, $config);
 
-        $repository->setLogger($this->logger);
+        $client = new Client();
+        $api = new Jobs( $config, $client );
+        $repository = new JobsRepository( $api, $config );
+
+        $repository->setLogger( $this->logger );
         $repository->persist();
-    }
-
-    // accessor
-
-    /**
-     * Set root directory.
-     *
-     * @param string $rootDir Path to project root directory.
-     *
-     * @return void
-     */
-    public function setRootDir($rootDir)
-    {
-        $this->rootDir = $rootDir;
     }
 }

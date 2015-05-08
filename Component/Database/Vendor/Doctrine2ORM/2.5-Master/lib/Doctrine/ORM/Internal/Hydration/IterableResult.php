@@ -24,10 +24,11 @@ namespace Doctrine\ORM\Internal\Hydration;
  * during the iteration. An IterableResult is obtained by AbstractHydrator#iterate().
  *
  * @author robo
- * @since 2.0
+ * @since  2.0
  */
 class IterableResult implements \Iterator
 {
+
     /**
      * @var \Doctrine\ORM\Internal\Hydration\AbstractHydrator
      */
@@ -51,8 +52,9 @@ class IterableResult implements \Iterator
     /**
      * @param \Doctrine\ORM\Internal\Hydration\AbstractHydrator $hydrator
      */
-    public function __construct($hydrator)
+    public function __construct( $hydrator )
     {
+
         $this->_hydrator = $hydrator;
     }
 
@@ -63,8 +65,9 @@ class IterableResult implements \Iterator
      */
     public function rewind()
     {
+
         if ($this->_rewinded == true) {
-            throw new HydrationException("Can only iterate a Result once.");
+            throw new HydrationException( "Can only iterate a Result once." );
         } else {
             $this->_current = $this->next();
             $this->_rewinded = true;
@@ -78,6 +81,7 @@ class IterableResult implements \Iterator
      */
     public function next()
     {
+
         $this->_current = $this->_hydrator->hydrateRow();
         $this->_key++;
         return $this->_current;
@@ -88,6 +92,7 @@ class IterableResult implements \Iterator
      */
     public function current()
     {
+
         return $this->_current;
     }
 
@@ -96,6 +101,7 @@ class IterableResult implements \Iterator
      */
     public function key()
     {
+
         return $this->_key;
     }
 
@@ -104,6 +110,7 @@ class IterableResult implements \Iterator
      */
     public function valid()
     {
-        return ($this->_current!=false);
+
+        return ( $this->_current != false );
     }
 }

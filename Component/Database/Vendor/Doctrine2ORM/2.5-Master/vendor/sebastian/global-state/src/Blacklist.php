@@ -22,6 +22,7 @@ use ReflectionClass;
  */
 class Blacklist
 {
+
     /**
      * @var array
      */
@@ -55,40 +56,45 @@ class Blacklist
     /**
      * @param string $variableName
      */
-    public function addGlobalVariable($variableName)
+    public function addGlobalVariable( $variableName )
     {
+
         $this->globalVariables[$variableName] = true;
     }
 
     /**
      * @param string $className
      */
-    public function addClass($className)
+    public function addClass( $className )
     {
+
         $this->classes[] = $className;
     }
 
     /**
      * @param string $className
      */
-    public function addSubclassesOf($className)
+    public function addSubclassesOf( $className )
     {
+
         $this->parentClasses[] = $className;
     }
 
     /**
      * @param string $interfaceName
      */
-    public function addImplementorsOf($interfaceName)
+    public function addImplementorsOf( $interfaceName )
     {
+
         $this->interfaces[] = $interfaceName;
     }
 
     /**
      * @param string $classNamePrefix
      */
-    public function addClassNamePrefix($classNamePrefix)
+    public function addClassNamePrefix( $classNamePrefix )
     {
+
         $this->classNamePrefixes[] = $classNamePrefix;
     }
 
@@ -96,9 +102,10 @@ class Blacklist
      * @param string $className
      * @param string $attributeName
      */
-    public function addStaticAttribute($className, $attributeName)
+    public function addStaticAttribute( $className, $attributeName )
     {
-        if (!isset($this->staticAttributes[$className])) {
+
+        if (!isset( $this->staticAttributes[$className] )) {
             $this->staticAttributes[$className] = array();
         }
 
@@ -107,45 +114,49 @@ class Blacklist
 
     /**
      * @param  string $variableName
+     *
      * @return boolean
      */
-    public function isGlobalVariableBlacklisted($variableName)
+    public function isGlobalVariableBlacklisted( $variableName )
     {
-        return isset($this->globalVariables[$variableName]);
+
+        return isset( $this->globalVariables[$variableName] );
     }
 
     /**
      * @param  string $className
      * @param  string $attributeName
+     *
      * @return boolean
      */
-    public function isStaticAttributeBlacklisted($className, $attributeName)
+    public function isStaticAttributeBlacklisted( $className, $attributeName )
     {
-        if (in_array($className, $this->classes)) {
+
+        if (in_array( $className, $this->classes )) {
             return true;
         }
 
         foreach ($this->classNamePrefixes as $prefix) {
-            if (strpos($className, $prefix) === 0) {
+            if (strpos( $className, $prefix ) === 0) {
                 return true;
             }
         }
 
-        $class = new ReflectionClass($className);
+        $class = new ReflectionClass( $className );
 
         foreach ($this->parentClasses as $type) {
-            if ($class->isSubclassOf($type)) {
+            if ($class->isSubclassOf( $type )) {
                 return true;
             }
         }
 
         foreach ($this->interfaces as $type) {
-            if ($class->implementsInterface($type)) {
+            if ($class->implementsInterface( $type )) {
                 return true;
             }
         }
 
-        if (isset($this->staticAttributes[$className][$attributeName])) {
+        if (isset( $this->staticAttributes[$className][$attributeName] )) {
             return true;
         }
 

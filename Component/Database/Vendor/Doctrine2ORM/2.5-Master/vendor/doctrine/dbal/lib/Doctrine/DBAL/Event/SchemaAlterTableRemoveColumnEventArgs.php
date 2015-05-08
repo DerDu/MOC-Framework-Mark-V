@@ -32,6 +32,7 @@ use Doctrine\DBAL\Schema\TableDiff;
  */
 class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
 {
+
     /**
      * @var \Doctrine\DBAL\Schema\Column
      */
@@ -57,11 +58,12 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      * @param \Doctrine\DBAL\Schema\TableDiff           $tableDiff
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      */
-    public function __construct(Column $column, TableDiff $tableDiff, AbstractPlatform $platform)
+    public function __construct( Column $column, TableDiff $tableDiff, AbstractPlatform $platform )
     {
-        $this->_column    = $column;
+
+        $this->_column = $column;
         $this->_tableDiff = $tableDiff;
-        $this->_platform  = $platform;
+        $this->_platform = $platform;
     }
 
     /**
@@ -69,6 +71,7 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      */
     public function getColumn()
     {
+
         return $this->_column;
     }
 
@@ -77,6 +80,7 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      */
     public function getTableDiff()
     {
+
         return $this->_tableDiff;
     }
 
@@ -85,6 +89,7 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
+
         return $this->_platform;
     }
 
@@ -93,10 +98,11 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      *
      * @return \Doctrine\DBAL\Event\SchemaAlterTableRemoveColumnEventArgs
      */
-    public function addSql($sql)
+    public function addSql( $sql )
     {
-        if (is_array($sql)) {
-            $this->_sql = array_merge($this->_sql, $sql);
+
+        if (is_array( $sql )) {
+            $this->_sql = array_merge( $this->_sql, $sql );
         } else {
             $this->_sql[] = $sql;
         }
@@ -109,6 +115,7 @@ class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
+
         return $this->_sql;
     }
 }

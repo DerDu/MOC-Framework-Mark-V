@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\Expr;
  */
 class Math
 {
+
     /**
      * @var mixed
      */
@@ -52,10 +53,11 @@ class Math
      * @param string $operator
      * @param mixed  $rightExpr
      */
-    public function __construct($leftExpr, $operator, $rightExpr)
+    public function __construct( $leftExpr, $operator, $rightExpr )
     {
-        $this->leftExpr  = $leftExpr;
-        $this->operator  = $operator;
+
+        $this->leftExpr = $leftExpr;
+        $this->operator = $operator;
         $this->rightExpr = $rightExpr;
     }
 
@@ -64,6 +66,7 @@ class Math
      */
     public function getLeftExpr()
     {
+
         return $this->leftExpr;
     }
 
@@ -72,6 +75,7 @@ class Math
      */
     public function getOperator()
     {
+
         return $this->operator;
     }
 
@@ -80,6 +84,7 @@ class Math
      */
     public function getRightExpr()
     {
+
         return $this->rightExpr;
     }
 
@@ -88,20 +93,21 @@ class Math
      */
     public function __toString()
     {
+
         // Adjusting Left Expression
-        $leftExpr = (string) $this->leftExpr;
+        $leftExpr = (string)$this->leftExpr;
 
         if ($this->leftExpr instanceof Math) {
-            $leftExpr = '(' . $leftExpr . ')';
+            $leftExpr = '('.$leftExpr.')';
         }
 
         // Adjusting Right Expression
-        $rightExpr = (string) $this->rightExpr;
+        $rightExpr = (string)$this->rightExpr;
 
         if ($this->rightExpr instanceof Math) {
-            $rightExpr = '(' . $rightExpr . ')';
+            $rightExpr = '('.$rightExpr.')';
         }
 
-        return $leftExpr . ' ' . $this->operator . ' ' . $rightExpr;
+        return $leftExpr.' '.$this->operator.' '.$rightExpr;
     }
 }

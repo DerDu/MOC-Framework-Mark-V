@@ -21,33 +21,37 @@
  */
 class PHPUnit_Framework_MockObject_Stub_ReturnValueMap implements PHPUnit_Framework_MockObject_Stub
 {
+
     protected $valueMap;
 
-    public function __construct(array $valueMap)
+    public function __construct( array $valueMap )
     {
+
         $this->valueMap = $valueMap;
     }
 
-    public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoke( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
-        $parameterCount = count($invocation->parameters);
+
+        $parameterCount = count( $invocation->parameters );
 
         foreach ($this->valueMap as $map) {
-            if (!is_array($map) || $parameterCount != count($map) - 1) {
+            if (!is_array( $map ) || $parameterCount != count( $map ) - 1) {
                 continue;
             }
 
-            $return = array_pop($map);
+            $return = array_pop( $map );
             if ($invocation->parameters === $map) {
                 return $return;
             }
         }
 
-        return NULL;
+        return null;
     }
 
     public function toString()
     {
+
         return 'return value from a map';
     }
 }

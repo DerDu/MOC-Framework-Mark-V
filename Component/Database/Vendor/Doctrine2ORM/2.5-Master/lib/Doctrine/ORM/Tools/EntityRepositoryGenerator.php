@@ -32,10 +32,9 @@ namespace Doctrine\ORM\Tools;
  */
 class EntityRepositoryGenerator
 {
-    private $repositoryName;
 
     protected static $_template =
-'<?php
+        '<?php
 
 <namespace>
 
@@ -49,88 +48,7 @@ class <className> extends <repositoryName>
 {
 }
 ';
-
-    /**
-     * @param string $fullClassName
-     *
-     * @return string
-     */
-    public function generateEntityRepositoryClass($fullClassName)
-    {
-        $variables = array(
-            '<namespace>'       => $this->generateEntityRepositoryNamespace($fullClassName),
-            '<repositoryName>'  => $this->generateEntityRepositoryName($fullClassName),
-            '<className>'       => $this->generateClassName($fullClassName)
-        );
-
-        return str_replace(array_keys($variables), array_values($variables), self::$_template);
-    }
-
-    /**
-     * Generates the namespace, if class do not have namespace, return empty string instead.
-     *
-     * @param string $fullClassName
-     * 
-     * @return string $namespace
-     */
-    private function getClassNamespace($fullClassName)
-    {
-        $namespace = substr($fullClassName, 0, strrpos($fullClassName, '\\'));
-
-        return $namespace;
-    }
-
-    /**
-     * Generates the class name
-     * 
-     * @param string $fullClassName
-     * 
-     * @return string
-     */
-    private function generateClassName($fullClassName)
-    {
-        $namespace = $this->getClassNamespace($fullClassName);
-
-        $className = $fullClassName;
-
-        if ($namespace) {
-            $className = substr($fullClassName, strrpos($fullClassName, '\\') + 1, strlen($fullClassName));
-        }
-
-        return $className;
-    }
-
-    /**
-     * Generates the namespace statement, if class do not have namespace, return empty string instead.
-     * 
-     * @param string $fullClassName The full repository class name.
-     *
-     * @return string $namespace
-     */
-    private function generateEntityRepositoryNamespace($fullClassName)
-    {
-        $namespace = $this->getClassNamespace($fullClassName);
-
-        return $namespace ? 'namespace ' . $namespace . ';' : '';
-    }
-
-    /**
-     * @param string $fullClassName
-     * 
-     * @return string $repositoryName
-     */
-    private function generateEntityRepositoryName($fullClassName)
-    {
-        $namespace = $this->getClassNamespace($fullClassName);
-
-        $repositoryName = $this->repositoryName ?: 'Doctrine\ORM\EntityRepository';
-
-        if ($namespace && $repositoryName[0] !== '\\') {
-            $repositoryName = '\\' . $repositoryName;
-        }
-
-        return $repositoryName;
-    }
+    private $repositoryName;
 
     /**
      * @param string $fullClassName
@@ -138,30 +56,119 @@ class <className> extends <repositoryName>
      *
      * @return void
      */
-    public function writeEntityRepositoryClass($fullClassName, $outputDirectory)
+    public function writeEntityRepositoryClass( $fullClassName, $outputDirectory )
     {
-        $code = $this->generateEntityRepositoryClass($fullClassName);
 
-        $path = $outputDirectory . DIRECTORY_SEPARATOR
-              . str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName) . '.php';
-        $dir = dirname($path);
+        $code = $this->generateEntityRepositoryClass( $fullClassName );
 
-        if ( ! is_dir($dir)) {
-            mkdir($dir, 0777, true);
+        $path = $outputDirectory.DIRECTORY_SEPARATOR
+            .str_replace( '\\', \DIRECTORY_SEPARATOR, $fullClassName ).'.php';
+        $dir = dirname( $path );
+
+        if (!is_dir( $dir )) {
+            mkdir( $dir, 0777, true );
         }
 
-        if ( ! file_exists($path)) {
-            file_put_contents($path, $code);
+        if (!file_exists( $path )) {
+            file_put_contents( $path, $code );
         }
     }
 
     /**
+     * @param string $fullClassName
+     *
+     * @return string
+     */
+    public function generateEntityRepositoryClass( $fullClassName )
+    {
+
+        $variables = array(
+            '<namespace>'      => $this->generateEntityRepositoryNamespace( $fullClassName ),
+            '<repositoryName>' => $this->generateEntityRepositoryName( $fullClassName ),
+            '<className>'      => $this->generateClassName( $fullClassName )
+        );
+
+        return str_replace( array_keys( $variables ), array_values( $variables ), self::$_template );
+    }
+
+    /**
+     * Generates the namespace statement, if class do not have namespace, return empty string instead.
+     *
+     * @param string $fullClassName The full repository class name.
+     *
+     * @return string $namespace
+     */
+    private function generateEntityRepositoryNamespace( $fullClassName )
+    {
+
+        $namespace = $this->getClassNamespace( $fullClassName );
+
+        return $namespace ? 'namespace '.$namespace.';' : '';
+    }
+
+    /**
+     * Generates the namespace, if class do not have namespace, return empty string instead.
+     *
+     * @param string $fullClassName
+     *
+     * @return string $namespace
+     */
+    private function getClassNamespace( $fullClassName )
+    {
+
+        $namespace = substr( $fullClassName, 0, strrpos( $fullClassName, '\\' ) );
+
+        return $namespace;
+    }
+
+    /**
+     * @param string $fullClassName
+     *
+     * @return string $repositoryName
+     */
+    private function generateEntityRepositoryName( $fullClassName )
+    {
+
+        $namespace = $this->getClassNamespace( $fullClassName );
+
+        $repositoryName = $this->repositoryName ?: 'Doctrine\ORM\EntityRepository';
+
+        if ($namespace && $repositoryName[0] !== '\\') {
+            $repositoryName = '\\'.$repositoryName;
+        }
+
+        return $repositoryName;
+    }
+
+    /**
+     * Generates the class name
+     *
+     * @param string $fullClassName
+     *
+     * @return string
+     */
+    private function generateClassName( $fullClassName )
+    {
+
+        $namespace = $this->getClassNamespace( $fullClassName );
+
+        $className = $fullClassName;
+
+        if ($namespace) {
+            $className = substr( $fullClassName, strrpos( $fullClassName, '\\' ) + 1, strlen( $fullClassName ) );
+        }
+
+        return $className;
+    }
+
+    /**
      * @param string $repositoryName
-     * 
+     *
      * @return \Doctrine\ORM\Tools\EntityRepositoryGenerator
      */
-    public function setDefaultRepositoryName($repositoryName)
+    public function setDefaultRepositoryName( $repositoryName )
     {
+
         $this->repositoryName = $repositoryName;
 
         return $this;

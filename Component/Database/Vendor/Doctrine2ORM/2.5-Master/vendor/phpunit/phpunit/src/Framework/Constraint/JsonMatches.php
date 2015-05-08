@@ -21,6 +21,7 @@
  */
 class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var string
      */
@@ -31,34 +32,11 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      *
      * @param string $value
      */
-    public function __construct($value)
+    public function __construct( $value )
     {
+
         parent::__construct();
         $this->value = $value;
-    }
-
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * This method can be overridden to implement the evaluation algorithm.
-     *
-     * @param  mixed $other Value or object to evaluate.
-     * @return bool
-     */
-    protected function matches($other)
-    {
-        $decodedOther = json_decode($other);
-        if (json_last_error()) {
-            return false;
-        }
-
-        $decodedValue = json_decode($this->value);
-        if (json_last_error()) {
-            return false;
-        }
-
-        return $decodedOther == $decodedValue;
     }
 
     /**
@@ -68,9 +46,36 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      */
     public function toString()
     {
+
         return sprintf(
             'matches JSON string "%s"',
             $this->value
         );
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * This method can be overridden to implement the evaluation algorithm.
+     *
+     * @param  mixed $other Value or object to evaluate.
+     *
+     * @return bool
+     */
+    protected function matches( $other )
+    {
+
+        $decodedOther = json_decode( $other );
+        if (json_last_error()) {
+            return false;
+        }
+
+        $decodedValue = json_decode( $this->value );
+        if (json_last_error()) {
+            return false;
+        }
+
+        return $decodedOther == $decodedValue;
     }
 }

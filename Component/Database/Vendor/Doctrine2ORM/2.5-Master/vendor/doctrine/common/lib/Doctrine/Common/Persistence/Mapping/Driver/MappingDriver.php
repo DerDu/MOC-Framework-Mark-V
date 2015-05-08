@@ -29,6 +29,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
  */
 interface MappingDriver
 {
+
     /**
      * Loads the metadata for the specified class into the provided container.
      *
@@ -37,7 +38,7 @@ interface MappingDriver
      *
      * @return void
      */
-    public function loadMetadataForClass($className, ClassMetadata $metadata);
+    public function loadMetadataForClass( $className, ClassMetadata $metadata );
 
     /**
      * Gets the names of all mapped classes known to this driver.
@@ -54,5 +55,5 @@ interface MappingDriver
      *
      * @return boolean
      */
-    public function isTransient($className);
+    public function isTransient( $className );
 }

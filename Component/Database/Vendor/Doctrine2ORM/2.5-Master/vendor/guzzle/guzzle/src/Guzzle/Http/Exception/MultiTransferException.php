@@ -10,6 +10,7 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class MultiTransferException extends ExceptionCollection
 {
+
     protected $successfulRequests = array();
     protected $failedRequests = array();
     protected $exceptionForRequest = array();
@@ -21,7 +22,8 @@ class MultiTransferException extends ExceptionCollection
      */
     public function getAllRequests()
     {
-        return array_merge($this->successfulRequests, $this->failedRequests);
+
+        return array_merge( $this->successfulRequests, $this->failedRequests );
     }
 
     /**
@@ -31,8 +33,9 @@ class MultiTransferException extends ExceptionCollection
      *
      * @return self
      */
-    public function addSuccessfulRequest(RequestInterface $request)
+    public function addSuccessfulRequest( RequestInterface $request )
     {
+
         $this->successfulRequests[] = $request;
 
         return $this;
@@ -45,8 +48,9 @@ class MultiTransferException extends ExceptionCollection
      *
      * @return self
      */
-    public function addFailedRequest(RequestInterface $request)
+    public function addFailedRequest( RequestInterface $request )
     {
+
         $this->failedRequests[] = $request;
 
         return $this;
@@ -60,11 +64,12 @@ class MultiTransferException extends ExceptionCollection
      *
      * @return self
      */
-    public function addFailedRequestWithException(RequestInterface $request, \Exception $exception)
+    public function addFailedRequestWithException( RequestInterface $request, \Exception $exception )
     {
-        $this->add($exception)
-             ->addFailedRequest($request)
-             ->exceptionForRequest[spl_object_hash($request)] = $exception;
+
+        $this->add( $exception )
+            ->addFailedRequest( $request )
+            ->exceptionForRequest[spl_object_hash( $request )] = $exception;
 
         return $this;
     }
@@ -76,39 +81,12 @@ class MultiTransferException extends ExceptionCollection
      *
      * @return \Exception|null
      */
-    public function getExceptionForFailedRequest(RequestInterface $request)
+    public function getExceptionForFailedRequest( RequestInterface $request )
     {
-        $oid = spl_object_hash($request);
 
-        return isset($this->exceptionForRequest[$oid]) ? $this->exceptionForRequest[$oid] : null;
-    }
+        $oid = spl_object_hash( $request );
 
-    /**
-     * Set all of the successful requests
-     *
-     * @param array Array of requests
-     *
-     * @return self
-     */
-    public function setSuccessfulRequests(array $requests)
-    {
-        $this->successfulRequests = $requests;
-
-        return $this;
-    }
-
-    /**
-     * Set all of the failed requests
-     *
-     * @param array Array of requests
-     *
-     * @return self
-     */
-    public function setFailedRequests(array $requests)
-    {
-        $this->failedRequests = $requests;
-
-        return $this;
+        return isset( $this->exceptionForRequest[$oid] ) ? $this->exceptionForRequest[$oid] : null;
     }
 
     /**
@@ -118,7 +96,23 @@ class MultiTransferException extends ExceptionCollection
      */
     public function getSuccessfulRequests()
     {
+
         return $this->successfulRequests;
+    }
+
+    /**
+     * Set all of the successful requests
+     *
+     * @param array Array of requests
+     *
+     * @return self
+     */
+    public function setSuccessfulRequests( array $requests )
+    {
+
+        $this->successfulRequests = $requests;
+
+        return $this;
     }
 
     /**
@@ -128,7 +122,23 @@ class MultiTransferException extends ExceptionCollection
      */
     public function getFailedRequests()
     {
+
         return $this->failedRequests;
+    }
+
+    /**
+     * Set all of the failed requests
+     *
+     * @param array Array of requests
+     *
+     * @return self
+     */
+    public function setFailedRequests( array $requests )
+    {
+
+        $this->failedRequests = $requests;
+
+        return $this;
     }
 
     /**
@@ -138,8 +148,10 @@ class MultiTransferException extends ExceptionCollection
      *
      * @return bool
      */
-    public function containsRequest(RequestInterface $request)
+    public function containsRequest( RequestInterface $request )
     {
-        return in_array($request, $this->failedRequests, true) || in_array($request, $this->successfulRequests, true);
+
+        return in_array( $request, $this->failedRequests, true ) || in_array( $request, $this->successfulRequests,
+            true );
     }
 }

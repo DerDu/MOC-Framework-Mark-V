@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class IndexBy extends Node
 {
+
     /**
      * @var PathExpression
      */
@@ -38,16 +39,18 @@ class IndexBy extends Node
     /**
      * @param PathExpression $simpleStateFieldPathExpression
      */
-    public function __construct($simpleStateFieldPathExpression)
+    public function __construct( $simpleStateFieldPathExpression )
     {
+
         $this->simpleStateFieldPathExpression = $simpleStateFieldPathExpression;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkIndexBy($this);
+
+        return $sqlWalker->walkIndexBy( $this );
     }
 }

@@ -7,6 +7,7 @@ namespace Guzzle\Http\Message\Header;
  */
 interface HeaderFactoryInterface
 {
+
     /**
      * Create a header from a header name and a single value
      *
@@ -15,5 +16,5 @@ interface HeaderFactoryInterface
      *
      * @return HeaderInterface
      */
-    public function createHeader($header, $value = null);
+    public function createHeader( $header, $value = null );
 }

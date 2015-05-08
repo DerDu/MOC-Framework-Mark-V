@@ -31,6 +31,7 @@ use Doctrine\DBAL\Schema\Table;
  */
 class SchemaDropTableEventArgs extends SchemaEventArgs
 {
+
     /**
      * @var string|\Doctrine\DBAL\Schema\Table
      */
@@ -52,13 +53,14 @@ class SchemaDropTableEventArgs extends SchemaEventArgs
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($table, AbstractPlatform $platform)
+    public function __construct( $table, AbstractPlatform $platform )
     {
-        if ( ! $table instanceof Table && !is_string($table)) {
-            throw new \InvalidArgumentException('SchemaDropTableEventArgs expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
+
+        if (!$table instanceof Table && !is_string( $table )) {
+            throw new \InvalidArgumentException( 'SchemaDropTableEventArgs expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.' );
         }
 
-        $this->_table    = $table;
+        $this->_table = $table;
         $this->_platform = $platform;
     }
 
@@ -67,6 +69,7 @@ class SchemaDropTableEventArgs extends SchemaEventArgs
      */
     public function getTable()
     {
+
         return $this->_table;
     }
 
@@ -75,19 +78,8 @@ class SchemaDropTableEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
+
         return $this->_platform;
-    }
-
-    /**
-     * @param string $sql
-     *
-     * @return \Doctrine\DBAL\Event\SchemaDropTableEventArgs
-     */
-    public function setSql($sql)
-    {
-        $this->_sql = $sql;
-
-        return $this;
     }
 
     /**
@@ -95,6 +87,20 @@ class SchemaDropTableEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
+
         return $this->_sql;
+    }
+
+    /**
+     * @param string $sql
+     *
+     * @return \Doctrine\DBAL\Event\SchemaDropTableEventArgs
+     */
+    public function setSql( $sql )
+    {
+
+        $this->_sql = $sql;
+
+        return $this;
     }
 }

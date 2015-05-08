@@ -20,6 +20,7 @@
  */
 class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
 {
+
     /**
      * @var mixed
      */
@@ -46,17 +47,20 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
     protected $timesRepeat = 1;
 
     /**
-     * @param  PHPUnit_Framework_Test      $test
-     * @param  integer                     $timesRepeat
-     * @param  boolean                     $processIsolation
+     * @param  PHPUnit_Framework_Test $test
+     * @param  integer                $timesRepeat
+     * @param  boolean                $processIsolation
+     *
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct(PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false)
+    public function __construct( PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false )
     {
-        parent::__construct($test);
 
-        if (is_integer($timesRepeat) &&
-            $timesRepeat >= 0) {
+        parent::__construct( $test );
+
+        if (is_integer( $timesRepeat ) &&
+            $timesRepeat >= 0
+        ) {
             $this->timesRepeat = $timesRepeat;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(
@@ -76,7 +80,8 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      */
     public function count()
     {
-        return $this->timesRepeat * count($this->test);
+
+        return $this->timesRepeat * count( $this->test );
     }
 
     /**
@@ -84,11 +89,13 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * result in a TestResult.
      *
      * @param  PHPUnit_Framework_TestResult $result
+     *
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run(PHPUnit_Framework_TestResult $result = null)
+    public function run( PHPUnit_Framework_TestResult $result = null )
     {
+
         if ($result === null) {
             $result = $this->createResult();
         }
@@ -97,9 +104,9 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
         for ($i = 0; $i < $this->timesRepeat && !$result->shouldStop(); $i++) {
             //@codingStandardsIgnoreEnd
             if ($this->test instanceof PHPUnit_Framework_TestSuite) {
-                $this->test->setRunTestInSeparateProcess($this->processIsolation);
+                $this->test->setRunTestInSeparateProcess( $this->processIsolation );
             }
-            $this->test->run($result);
+            $this->test->run( $result );
         }
 
         return $result;

@@ -20,19 +20,20 @@
 
 namespace Doctrine\ORM\Cache;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Persisters\Collection\CollectionPersister;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 
 /**
  * Contract for building second level cache regions components.
- * 
+ *
  * @since   2.5
  * @author  Fabio B. Silva <fabio.bat.silva@gmail.com>
  */
 interface CacheFactory
 {
+
     /**
      * Build an entity persister for the given entity metadata.
      *
@@ -42,7 +43,11 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\Persister\Entity\CachedEntityPersister
      */
-    public function buildCachedEntityPersister(EntityManagerInterface $em, EntityPersister $persister, ClassMetadata $metadata);
+    public function buildCachedEntityPersister(
+        EntityManagerInterface $em,
+        EntityPersister $persister,
+        ClassMetadata $metadata
+    );
 
     /**
      * Build a collection persister for the given relation mapping.
@@ -53,7 +58,11 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\Persister\Collection\CachedCollectionPersister
      */
-    public function buildCachedCollectionPersister(EntityManagerInterface $em, CollectionPersister $persister, array $mapping);
+    public function buildCachedCollectionPersister(
+        EntityManagerInterface $em,
+        CollectionPersister $persister,
+        array $mapping
+    );
 
     /**
      * Build a query cache based on the given region name
@@ -63,7 +72,7 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\QueryCache The built query cache.
      */
-    public function buildQueryCache(EntityManagerInterface $em, $regionName = null);
+    public function buildQueryCache( EntityManagerInterface $em, $regionName = null );
 
     /**
      * Build an entity hydrator
@@ -73,7 +82,7 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\EntityHydrator The built entity hydrator.
      */
-    public function buildEntityHydrator(EntityManagerInterface $em, ClassMetadata $metadata);
+    public function buildEntityHydrator( EntityManagerInterface $em, ClassMetadata $metadata );
 
     /**
      * Build a collection hydrator
@@ -83,7 +92,7 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\CollectionHydrator The built collection hydrator.
      */
-    public function buildCollectionHydrator(EntityManagerInterface $em, array $mapping);
+    public function buildCollectionHydrator( EntityManagerInterface $em, array $mapping );
 
     /**
      * Build a cache region
@@ -92,7 +101,7 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache\Region The cache region.
      */
-    public function getRegion(array $cache);
+    public function getRegion( array $cache );
 
     /**
      * Build timestamp cache region
@@ -108,5 +117,5 @@ interface CacheFactory
      *
      * @return \Doctrine\ORM\Cache
      */
-    public function createCache(EntityManagerInterface $entityManager);
+    public function createCache( EntityManagerInterface $entityManager );
 }

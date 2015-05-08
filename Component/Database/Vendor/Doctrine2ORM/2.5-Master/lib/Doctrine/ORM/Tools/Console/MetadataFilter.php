@@ -32,10 +32,23 @@ namespace Doctrine\ORM\Tools\Console;
  */
 class MetadataFilter extends \FilterIterator implements \Countable
 {
+
     /**
      * @var array
      */
     private $filter = array();
+
+    /**
+     * @param \ArrayIterator $metadata
+     * @param array|string   $filter
+     */
+    public function __construct( \ArrayIterator $metadata, $filter )
+    {
+
+        $this->filter = (array)$filter;
+
+        parent::__construct( $metadata );
+    }
 
     /**
      * Filter Metadatas by one or more filter options.
@@ -45,22 +58,12 @@ class MetadataFilter extends \FilterIterator implements \Countable
      *
      * @return array
      */
-    static public function filter(array $metadatas, $filter)
+    static public function filter( array $metadatas, $filter )
     {
-        $metadatas = new MetadataFilter(new \ArrayIterator($metadatas), $filter);
 
-        return iterator_to_array($metadatas);
-    }
+        $metadatas = new MetadataFilter( new \ArrayIterator( $metadatas ), $filter );
 
-    /**
-     * @param \ArrayIterator $metadata
-     * @param array|string   $filter
-     */
-    public function __construct(\ArrayIterator $metadata, $filter)
-    {
-        $this->filter = (array) $filter;
-
-        parent::__construct($metadata);
+        return iterator_to_array( $metadatas );
     }
 
     /**
@@ -68,7 +71,8 @@ class MetadataFilter extends \FilterIterator implements \Countable
      */
     public function accept()
     {
-        if (count($this->filter) == 0) {
+
+        if (count( $this->filter ) == 0) {
             return true;
         }
 
@@ -76,11 +80,11 @@ class MetadataFilter extends \FilterIterator implements \Countable
         $metadata = $it->current();
 
         foreach ($this->filter as $filter) {
-            $pregResult = preg_match("/$filter/", $metadata->name);
+            $pregResult = preg_match( "/$filter/", $metadata->name );
 
             if ($pregResult === false) {
                 throw new \RuntimeException(
-                    sprintf("Error while evaluating regex '/%s/'.", $filter)
+                    sprintf( "Error while evaluating regex '/%s/'.", $filter )
                 );
             }
 
@@ -101,6 +105,7 @@ class MetadataFilter extends \FilterIterator implements \Countable
      */
     public function count()
     {
-        return count($this->getInnerIterator());
+
+        return count( $this->getInnerIterator() );
     }
 }

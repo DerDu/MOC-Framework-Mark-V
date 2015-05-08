@@ -22,33 +22,36 @@
  */
 class File_Iterator_Factory
 {
+
     /**
      * @param  array|string $paths
      * @param  array|string $suffixes
      * @param  array|string $prefixes
      * @param  array        $exclude
+     *
      * @return AppendIterator
      */
-    public function getFileIterator($paths, $suffixes = '', $prefixes = '', array $exclude = array())
+    public function getFileIterator( $paths, $suffixes = '', $prefixes = '', array $exclude = array() )
     {
-        if (is_string($paths)) {
-            $paths = array($paths);
+
+        if (is_string( $paths )) {
+            $paths = array( $paths );
         }
 
-        $paths   = $this->getPathsAfterResolvingWildcards($paths);
-        $exclude = $this->getPathsAfterResolvingWildcards($exclude);
+        $paths = $this->getPathsAfterResolvingWildcards( $paths );
+        $exclude = $this->getPathsAfterResolvingWildcards( $exclude );
 
-        if (is_string($prefixes)) {
+        if (is_string( $prefixes )) {
             if ($prefixes != '') {
-                $prefixes = array($prefixes);
+                $prefixes = array( $prefixes );
             } else {
                 $prefixes = array();
             }
         }
 
-        if (is_string($suffixes)) {
+        if (is_string( $suffixes )) {
             if ($suffixes != '') {
-                $suffixes = array($suffixes);
+                $suffixes = array( $suffixes );
             } else {
                 $suffixes = array();
             }
@@ -57,17 +60,17 @@ class File_Iterator_Factory
         $iterator = new AppendIterator;
 
         foreach ($paths as $path) {
-            if (is_dir($path)) {
+            if (is_dir( $path )) {
                 $iterator->append(
-                  new File_Iterator(
-                    new RecursiveIteratorIterator(
-                      new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::FOLLOW_SYMLINKS)
-                    ),
-                    $suffixes,
-                    $prefixes,
-                    $exclude,
-                    $path
-                  )
+                    new File_Iterator(
+                        new RecursiveIteratorIterator(
+                            new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::FOLLOW_SYMLINKS )
+                        ),
+                        $suffixes,
+                        $prefixes,
+                        $exclude,
+                        $path
+                    )
                 );
             }
         }
@@ -77,15 +80,17 @@ class File_Iterator_Factory
 
     /**
      * @param  array $paths
+     *
      * @return array
      */
-    protected function getPathsAfterResolvingWildcards(array $paths)
+    protected function getPathsAfterResolvingWildcards( array $paths )
     {
+
         $_paths = array();
 
         foreach ($paths as $path) {
-            if ($locals = glob($path, GLOB_ONLYDIR)) {
-                $_paths = array_merge($_paths, $locals);
+            if ($locals = glob( $path, GLOB_ONLYDIR )) {
+                $_paths = array_merge( $_paths, $locals );
             } else {
                 $_paths[] = $path;
             }

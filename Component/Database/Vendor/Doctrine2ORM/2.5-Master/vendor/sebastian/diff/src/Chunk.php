@@ -20,6 +20,7 @@ namespace SebastianBergmann\Diff;
  */
 class Chunk
 {
+
     /**
      * @var int
      */
@@ -51,13 +52,14 @@ class Chunk
      * @param int   $endRange
      * @param array $lines
      */
-    public function __construct($start = 0, $startRange = 1, $end = 0, $endRange = 1, array $lines = array())
+    public function __construct( $start = 0, $startRange = 1, $end = 0, $endRange = 1, array $lines = array() )
     {
-        $this->start      = (int) $start;
-        $this->startRange = (int) $startRange;
-        $this->end        = (int) $end;
-        $this->endRange   = (int) $endRange;
-        $this->lines      = $lines;
+
+        $this->start = (int)$start;
+        $this->startRange = (int)$startRange;
+        $this->end = (int)$end;
+        $this->endRange = (int)$endRange;
+        $this->lines = $lines;
     }
 
     /**
@@ -65,6 +67,7 @@ class Chunk
      */
     public function getStart()
     {
+
         return $this->start;
     }
 
@@ -73,6 +76,7 @@ class Chunk
      */
     public function getStartRange()
     {
+
         return $this->startRange;
     }
 
@@ -81,6 +85,7 @@ class Chunk
      */
     public function getEnd()
     {
+
         return $this->end;
     }
 
@@ -89,6 +94,7 @@ class Chunk
      */
     public function getEndRange()
     {
+
         return $this->endRange;
     }
 
@@ -97,14 +103,16 @@ class Chunk
      */
     public function getLines()
     {
+
         return $this->lines;
     }
 
     /**
      * @param array $lines
      */
-    public function setLines(array $lines)
+    public function setLines( array $lines )
     {
+
         $this->lines = $lines;
     }
 }

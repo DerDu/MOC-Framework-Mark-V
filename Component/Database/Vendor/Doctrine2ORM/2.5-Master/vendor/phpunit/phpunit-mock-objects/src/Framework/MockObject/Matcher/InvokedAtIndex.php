@@ -28,6 +28,7 @@
  */
 class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Framework_MockObject_Matcher_Invocation
 {
+
     /**
      * @var integer
      */
@@ -41,8 +42,9 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     /**
      * @param integer $sequenceIndex
      */
-    public function __construct($sequenceIndex)
+    public function __construct( $sequenceIndex )
     {
+
         $this->sequenceIndex = $sequenceIndex;
     }
 
@@ -51,15 +53,18 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
      */
     public function toString()
     {
-        return 'invoked at sequence index ' . $this->sequenceIndex;
+
+        return 'invoked at sequence index '.$this->sequenceIndex;
     }
 
     /**
      * @param  PHPUnit_Framework_MockObject_Invocation $invocation
+     *
      * @return boolean
      */
-    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
+
         $this->currentIndex++;
 
         return $this->currentIndex == $this->sequenceIndex;
@@ -68,7 +73,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     /**
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      */
-    public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoked( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
     }
 
@@ -80,13 +85,14 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
      */
     public function verify()
     {
+
         if ($this->currentIndex < $this->sequenceIndex) {
             throw new PHPUnit_Framework_ExpectationFailedException(
-              sprintf(
-                'The expected invocation at index %s was never reached.',
+                sprintf(
+                    'The expected invocation at index %s was never reached.',
 
-                $this->sequenceIndex
-              )
+                    $this->sequenceIndex
+                )
             );
         }
     }

@@ -44,22 +44,23 @@
  */
 
 spl_autoload_register(
-  function ($class) {
-      static $classes = NULL;
-      static $path = NULL;
+    function ( $class ) {
 
-      if ($classes === NULL) {
-          $classes = array(
-            'text_template' => '/Template.php'
-          );
+        static $classes = null;
+        static $path = null;
 
-          $path = dirname(dirname(__FILE__));
-      }
+        if ($classes === null) {
+            $classes = array(
+                'text_template' => '/Template.php'
+            );
 
-      $cn = strtolower($class);
+            $path = dirname( dirname( __FILE__ ) );
+        }
 
-      if (isset($classes[$cn])) {
-          require $path . $classes[$cn];
-      }
-  }
+        $cn = strtolower( $class );
+
+        if (isset( $classes[$cn] )) {
+            require $path.$classes[$cn];
+        }
+    }
 );

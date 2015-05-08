@@ -28,6 +28,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ParenthesisExpression extends Node
 {
+
     /**
      * @var \Doctrine\ORM\Query\AST\Node
      */
@@ -36,16 +37,18 @@ class ParenthesisExpression extends Node
     /**
      * @param \Doctrine\ORM\Query\AST\Node $expression
      */
-    public function __construct(Node $expression)
+    public function __construct( Node $expression )
     {
+
         $this->expression = $expression;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($walker)
+    public function dispatch( $walker )
     {
-        return $walker->walkParenthesisExpression($this);
+
+        return $walker->walkParenthesisExpression( $this );
     }
 }

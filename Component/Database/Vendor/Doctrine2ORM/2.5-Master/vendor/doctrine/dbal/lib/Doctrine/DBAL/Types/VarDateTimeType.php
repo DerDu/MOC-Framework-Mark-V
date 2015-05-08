@@ -37,18 +37,20 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class VarDateTimeType extends DateTimeType
 {
+
     /**
      * {@inheritdoc}
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue( $value, AbstractPlatform $platform )
     {
+
         if ($value === null || $value instanceof \DateTime) {
             return $value;
         }
 
-        $val = date_create($value);
-        if ( ! $val) {
-            throw ConversionException::conversionFailed($value, $this->getName());
+        $val = date_create( $value );
+        if (!$val) {
+            throw ConversionException::conversionFailed( $value, $this->getName() );
         }
 
         return $val;

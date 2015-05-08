@@ -21,15 +21,17 @@ namespace phpDocumentor\Reflection\DocBlock;
  */
 class Location
 {
+
     /** @var int Line where the DocBlock text starts. */
     protected $lineNumber = 0;
 
     /** @var int Column where the DocBlock text starts. */
     protected $columnNumber = 0;
-    
-    public function __construct($lineNumber = 0, $columnNumber = 0)
+
+    public function __construct( $lineNumber = 0, $columnNumber = 0 )
     {
-        $this->setLineNumber($lineNumber)->setColumnNumber($columnNumber);
+
+        $this->setLineNumber( $lineNumber )->setColumnNumber( $columnNumber );
     }
 
     /**
@@ -39,6 +41,7 @@ class Location
      */
     public function getLineNumber()
     {
+
         return $this->lineNumber;
     }
 
@@ -49,8 +52,9 @@ class Location
      *
      * @return $this
      */
-    public function setLineNumber($lineNumber)
+    public function setLineNumber( $lineNumber )
     {
+
         $this->lineNumber = (int)$lineNumber;
 
         return $this;
@@ -63,6 +67,7 @@ class Location
      */
     public function getColumnNumber()
     {
+
         return $this->columnNumber;
     }
 
@@ -73,8 +78,9 @@ class Location
      *
      * @return $this
      */
-    public function setColumnNumber($columnNumber)
+    public function setColumnNumber( $columnNumber )
     {
+
         $this->columnNumber = (int)$columnNumber;
 
         return $this;

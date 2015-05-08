@@ -14,6 +14,7 @@ use Satooshi\Component\System\Git\GitCommand;
  */
 class Jobs extends CoverallsApi
 {
+
     /**
      * URL for jobs API.
      *
@@ -44,14 +45,15 @@ class Jobs extends CoverallsApi
      */
     public function collectCloverXml()
     {
-        $rootDir        = $this->config->getRootDir();
+
+        $rootDir = $this->config->getRootDir();
         $cloverXmlPaths = $this->config->getCloverXmlPaths();
-        $xmlCollector   = new CloverXmlCoverageCollector();
+        $xmlCollector = new CloverXmlCoverageCollector();
 
         foreach ($cloverXmlPaths as $cloverXmlPath) {
-            $xml = simplexml_load_file($cloverXmlPath);
+            $xml = simplexml_load_file( $cloverXmlPath );
 
-            $xmlCollector->collect($xml, $rootDir);
+            $xmlCollector->collect( $xml, $rootDir );
         }
 
         $this->jsonFile = $xmlCollector->getJsonFile();
@@ -72,10 +74,11 @@ class Jobs extends CoverallsApi
      */
     public function collectGitInfo()
     {
-        $command      = new GitCommand();
-        $gitCollector = new GitInfoCollector($command);
 
-        $this->jsonFile->setGit($gitCollector->collect());
+        $command = new GitCommand();
+        $gitCollector = new GitInfoCollector( $command );
+
+        $this->jsonFile->setGit( $gitCollector->collect() );
 
         return $this;
     }
@@ -89,14 +92,15 @@ class Jobs extends CoverallsApi
      *
      * @throws \Satooshi\Bundle\CoverallsV1Bundle\Entity\Exception\RequirementsNotSatisfiedException
      */
-    public function collectEnvVars(array $env)
+    public function collectEnvVars( array $env )
     {
-        $envCollector = new CiEnvVarsCollector($this->config);
+
+        $envCollector = new CiEnvVarsCollector( $this->config );
 
         try {
-            $this->jsonFile->fillJobs($envCollector->collect($env));
-        } catch (\Satooshi\Bundle\CoverallsV1Bundle\Entity\Exception\RequirementsNotSatisfiedException $e) {
-            $e->setReadEnv($envCollector->getReadEnv());
+            $this->jsonFile->fillJobs( $envCollector->collect( $env ) );
+        } catch( \Satooshi\Bundle\CoverallsV1Bundle\Entity\Exception\RequirementsNotSatisfiedException $e ) {
+            $e->setReadEnv( $envCollector->getReadEnv() );
 
             throw $e;
         }
@@ -111,9 +115,10 @@ class Jobs extends CoverallsApi
      */
     public function dumpJsonFile()
     {
+
         $jsonPath = $this->config->getJsonPath();
 
-        file_put_contents($jsonPath, $this->jsonFile);
+        file_put_contents( $jsonPath, $this->jsonFile );
 
         return $this;
     }
@@ -127,13 +132,14 @@ class Jobs extends CoverallsApi
      */
     public function send()
     {
+
         if ($this->config->isDryRun()) {
             return;
         }
 
         $jsonPath = $this->config->getJsonPath();
 
-        return $this->upload(static::URL, $jsonPath, static::FILENAME);
+        return $this->upload( static::URL, $jsonPath, static::FILENAME );
     }
 
     // internal method
@@ -149,28 +155,15 @@ class Jobs extends CoverallsApi
      *
      * @throws \RuntimeException
      */
-    protected function upload($url, $path, $filename)
+    protected function upload( $url, $path, $filename )
     {
-        $request  = $this->client->post($url)->addPostFiles(array($filename => $path));
+
+        $request = $this->client->post( $url )->addPostFiles( array( $filename => $path ) );
 
         return $request->send();
     }
 
     // accessor
-
-    /**
-     * Set JsonFile.
-     *
-     * @param JsonFile $jsonFile json_file content.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Api\Jobs
-     */
-    public function setJsonFile(JsonFile $jsonFile)
-    {
-        $this->jsonFile = $jsonFile;
-
-        return $this;
-    }
 
     /**
      * Return JsonFile.
@@ -179,10 +172,26 @@ class Jobs extends CoverallsApi
      */
     public function getJsonFile()
     {
-        if (isset($this->jsonFile)) {
+
+        if (isset( $this->jsonFile )) {
             return $this->jsonFile;
         }
 
         return null;
+    }
+
+    /**
+     * Set JsonFile.
+     *
+     * @param JsonFile $jsonFile json_file content.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Api\Jobs
+     */
+    public function setJsonFile( JsonFile $jsonFile )
+    {
+
+        $this->jsonFile = $jsonFile;
+
+        return $this;
     }
 }

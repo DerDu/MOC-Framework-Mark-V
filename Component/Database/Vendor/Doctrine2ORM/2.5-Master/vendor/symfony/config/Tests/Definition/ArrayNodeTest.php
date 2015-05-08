@@ -16,13 +16,15 @@ use Symfony\Component\Config\Definition\ScalarNode;
 
 class ArrayNodeTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidTypeException
      */
     public function testNormalizeThrowsExceptionWhenFalseIsNotAllowed()
     {
-        $node = new ArrayNode('root');
-        $node->normalize(false);
+
+        $node = new ArrayNode( 'root' );
+        $node->normalize( false );
     }
 
     /**
@@ -31,8 +33,9 @@ class ArrayNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionThrownOnUnrecognizedChild()
     {
-        $node = new ArrayNode('root');
-        $node->normalize(array('foo' => 'bar'));
+
+        $node = new ArrayNode( 'root' );
+        $node->normalize( array( 'foo' => 'bar' ) );
     }
 
     /**
@@ -43,40 +46,43 @@ class ArrayNodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testIgnoreExtraKeysNoException()
     {
-        $node = new ArrayNode('roo');
-        $node->setIgnoreExtraKeys(true);
 
-        $node->normalize(array('foo' => 'bar'));
-        $this->assertTrue(true, 'No exception was thrown when setIgnoreExtraKeys is true');
+        $node = new ArrayNode( 'roo' );
+        $node->setIgnoreExtraKeys( true );
+
+        $node->normalize( array( 'foo' => 'bar' ) );
+        $this->assertTrue( true, 'No exception was thrown when setIgnoreExtraKeys is true' );
     }
 
     /**
      * @dataProvider getPreNormalizationTests
      */
-    public function testPreNormalize($denormalized, $normalized)
+    public function testPreNormalize( $denormalized, $normalized )
     {
-        $node = new ArrayNode('foo');
 
-        $r = new \ReflectionMethod($node, 'preNormalize');
-        $r->setAccessible(true);
+        $node = new ArrayNode( 'foo' );
 
-        $this->assertSame($normalized, $r->invoke($node, $denormalized));
+        $r = new \ReflectionMethod( $node, 'preNormalize' );
+        $r->setAccessible( true );
+
+        $this->assertSame( $normalized, $r->invoke( $node, $denormalized ) );
     }
 
     public function getPreNormalizationTests()
     {
+
         return array(
             array(
-                array('foo-bar' => 'foo'),
-                array('foo_bar' => 'foo'),
+                array( 'foo-bar' => 'foo' ),
+                array( 'foo_bar' => 'foo' ),
             ),
             array(
-                array('foo-bar_moo' => 'foo'),
-                array('foo-bar_moo' => 'foo'),
+                array( 'foo-bar_moo' => 'foo' ),
+                array( 'foo-bar_moo' => 'foo' ),
             ),
             array(
-                array('foo-bar' => null, 'foo_bar' => 'foo'),
-                array('foo-bar' => null, 'foo_bar' => 'foo'),
+                array( 'foo-bar' => null, 'foo_bar' => 'foo' ),
+                array( 'foo-bar' => null, 'foo_bar' => 'foo' ),
             ),
         );
     }
@@ -84,25 +90,27 @@ class ArrayNodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getZeroNamedNodeExamplesData
      */
-    public function testNodeNameCanBeZero($denormalized, $normalized)
+    public function testNodeNameCanBeZero( $denormalized, $normalized )
     {
-        $zeroNode = new ArrayNode(0);
-        $zeroNode->addChild(new ScalarNode('name'));
-        $fiveNode = new ArrayNode(5);
-        $fiveNode->addChild(new ScalarNode(0));
-        $fiveNode->addChild(new ScalarNode('new_key'));
-        $rootNode = new ArrayNode('root');
-        $rootNode->addChild($zeroNode);
-        $rootNode->addChild($fiveNode);
-        $rootNode->addChild(new ScalarNode('string_key'));
-        $r = new \ReflectionMethod($rootNode, 'normalizeValue');
-        $r->setAccessible(true);
 
-        $this->assertSame($normalized, $r->invoke($rootNode, $denormalized));
+        $zeroNode = new ArrayNode( 0 );
+        $zeroNode->addChild( new ScalarNode( 'name' ) );
+        $fiveNode = new ArrayNode( 5 );
+        $fiveNode->addChild( new ScalarNode( 0 ) );
+        $fiveNode->addChild( new ScalarNode( 'new_key' ) );
+        $rootNode = new ArrayNode( 'root' );
+        $rootNode->addChild( $zeroNode );
+        $rootNode->addChild( $fiveNode );
+        $rootNode->addChild( new ScalarNode( 'string_key' ) );
+        $r = new \ReflectionMethod( $rootNode, 'normalizeValue' );
+        $r->setAccessible( true );
+
+        $this->assertSame( $normalized, $r->invoke( $rootNode, $denormalized ) );
     }
 
     public function getZeroNamedNodeExamplesData()
     {
+
         return array(
             array(
                 array(
@@ -132,28 +140,30 @@ class ArrayNodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getPreNormalizedNormalizedOrderedData
      */
-    public function testChildrenOrderIsMaintainedOnNormalizeValue($prenormalized, $normalized)
+    public function testChildrenOrderIsMaintainedOnNormalizeValue( $prenormalized, $normalized )
     {
-        $scalar1 = new ScalarNode('1');
-        $scalar2 = new ScalarNode('2');
-        $scalar3 = new ScalarNode('3');
-        $node = new ArrayNode('foo');
-        $node->addChild($scalar1);
-        $node->addChild($scalar3);
-        $node->addChild($scalar2);
 
-        $r = new \ReflectionMethod($node, 'normalizeValue');
-        $r->setAccessible(true);
+        $scalar1 = new ScalarNode( '1' );
+        $scalar2 = new ScalarNode( '2' );
+        $scalar3 = new ScalarNode( '3' );
+        $node = new ArrayNode( 'foo' );
+        $node->addChild( $scalar1 );
+        $node->addChild( $scalar3 );
+        $node->addChild( $scalar2 );
 
-        $this->assertSame($normalized, $r->invoke($node, $prenormalized));
+        $r = new \ReflectionMethod( $node, 'normalizeValue' );
+        $r->setAccessible( true );
+
+        $this->assertSame( $normalized, $r->invoke( $node, $prenormalized ) );
     }
 
     public function getPreNormalizedNormalizedOrderedData()
     {
+
         return array(
             array(
-                array('2' => 'two', '1' => 'one', '3' => 'three'),
-                array('2' => 'two', '1' => 'one', '3' => 'three'),
+                array( '2' => 'two', '1' => 'one', '3' => 'three' ),
+                array( '2' => 'two', '1' => 'one', '3' => 'three' ),
             ),
         );
     }

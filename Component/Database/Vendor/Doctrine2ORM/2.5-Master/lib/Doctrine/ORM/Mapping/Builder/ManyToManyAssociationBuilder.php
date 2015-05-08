@@ -29,6 +29,7 @@ namespace Doctrine\ORM\Mapping\Builder;
  */
 class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
 {
+
     /**
      * @var string|null
      */
@@ -44,8 +45,9 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
      *
      * @return ManyToManyAssociationBuilder
      */
-    public function setJoinTable($name)
+    public function setJoinTable( $name )
     {
+
         $this->joinTableName = $name;
         return $this;
     }
@@ -62,14 +64,21 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
      *
      * @return ManyToManyAssociationBuilder
      */
-    public function addInverseJoinColumn($columnName, $referencedColumnName, $nullable = true, $unique = false, $onDelete = null, $columnDef = null)
-    {
+    public function addInverseJoinColumn(
+        $columnName,
+        $referencedColumnName,
+        $nullable = true,
+        $unique = false,
+        $onDelete = null,
+        $columnDef = null
+    ) {
+
         $this->inverseJoinColumns[] = array(
-            'name' => $columnName,
+            'name'             => $columnName,
             'referencedColumnName' => $referencedColumnName,
-            'nullable' => $nullable,
-            'unique' => $unique,
-            'onDelete' => $onDelete,
+            'nullable'         => $nullable,
+            'unique'           => $unique,
+            'onDelete'         => $onDelete,
             'columnDefinition' => $columnDef,
         );
         return $this;
@@ -80,6 +89,7 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
      */
     public function build()
     {
+
         $mapping = $this->mapping;
         $mapping['joinTable'] = array();
         if ($this->joinColumns) {
@@ -92,7 +102,7 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
             $mapping['joinTable']['name'] = $this->joinTableName;
         }
         $cm = $this->builder->getClassMetadata();
-        $cm->mapManyToMany($mapping);
+        $cm->mapManyToMany( $mapping );
         return $this->builder;
     }
 }

@@ -12,10 +12,10 @@
 namespace Prophecy\Prediction;
 
 use Prophecy\Call\Call;
-use Prophecy\Prophecy\ObjectProphecy;
-use Prophecy\Prophecy\MethodProphecy;
-use Prophecy\Util\StringUtil;
 use Prophecy\Exception\Prediction\UnexpectedCallsException;
+use Prophecy\Prophecy\MethodProphecy;
+use Prophecy\Prophecy\ObjectProphecy;
+use Prophecy\Util\StringUtil;
 
 /**
  * No calls prediction.
@@ -24,6 +24,7 @@ use Prophecy\Exception\Prediction\UnexpectedCallsException;
  */
 class NoCallsPrediction implements PredictionInterface
 {
+
     private $util;
 
     /**
@@ -31,8 +32,9 @@ class NoCallsPrediction implements PredictionInterface
      *
      * @param null|StringUtil $util
      */
-    public function __construct(StringUtil $util = null)
+    public function __construct( StringUtil $util = null )
     {
+
         $this->util = $util ?: new StringUtil;
     }
 
@@ -45,24 +47,25 @@ class NoCallsPrediction implements PredictionInterface
      *
      * @throws \Prophecy\Exception\Prediction\UnexpectedCallsException
      */
-    public function check(array $calls, ObjectProphecy $object, MethodProphecy $method)
+    public function check( array $calls, ObjectProphecy $object, MethodProphecy $method )
     {
-        if (!count($calls)) {
+
+        if (!count( $calls )) {
             return;
         }
 
-        $verb = count($calls) === 1 ? 'was' : 'were';
+        $verb = count( $calls ) === 1 ? 'was' : 'were';
 
-        throw new UnexpectedCallsException(sprintf(
+        throw new UnexpectedCallsException( sprintf(
             "No calls expected that match:\n".
             "  %s->%s(%s)\n".
             "but %d %s made:\n%s",
-            get_class($object->reveal()),
+            get_class( $object->reveal() ),
             $method->getMethodName(),
             $method->getArgumentsWildcard(),
-            count($calls),
+            count( $calls ),
             $verb,
-            $this->util->stringifyCalls($calls)
-        ), $method, $calls);
+            $this->util->stringifyCalls( $calls )
+        ), $method, $calls );
     }
 }

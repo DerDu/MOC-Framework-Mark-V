@@ -28,6 +28,7 @@ namespace Doctrine\ORM;
  */
 interface Cache
 {
+
     const DEFAULT_QUERY_REGION_NAME = 'query_cache_region';
 
     const DEFAULT_TIMESTAMP_REGION_NAME = 'timestamp_cache_region';
@@ -59,7 +60,7 @@ interface Cache
      *
      * @return \Doctrine\ORM\Cache\Region|null
      */
-    public function getEntityCacheRegion($className);
+    public function getEntityCacheRegion( $className );
 
     /**
      * @param string $className   The entity class.
@@ -67,7 +68,7 @@ interface Cache
      *
      * @return \Doctrine\ORM\Cache\Region|null
      */
-    public function getCollectionCacheRegion($className, $association);
+    public function getCollectionCacheRegion( $className, $association );
 
     /**
      * Determine whether the cache contains data for the given entity "instance".
@@ -77,7 +78,7 @@ interface Cache
      *
      * @return boolean true if the underlying cache contains corresponding data; false otherwise.
      */
-    public function containsEntity($className, $identifier);
+    public function containsEntity( $className, $identifier );
 
     /**
      * Evicts the entity data for a particular entity "instance".
@@ -87,7 +88,7 @@ interface Cache
      *
      * @return void
      */
-    public function evictEntity($className, $identifier);
+    public function evictEntity( $className, $identifier );
 
     /**
      * Evicts all entity data from the given region.
@@ -96,7 +97,7 @@ interface Cache
      *
      * @return void
      */
-    public function evictEntityRegion($className);
+    public function evictEntityRegion( $className );
 
     /**
      * Evict data from all entity regions.
@@ -114,7 +115,7 @@ interface Cache
      *
      * @return boolean true if the underlying cache contains corresponding data; false otherwise.
      */
-    public function containsCollection($className, $association, $ownerIdentifier);
+    public function containsCollection( $className, $association, $ownerIdentifier );
 
     /**
      * Evicts the cache data for the given identified collection instance.
@@ -125,7 +126,7 @@ interface Cache
      *
      * @return void
      */
-    public function evictCollection($className, $association, $ownerIdentifier);
+    public function evictCollection( $className, $association, $ownerIdentifier );
 
     /**
      * Evicts all entity data from the given region.
@@ -135,7 +136,7 @@ interface Cache
      *
      * @return void
      */
-    public function evictCollectionRegion($className, $association);
+    public function evictCollectionRegion( $className, $association );
 
     /**
      * Evict data from all collection regions.
@@ -151,14 +152,14 @@ interface Cache
      *
      * @return boolean true if the underlying cache contains corresponding data; false otherwise.
      */
-    public function containsQuery($regionName);
+    public function containsQuery( $regionName );
 
     /**
      * Evicts all cached query results under the given name, or default query cache if the region name is NULL.
      *
      * @param string|null $regionName The cache name associated to the queries being cached.
      */
-    public function evictQueryRegion($regionName = null);
+    public function evictQueryRegion( $regionName = null );
 
     /**
      * Evict data from all query regions.
@@ -174,5 +175,5 @@ interface Cache
      *
      * @return \Doctrine\ORM\Cache\QueryCache The Query Cache associated with the region name.
      */
-    public function getQueryCache($regionName = null);
+    public function getQueryCache( $regionName = null );
 }

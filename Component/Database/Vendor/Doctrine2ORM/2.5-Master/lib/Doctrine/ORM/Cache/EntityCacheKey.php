@@ -28,6 +28,7 @@ namespace Doctrine\ORM\Cache;
  */
 class EntityCacheKey extends CacheKey
 {
+
     /**
      * READ-ONLY: Public only for performance reasons, it should be considered immutable.
      *
@@ -46,12 +47,13 @@ class EntityCacheKey extends CacheKey
      * @param string $entityClass The entity class name. In a inheritance hierarchy it should always be the root entity class.
      * @param array  $identifier  The entity identifier
      */
-    public function __construct($entityClass, array $identifier)
+    public function __construct( $entityClass, array $identifier )
     {
-        ksort($identifier);
 
-        $this->identifier  = $identifier;
+        ksort( $identifier );
+
+        $this->identifier = $identifier;
         $this->entityClass = $entityClass;
-        $this->hash        = str_replace('\\', '.', strtolower($entityClass) . '_' . implode(' ', $identifier));
+        $this->hash = str_replace( '\\', '.', strtolower( $entityClass ).'_'.implode( ' ', $identifier ) );
     }
 }

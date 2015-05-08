@@ -2,33 +2,36 @@
 
 namespace Guzzle\Tests\Batch;
 
-use Guzzle\Batch\NotifyingBatch;
 use Guzzle\Batch\Batch;
+use Guzzle\Batch\NotifyingBatch;
 
 /**
  * @covers Guzzle\Batch\NotifyingBatch
  */
 class NotifyingBatchTest extends \Guzzle\Tests\GuzzleTestCase
 {
+
     public function testNotifiesAfterFlush()
     {
-        $batch = $this->getMock('Guzzle\Batch\Batch', array('flush'), array(
-            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
-        ));
 
-        $batch->expects($this->once())
-            ->method('flush')
-            ->will($this->returnValue(array('foo', 'baz')));
+        $batch = $this->getMock( 'Guzzle\Batch\Batch', array( 'flush' ), array(
+            $this->getMock( 'Guzzle\Batch\BatchTransferInterface' ),
+            $this->getMock( 'Guzzle\Batch\BatchDivisorInterface' )
+        ) );
+
+        $batch->expects( $this->once() )
+            ->method( 'flush' )
+            ->will( $this->returnValue( array( 'foo', 'baz' ) ) );
 
         $data = array();
-        $decorator = new NotifyingBatch($batch, function ($batch) use (&$data) {
-            $data[] = $batch;
-        });
+        $decorator = new NotifyingBatch( $batch, function ( $batch ) use ( &$data ) {
 
-        $decorator->add('foo')->add('baz');
+            $data[] = $batch;
+        } );
+
+        $decorator->add( 'foo' )->add( 'baz' );
         $decorator->flush();
-        $this->assertEquals(array(array('foo', 'baz')), $data);
+        $this->assertEquals( array( array( 'foo', 'baz' ) ), $data );
     }
 
     /**
@@ -36,10 +39,11 @@ class NotifyingBatchTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testEnsuresCallableIsValid()
     {
+
         $batch = new Batch(
-            $this->getMock('Guzzle\Batch\BatchTransferInterface'),
-            $this->getMock('Guzzle\Batch\BatchDivisorInterface')
+            $this->getMock( 'Guzzle\Batch\BatchTransferInterface' ),
+            $this->getMock( 'Guzzle\Batch\BatchDivisorInterface' )
         );
-        $decorator = new NotifyingBatch($batch, 'foo');
+        $decorator = new NotifyingBatch( $batch, 'foo' );
     }
 }

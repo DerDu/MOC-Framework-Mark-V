@@ -19,6 +19,7 @@ namespace Symfony\Component\Console\Output;
  */
 interface ConsoleOutputInterface extends OutputInterface
 {
+
     /**
      * Gets the OutputInterface for errors.
      *
@@ -31,5 +32,5 @@ interface ConsoleOutputInterface extends OutputInterface
      *
      * @param OutputInterface $error
      */
-    public function setErrorOutput(OutputInterface $error);
+    public function setErrorOutput( OutputInterface $error );
 }

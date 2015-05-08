@@ -33,6 +33,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
  */
 class ClassMetadataBuilder
 {
+
     /**
      * @var \Doctrine\ORM\Mapping\ClassMetadataInfo
      */
@@ -41,8 +42,9 @@ class ClassMetadataBuilder
     /**
      * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $cm
      */
-    public function __construct(ClassMetadataInfo $cm)
+    public function __construct( ClassMetadataInfo $cm )
     {
+
         $this->cm = $cm;
     }
 
@@ -51,6 +53,7 @@ class ClassMetadataBuilder
      */
     public function getClassMetadata()
     {
+
         return $this->cm;
     }
 
@@ -61,6 +64,7 @@ class ClassMetadataBuilder
      */
     public function setMappedSuperClass()
     {
+
         $this->cm->isMappedSuperclass = true;
         $this->cm->isEmbeddedClass = false;
 
@@ -74,6 +78,7 @@ class ClassMetadataBuilder
      */
     public function setEmbeddable()
     {
+
         $this->cm->isEmbeddedClass = true;
         $this->cm->isMappedSuperclass = false;
 
@@ -89,13 +94,14 @@ class ClassMetadataBuilder
      *
      * @return $this
      */
-    public function addEmbedded($fieldName, $class, $columnPrefix = null)
+    public function addEmbedded( $fieldName, $class, $columnPrefix = null )
     {
-        $this->cm->mapEmbedded(array(
+
+        $this->cm->mapEmbedded( array(
             'fieldName'    => $fieldName,
             'class'        => $class,
             'columnPrefix' => $columnPrefix
-        ));
+        ) );
 
         return $this;
     }
@@ -107,9 +113,10 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function setCustomRepositoryClass($repositoryClassName)
+    public function setCustomRepositoryClass( $repositoryClassName )
     {
-        $this->cm->setCustomRepositoryClass($repositoryClassName);
+
+        $this->cm->setCustomRepositoryClass( $repositoryClassName );
 
         return $this;
     }
@@ -121,6 +128,7 @@ class ClassMetadataBuilder
      */
     public function setReadOnly()
     {
+
         $this->cm->markReadOnly();
 
         return $this;
@@ -133,9 +141,10 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function setTable($name)
+    public function setTable( $name )
     {
-        $this->cm->setPrimaryTable(array('name' => $name));
+
+        $this->cm->setPrimaryTable( array( 'name' => $name ) );
 
         return $this;
     }
@@ -148,13 +157,14 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addIndex(array $columns, $name)
+    public function addIndex( array $columns, $name )
     {
-        if (!isset($this->cm->table['indexes'])) {
+
+        if (!isset( $this->cm->table['indexes'] )) {
             $this->cm->table['indexes'] = array();
         }
 
-        $this->cm->table['indexes'][$name] = array('columns' => $columns);
+        $this->cm->table['indexes'][$name] = array( 'columns' => $columns );
 
         return $this;
     }
@@ -167,13 +177,14 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addUniqueConstraint(array $columns, $name)
+    public function addUniqueConstraint( array $columns, $name )
     {
-        if ( ! isset($this->cm->table['uniqueConstraints'])) {
+
+        if (!isset( $this->cm->table['uniqueConstraints'] )) {
             $this->cm->table['uniqueConstraints'] = array();
         }
 
-        $this->cm->table['uniqueConstraints'][$name] = array('columns' => $columns);
+        $this->cm->table['uniqueConstraints'][$name] = array( 'columns' => $columns );
 
         return $this;
     }
@@ -186,12 +197,13 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addNamedQuery($name, $dqlQuery)
+    public function addNamedQuery( $name, $dqlQuery )
     {
-        $this->cm->addNamedQuery(array(
+
+        $this->cm->addNamedQuery( array(
             'name' => $name,
             'query' => $dqlQuery,
-        ));
+        ) );
 
         return $this;
     }
@@ -203,7 +215,8 @@ class ClassMetadataBuilder
      */
     public function setJoinedTableInheritance()
     {
-        $this->cm->setInheritanceType(ClassMetadata::INHERITANCE_TYPE_JOINED);
+
+        $this->cm->setInheritanceType( ClassMetadata::INHERITANCE_TYPE_JOINED );
 
         return $this;
     }
@@ -215,7 +228,8 @@ class ClassMetadataBuilder
      */
     public function setSingleTableInheritance()
     {
-        $this->cm->setInheritanceType(ClassMetadata::INHERITANCE_TYPE_SINGLE_TABLE);
+
+        $this->cm->setInheritanceType( ClassMetadata::INHERITANCE_TYPE_SINGLE_TABLE );
 
         return $this;
     }
@@ -229,13 +243,14 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function setDiscriminatorColumn($name, $type = 'string', $length = 255)
+    public function setDiscriminatorColumn( $name, $type = 'string', $length = 255 )
     {
-        $this->cm->setDiscriminatorColumn(array(
+
+        $this->cm->setDiscriminatorColumn( array(
             'name' => $name,
             'type' => $type,
             'length' => $length,
-        ));
+        ) );
 
         return $this;
     }
@@ -248,9 +263,10 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addDiscriminatorMapClass($name, $class)
+    public function addDiscriminatorMapClass( $name, $class )
     {
-        $this->cm->addDiscriminatorMapClass($name, $class);
+
+        $this->cm->addDiscriminatorMapClass( $name, $class );
 
         return $this;
     }
@@ -262,7 +278,8 @@ class ClassMetadataBuilder
      */
     public function setChangeTrackingPolicyDeferredExplicit()
     {
-        $this->cm->setChangeTrackingPolicy(ClassMetadata::CHANGETRACKING_DEFERRED_EXPLICIT);
+
+        $this->cm->setChangeTrackingPolicy( ClassMetadata::CHANGETRACKING_DEFERRED_EXPLICIT );
 
         return $this;
     }
@@ -274,7 +291,8 @@ class ClassMetadataBuilder
      */
     public function setChangeTrackingPolicyNotify()
     {
-        $this->cm->setChangeTrackingPolicy(ClassMetadata::CHANGETRACKING_NOTIFY);
+
+        $this->cm->setChangeTrackingPolicy( ClassMetadata::CHANGETRACKING_NOTIFY );
 
         return $this;
     }
@@ -287,9 +305,10 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addLifecycleEvent($methodName, $event)
+    public function addLifecycleEvent( $methodName, $event )
     {
-        $this->cm->addLifecycleCallback($methodName, $event);
+
+        $this->cm->addLifecycleCallback( $methodName, $event );
 
         return $this;
     }
@@ -303,12 +322,13 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addField($name, $type, array $mapping = array())
+    public function addField( $name, $type, array $mapping = array() )
     {
+
         $mapping['fieldName'] = $name;
         $mapping['type'] = $type;
 
-        $this->cm->mapField($mapping);
+        $this->cm->mapField( $mapping );
 
         return $this;
     }
@@ -321,8 +341,9 @@ class ClassMetadataBuilder
      *
      * @return FieldBuilder
      */
-    public function createField($name, $type)
+    public function createField( $name, $type )
     {
+
         return new FieldBuilder(
             $this,
             array(
@@ -340,8 +361,9 @@ class ClassMetadataBuilder
      *
      * @return EmbeddedBuilder
      */
-    public function createEmbedded($fieldName, $class)
+    public function createEmbedded( $fieldName, $class )
     {
+
         return new EmbeddedBuilder(
             $this,
             array(
@@ -361,12 +383,13 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addManyToOne($name, $targetEntity, $inversedBy = null)
+    public function addManyToOne( $name, $targetEntity, $inversedBy = null )
     {
-        $builder = $this->createManyToOne($name, $targetEntity);
+
+        $builder = $this->createManyToOne( $name, $targetEntity );
 
         if ($inversedBy) {
-            $builder->inversedBy($inversedBy);
+            $builder->inversedBy( $inversedBy );
         }
 
         return $builder->build();
@@ -382,8 +405,9 @@ class ClassMetadataBuilder
      *
      * @return AssociationBuilder
      */
-    public function createManyToOne($name, $targetEntity)
+    public function createManyToOne( $name, $targetEntity )
     {
+
         return new AssociationBuilder(
             $this,
             array(
@@ -391,26 +415,6 @@ class ClassMetadataBuilder
                 'targetEntity' => $targetEntity
             ),
             ClassMetadata::MANY_TO_ONE
-        );
-    }
-
-    /**
-     * Creates a OneToOne Association Builder.
-     *
-     * @param string $name
-     * @param string $targetEntity
-     *
-     * @return AssociationBuilder
-     */
-    public function createOneToOne($name, $targetEntity)
-    {
-        return new AssociationBuilder(
-            $this,
-            array(
-                'fieldName'    => $name,
-                'targetEntity' => $targetEntity
-            ),
-            ClassMetadata::ONE_TO_ONE
         );
     }
 
@@ -423,12 +427,34 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addInverseOneToOne($name, $targetEntity, $mappedBy)
+    public function addInverseOneToOne( $name, $targetEntity, $mappedBy )
     {
-        $builder = $this->createOneToOne($name, $targetEntity);
-        $builder->mappedBy($mappedBy);
+
+        $builder = $this->createOneToOne( $name, $targetEntity );
+        $builder->mappedBy( $mappedBy );
 
         return $builder->build();
+    }
+
+    /**
+     * Creates a OneToOne Association Builder.
+     *
+     * @param string $name
+     * @param string $targetEntity
+     *
+     * @return AssociationBuilder
+     */
+    public function createOneToOne( $name, $targetEntity )
+    {
+
+        return new AssociationBuilder(
+            $this,
+            array(
+                'fieldName'    => $name,
+                'targetEntity' => $targetEntity
+            ),
+            ClassMetadata::ONE_TO_ONE
+        );
     }
 
     /**
@@ -440,12 +466,34 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addOwningOneToOne($name, $targetEntity, $inversedBy = null)
+    public function addOwningOneToOne( $name, $targetEntity, $inversedBy = null )
     {
-        $builder = $this->createOneToOne($name, $targetEntity);
+
+        $builder = $this->createOneToOne( $name, $targetEntity );
 
         if ($inversedBy) {
-            $builder->inversedBy($inversedBy);
+            $builder->inversedBy( $inversedBy );
+        }
+
+        return $builder->build();
+    }
+
+    /**
+     * Adds a simple owning many to many association.
+     *
+     * @param string      $name
+     * @param string      $targetEntity
+     * @param string|null $inversedBy
+     *
+     * @return ClassMetadataBuilder
+     */
+    public function addOwningManyToMany( $name, $targetEntity, $inversedBy = null )
+    {
+
+        $builder = $this->createManyToMany( $name, $targetEntity );
+
+        if ($inversedBy) {
+            $builder->inversedBy( $inversedBy );
         }
 
         return $builder->build();
@@ -459,8 +507,9 @@ class ClassMetadataBuilder
      *
      * @return ManyToManyAssociationBuilder
      */
-    public function createManyToMany($name, $targetEntity)
+    public function createManyToMany( $name, $targetEntity )
     {
+
         return new ManyToManyAssociationBuilder(
             $this,
             array(
@@ -472,26 +521,6 @@ class ClassMetadataBuilder
     }
 
     /**
-     * Adds a simple owning many to many association.
-     *
-     * @param string      $name
-     * @param string      $targetEntity
-     * @param string|null $inversedBy
-     *
-     * @return ClassMetadataBuilder
-     */
-    public function addOwningManyToMany($name, $targetEntity, $inversedBy = null)
-    {
-        $builder = $this->createManyToMany($name, $targetEntity);
-
-        if ($inversedBy) {
-            $builder->inversedBy($inversedBy);
-        }
-
-        return $builder->build();
-    }
-
-    /**
      * Adds a simple inverse many to many association.
      *
      * @param string $name
@@ -500,10 +529,29 @@ class ClassMetadataBuilder
      *
      * @return ClassMetadataBuilder
      */
-    public function addInverseManyToMany($name, $targetEntity, $mappedBy)
+    public function addInverseManyToMany( $name, $targetEntity, $mappedBy )
     {
-        $builder = $this->createManyToMany($name, $targetEntity);
-        $builder->mappedBy($mappedBy);
+
+        $builder = $this->createManyToMany( $name, $targetEntity );
+        $builder->mappedBy( $mappedBy );
+
+        return $builder->build();
+    }
+
+    /**
+     * Adds simple OneToMany association.
+     *
+     * @param string $name
+     * @param string $targetEntity
+     * @param string $mappedBy
+     *
+     * @return ClassMetadataBuilder
+     */
+    public function addOneToMany( $name, $targetEntity, $mappedBy )
+    {
+
+        $builder = $this->createOneToMany( $name, $targetEntity );
+        $builder->mappedBy( $mappedBy );
 
         return $builder->build();
     }
@@ -516,8 +564,9 @@ class ClassMetadataBuilder
      *
      * @return OneToManyAssociationBuilder
      */
-    public function createOneToMany($name, $targetEntity)
+    public function createOneToMany( $name, $targetEntity )
     {
+
         return new OneToManyAssociationBuilder(
             $this,
             array(
@@ -526,22 +575,5 @@ class ClassMetadataBuilder
             ),
             ClassMetadata::ONE_TO_MANY
         );
-    }
-
-    /**
-     * Adds simple OneToMany association.
-     *
-     * @param string $name
-     * @param string $targetEntity
-     * @param string $mappedBy
-     *
-     * @return ClassMetadataBuilder
-     */
-    public function addOneToMany($name, $targetEntity, $mappedBy)
-    {
-        $builder = $this->createOneToMany($name, $targetEntity);
-        $builder->mappedBy($mappedBy);
-
-        return $builder->build();
     }
 }

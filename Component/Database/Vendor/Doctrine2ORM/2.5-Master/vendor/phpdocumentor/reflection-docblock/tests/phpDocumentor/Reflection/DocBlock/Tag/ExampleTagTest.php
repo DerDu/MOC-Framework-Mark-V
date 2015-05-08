@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Example Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
@@ -22,6 +22,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ExampleTagTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\SourceTag can
      * understand the @source DocBlock.
@@ -33,7 +34,7 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exLineCount
      * @param string $exFilepath
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -47,14 +48,15 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
         $exLineCount,
         $exFilePath
     ) {
-        $tag = new ExampleTag($type, $content);
 
-        $this->assertEquals($type, $tag->getName());
-        $this->assertEquals($exContent, $tag->getContent());
-        $this->assertEquals($exDescription, $tag->getDescription());
-        $this->assertEquals($exStartingLine, $tag->getStartingLine());
-        $this->assertEquals($exLineCount, $tag->getLineCount());
-        $this->assertEquals($exFilePath, $tag->getFilePath());
+        $tag = new ExampleTag( $type, $content );
+
+        $this->assertEquals( $type, $tag->getName() );
+        $this->assertEquals( $exContent, $tag->getContent() );
+        $this->assertEquals( $exDescription, $tag->getDescription() );
+        $this->assertEquals( $exStartingLine, $tag->getStartingLine() );
+        $this->assertEquals( $exLineCount, $tag->getLineCount() );
+        $this->assertEquals( $exFilePath, $tag->getFilePath() );
     }
 
     /**
@@ -64,6 +66,7 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
+
         // $type,
         // $content,
         // $exContent,

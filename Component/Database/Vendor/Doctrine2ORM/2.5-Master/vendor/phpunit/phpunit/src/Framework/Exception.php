@@ -26,7 +26,7 @@
  * connections). Unserializing user-space objects from the child process into
  * the parent would break the intended encapsulation of process isolation.
  *
- * @see http://fabien.potencier.org/article/9/php-serialization-stack-traces-and-exceptions
+ * @see        http://fabien.potencier.org/article/9/php-serialization-stack-traces-and-exceptions
  *
  * @package    PHPUnit
  * @subpackage Framework
@@ -38,18 +38,20 @@
  */
 class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Exception
 {
+
     /**
      * @var array
      */
     protected $serializableTrace;
 
-    public function __construct($message = '', $code = 0, Exception $previous = null)
+    public function __construct( $message = '', $code = 0, Exception $previous = null )
     {
-        parent::__construct($message, $code, $previous);
+
+        parent::__construct( $message, $code, $previous );
 
         $this->serializableTrace = $this->getTrace();
         foreach ($this->serializableTrace as $i => $call) {
-            unset($this->serializableTrace[$i]['args']);
+            unset( $this->serializableTrace[$i]['args'] );
         }
     }
 
@@ -60,6 +62,7 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
      */
     public function getSerializableTrace()
     {
+
         return $this->serializableTrace;
     }
 
@@ -68,10 +71,11 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
      */
     public function __toString()
     {
-        $string = PHPUnit_Framework_TestFailure::exceptionToString($this);
 
-        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace($this)) {
-            $string .= "\n" . $trace;
+        $string = PHPUnit_Framework_TestFailure::exceptionToString( $this );
+
+        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace( $this )) {
+            $string .= "\n".$trace;
         }
 
         return $string;
@@ -79,6 +83,7 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
 
     public function __sleep()
     {
-        return array_keys(get_object_vars($this));
+
+        return array_keys( get_object_vars( $this ) );
     }
 }

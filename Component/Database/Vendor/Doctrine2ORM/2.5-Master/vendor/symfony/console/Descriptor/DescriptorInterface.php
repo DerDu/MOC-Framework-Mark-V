@@ -20,6 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 interface DescriptorInterface
 {
+
     /**
      * Describes an InputArgument instance.
      *
@@ -27,5 +28,5 @@ interface DescriptorInterface
      * @param object          $object
      * @param array           $options
      */
-    public function describe(OutputInterface $output, $object, array $options = array());
+    public function describe( OutputInterface $output, $object, array $options = array() );
 }

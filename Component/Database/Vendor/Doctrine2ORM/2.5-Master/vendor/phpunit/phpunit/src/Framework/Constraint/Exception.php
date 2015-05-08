@@ -21,6 +21,7 @@
  */
 class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var string
      */
@@ -29,54 +30,11 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
     /**
      * @param string $className
      */
-    public function __construct($className)
+    public function __construct( $className )
     {
+
         parent::__construct();
         $this->className = $className;
-    }
-
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * @param  mixed $other Value or object to evaluate.
-     * @return bool
-     */
-    protected function matches($other)
-    {
-        return $other instanceof $this->className;
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed  $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        if ($other !== null) {
-            $message = '';
-            if ($other instanceof Exception) {
-                $message = '. Message was: "' . $other->getMessage() . '" at'
-                        . "\n" . $other->getTraceAsString();
-            }
-
-            return sprintf(
-                'exception of type "%s" matches expected exception "%s"%s',
-                get_class($other),
-                $this->className,
-                $message
-            );
-        }
-
-        return sprintf(
-            'exception of type "%s" is thrown',
-            $this->className
-        );
     }
 
     /**
@@ -86,8 +44,57 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
      */
     public function toString()
     {
+
         return sprintf(
             'exception of type "%s"',
+            $this->className
+        );
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param  mixed $other Value or object to evaluate.
+     *
+     * @return bool
+     */
+    protected function matches( $other )
+    {
+
+        return $other instanceof $this->className;
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed $other Evaluated value or object.
+     *
+     * @return string
+     */
+    protected function failureDescription( $other )
+    {
+
+        if ($other !== null) {
+            $message = '';
+            if ($other instanceof Exception) {
+                $message = '. Message was: "'.$other->getMessage().'" at'
+                    ."\n".$other->getTraceAsString();
+            }
+
+            return sprintf(
+                'exception of type "%s" matches expected exception "%s"%s',
+                get_class( $other ),
+                $this->className,
+                $message
+            );
+        }
+
+        return sprintf(
+            'exception of type "%s" is thrown',
             $this->className
         );
     }

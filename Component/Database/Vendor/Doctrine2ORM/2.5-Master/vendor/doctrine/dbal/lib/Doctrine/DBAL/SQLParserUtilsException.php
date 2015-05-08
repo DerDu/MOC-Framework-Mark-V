@@ -31,14 +31,17 @@ namespace Doctrine\DBAL;
  */
 class SQLParserUtilsException extends DBALException
 {
+
     /**
      * @param string $paramName
      *
      * @return \Doctrine\DBAL\SQLParserUtilsException
      */
-    public static function missingParam($paramName)
+    public static function missingParam( $paramName )
     {
-        return new self(sprintf('Value for :%1$s not found in params array. Params array key should be "%1$s"', $paramName));
+
+        return new self( sprintf( 'Value for :%1$s not found in params array. Params array key should be "%1$s"',
+            $paramName ) );
     }
 
     /**
@@ -46,8 +49,10 @@ class SQLParserUtilsException extends DBALException
      *
      * @return \Doctrine\DBAL\SQLParserUtilsException
      */
-    public static function missingType($typeName)
+    public static function missingType( $typeName )
     {
-        return new self(sprintf('Value for :%1$s not found in types array. Types array key should be "%1$s"', $typeName));
+
+        return new self( sprintf( 'Value for :%1$s not found in types array. Types array key should be "%1$s"',
+            $typeName ) );
     }
 }

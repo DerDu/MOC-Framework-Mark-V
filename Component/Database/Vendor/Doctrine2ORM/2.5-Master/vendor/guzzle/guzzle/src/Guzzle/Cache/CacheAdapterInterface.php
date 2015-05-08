@@ -11,6 +11,7 @@ namespace Guzzle\Cache;
  */
 interface CacheAdapterInterface
 {
+
     /**
      * Test if an entry exists in the cache.
      *
@@ -19,7 +20,7 @@ interface CacheAdapterInterface
      *
      * @return bool Returns TRUE if a cache entry exists for the given cache id, FALSE otherwise.
      */
-    public function contains($id, array $options = null);
+    public function contains( $id, array $options = null );
 
     /**
      * Deletes a cache entry.
@@ -29,7 +30,7 @@ interface CacheAdapterInterface
      *
      * @return bool TRUE on success, FALSE on failure
      */
-    public function delete($id, array $options = null);
+    public function delete( $id, array $options = null );
 
     /**
      * Fetches an entry from the cache.
@@ -39,7 +40,7 @@ interface CacheAdapterInterface
      *
      * @return string The cached data or FALSE, if no cache entry exists for the given id.
      */
-    public function fetch($id, array $options = null);
+    public function fetch( $id, array $options = null );
 
     /**
      * Puts data into the cache.
@@ -51,5 +52,5 @@ interface CacheAdapterInterface
      *
      * @return bool TRUE if the entry was successfully stored in the cache, FALSE otherwise.
      */
-    public function save($id, $data, $lifeTime = false, array $options = null);
+    public function save( $id, $data, $lifeTime = false, array $options = null );
 }

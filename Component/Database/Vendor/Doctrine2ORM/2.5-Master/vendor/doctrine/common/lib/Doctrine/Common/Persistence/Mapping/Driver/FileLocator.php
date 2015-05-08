@@ -30,6 +30,7 @@ namespace Doctrine\Common\Persistence\Mapping\Driver;
  */
 interface FileLocator
 {
+
     /**
      * Locates mapping file for the given class name.
      *
@@ -37,7 +38,7 @@ interface FileLocator
      *
      * @return string
      */
-    public function findMappingFile($className);
+    public function findMappingFile( $className );
 
     /**
      * Gets all class names that are found with this file locator.
@@ -46,7 +47,7 @@ interface FileLocator
      *
      * @return array
      */
-    public function getAllClassNames($globalBasename);
+    public function getAllClassNames( $globalBasename );
 
     /**
      * Checks if a file can be found for this class name.
@@ -55,7 +56,7 @@ interface FileLocator
      *
      * @return bool
      */
-    public function fileExists($className);
+    public function fileExists( $className );
 
     /**
      * Gets all the paths that this file locator looks for mapping files.

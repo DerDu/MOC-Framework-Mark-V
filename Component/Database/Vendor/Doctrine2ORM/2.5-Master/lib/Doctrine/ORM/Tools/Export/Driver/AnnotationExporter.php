@@ -31,6 +31,7 @@ use Doctrine\ORM\Tools\EntityGenerator;
  */
 class AnnotationExporter extends AbstractExporter
 {
+
     /**
      * @var string
      */
@@ -44,28 +45,19 @@ class AnnotationExporter extends AbstractExporter
     /**
      * {@inheritdoc}
      */
-    public function exportClassMetadata(ClassMetadataInfo $metadata)
+    public function exportClassMetadata( ClassMetadataInfo $metadata )
     {
-        if ( ! $this->_entityGenerator) {
-            throw new \RuntimeException('For the AnnotationExporter you must set an EntityGenerator instance with the setEntityGenerator() method.');
+
+        if (!$this->_entityGenerator) {
+            throw new \RuntimeException( 'For the AnnotationExporter you must set an EntityGenerator instance with the setEntityGenerator() method.' );
         }
 
-        $this->_entityGenerator->setGenerateAnnotations(true);
-        $this->_entityGenerator->setGenerateStubMethods(false);
-        $this->_entityGenerator->setRegenerateEntityIfExists(false);
-        $this->_entityGenerator->setUpdateEntityIfExists(false);
+        $this->_entityGenerator->setGenerateAnnotations( true );
+        $this->_entityGenerator->setGenerateStubMethods( false );
+        $this->_entityGenerator->setRegenerateEntityIfExists( false );
+        $this->_entityGenerator->setUpdateEntityIfExists( false );
 
-        return $this->_entityGenerator->generateEntityClass($metadata);
-    }
-
-    /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata
-     *
-     * @return string
-     */
-    protected function _generateOutputPath(ClassMetadataInfo $metadata)
-    {
-        return $this->_outputDir . '/' . str_replace('\\', '/', $metadata->name) . $this->_extension;
+        return $this->_entityGenerator->generateEntityClass( $metadata );
     }
 
     /**
@@ -73,8 +65,20 @@ class AnnotationExporter extends AbstractExporter
      *
      * @return void
      */
-    public function setEntityGenerator(EntityGenerator $entityGenerator)
+    public function setEntityGenerator( EntityGenerator $entityGenerator )
     {
+
         $this->_entityGenerator = $entityGenerator;
+    }
+
+    /**
+     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata
+     *
+     * @return string
+     */
+    protected function _generateOutputPath( ClassMetadataInfo $metadata )
+    {
+
+        return $this->_outputDir.'/'.str_replace( '\\', '/', $metadata->name ).$this->_extension;
     }
 }

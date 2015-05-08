@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class IdentificationVariableDeclaration extends Node
 {
+
     /**
      * @var RangeVariableDeclaration|null
      */
@@ -50,8 +51,9 @@ class IdentificationVariableDeclaration extends Node
      * @param IndexBy|null                  $indexBy
      * @param array                         $joins
      */
-    public function __construct($rangeVariableDecl, $indexBy, array $joins)
+    public function __construct( $rangeVariableDecl, $indexBy, array $joins )
     {
+
         $this->rangeVariableDeclaration = $rangeVariableDecl;
         $this->indexBy = $indexBy;
         $this->joins = $joins;
@@ -60,8 +62,9 @@ class IdentificationVariableDeclaration extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkIdentificationVariableDeclaration($this);
+
+        return $sqlWalker->walkIdentificationVariableDeclaration( $this );
     }
 }

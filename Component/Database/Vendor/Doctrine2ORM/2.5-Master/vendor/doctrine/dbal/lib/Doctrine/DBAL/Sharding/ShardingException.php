@@ -28,12 +28,14 @@ use Doctrine\DBAL\DBALException;
  */
 class ShardingException extends DBALException
 {
+
     /**
      * @return \Doctrine\DBAL\Sharding\ShardingException
      */
     static public function notImplemented()
     {
-        return new self("This functionality is not implemented with this sharding provider.", 1331557937);
+
+        return new self( "This functionality is not implemented with this sharding provider.", 1331557937 );
     }
 
     /**
@@ -41,7 +43,8 @@ class ShardingException extends DBALException
      */
     static public function missingDefaultFederationName()
     {
-        return new self("SQLAzure requires a federation name to be set during sharding configuration.", 1332141280);
+
+        return new self( "SQLAzure requires a federation name to be set during sharding configuration.", 1332141280 );
     }
 
     /**
@@ -49,7 +52,8 @@ class ShardingException extends DBALException
      */
     static public function missingDefaultDistributionKey()
     {
-        return new self("SQLAzure requires a distribution key to be set during sharding configuration.", 1332141329);
+
+        return new self( "SQLAzure requires a distribution key to be set during sharding configuration.", 1332141329 );
     }
 
     /**
@@ -57,7 +61,8 @@ class ShardingException extends DBALException
      */
     static public function activeTransaction()
     {
-        return new self("Cannot switch shard during an active transaction.", 1332141766);
+
+        return new self( "Cannot switch shard during an active transaction.", 1332141766 );
     }
 
     /**
@@ -65,7 +70,8 @@ class ShardingException extends DBALException
      */
     static public function noShardDistributionValue()
     {
-        return new self("You have to specify a string or integer as shard distribution value.", 1332142103);
+
+        return new self( "You have to specify a string or integer as shard distribution value.", 1332142103 );
     }
 
     /**
@@ -73,6 +79,7 @@ class ShardingException extends DBALException
      */
     static public function missingDistributionType()
     {
-        return new self("You have to specify a sharding distribution type such as 'integer', 'string', 'guid'.");
+
+        return new self( "You have to specify a sharding distribution type such as 'integer', 'string', 'guid'." );
     }
 }

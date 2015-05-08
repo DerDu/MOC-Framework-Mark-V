@@ -21,6 +21,7 @@
  */
 class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_ResultPrinter
 {
+
     /**
      * @var    boolean
      */
@@ -32,7 +33,8 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      */
     protected function startRun()
     {
-        $this->write('<html><body>');
+
+        $this->write( '<html><body>' );
     }
 
     /**
@@ -40,10 +42,11 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function startClass($name)
+    protected function startClass( $name )
     {
+
         $this->write(
-            '<h2 id="' . $name . '">' . $this->currentTestClassPrettified .
+            '<h2 id="'.$name.'">'.$this->currentTestClassPrettified.
             '</h2><ul>'
         );
     }
@@ -54,17 +57,18 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      * @param string  $name
      * @param boolean $success
      */
-    protected function onTest($name, $success = true)
+    protected function onTest( $name, $success = true )
     {
+
         if (!$success) {
-            $strikeOpen  = '<span style="text-decoration:line-through;">';
+            $strikeOpen = '<span style="text-decoration:line-through;">';
             $strikeClose = '</span>';
         } else {
-            $strikeOpen  = '';
+            $strikeOpen = '';
             $strikeClose = '';
         }
 
-        $this->write('<li>' . $strikeOpen . $name . $strikeClose . '</li>');
+        $this->write( '<li>'.$strikeOpen.$name.$strikeClose.'</li>' );
     }
 
     /**
@@ -72,9 +76,10 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function endClass($name)
+    protected function endClass( $name )
     {
-        $this->write('</ul>');
+
+        $this->write( '</ul>' );
     }
 
     /**
@@ -83,6 +88,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      */
     protected function endRun()
     {
-        $this->write('</body></html>');
+
+        $this->write( '</body></html>' );
     }
 }

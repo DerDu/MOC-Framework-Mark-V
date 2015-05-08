@@ -35,6 +35,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ComparisonExpression extends Node
 {
+
     /**
      * @var Node
      */
@@ -51,12 +52,13 @@ class ComparisonExpression extends Node
     public $operator;
 
     /**
-     * @param Node $leftExpr
+     * @param Node   $leftExpr
      * @param string $operator
-     * @param Node $rightExpr
+     * @param Node   $rightExpr
      */
-    public function __construct($leftExpr, $operator, $rightExpr)
+    public function __construct( $leftExpr, $operator, $rightExpr )
     {
+
         $this->leftExpression = $leftExpr;
         $this->rightExpression = $rightExpr;
         $this->operator = $operator;
@@ -65,8 +67,9 @@ class ComparisonExpression extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkComparisonExpression($this);
+
+        return $sqlWalker->walkComparisonExpression( $this );
     }
 }

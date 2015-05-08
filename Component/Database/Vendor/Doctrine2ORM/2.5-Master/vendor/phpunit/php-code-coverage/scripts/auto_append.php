@@ -2,4 +2,4 @@
 $coverage->stop();
 
 $writer = new PHP_CodeCoverage_Report_HTML;
-$writer->process($coverage, '/tmp/coverage');
+$writer->process( $coverage, '/tmp/coverage' );

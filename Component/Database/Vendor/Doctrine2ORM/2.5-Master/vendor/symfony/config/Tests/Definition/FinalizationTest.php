@@ -12,34 +12,35 @@
 namespace Symfony\Component\Config\Tests\Definition;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\NodeInterface;
+use Symfony\Component\Config\Definition\Processor;
 
 class FinalizationTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testUnsetKeyWithDeepHierarchy()
     {
+
         $tb = new TreeBuilder();
         $tree = $tb
-            ->root('config', 'array')
-                ->children()
-                    ->node('level1', 'array')
-                        ->canBeUnset()
-                        ->children()
-                            ->node('level2', 'array')
-                                ->canBeUnset()
-                                ->children()
-                                    ->node('somevalue', 'scalar')->end()
-                                    ->node('anothervalue', 'scalar')->end()
-                                ->end()
-                            ->end()
-                            ->node('level1_scalar', 'scalar')->end()
-                        ->end()
-                    ->end()
-                ->end()
+            ->root( 'config', 'array' )
+            ->children()
+            ->node( 'level1', 'array' )
+            ->canBeUnset()
+            ->children()
+            ->node( 'level2', 'array' )
+            ->canBeUnset()
+            ->children()
+            ->node( 'somevalue', 'scalar' )->end()
+            ->node( 'anothervalue', 'scalar' )->end()
             ->end()
-            ->buildTree()
-        ;
+            ->end()
+            ->node( 'level1_scalar', 'scalar' )->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->buildTree();
 
         $a = array(
             'level1' => array(
@@ -57,17 +58,18 @@ class FinalizationTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertEquals(array(
+        $this->assertEquals( array(
             'level1' => array(
                 'level1_scalar' => 'foo',
             ),
-        ), $this->process($tree, array($a, $b)));
+        ), $this->process( $tree, array( $a, $b ) ) );
     }
 
-    protected function process(NodeInterface $tree, array $configs)
+    protected function process( NodeInterface $tree, array $configs )
     {
+
         $processor = new Processor();
 
-        return $processor->process($tree, $configs);
+        return $processor->process( $tree, $configs );
     }
 }

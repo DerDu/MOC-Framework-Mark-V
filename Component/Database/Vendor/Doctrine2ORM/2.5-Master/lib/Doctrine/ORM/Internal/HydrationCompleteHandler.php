@@ -30,10 +30,11 @@ use Doctrine\ORM\Mapping\ClassMetadata;
  * In current implementation triggers deferred postLoad event.
  *
  * @author Artur Eshenbrener <strate@yandex.ru>
- * @since 2.5
+ * @since  2.5
  */
 final class HydrationCompleteHandler
 {
+
     /**
      * @var ListenersInvoker
      */
@@ -55,10 +56,11 @@ final class HydrationCompleteHandler
      * @param ListenersInvoker $listenersInvoker
      * @param EntityManagerInterface $em
      */
-    public function __construct(ListenersInvoker $listenersInvoker, EntityManagerInterface $em)
+    public function __construct( ListenersInvoker $listenersInvoker, EntityManagerInterface $em )
     {
+
         $this->listenersInvoker = $listenersInvoker;
-        $this->em               = $em;
+        $this->em = $em;
     }
 
     /**
@@ -67,15 +69,16 @@ final class HydrationCompleteHandler
      * @param ClassMetadata $class
      * @param object        $entity
      */
-    public function deferPostLoadInvoking(ClassMetadata $class, $entity)
+    public function deferPostLoadInvoking( ClassMetadata $class, $entity )
     {
-        $invoke = $this->listenersInvoker->getSubscribedSystems($class, Events::postLoad);
+
+        $invoke = $this->listenersInvoker->getSubscribedSystems( $class, Events::postLoad );
 
         if ($invoke === ListenersInvoker::INVOKE_NONE) {
             return;
         }
 
-        $this->deferredPostLoadInvocations[] = array($class, $invoke, $entity);
+        $this->deferredPostLoadInvocations[] = array( $class, $invoke, $entity );
     }
 
     /**
@@ -85,17 +88,18 @@ final class HydrationCompleteHandler
      */
     public function hydrationComplete()
     {
-        $toInvoke                          = $this->deferredPostLoadInvocations;
+
+        $toInvoke = $this->deferredPostLoadInvocations;
         $this->deferredPostLoadInvocations = array();
 
         foreach ($toInvoke as $classAndEntity) {
-            list($class, $invoke, $entity) = $classAndEntity;
+            list( $class, $invoke, $entity ) = $classAndEntity;
 
             $this->listenersInvoker->invoke(
                 $class,
                 Events::postLoad,
                 $entity,
-                new LifecycleEventArgs($entity, $this->em),
+                new LifecycleEventArgs( $entity, $this->em ),
                 $invoke
             );
         }

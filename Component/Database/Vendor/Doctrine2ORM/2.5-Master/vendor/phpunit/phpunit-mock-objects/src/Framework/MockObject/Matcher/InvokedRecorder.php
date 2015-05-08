@@ -25,6 +25,7 @@
  */
 abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements PHPUnit_Framework_MockObject_Matcher_Invocation
 {
+
     /**
      * @var PHPUnit_Framework_MockObject_Invocation[]
      */
@@ -35,7 +36,8 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function getInvocationCount()
     {
-        return count($this->invocations);
+
+        return count( $this->invocations );
     }
 
     /**
@@ -43,6 +45,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function getInvocations()
     {
+
         return $this->invocations;
     }
 
@@ -51,23 +54,27 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function hasBeenInvoked()
     {
-        return count($this->invocations) > 0;
+
+        return count( $this->invocations ) > 0;
     }
 
     /**
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      */
-    public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoked( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
+
         $this->invocations[] = $invocation;
     }
 
     /**
      * @param  PHPUnit_Framework_MockObject_Invocation $invocation
+     *
      * @return boolean
      */
-    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
     {
-        return TRUE;
+
+        return true;
     }
 }

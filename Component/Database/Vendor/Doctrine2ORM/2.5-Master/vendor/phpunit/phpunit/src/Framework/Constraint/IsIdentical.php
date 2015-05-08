@@ -30,6 +30,7 @@
  */
 class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constraint
 {
+
     /**
      * @var float
      */
@@ -43,8 +44,9 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
     /**
      * @param mixed $value
      */
-    public function __construct($value)
+    public function __construct( $value )
     {
+
         parent::__construct();
         $this->value = $value;
     }
@@ -59,18 +61,21 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed                                        $other        Value or object to evaluate.
-     * @param  string                                       $description  Additional information about the test
-     * @param  bool                                         $returnResult Whether to return a result or throw an exception
+     * @param  mixed  $other        Value or object to evaluate.
+     * @param  string $description  Additional information about the test
+     * @param  bool   $returnResult Whether to return a result or throw an exception
+     *
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate($other, $description = '', $returnResult = false)
+    public function evaluate( $other, $description = '', $returnResult = false )
     {
-        if (is_double($this->value) && is_double($other) &&
-            !is_infinite($this->value) && !is_infinite($other) &&
-            !is_nan($this->value) && !is_nan($other)) {
-            $success = abs($this->value - $other) < self::EPSILON;
+
+        if (is_double( $this->value ) && is_double( $other ) &&
+            !is_infinite( $this->value ) && !is_infinite( $other ) &&
+            !is_nan( $this->value ) && !is_nan( $other )
+        ) {
+            $success = abs( $this->value - $other ) < self::EPSILON;
         } else {
             $success = $this->value === $other;
         }
@@ -83,7 +88,7 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
             $f = null;
 
             // if both values are strings, make sure a diff is generated
-            if (is_string($this->value) && is_string($other)) {
+            if (is_string( $this->value ) && is_string( $other )) {
                 $f = new SebastianBergmann\Comparator\ComparisonFailure(
                     $this->value,
                     $other,
@@ -92,30 +97,8 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
                 );
             }
 
-            $this->fail($other, $description, $f);
+            $this->fail( $other, $description, $f );
         }
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed  $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        if (is_object($this->value) && is_object($other)) {
-            return 'two variables reference the same object';
-        }
-
-        if (is_string($this->value) && is_string($other)) {
-            return 'two strings are identical';
-        }
-
-        return parent::failureDescription($other);
     }
 
     /**
@@ -125,12 +108,37 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
      */
     public function toString()
     {
-        if (is_object($this->value)) {
-            return 'is identical to an object of class "' .
-                   get_class($this->value) . '"';
+
+        if (is_object( $this->value )) {
+            return 'is identical to an object of class "'.
+            get_class( $this->value ).'"';
         } else {
-            return 'is identical to ' .
-                   $this->exporter->export($this->value);
+            return 'is identical to '.
+            $this->exporter->export( $this->value );
         }
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed $other Evaluated value or object.
+     *
+     * @return string
+     */
+    protected function failureDescription( $other )
+    {
+
+        if (is_object( $this->value ) && is_object( $other )) {
+            return 'two variables reference the same object';
+        }
+
+        if (is_string( $this->value ) && is_string( $other )) {
+            return 'two strings are identical';
+        }
+
+        return parent::failureDescription( $other );
     }
 }

@@ -29,6 +29,7 @@ namespace Doctrine\ORM\Mapping\Builder;
  */
 class FieldBuilder
 {
+
     /**
      * @var ClassMetadataBuilder
      */
@@ -58,8 +59,9 @@ class FieldBuilder
      * @param ClassMetadataBuilder $builder
      * @param array                $mapping
      */
-    public function __construct(ClassMetadataBuilder $builder, array $mapping)
+    public function __construct( ClassMetadataBuilder $builder, array $mapping )
     {
+
         $this->builder = $builder;
         $this->mapping = $mapping;
     }
@@ -71,8 +73,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function length($length)
+    public function length( $length )
     {
+
         $this->mapping['length'] = $length;
         return $this;
     }
@@ -84,8 +87,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function nullable($flag = true)
+    public function nullable( $flag = true )
     {
+
         $this->mapping['nullable'] = (bool)$flag;
         return $this;
     }
@@ -97,8 +101,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function unique($flag = true)
+    public function unique( $flag = true )
     {
+
         $this->mapping['unique'] = (bool)$flag;
         return $this;
     }
@@ -110,8 +115,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function columnName($name)
+    public function columnName( $name )
     {
+
         $this->mapping['columnName'] = $name;
         return $this;
     }
@@ -123,8 +129,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function precision($p)
+    public function precision( $p )
     {
+
         $this->mapping['precision'] = $p;
         return $this;
     }
@@ -136,8 +143,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function scale($s)
+    public function scale( $s )
     {
+
         $this->mapping['scale'] = $s;
         return $this;
     }
@@ -150,6 +158,7 @@ class FieldBuilder
      */
     public function isPrimaryKey()
     {
+
         return $this->makePrimaryKey();
     }
 
@@ -160,6 +169,7 @@ class FieldBuilder
      */
     public function makePrimaryKey()
     {
+
         $this->mapping['id'] = true;
         return $this;
     }
@@ -172,8 +182,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function option($name, $value)
+    public function option( $name, $value )
     {
+
         $this->mapping['options'][$name] = $value;
         return $this;
     }
@@ -183,8 +194,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function generatedValue($strategy = 'AUTO')
+    public function generatedValue( $strategy = 'AUTO' )
     {
+
         $this->generatedValue = $strategy;
         return $this;
     }
@@ -196,6 +208,7 @@ class FieldBuilder
      */
     public function isVersionField()
     {
+
         $this->version = true;
         return $this;
     }
@@ -209,8 +222,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function setSequenceGenerator($sequenceName, $allocationSize = 1, $initialValue = 1)
+    public function setSequenceGenerator( $sequenceName, $allocationSize = 1, $initialValue = 1 )
     {
+
         $this->sequenceDef = array(
             'sequenceName' => $sequenceName,
             'allocationSize' => $allocationSize,
@@ -226,8 +240,9 @@ class FieldBuilder
      *
      * @return FieldBuilder
      */
-    public function columnDefinition($def)
+    public function columnDefinition( $def )
     {
+
         $this->mapping['columnDefinition'] = $def;
         return $this;
     }
@@ -241,16 +256,17 @@ class FieldBuilder
      */
     public function build()
     {
+
         $cm = $this->builder->getClassMetadata();
         if ($this->generatedValue) {
-            $cm->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_' . $this->generatedValue));
+            $cm->setIdGeneratorType( constant( 'Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'.$this->generatedValue ) );
         }
         if ($this->version) {
-            $cm->setVersionMapping($this->mapping);
+            $cm->setVersionMapping( $this->mapping );
         }
-        $cm->mapField($this->mapping);
+        $cm->mapField( $this->mapping );
         if ($this->sequenceDef) {
-            $cm->setSequenceGeneratorDefinition($this->sequenceDef);
+            $cm->setSequenceGeneratorDefinition( $this->sequenceDef );
         }
         return $this->builder;
     }

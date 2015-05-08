@@ -34,6 +34,7 @@ use Doctrine\DBAL\Types\Type;
  */
 class ParameterTypeInferer
 {
+
     /**
      * Infers type of a given value, returning a compatible constant:
      * - Type (\Doctrine\DBAL\Types\Type::*)
@@ -43,13 +44,14 @@ class ParameterTypeInferer
      *
      * @return mixed Parameter type constant.
      */
-    public static function inferType($value)
+    public static function inferType( $value )
     {
-        if (is_integer($value)) {
+
+        if (is_integer( $value )) {
             return Type::INTEGER;
         }
 
-        if (is_bool($value)) {
+        if (is_bool( $value )) {
             return Type::BOOLEAN;
         }
 
@@ -57,8 +59,8 @@ class ParameterTypeInferer
             return Type::DATETIME;
         }
 
-        if (is_array($value)) {
-            return is_integer(current($value))
+        if (is_array( $value )) {
+            return is_integer( current( $value ) )
                 ? Connection::PARAM_INT_ARRAY
                 : Connection::PARAM_STR_ARRAY;
         }

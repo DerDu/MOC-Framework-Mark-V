@@ -30,12 +30,13 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 class StreamOutput extends Output
 {
+
     private $stream;
 
     /**
      * Constructor.
      *
-     * @param mixed                         $stream    A stream resource
+     * @param mixed $stream A stream resource
      * @param int                           $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
      * @param bool|null                     $decorated Whether to decorate messages (null for auto-guessing)
      * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
@@ -44,10 +45,15 @@ class StreamOutput extends Output
      *
      * @api
      */
-    public function __construct($stream, $verbosity = self::VERBOSITY_NORMAL, $decorated = null, OutputFormatterInterface $formatter = null)
-    {
-        if (!is_resource($stream) || 'stream' !== get_resource_type($stream)) {
-            throw new \InvalidArgumentException('The StreamOutput class needs a stream as its first argument.');
+    public function __construct(
+        $stream,
+        $verbosity = self::VERBOSITY_NORMAL,
+        $decorated = null,
+        OutputFormatterInterface $formatter = null
+    ) {
+
+        if (!is_resource( $stream ) || 'stream' !== get_resource_type( $stream )) {
+            throw new \InvalidArgumentException( 'The StreamOutput class needs a stream as its first argument.' );
         }
 
         $this->stream = $stream;
@@ -56,30 +62,7 @@ class StreamOutput extends Output
             $decorated = $this->hasColorSupport();
         }
 
-        parent::__construct($verbosity, $decorated, $formatter);
-    }
-
-    /**
-     * Gets the stream attached to this StreamOutput instance.
-     *
-     * @return resource A stream resource
-     */
-    public function getStream()
-    {
-        return $this->stream;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function doWrite($message, $newline)
-    {
-        if (false === @fwrite($this->stream, $message.($newline ? PHP_EOL : ''))) {
-            // should never happen
-            throw new \RuntimeException('Unable to write output.');
-        }
-
-        fflush($this->stream);
+        parent::__construct( $verbosity, $decorated, $formatter );
     }
 
     /**
@@ -94,10 +77,36 @@ class StreamOutput extends Output
      */
     protected function hasColorSupport()
     {
+
         if (DIRECTORY_SEPARATOR == '\\') {
-            return false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
+            return false !== getenv( 'ANSICON' ) || 'ON' === getenv( 'ConEmuANSI' );
         }
 
-        return function_exists('posix_isatty') && @posix_isatty($this->stream);
+        return function_exists( 'posix_isatty' ) && @posix_isatty( $this->stream );
+    }
+
+    /**
+     * Gets the stream attached to this StreamOutput instance.
+     *
+     * @return resource A stream resource
+     */
+    public function getStream()
+    {
+
+        return $this->stream;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doWrite( $message, $newline )
+    {
+
+        if (false === @fwrite( $this->stream, $message.( $newline ? PHP_EOL : '' ) )) {
+            // should never happen
+            throw new \RuntimeException( 'Unable to write output.' );
+        }
+
+        fflush( $this->stream );
     }
 }

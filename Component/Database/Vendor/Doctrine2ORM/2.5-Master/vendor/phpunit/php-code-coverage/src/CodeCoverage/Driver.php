@@ -21,6 +21,7 @@
  */
 interface PHP_CodeCoverage_Driver
 {
+
     /**
      * Start collection of code coverage information.
      */

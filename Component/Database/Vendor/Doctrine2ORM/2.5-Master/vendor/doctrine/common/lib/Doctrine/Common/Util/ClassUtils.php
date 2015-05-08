@@ -30,33 +30,6 @@ use Doctrine\Common\Persistence\Proxy;
  */
 class ClassUtils
 {
-    /**
-     * Gets the real class name of a class name that could be a proxy.
-     *
-     * @param string $class
-     *
-     * @return string
-     */
-    public static function getRealClass($class)
-    {
-        if (false === $pos = strrpos($class, '\\'.Proxy::MARKER.'\\')) {
-            return $class;
-        }
-
-        return substr($class, $pos + Proxy::MARKER_LENGTH + 2);
-    }
-
-    /**
-     * Gets the real class name of an object (even if its a proxy).
-     *
-     * @param object $object
-     *
-     * @return string
-     */
-    public static function getClass($object)
-    {
-        return self::getRealClass(get_class($object));
-    }
 
     /**
      * Gets the real parent class name of a class or object.
@@ -65,21 +38,27 @@ class ClassUtils
      *
      * @return string
      */
-    public static function getParentClass($className)
+    public static function getParentClass( $className )
     {
+
         return get_parent_class( self::getRealClass( $className ) );
     }
 
     /**
-     * Creates a new reflection class.
+     * Gets the real class name of a class name that could be a proxy.
      *
      * @param string $class
      *
-     * @return \ReflectionClass
+     * @return string
      */
-    public static function newReflectionClass($class)
+    public static function getRealClass( $class )
     {
-        return new \ReflectionClass( self::getRealClass( $class ) );
+
+        if (false === $pos = strrpos( $class, '\\'.Proxy::MARKER.'\\' )) {
+            return $class;
+        }
+
+        return substr( $class, $pos + Proxy::MARKER_LENGTH + 2 );
     }
 
     /**
@@ -89,9 +68,36 @@ class ClassUtils
      *
      * @return \ReflectionObject
      */
-    public static function newReflectionObject($object)
+    public static function newReflectionObject( $object )
     {
+
         return self::newReflectionClass( self::getClass( $object ) );
+    }
+
+    /**
+     * Creates a new reflection class.
+     *
+     * @param string $class
+     *
+     * @return \ReflectionClass
+     */
+    public static function newReflectionClass( $class )
+    {
+
+        return new \ReflectionClass( self::getRealClass( $class ) );
+    }
+
+    /**
+     * Gets the real class name of an object (even if its a proxy).
+     *
+     * @param object $object
+     *
+     * @return string
+     */
+    public static function getClass( $object )
+    {
+
+        return self::getRealClass( get_class( $object ) );
     }
 
     /**
@@ -102,8 +108,9 @@ class ClassUtils
      *
      * @return string
      */
-    public static function generateProxyClassName($className, $proxyNamespace)
+    public static function generateProxyClassName( $className, $proxyNamespace )
     {
-        return rtrim($proxyNamespace, '\\') . '\\'.Proxy::MARKER.'\\' . ltrim($className, '\\');
+
+        return rtrim( $proxyNamespace, '\\' ).'\\'.Proxy::MARKER.'\\'.ltrim( $className, '\\' );
     }
 }

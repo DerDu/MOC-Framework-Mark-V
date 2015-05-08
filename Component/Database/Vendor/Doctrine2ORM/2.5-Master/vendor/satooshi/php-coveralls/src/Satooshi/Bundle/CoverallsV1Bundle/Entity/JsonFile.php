@@ -12,6 +12,7 @@ use Satooshi\Bundle\CoverallsV1Bundle\Version;
  */
 class JsonFile extends Coveralls
 {
+
     /**
      * Service name.
      *
@@ -107,6 +108,7 @@ class JsonFile extends Coveralls
      */
     public function toArray()
     {
+
         $array = array();
 
         $arrayMap = array(
@@ -125,14 +127,52 @@ class JsonFile extends Coveralls
         );
 
         foreach ($arrayMap as $jsonKey => $propName) {
-            if (isset($this->$propName)) {
-                $array[$jsonKey] = $this->toJsonProperty($this->$propName);
+            if (isset( $this->$propName )) {
+                $array[$jsonKey] = $this->toJsonProperty( $this->$propName );
             }
         }
 
         $array['environment'] = array(
             'packagist_version' => Version::VERSION,
         );
+
+        return $array;
+    }
+
+    /**
+     * Convert to json property.
+     *
+     * @param mixed $prop
+     *
+     * @return mixed
+     */
+    protected function toJsonProperty( $prop )
+    {
+
+        if ($prop instanceof Coveralls) {
+            return $prop->toArray();
+        } elseif (is_array( $prop )) {
+            return $this->toJsonPropertyArray( $prop );
+        }
+
+        return $prop;
+    }
+
+    /**
+     * Convert to array as json property.
+     *
+     * @param array $propArray
+     *
+     * @return array
+     */
+    protected function toJsonPropertyArray( array $propArray )
+    {
+
+        $array = array();
+
+        foreach ($propArray as $prop) {
+            $array[] = $this->toJsonProperty( $prop );
+        }
 
         return $array;
     }
@@ -146,135 +186,12 @@ class JsonFile extends Coveralls
      *
      * @throws \RuntimeException
      */
-    public function fillJobs(array $env)
+    public function fillJobs( array $env )
     {
+
         return $this
-        ->fillStandardizedEnvVars($env)
-        ->ensureJobs();
-    }
-
-    /**
-     * Exclude source files that have no executable statements.
-     *
-     * @return void
-     */
-    public function excludeNoStatementsFiles()
-    {
-        $this->sourceFiles = array_filter(
-            $this->sourceFiles,
-            function (SourceFile $sourceFile) {
-                return $sourceFile->getMetrics()->hasStatements();
-            }
-        );
-    }
-
-    /**
-     * Sort source files by path.
-     *
-     * @return void
-     */
-    public function sortSourceFiles()
-    {
-        ksort($this->sourceFiles);
-    }
-
-    /**
-     * Return line coverage.
-     *
-     * @return float
-     */
-    public function reportLineCoverage()
-    {
-        $metrics = $this->getMetrics();
-
-        foreach ($this->sourceFiles as $sourceFile) {
-            /* @var $sourceFile \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile */
-            $metrics->merge($sourceFile->getMetrics());
-        }
-
-        return $metrics->getLineCoverage();
-    }
-
-    // internal method
-
-    /**
-     * Convert to json property.
-     *
-     * @param mixed $prop
-     *
-     * @return mixed
-     */
-    protected function toJsonProperty($prop)
-    {
-        if ($prop instanceof Coveralls) {
-            return $prop->toArray();
-        } elseif (is_array($prop)) {
-            return $this->toJsonPropertyArray($prop);
-        }
-
-        return $prop;
-    }
-
-    /**
-     * Convert to array as json property.
-     *
-     * @param array $propArray
-     *
-     * @return array
-     */
-    protected function toJsonPropertyArray(array $propArray)
-    {
-        $array = array();
-
-        foreach ($propArray as $prop) {
-            $array[] = $this->toJsonProperty($prop);
-        }
-
-        return $array;
-    }
-
-    /**
-     * Fill standardized environment variables.
-     *
-     * "CI_NAME", "CI_BUILD_NUMBER" must be set.
-     *
-     * Env vars are:
-     *
-     * * CI_NAME
-     * * CI_BUILD_NUMBER
-     * * CI_BUILD_URL
-     * * CI_BRANCH
-     * * CI_PULL_REQUEST
-     *
-     * These vars are supported by Codeship.
-     *
-     * @param array $env $_SERVER environment.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
-     */
-    protected function fillStandardizedEnvVars(array $env)
-    {
-        $map = array(
-            // defined in Ruby lib
-            'serviceName'        => 'CI_NAME',
-            'serviceNumber'      => 'CI_BUILD_NUMBER',
-            'serviceBuildUrl'    => 'CI_BUILD_URL',
-            'serviceBranch'      => 'CI_BRANCH',
-            'servicePullRequest' => 'CI_PULL_REQUEST',
-
-            // extends by php-coveralls
-            'serviceJobId'       => 'CI_JOB_ID',
-            'serviceEventType'   => 'COVERALLS_EVENT_TYPE',
-            'repoToken'          => 'COVERALLS_REPO_TOKEN',
-        );
-
-        foreach ($map as $propName => $envName) {
-            if (isset($env[$envName])) {
-                $this->$propName = $env[$envName];
-            }
-        }
-
-        return $this;
+            ->fillStandardizedEnvVars( $env )
+            ->ensureJobs();
     }
 
     /**
@@ -286,8 +203,9 @@ class JsonFile extends Coveralls
      */
     protected function ensureJobs()
     {
+
         if (!$this->hasSourceFiles()) {
-            throw new \RuntimeException('source_files must be set');
+            throw new \RuntimeException( 'source_files must be set' );
         }
 
         if ($this->requireServiceJobId()) {
@@ -313,6 +231,19 @@ class JsonFile extends Coveralls
         throw new RequirementsNotSatisfiedException();
     }
 
+    // internal method
+
+    /**
+     * Return whether the json file has a source file.
+     *
+     * @return boolean
+     */
+    public function hasSourceFiles()
+    {
+
+        return count( $this->sourceFiles ) > 0;
+    }
+
     /**
      * Return whether the job requires "service_job_id" (for Travis CI).
      *
@@ -320,7 +251,8 @@ class JsonFile extends Coveralls
      */
     protected function requireServiceJobId()
     {
-        return isset($this->serviceName) && isset($this->serviceJobId) && !isset($this->repoToken);
+
+        return isset( $this->serviceName ) && isset( $this->serviceJobId ) && !isset( $this->repoToken );
     }
 
     /**
@@ -330,7 +262,8 @@ class JsonFile extends Coveralls
      */
     protected function requireServiceNumber()
     {
-        return isset($this->serviceName) && isset($this->serviceNumber) && isset($this->repoToken);
+
+        return isset( $this->serviceName ) && isset( $this->serviceNumber ) && isset( $this->repoToken );
     }
 
     /**
@@ -340,7 +273,8 @@ class JsonFile extends Coveralls
      */
     protected function requireServiceEventType()
     {
-        return isset($this->serviceName) && isset($this->serviceEventType) && isset($this->repoToken);
+
+        return isset( $this->serviceName ) && isset( $this->serviceEventType ) && isset( $this->repoToken );
     }
 
     /**
@@ -350,7 +284,8 @@ class JsonFile extends Coveralls
      */
     protected function requireRepoToken()
     {
-        return isset($this->serviceName) && $this->serviceName === 'travis-pro' && isset($this->repoToken);
+
+        return isset( $this->serviceName ) && $this->serviceName === 'travis-pro' && isset( $this->repoToken );
     }
 
     /**
@@ -360,21 +295,115 @@ class JsonFile extends Coveralls
      */
     protected function isUnsupportedServiceJob()
     {
-        return !isset($this->serviceJobId) && !isset($this->serviceNumber) && !isset($this->serviceEventType) && isset($this->repoToken);
+
+        return !isset( $this->serviceJobId ) && !isset( $this->serviceNumber ) && !isset( $this->serviceEventType ) && isset( $this->repoToken );
+    }
+
+    /**
+     * Fill standardized environment variables.
+     *
+     * "CI_NAME", "CI_BUILD_NUMBER" must be set.
+     *
+     * Env vars are:
+     *
+     * * CI_NAME
+     * * CI_BUILD_NUMBER
+     * * CI_BUILD_URL
+     * * CI_BRANCH
+     * * CI_PULL_REQUEST
+     *
+     * These vars are supported by Codeship.
+     *
+     * @param array $env $_SERVER environment.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
+     */
+    protected function fillStandardizedEnvVars( array $env )
+    {
+
+        $map = array(
+            // defined in Ruby lib
+            'serviceName'        => 'CI_NAME',
+            'serviceNumber'      => 'CI_BUILD_NUMBER',
+            'serviceBuildUrl'    => 'CI_BUILD_URL',
+            'serviceBranch'      => 'CI_BRANCH',
+            'servicePullRequest' => 'CI_PULL_REQUEST',
+            // extends by php-coveralls
+            'serviceJobId'       => 'CI_JOB_ID',
+            'serviceEventType'   => 'COVERALLS_EVENT_TYPE',
+            'repoToken'          => 'COVERALLS_REPO_TOKEN',
+        );
+
+        foreach ($map as $propName => $envName) {
+            if (isset( $env[$envName] )) {
+                $this->$propName = $env[$envName];
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Exclude source files that have no executable statements.
+     *
+     * @return void
+     */
+    public function excludeNoStatementsFiles()
+    {
+
+        $this->sourceFiles = array_filter(
+            $this->sourceFiles,
+            function ( SourceFile $sourceFile ) {
+
+                return $sourceFile->getMetrics()->hasStatements();
+            }
+        );
+    }
+
+    /**
+     * Sort source files by path.
+     *
+     * @return void
+     */
+    public function sortSourceFiles()
+    {
+
+        ksort( $this->sourceFiles );
     }
 
     // accessor
 
     /**
-     * Return whether the json file has source file.
+     * Return line coverage.
      *
-     * @param string $path Absolute path to source file.
-     *
-     * @return boolean
+     * @return float
      */
-    public function hasSourceFile($path)
+    public function reportLineCoverage()
     {
-        return isset($this->sourceFiles[$path]);
+
+        $metrics = $this->getMetrics();
+
+        foreach ($this->sourceFiles as $sourceFile) {
+            /* @var $sourceFile \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile */
+            $metrics->merge( $sourceFile->getMetrics() );
+        }
+
+        return $metrics->getLineCoverage();
+    }
+
+    /**
+     * Return metrics.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Metrics
+     */
+    public function getMetrics()
+    {
+
+        if (!isset( $this->metrics )) {
+            $this->metrics = new Metrics();
+        }
+
+        return $this->metrics;
     }
 
     /**
@@ -384,13 +413,27 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile|null
      */
-    public function getSourceFile($path)
+    public function getSourceFile( $path )
     {
-        if ($this->hasSourceFile($path)) {
+
+        if ($this->hasSourceFile( $path )) {
             return $this->sourceFiles[$path];
         }
 
         return null;
+    }
+
+    /**
+     * Return whether the json file has source file.
+     *
+     * @param string $path Absolute path to source file.
+     *
+     * @return boolean
+     */
+    public function hasSourceFile( $path )
+    {
+
+        return isset( $this->sourceFiles[$path] );
     }
 
     /**
@@ -400,19 +443,10 @@ class JsonFile extends Coveralls
      *
      * @return void
      */
-    public function addSourceFile(SourceFile $sourceFile)
+    public function addSourceFile( SourceFile $sourceFile )
     {
-        $this->sourceFiles[$sourceFile->getPath()] = $sourceFile;
-    }
 
-    /**
-     * Return whether the json file has a source file.
-     *
-     * @return boolean
-     */
-    public function hasSourceFiles()
-    {
-        return count($this->sourceFiles) > 0;
+        $this->sourceFiles[$sourceFile->getPath()] = $sourceFile;
     }
 
     /**
@@ -422,21 +456,8 @@ class JsonFile extends Coveralls
      */
     public function getSourceFiles()
     {
+
         return $this->sourceFiles;
-    }
-
-    /**
-     * Set service name.
-     *
-     * @param string $serviceName Service name.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
-     */
-    public function setServiceName($serviceName)
-    {
-        $this->serviceName = $serviceName;
-
-        return $this;
     }
 
     /**
@@ -446,8 +467,39 @@ class JsonFile extends Coveralls
      */
     public function getServiceName()
     {
-        if (isset($this->serviceName)) {
+
+        if (isset( $this->serviceName )) {
             return $this->serviceName;
+        }
+
+        return null;
+    }
+
+    /**
+     * Set service name.
+     *
+     * @param string $serviceName Service name.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
+     */
+    public function setServiceName( $serviceName )
+    {
+
+        $this->serviceName = $serviceName;
+
+        return $this;
+    }
+
+    /**
+     * Return repository token.
+     *
+     * @return string
+     */
+    public function getRepoToken()
+    {
+
+        if (isset( $this->repoToken )) {
+            return $this->repoToken;
         }
 
         return null;
@@ -460,22 +512,24 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setRepoToken($repoToken)
+    public function setRepoToken( $repoToken )
     {
+
         $this->repoToken = $repoToken;
 
         return $this;
     }
 
     /**
-     * Return repository token.
+     * Return service job id.
      *
      * @return string
      */
-    public function getRepoToken()
+    public function getServiceJobId()
     {
-        if (isset($this->repoToken)) {
-            return $this->repoToken;
+
+        if (isset( $this->serviceJobId )) {
+            return $this->serviceJobId;
         }
 
         return null;
@@ -488,25 +542,12 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setServiceJobId($serviceJobId)
+    public function setServiceJobId( $serviceJobId )
     {
+
         $this->serviceJobId = $serviceJobId;
 
         return $this;
-    }
-
-    /**
-     * Return service job id.
-     *
-     * @return string
-     */
-    public function getServiceJobId()
-    {
-        if (isset($this->serviceJobId)) {
-            return $this->serviceJobId;
-        }
-
-        return null;
     }
 
     /**
@@ -516,6 +557,7 @@ class JsonFile extends Coveralls
      */
     public function getServiceNumber()
     {
+
         return $this->serviceNumber;
     }
 
@@ -526,6 +568,7 @@ class JsonFile extends Coveralls
      */
     public function getServiceEventType()
     {
+
         return $this->serviceEventType;
     }
 
@@ -536,6 +579,7 @@ class JsonFile extends Coveralls
      */
     public function getServiceBuildUrl()
     {
+
         return $this->serviceBuildUrl;
     }
 
@@ -546,6 +590,7 @@ class JsonFile extends Coveralls
      */
     public function getServiceBranch()
     {
+
         return $this->serviceBranch;
     }
 
@@ -556,21 +601,8 @@ class JsonFile extends Coveralls
      */
     public function getServicePullRequest()
     {
+
         return $this->servicePullRequest;
-    }
-
-    /**
-     * Set git data.
-     *
-     * @param array $git Git data.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
-     */
-    public function setGit(Git $git)
-    {
-        $this->git = $git;
-
-        return $this;
     }
 
     /**
@@ -580,8 +612,39 @@ class JsonFile extends Coveralls
      */
     public function getGit()
     {
-        if (isset($this->git)) {
+
+        if (isset( $this->git )) {
             return $this->git;
+        }
+
+        return null;
+    }
+
+    /**
+     * Set git data.
+     *
+     * @param array $git Git data.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
+     */
+    public function setGit( Git $git )
+    {
+
+        $this->git = $git;
+
+        return $this;
+    }
+
+    /**
+     * Return timestamp when the job ran.
+     *
+     * @return string
+     */
+    public function getRunAt()
+    {
+
+        if (isset( $this->runAt )) {
+            return $this->runAt;
         }
 
         return null;
@@ -594,38 +657,11 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setRunAt($runAt)
+    public function setRunAt( $runAt )
     {
+
         $this->runAt = $runAt;
 
         return $this;
-    }
-
-    /**
-     * Return timestamp when the job ran.
-     *
-     * @return string
-     */
-    public function getRunAt()
-    {
-        if (isset($this->runAt)) {
-            return $this->runAt;
-        }
-
-        return null;
-    }
-
-    /**
-     * Return metrics.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Metrics
-     */
-    public function getMetrics()
-    {
-        if (!isset($this->metrics)) {
-            $this->metrics = new Metrics();
-        }
-
-        return $this->metrics;
     }
 }

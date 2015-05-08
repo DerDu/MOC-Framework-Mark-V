@@ -26,6 +26,7 @@ use Doctrine\DBAL\Connection;
  */
 abstract class AbstractSchemaSynchronizer implements SchemaSynchronizer
 {
+
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -34,20 +35,22 @@ abstract class AbstractSchemaSynchronizer implements SchemaSynchronizer
     /**
      * @param \Doctrine\DBAL\Connection $conn
      */
-    public function __construct(Connection $conn)
+    public function __construct( Connection $conn )
     {
+
         $this->conn = $conn;
     }
 
     /**
      * @param array $sql
      */
-    protected function processSqlSafely(array $sql)
+    protected function processSqlSafely( array $sql )
     {
+
         foreach ($sql as $s) {
             try {
-                $this->conn->exec($s);
-            } catch (\Exception $e) {
+                $this->conn->exec( $s );
+            } catch( \Exception $e ) {
 
             }
         }
@@ -56,10 +59,11 @@ abstract class AbstractSchemaSynchronizer implements SchemaSynchronizer
     /**
      * @param array $sql
      */
-    protected function processSql(array $sql)
+    protected function processSql( array $sql )
     {
+
         foreach ($sql as $s) {
-            $this->conn->exec($s);
+            $this->conn->exec( $s );
         }
     }
 }

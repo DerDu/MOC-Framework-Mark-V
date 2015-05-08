@@ -5,9 +5,9 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
->
+    >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <ini name="error_reporting" value="-1"/>
     </php>
 
     <testsuites>

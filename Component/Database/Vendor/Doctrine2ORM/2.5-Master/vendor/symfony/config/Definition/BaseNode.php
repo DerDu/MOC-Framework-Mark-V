@@ -23,6 +23,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  */
 abstract class BaseNode implements NodeInterface
 {
+
     protected $name;
     protected $parent;
     protected $normalizationClosures = array();
@@ -40,44 +41,39 @@ abstract class BaseNode implements NodeInterface
      *
      * @throws \InvalidArgumentException if the name contains a period.
      */
-    public function __construct($name, NodeInterface $parent = null)
+    public function __construct( $name, NodeInterface $parent = null )
     {
-        if (false !== strpos($name, '.')) {
-            throw new \InvalidArgumentException('The name must not contain ".".');
+
+        if (false !== strpos( $name, '.' )) {
+            throw new \InvalidArgumentException( 'The name must not contain ".".' );
         }
 
         $this->name = $name;
         $this->parent = $parent;
     }
 
-    public function setAttribute($key, $value)
+    public function hasAttribute( $key )
     {
-        $this->attributes[$key] = $value;
-    }
 
-    public function getAttribute($key, $default = null)
-    {
-        return isset($this->attributes[$key]) ? $this->attributes[$key] : $default;
-    }
-
-    public function hasAttribute($key)
-    {
-        return isset($this->attributes[$key]);
+        return isset( $this->attributes[$key] );
     }
 
     public function getAttributes()
     {
+
         return $this->attributes;
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes( array $attributes )
     {
+
         $this->attributes = $attributes;
     }
 
-    public function removeAttribute($key)
+    public function removeAttribute( $key )
     {
-        unset($this->attributes[$key]);
+
+        unset( $this->attributes[$key] );
     }
 
     /**
@@ -85,9 +81,16 @@ abstract class BaseNode implements NodeInterface
      *
      * @param string $info
      */
-    public function setInfo($info)
+    public function setInfo( $info )
     {
-        $this->setAttribute('info', $info);
+
+        $this->setAttribute( 'info', $info );
+    }
+
+    public function setAttribute( $key, $value )
+    {
+
+        $this->attributes[$key] = $value;
     }
 
     /**
@@ -97,7 +100,14 @@ abstract class BaseNode implements NodeInterface
      */
     public function getInfo()
     {
-        return $this->getAttribute('info');
+
+        return $this->getAttribute( 'info' );
+    }
+
+    public function getAttribute( $key, $default = null )
+    {
+
+        return isset( $this->attributes[$key] ) ? $this->attributes[$key] : $default;
     }
 
     /**
@@ -105,9 +115,10 @@ abstract class BaseNode implements NodeInterface
      *
      * @param string|array $example
      */
-    public function setExample($example)
+    public function setExample( $example )
     {
-        $this->setAttribute('example', $example);
+
+        $this->setAttribute( 'example', $example );
     }
 
     /**
@@ -117,7 +128,8 @@ abstract class BaseNode implements NodeInterface
      */
     public function getExample()
     {
-        return $this->getAttribute('example');
+
+        return $this->getAttribute( 'example' );
     }
 
     /**
@@ -126,19 +138,10 @@ abstract class BaseNode implements NodeInterface
      * @param mixed $originalValue
      * @param mixed $equivalentValue
      */
-    public function addEquivalentValue($originalValue, $equivalentValue)
+    public function addEquivalentValue( $originalValue, $equivalentValue )
     {
-        $this->equivalentValues[] = array($originalValue, $equivalentValue);
-    }
 
-    /**
-     * Set this node as required.
-     *
-     * @param bool $boolean Required node
-     */
-    public function setRequired($boolean)
-    {
-        $this->required = (bool) $boolean;
+        $this->equivalentValues[] = array( $originalValue, $equivalentValue );
     }
 
     /**
@@ -146,9 +149,10 @@ abstract class BaseNode implements NodeInterface
      *
      * @param bool $allow
      */
-    public function setAllowOverwrite($allow)
+    public function setAllowOverwrite( $allow )
     {
-        $this->allowOverwrite = (bool) $allow;
+
+        $this->allowOverwrite = (bool)$allow;
     }
 
     /**
@@ -156,8 +160,9 @@ abstract class BaseNode implements NodeInterface
      *
      * @param \Closure[] $closures An array of Closures used for normalization
      */
-    public function setNormalizationClosures(array $closures)
+    public function setNormalizationClosures( array $closures )
     {
+
         $this->normalizationClosures = $closures;
     }
 
@@ -166,8 +171,9 @@ abstract class BaseNode implements NodeInterface
      *
      * @param \Closure[] $closures An array of Closures used for final validation
      */
-    public function setFinalValidationClosures(array $closures)
+    public function setFinalValidationClosures( array $closures )
     {
+
         $this->finalValidationClosures = $closures;
     }
 
@@ -178,7 +184,19 @@ abstract class BaseNode implements NodeInterface
      */
     public function isRequired()
     {
+
         return $this->required;
+    }
+
+    /**
+     * Set this node as required.
+     *
+     * @param bool $boolean Required node
+     */
+    public function setRequired( $boolean )
+    {
+
+        $this->required = (bool)$boolean;
     }
 
     /**
@@ -188,23 +206,8 @@ abstract class BaseNode implements NodeInterface
      */
     public function getName()
     {
+
         return $this->name;
-    }
-
-    /**
-     * Retrieves the path of this node.
-     *
-     * @return string The Node's path
-     */
-    public function getPath()
-    {
-        $path = $this->name;
-
-        if (null !== $this->parent) {
-            $path = $this->parent->getPath().'.'.$path;
-        }
-
-        return $path;
     }
 
     /**
@@ -217,22 +220,59 @@ abstract class BaseNode implements NodeInterface
      *
      * @throws ForbiddenOverwriteException
      */
-    final public function merge($leftSide, $rightSide)
+    final public function merge( $leftSide, $rightSide )
     {
+
         if (!$this->allowOverwrite) {
-            throw new ForbiddenOverwriteException(sprintf(
+            throw new ForbiddenOverwriteException( sprintf(
                 'Configuration path "%s" cannot be overwritten. You have to '
-               .'define all options for this path, and any of its sub-paths in '
-               .'one configuration section.',
+                .'define all options for this path, and any of its sub-paths in '
+                .'one configuration section.',
                 $this->getPath()
-            ));
+            ) );
         }
 
-        $this->validateType($leftSide);
-        $this->validateType($rightSide);
+        $this->validateType( $leftSide );
+        $this->validateType( $rightSide );
 
-        return $this->mergeValues($leftSide, $rightSide);
+        return $this->mergeValues( $leftSide, $rightSide );
     }
+
+    /**
+     * Retrieves the path of this node.
+     *
+     * @return string The Node's path
+     */
+    public function getPath()
+    {
+
+        $path = $this->name;
+
+        if (null !== $this->parent) {
+            $path = $this->parent->getPath().'.'.$path;
+        }
+
+        return $path;
+    }
+
+    /**
+     * Validates the type of a Node.
+     *
+     * @param mixed $value The value to validate
+     *
+     * @throws InvalidTypeException when the value is invalid
+     */
+    abstract protected function validateType( $value );
+
+    /**
+     * Merges two values together.
+     *
+     * @param mixed $leftSide
+     * @param mixed $rightSide
+     *
+     * @return mixed The merged value
+     */
+    abstract protected function mergeValues( $leftSide, $rightSide );
 
     /**
      * Normalizes a value, applying all normalization closures.
@@ -241,13 +281,14 @@ abstract class BaseNode implements NodeInterface
      *
      * @return mixed The normalized value.
      */
-    final public function normalize($value)
+    final public function normalize( $value )
     {
-        $value = $this->preNormalize($value);
+
+        $value = $this->preNormalize( $value );
 
         // run custom normalization closures
         foreach ($this->normalizationClosures as $closure) {
-            $value = $closure($value);
+            $value = $closure( $value );
         }
 
         // replace value with their equivalent
@@ -258,10 +299,10 @@ abstract class BaseNode implements NodeInterface
         }
 
         // validate type
-        $this->validateType($value);
+        $this->validateType( $value );
 
         // normalize value
-        return $this->normalizeValue($value);
+        return $this->normalizeValue( $value );
     }
 
     /**
@@ -271,10 +312,20 @@ abstract class BaseNode implements NodeInterface
      *
      * @return $value The normalized array value
      */
-    protected function preNormalize($value)
+    protected function preNormalize( $value )
     {
+
         return $value;
     }
+
+    /**
+     * Normalizes the value.
+     *
+     * @param mixed $value The value to normalize.
+     *
+     * @return mixed The normalized value
+     */
+    abstract protected function normalizeValue( $value );
 
     /**
      * Returns parent node for this node.
@@ -283,6 +334,7 @@ abstract class BaseNode implements NodeInterface
      */
     public function getParent()
     {
+
         return $this->parent;
     }
 
@@ -296,58 +348,31 @@ abstract class BaseNode implements NodeInterface
      * @throws Exception
      * @throws InvalidConfigurationException
      */
-    final public function finalize($value)
+    final public function finalize( $value )
     {
-        $this->validateType($value);
 
-        $value = $this->finalizeValue($value);
+        $this->validateType( $value );
+
+        $value = $this->finalizeValue( $value );
 
         // Perform validation on the final value if a closure has been set.
         // The closure is also allowed to return another value.
         foreach ($this->finalValidationClosures as $closure) {
             try {
-                $value = $closure($value);
-            } catch (Exception $correctEx) {
+                $value = $closure( $value );
+            } catch( Exception $correctEx ) {
                 throw $correctEx;
-            } catch (\Exception $invalid) {
-                throw new InvalidConfigurationException(sprintf(
+            } catch( \Exception $invalid ) {
+                throw new InvalidConfigurationException( sprintf(
                     'Invalid configuration for path "%s": %s',
                     $this->getPath(),
                     $invalid->getMessage()
-                ), $invalid->getCode(), $invalid);
+                ), $invalid->getCode(), $invalid );
             }
         }
 
         return $value;
     }
-
-    /**
-     * Validates the type of a Node.
-     *
-     * @param mixed $value The value to validate
-     *
-     * @throws InvalidTypeException when the value is invalid
-     */
-    abstract protected function validateType($value);
-
-    /**
-     * Normalizes the value.
-     *
-     * @param mixed $value The value to normalize.
-     *
-     * @return mixed The normalized value
-     */
-    abstract protected function normalizeValue($value);
-
-    /**
-     * Merges two values together.
-     *
-     * @param mixed $leftSide
-     * @param mixed $rightSide
-     *
-     * @return mixed The merged value
-     */
-    abstract protected function mergeValues($leftSide, $rightSide);
 
     /**
      * Finalizes a value.
@@ -356,5 +381,5 @@ abstract class BaseNode implements NodeInterface
      *
      * @return mixed The finalized value
      */
-    abstract protected function finalizeValue($value);
+    abstract protected function finalizeValue( $value );
 }

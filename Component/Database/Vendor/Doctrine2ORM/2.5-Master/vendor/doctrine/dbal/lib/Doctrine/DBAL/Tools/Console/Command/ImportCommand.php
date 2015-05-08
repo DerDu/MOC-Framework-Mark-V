@@ -37,60 +37,63 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ImportCommand extends Command
 {
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
+
         $this
-        ->setName('dbal:import')
-        ->setDescription('Import SQL file(s) directly to Database.')
-        ->setDefinition(array(
-            new InputArgument(
-                'file', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'File path(s) of SQL to be executed.'
-            )
-        ))
-        ->setHelp(<<<EOT
+            ->setName( 'dbal:import' )
+            ->setDescription( 'Import SQL file(s) directly to Database.' )
+            ->setDefinition( array(
+                new InputArgument(
+                    'file', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'File path(s) of SQL to be executed.'
+                )
+            ) )
+            ->setHelp( <<<EOT
 Import SQL file(s) directly to Database.
 EOT
-        );
+            );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute( InputInterface $input, OutputInterface $output )
     {
-        $conn = $this->getHelper('db')->getConnection();
 
-        if (($fileNames = $input->getArgument('file')) !== null) {
-            foreach ((array) $fileNames as $fileName) {
-                $filePath = realpath($fileName);
+        $conn = $this->getHelper( 'db' )->getConnection();
+
+        if (( $fileNames = $input->getArgument( 'file' ) ) !== null) {
+            foreach ((array)$fileNames as $fileName) {
+                $filePath = realpath( $fileName );
 
                 // Phar compatibility.
                 if (false === $filePath) {
                     $filePath = $fileName;
                 }
 
-                if ( ! file_exists($filePath)) {
+                if (!file_exists( $filePath )) {
                     throw new \InvalidArgumentException(
-                        sprintf("SQL file '<info>%s</info>' does not exist.", $filePath)
+                        sprintf( "SQL file '<info>%s</info>' does not exist.", $filePath )
                     );
-                } elseif ( ! is_readable($filePath)) {
+                } elseif (!is_readable( $filePath )) {
                     throw new \InvalidArgumentException(
-                        sprintf("SQL file '<info>%s</info>' does not have read permissions.", $filePath)
+                        sprintf( "SQL file '<info>%s</info>' does not have read permissions.", $filePath )
                     );
                 }
 
-                $output->write(sprintf("Processing file '<info>%s</info>'... ", $filePath));
-                $sql = file_get_contents($filePath);
+                $output->write( sprintf( "Processing file '<info>%s</info>'... ", $filePath ) );
+                $sql = file_get_contents( $filePath );
 
                 if ($conn instanceof \Doctrine\DBAL\Driver\PDOConnection) {
                     // PDO Drivers
                     try {
                         $lines = 0;
 
-                        $stmt = $conn->prepare($sql);
+                        $stmt = $conn->prepare( $sql );
                         $stmt->execute();
 
                         do {
@@ -101,25 +104,25 @@ EOT
                             $lines++;
                         } while ($stmt->nextRowset());
 
-                        $output->write(sprintf('%d statements executed!', $lines) . PHP_EOL);
-                    } catch (\PDOException $e) {
-                        $output->write('error!' . PHP_EOL);
+                        $output->write( sprintf( '%d statements executed!', $lines ).PHP_EOL );
+                    } catch( \PDOException $e ) {
+                        $output->write( 'error!'.PHP_EOL );
 
-                        throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+                        throw new \RuntimeException( $e->getMessage(), $e->getCode(), $e );
                     }
                 } else {
                     // Non-PDO Drivers (ie. OCI8 driver)
-                    $stmt = $conn->prepare($sql);
+                    $stmt = $conn->prepare( $sql );
                     $rs = $stmt->execute();
 
                     if ($rs) {
-                        $output->writeln('OK!' . PHP_EOL);
+                        $output->writeln( 'OK!'.PHP_EOL );
                     } else {
                         $error = $stmt->errorInfo();
 
-                        $output->write('error!' . PHP_EOL);
+                        $output->write( 'error!'.PHP_EOL );
 
-                        throw new \RuntimeException($error[2], $error[0]);
+                        throw new \RuntimeException( $error[2], $error[0] );
                     }
 
                     $stmt->closeCursor();

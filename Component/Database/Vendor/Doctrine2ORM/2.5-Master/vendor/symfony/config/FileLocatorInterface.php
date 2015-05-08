@@ -16,6 +16,7 @@ namespace Symfony\Component\Config;
  */
 interface FileLocatorInterface
 {
+
     /**
      * Returns a full path for a given file name.
      *
@@ -27,5 +28,5 @@ interface FileLocatorInterface
      *
      * @throws \InvalidArgumentException When file is not found
      */
-    public function locate($name, $currentPath = null, $first = true);
+    public function locate( $name, $currentPath = null, $first = true );
 }

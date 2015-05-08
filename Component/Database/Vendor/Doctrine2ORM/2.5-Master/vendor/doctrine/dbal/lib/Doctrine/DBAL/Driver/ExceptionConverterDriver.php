@@ -29,6 +29,7 @@ namespace Doctrine\DBAL\Driver;
  */
 interface ExceptionConverterDriver
 {
+
     /**
      * Converts a given DBAL driver exception into a standardized DBAL driver exception.
      *
@@ -40,5 +41,5 @@ interface ExceptionConverterDriver
      *
      * @return \Doctrine\DBAL\Exception\DriverException An instance of one of the DriverException subclasses.
      */
-    public function convertException($message, DriverException $exception);
+    public function convertException( $message, DriverException $exception );
 }

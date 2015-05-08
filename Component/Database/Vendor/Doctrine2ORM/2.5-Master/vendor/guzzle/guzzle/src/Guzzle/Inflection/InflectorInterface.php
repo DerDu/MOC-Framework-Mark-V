@@ -7,6 +7,7 @@ namespace Guzzle\Inflection;
  */
 interface InflectorInterface
 {
+
     /**
      * Converts strings from camel case to snake case (e.g. CamelCase camel_case).
      *
@@ -14,7 +15,7 @@ interface InflectorInterface
      *
      * @return string
      */
-    public function snake($word);
+    public function snake( $word );
 
     /**
      * Converts strings from snake_case to upper CamelCase
@@ -23,5 +24,5 @@ interface InflectorInterface
      *
      * @return string
      */
-    public function camel($word);
+    public function camel( $word );
 }

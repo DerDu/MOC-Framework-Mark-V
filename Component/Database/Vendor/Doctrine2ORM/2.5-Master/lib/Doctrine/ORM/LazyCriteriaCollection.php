@@ -38,6 +38,7 @@ use Doctrine\ORM\Persisters\Entity\EntityPersister;
  */
 class LazyCriteriaCollection extends AbstractLazyCollection implements Selectable
 {
+
     /**
      * @var BasicEntityPersister
      */
@@ -57,10 +58,11 @@ class LazyCriteriaCollection extends AbstractLazyCollection implements Selectabl
      * @param EntityPersister $entityPersister
      * @param Criteria        $criteria
      */
-    public function __construct(EntityPersister $entityPersister, Criteria $criteria)
+    public function __construct( EntityPersister $entityPersister, Criteria $criteria )
     {
+
         $this->entityPersister = $entityPersister;
-        $this->criteria        = $criteria;
+        $this->criteria = $criteria;
     }
 
     /**
@@ -70,6 +72,7 @@ class LazyCriteriaCollection extends AbstractLazyCollection implements Selectabl
      */
     public function count()
     {
+
         if ($this->isInitialized()) {
             return $this->collection->count();
         }
@@ -79,32 +82,35 @@ class LazyCriteriaCollection extends AbstractLazyCollection implements Selectabl
             return $this->count;
         }
 
-        return $this->count = $this->entityPersister->count($this->criteria);
+        return $this->count = $this->entityPersister->count( $this->criteria );
     }
 
     /**
      * Do an optimized search of an element
      *
      * @param  object $element
+     *
      * @return bool
      */
-    public function contains($element)
+    public function contains( $element )
     {
+
         if ($this->isInitialized()) {
-            return $this->collection->contains($element);
+            return $this->collection->contains( $element );
         }
 
-        return $this->entityPersister->exists($element, $this->criteria);
+        return $this->entityPersister->exists( $element, $this->criteria );
     }
 
     /**
      * {@inheritDoc}
      */
-    public function matching(Criteria $criteria)
+    public function matching( Criteria $criteria )
     {
+
         $this->initialize();
 
-        return $this->collection->matching($criteria);
+        return $this->collection->matching( $criteria );
     }
 
     /**
@@ -112,7 +118,8 @@ class LazyCriteriaCollection extends AbstractLazyCollection implements Selectabl
      */
     protected function doInitialize()
     {
-        $elements         = $this->entityPersister->loadCriteria($this->criteria);
-        $this->collection = new ArrayCollection($elements);
+
+        $elements = $this->entityPersister->loadCriteria( $this->criteria );
+        $this->collection = new ArrayCollection( $elements );
     }
 }

@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ArithmeticFactor extends Node
 {
+
     /**
      * @var mixed
      */
@@ -46,8 +47,9 @@ class ArithmeticFactor extends Node
      * @param mixed     $arithmeticPrimary
      * @param null|bool $sign
      */
-    public function __construct($arithmeticPrimary, $sign = null)
+    public function __construct( $arithmeticPrimary, $sign = null )
     {
+
         $this->arithmeticPrimary = $arithmeticPrimary;
         $this->sign = $sign;
     }
@@ -57,6 +59,7 @@ class ArithmeticFactor extends Node
      */
     public function isPositiveSigned()
     {
+
         return $this->sign === true;
     }
 
@@ -65,14 +68,16 @@ class ArithmeticFactor extends Node
      */
     public function isNegativeSigned()
     {
+
         return $this->sign === false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkArithmeticFactor($this);
+
+        return $sqlWalker->walkArithmeticFactor( $this );
     }
 }

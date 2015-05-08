@@ -1,24 +1,30 @@
 <?php
+
 /**
  * Some comment
  */
-class Foo{function foo(){}
+class Foo
+{
 
-    /**
-     * @param Baz $baz
-     */
-    public function bar(Baz $baz)
+    function foo()
     {
     }
 
     /**
      * @param Foobar $foobar
      */
-    static public function foobar(Foobar $foobar)
+    static public function foobar( Foobar $foobar )
     {
     }
 
-    public function barfoo(Barfoo $barfoo)
+    /**
+     * @param Baz $baz
+     */
+    public function bar( Baz $baz )
+    {
+    }
+
+    public function barfoo( Barfoo $barfoo )
     {
     }
 
@@ -30,7 +36,7 @@ class Foo{function foo(){}
     {
     }
 
-    public function blaz($x, $y)
+    public function blaz( $x, $y )
     {
     }
 }

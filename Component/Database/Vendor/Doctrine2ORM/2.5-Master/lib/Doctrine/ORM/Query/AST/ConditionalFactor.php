@@ -30,6 +30,7 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ConditionalFactor extends Node
 {
+
     /**
      * @var bool
      */
@@ -43,16 +44,18 @@ class ConditionalFactor extends Node
     /**
      * @param ConditionalPrimary $conditionalPrimary
      */
-    public function __construct($conditionalPrimary)
+    public function __construct( $conditionalPrimary )
     {
+
         $this->conditionalPrimary = $conditionalPrimary;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch($sqlWalker)
+    public function dispatch( $sqlWalker )
     {
-        return $sqlWalker->walkConditionalFactor($this);
+
+        return $sqlWalker->walkConditionalFactor( $this );
     }
 }

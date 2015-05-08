@@ -29,6 +29,7 @@ namespace Doctrine\Common\Persistence\Mapping;
  */
 interface ClassMetadataFactory
 {
+
     /**
      * Forces the factory to load the metadata of all classes known to the underlying
      * mapping driver.
@@ -44,7 +45,7 @@ interface ClassMetadataFactory
      *
      * @return ClassMetadata
      */
-    public function getMetadataFor($className);
+    public function getMetadataFor( $className );
 
     /**
      * Checks whether the factory has the metadata for a class loaded already.
@@ -53,7 +54,7 @@ interface ClassMetadataFactory
      *
      * @return boolean TRUE if the metadata of the class in question is already loaded, FALSE otherwise.
      */
-    public function hasMetadataFor($className);
+    public function hasMetadataFor( $className );
 
     /**
      * Sets the metadata descriptor for a specific class.
@@ -62,7 +63,7 @@ interface ClassMetadataFactory
      *
      * @param ClassMetadata $class
      */
-    public function setMetadataFor($className, $class);
+    public function setMetadataFor( $className, $class );
 
     /**
      * Returns whether the class with the specified name should have its metadata loaded.
@@ -72,5 +73,5 @@ interface ClassMetadataFactory
      *
      * @return boolean
      */
-    public function isTransient($className);
+    public function isTransient( $className );
 }

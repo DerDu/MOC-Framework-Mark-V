@@ -11,6 +11,7 @@ use Guzzle\Http\Message\Response;
  */
 class CallbackCanCacheStrategy extends DefaultCanCacheStrategy
 {
+
     /** @var callable Callback for request */
     protected $requestCallback;
 
@@ -23,31 +24,34 @@ class CallbackCanCacheStrategy extends DefaultCanCacheStrategy
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($requestCallback = null, $responseCallback = null)
+    public function __construct( $requestCallback = null, $responseCallback = null )
     {
-        if ($requestCallback && !is_callable($requestCallback)) {
-            throw new InvalidArgumentException('Method must be callable');
+
+        if ($requestCallback && !is_callable( $requestCallback )) {
+            throw new InvalidArgumentException( 'Method must be callable' );
         }
 
-        if ($responseCallback && !is_callable($responseCallback)) {
-            throw new InvalidArgumentException('Method must be callable');
+        if ($responseCallback && !is_callable( $responseCallback )) {
+            throw new InvalidArgumentException( 'Method must be callable' );
         }
 
         $this->requestCallback = $requestCallback;
         $this->responseCallback = $responseCallback;
     }
 
-    public function canCacheRequest(RequestInterface $request)
+    public function canCacheRequest( RequestInterface $request )
     {
+
         return $this->requestCallback
-            ? call_user_func($this->requestCallback, $request)
-            : parent::canCacheRequest($request);
+            ? call_user_func( $this->requestCallback, $request )
+            : parent::canCacheRequest( $request );
     }
 
-    public function canCacheResponse(Response $response)
+    public function canCacheResponse( Response $response )
     {
+
         return $this->responseCallback
-            ? call_user_func($this->responseCallback, $response)
-            : parent::canCacheResponse($response);
+            ? call_user_func( $this->responseCallback, $response )
+            : parent::canCacheResponse( $response );
     }
 }
