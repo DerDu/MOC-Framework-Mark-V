@@ -13,13 +13,20 @@ use MOC\V\Core\HttpKernel\Vendor\Universal\Request;
 class UniversalRequest extends Bridge implements IBridgeInterface
 {
 
+    /** @var null|array $ParameterArray */
+    private static $ParameterArray = null;
     /** @var Request $Instance */
-    private $Instance = null;
+    private static $Instance = null;
 
+    /**
+     *
+     */
     function __construct()
     {
 
-        $this->Instance = new Request();
+        if (null === self::$Instance) {
+            self::$Instance = new Request();
+        }
     }
 
     /**
@@ -37,7 +44,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getPathBase()
     {
 
-        return (string)$this->Instance->getSymfonyRequest()->getBasePath();
+        return (string)self::$Instance->getSymfonyRequest()->getBasePath();
     }
 
     /**
@@ -57,7 +64,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getPathInfo()
     {
 
-        return (string)$this->Instance->getSymfonyRequest()->getPathInfo();
+        return (string)self::$Instance->getSymfonyRequest()->getPathInfo();
     }
 
     /**
@@ -72,7 +79,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getUrlBase()
     {
 
-        return (string)$this->Instance->getSymfonyRequest()->getBaseUrl();
+        return (string)self::$Instance->getSymfonyRequest()->getBaseUrl();
     }
 
     /**
@@ -87,7 +94,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getPort()
     {
 
-        return (string)$this->Instance->getSymfonyRequest()->getPort();
+        return (string)self::$Instance->getSymfonyRequest()->getPort();
     }
 
     /**
@@ -96,10 +103,15 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getParameterArray()
     {
 
-        return array_merge(
-            $this->getRequestGETArray(),
-            $this->getRequestPOSTArray(),
-            $this->getRequestCUSTOMArray() );
+        if (null === self::$ParameterArray) {
+            self::$ParameterArray = array_merge(
+                $this->getRequestGETArray(),
+                $this->getRequestFILESArray(),
+                $this->getRequestPOSTArray(),
+                $this->getRequestCUSTOMArray()
+            );
+        }
+        return self::$ParameterArray;
     }
 
     /**
@@ -108,7 +120,16 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getRequestGETArray()
     {
 
-        return (array)$this->Instance->getSymfonyRequest()->query->all();
+        return (array)self::$Instance->getSymfonyRequest()->query->all();
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestFILESArray()
+    {
+
+        return (array)self::$Instance->getSymfonyRequest()->files->all();
     }
 
     /**
@@ -117,7 +138,7 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getRequestPOSTArray()
     {
 
-        return (array)$this->Instance->getSymfonyRequest()->request->all();
+        return (array)self::$Instance->getSymfonyRequest()->request->all();
     }
 
     /**
@@ -126,6 +147,6 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     public function getRequestCUSTOMArray()
     {
 
-        return (array)$this->Instance->getSymfonyRequest()->attributes->all();
+        return (array)self::$Instance->getSymfonyRequest()->attributes->all();
     }
 }

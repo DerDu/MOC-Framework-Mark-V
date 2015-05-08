@@ -15,6 +15,9 @@ class Request
     /** @var null|SymfonyRequest $SymfonyRequest */
     private $SymfonyRequest = null;
 
+    /**
+     *
+     */
     function __construct()
     {
 
