@@ -17,10 +17,11 @@ use Eden\Core\Base as CoreBase;
  * overloaded and overrided as well as provide some basic class
  * loading patterns.
  *
- * @vendor Eden
+ * @vendor  Eden
  * @package Mail
- * @author Christian Blanquera cblanquera@openovate.com
+ * @author  Christian Blanquera cblanquera@openovate.com
  */
 class Base extends CoreBase
 {
+
 }

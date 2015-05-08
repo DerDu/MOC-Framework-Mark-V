@@ -17,62 +17,72 @@
 //  limitations under the License.
 //
 
-class pdf_context {
+class pdf_context
+{
 
-	var $file;
-	var $buffer;
-	var $offset;
-	var $length;
+    var $file;
+    var $buffer;
+    var $offset;
+    var $length;
 
-	var $stack;
+    var $stack;
 
-	// Constructor
+    // Constructor
 
-	function pdf_context($f) {
-		$this->file = $f;
-		$this->reset();
-	}
+    function pdf_context( $f )
+    {
 
-	// Optionally move the file
-	// pointer to a new location
-	// and reset the buffered data
+        $this->file = $f;
+        $this->reset();
+    }
 
-	function reset($pos = null, $l = 100) {
-		if (!is_null ($pos)) {
-			fseek ($this->file, $pos);
-		}
+    // Optionally move the file
+    // pointer to a new location
+    // and reset the buffered data
 
-		$this->buffer = $l > 0 ? fread($this->file, $l) : '';
-		$this->offset = 0;
-		$this->length = strlen($this->buffer);
-		$this->stack = array();
-	}
+    function reset( $pos = null, $l = 100 )
+    {
 
-	// Make sure that there is at least one
-	// character beyond the current offset in
-	// the buffer to prevent the tokenizer
-	// from attempting to access data that does
-	// not exist
+        if (!is_null( $pos )) {
+            fseek( $this->file, $pos );
+        }
 
-	function ensure_content() {
-		if ($this->offset >= $this->length - 1) {
-			return $this->increase_length();
-		} else {
-			return true;
-		}
-	}
+        $this->buffer = $l > 0 ? fread( $this->file, $l ) : '';
+        $this->offset = 0;
+        $this->length = strlen( $this->buffer );
+        $this->stack = array();
+    }
 
-	// Forcefully read more data into the buffer
+    // Make sure that there is at least one
+    // character beyond the current offset in
+    // the buffer to prevent the tokenizer
+    // from attempting to access data that does
+    // not exist
 
-	function increase_length($l=100) {
-		if (feof($this->file)) {
-			return false;
-		} else {
-			$this->buffer .= fread($this->file, $l);
-			$this->length = strlen($this->buffer);
-			return true;
-		}
-	}
+    function ensure_content()
+    {
+
+        if ($this->offset >= $this->length - 1) {
+            return $this->increase_length();
+        } else {
+            return true;
+        }
+    }
+
+    // Forcefully read more data into the buffer
+
+    function increase_length( $l = 100 )
+    {
+
+        if (feof( $this->file )) {
+            return false;
+        } else {
+            $this->buffer .= fread( $this->file, $l );
+            $this->length = strlen( $this->buffer );
+            return true;
+        }
+    }
 
 }
+
 ?>

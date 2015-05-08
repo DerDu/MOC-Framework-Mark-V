@@ -9,12 +9,14 @@
 
 class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 {
+
     public $imap;
 
     public function setUp()
     {
-        date_default_timezone_set('GMT');
-        $this->imap = eden('mail')->imap(
+
+        date_default_timezone_set( 'GMT' );
+        $this->imap = eden( 'mail' )->imap(
             'imap.gmail.com',
             '[EMAIL-ADDRESS]',
             '[PASSWORD]',
@@ -25,11 +27,13 @@ class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+
         $this->imap->disconnect();
     }
 
     public function testGetEmails()
     {
+
         // $emails = $this->imap
         // ->setActiveMailbox('INBOX')
         // ->getEmails(0, 1);
@@ -43,6 +47,7 @@ class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 
     public function testGetEmailTotal()
     {
+
         // $total = $this->imap
         // ->setActiveMailbox('INBOX')
         // ->getEmailTotal();
@@ -52,6 +57,7 @@ class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 
     public function testGetActiveMailbox()
     {
+
         // $mailbox = $this->imap
         // ->setActiveMailbox('INBOX')
         // ->getActiveMailbox();
@@ -61,6 +67,7 @@ class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 
     public function testGetNextUid()
     {
+
         // $uid = $this->imap
         // ->setActiveMailbox('INBOX')
         // ->getNextUid();
@@ -70,6 +77,7 @@ class Eden_Mail_Tests_Mail_ImapTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMailboxes()
     {
+
         // $mailboxes = $this->imap
         // ->getMailboxes('INBOX');
 

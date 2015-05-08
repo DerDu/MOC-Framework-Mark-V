@@ -1,10 +1,6 @@
 <?php
 namespace MOC\V\TestSuite\Tests\Component\Mail;
 
-use MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpImap;
-use MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpPop3;
-use MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp;
-
 /**
  * Class BridgeTest
  *

@@ -19,10 +19,11 @@ use Eden\Core\Argument as CoreArgument;
  * outputs a trace (can be turned off) that shows where the problem
  * started to where the program stopped.
  *
- * @vendor Eden
+ * @vendor  Eden
  * @package Mail
- * @author Christian Blanquera cblanquera@openovate.com
+ * @author  Christian Blanquera cblanquera@openovate.com
  */
 class Argument extends CoreArgument
 {
+
 }

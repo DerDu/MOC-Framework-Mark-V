@@ -6,10 +6,10 @@
  * Copyright and license information can be found at LICENSE
  * distributed with this package.
  */
- 
+
 require_once __DIR__.'/../../Core/Loader.php';
 Eden\Core\Loader::i()
-	->addRoot(true, 'Eden\\Core')
-	->addRoot(realpath(__DIR__.'/../..'), 'Eden\\Mail')
-	->register()
-	->load('Controller');
+    ->addRoot( true, 'Eden\\Core' )
+    ->addRoot( realpath( __DIR__.'/../..' ), 'Eden\\Mail' )
+    ->register()
+    ->load( 'Controller' );

@@ -9,12 +9,14 @@
 
 class Eden_Mail_Tests_Mail_SmtpTest extends \PHPUnit_Framework_TestCase
 {
+
     public $smtp;
 
     public function setUp()
     {
-        date_default_timezone_set('GMT');
-        $this->smtp = eden('mail')->smtp(
+
+        date_default_timezone_set( 'GMT' );
+        $this->smtp = eden( 'mail' )->smtp(
             'smtp.gmail.com',
             '[EMAIL-ADDRESS]',
             '[PASSWORD]',
@@ -25,50 +27,58 @@ class Eden_Mail_Tests_Mail_SmtpTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+
         $this->smtp->disconnect();
     }
 
     public function testAddAttachment()
     {
-        $smtp = $this->smtp->addAttachment('test.txt', 'hi', 'text/plain');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+
+        $smtp = $this->smtp->addAttachment( 'test.txt', 'hi', 'text/plain' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testAddBCC()
     {
-        $smtp = $this->smtp->addBcc('airon.dumael@gmail.com', 'airon');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+
+        $smtp = $this->smtp->addBcc( 'airon.dumael@gmail.com', 'airon' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testAddCC()
     {
-        $smtp = $this->smtp->addCc('airon.dumael@gmail.com', 'airon');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+
+        $smtp = $this->smtp->addCc( 'airon.dumael@gmail.com', 'airon' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testAddTo()
     {
-        $smtp = $this->smtp->addTo('airon.dumael@gmail.com', 'airon');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+
+        $smtp = $this->smtp->addTo( 'airon.dumael@gmail.com', 'airon' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testSetBody()
     {
-        $smtp = $this->smtp->setBody('hi');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
 
-        $smtp = $this->smtp->setBody('hi', true);
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+        $smtp = $this->smtp->setBody( 'hi' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
+
+        $smtp = $this->smtp->setBody( 'hi', true );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testSetSubject()
     {
-        $smtp = $this->smtp->setSubject('hi');
-        $this->assertInstanceOf('Eden\\Mail\\Smtp', $smtp);
+
+        $smtp = $this->smtp->setSubject( 'hi' );
+        $this->assertInstanceOf( 'Eden\\Mail\\Smtp', $smtp );
     }
 
     public function testReply()
     {
+
         // $test = $this->smtp
         //  ->setSubject('[SUBJECT/TOPIC])
         //  ->setBody('[BODY]')
@@ -78,6 +88,7 @@ class Eden_Mail_Tests_Mail_SmtpTest extends \PHPUnit_Framework_TestCase
 
     public function testSend()
     {
+
         // $this->smtp
         //  ->setSubject('[SUBJECT/TOPIC]')
         //  ->setBody('[BODY]')

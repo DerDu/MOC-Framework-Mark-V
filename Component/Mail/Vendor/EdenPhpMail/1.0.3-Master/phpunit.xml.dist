@@ -10,16 +10,16 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="Tests/bootstrap.php"
->
-  <testsuites>
-    <testsuite name="Eden Mail Test Suite">
-      <directory>./Tests/Mail</directory>
-    </testsuite>
-  </testsuites>
+    >
+    <testsuites>
+        <testsuite name="Eden Mail Test Suite">
+            <directory>./Tests/Mail</directory>
+        </testsuite>
+    </testsuites>
 
-  <filter>
-    <whitelist>
-      <directory suffix=".php">./</directory>
-    </whitelist>
-  </filter>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./</directory>
+        </whitelist>
+    </filter>
 </phpunit>
