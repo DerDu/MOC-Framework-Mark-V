@@ -75,6 +75,26 @@ class PhpExcel extends Bridge implements IBridgeInterface
     }
 
     /**
+     * @return int
+     */
+    public function getSheetColumnCount()
+    {
+
+        return \PHPExcel_Cell::columnIndexFromString(
+            $this->Source->getActiveSheet()->getHighestColumn()
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getSheetRowCount()
+    {
+
+        return $this->Source->getActiveSheet()->getHighestRow();
+    }
+
+    /**
      * @param FileParameter $Location
      *
      * @return PhpExcel

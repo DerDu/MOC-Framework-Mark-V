@@ -338,6 +338,9 @@ class PHPExcel_Shared_String
     {
 
         if (self::getIsIconvEnabled()) {
+            if (!self::IsUTF8( $value )) {
+                $value = @iconv( 'WINDOWS-1252', 'UTF-8', $value );
+            }
             $value = @iconv( 'UTF-8', 'UTF-8', $value );
             return $value;
         }
@@ -397,6 +400,19 @@ class PHPExcel_Shared_String
     }
 
     /**
+     * Check if a string contains UTF8 data
+     *
+     * @param string $value
+     *
+     * @return boolean
+     */
+    public static function IsUTF8( $value = '' )
+    {
+
+        return $value === '' || preg_match( '/^./su', $value ) === 1;
+    }
+
+    /**
      * Get whether mbstring extension is available
      *
      * @return boolean
@@ -412,19 +428,6 @@ class PHPExcel_Shared_String
             true : false;
 
         return self::$_isMbstringEnabled;
-    }
-
-    /**
-     * Check if a string contains UTF8 data
-     *
-     * @param string $value
-     *
-     * @return boolean
-     */
-    public static function IsUTF8( $value = '' )
-    {
-
-        return $string === '' || preg_match( '/^./su', $string ) === 1;
     }
 
     /**
