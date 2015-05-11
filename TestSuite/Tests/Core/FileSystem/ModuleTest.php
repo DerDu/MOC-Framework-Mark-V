@@ -43,6 +43,22 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader );
     }
 
+    public function testStaticSymfonyFinder()
+    {
+
+        try {
+            FileSystem::getSymfonyFinder( __DIR__ );
+        } catch( \Exception $E ) {
+            $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E );
+        }
+
+        $Loader = FileSystem::getSymfonyFinder( __FILE__ );
+
+        $this->assertEquals( __FILE__, $Loader->getLocation() );
+
+        $this->assertInstanceOf( 'MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader );
+    }
+
     public function testStaticUniversalFileWriter()
     {
 
