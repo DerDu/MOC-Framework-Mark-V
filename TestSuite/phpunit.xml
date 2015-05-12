@@ -24,6 +24,7 @@
             <directory suffix=".php">./../Core</directory>
             <directory suffix=".php">./../Component</directory>
             <exclude>
+                <directory>./../Core/FileSystem/Vendor/Symfony</directory>
                 <directory>./../Core/HttpKernel/Vendor/Symfony</directory>
                 <directory>./../Component/Router/Vendor/Symfony</directory>
                 <directory>./../Component/Database/Vendor/Doctrine2DBAL</directory>
