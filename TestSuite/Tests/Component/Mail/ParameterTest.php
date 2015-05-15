@@ -33,6 +33,8 @@ class ParameterTest extends \PHPUnit_Framework_TestCase
 
         $Parameter = new FileParameter( __FILE__ );
         $this->assertEquals( __FILE__, $Parameter->getFile() );
+        $this->assertInstanceOf( '\SplFileInfo', $Parameter->getFileInfo() );
+        $this->assertEquals( __FILE__, $Parameter->__toString() );
 
         try {
             $Parameter->setFile( __DIR__ );
