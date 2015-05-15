@@ -51,6 +51,13 @@ interface IBridgeInterface
     public function getUrlBase();
 
     /**
+     * Returns the requested URI.
+     *
+     * @return string
+     */
+    public function getUrl();
+
+    /**
      * Returns the port on which the request is made.
      *
      * This method can read the client port from the "X-Forwarded-Port" header when trusted proxies were set via "setTrustedProxies()".

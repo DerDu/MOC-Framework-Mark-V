@@ -83,6 +83,17 @@ class UniversalRequest extends Bridge implements IBridgeInterface
     }
 
     /**
+     * Returns the requested URI.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+
+        return (string)self::$Instance->getSymfonyRequest()->getRequestUri();
+    }
+
+    /**
      * Returns the port on which the request is made.
      *
      * This method can read the client port from the "X-Forwarded-Port" header when trusted proxies were set via "setTrustedProxies()".
