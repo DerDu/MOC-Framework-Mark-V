@@ -1,9 +1,9 @@
 <?php
 namespace Bar;
 
+use MOC\V\Component\Captcha\Captcha;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Core\AutoLoader\AutoLoader;
-use MOC\V\Core\FileSystem\FileSystem;
 
 /**
  * Setup: Php
@@ -20,6 +20,9 @@ date_default_timezone_set( 'Europe/Berlin' );
 require_once( __DIR__.'/../../Core/AutoLoader/AutoLoader.php' );
 AutoLoader::getNamespaceAutoLoader( '\MOC\V', __DIR__.'/../../' );
 
+var_dump( Captcha::getCaptcha()->createCaptcha()->getCaptcha() );
+
+/*
 $File = FileSystem::getUniversalFileLoader( __FILE__ );
 var_dump( $File->getLocation() );
 var_dump( $File->getRealPath() );
