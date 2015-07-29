@@ -36,7 +36,6 @@ namespace Doctrine\Common\Collections;
  */
 interface Selectable
 {
-
     /**
      * Selects all elements from a selectable that match the expression and
      * returns a new collection containing these elements.
@@ -45,5 +44,5 @@ interface Selectable
      *
      * @return Collection
      */
-    public function matching( Criteria $criteria );
+    public function matching(Criteria $criteria);
 }

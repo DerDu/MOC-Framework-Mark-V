@@ -10,7 +10,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Entity\Coveralls;
  */
 class Remote extends Coveralls
 {
-
     /**
      * Remote name.
      *
@@ -34,7 +33,6 @@ class Remote extends Coveralls
      */
     public function toArray()
     {
-
         return array(
             'name' => $this->name,
             'url'  => $this->url,
@@ -44,45 +42,28 @@ class Remote extends Coveralls
     // accessor
 
     /**
-     * Return remote name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-
-        if (isset( $this->name )) {
-            return $this->name;
-        }
-
-        return null;
-    }
-
-    /**
      * Set remote name.
      *
      * @param string $name Remote name.
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Remote
      */
-    public function setName( $name )
+    public function setName($name)
     {
-
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Return remote URL.
+     * Return remote name.
      *
      * @return string
      */
-    public function getUrl()
+    public function getName()
     {
-
-        if (isset( $this->url )) {
-            return $this->url;
+        if (isset($this->name)) {
+            return $this->name;
         }
 
         return null;
@@ -95,11 +76,24 @@ class Remote extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Remote
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
-
         $this->url = $url;
 
         return $this;
+    }
+
+    /**
+     * Return remote URL.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if (isset($this->url)) {
+            return $this->url;
+        }
+
+        return null;
     }
 }

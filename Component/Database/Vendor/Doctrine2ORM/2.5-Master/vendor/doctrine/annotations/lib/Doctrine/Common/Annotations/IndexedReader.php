@@ -26,7 +26,6 @@ namespace Doctrine\Common\Annotations;
  */
 class IndexedReader implements Reader
 {
-
     /**
      * @var Reader
      */
@@ -37,21 +36,19 @@ class IndexedReader implements Reader
      *
      * @param Reader $reader
      */
-    public function __construct( Reader $reader )
+    public function __construct(Reader $reader)
     {
-
         $this->delegate = $reader;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getClassAnnotations( \ReflectionClass $class )
+    public function getClassAnnotations(\ReflectionClass $class)
     {
-
         $annotations = array();
-        foreach ($this->delegate->getClassAnnotations( $class ) as $annot) {
-            $annotations[get_class( $annot )] = $annot;
+        foreach ($this->delegate->getClassAnnotations($class) as $annot) {
+            $annotations[get_class($annot)] = $annot;
         }
 
         return $annotations;
@@ -60,21 +57,19 @@ class IndexedReader implements Reader
     /**
      * {@inheritDoc}
      */
-    public function getClassAnnotation( \ReflectionClass $class, $annotation )
+    public function getClassAnnotation(\ReflectionClass $class, $annotation)
     {
-
-        return $this->delegate->getClassAnnotation( $class, $annotation );
+        return $this->delegate->getClassAnnotation($class, $annotation);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMethodAnnotations( \ReflectionMethod $method )
+    public function getMethodAnnotations(\ReflectionMethod $method)
     {
-
         $annotations = array();
-        foreach ($this->delegate->getMethodAnnotations( $method ) as $annot) {
-            $annotations[get_class( $annot )] = $annot;
+        foreach ($this->delegate->getMethodAnnotations($method) as $annot) {
+            $annotations[get_class($annot)] = $annot;
         }
 
         return $annotations;
@@ -83,21 +78,19 @@ class IndexedReader implements Reader
     /**
      * {@inheritDoc}
      */
-    public function getMethodAnnotation( \ReflectionMethod $method, $annotation )
+    public function getMethodAnnotation(\ReflectionMethod $method, $annotation)
     {
-
-        return $this->delegate->getMethodAnnotation( $method, $annotation );
+        return $this->delegate->getMethodAnnotation($method, $annotation);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getPropertyAnnotations( \ReflectionProperty $property )
+    public function getPropertyAnnotations(\ReflectionProperty $property)
     {
-
         $annotations = array();
-        foreach ($this->delegate->getPropertyAnnotations( $property ) as $annot) {
-            $annotations[get_class( $annot )] = $annot;
+        foreach ($this->delegate->getPropertyAnnotations($property) as $annot) {
+            $annotations[get_class($annot)] = $annot;
         }
 
         return $annotations;
@@ -106,10 +99,9 @@ class IndexedReader implements Reader
     /**
      * {@inheritDoc}
      */
-    public function getPropertyAnnotation( \ReflectionProperty $property, $annotation )
+    public function getPropertyAnnotation(\ReflectionProperty $property, $annotation)
     {
-
-        return $this->delegate->getPropertyAnnotation( $property, $annotation );
+        return $this->delegate->getPropertyAnnotation($property, $annotation);
     }
 
     /**
@@ -120,9 +112,8 @@ class IndexedReader implements Reader
      *
      * @return mixed
      */
-    public function __call( $method, $args )
+    public function __call($method, $args)
     {
-
-        return call_user_func_array( array( $this->delegate, $method ), $args );
+        return call_user_func_array(array($this->delegate, $method), $args);
     }
 }

@@ -2,18 +2,17 @@
 
 namespace Doctrine\Tests\Common\Persistence;
 
+use \PHPUnit_Framework_MockObject_Generator;
 use Doctrine\Common\Persistence\AbstractManagerRegistry;
 use Doctrine\Tests\Common\Persistence\Mapping\TestClassMetadataFactory;
 use Doctrine\Tests\DoctrineTestCase;
-use PHPUnit_Framework_MockObject_Generator;
 
 /**
  * @groups DCOM-270
- * @uses   Doctrine\Tests\Common\Persistence\TestObject
+ * @uses Doctrine\Tests\Common\Persistence\TestObject
  */
 class ManagerRegistryTest extends DoctrineTestCase
 {
-
     /**
      * @var TestManagerRegistry
      */
@@ -24,11 +23,10 @@ class ManagerRegistryTest extends DoctrineTestCase
      */
     public function setUp()
     {
-
         $this->mr = new TestManagerRegistry(
             'ORM',
-            array( 'default_connection' ),
-            array( 'default_manager' ),
+            array('default_connection'),
+            array('default_manager'),
             'default',
             'default',
             'Doctrine\Common\Persistence\ObjectManagerAware'
@@ -37,72 +35,63 @@ class ManagerRegistryTest extends DoctrineTestCase
 
     public function testGetManagerForClass()
     {
-
-        $this->mr->getManagerForClass( 'Doctrine\Tests\Common\Persistence\TestObject' );
+        $this->mr->getManagerForClass('Doctrine\Tests\Common\Persistence\TestObject');
     }
 
     public function testGetManagerForInvalidClass()
     {
-
         $this->setExpectedException(
             'ReflectionException',
             'Class Doctrine\Tests\Common\Persistence\TestObjectInexistent does not exist'
         );
 
-        $this->mr->getManagerForClass( 'prefix:TestObjectInexistent' );
+        $this->mr->getManagerForClass('prefix:TestObjectInexistent');
     }
 
     public function testGetManagerForAliasedClass()
     {
-
-        $this->mr->getManagerForClass( 'prefix:TestObject' );
+        $this->mr->getManagerForClass('prefix:TestObject');
     }
 
     public function testGetManagerForInvalidAliasedClass()
     {
-
         $this->setExpectedException(
             'ReflectionException',
             'Class Doctrine\Tests\Common\Persistence\TestObject:Foo does not exist'
         );
 
-        $this->mr->getManagerForClass( 'prefix:TestObject:Foo' );
+        $this->mr->getManagerForClass('prefix:TestObject:Foo');
     }
 }
 
 class TestManager
 {
-
     public function getMetadataFactory()
     {
+        $driver = PHPUnit_Framework_MockObject_Generator::getMock('Doctrine\Common\Persistence\Mapping\Driver\MappingDriver');
+        $metadata = PHPUnit_Framework_MockObject_Generator::getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
 
-        $driver = PHPUnit_Framework_MockObject_Generator::getMock( 'Doctrine\Common\Persistence\Mapping\Driver\MappingDriver' );
-        $metadata = PHPUnit_Framework_MockObject_Generator::getMock( 'Doctrine\Common\Persistence\Mapping\ClassMetadata' );
-
-        return new TestClassMetadataFactory( $driver, $metadata );
+        return new TestClassMetadataFactory($driver, $metadata);
     }
 }
 
 class TestManagerRegistry extends AbstractManagerRegistry
 {
-
-    public function getAliasNamespace( $alias )
+    protected function getService($name)
     {
-
-        return __NAMESPACE__;
-    }
-
-    protected function getService( $name )
-    {
-
         return new TestManager();
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function resetService( $name )
+    protected function resetService($name)
     {
 
+    }
+
+    public function getAliasNamespace($alias)
+    {
+        return __NAMESPACE__;
     }
 }

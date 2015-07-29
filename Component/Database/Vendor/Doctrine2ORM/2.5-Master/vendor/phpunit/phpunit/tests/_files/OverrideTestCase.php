@@ -1,9 +1,7 @@
 <?php
-
 class OverrideTestCase extends OneTestCase
 {
-
-    public function testCase( $arg = '' )
+    public function testCase($arg = '')
     {
     }
 }

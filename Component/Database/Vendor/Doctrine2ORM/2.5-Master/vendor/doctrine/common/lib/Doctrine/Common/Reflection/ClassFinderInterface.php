@@ -26,7 +26,6 @@ namespace Doctrine\Common\Reflection;
  */
 interface ClassFinderInterface
 {
-
     /**
      * Finds a class.
      *
@@ -34,5 +33,5 @@ interface ClassFinderInterface
      *
      * @return string|null The name of the class or NULL if not found.
      */
-    public function findFile( $class );
+    public function findFile($class);
 }

@@ -10,7 +10,7 @@
     processIsolation="false"
     backupGlobals="false"
     syntaxCheck="true"
-    >
+>
     <testsuite name="Doctrine\Instantiator tests">
         <directory>./tests/DoctrineTest/InstantiatorTest</directory>
     </testsuite>

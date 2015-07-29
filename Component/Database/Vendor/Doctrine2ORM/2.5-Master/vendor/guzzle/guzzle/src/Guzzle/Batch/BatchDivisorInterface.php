@@ -7,7 +7,6 @@ namespace Guzzle\Batch;
  */
 interface BatchDivisorInterface
 {
-
     /**
      * Divide a queue of items into an array batches
      *
@@ -15,5 +14,5 @@ interface BatchDivisorInterface
      *
      * @return array|\Traversable Returns an array or Traversable object that contains arrays of items to transfer
      */
-    public function createBatches( \SplQueue $queue );
+    public function createBatches(\SplQueue $queue);
 }

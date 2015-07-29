@@ -30,16 +30,14 @@ use UnexpectedValueException as BaseUnexpectedValueException;
  */
 class UnexpectedValueException extends BaseUnexpectedValueException implements ProxyException
 {
-
     /**
      * @param string $proxyDirectory
      *
      * @return self
      */
-    public static function proxyDirectoryNotWritable( $proxyDirectory )
+    public static function proxyDirectoryNotWritable($proxyDirectory)
     {
-
-        return new self( sprintf( 'Your proxy directory "%s" must be writable', $proxyDirectory ) );
+        return new self(sprintf('Your proxy directory "%s" must be writable', $proxyDirectory));
     }
 
     /**
@@ -50,9 +48,8 @@ class UnexpectedValueException extends BaseUnexpectedValueException implements P
      *
      * @return self
      */
-    public static function invalidParameterTypeHint( $className, $methodName, $parameterName, \Exception $previous )
+    public static function invalidParameterTypeHint($className, $methodName, $parameterName, \Exception $previous)
     {
-
         return new self(
             sprintf(
                 'The type hint of parameter "%s" in method "%s" in class "%s" is invalid.',

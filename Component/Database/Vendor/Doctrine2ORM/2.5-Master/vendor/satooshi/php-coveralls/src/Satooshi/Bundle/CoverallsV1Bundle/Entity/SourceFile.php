@@ -8,7 +8,6 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity;
  */
 class SourceFile extends Coveralls
 {
-
     /**
      * Source filename.
      *
@@ -58,16 +57,15 @@ class SourceFile extends Coveralls
      * @param string $name Source filename.
      * @param string $eol  End of line.
      */
-    public function __construct( $path, $name, $eol = "\n" )
+    public function __construct($path, $name, $eol = "\n")
     {
+        $this->path   = $path;
+        $this->name   = $name;
+        $this->source = trim(file_get_contents($path));
 
-        $this->path = $path;
-        $this->name = $name;
-        $this->source = trim( file_get_contents( $path ) );
-
-        $lines = explode( $eol, $this->source );
-        $this->fileLines = count( $lines );
-        $this->coverage = array_fill( 0, $this->fileLines, null );
+        $lines = explode($eol, $this->source);
+        $this->fileLines = count($lines);
+        $this->coverage  = array_fill(0, $this->fileLines, null);
     }
 
     /**
@@ -77,7 +75,6 @@ class SourceFile extends Coveralls
      */
     public function toArray()
     {
-
         return array(
             'name'     => $this->name,
             'source'   => $this->source,
@@ -95,10 +92,9 @@ class SourceFile extends Coveralls
      *
      * @return void
      */
-    public function addCoverage( $lineNum, $count )
+    public function addCoverage($lineNum, $count)
     {
-
-        if (array_key_exists( $lineNum, $this->coverage )) {
+        if (array_key_exists($lineNum, $this->coverage)) {
             $this->coverage[$lineNum] += $count;
         }
     }
@@ -110,26 +106,10 @@ class SourceFile extends Coveralls
      */
     public function reportLineCoverage()
     {
-
         return $this->getMetrics()->getLineCoverage();
     }
 
     // accessor
-
-    /**
-     * Return metrics.
-     *
-     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Metrics
-     */
-    public function getMetrics()
-    {
-
-        if (!isset( $this->metrics )) {
-            $this->metrics = new Metrics( $this->coverage );
-        }
-
-        return $this->metrics;
-    }
 
     /**
      * Return source filename.
@@ -138,7 +118,6 @@ class SourceFile extends Coveralls
      */
     public function getName()
     {
-
         return $this->name;
     }
 
@@ -149,7 +128,6 @@ class SourceFile extends Coveralls
      */
     public function getSource()
     {
-
         return $this->source;
     }
 
@@ -160,7 +138,6 @@ class SourceFile extends Coveralls
      */
     public function getCoverage()
     {
-
         return $this->coverage;
     }
 
@@ -171,7 +148,6 @@ class SourceFile extends Coveralls
      */
     public function getPath()
     {
-
         return $this->path;
     }
 
@@ -182,7 +158,20 @@ class SourceFile extends Coveralls
      */
     public function getFileLines()
     {
-
         return $this->fileLines;
+    }
+
+    /**
+     * Return metrics.
+     *
+     * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Metrics
+     */
+    public function getMetrics()
+    {
+        if (!isset($this->metrics)) {
+            $this->metrics = new Metrics($this->coverage);
+        }
+
+        return $this->metrics;
     }
 }

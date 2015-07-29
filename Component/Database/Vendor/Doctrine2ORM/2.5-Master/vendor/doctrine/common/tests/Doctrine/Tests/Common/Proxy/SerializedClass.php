@@ -7,36 +7,43 @@ namespace Doctrine\Tests\Common\Proxy;
  */
 class SerializedClass
 {
-
-    /**
-     * @var mixed
-     */
-    public $baz = 'baz';
-    /**
-     * @var mixed
-     */
-    protected $bar = 'bar';
     /**
      * @var mixed
      */
     private $foo = 'foo';
 
     /**
-     * @return mixed|string
+     * @var mixed
      */
-    public function getFoo()
-    {
+    protected $bar = 'bar';
 
-        return $this->foo;
-    }
+    /**
+     * @var mixed
+     */
+    public $baz = 'baz';
 
     /**
      * @param mixed $foo
      */
-    public function setFoo( $foo )
+    public function setFoo($foo)
     {
-
         $this->foo = $foo;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+
+    /**
+     * @param $bar
+     */
+    public function setBar($bar)
+    {
+        $this->bar = $bar;
     }
 
     /**
@@ -44,17 +51,15 @@ class SerializedClass
      */
     public function getBar()
     {
-
         return $this->bar;
     }
 
     /**
-     * @param $bar
+     * @param $baz
      */
-    public function setBar( $bar )
+    public function setBaz($baz)
     {
-
-        $this->bar = $bar;
+        $this->baz = $baz;
     }
 
     /**
@@ -62,16 +67,6 @@ class SerializedClass
      */
     public function getBaz()
     {
-
         return $this->baz;
-    }
-
-    /**
-     * @param $baz
-     */
-    public function setBaz( $baz )
-    {
-
-        $this->baz = $baz;
     }
 }

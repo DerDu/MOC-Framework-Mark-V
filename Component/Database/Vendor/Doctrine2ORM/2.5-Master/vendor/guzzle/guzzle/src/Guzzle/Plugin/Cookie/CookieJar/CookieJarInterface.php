@@ -2,16 +2,15 @@
 
 namespace Guzzle\Plugin\Cookie\CookieJar;
 
+use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Cookie\Cookie;
 
 /**
  * Interface for persisting cookies
  */
 interface CookieJarInterface extends \Countable, \IteratorAggregate
 {
-
     /**
      * Remove cookies currently held in the Cookie cookieJar.
      *
@@ -26,7 +25,7 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      *
      * @return CookieJarInterface
      */
-    public function remove( $domain = null, $path = null, $name = null );
+    public function remove($domain = null, $path = null, $name = null);
 
     /**
      * Discard all temporary cookies.
@@ -52,7 +51,7 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      *
      * @return bool Returns true on success or false on failure
      */
-    public function add( Cookie $cookie );
+    public function add(Cookie $cookie);
 
     /**
      * Add cookies from a {@see Guzzle\Http\Message\Response} object
@@ -60,7 +59,7 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * @param Response         $response Response object
      * @param RequestInterface $request  Request that received the response
      */
-    public function addCookiesFromResponse( Response $response, RequestInterface $request = null );
+    public function addCookiesFromResponse(Response $response, RequestInterface $request = null);
 
     /**
      * Get cookies matching a request object
@@ -69,7 +68,7 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      *
      * @return array
      */
-    public function getMatchingCookies( RequestInterface $request );
+    public function getMatchingCookies(RequestInterface $request);
 
     /**
      * Get all of the matching cookies
@@ -82,5 +81,5 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      *
      * @return array Returns an array of Cookie objects
      */
-    public function all( $domain = null, $path = null, $name = null, $skipDiscardable = false, $skipExpired = true );
+    public function all($domain = null, $path = null, $name = null, $skipDiscardable = false, $skipExpired = true);
 }

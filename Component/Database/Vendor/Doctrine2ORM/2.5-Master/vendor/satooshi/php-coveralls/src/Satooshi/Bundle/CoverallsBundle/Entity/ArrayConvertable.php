@@ -8,7 +8,6 @@ namespace Satooshi\Bundle\CoverallsBundle\Entity;
  */
 interface ArrayConvertable
 {
-
     /**
      * Convert to an array.
      *

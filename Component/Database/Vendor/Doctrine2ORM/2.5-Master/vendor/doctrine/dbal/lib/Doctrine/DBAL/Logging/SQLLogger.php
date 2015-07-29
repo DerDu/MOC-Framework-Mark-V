@@ -31,7 +31,6 @@ namespace Doctrine\DBAL\Logging;
  */
 interface SQLLogger
 {
-
     /**
      * Logs a SQL statement somewhere.
      *
@@ -41,7 +40,7 @@ interface SQLLogger
      *
      * @return void
      */
-    public function startQuery( $sql, array $params = null, array $types = null );
+    public function startQuery($sql, array $params = null, array $types = null);
 
     /**
      * Marks the last started query as stopped. This can be used for timing of queries.

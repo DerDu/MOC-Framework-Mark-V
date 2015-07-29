@@ -29,7 +29,6 @@ namespace Doctrine\DBAL\Driver;
  */
 interface Connection
 {
-
     /**
      * Prepares a statement for execution and returns a Statement object.
      *
@@ -37,7 +36,7 @@ interface Connection
      *
      * @return \Doctrine\DBAL\Driver\Statement
      */
-    function prepare( $prepareString );
+    function prepare($prepareString);
 
     /**
      * Executes an SQL statement, returning a result set as a Statement object.
@@ -54,7 +53,7 @@ interface Connection
      *
      * @return string
      */
-    function quote( $input, $type = \PDO::PARAM_STR );
+    function quote($input, $type=\PDO::PARAM_STR);
 
     /**
      * Executes an SQL statement and return the number of affected rows.
@@ -63,7 +62,7 @@ interface Connection
      *
      * @return integer
      */
-    function exec( $statement );
+    function exec($statement);
 
     /**
      * Returns the ID of the last inserted row or sequence value.
@@ -72,7 +71,7 @@ interface Connection
      *
      * @return string
      */
-    function lastInsertId( $name = null );
+    function lastInsertId($name = null);
 
     /**
      * Initiates a transaction.

@@ -19,7 +19,7 @@
 
 namespace Doctrine\Common\Cache;
 
-use Memcache;
+use \Memcache;
 
 /**
  * Memcache cache provider.
@@ -34,22 +34,10 @@ use Memcache;
  */
 class MemcacheCache extends CacheProvider
 {
-
     /**
      * @var Memcache|null
      */
     private $memcache;
-
-    /**
-     * Gets the memcache instance used by the cache.
-     *
-     * @return Memcache|null
-     */
-    public function getMemcache()
-    {
-
-        return $this->memcache;
-    }
 
     /**
      * Sets the memcache instance to use.
@@ -58,53 +46,58 @@ class MemcacheCache extends CacheProvider
      *
      * @return void
      */
-    public function setMemcache( Memcache $memcache )
+    public function setMemcache(Memcache $memcache)
     {
-
         $this->memcache = $memcache;
     }
 
     /**
-     * {@inheritdoc}
+     * Gets the memcache instance used by the cache.
+     *
+     * @return Memcache|null
      */
-    protected function doFetch( $id )
+    public function getMemcache()
     {
-
-        return $this->memcache->get( $id );
+        return $this->memcache;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doFetch($id)
     {
+        return $this->memcache->get($id);
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function doContains($id)
+    {
         $flags = null;
-        $this->memcache->get( $id, $flags );
-
+        $this->memcache->get($id, $flags);
+        
         //if memcache has changed the value of "flags", it means the value exists
-        return ( $flags !== null );
+        return ($flags !== null);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         if ($lifeTime > 30 * 24 * 3600) {
             $lifeTime = time() + $lifeTime;
         }
-        return $this->memcache->set( $id, $data, 0, (int)$lifeTime );
+        return $this->memcache->set($id, $data, 0, (int) $lifeTime);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
-
-        return $this->memcache->delete( $id );
+        return $this->memcache->delete($id);
     }
 
     /**
@@ -112,7 +105,6 @@ class MemcacheCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         return $this->memcache->flush();
     }
 
@@ -121,7 +113,6 @@ class MemcacheCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         $stats = $this->memcache->getStats();
         return array(
             Cache::STATS_HITS   => $stats['get_hits'],

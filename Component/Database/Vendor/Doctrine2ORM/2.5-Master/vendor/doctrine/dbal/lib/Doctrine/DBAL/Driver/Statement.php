@@ -32,7 +32,6 @@ namespace Doctrine\DBAL\Driver;
  */
 interface Statement extends ResultStatement
 {
-
     /**
      * Binds a value to a corresponding named (not supported by mysqli driver, see comment below) or positional
      * placeholder in the SQL statement that was used to prepare the statement.
@@ -48,7 +47,7 @@ interface Statement extends ResultStatement
      *
      * @return boolean TRUE on success or FALSE on failure.
      */
-    function bindValue( $param, $value, $type = null );
+    function bindValue($param, $value, $type = null);
 
 
     /**
@@ -77,7 +76,7 @@ interface Statement extends ResultStatement
      *
      * @return boolean TRUE on success or FALSE on failure.
      */
-    function bindParam( $column, &$variable, $type = null, $length = null );
+    function bindParam($column, &$variable, $type = null, $length = null);
 
     /**
      * Fetches the SQLSTATE associated with the last operation on the statement handle.
@@ -112,7 +111,7 @@ interface Statement extends ResultStatement
      *
      * @return boolean TRUE on success or FALSE on failure.
      */
-    function execute( $params = null );
+    function execute($params = null);
 
     /**
      * Returns the number of rows affected by the last DELETE, INSERT, or UPDATE statement

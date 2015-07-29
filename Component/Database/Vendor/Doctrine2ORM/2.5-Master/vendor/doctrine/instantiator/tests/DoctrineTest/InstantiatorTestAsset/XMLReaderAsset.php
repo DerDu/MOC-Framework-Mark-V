@@ -29,7 +29,6 @@ use XMLReader;
  */
 class XMLReaderAsset extends XMLReader
 {
-
     /**
      * Constructor - should not be called
      *
@@ -37,7 +36,6 @@ class XMLReaderAsset extends XMLReader
      */
     public function __construct()
     {
-
-        throw new BadMethodCallException( 'Not supposed to be called!' );
+        throw new BadMethodCallException('Not supposed to be called!');
     }
 }

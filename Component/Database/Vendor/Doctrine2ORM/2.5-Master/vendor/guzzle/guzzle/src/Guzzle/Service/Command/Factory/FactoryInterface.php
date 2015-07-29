@@ -9,7 +9,6 @@ use Guzzle\Service\Command\CommandInterface;
  */
 interface FactoryInterface
 {
-
     /**
      * Create a command by name
      *
@@ -18,5 +17,5 @@ interface FactoryInterface
      *
      * @return CommandInterface|null
      */
-    public function factory( $name, array $args = array() );
+    public function factory($name, array $args = array());
 }

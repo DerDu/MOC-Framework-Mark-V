@@ -26,7 +26,6 @@ namespace Symfony\Component\EventDispatcher;
  */
 interface EventSubscriberInterface
 {
-
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *

@@ -11,56 +11,32 @@
 /**
  * A Decorator that runs a test repeatedly.
  *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 2.0.0
+ * @since Class available since Release 2.0.0
  */
 class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
 {
-
     /**
-     * @var mixed
-     */
-    protected $filter = false;
-
-    /**
-     * @var array
-     */
-    protected $groups = array();
-
-    /**
-     * @var array
-     */
-    protected $excludeGroups = array();
-
-    /**
-     * @var boolean
+     * @var bool
      */
     protected $processIsolation = false;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $timesRepeat = 1;
 
     /**
-     * @param  PHPUnit_Framework_Test $test
-     * @param  integer                $timesRepeat
-     * @param  boolean                $processIsolation
-     *
+     * @param  PHPUnit_Framework_Test      $test
+     * @param  int                         $timesRepeat
+     * @param  bool                        $processIsolation
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct( PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false )
+    public function __construct(PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false)
     {
+        parent::__construct($test);
 
-        parent::__construct( $test );
-
-        if (is_integer( $timesRepeat ) &&
-            $timesRepeat >= 0
-        ) {
+        if (is_integer($timesRepeat) &&
+            $timesRepeat >= 0) {
             $this->timesRepeat = $timesRepeat;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(
@@ -76,12 +52,11 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * Counts the number of test cases that
      * will be run by this test.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
-
-        return $this->timesRepeat * count( $this->test );
+        return $this->timesRepeat * count($this->test);
     }
 
     /**
@@ -89,13 +64,11 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * result in a TestResult.
      *
      * @param  PHPUnit_Framework_TestResult $result
-     *
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run( PHPUnit_Framework_TestResult $result = null )
+    public function run(PHPUnit_Framework_TestResult $result = null)
     {
-
         if ($result === null) {
             $result = $this->createResult();
         }
@@ -104,9 +77,9 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
         for ($i = 0; $i < $this->timesRepeat && !$result->shouldStop(); $i++) {
             //@codingStandardsIgnoreEnd
             if ($this->test instanceof PHPUnit_Framework_TestSuite) {
-                $this->test->setRunTestInSeparateProcess( $this->processIsolation );
+                $this->test->setRunTestInSeparateProcess($this->processIsolation);
             }
-            $this->test->run( $result );
+            $this->test->run($result);
         }
 
         return $result;

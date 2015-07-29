@@ -34,7 +34,6 @@ namespace Doctrine\Common;
  */
 class EventArgs
 {
-
     /**
      * Single instance of EventArgs.
      *
@@ -51,7 +50,7 @@ class EventArgs
      * The benefit from this is that only one empty instance is instantiated and shared
      * (otherwise there would be instances for every dispatched in the abovementioned form).
      *
-     * @see  EventManager::dispatchEvent
+     * @see EventManager::dispatchEvent
      *
      * @link http://msdn.microsoft.com/en-us/library/system.eventargs.aspx
      *
@@ -59,8 +58,7 @@ class EventArgs
      */
     public static function getEmptyInstance()
     {
-
-        if (!self::$_emptyEventArgsInstance) {
+        if ( ! self::$_emptyEventArgsInstance) {
             self::$_emptyEventArgsInstance = new EventArgs;
         }
 

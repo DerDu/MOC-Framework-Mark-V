@@ -12,43 +12,64 @@ namespace SebastianBergmann\Comparator;
 
 /**
  * Factory for comparators which compare values for equality.
- *
- * @package    Comparator
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
  */
 class Factory
 {
-
-    /**
-     * @var Factory
-     */
-    private static $instance;
     /**
      * @var Comparator[]
      */
     private $comparators = array();
 
     /**
+     * @var Factory
+     */
+    private static $instance;
+
+    /**
      * Constructs a new factory.
      */
     public function __construct()
     {
+        $this->register(new TypeComparator);
+        $this->register(new ScalarComparator);
+        $this->register(new NumericComparator);
+        $this->register(new DoubleComparator);
+        $this->register(new ArrayComparator);
+        $this->register(new ResourceComparator);
+        $this->register(new ObjectComparator);
+        $this->register(new ExceptionComparator);
+        $this->register(new SplObjectStorageComparator);
+        $this->register(new DOMNodeComparator);
+        $this->register(new MockObjectComparator);
+        $this->register(new DateTimeComparator);
+    }
 
-        $this->register( new TypeComparator );
-        $this->register( new ScalarComparator );
-        $this->register( new NumericComparator );
-        $this->register( new DoubleComparator );
-        $this->register( new ArrayComparator );
-        $this->register( new ResourceComparator );
-        $this->register( new ObjectComparator );
-        $this->register( new ExceptionComparator );
-        $this->register( new SplObjectStorageComparator );
-        $this->register( new DOMNodeComparator );
-        $this->register( new MockObjectComparator );
-        $this->register( new DateTimeComparator );
+    /**
+     * @return Factory
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Returns the correct comparator for comparing two values.
+     *
+     * @param  mixed      $expected The first value to compare
+     * @param  mixed      $actual   The second value to compare
+     * @return Comparator
+     */
+    public function getComparatorFor($expected, $actual)
+    {
+        foreach ($this->comparators as $comparator) {
+            if ($comparator->accepts($expected, $actual)) {
+                return $comparator;
+            }
+        }
     }
 
     /**
@@ -61,43 +82,11 @@ class Factory
      *
      * @param Comparator $comparator The registered comparator
      */
-    public function register( Comparator $comparator )
+    public function register(Comparator $comparator)
     {
+        array_unshift($this->comparators, $comparator);
 
-        array_unshift( $this->comparators, $comparator );
-
-        $comparator->setFactory( $this );
-    }
-
-    /**
-     * @return Factory
-     */
-    public static function getInstance()
-    {
-
-        if (self::$instance === null) {
-            self::$instance = new Factory;
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * Returns the correct comparator for comparing two values.
-     *
-     * @param  mixed $expected The first value to compare
-     * @param  mixed $actual The second value to compare
-     *
-     * @return Comparator
-     */
-    public function getComparatorFor( $expected, $actual )
-    {
-
-        foreach ($this->comparators as $comparator) {
-            if ($comparator->accepts( $expected, $actual )) {
-                return $comparator;
-            }
-        }
+        $comparator->setFactory($this);
     }
 
     /**
@@ -107,12 +96,11 @@ class Factory
      *
      * @param Comparator $comparator The unregistered comparator
      */
-    public function unregister( Comparator $comparator )
+    public function unregister(Comparator $comparator)
     {
-
         foreach ($this->comparators as $key => $_comparator) {
             if ($comparator === $_comparator) {
-                unset( $this->comparators[$key] );
+                unset($this->comparators[$key]);
             }
         }
     }

@@ -26,13 +26,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class SQLAnywhere11Keywords extends SQLAnywhereKeywords
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'SQLAnywhere11';
     }
 
@@ -43,11 +41,10 @@ class SQLAnywhere11Keywords extends SQLAnywhereKeywords
      */
     protected function getKeywords()
     {
-
         return array_merge(
             array_diff(
                 parent::getKeywords(),
-                array( 'IQ' )
+                array('IQ')
             ),
             array(
                 'MERGE',

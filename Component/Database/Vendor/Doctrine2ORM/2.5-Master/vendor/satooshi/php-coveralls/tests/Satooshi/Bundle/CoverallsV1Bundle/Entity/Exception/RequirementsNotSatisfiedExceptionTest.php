@@ -8,7 +8,6 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity\Exception;
  */
 class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
 {
-
     // getReadEnv()
 
     /**
@@ -16,10 +15,9 @@ class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldNotHaveReadEnvOnConstruction()
     {
-
         $object = new RequirementsNotSatisfiedException();
 
-        $this->assertNull( $object->getReadEnv() );
+        $this->assertNull($object->getReadEnv());
     }
 
     // setReadEnv()
@@ -29,15 +27,14 @@ class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetReadEnv()
     {
-
         $expected = array(
             'ENV_NAME' => 'value',
         );
 
         $object = new RequirementsNotSatisfiedException();
-        $object->setReadEnv( $expected );
+        $object->setReadEnv($expected);
 
-        $this->assertSame( $expected, $object->getReadEnv() );
+        $this->assertSame($expected, $object->getReadEnv());
     }
 
     // getHelpMessage()
@@ -47,17 +44,16 @@ class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldGetHelpMessageWithStringEnvVar()
     {
-
         $expected = array(
             'ENV_NAME' => 'value',
         );
 
         $object = new RequirementsNotSatisfiedException();
-        $object->setReadEnv( $expected );
+        $object->setReadEnv($expected);
 
         $message = $object->getHelpMessage();
 
-        $this->assertContains( "  - ENV_NAME='value'", $message );
+        $this->assertContains("  - ENV_NAME='value'", $message);
     }
 
     /**
@@ -65,17 +61,16 @@ class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldGetHelpMessageWithIntegerEnvVar()
     {
-
         $expected = array(
             'ENV_NAME' => 123,
         );
 
         $object = new RequirementsNotSatisfiedException();
-        $object->setReadEnv( $expected );
+        $object->setReadEnv($expected);
 
         $message = $object->getHelpMessage();
 
-        $this->assertContains( "  - ENV_NAME=123", $message );
+        $this->assertContains("  - ENV_NAME=123", $message);
     }
 
     /**
@@ -83,16 +78,15 @@ class RequirementsNotSatisfiedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldGetHelpMessageWithBooleanEnvVar()
     {
-
         $expected = array(
             'ENV_NAME' => true,
         );
 
         $object = new RequirementsNotSatisfiedException();
-        $object->setReadEnv( $expected );
+        $object->setReadEnv($expected);
 
         $message = $object->getHelpMessage();
 
-        $this->assertContains( "  - ENV_NAME=true", $message );
+        $this->assertContains("  - ENV_NAME=true", $message);
     }
 }

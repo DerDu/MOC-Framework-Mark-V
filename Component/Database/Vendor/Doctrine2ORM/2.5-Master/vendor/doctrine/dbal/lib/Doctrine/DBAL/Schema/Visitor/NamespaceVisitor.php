@@ -28,11 +28,10 @@ namespace Doctrine\DBAL\Schema\Visitor;
  */
 interface NamespaceVisitor
 {
-
     /**
      * Accepts a schema namespace name.
      *
      * @param string $namespaceName The schema namespace name to accept.
      */
-    public function acceptNamespace( $namespaceName );
+    public function acceptNamespace($namespaceName);
 }

@@ -9,7 +9,6 @@ use Guzzle\Http\Message\Response;
  */
 class DefaultResponseParser implements ResponseParserInterface
 {
-
     /** @var self */
     protected static $instance;
 
@@ -19,7 +18,6 @@ class DefaultResponseParser implements ResponseParserInterface
      */
     public static function getInstance()
     {
-
         if (!self::$instance) {
             self::$instance = new self;
         }
@@ -27,29 +25,27 @@ class DefaultResponseParser implements ResponseParserInterface
         return self::$instance;
     }
 
-    public function parse( CommandInterface $command )
+    public function parse(CommandInterface $command)
     {
-
         $response = $command->getRequest()->getResponse();
 
         // Account for hard coded content-type values specified in service descriptions
         if ($contentType = $command['command.expects']) {
-            $response->setHeader( 'Content-Type', $contentType );
+            $response->setHeader('Content-Type', $contentType);
         } else {
-            $contentType = (string)$response->getHeader( 'Content-Type' );
+            $contentType = (string) $response->getHeader('Content-Type');
         }
 
-        return $this->handleParsing( $command, $response, $contentType );
+        return $this->handleParsing($command, $response, $contentType);
     }
 
-    protected function handleParsing( CommandInterface $command, Response $response, $contentType )
+    protected function handleParsing(CommandInterface $command, Response $response, $contentType)
     {
-
         $result = $response;
         if ($result->getBody()) {
-            if (stripos( $contentType, 'json' ) !== false) {
+            if (stripos($contentType, 'json') !== false) {
                 $result = $result->json();
-            } elseif (stripos( $contentType, 'xml' ) !== false) {
+            } elseif (stripos($contentType, 'xml') !== false) {
                 $result = $result->xml();
             }
         }

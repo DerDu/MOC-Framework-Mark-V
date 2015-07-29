@@ -13,7 +13,6 @@ namespace Prophecy\Exception\Doubler;
 
 class ReturnByReferenceException extends DoubleException
 {
-
     private $classname;
     private $methodName;
 
@@ -22,24 +21,21 @@ class ReturnByReferenceException extends DoubleException
      * @param string $classname
      * @param string $methodName
      */
-    public function __construct( $message, $classname, $methodName )
+    public function __construct($message, $classname, $methodName)
     {
+        parent::__construct($message);
 
-        parent::__construct( $message );
-
-        $this->classname = $classname;
+        $this->classname  = $classname;
         $this->methodName = $methodName;
     }
 
     public function getClassname()
     {
-
         return $this->classname;
     }
 
     public function getMethodName()
     {
-
         return $this->methodName;
     }
 }

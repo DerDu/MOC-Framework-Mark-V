@@ -18,7 +18,6 @@ namespace Prophecy\Argument;
  */
 class ArgumentsWildcard
 {
-
     /**
      * @var Token\TokenInterface[]
      */
@@ -30,12 +29,11 @@ class ArgumentsWildcard
      *
      * @param array $arguments Array of argument tokens or values
      */
-    public function __construct( array $arguments )
+    public function __construct(array $arguments)
     {
-
         foreach ($arguments as $argument) {
             if (!$argument instanceof Token\TokenInterface) {
-                $argument = new Token\ExactValueToken( $argument );
+                $argument = new Token\ExactValueToken($argument);
             }
 
             $this->tokens[] = $argument;
@@ -49,18 +47,17 @@ class ArgumentsWildcard
      *
      * @return false|int False OR integer score (higher - better)
      */
-    public function scoreArguments( array $arguments )
+    public function scoreArguments(array $arguments)
     {
-
-        if (0 == count( $arguments ) && 0 == count( $this->tokens )) {
+        if (0 == count($arguments) && 0 == count($this->tokens)) {
             return 1;
         }
 
-        $arguments = array_values( $arguments );
+        $arguments  = array_values($arguments);
         $totalScore = 0;
         foreach ($this->tokens as $i => $token) {
-            $argument = isset( $arguments[$i] ) ? $arguments[$i] : null;
-            if (1 >= $score = $token->scoreArgument( $argument )) {
+            $argument = isset($arguments[$i]) ? $arguments[$i] : null;
+            if (1 >= $score = $token->scoreArgument($argument)) {
                 return false;
             }
 
@@ -71,7 +68,7 @@ class ArgumentsWildcard
             }
         }
 
-        if (count( $arguments ) > count( $this->tokens )) {
+        if (count($arguments) > count($this->tokens)) {
             return false;
         }
 
@@ -85,12 +82,10 @@ class ArgumentsWildcard
      */
     public function __toString()
     {
-
         if (null === $this->string) {
-            $this->string = implode( ', ', array_map( function ( $token ) {
-
-                return (string)$token;
-            }, $this->tokens ) );
+            $this->string = implode(', ', array_map(function ($token) {
+                return (string) $token;
+            }, $this->tokens));
         }
 
         return $this->string;
@@ -101,7 +96,6 @@ class ArgumentsWildcard
      */
     public function getTokens()
     {
-
         return $this->tokens;
     }
 }

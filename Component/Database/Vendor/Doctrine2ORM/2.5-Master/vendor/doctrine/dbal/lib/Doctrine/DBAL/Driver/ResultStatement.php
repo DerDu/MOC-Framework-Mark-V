@@ -26,7 +26,6 @@ namespace Doctrine\DBAL\Driver;
  */
 interface ResultStatement extends \Traversable
 {
-
     /**
      * Closes the cursor, enabling the statement to be executed again.
      *
@@ -54,7 +53,7 @@ interface ResultStatement extends \Traversable
      *
      * @see PDO::FETCH_* constants.
      */
-    public function setFetchMode( $fetchMode, $arg2 = null, $arg3 = null );
+    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null);
 
     /**
      * Returns the next row of a result set.
@@ -68,7 +67,7 @@ interface ResultStatement extends \Traversable
      *
      * @see PDO::FETCH_* constants.
      */
-    public function fetch( $fetchMode = null );
+    public function fetch($fetchMode = null);
 
     /**
      * Returns an array containing all of the result set rows.
@@ -81,7 +80,7 @@ interface ResultStatement extends \Traversable
      *
      * @see PDO::FETCH_* constants.
      */
-    public function fetchAll( $fetchMode = null );
+    public function fetchAll($fetchMode = null);
 
     /**
      * Returns a single column from the next row of a result set or FALSE if there are no more rows.
@@ -92,5 +91,5 @@ interface ResultStatement extends \Traversable
      *
      * @return string|boolean A single column in the next row of a result set, or FALSE if there are no more rows.
      */
-    public function fetchColumn( $columnIndex = 0 );
+    public function fetchColumn($columnIndex = 0);
 }

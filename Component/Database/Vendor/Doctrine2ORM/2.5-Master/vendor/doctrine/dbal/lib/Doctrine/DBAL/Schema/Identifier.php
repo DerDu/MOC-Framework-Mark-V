@@ -31,15 +31,13 @@ namespace Doctrine\DBAL\Schema;
  */
 class Identifier extends AbstractAsset
 {
-
     /**
      * Constructor.
      *
      * @param string $identifier Identifier name to wrap.
      */
-    public function __construct( $identifier )
+    public function __construct($identifier)
     {
-
-        $this->_setName( $identifier );
+        $this->_setName($identifier);
     }
 }

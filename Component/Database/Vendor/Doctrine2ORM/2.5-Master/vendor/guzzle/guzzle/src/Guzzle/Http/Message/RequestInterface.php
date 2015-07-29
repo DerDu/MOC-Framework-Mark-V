@@ -4,18 +4,17 @@ namespace Guzzle\Http\Message;
 
 use Guzzle\Common\Collection;
 use Guzzle\Common\HasDispatcherInterface;
+use Guzzle\Http\Exception\RequestException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\EntityBodyInterface;
-use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\QueryString;
 use Guzzle\Http\Url;
+use Guzzle\Http\QueryString;
 
 /**
  * Generic HTTP request interface
  */
 interface RequestInterface extends MessageInterface, HasDispatcherInterface
 {
-
     const STATE_NEW = 'new';
     const STATE_COMPLETE = 'complete';
     const STATE_TRANSFER = 'transfer';
@@ -51,7 +50,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setClient( ClientInterface $client );
+    public function setClient(ClientInterface $client);
 
     /**
      * Get the client used to transport the request
@@ -63,11 +62,11 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     /**
      * Set the URL of the request
      *
-     * @param string $url |Url Full URL to set including query string
+     * @param string $url|Url Full URL to set including query string
      *
      * @return self
      */
-    public function setUrl( $url );
+    public function setUrl($url);
 
     /**
      * Get the full URL of the request (e.g. 'http://www.guzzle-project.com/')
@@ -76,7 +75,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return string|Url
      */
-    public function getUrl( $asObject = false );
+    public function getUrl($asObject = false);
 
     /**
      * Get the resource part of the the request, including the path, query string, and fragment
@@ -113,7 +112,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setScheme( $scheme );
+    public function setScheme($scheme);
 
     /**
      * Get the host of the request
@@ -129,7 +128,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setHost( $host );
+    public function setHost($host);
 
     /**
      * Get the path of the request (e.g. '/', '/index.html')
@@ -145,7 +144,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setPath( $path );
+    public function setPath($path);
 
     /**
      * Get the port that the request will be sent on if it has been set
@@ -161,7 +160,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setPort( $port );
+    public function setPort($port);
 
     /**
      * Get the username to pass in the URL if set
@@ -189,7 +188,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      * @link http://php.net/manual/en/function.curl-setopt.php See the available options for CURLOPT_HTTPAUTH
      * @throws RequestException
      */
-    public function setAuth( $user, $password = '', $scheme = 'Basic' );
+    public function setAuth($user, $password = '', $scheme = 'Basic');
 
     /**
      * Get the HTTP protocol version of the request
@@ -205,7 +204,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function setProtocolVersion( $protocol );
+    public function setProtocolVersion($protocol);
 
     /**
      * Get the previously received {@see Response} or NULL if the request has not been sent
@@ -226,7 +225,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self Returns a reference to the object.
      */
-    public function setResponse( Response $response, $queued = false );
+    public function setResponse(Response $response, $queued = false);
 
     /**
      * The start of a response has been received for a request and the request is still in progress
@@ -235,7 +234,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function startResponse( Response $response );
+    public function startResponse(Response $response);
 
     /**
      * Set the EntityBody that will hold a successful response message's entity body.
@@ -245,10 +244,9 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @param EntityBodyInterface|string|resource $body Response body object. Pass a string to attempt to store the
      *                                                  response body in a local file.
-     *
      * @return Request
      */
-    public function setResponseBody( $body );
+    public function setResponseBody($body);
 
     /**
      * Get the EntityBody that will hold the resulting response message's entity body. This response body will only
@@ -274,7 +272,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return string Returns the current state of the request (which may have changed due to events being fired)
      */
-    public function setState( $state, array $context = array() );
+    public function setState($state, array $context = array());
 
     /**
      * Get the cURL options that will be applied when the cURL handle is created
@@ -297,7 +295,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return null|string
      */
-    public function getCookie( $name );
+    public function getCookie($name);
 
     /**
      * Add a Cookie value by name to the Cookie header
@@ -307,7 +305,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function addCookie( $name, $value );
+    public function addCookie($name, $value);
 
     /**
      * Remove a specific cookie value by name
@@ -316,5 +314,5 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      *
      * @return self
      */
-    public function removeCookie( $name );
+    public function removeCookie($name);
 }

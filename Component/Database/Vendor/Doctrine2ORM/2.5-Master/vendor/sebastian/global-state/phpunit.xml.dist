@@ -4,18 +4,18 @@
          bootstrap="vendor/autoload.php"
          backupGlobals="false"
          verbose="true">
-    <testsuite name="GlobalState">
-        <directory suffix="Test.php">tests</directory>
-    </testsuite>
+  <testsuite name="GlobalState">
+    <directory suffix="Test.php">tests</directory>
+  </testsuite>
 
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">src</directory>
+    </whitelist>
+  </filter>
 
-    <php>
-        <const name="GLOBALSTATE_TESTSUITE" value="true"/>
-        <ini name="date.timezone" value="Etc/UTC"/>
-    </php>
+  <php>
+    <const name="GLOBALSTATE_TESTSUITE" value="true"/>
+    <ini name="date.timezone" value="Etc/UTC"/>
+  </php>
 </phpunit>

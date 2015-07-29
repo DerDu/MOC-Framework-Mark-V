@@ -8,140 +8,100 @@ namespace Satooshi\Component\File;
  */
 class PathTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        $this->existingFile = __DIR__ . '/existing.txt';
+        $this->unreadablePath = __DIR__ . '/unreadable.txt';
+        $this->unwritablePath = __DIR__ . '/unwritable.txt';
+        $this->unwritableDir  = __DIR__ . '/unwritable.dir';
+
+        $this->object = new Path();
+    }
+
+    protected function tearDown()
+    {
+        $this->rmFile($this->existingFile);
+        $this->rmFile($this->unreadablePath);
+        $this->rmFile($this->unwritablePath);
+
+        $this->rmDir($this->unwritableDir);
+    }
+
+    protected function rmFile($file)
+    {
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
+
+    protected function rmDir($dir)
+    {
+        if (is_dir($dir)) {
+            rmdir($dir);
+        }
+    }
+
+    protected function touchUnreadableFile()
+    {
+        $this->rmFile($this->unreadablePath);
+
+        touch($this->unreadablePath);
+        chmod($this->unreadablePath, 0377);
+    }
+
+    protected function touchUnwritableFile()
+    {
+        $this->rmFile($this->unwritablePath);
+
+        touch($this->unwritablePath);
+        chmod($this->unwritablePath, 0577);
+    }
+
+    protected function mkdirUnwritableDir()
+    {
+        $this->rmDir($this->unwritableDir);
+
+        mkdir($this->unwritableDir);
+        chmod($this->unwritableDir, 0577);
+    }
+
+    // provider
 
     public function provideRelativePaths()
     {
-
         return array(
-            array( '' ),
-            array( '.' ),
-            array( '..' ),
+            array(''),
+            array('.'),
+            array('..'),
         );
     }
 
     public function proviceAbsolutePaths()
     {
-
         return array(
-            array( '/' ),
-            array( '/path/to/somewhere' ),
+            array('/'),
+            array('/path/to/somewhere'),
         );
-    }
-
-    /**
-     * @test
-     * @dataProvider provideRelativePaths
-     */
-    public function shouldBeRelativePath( $path )
-    {
-
-        $this->assertTrue( $this->object->isRelativePath( $path ) );
-    }
-
-    /**
-     * @test
-     * @dataProvider proviceAbsolutePaths
-     */
-    public function shouldNotBeRelativePath( $path )
-    {
-
-        $this->assertFalse( $this->object->isRelativePath( $path ) );
-    }
-
-    /**
-     * @test
-     */
-    public function shouldNotConvertAbsolutePath()
-    {
-
-        $path = false;
-        $rootDir = __DIR__;
-
-        $this->assertFalse( $this->object->toAbsolutePath( $path, $rootDir ) );
-    }
-
-    /**
-     * @test
-     * @dataProvider provideRelativePaths
-     */
-    public function shouldConvertAbsolutePathIfRelativePathGiven( $path )
-    {
-
-        $rootDir = '/path/to/dir';
-
-        $expected = $rootDir.DIRECTORY_SEPARATOR.$path;
-
-        $this->assertEquals( $expected, $this->object->toAbsolutePath( $path, $rootDir ) );
-    }
-
-    /**
-     * @test
-     */
-    public function shouldConvertAbsolutePathIfAbsolutePathGiven()
-    {
-
-        $rootDir = '/path/to/dir';
-        $path = __DIR__;
-
-        $expected = $path;
-
-        $this->assertEquals( $expected, $this->object->toAbsolutePath( $path, $rootDir ) );
-    }
-
-    // provider
-
-    /**
-     * @test
-     */
-    public function shouldNotBeRealPath()
-    {
-
-        $path = false;
-        $rootDir = __DIR__;
-
-        $this->assertFalse( $this->object->getRealPath( $path, $rootDir ) );
-    }
-
-    /**
-     * @test
-     * @dataProvider provideRelativePaths
-     */
-    public function shouldGetRealPathIfRelativePathGiven( $path )
-    {
-
-        $rootDir = __DIR__;
-
-        $expected = realpath( $rootDir.DIRECTORY_SEPARATOR.$path );
-
-        $this->assertEquals( $expected, $this->object->getRealPath( $path, $rootDir ) );
     }
 
     // isRelativePath()
 
     /**
      * @test
+     * @dataProvider provideRelativePaths
      */
-    public function shouldGetRealPathIfAbsolutePathGiven()
+    public function shouldBeRelativePath($path)
     {
-
-        $path = __DIR__;
-        $rootDir = '';
-
-        $expected = realpath( $path );
-
-        $this->assertEquals( $expected, $this->object->getRealPath( $path, $rootDir ) );
+        $this->assertTrue($this->object->isRelativePath($path));
     }
 
     /**
      * @test
+     * @dataProvider proviceAbsolutePaths
      */
-    public function shouldNotBeRealDir()
+    public function shouldNotBeRelativePath($path)
     {
-
-        $path = false;
-        $rootDir = __DIR__;
-
-        $this->assertFalse( $this->object->getRealDir( $path, $rootDir ) );
+        $this->assertFalse($this->object->isRelativePath($path));
     }
 
     // toAbsolutePath()
@@ -149,41 +109,38 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldGetRealDirIfRelativePathGiven()
+    public function shouldNotConvertAbsolutePath()
     {
-
-        $path = '';
+        $path    = false;
         $rootDir = __DIR__;
 
-        $expected = realpath( $rootDir.DIRECTORY_SEPARATOR.$path );
+        $this->assertFalse($this->object->toAbsolutePath($path, $rootDir));
+    }
 
-        $this->assertEquals( $expected, $this->object->getRealDir( $path, $rootDir ) );
+    /**
+     * @test
+     * @dataProvider provideRelativePaths
+     */
+    public function shouldConvertAbsolutePathIfRelativePathGiven($path)
+    {
+        $rootDir = '/path/to/dir';
+
+        $expected = $rootDir . DIRECTORY_SEPARATOR . $path;
+
+        $this->assertEquals($expected, $this->object->toAbsolutePath($path, $rootDir));
     }
 
     /**
      * @test
      */
-    public function shouldGetRealDirIfAbsolutePathGiven()
+    public function shouldConvertAbsolutePathIfAbsolutePathGiven()
     {
+        $rootDir = '/path/to/dir';
+        $path    = __DIR__;
 
-        $path = __DIR__;
-        $rootDir = '';
+        $expected = $path;
 
-        $expected = realpath( $path.'/..' );
-
-        $this->assertEquals( $expected, $this->object->getRealDir( $path, $rootDir ) );
-    }
-
-    /**
-     * @test
-     */
-    public function shouldNotBeRealWritingFilePath()
-    {
-
-        $path = false;
-        $rootDir = __DIR__;
-
-        $this->assertFalse( $this->object->getRealWritingFilePath( $path, $rootDir ) );
+        $this->assertEquals($expected, $this->object->toAbsolutePath($path, $rootDir));
     }
 
     // getRealPath()
@@ -191,37 +148,38 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldGetRealWritingPathIfRelativePathGiven()
+    public function shouldNotBeRealPath()
     {
-
-        $path = 'test.txt';
+        $path    = false;
         $rootDir = __DIR__;
 
-        $expected = $rootDir.DIRECTORY_SEPARATOR.$path;
+        $this->assertFalse($this->object->getRealPath($path, $rootDir));
+    }
 
-        $this->assertEquals( $expected, $this->object->getRealWritingFilePath( $path, $rootDir ) );
+    /**
+     * @test
+     * @dataProvider provideRelativePaths
+     */
+    public function shouldGetRealPathIfRelativePathGiven($path)
+    {
+        $rootDir = __DIR__;
+
+        $expected = realpath($rootDir . DIRECTORY_SEPARATOR . $path);
+
+        $this->assertEquals($expected, $this->object->getRealPath($path, $rootDir));
     }
 
     /**
      * @test
      */
-    public function shouldNotExistRealPathIfFalseGiven()
+    public function shouldGetRealPathIfAbsolutePathGiven()
     {
+        $path    = __DIR__;
+        $rootDir = '';
 
-        $path = false;
+        $expected = realpath($path);
 
-        $this->assertFalse( $this->object->isRealPathExist( $path ) );
-    }
-
-    /**
-     * @test
-     */
-    public function shouldNotExistRealPath()
-    {
-
-        $path = __DIR__.'/dummy.dir';
-
-        $this->assertFalse( $this->object->isRealPathExist( $path ) );
+        $this->assertEquals($expected, $this->object->getRealPath($path, $rootDir));
     }
 
     // getRealDir()
@@ -229,34 +187,38 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldExistRealPath()
+    public function shouldNotBeRealDir()
     {
+        $path    = false;
+        $rootDir = __DIR__;
 
-        touch( $this->existingFile );
-
-        $this->assertTrue( $this->object->isRealPathExist( $this->existingFile ) );
+        $this->assertFalse($this->object->getRealDir($path, $rootDir));
     }
 
     /**
      * @test
      */
-    public function shouldNotExistRealFile()
+    public function shouldGetRealDirIfRelativePathGiven()
     {
+        $path    = '';
+        $rootDir = __DIR__;
 
-        $path = __DIR__.'/dummy.file';
+        $expected = realpath($rootDir . DIRECTORY_SEPARATOR . $path);
 
-        $this->assertFalse( $this->object->isRealFileExist( $path ) );
+        $this->assertEquals($expected, $this->object->getRealDir($path, $rootDir));
     }
 
     /**
      * @test
      */
-    public function shouldNotExistRealFileIfDirGiven()
+    public function shouldGetRealDirIfAbsolutePathGiven()
     {
+        $path    = __DIR__;
+        $rootDir = '';
 
-        $path = __DIR__;
+        $expected = realpath($path . '/..');
 
-        $this->assertFalse( $this->object->isRealFileExist( $path ) );
+        $this->assertEquals($expected, $this->object->getRealDir($path, $rootDir));
     }
 
     // getRealWritingFilePath()
@@ -264,23 +226,25 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldExistRealFile()
+    public function shouldNotBeRealWritingFilePath()
     {
+        $path    = false;
+        $rootDir = __DIR__;
 
-        touch( $this->existingFile );
-
-        $this->assertTrue( $this->object->isRealFileExist( $this->existingFile ) );
+        $this->assertFalse($this->object->getRealWritingFilePath($path, $rootDir));
     }
 
     /**
      * @test
      */
-    public function shouldNotBeRealFileReadableIfFileNotFound()
+    public function shouldGetRealWritingPathIfRelativePathGiven()
     {
+        $path    = 'test.txt';
+        $rootDir = __DIR__;
 
-        $path = __DIR__.'/dummy.file';
+        $expected = $rootDir . DIRECTORY_SEPARATOR . $path;
 
-        $this->assertFalse( $this->object->isRealFileReadable( $path ) );
+        $this->assertEquals($expected, $this->object->getRealWritingFilePath($path, $rootDir));
     }
 
     // isRealPathExist()
@@ -288,29 +252,31 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldNotBeRealFileReadableIFFileUnreadable()
+    public function shouldNotExistRealPathIfFalseGiven()
     {
+        $path = false;
 
-        $this->touchUnreadableFile();
-
-        $this->assertFalse( $this->object->isRealFileReadable( $this->unreadablePath ) );
+        $this->assertFalse($this->object->isRealPathExist($path));
     }
 
-    protected function touchUnreadableFile()
+    /**
+     * @test
+     */
+    public function shouldNotExistRealPath()
     {
+        $path = __DIR__ . '/dummy.dir';
 
-        $this->rmFile( $this->unreadablePath );
-
-        touch( $this->unreadablePath );
-        chmod( $this->unreadablePath, 0377 );
+        $this->assertFalse($this->object->isRealPathExist($path));
     }
 
-    protected function rmFile( $file )
+    /**
+     * @test
+     */
+    public function shouldExistRealPath()
     {
+        touch($this->existingFile);
 
-        if (is_file( $file )) {
-            unlink( $file );
-        }
+        $this->assertTrue($this->object->isRealPathExist($this->existingFile));
     }
 
     // isRealFileExist()
@@ -318,67 +284,63 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldBeRealFileReadable()
+    public function shouldNotExistRealFile()
     {
+        $path    = __DIR__ . '/dummy.file';
 
-        touch( $this->existingFile );
-
-        $this->assertTrue( $this->object->isRealFileReadable( $this->existingFile ) );
+        $this->assertFalse($this->object->isRealFileExist($path));
     }
 
     /**
      * @test
      */
-    public function shouldNotBeRealFileWritableIfFileNotFound()
+    public function shouldNotExistRealFileIfDirGiven()
     {
+        $path    = __DIR__;
 
-        $path = __DIR__.'/dummy.file';
-
-        $this->assertFalse( $this->object->isRealFileWritable( $path ) );
+        $this->assertFalse($this->object->isRealFileExist($path));
     }
 
     /**
      * @test
      */
-    public function shouldNotBeRealFileWritableIfFileUnwritable()
+    public function shouldExistRealFile()
     {
+        touch($this->existingFile);
 
-        $this->touchUnwritableFile();
-
-        $this->assertFalse( $this->object->isRealFileWritable( $this->unwritablePath ) );
+        $this->assertTrue($this->object->isRealFileExist($this->existingFile));
     }
 
     // isRealFileReadable()
 
-    protected function touchUnwritableFile()
+    /**
+     * @test
+     */
+    public function shouldNotBeRealFileReadableIfFileNotFound()
     {
+        $path    = __DIR__ . '/dummy.file';
 
-        $this->rmFile( $this->unwritablePath );
-
-        touch( $this->unwritablePath );
-        chmod( $this->unwritablePath, 0577 );
+        $this->assertFalse($this->object->isRealFileReadable($path));
     }
 
     /**
      * @test
      */
-    public function shouldBeRealFileWritable()
+    public function shouldNotBeRealFileReadableIFFileUnreadable()
     {
+        $this->touchUnreadableFile();
 
-        touch( $this->existingFile );
-
-        $this->assertTrue( $this->object->isRealFileWritable( $this->existingFile ) );
+        $this->assertFalse($this->object->isRealFileReadable($this->unreadablePath));
     }
 
     /**
      * @test
      */
-    public function shouldNotExistRealDir()
+    public function shouldBeRealFileReadable()
     {
+        touch($this->existingFile);
 
-        $path = __DIR__.'/dummy.dir';
-
-        $this->assertFalse( $this->object->isRealDirExist( $path ) );
+        $this->assertTrue($this->object->isRealFileReadable($this->existingFile));
     }
 
     // isRealFileWritable()
@@ -386,34 +348,31 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldNotExistRealDirIfFileGiven()
+    public function shouldNotBeRealFileWritableIfFileNotFound()
     {
+        $path    = __DIR__ . '/dummy.file';
 
-        touch( $this->existingFile );
-
-        $this->assertFalse( $this->object->isRealDirExist( $this->existingFile ) );
+        $this->assertFalse($this->object->isRealFileWritable($path));
     }
 
     /**
      * @test
      */
-    public function shouldExistRealDir()
+    public function shouldNotBeRealFileWritableIfFileUnwritable()
     {
+        $this->touchUnwritableFile();
 
-        $path = __DIR__;
-
-        $this->assertTrue( $this->object->isRealDirExist( $path ) );
+        $this->assertFalse($this->object->isRealFileWritable($this->unwritablePath));
     }
 
     /**
      * @test
      */
-    public function shouldNotBeRealDirWritableIfDirNotFound()
+    public function shouldBeRealFileWritable()
     {
+        touch($this->existingFile);
 
-        $path = __DIR__.'/dummy.dir';
-
-        $this->assertFalse( $this->object->isRealDirWritable( $path ) );
+        $this->assertTrue($this->object->isRealFileWritable($this->existingFile));
     }
 
     // isRealDirExist()
@@ -421,29 +380,32 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldNotBeRealDirWritableIfDirUnwritable()
+    public function shouldNotExistRealDir()
     {
+        $path = __DIR__ . '/dummy.dir';
 
-        $this->mkdirUnwritableDir();
-
-        $this->assertFalse( $this->object->isRealDirWritable( $this->unwritableDir ) );
+        $this->assertFalse($this->object->isRealDirExist($path));
     }
 
-    protected function mkdirUnwritableDir()
+    /**
+     * @test
+     */
+    public function shouldNotExistRealDirIfFileGiven()
     {
+        touch($this->existingFile);
 
-        $this->rmDir( $this->unwritableDir );
 
-        mkdir( $this->unwritableDir );
-        chmod( $this->unwritableDir, 0577 );
+        $this->assertFalse($this->object->isRealDirExist($this->existingFile));
     }
 
-    protected function rmDir( $dir )
+    /**
+     * @test
+     */
+    public function shouldExistRealDir()
     {
+        $path = __DIR__;
 
-        if (is_dir( $dir )) {
-            rmdir( $dir );
-        }
+        $this->assertTrue($this->object->isRealDirExist($path));
     }
 
     // isRealDirWritable()
@@ -451,32 +413,30 @@ class PathTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldNotBeRealDirWritableIfDirNotFound()
+    {
+        $path = __DIR__ . '/dummy.dir';
+
+        $this->assertFalse($this->object->isRealDirWritable($path));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotBeRealDirWritableIfDirUnwritable()
+    {
+        $this->mkdirUnwritableDir();
+
+        $this->assertFalse($this->object->isRealDirWritable($this->unwritableDir));
+    }
+
+    /**
+     * @test
+     */
     public function shouldBeRealDirWritable()
     {
-
         $path = __DIR__;
 
-        $this->assertTrue( $this->object->isRealDirWritable( $path ) );
-    }
-
-    protected function setUp()
-    {
-
-        $this->existingFile = __DIR__.'/existing.txt';
-        $this->unreadablePath = __DIR__.'/unreadable.txt';
-        $this->unwritablePath = __DIR__.'/unwritable.txt';
-        $this->unwritableDir = __DIR__.'/unwritable.dir';
-
-        $this->object = new Path();
-    }
-
-    protected function tearDown()
-    {
-
-        $this->rmFile( $this->existingFile );
-        $this->rmFile( $this->unreadablePath );
-        $this->rmFile( $this->unwritablePath );
-
-        $this->rmDir( $this->unwritableDir );
+        $this->assertTrue($this->object->isRealDirWritable($path));
     }
 }

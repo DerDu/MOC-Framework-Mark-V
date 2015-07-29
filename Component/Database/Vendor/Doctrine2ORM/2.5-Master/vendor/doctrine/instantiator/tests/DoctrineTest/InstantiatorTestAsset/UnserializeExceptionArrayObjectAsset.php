@@ -29,13 +29,11 @@ use BadMethodCallException;
  */
 class UnserializeExceptionArrayObjectAsset extends ArrayObject
 {
-
     /**
      * {@inheritDoc}
      */
     public function __wakeup()
     {
-
         throw new BadMethodCallException();
     }
 }

@@ -24,7 +24,6 @@ namespace Doctrine\Common\Annotations;
  */
 final class AnnotationRegistry
 {
-
     /**
      * A map of namespaces to use for autoloading purposes based on a PSR-0 convention.
      *
@@ -49,7 +48,6 @@ final class AnnotationRegistry
      */
     static public function reset()
     {
-
         self::$autoloadNamespaces = array();
         self::$loaders = array();
     }
@@ -61,9 +59,8 @@ final class AnnotationRegistry
      *
      * @return void
      */
-    static public function registerFile( $file )
+    static public function registerFile($file)
     {
-
         require_once $file;
     }
 
@@ -77,9 +74,8 @@ final class AnnotationRegistry
      *
      * @return void
      */
-    static public function registerAutoloadNamespace( $namespace, $dirs = null )
+    static public function registerAutoloadNamespace($namespace, $dirs = null)
     {
-
         self::$autoloadNamespaces[$namespace] = $dirs;
     }
 
@@ -92,10 +88,9 @@ final class AnnotationRegistry
      *
      * @return void
      */
-    static public function registerAutoloadNamespaces( array $namespaces )
+    static public function registerAutoloadNamespaces(array $namespaces)
     {
-
-        self::$autoloadNamespaces = array_merge( self::$autoloadNamespaces, $namespaces );
+        self::$autoloadNamespaces = array_merge(self::$autoloadNamespaces, $namespaces);
     }
 
     /**
@@ -110,11 +105,10 @@ final class AnnotationRegistry
      *
      * @throws \InvalidArgumentException
      */
-    static public function registerLoader( $callable )
+    static public function registerLoader($callable)
     {
-
-        if (!is_callable( $callable )) {
-            throw new \InvalidArgumentException( "A callable is expected in AnnotationRegistry::registerLoader()." );
+        if (!is_callable($callable)) {
+            throw new \InvalidArgumentException("A callable is expected in AnnotationRegistry::registerLoader().");
         }
         self::$loaders[] = $callable;
     }
@@ -126,21 +120,20 @@ final class AnnotationRegistry
      *
      * @return boolean
      */
-    static public function loadAnnotationClass( $class )
+    static public function loadAnnotationClass($class)
     {
-
         foreach (self::$autoloadNamespaces AS $namespace => $dirs) {
-            if (strpos( $class, $namespace ) === 0) {
-                $file = str_replace( "\\", DIRECTORY_SEPARATOR, $class ).".php";
+            if (strpos($class, $namespace) === 0) {
+                $file = str_replace("\\", DIRECTORY_SEPARATOR, $class) . ".php";
                 if ($dirs === null) {
-                    if ($path = stream_resolve_include_path( $file )) {
+                    if ($path = stream_resolve_include_path($file)) {
                         require $path;
                         return true;
                     }
                 } else {
-                    foreach ((array)$dirs AS $dir) {
-                        if (is_file( $dir.DIRECTORY_SEPARATOR.$file )) {
-                            require $dir.DIRECTORY_SEPARATOR.$file;
+                    foreach((array)$dirs AS $dir) {
+                        if (is_file($dir . DIRECTORY_SEPARATOR . $file)) {
+                            require $dir . DIRECTORY_SEPARATOR . $file;
                             return true;
                         }
                     }
@@ -149,7 +142,7 @@ final class AnnotationRegistry
         }
 
         foreach (self::$loaders AS $loader) {
-            if (call_user_func( $loader, $class ) === true) {
+            if (call_user_func($loader, $class) === true) {
                 return true;
             }
         }

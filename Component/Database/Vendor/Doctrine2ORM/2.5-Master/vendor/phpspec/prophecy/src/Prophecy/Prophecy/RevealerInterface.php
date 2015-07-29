@@ -18,7 +18,6 @@ namespace Prophecy\Prophecy;
  */
 interface RevealerInterface
 {
-
     /**
      * Unwraps value(s).
      *
@@ -26,5 +25,5 @@ interface RevealerInterface
      *
      * @return mixed
      */
-    public function reveal( $value );
+    public function reveal($value);
 }

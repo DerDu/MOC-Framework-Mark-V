@@ -21,7 +21,6 @@ namespace Doctrine\Common\Collections\Expr;
 
 class Value implements Expression
 {
-
     /**
      * @var mixed
      */
@@ -30,9 +29,8 @@ class Value implements Expression
     /**
      * @param mixed $value
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
-
         $this->value = $value;
     }
 
@@ -41,16 +39,14 @@ class Value implements Expression
      */
     public function getValue()
     {
-
         return $this->value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function visit( ExpressionVisitor $visitor )
+    public function visit(ExpressionVisitor $visitor)
     {
-
-        return $visitor->walkValue( $this );
+        return $visitor->walkValue($this);
     }
 }

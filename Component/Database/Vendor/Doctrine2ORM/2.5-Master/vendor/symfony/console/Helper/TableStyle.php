@@ -19,7 +19,6 @@ namespace Symfony\Component\Console\Helper;
  */
 class TableStyle
 {
-
     private $paddingChar = ' ';
     private $horizontalBorderChar = '-';
     private $verticalBorderChar = '|';
@@ -31,31 +30,43 @@ class TableStyle
     private $padType = STR_PAD_RIGHT;
 
     /**
-     * Gets padding character, used for cell padding.
-     *
-     * @return string
-     */
-    public function getPaddingChar()
-    {
-
-        return $this->paddingChar;
-    }
-
-    /**
      * Sets padding character, used for cell padding.
      *
      * @param string $paddingChar
      *
      * @return TableStyle
      */
-    public function setPaddingChar( $paddingChar )
+    public function setPaddingChar($paddingChar)
     {
-
         if (!$paddingChar) {
-            throw new \LogicException( 'The padding char must not be empty' );
+            throw new \LogicException('The padding char must not be empty');
         }
 
         $this->paddingChar = $paddingChar;
+
+        return $this;
+    }
+
+    /**
+     * Gets padding character, used for cell padding.
+     *
+     * @return string
+     */
+    public function getPaddingChar()
+    {
+        return $this->paddingChar;
+    }
+
+    /**
+     * Sets horizontal border character.
+     *
+     * @param string $horizontalBorderChar
+     *
+     * @return TableStyle
+     */
+    public function setHorizontalBorderChar($horizontalBorderChar)
+    {
+        $this->horizontalBorderChar = $horizontalBorderChar;
 
         return $this;
     }
@@ -67,21 +78,19 @@ class TableStyle
      */
     public function getHorizontalBorderChar()
     {
-
         return $this->horizontalBorderChar;
     }
 
     /**
-     * Sets horizontal border character.
+     * Sets vertical border character.
      *
-     * @param string $horizontalBorderChar
+     * @param string $verticalBorderChar
      *
      * @return TableStyle
      */
-    public function setHorizontalBorderChar( $horizontalBorderChar )
+    public function setVerticalBorderChar($verticalBorderChar)
     {
-
-        $this->horizontalBorderChar = $horizontalBorderChar;
+        $this->verticalBorderChar = $verticalBorderChar;
 
         return $this;
     }
@@ -93,21 +102,19 @@ class TableStyle
      */
     public function getVerticalBorderChar()
     {
-
         return $this->verticalBorderChar;
     }
 
     /**
-     * Sets vertical border character.
+     * Sets crossing character.
      *
-     * @param string $verticalBorderChar
+     * @param string $crossingChar
      *
      * @return TableStyle
      */
-    public function setVerticalBorderChar( $verticalBorderChar )
+    public function setCrossingChar($crossingChar)
     {
-
-        $this->verticalBorderChar = $verticalBorderChar;
+        $this->crossingChar = $crossingChar;
 
         return $this;
     }
@@ -119,21 +126,19 @@ class TableStyle
      */
     public function getCrossingChar()
     {
-
         return $this->crossingChar;
     }
 
     /**
-     * Sets crossing character.
+     * Sets header cell format.
      *
-     * @param string $crossingChar
+     * @param string $cellHeaderFormat
      *
      * @return TableStyle
      */
-    public function setCrossingChar( $crossingChar )
+    public function setCellHeaderFormat($cellHeaderFormat)
     {
-
-        $this->crossingChar = $crossingChar;
+        $this->cellHeaderFormat = $cellHeaderFormat;
 
         return $this;
     }
@@ -145,21 +150,19 @@ class TableStyle
      */
     public function getCellHeaderFormat()
     {
-
         return $this->cellHeaderFormat;
     }
 
     /**
-     * Sets header cell format.
+     * Sets row cell format.
      *
-     * @param string $cellHeaderFormat
+     * @param string $cellRowFormat
      *
      * @return TableStyle
      */
-    public function setCellHeaderFormat( $cellHeaderFormat )
+    public function setCellRowFormat($cellRowFormat)
     {
-
-        $this->cellHeaderFormat = $cellHeaderFormat;
+        $this->cellRowFormat = $cellRowFormat;
 
         return $this;
     }
@@ -171,21 +174,19 @@ class TableStyle
      */
     public function getCellRowFormat()
     {
-
         return $this->cellRowFormat;
     }
 
     /**
-     * Sets row cell format.
+     * Sets row cell content format.
      *
-     * @param string $cellRowFormat
+     * @param string $cellRowContentFormat
      *
      * @return TableStyle
      */
-    public function setCellRowFormat( $cellRowFormat )
+    public function setCellRowContentFormat($cellRowContentFormat)
     {
-
-        $this->cellRowFormat = $cellRowFormat;
+        $this->cellRowContentFormat = $cellRowContentFormat;
 
         return $this;
     }
@@ -197,21 +198,19 @@ class TableStyle
      */
     public function getCellRowContentFormat()
     {
-
         return $this->cellRowContentFormat;
     }
 
     /**
-     * Sets row cell content format.
+     * Sets table border format.
      *
-     * @param string $cellRowContentFormat
+     * @param string $borderFormat
      *
      * @return TableStyle
      */
-    public function setCellRowContentFormat( $cellRowContentFormat )
+    public function setBorderFormat($borderFormat)
     {
-
-        $this->cellRowContentFormat = $cellRowContentFormat;
+        $this->borderFormat = $borderFormat;
 
         return $this;
     }
@@ -223,21 +222,23 @@ class TableStyle
      */
     public function getBorderFormat()
     {
-
         return $this->borderFormat;
     }
 
     /**
-     * Sets table border format.
+     * Sets cell padding type.
      *
-     * @param string $borderFormat
+     * @param int $padType STR_PAD_*
      *
      * @return TableStyle
      */
-    public function setBorderFormat( $borderFormat )
+    public function setPadType($padType)
     {
+        if (!in_array($padType, array(STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH), true)) {
+            throw new \InvalidArgumentException('Invalid padding type. Expected one of (STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH).');
+        }
 
-        $this->borderFormat = $borderFormat;
+        $this->padType = $padType;
 
         return $this;
     }
@@ -249,26 +250,6 @@ class TableStyle
      */
     public function getPadType()
     {
-
         return $this->padType;
-    }
-
-    /**
-     * Sets cell padding type.
-     *
-     * @param int $padType STR_PAD_*
-     *
-     * @return TableStyle
-     */
-    public function setPadType( $padType )
-    {
-
-        if (!in_array( $padType, array( STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH ), true )) {
-            throw new \InvalidArgumentException( 'Invalid padding type. Expected one of (STR_PAD_LEFT, STR_PAD_RIGHT, STR_PAD_BOTH).' );
-        }
-
-        $this->padType = $padType;
-
-        return $this;
     }
 }

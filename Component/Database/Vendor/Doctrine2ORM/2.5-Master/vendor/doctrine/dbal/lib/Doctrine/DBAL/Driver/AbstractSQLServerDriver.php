@@ -37,19 +37,16 @@ use Doctrine\DBAL\VersionAwarePlatformDriver;
  */
 abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function createDatabasePlatformForVersion( $version )
+    public function createDatabasePlatformForVersion($version)
     {
-
-        if (!preg_match(
+        if ( ! preg_match(
             '/^(?P<major>\d+)(?:\.(?P<minor>\d+)(?:\.(?P<patch>\d+)(?:\.(?P<build>\d+))?)?)?/',
             $version,
             $versionParts
-        )
-        ) {
+        )) {
             throw DBALException::invalidPlatformVersionSpecified(
                 $version,
                 '<major_version>.<minor_version>.<patch_version>.<build_version>'
@@ -57,17 +54,17 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
         }
 
         $majorVersion = $versionParts['major'];
-        $minorVersion = isset( $versionParts['minor'] ) ? $versionParts['minor'] : 0;
-        $patchVersion = isset( $versionParts['patch'] ) ? $versionParts['patch'] : 0;
-        $buildVersion = isset( $versionParts['build'] ) ? $versionParts['build'] : 0;
-        $version = $majorVersion.'.'.$minorVersion.'.'.$patchVersion.'.'.$buildVersion;
+        $minorVersion = isset($versionParts['minor']) ? $versionParts['minor'] : 0;
+        $patchVersion = isset($versionParts['patch']) ? $versionParts['patch'] : 0;
+        $buildVersion = isset($versionParts['build']) ? $versionParts['build'] : 0;
+        $version      = $majorVersion . '.' . $minorVersion . '.' . $patchVersion . '.' . $buildVersion;
 
-        switch (true) {
-            case version_compare( $version, '11.00.2100', '>=' ):
+        switch(true) {
+            case version_compare($version, '11.00.2100', '>='):
                 return new SQLServer2012Platform();
-            case version_compare( $version, '10.00.1600', '>=' ):
+            case version_compare($version, '10.00.1600', '>='):
                 return new SQLServer2008Platform();
-            case version_compare( $version, '9.00.1399', '>=' ):
+            case version_compare($version, '9.00.1399', '>='):
                 return new SQLServer2005Platform();
             default:
                 return new SQLServerPlatform();
@@ -77,9 +74,8 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
     /**
      * {@inheritdoc}
      */
-    public function getDatabase( \Doctrine\DBAL\Connection $conn )
+    public function getDatabase(\Doctrine\DBAL\Connection $conn)
     {
-
         $params = $conn->getParams();
 
         return $params['dbname'];
@@ -90,7 +86,6 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
      */
     public function getDatabasePlatform()
     {
-
         return new SQLServer2008Platform();
     }
 
@@ -98,9 +93,8 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
      * {@inheritdoc}
      */
 
-    public function getSchemaManager( \Doctrine\DBAL\Connection $conn )
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
     {
-
-        return new SQLServerSchemaManager( $conn );
+        return new SQLServerSchemaManager($conn);
     }
 }

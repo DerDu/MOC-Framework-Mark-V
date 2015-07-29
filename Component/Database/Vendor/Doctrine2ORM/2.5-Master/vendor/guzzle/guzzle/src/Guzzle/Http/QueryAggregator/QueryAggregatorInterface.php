@@ -9,7 +9,6 @@ use Guzzle\Http\QueryString;
  */
 interface QueryAggregatorInterface
 {
-
     /**
      * Aggregate multi-valued parameters into a flattened associative array
      *
@@ -19,5 +18,5 @@ interface QueryAggregatorInterface
      *
      * @return array Returns an array of the combined values
      */
-    public function aggregate( $key, $value, QueryString $query );
+    public function aggregate($key, $value, QueryString $query);
 }

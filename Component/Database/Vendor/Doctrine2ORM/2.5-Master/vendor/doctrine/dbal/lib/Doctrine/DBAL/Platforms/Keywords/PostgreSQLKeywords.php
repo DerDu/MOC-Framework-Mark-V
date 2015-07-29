@@ -29,13 +29,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class PostgreSQLKeywords extends KeywordList
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'PostgreSQL';
     }
 
@@ -44,7 +42,6 @@ class PostgreSQLKeywords extends KeywordList
      */
     protected function getKeywords()
     {
-
         return array(
             'ALL',
             'ANALYSE',

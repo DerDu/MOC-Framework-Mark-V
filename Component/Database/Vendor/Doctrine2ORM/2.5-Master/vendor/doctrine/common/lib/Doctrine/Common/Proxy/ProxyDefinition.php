@@ -26,7 +26,6 @@ namespace Doctrine\Common\Proxy;
  */
 class ProxyDefinition
 {
-
     /**
      * @var string
      */
@@ -53,25 +52,19 @@ class ProxyDefinition
     public $cloner;
 
     /**
-     * @param string $proxyClassName
-     * @param array  $identifierFields
-     * @param array  $reflectionFields
+     * @param string   $proxyClassName
+     * @param array    $identifierFields
+     * @param array    $reflectionFields
      * @param callable $initializer
      * @param callable $cloner
      */
-    public function __construct(
-        $proxyClassName,
-        array $identifierFields,
-        array $reflectionFields,
-        $initializer,
-        $cloner
-    ) {
-
-        $this->proxyClassName = $proxyClassName;
+    public function __construct($proxyClassName, array $identifierFields, array $reflectionFields, $initializer, $cloner)
+    {
+        $this->proxyClassName   = $proxyClassName;
         $this->identifierFields = $identifierFields;
         $this->reflectionFields = $reflectionFields;
-        $this->initializer = $initializer;
-        $this->cloner = $cloner;
+        $this->initializer      = $initializer;
+        $this->cloner           = $cloner;
     }
 }
 

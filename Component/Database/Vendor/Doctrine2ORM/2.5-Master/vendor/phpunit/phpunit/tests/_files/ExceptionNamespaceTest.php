@@ -4,7 +4,6 @@ namespace My\Space;
 
 class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Exception message
      *
@@ -15,14 +14,14 @@ class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
     /**
      * Exception code
      *
-     * @var integer
+     * @var int
      */
     const ERROR_CODE = 200;
 
     /**
      * @expectedException Class
      * @expectedExceptionMessage My\Space\ExceptionNamespaceTest::ERROR_MESSAGE
-     * @expectedExceptionCode    My\Space\ExceptionNamespaceTest::ERROR_CODE
+     * @expectedExceptionCode My\Space\ExceptionNamespaceTest::ERROR_CODE
      */
     public function testConstants()
     {
@@ -30,7 +29,7 @@ class ExceptionNamespaceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Class
-     * @expectedExceptionCode    My\Space\ExceptionNamespaceTest::UNKNOWN_CODE_CONSTANT
+     * @expectedExceptionCode My\Space\ExceptionNamespaceTest::UNKNOWN_CODE_CONSTANT
      * @expectedExceptionMessage My\Space\ExceptionNamespaceTest::UNKNOWN_MESSAGE_CONSTANT
      */
     public function testUnknownConstants()

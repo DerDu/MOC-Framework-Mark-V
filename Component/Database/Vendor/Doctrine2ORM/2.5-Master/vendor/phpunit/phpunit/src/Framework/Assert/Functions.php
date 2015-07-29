@@ -9,15 +9,14 @@
  */
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is executed zero or more times.
+ * Returns a matcher that matches when the method is executed
+ * zero or more times.
  *
  * @return PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount
  * @since  Method available since Release 3.0.0
  */
 function any()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::any',
         func_get_args()
@@ -32,7 +31,6 @@ function any()
  */
 function anything()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::anything',
         func_get_args()
@@ -43,13 +41,11 @@ function anything()
  * Returns a PHPUnit_Framework_Constraint_ArrayHasKey matcher object.
  *
  * @param  mixed $key
- *
  * @return PHPUnit_Framework_Constraint_ArrayHasKey
  * @since  Method available since Release 3.0.0
  */
-function arrayHasKey( $key )
+function arrayHasKey($key)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::arrayHasKey',
         func_get_args()
@@ -59,15 +55,13 @@ function arrayHasKey( $key )
 /**
  * Asserts that an array has a specified key.
  *
- * @param  mixed             $key
- * @param  array|ArrayAccess $array
- * @param  string            $message
- *
+ * @param  mixed  $key
+ * @param  array|ArrayAccess  $array
+ * @param  string $message
  * @since  Method available since Release 3.0.0
  */
-function assertArrayHasKey( $key, $array, $message = '' )
+function assertArrayHasKey($key, $array, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertArrayHasKey',
         func_get_args()
@@ -77,16 +71,14 @@ function assertArrayHasKey( $key, $array, $message = '' )
 /**
  * Asserts that an array has a specified subset.
  *
- * @param array|ArrayAccess $subset
- * @param array|ArrayAccess $array
- * @param boolean           $strict Check for object identity
- * @param string            $message
- *
+ * @param array|ArrayAccess  $subset
+ * @param array|ArrayAccess  $array
+ * @param bool            $strict  Check for object identity
+ * @param string             $message
  * @since Method available since Release 4.4.0
  */
-function assertArraySubset( $subset, $array, $strict = false, $message = '' )
+function assertArraySubset($subset, $array, $strict = false, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertArraySubset',
         func_get_args()
@@ -96,15 +88,13 @@ function assertArraySubset( $subset, $array, $strict = false, $message = '' )
 /**
  * Asserts that an array does not have a specified key.
  *
- * @param  mixed             $key
- * @param  array|ArrayAccess $array
- * @param  string            $message
- *
+ * @param  mixed  $key
+ * @param  array|ArrayAccess  $array
+ * @param  string $message
  * @since  Method available since Release 3.0.0
  */
-function assertArrayNotHasKey( $key, $array, $message = '' )
+function assertArrayNotHasKey($key, $array, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertArrayNotHasKey',
         func_get_args()
@@ -119,22 +109,13 @@ function assertArrayNotHasKey( $key, $array, $message = '' )
  * @param  string  $haystackAttributeName
  * @param  mixed   $haystackClassOrObject
  * @param  string  $message
- * @param  boolean $ignoreCase
- * @param  boolean $checkForObjectIdentity
- * @param  boolean $checkForNonObjectIdentity
- *
+ * @param  bool $ignoreCase
+ * @param  bool $checkForObjectIdentity
+ * @param  bool $checkForNonObjectIdentity
  * @since  Method available since Release 3.0.0
  */
-function assertAttributeContains(
-    $needle,
-    $haystackAttributeName,
-    $haystackClassOrObject,
-    $message = '',
-    $ignoreCase = false,
-    $checkForObjectIdentity = true,
-    $checkForNonObjectIdentity = false
-) {
-
+function assertAttributeContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeContains',
         func_get_args()
@@ -148,19 +129,12 @@ function assertAttributeContains(
  * @param  string  $type
  * @param  string  $haystackAttributeName
  * @param  mixed   $haystackClassOrObject
- * @param  boolean $isNativeType
+ * @param  bool $isNativeType
  * @param  string  $message
- *
  * @since  Method available since Release 3.1.4
  */
-function assertAttributeContainsOnly(
-    $type,
-    $haystackAttributeName,
-    $haystackClassOrObject,
-    $isNativeType = null,
-    $message = ''
-) {
-
+function assertAttributeContainsOnly($type, $haystackAttributeName, $haystackClassOrObject, $isNativeType = null, $message = '')
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeContainsOnly',
         func_get_args()
@@ -171,16 +145,14 @@ function assertAttributeContainsOnly(
  * Asserts the number of elements of an array, Countable or Traversable
  * that is stored in an attribute.
  *
- * @param integer $expectedCount
+ * @param int $expectedCount
  * @param string  $haystackAttributeName
  * @param mixed   $haystackClassOrObject
  * @param string  $message
- *
  * @since Method available since Release 3.6.0
  */
-function assertAttributeCount( $expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeCount',
         func_get_args()
@@ -194,12 +166,10 @@ function assertAttributeCount( $expectedCount, $haystackAttributeName, $haystack
  * @param string $haystackAttributeName
  * @param mixed  $haystackClassOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeEmpty( $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeEmpty($haystackAttributeName, $haystackClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeEmpty',
         func_get_args()
@@ -214,21 +184,12 @@ function assertAttributeEmpty( $haystackAttributeName, $haystackClassOrObject, $
  * @param  string  $actualClassOrObject
  * @param  string  $message
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  */
-function assertAttributeEquals(
-    $expected,
-    $actualAttributeName,
-    $actualClassOrObject,
-    $message = '',
-    $delta = 0.0,
-    $maxDepth = 10,
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertAttributeEquals($expected, $actualAttributeName, $actualClassOrObject, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeEquals',
         func_get_args()
@@ -238,16 +199,14 @@ function assertAttributeEquals(
 /**
  * Asserts that an attribute is greater than another value.
  *
- * @param  mixed  $expected
- * @param  string $actualAttributeName
- * @param  string $actualClassOrObject
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  string  $actualAttributeName
+ * @param  string  $actualClassOrObject
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeGreaterThan( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeGreaterThan($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeGreaterThan',
         func_get_args()
@@ -257,16 +216,14 @@ function assertAttributeGreaterThan( $expected, $actualAttributeName, $actualCla
 /**
  * Asserts that an attribute is greater than or equal to another value.
  *
- * @param  mixed  $expected
- * @param  string $actualAttributeName
- * @param  string $actualClassOrObject
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  string  $actualAttributeName
+ * @param  string  $actualClassOrObject
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeGreaterThanOrEqual( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeGreaterThanOrEqual($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeGreaterThanOrEqual',
         func_get_args()
@@ -280,12 +237,10 @@ function assertAttributeGreaterThanOrEqual( $expected, $actualAttributeName, $ac
  * @param string $attributeName
  * @param mixed  $classOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeInstanceOf( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeInstanceOf($expected, $attributeName, $classOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeInstanceOf',
         func_get_args()
@@ -299,12 +254,10 @@ function assertAttributeInstanceOf( $expected, $attributeName, $classOrObject, $
  * @param string $attributeName
  * @param mixed  $classOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeInternalType( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeInternalType($expected, $attributeName, $classOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeInternalType',
         func_get_args()
@@ -314,16 +267,14 @@ function assertAttributeInternalType( $expected, $attributeName, $classOrObject,
 /**
  * Asserts that an attribute is smaller than another value.
  *
- * @param  mixed  $expected
- * @param  string $actualAttributeName
- * @param  string $actualClassOrObject
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  string  $actualAttributeName
+ * @param  string  $actualClassOrObject
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeLessThan( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeLessThan($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeLessThan',
         func_get_args()
@@ -333,16 +284,14 @@ function assertAttributeLessThan( $expected, $actualAttributeName, $actualClassO
 /**
  * Asserts that an attribute is smaller than or equal to another value.
  *
- * @param  mixed  $expected
- * @param  string $actualAttributeName
- * @param  string $actualClassOrObject
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  string  $actualAttributeName
+ * @param  string  $actualClassOrObject
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeLessThanOrEqual( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeLessThanOrEqual($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeLessThanOrEqual',
         func_get_args()
@@ -357,22 +306,13 @@ function assertAttributeLessThanOrEqual( $expected, $actualAttributeName, $actua
  * @param  string  $haystackAttributeName
  * @param  mixed   $haystackClassOrObject
  * @param  string  $message
- * @param  boolean $ignoreCase
- * @param  boolean $checkForObjectIdentity
- * @param  boolean $checkForNonObjectIdentity
- *
+ * @param  bool $ignoreCase
+ * @param  bool $checkForObjectIdentity
+ * @param  bool $checkForNonObjectIdentity
  * @since  Method available since Release 3.0.0
  */
-function assertAttributeNotContains(
-    $needle,
-    $haystackAttributeName,
-    $haystackClassOrObject,
-    $message = '',
-    $ignoreCase = false,
-    $checkForObjectIdentity = true,
-    $checkForNonObjectIdentity = false
-) {
-
+function assertAttributeNotContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotContains',
         func_get_args()
@@ -387,19 +327,12 @@ function assertAttributeNotContains(
  * @param  string  $type
  * @param  string  $haystackAttributeName
  * @param  mixed   $haystackClassOrObject
- * @param  boolean $isNativeType
+ * @param  bool $isNativeType
  * @param  string  $message
- *
  * @since  Method available since Release 3.1.4
  */
-function assertAttributeNotContainsOnly(
-    $type,
-    $haystackAttributeName,
-    $haystackClassOrObject,
-    $isNativeType = null,
-    $message = ''
-) {
-
+function assertAttributeNotContainsOnly($type, $haystackAttributeName, $haystackClassOrObject, $isNativeType = null, $message = '')
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotContainsOnly',
         func_get_args()
@@ -410,16 +343,14 @@ function assertAttributeNotContainsOnly(
  * Asserts the number of elements of an array, Countable or Traversable
  * that is stored in an attribute.
  *
- * @param integer $expectedCount
+ * @param int $expectedCount
  * @param string  $haystackAttributeName
  * @param mixed   $haystackClassOrObject
  * @param string  $message
- *
  * @since Method available since Release 3.6.0
  */
-function assertAttributeNotCount( $expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeNotCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotCount',
         func_get_args()
@@ -433,12 +364,10 @@ function assertAttributeNotCount( $expectedCount, $haystackAttributeName, $hayst
  * @param string $haystackAttributeName
  * @param mixed  $haystackClassOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotEmpty( $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeNotEmpty($haystackAttributeName, $haystackClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotEmpty',
         func_get_args()
@@ -453,21 +382,12 @@ function assertAttributeNotEmpty( $haystackAttributeName, $haystackClassOrObject
  * @param  string  $actualClassOrObject
  * @param  string  $message
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  */
-function assertAttributeNotEquals(
-    $expected,
-    $actualAttributeName,
-    $actualClassOrObject,
-    $message = '',
-    $delta = 0.0,
-    $maxDepth = 10,
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertAttributeNotEquals($expected, $actualAttributeName, $actualClassOrObject, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotEquals',
         func_get_args()
@@ -481,12 +401,10 @@ function assertAttributeNotEquals(
  * @param string $attributeName
  * @param mixed  $classOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotInstanceOf( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeNotInstanceOf($expected, $attributeName, $classOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotInstanceOf',
         func_get_args()
@@ -500,12 +418,10 @@ function assertAttributeNotInstanceOf( $expected, $attributeName, $classOrObject
  * @param string $attributeName
  * @param mixed  $classOrObject
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotInternalType( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeNotInternalType($expected, $attributeName, $classOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotInternalType',
         func_get_args()
@@ -521,9 +437,8 @@ function assertAttributeNotInternalType( $expected, $attributeName, $classOrObje
  * @param  object $actualClassOrObject
  * @param  string $message
  */
-function assertAttributeNotSame( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeNotSame($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeNotSame',
         func_get_args()
@@ -539,9 +454,8 @@ function assertAttributeNotSame( $expected, $actualAttributeName, $actualClassOr
  * @param  object $actualClassOrObject
  * @param  string $message
  */
-function assertAttributeSame( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeSame($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertAttributeSame',
         func_get_args()
@@ -554,12 +468,10 @@ function assertAttributeSame( $expected, $actualAttributeName, $actualClassOrObj
  * @param  string $attributeName
  * @param  string $className
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertClassHasAttribute( $attributeName, $className, $message = '' )
+function assertClassHasAttribute($attributeName, $className, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertClassHasAttribute',
         func_get_args()
@@ -572,12 +484,10 @@ function assertClassHasAttribute( $attributeName, $className, $message = '' )
  * @param  string $attributeName
  * @param  string $className
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertClassHasStaticAttribute( $attributeName, $className, $message = '' )
+function assertClassHasStaticAttribute($attributeName, $className, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertClassHasStaticAttribute',
         func_get_args()
@@ -590,12 +500,10 @@ function assertClassHasStaticAttribute( $attributeName, $className, $message = '
  * @param  string $attributeName
  * @param  string $className
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertClassNotHasAttribute( $attributeName, $className, $message = '' )
+function assertClassNotHasAttribute($attributeName, $className, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertClassNotHasAttribute',
         func_get_args()
@@ -608,12 +516,10 @@ function assertClassNotHasAttribute( $attributeName, $className, $message = '' )
  * @param  string $attributeName
  * @param  string $className
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertClassNotHasStaticAttribute( $attributeName, $className, $message = '' )
+function assertClassNotHasStaticAttribute($attributeName, $className, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertClassNotHasStaticAttribute',
         func_get_args()
@@ -626,21 +532,13 @@ function assertClassNotHasStaticAttribute( $attributeName, $className, $message 
  * @param  mixed   $needle
  * @param  mixed   $haystack
  * @param  string  $message
- * @param  boolean $ignoreCase
- * @param  boolean $checkForObjectIdentity
- * @param  boolean $checkForNonObjectIdentity
- *
+ * @param  bool $ignoreCase
+ * @param  bool $checkForObjectIdentity
+ * @param  bool $checkForNonObjectIdentity
  * @since  Method available since Release 2.1.0
  */
-function assertContains(
-    $needle,
-    $haystack,
-    $message = '',
-    $ignoreCase = false,
-    $checkForObjectIdentity = true,
-    $checkForNonObjectIdentity = false
-) {
-
+function assertContains($needle, $haystack, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertContains',
         func_get_args()
@@ -652,14 +550,12 @@ function assertContains(
  *
  * @param  string  $type
  * @param  mixed   $haystack
- * @param  boolean $isNativeType
+ * @param  bool $isNativeType
  * @param  string  $message
- *
  * @since  Method available since Release 3.1.4
  */
-function assertContainsOnly( $type, $haystack, $isNativeType = null, $message = '' )
+function assertContainsOnly($type, $haystack, $isNativeType = null, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertContainsOnly',
         func_get_args()
@@ -669,13 +565,12 @@ function assertContainsOnly( $type, $haystack, $isNativeType = null, $message = 
 /**
  * Asserts that a haystack contains only instances of a given classname
  *
- * @param string            $classname
+ * @param string $classname
  * @param array|Traversable $haystack
- * @param string            $message
+ * @param string $message
  */
-function assertContainsOnlyInstancesOf( $classname, $haystack, $message = '' )
+function assertContainsOnlyInstancesOf($classname, $haystack, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertContainsOnlyInstancesOf',
         func_get_args()
@@ -685,13 +580,12 @@ function assertContainsOnlyInstancesOf( $classname, $haystack, $message = '' )
 /**
  * Asserts the number of elements of an array, Countable or Traversable.
  *
- * @param integer $expectedCount
+ * @param int $expectedCount
  * @param mixed   $haystack
  * @param string  $message
  */
-function assertCount( $expectedCount, $haystack, $message = '' )
+function assertCount($expectedCount, $haystack, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertCount',
         func_get_args()
@@ -701,14 +595,12 @@ function assertCount( $expectedCount, $haystack, $message = '' )
 /**
  * Asserts that a variable is empty.
  *
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $actual
+ * @param  string  $message
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertEmpty( $actual, $message = '' )
+function assertEmpty($actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertEmpty',
         func_get_args()
@@ -720,19 +612,12 @@ function assertEmpty( $actual, $message = '' )
  *
  * @param DOMElement $expectedElement
  * @param DOMElement $actualElement
- * @param boolean    $checkAttributes
- * @param string     $message
- *
- * @author Mattis Stordalen Flister <mattis@xait.no>
+ * @param bool $checkAttributes
+ * @param string  $message
  * @since  Method available since Release 3.3.0
  */
-function assertEqualXMLStructure(
-    DOMElement $expectedElement,
-    DOMElement $actualElement,
-    $checkAttributes = false,
-    $message = ''
-) {
-
+function assertEqualXMLStructure(DOMElement $expectedElement, DOMElement $actualElement, $checkAttributes = false, $message = '')
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertEqualXMLStructure',
         func_get_args()
@@ -746,20 +631,12 @@ function assertEqualXMLStructure(
  * @param  mixed   $actual
  * @param  string  $message
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  */
-function assertEquals(
-    $expected,
-    $actual,
-    $message = '',
-    $delta = 0.0,
-    $maxDepth = 10,
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertEquals',
         func_get_args()
@@ -769,14 +646,12 @@ function assertEquals(
 /**
  * Asserts that a condition is not true.
  *
- * @param  boolean $condition
- * @param  string  $message
- *
+ * @param  bool  $condition
+ * @param  string   $message
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotTrue( $condition, $message = '' )
+function assertNotTrue($condition, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotTrue',
         func_get_args()
@@ -786,14 +661,12 @@ function assertNotTrue( $condition, $message = '' )
 /**
  * Asserts that a condition is false.
  *
- * @param  boolean $condition
- * @param  string  $message
- *
+ * @param  bool  $condition
+ * @param  string   $message
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertFalse( $condition, $message = '' )
+function assertFalse($condition, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertFalse',
         func_get_args()
@@ -807,14 +680,12 @@ function assertFalse( $condition, $message = '' )
  * @param  string  $expected
  * @param  string  $actual
  * @param  string  $message
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @since  Method available since Release 3.2.14
  */
-function assertFileEquals( $expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false )
+function assertFileEquals($expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertFileEquals',
         func_get_args()
@@ -826,12 +697,10 @@ function assertFileEquals( $expected, $actual, $message = '', $canonicalize = fa
  *
  * @param  string $filename
  * @param  string $message
- *
  * @since  Method available since Release 3.0.0
  */
-function assertFileExists( $filename, $message = '' )
+function assertFileExists($filename, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertFileExists',
         func_get_args()
@@ -845,14 +714,12 @@ function assertFileExists( $filename, $message = '' )
  * @param  string  $expected
  * @param  string  $actual
  * @param  string  $message
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @since  Method available since Release 3.2.14
  */
-function assertFileNotEquals( $expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false )
+function assertFileNotEquals($expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertFileNotEquals',
         func_get_args()
@@ -864,12 +731,10 @@ function assertFileNotEquals( $expected, $actual, $message = '', $canonicalize =
  *
  * @param  string $filename
  * @param  string $message
- *
  * @since  Method available since Release 3.0.0
  */
-function assertFileNotExists( $filename, $message = '' )
+function assertFileNotExists($filename, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertFileNotExists',
         func_get_args()
@@ -879,15 +744,13 @@ function assertFileNotExists( $filename, $message = '' )
 /**
  * Asserts that a value is greater than another value.
  *
- * @param  mixed  $expected
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  mixed   $actual
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertGreaterThan( $expected, $actual, $message = '' )
+function assertGreaterThan($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertGreaterThan',
         func_get_args()
@@ -897,15 +760,13 @@ function assertGreaterThan( $expected, $actual, $message = '' )
 /**
  * Asserts that a value is greater than or equal to another value.
  *
- * @param  mixed  $expected
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  mixed   $actual
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertGreaterThanOrEqual( $expected, $actual, $message = '' )
+function assertGreaterThanOrEqual($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertGreaterThanOrEqual',
         func_get_args()
@@ -918,12 +779,10 @@ function assertGreaterThanOrEqual( $expected, $actual, $message = '' )
  * @param string $expected
  * @param mixed  $actual
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertInstanceOf( $expected, $actual, $message = '' )
+function assertInstanceOf($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertInstanceOf',
         func_get_args()
@@ -936,12 +795,10 @@ function assertInstanceOf( $expected, $actual, $message = '' )
  * @param string $expected
  * @param mixed  $actual
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertInternalType( $expected, $actual, $message = '' )
+function assertInternalType($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertInternalType',
         func_get_args()
@@ -953,12 +810,10 @@ function assertInternalType( $expected, $actual, $message = '' )
  *
  * @param  string $filename
  * @param  string $message
- *
  * @since  Method available since Release 3.7.20
  */
-function assertJson( $expectedJson, $message = '' )
+function assertJson($expectedJson, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJson',
         func_get_args()
@@ -972,9 +827,8 @@ function assertJson( $expectedJson, $message = '' )
  * @param  string $actualFile
  * @param  string $message
  */
-function assertJsonFileEqualsJsonFile( $expectedFile, $actualFile, $message = '' )
+function assertJsonFileEqualsJsonFile($expectedFile, $actualFile, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonFileEqualsJsonFile',
         func_get_args()
@@ -988,9 +842,8 @@ function assertJsonFileEqualsJsonFile( $expectedFile, $actualFile, $message = ''
  * @param  string $actualFile
  * @param  string $message
  */
-function assertJsonFileNotEqualsJsonFile( $expectedFile, $actualFile, $message = '' )
+function assertJsonFileNotEqualsJsonFile($expectedFile, $actualFile, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonFileNotEqualsJsonFile',
         func_get_args()
@@ -1004,9 +857,8 @@ function assertJsonFileNotEqualsJsonFile( $expectedFile, $actualFile, $message =
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringEqualsJsonFile( $expectedFile, $actualJson, $message = '' )
+function assertJsonStringEqualsJsonFile($expectedFile, $actualJson, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonStringEqualsJsonFile',
         func_get_args()
@@ -1020,9 +872,8 @@ function assertJsonStringEqualsJsonFile( $expectedFile, $actualJson, $message = 
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringEqualsJsonString( $expectedJson, $actualJson, $message = '' )
+function assertJsonStringEqualsJsonString($expectedJson, $actualJson, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString',
         func_get_args()
@@ -1036,9 +887,8 @@ function assertJsonStringEqualsJsonString( $expectedJson, $actualJson, $message 
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringNotEqualsJsonFile( $expectedFile, $actualJson, $message = '' )
+function assertJsonStringNotEqualsJsonFile($expectedFile, $actualJson, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonFile',
         func_get_args()
@@ -1052,9 +902,8 @@ function assertJsonStringNotEqualsJsonFile( $expectedFile, $actualJson, $message
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringNotEqualsJsonString( $expectedJson, $actualJson, $message = '' )
+function assertJsonStringNotEqualsJsonString($expectedJson, $actualJson, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonString',
         func_get_args()
@@ -1064,15 +913,13 @@ function assertJsonStringNotEqualsJsonString( $expectedJson, $actualJson, $messa
 /**
  * Asserts that a value is smaller than another value.
  *
- * @param  mixed  $expected
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  mixed   $actual
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertLessThan( $expected, $actual, $message = '' )
+function assertLessThan($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertLessThan',
         func_get_args()
@@ -1082,15 +929,13 @@ function assertLessThan( $expected, $actual, $message = '' )
 /**
  * Asserts that a value is smaller than or equal to another value.
  *
- * @param  mixed  $expected
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $expected
+ * @param  mixed   $actual
+ * @param  string  $message
  * @since  Method available since Release 3.1.0
  */
-function assertLessThanOrEqual( $expected, $actual, $message = '' )
+function assertLessThanOrEqual($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertLessThanOrEqual',
         func_get_args()
@@ -1103,21 +948,13 @@ function assertLessThanOrEqual( $expected, $actual, $message = '' )
  * @param  mixed   $needle
  * @param  mixed   $haystack
  * @param  string  $message
- * @param  boolean $ignoreCase
- * @param  boolean $checkForObjectIdentity
- * @param  boolean $checkForNonObjectIdentity
- *
+ * @param  bool $ignoreCase
+ * @param  bool $checkForObjectIdentity
+ * @param  bool $checkForNonObjectIdentity
  * @since  Method available since Release 2.1.0
  */
-function assertNotContains(
-    $needle,
-    $haystack,
-    $message = '',
-    $ignoreCase = false,
-    $checkForObjectIdentity = true,
-    $checkForNonObjectIdentity = false
-) {
-
+function assertNotContains($needle, $haystack, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotContains',
         func_get_args()
@@ -1129,14 +966,12 @@ function assertNotContains(
  *
  * @param  string  $type
  * @param  mixed   $haystack
- * @param  boolean $isNativeType
+ * @param  bool $isNativeType
  * @param  string  $message
- *
  * @since  Method available since Release 3.1.4
  */
-function assertNotContainsOnly( $type, $haystack, $isNativeType = null, $message = '' )
+function assertNotContainsOnly($type, $haystack, $isNativeType = null, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotContainsOnly',
         func_get_args()
@@ -1146,13 +981,12 @@ function assertNotContainsOnly( $type, $haystack, $isNativeType = null, $message
 /**
  * Asserts the number of elements of an array, Countable or Traversable.
  *
- * @param integer $expectedCount
+ * @param int $expectedCount
  * @param mixed   $haystack
  * @param string  $message
  */
-function assertNotCount( $expectedCount, $haystack, $message = '' )
+function assertNotCount($expectedCount, $haystack, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotCount',
         func_get_args()
@@ -1162,14 +996,12 @@ function assertNotCount( $expectedCount, $haystack, $message = '' )
 /**
  * Asserts that a variable is not empty.
  *
- * @param  mixed  $actual
- * @param  string $message
- *
+ * @param  mixed   $actual
+ * @param  string  $message
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotEmpty( $actual, $message = '' )
+function assertNotEmpty($actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotEmpty',
         func_get_args()
@@ -1183,22 +1015,13 @@ function assertNotEmpty( $actual, $message = '' )
  * @param  mixed   $actual
  * @param  string  $message
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @since  Method available since Release 2.3.0
  */
-function assertNotEquals(
-    $expected,
-    $actual,
-    $message = '',
-    $delta = 0.0,
-    $maxDepth = 10,
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertNotEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotEquals',
         func_get_args()
@@ -1211,12 +1034,10 @@ function assertNotEquals(
  * @param string $expected
  * @param mixed  $actual
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertNotInstanceOf( $expected, $actual, $message = '' )
+function assertNotInstanceOf($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotInstanceOf',
         func_get_args()
@@ -1229,12 +1050,10 @@ function assertNotInstanceOf( $expected, $actual, $message = '' )
  * @param string $expected
  * @param mixed  $actual
  * @param string $message
- *
  * @since Method available since Release 3.5.0
  */
-function assertNotInternalType( $expected, $actual, $message = '' )
+function assertNotInternalType($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotInternalType',
         func_get_args()
@@ -1244,14 +1063,12 @@ function assertNotInternalType( $expected, $actual, $message = '' )
 /**
  * Asserts that a condition is not false.
  *
- * @param  boolean $condition
- * @param  string  $message
- *
+ * @param  bool  $condition
+ * @param  string   $message
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotFalse( $condition, $message = '' )
+function assertNotFalse($condition, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotFalse',
         func_get_args()
@@ -1264,9 +1081,8 @@ function assertNotFalse( $condition, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNotNull( $actual, $message = '' )
+function assertNotNull($actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotNull',
         func_get_args()
@@ -1279,12 +1095,10 @@ function assertNotNull( $actual, $message = '' )
  * @param  string $pattern
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 2.1.0
  */
-function assertNotRegExp( $pattern, $string, $message = '' )
+function assertNotRegExp($pattern, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotRegExp',
         func_get_args()
@@ -1300,9 +1114,8 @@ function assertNotRegExp( $pattern, $string, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNotSame( $expected, $actual, $message = '' )
+function assertNotSame($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotSame',
         func_get_args()
@@ -1315,11 +1128,10 @@ function assertNotSame( $expected, $actual, $message = '' )
  *
  * @param array|Countable|Traversable $expected
  * @param array|Countable|Traversable $actual
- * @param string                      $message
+ * @param string $message
  */
-function assertNotSameSize( $expected, $actual, $message = '' )
+function assertNotSameSize($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotSameSize',
         func_get_args()
@@ -1335,15 +1147,11 @@ function assertNotSameSize( $expected, $actual, $message = '' )
  * @param  array   $matcher
  * @param  string  $actual
  * @param  string  $message
- * @param  boolean $isHtml
- *
+ * @param  bool $isHtml
  * @since  Method available since Release 3.3.0
- * @author Mike Naberezny <mike@maintainable.com>
- * @author Derek DeVries <derek@maintainable.com>
  */
-function assertNotTag( $matcher, $actual, $message = '', $isHtml = true )
+function assertNotTag($matcher, $actual, $message = '', $isHtml = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNotTag',
         func_get_args()
@@ -1356,9 +1164,8 @@ function assertNotTag( $matcher, $actual, $message = '', $isHtml = true )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNull( $actual, $message = '' )
+function assertNull($actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertNull',
         func_get_args()
@@ -1371,12 +1178,10 @@ function assertNull( $actual, $message = '' )
  * @param  string $attributeName
  * @param  object $object
  * @param  string $message
- *
  * @since  Method available since Release 3.0.0
  */
-function assertObjectHasAttribute( $attributeName, $object, $message = '' )
+function assertObjectHasAttribute($attributeName, $object, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertObjectHasAttribute',
         func_get_args()
@@ -1389,12 +1194,10 @@ function assertObjectHasAttribute( $attributeName, $object, $message = '' )
  * @param  string $attributeName
  * @param  object $object
  * @param  string $message
- *
  * @since  Method available since Release 3.0.0
  */
-function assertObjectNotHasAttribute( $attributeName, $object, $message = '' )
+function assertObjectNotHasAttribute($attributeName, $object, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertObjectNotHasAttribute',
         func_get_args()
@@ -1408,9 +1211,8 @@ function assertObjectNotHasAttribute( $attributeName, $object, $message = '' )
  * @param  string $string
  * @param  string $message
  */
-function assertRegExp( $pattern, $string, $message = '' )
+function assertRegExp($pattern, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertRegExp',
         func_get_args()
@@ -1426,9 +1228,8 @@ function assertRegExp( $pattern, $string, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertSame( $expected, $actual, $message = '' )
+function assertSame($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertSame',
         func_get_args()
@@ -1441,11 +1242,10 @@ function assertSame( $expected, $actual, $message = '' )
  *
  * @param array|Countable|Traversable $expected
  * @param array|Countable|Traversable $actual
- * @param string                      $message
+ * @param string $message
  */
-function assertSameSize( $expected, $actual, $message = '' )
+function assertSameSize($expected, $actual, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertSameSize',
         func_get_args()
@@ -1468,18 +1268,14 @@ function assertSameSize( $expected, $actual, $message = '' )
  * assertSelectCount(".binder", 3, $xml); // exactly 3?
  *
  * @param  array   $selector
- * @param  integer $count
+ * @param  int $count
  * @param  mixed   $actual
  * @param  string  $message
- * @param  boolean $isHtml
- *
+ * @param  bool $isHtml
  * @since  Method available since Release 3.3.0
- * @author Mike Naberezny <mike@maintainable.com>
- * @author Derek DeVries <derek@maintainable.com>
  */
-function assertSelectCount( $selector, $count, $actual, $message = '', $isHtml = true )
+function assertSelectCount($selector, $count, $actual, $message = '', $isHtml = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertSelectCount',
         func_get_args()
@@ -1492,18 +1288,14 @@ function assertSelectCount( $selector, $count, $actual, $message = '', $isHtml =
  *
  * @param  array   $selector
  * @param  string  $content
- * @param  integer $count
+ * @param  int $count
  * @param  mixed   $actual
  * @param  string  $message
- * @param  boolean $isHtml
- *
+ * @param  bool $isHtml
  * @since  Method available since Release 3.3.0
- * @author Mike Naberezny <mike@maintainable.com>
- * @author Derek DeVries <derek@maintainable.com>
  */
-function assertSelectEquals( $selector, $content, $count, $actual, $message = '', $isHtml = true )
+function assertSelectEquals($selector, $content, $count, $actual, $message = '', $isHtml = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertSelectEquals',
         func_get_args()
@@ -1516,18 +1308,14 @@ function assertSelectEquals( $selector, $content, $count, $actual, $message = ''
  *
  * @param  array   $selector
  * @param  string  $pattern
- * @param  integer $count
+ * @param  int $count
  * @param  mixed   $actual
  * @param  string  $message
- * @param  boolean $isHtml
- *
+ * @param  bool $isHtml
  * @since  Method available since Release 3.3.0
- * @author Mike Naberezny <mike@maintainable.com>
- * @author Derek DeVries <derek@maintainable.com>
  */
-function assertSelectRegExp( $selector, $pattern, $count, $actual, $message = '', $isHtml = true )
+function assertSelectRegExp($selector, $pattern, $count, $actual, $message = '', $isHtml = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertSelectRegExp',
         func_get_args()
@@ -1540,12 +1328,10 @@ function assertSelectRegExp( $selector, $pattern, $count, $actual, $message = ''
  * @param  string $suffix
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.4.0
  */
-function assertStringEndsNotWith( $suffix, $string, $message = '' )
+function assertStringEndsNotWith($suffix, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringEndsNotWith',
         func_get_args()
@@ -1558,12 +1344,10 @@ function assertStringEndsNotWith( $suffix, $string, $message = '' )
  * @param  string $suffix
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.4.0
  */
-function assertStringEndsWith( $suffix, $string, $message = '' )
+function assertStringEndsWith($suffix, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringEndsWith',
         func_get_args()
@@ -1577,19 +1361,12 @@ function assertStringEndsWith( $suffix, $string, $message = '' )
  * @param  string  $expectedFile
  * @param  string  $actualString
  * @param  string  $message
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @since  Method available since Release 3.3.0
  */
-function assertStringEqualsFile(
-    $expectedFile,
-    $actualString,
-    $message = '',
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertStringEqualsFile($expectedFile, $actualString, $message = '', $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringEqualsFile',
         func_get_args()
@@ -1602,12 +1379,10 @@ function assertStringEqualsFile(
  * @param  string $format
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.5.0
  */
-function assertStringMatchesFormat( $format, $string, $message = '' )
+function assertStringMatchesFormat($format, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringMatchesFormat',
         func_get_args()
@@ -1620,12 +1395,10 @@ function assertStringMatchesFormat( $format, $string, $message = '' )
  * @param  string $formatFile
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.5.0
  */
-function assertStringMatchesFormatFile( $formatFile, $string, $message = '' )
+function assertStringMatchesFormatFile($formatFile, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringMatchesFormatFile',
         func_get_args()
@@ -1639,19 +1412,12 @@ function assertStringMatchesFormatFile( $formatFile, $string, $message = '' )
  * @param  string  $expectedFile
  * @param  string  $actualString
  * @param  string  $message
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @since  Method available since Release 3.3.0
  */
-function assertStringNotEqualsFile(
-    $expectedFile,
-    $actualString,
-    $message = '',
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function assertStringNotEqualsFile($expectedFile, $actualString, $message = '', $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringNotEqualsFile',
         func_get_args()
@@ -1664,12 +1430,10 @@ function assertStringNotEqualsFile(
  * @param  string $format
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.5.0
  */
-function assertStringNotMatchesFormat( $format, $string, $message = '' )
+function assertStringNotMatchesFormat($format, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringNotMatchesFormat',
         func_get_args()
@@ -1682,12 +1446,10 @@ function assertStringNotMatchesFormat( $format, $string, $message = '' )
  * @param  string $formatFile
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.5.0
  */
-function assertStringNotMatchesFormatFile( $formatFile, $string, $message = '' )
+function assertStringNotMatchesFormatFile($formatFile, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringNotMatchesFormatFile',
         func_get_args()
@@ -1700,12 +1462,10 @@ function assertStringNotMatchesFormatFile( $formatFile, $string, $message = '' )
  * @param  string $prefix
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.4.0
  */
-function assertStringStartsNotWith( $prefix, $string, $message = '' )
+function assertStringStartsNotWith($prefix, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringStartsNotWith',
         func_get_args()
@@ -1718,12 +1478,10 @@ function assertStringStartsNotWith( $prefix, $string, $message = '' )
  * @param  string $prefix
  * @param  string $string
  * @param  string $message
- *
  * @since  Method available since Release 3.4.0
  */
-function assertStringStartsWith( $prefix, $string, $message = '' )
+function assertStringStartsWith($prefix, $string, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertStringStartsWith',
         func_get_args()
@@ -1862,15 +1620,11 @@ function assertStringStartsWith( $prefix, $string, $message = '' )
  * @param  array   $matcher
  * @param  string  $actual
  * @param  string  $message
- * @param  boolean $isHtml
- *
+ * @param  bool $isHtml
  * @since  Method available since Release 3.3.0
- * @author Mike Naberezny <mike@maintainable.com>
- * @author Derek DeVries <derek@maintainable.com>
  */
-function assertTag( $matcher, $actual, $message = '', $isHtml = true )
+function assertTag($matcher, $actual, $message = '', $isHtml = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertTag',
         func_get_args()
@@ -1880,15 +1634,13 @@ function assertTag( $matcher, $actual, $message = '', $isHtml = true )
 /**
  * Evaluates a PHPUnit_Framework_Constraint matcher object.
  *
- * @param  mixed                        $value
+ * @param  mixed$value
  * @param  PHPUnit_Framework_Constraint $constraint
- * @param  string                       $message
- *
+ * @param  string   $message
  * @since  Method available since Release 3.0.0
  */
-function assertThat( $value, PHPUnit_Framework_Constraint $constraint, $message = '' )
+function assertThat($value, PHPUnit_Framework_Constraint $constraint, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertThat',
         func_get_args()
@@ -1898,14 +1650,12 @@ function assertThat( $value, PHPUnit_Framework_Constraint $constraint, $message 
 /**
  * Asserts that a condition is true.
  *
- * @param  boolean $condition
+ * @param  bool $condition
  * @param  string  $message
- *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertTrue( $condition, $message = '' )
+function assertTrue($condition, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertTrue',
         func_get_args()
@@ -1918,12 +1668,10 @@ function assertTrue( $condition, $message = '' )
  * @param  string $expectedFile
  * @param  string $actualFile
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlFileEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
+function assertXmlFileEqualsXmlFile($expectedFile, $actualFile, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlFileEqualsXmlFile',
         func_get_args()
@@ -1936,12 +1684,10 @@ function assertXmlFileEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
  * @param  string $expectedFile
  * @param  string $actualFile
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlFileNotEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
+function assertXmlFileNotEqualsXmlFile($expectedFile, $actualFile, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlFileNotEqualsXmlFile',
         func_get_args()
@@ -1954,12 +1700,10 @@ function assertXmlFileNotEqualsXmlFile( $expectedFile, $actualFile, $message = '
  * @param  string $expectedFile
  * @param  string $actualXml
  * @param  string $message
- *
  * @since  Method available since Release 3.3.0
  */
-function assertXmlStringEqualsXmlFile( $expectedFile, $actualXml, $message = '' )
+function assertXmlStringEqualsXmlFile($expectedFile, $actualXml, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlStringEqualsXmlFile',
         func_get_args()
@@ -1972,12 +1716,10 @@ function assertXmlStringEqualsXmlFile( $expectedFile, $actualXml, $message = '' 
  * @param  string $expectedXml
  * @param  string $actualXml
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlStringEqualsXmlString( $expectedXml, $actualXml, $message = '' )
+function assertXmlStringEqualsXmlString($expectedXml, $actualXml, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlStringEqualsXmlString',
         func_get_args()
@@ -1990,12 +1732,10 @@ function assertXmlStringEqualsXmlString( $expectedXml, $actualXml, $message = ''
  * @param  string $expectedFile
  * @param  string $actualXml
  * @param  string $message
- *
  * @since  Method available since Release 3.3.0
  */
-function assertXmlStringNotEqualsXmlFile( $expectedFile, $actualXml, $message = '' )
+function assertXmlStringNotEqualsXmlFile($expectedFile, $actualXml, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlStringNotEqualsXmlFile',
         func_get_args()
@@ -2008,12 +1748,10 @@ function assertXmlStringNotEqualsXmlFile( $expectedFile, $actualXml, $message = 
  * @param  string $expectedXml
  * @param  string $actualXml
  * @param  string $message
- *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlStringNotEqualsXmlString( $expectedXml, $actualXml, $message = '' )
+function assertXmlStringNotEqualsXmlString($expectedXml, $actualXml, $message = '')
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::assertXmlStringNotEqualsXmlString',
         func_get_args()
@@ -2021,17 +1759,15 @@ function assertXmlStringNotEqualsXmlString( $expectedXml, $actualXml, $message =
 }
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is invoked at the given $index.
+ * Returns a matcher that matches when the method is executed
+ * at the given $index.
  *
- * @param  integer $index
- *
+ * @param  int $index
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex
  * @since  Method available since Release 3.0.0
  */
-function at( $index )
+function at($index)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::at',
         func_get_args()
@@ -2039,15 +1775,13 @@ function at( $index )
 }
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is executed at least once.
+ * Returns a matcher that matches when the method is executed at least once.
  *
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce
  * @since  Method available since Release 3.0.0
  */
 function atLeastOnce()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::atLeastOnce',
         func_get_args()
@@ -2058,14 +1792,12 @@ function atLeastOnce()
  * Returns a PHPUnit_Framework_Constraint_Attribute matcher object.
  *
  * @param  PHPUnit_Framework_Constraint $constraint
- * @param  string                       $attributeName
- *
+ * @param  string   $attributeName
  * @return PHPUnit_Framework_Constraint_Attribute
  * @since  Method available since Release 3.1.0
  */
-function attribute( PHPUnit_Framework_Constraint $constraint, $attributeName )
+function attribute(PHPUnit_Framework_Constraint $constraint, $attributeName)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::attribute',
         func_get_args()
@@ -2080,22 +1812,14 @@ function attribute( PHPUnit_Framework_Constraint $constraint, $attributeName )
  * @param  string  $attributeName
  * @param  mixed   $value
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @return PHPUnit_Framework_Constraint_Attribute
  * @since  Method available since Release 3.1.0
  */
-function attributeEqualTo(
-    $attributeName,
-    $value,
-    $delta = 0.0,
-    $maxDepth = 10,
-    $canonicalize = false,
-    $ignoreCase = false
-) {
-
+function attributeEqualTo($attributeName, $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+{
     return call_user_func_array(
         'PHPUnit_Framework_Assert::attributeEqualTo',
         func_get_args()
@@ -2106,12 +1830,10 @@ function attributeEqualTo(
  * Returns a PHPUnit_Framework_Constraint_Callback matcher object.
  *
  * @param callable $callback
- *
  * @return PHPUnit_Framework_Constraint_Callback
  */
-function callback( $callback )
+function callback($callback)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::callback',
         func_get_args()
@@ -2122,13 +1844,11 @@ function callback( $callback )
  * Returns a PHPUnit_Framework_Constraint_ClassHasAttribute matcher object.
  *
  * @param  string $attributeName
- *
  * @return PHPUnit_Framework_Constraint_ClassHasAttribute
  * @since  Method available since Release 3.1.0
  */
-function classHasAttribute( $attributeName )
+function classHasAttribute($attributeName)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::classHasAttribute',
         func_get_args()
@@ -2140,13 +1860,11 @@ function classHasAttribute( $attributeName )
  * object.
  *
  * @param  string $attributeName
- *
  * @return PHPUnit_Framework_Constraint_ClassHasStaticAttribute
  * @since  Method available since Release 3.1.0
  */
-function classHasStaticAttribute( $attributeName )
+function classHasStaticAttribute($attributeName)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::classHasStaticAttribute',
         func_get_args()
@@ -2158,15 +1876,13 @@ function classHasStaticAttribute( $attributeName )
  * object.
  *
  * @param  mixed   $value
- * @param  boolean $checkForObjectIdentity
- * @param  boolean $checkForNonObjectIdentity
- *
+ * @param  bool $checkForObjectIdentity
+ * @param  bool $checkForNonObjectIdentity
  * @return PHPUnit_Framework_Constraint_TraversableContains
  * @since  Method available since Release 3.0.0
  */
-function contains( $value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false )
+function contains($value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::contains',
         func_get_args()
@@ -2178,13 +1894,11 @@ function contains( $value, $checkForObjectIdentity = true, $checkForNonObjectIde
  * object.
  *
  * @param  string $type
- *
  * @return PHPUnit_Framework_Constraint_TraversableContainsOnly
  * @since  Method available since Release 3.1.4
  */
-function containsOnly( $type )
+function containsOnly($type)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::containsOnly',
         func_get_args()
@@ -2196,12 +1910,10 @@ function containsOnly( $type )
  * object.
  *
  * @param string $classname
- *
  * @return PHPUnit_Framework_Constraint_TraversableContainsOnly
  */
-function containsOnlyInstancesOf( $classname )
+function containsOnlyInstancesOf($classname)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::containsOnlyInstancesOf',
         func_get_args()
@@ -2213,16 +1925,14 @@ function containsOnlyInstancesOf( $classname )
  *
  * @param  mixed   $value
  * @param  float   $delta
- * @param  integer $maxDepth
- * @param  boolean $canonicalize
- * @param  boolean $ignoreCase
- *
+ * @param  int $maxDepth
+ * @param  bool $canonicalize
+ * @param  bool $ignoreCase
  * @return PHPUnit_Framework_Constraint_IsEqual
  * @since  Method available since Release 3.0.0
  */
-function equalTo( $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false )
+function equalTo($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::equalTo',
         func_get_args()
@@ -2230,17 +1940,15 @@ function equalTo( $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $
 }
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is executed exactly $count times.
+ * Returns a matcher that matches when the method is executed
+ * exactly $count times.
  *
- * @param  integer $count
- *
+ * @param  int $count
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedCount
  * @since  Method available since Release 3.0.0
  */
-function exactly( $count )
+function exactly($count)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::exactly',
         func_get_args()
@@ -2255,7 +1963,6 @@ function exactly( $count )
  */
 function fileExists()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::fileExists',
         func_get_args()
@@ -2266,13 +1973,11 @@ function fileExists()
  * Returns a PHPUnit_Framework_Constraint_GreaterThan matcher object.
  *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_Constraint_GreaterThan
  * @since  Method available since Release 3.0.0
  */
-function greaterThan( $value )
+function greaterThan($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::greaterThan',
         func_get_args()
@@ -2285,13 +1990,11 @@ function greaterThan( $value )
  * PHPUnit_Framework_Constraint_GreaterThan matcher object.
  *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_Constraint_Or
  * @since  Method available since Release 3.1.0
  */
-function greaterThanOrEqual( $value )
+function greaterThanOrEqual($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::greaterThanOrEqual',
         func_get_args()
@@ -2302,13 +2005,11 @@ function greaterThanOrEqual( $value )
  * Returns a PHPUnit_Framework_Constraint_IsIdentical matcher object.
  *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_Constraint_IsIdentical
  * @since  Method available since Release 3.0.0
  */
-function identicalTo( $value )
+function identicalTo($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::identicalTo',
         func_get_args()
@@ -2323,7 +2024,6 @@ function identicalTo( $value )
  */
 function isEmpty()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isEmpty',
         func_get_args()
@@ -2338,7 +2038,6 @@ function isEmpty()
  */
 function isFalse()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isFalse',
         func_get_args()
@@ -2349,13 +2048,11 @@ function isFalse()
  * Returns a PHPUnit_Framework_Constraint_IsInstanceOf matcher object.
  *
  * @param  string $className
- *
  * @return PHPUnit_Framework_Constraint_IsInstanceOf
  * @since  Method available since Release 3.0.0
  */
-function isInstanceOf( $className )
+function isInstanceOf($className)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isInstanceOf',
         func_get_args()
@@ -2370,7 +2067,6 @@ function isInstanceOf( $className )
  */
 function isJson()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isJson',
         func_get_args()
@@ -2385,7 +2081,6 @@ function isJson()
  */
 function isNull()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isNull',
         func_get_args()
@@ -2400,7 +2095,6 @@ function isNull()
  */
 function isTrue()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isTrue',
         func_get_args()
@@ -2411,13 +2105,11 @@ function isTrue()
  * Returns a PHPUnit_Framework_Constraint_IsType matcher object.
  *
  * @param  string $type
- *
  * @return PHPUnit_Framework_Constraint_IsType
  * @since  Method available since Release 3.0.0
  */
-function isType( $type )
+function isType($type)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::isType',
         func_get_args()
@@ -2428,13 +2120,11 @@ function isType( $type )
  * Returns a PHPUnit_Framework_Constraint_LessThan matcher object.
  *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_Constraint_LessThan
  * @since  Method available since Release 3.0.0
  */
-function lessThan( $value )
+function lessThan($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::lessThan',
         func_get_args()
@@ -2447,13 +2137,11 @@ function lessThan( $value )
  * PHPUnit_Framework_Constraint_LessThan matcher object.
  *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_Constraint_Or
  * @since  Method available since Release 3.1.0
  */
-function lessThanOrEqual( $value )
+function lessThanOrEqual($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::lessThanOrEqual',
         func_get_args()
@@ -2468,7 +2156,6 @@ function lessThanOrEqual( $value )
  */
 function logicalAnd()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::logicalAnd',
         func_get_args()
@@ -2479,13 +2166,11 @@ function logicalAnd()
  * Returns a PHPUnit_Framework_Constraint_Not matcher object.
  *
  * @param  PHPUnit_Framework_Constraint $constraint
- *
  * @return PHPUnit_Framework_Constraint_Not
  * @since  Method available since Release 3.0.0
  */
-function logicalNot( PHPUnit_Framework_Constraint $constraint )
+function logicalNot(PHPUnit_Framework_Constraint $constraint)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::logicalNot',
         func_get_args()
@@ -2500,7 +2185,6 @@ function logicalNot( PHPUnit_Framework_Constraint $constraint )
  */
 function logicalOr()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::logicalOr',
         func_get_args()
@@ -2515,7 +2199,6 @@ function logicalOr()
  */
 function logicalXor()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::logicalXor',
         func_get_args()
@@ -2526,13 +2209,11 @@ function logicalXor()
  * Returns a PHPUnit_Framework_Constraint_StringMatches matcher object.
  *
  * @param  string $string
- *
  * @return PHPUnit_Framework_Constraint_StringMatches
  * @since  Method available since Release 3.5.0
  */
-function matches( $string )
+function matches($string)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::matches',
         func_get_args()
@@ -2543,13 +2224,11 @@ function matches( $string )
  * Returns a PHPUnit_Framework_Constraint_PCREMatch matcher object.
  *
  * @param  string $pattern
- *
  * @return PHPUnit_Framework_Constraint_PCREMatch
  * @since  Method available since Release 3.0.0
  */
-function matchesRegularExpression( $pattern )
+function matchesRegularExpression($pattern)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::matchesRegularExpression',
         func_get_args()
@@ -2557,15 +2236,13 @@ function matchesRegularExpression( $pattern )
 }
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is never executed.
+ * Returns a matcher that matches when the method is never executed.
  *
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedCount
  * @since  Method available since Release 3.0.0
  */
 function never()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::never',
         func_get_args()
@@ -2576,13 +2253,11 @@ function never()
  * Returns a PHPUnit_Framework_Constraint_ObjectHasAttribute matcher object.
  *
  * @param  string $attributeName
- *
  * @return PHPUnit_Framework_Constraint_ObjectHasAttribute
  * @since  Method available since Release 3.0.0
  */
-function objectHasAttribute( $attributeName )
+function objectHasAttribute($attributeName)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::objectHasAttribute',
         func_get_args()
@@ -2590,14 +2265,12 @@ function objectHasAttribute( $attributeName )
 }
 
 /**
- * @param  mixed $value , ...
- *
+ * @param  mixed $value, ...
  * @return PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls
  * @since  Method available since Release 3.0.0
  */
 function onConsecutiveCalls()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::onConsecutiveCalls',
         func_get_args()
@@ -2605,15 +2278,13 @@ function onConsecutiveCalls()
 }
 
 /**
- * Returns a matcher that matches when the method it is evaluated for
- * is executed exactly once.
+ * Returns a matcher that matches when the method is executed exactly once.
  *
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedCount
  * @since  Method available since Release 3.0.0
  */
 function once()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::once',
         func_get_args()
@@ -2621,16 +2292,12 @@ function once()
 }
 
 /**
- *
- *
- * @param  integer $argumentIndex
- *
+ * @param  int $argumentIndex
  * @return PHPUnit_Framework_MockObject_Stub_ReturnArgument
  * @since  Method available since Release 3.3.0
  */
-function returnArgument( $argumentIndex )
+function returnArgument($argumentIndex)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::returnArgument',
         func_get_args()
@@ -2638,16 +2305,12 @@ function returnArgument( $argumentIndex )
 }
 
 /**
- *
- *
  * @param  mixed $callback
- *
  * @return PHPUnit_Framework_MockObject_Stub_ReturnCallback
  * @since  Method available since Release 3.3.0
  */
-function returnCallback( $callback )
+function returnCallback($callback)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::returnCallback',
         func_get_args()
@@ -2664,7 +2327,6 @@ function returnCallback( $callback )
  */
 function returnSelf()
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::returnSelf',
         func_get_args()
@@ -2672,16 +2334,12 @@ function returnSelf()
 }
 
 /**
- *
- *
  * @param  mixed $value
- *
  * @return PHPUnit_Framework_MockObject_Stub_Return
  * @since  Method available since Release 3.0.0
  */
-function returnValue( $value )
+function returnValue($value)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::returnValue',
         func_get_args()
@@ -2689,16 +2347,12 @@ function returnValue( $value )
 }
 
 /**
- *
- *
  * @param  array $valueMap
- *
  * @return PHPUnit_Framework_MockObject_Stub_ReturnValueMap
  * @since  Method available since Release 3.6.0
  */
-function returnValueMap( array $valueMap )
+function returnValueMap(array $valueMap)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::returnValueMap',
         func_get_args()
@@ -2709,14 +2363,12 @@ function returnValueMap( array $valueMap )
  * Returns a PHPUnit_Framework_Constraint_StringContains matcher object.
  *
  * @param  string  $string
- * @param  boolean $case
- *
+ * @param  bool $case
  * @return PHPUnit_Framework_Constraint_StringContains
  * @since  Method available since Release 3.0.0
  */
-function stringContains( $string, $case = true )
+function stringContains($string, $case = true)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::stringContains',
         func_get_args()
@@ -2727,13 +2379,11 @@ function stringContains( $string, $case = true )
  * Returns a PHPUnit_Framework_Constraint_StringEndsWith matcher object.
  *
  * @param  mixed $suffix
- *
  * @return PHPUnit_Framework_Constraint_StringEndsWith
  * @since  Method available since Release 3.4.0
  */
-function stringEndsWith( $suffix )
+function stringEndsWith($suffix)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::stringEndsWith',
         func_get_args()
@@ -2744,13 +2394,11 @@ function stringEndsWith( $suffix )
  * Returns a PHPUnit_Framework_Constraint_StringStartsWith matcher object.
  *
  * @param  mixed $prefix
- *
  * @return PHPUnit_Framework_Constraint_StringStartsWith
  * @since  Method available since Release 3.4.0
  */
-function stringStartsWith( $prefix )
+function stringStartsWith($prefix)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_Assert::stringStartsWith',
         func_get_args()
@@ -2758,16 +2406,12 @@ function stringStartsWith( $prefix )
 }
 
 /**
- *
- *
  * @param  Exception $exception
- *
  * @return PHPUnit_Framework_MockObject_Stub_Exception
  * @since  Method available since Release 3.1.0
  */
-function throwException( Exception $exception )
+function throwException(Exception $exception)
 {
-
     return call_user_func_array(
         'PHPUnit_Framework_TestCase::throwException',
         func_get_args()

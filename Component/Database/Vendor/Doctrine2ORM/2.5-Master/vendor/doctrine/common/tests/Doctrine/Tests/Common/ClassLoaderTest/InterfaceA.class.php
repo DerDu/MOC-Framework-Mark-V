@@ -2,5 +2,4 @@
 
 interface ClassLoaderTest_InterfaceA
 {
-
 }

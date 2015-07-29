@@ -12,49 +12,23 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CoverallsV1JobsCommandTest extends ProjectTestCase
 {
-
-    /**
-     * @test
-     */
-    public function shouldExecuteCoverallsV1JobsCommand()
+    protected function setUp()
     {
+        $this->projectDir = realpath(__DIR__ . '/../../../..');
 
-        $this->makeProjectDir( null, $this->logsDir );
-        $this->dumpCloverXml();
-
-        $command = new CoverallsV1JobsCommand();
-        $command->setRootDir( $this->rootDir );
-
-        $app = new Application();
-        $app->add( $command );
-
-        $command = $app->find( 'coveralls:v1:jobs' );
-        $commandTester = new CommandTester( $command );
-
-        $_SERVER['TRAVIS'] = true;
-        $_SERVER['TRAVIS_JOB_ID'] = 'command_test';
-
-        $actual = $commandTester->execute(
-            array(
-                'command'   => $command->getName(),
-                '--dry-run' => true,
-                '--config'  => 'coveralls.yml',
-                '--env'     => 'test',
-            )
-        );
-
-        $this->assertEquals( 0, $actual );
+        $this->setUpDir($this->projectDir);
     }
 
-    protected function dumpCloverXml()
+    protected function tearDown()
     {
-
-        file_put_contents( $this->cloverXmlPath, $this->getCloverXml() );
+        $this->rmFile($this->cloverXmlPath);
+        $this->rmFile($this->jsonPath);
+        $this->rmDir($this->logsDir);
+        $this->rmDir($this->buildDir);
     }
 
     protected function getCloverXml()
     {
-
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -78,23 +52,43 @@ class CoverallsV1JobsCommandTest extends ProjectTestCase
   </project>
 </coverage>
 XML;
-        return sprintf( $xml, $this->srcDir, $this->srcDir );
+        return sprintf($xml, $this->srcDir, $this->srcDir);
     }
 
-    protected function setUp()
+    protected function dumpCloverXml()
     {
-
-        $this->projectDir = realpath( __DIR__.'/../../../..' );
-
-        $this->setUpDir( $this->projectDir );
+        file_put_contents($this->cloverXmlPath, $this->getCloverXml());
     }
 
-    protected function tearDown()
+    /**
+     * @test
+     */
+    public function shouldExecuteCoverallsV1JobsCommand()
     {
+        $this->makeProjectDir(null, $this->logsDir);
+        $this->dumpCloverXml();
 
-        $this->rmFile( $this->cloverXmlPath );
-        $this->rmFile( $this->jsonPath );
-        $this->rmDir( $this->logsDir );
-        $this->rmDir( $this->buildDir );
+        $command = new CoverallsV1JobsCommand();
+        $command->setRootDir($this->rootDir);
+
+        $app = new Application();
+        $app->add($command);
+
+        $command = $app->find('coveralls:v1:jobs');
+        $commandTester = new CommandTester($command);
+
+        $_SERVER['TRAVIS']        = true;
+        $_SERVER['TRAVIS_JOB_ID'] = 'command_test';
+
+        $actual = $commandTester->execute(
+            array(
+                'command'   => $command->getName(),
+                '--dry-run' => true,
+                '--config'  => 'coveralls.yml',
+                '--env'     => 'test',
+            )
+        );
+
+        $this->assertEquals(0, $actual);
     }
 }

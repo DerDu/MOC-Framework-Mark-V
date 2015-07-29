@@ -10,7 +10,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Entity\Coveralls;
  */
 class Commit extends Coveralls
 {
-
     /**
      * Commit ID.
      *
@@ -62,7 +61,6 @@ class Commit extends Coveralls
      */
     public function toArray()
     {
-
         return array(
             'id'              => $this->id,
             'author_name'     => $this->authorName,
@@ -76,45 +74,28 @@ class Commit extends Coveralls
     // accessor
 
     /**
-     * Return commit ID.
-     *
-     * @return string|null
-     */
-    public function getId()
-    {
-
-        if (isset( $this->id )) {
-            return $this->id;
-        }
-
-        return null;
-    }
-
-    /**
      * Set commit ID.
      *
      * @param string $id
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setId( $id )
+    public function setId($id)
     {
-
         $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Return author name.
+     * Return commit ID.
      *
      * @return string|null
      */
-    public function getAuthorName()
+    public function getId()
     {
-
-        if (isset( $this->authorName )) {
-            return $this->authorName;
+        if (isset($this->id)) {
+            return $this->id;
         }
 
         return null;
@@ -127,24 +108,22 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setAuthorName( $authorName )
+    public function setAuthorName($authorName)
     {
-
         $this->authorName = $authorName;
 
         return $this;
     }
 
     /**
-     * Return author email.
+     * Return author name.
      *
      * @return string|null
      */
-    public function getAuthorEmail()
+    public function getAuthorName()
     {
-
-        if (isset( $this->authorEmail )) {
-            return $this->authorEmail;
+        if (isset($this->authorName)) {
+            return $this->authorName;
         }
 
         return null;
@@ -157,24 +136,22 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setAuthorEmail( $authorEmail )
+    public function setAuthorEmail($authorEmail)
     {
-
         $this->authorEmail = $authorEmail;
 
         return $this;
     }
 
     /**
-     * Return committer name.
+     * Return author email.
      *
      * @return string|null
      */
-    public function getCommitterName()
+    public function getAuthorEmail()
     {
-
-        if (isset( $this->committerName )) {
-            return $this->committerName;
+        if (isset($this->authorEmail)) {
+            return $this->authorEmail;
         }
 
         return null;
@@ -187,24 +164,22 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setCommitterName( $committerName )
+    public function setCommitterName($committerName)
     {
-
         $this->committerName = $committerName;
 
         return $this;
     }
 
     /**
-     * Return committer email.
+     * Return committer name.
      *
      * @return string|null
      */
-    public function getCommitterEmail()
+    public function getCommitterName()
     {
-
-        if (isset( $this->committerEmail )) {
-            return $this->committerEmail;
+        if (isset($this->committerName)) {
+            return $this->committerName;
         }
 
         return null;
@@ -217,24 +192,22 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setCommitterEmail( $committerEmail )
+    public function setCommitterEmail($committerEmail)
     {
-
         $this->committerEmail = $committerEmail;
 
         return $this;
     }
 
     /**
-     * Return commit message.
+     * Return committer email.
      *
      * @return string|null
      */
-    public function getMessage()
+    public function getCommitterEmail()
     {
-
-        if (isset( $this->message )) {
-            return $this->message;
+        if (isset($this->committerEmail)) {
+            return $this->committerEmail;
         }
 
         return null;
@@ -247,11 +220,24 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
-
         $this->message = $message;
 
         return $this;
+    }
+
+    /**
+     * Return commit message.
+     *
+     * @return string|null
+     */
+    public function getMessage()
+    {
+        if (isset($this->message)) {
+            return $this->message;
+        }
+
+        return null;
     }
 }

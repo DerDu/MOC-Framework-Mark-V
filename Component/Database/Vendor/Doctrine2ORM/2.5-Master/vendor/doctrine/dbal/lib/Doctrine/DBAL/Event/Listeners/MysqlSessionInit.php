@@ -19,9 +19,9 @@
 
 namespace Doctrine\DBAL\Event\Listeners;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 use Doctrine\DBAL\Events;
+use Doctrine\Common\EventSubscriber;
 
 /**
  * MySQL Session Init Event Subscriber which allows to set the Client Encoding of the Connection.
@@ -33,7 +33,6 @@ use Doctrine\DBAL\Events;
  */
 class MysqlSessionInit implements EventSubscriber
 {
-
     /**
      * The charset.
      *
@@ -54,9 +53,8 @@ class MysqlSessionInit implements EventSubscriber
      * @param string         $charset   The charset.
      * @param string|boolean $collation The collation, or FALSE if no collation.
      */
-    public function __construct( $charset = 'utf8', $collation = false )
+    public function __construct($charset = 'utf8', $collation = false)
     {
-
         $this->_charset = $charset;
         $this->_collation = $collation;
     }
@@ -66,11 +64,10 @@ class MysqlSessionInit implements EventSubscriber
      *
      * @return void
      */
-    public function postConnect( ConnectionEventArgs $args )
+    public function postConnect(ConnectionEventArgs $args)
     {
-
-        $collation = ( $this->_collation ) ? " COLLATE ".$this->_collation : "";
-        $args->getConnection()->executeUpdate( "SET NAMES ".$this->_charset.$collation );
+        $collation = ($this->_collation) ? " COLLATE ".$this->_collation : "";
+        $args->getConnection()->executeUpdate("SET NAMES ".$this->_charset . $collation);
     }
 
     /**
@@ -78,7 +75,6 @@ class MysqlSessionInit implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-
-        return array( Events::postConnect );
+        return array(Events::postConnect);
     }
 }

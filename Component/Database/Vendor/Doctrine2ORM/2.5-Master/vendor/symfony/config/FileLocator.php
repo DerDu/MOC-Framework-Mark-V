@@ -18,7 +18,6 @@ namespace Symfony\Component\Config;
  */
 class FileLocator implements FileLocatorInterface
 {
-
     protected $paths;
 
     /**
@@ -26,40 +25,39 @@ class FileLocator implements FileLocatorInterface
      *
      * @param string|array $paths A path or an array of paths where to look for resources
      */
-    public function __construct( $paths = array() )
+    public function __construct($paths = array())
     {
-
-        $this->paths = (array)$paths;
+        $this->paths = (array) $paths;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function locate( $name, $currentPath = null, $first = true )
+    public function locate($name, $currentPath = null, $first = true)
     {
-
         if ('' == $name) {
-            throw new \InvalidArgumentException( 'An empty file name is not valid to be located.' );
+            throw new \InvalidArgumentException('An empty file name is not valid to be located.');
         }
 
-        if ($this->isAbsolutePath( $name )) {
-            if (!file_exists( $name )) {
-                throw new \InvalidArgumentException( sprintf( 'The file "%s" does not exist.', $name ) );
+        if ($this->isAbsolutePath($name)) {
+            if (!file_exists($name)) {
+                throw new \InvalidArgumentException(sprintf('The file "%s" does not exist.', $name));
             }
 
             return $name;
         }
 
-        $filepaths = array();
-        if (null !== $currentPath && file_exists( $file = $currentPath.DIRECTORY_SEPARATOR.$name )) {
-            if (true === $first) {
-                return $file;
-            }
-            $filepaths[] = $file;
+        $paths = $this->paths;
+
+        if (null !== $currentPath) {
+            array_unshift($paths, $currentPath);
         }
 
-        foreach ($this->paths as $path) {
-            if (file_exists( $file = $path.DIRECTORY_SEPARATOR.$name )) {
+        $paths = array_unique($paths);
+        $filepaths = array();
+
+        foreach ($paths as $path) {
+            if (file_exists($file = $path.DIRECTORY_SEPARATOR.$name)) {
                 if (true === $first) {
                     return $file;
                 }
@@ -68,11 +66,10 @@ class FileLocator implements FileLocatorInterface
         }
 
         if (!$filepaths) {
-            throw new \InvalidArgumentException( sprintf( 'The file "%s" does not exist (in: %s%s).', $name,
-                null !== $currentPath ? $currentPath.', ' : '', implode( ', ', $this->paths ) ) );
+            throw new \InvalidArgumentException(sprintf('The file "%s" does not exist (in: %s).', $name, implode(', ', $paths)));
         }
 
-        return array_values( array_unique( $filepaths ) );
+        return $filepaths;
     }
 
     /**
@@ -82,15 +79,14 @@ class FileLocator implements FileLocatorInterface
      *
      * @return bool
      */
-    private function isAbsolutePath( $file )
+    private function isAbsolutePath($file)
     {
-
         if ($file[0] === '/' || $file[0] === '\\'
-            || ( strlen( $file ) > 3 && ctype_alpha( $file[0] )
+            || (strlen($file) > 3 && ctype_alpha($file[0])
                 && $file[1] === ':'
-                && ( $file[2] === '\\' || $file[2] === '/' )
+                && ($file[2] === '\\' || $file[2] === '/')
             )
-            || null !== parse_url( $file, PHP_URL_SCHEME )
+            || null !== parse_url($file, PHP_URL_SCHEME)
         ) {
             return true;
         }

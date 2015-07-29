@@ -26,7 +26,6 @@ namespace Doctrine\Common\Reflection;
  */
 class Psr0FindFile implements ClassFinderInterface
 {
-
     /**
      * The PSR-0 prefixes.
      *
@@ -38,40 +37,38 @@ class Psr0FindFile implements ClassFinderInterface
      * @param array $prefixes An array of prefixes. Each key is a PHP namespace and each value is
      *                        a list of directories.
      */
-    public function __construct( $prefixes )
+    public function __construct($prefixes)
     {
-
         $this->prefixes = $prefixes;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function findFile( $class )
+    public function findFile($class)
     {
-
-        $lastNsPos = strrpos( $class, '\\' );
+        $lastNsPos = strrpos($class, '\\');
         if ('\\' == $class[0]) {
-            $class = substr( $class, 1 );
+            $class = substr($class, 1);
         }
 
         if (false !== $lastNsPos) {
             // namespaced class name
-            $classPath = str_replace( '\\', DIRECTORY_SEPARATOR, substr( $class, 0, $lastNsPos ) ).DIRECTORY_SEPARATOR;
-            $className = substr( $class, $lastNsPos + 1 );
+            $classPath = str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 0, $lastNsPos)) . DIRECTORY_SEPARATOR;
+            $className = substr($class, $lastNsPos + 1);
         } else {
             // PEAR-like class name
             $classPath = null;
             $className = $class;
         }
 
-        $classPath .= str_replace( '_', DIRECTORY_SEPARATOR, $className ).'.php';
+        $classPath .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
         foreach ($this->prefixes as $prefix => $dirs) {
-            if (0 === strpos( $class, $prefix )) {
+            if (0 === strpos($class, $prefix)) {
                 foreach ($dirs as $dir) {
-                    if (is_file( $dir.DIRECTORY_SEPARATOR.$classPath )) {
-                        return $dir.DIRECTORY_SEPARATOR.$classPath;
+                    if (is_file($dir . DIRECTORY_SEPARATOR . $classPath)) {
+                        return $dir . DIRECTORY_SEPARATOR . $classPath;
                     }
                 }
             }

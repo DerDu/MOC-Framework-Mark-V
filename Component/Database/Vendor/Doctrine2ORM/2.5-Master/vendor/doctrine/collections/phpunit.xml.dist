@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./tests/Doctrine/Tests/TestInit.php"
-    >
+>
     <testsuites>
         <testsuite name="Doctrine Collections Test Suite">
             <directory>./tests/Doctrine/</directory>
@@ -22,7 +22,7 @@
             <directory>./lib/Doctrine/</directory>
         </whitelist>
     </filter>
-
+    
     <groups>
         <exclude>
             <group>performance</group>

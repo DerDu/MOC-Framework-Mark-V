@@ -9,41 +9,22 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.6.6
+ * @since Class available since Release 3.6.6
  */
 class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Constraint
 {
-
     /**
-     * @var integer
+     * @var int
      */
     protected $expectedMessage;
 
     /**
      * @param string $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
-
         parent::__construct();
         $this->expectedMessage = $expected;
-    }
-
-    /**
-     * @return string
-     */
-    public function toString()
-    {
-
-        return 'exception message contains ';
     }
 
     /**
@@ -51,13 +32,11 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      * constraint is met, false otherwise.
      *
      * @param  Exception $other
-     *
-     * @return boolean
+     * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
-
-        return strpos( $other->getMessage(), $this->expectedMessage ) !== false;
+        return strpos($other->getMessage(), $this->expectedMessage) !== false;
     }
 
     /**
@@ -66,17 +45,23 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed $other Evaluated value or object.
-     *
+     * @param  mixed  $other Evaluated value or object.
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
-
         return sprintf(
             "exception message '%s' contains '%s'",
             $other->getMessage(),
             $this->expectedMessage
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return 'exception message contains ';
     }
 }

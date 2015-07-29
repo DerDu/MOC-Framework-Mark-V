@@ -9,41 +9,22 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Márcio Almada <marcio3w@gmail.com>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 4.3.0
+ * @since Class available since Release 4.3.0
  */
 class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framework_Constraint
 {
-
     /**
-     * @var integer
+     * @var int
      */
     protected $expectedMessageRegExp;
 
     /**
      * @param string $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
-
         parent::__construct();
         $this->expectedMessageRegExp = $expected;
-    }
-
-    /**
-     * @return string
-     */
-    public function toString()
-    {
-
-        return "exception message matches ";
     }
 
     /**
@@ -51,13 +32,11 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
      * constraint is met, false otherwise.
      *
      * @param  Exception $other
-     *
-     * @return boolean
+     * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
-
-        $match = PHPUnit_Util_Regex::pregMatchSafe( $this->expectedMessageRegExp, $other->getMessage() );
+        $match = PHPUnit_Util_Regex::pregMatchSafe($this->expectedMessageRegExp, $other->getMessage());
 
         if (false === $match) {
             throw new PHPUnit_Framework_Exception(
@@ -74,17 +53,23 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed $other Evaluated value or object.
-     *
+     * @param  mixed  $other Evaluated value or object.
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
-
         return sprintf(
             "exception message '%s' matches '%s'",
             $other->getMessage(),
             $this->expectedMessageRegExp
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return 'exception message matches ';
     }
 }

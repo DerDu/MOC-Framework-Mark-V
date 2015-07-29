@@ -26,28 +26,26 @@ use Doctrine\DBAL\Driver\AbstractOracleDriver;
  * A Doctrine DBAL driver for the Oracle OCI8 PHP extensions.
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 class Driver extends AbstractOracleDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         try {
             return new OCI8Connection(
                 $username,
                 $password,
-                $this->_constructDsn( $params ),
-                isset( $params['charset'] ) ? $params['charset'] : null,
-                isset( $params['sessionMode'] ) ? $params['sessionMode'] : OCI_DEFAULT,
-                isset( $params['persistent'] ) ? $params['persistent'] : false
+                $this->_constructDsn($params),
+                isset($params['charset']) ? $params['charset'] : null,
+                isset($params['sessionMode']) ? $params['sessionMode'] : OCI_DEFAULT,
+                isset($params['persistent']) ? $params['persistent'] : false
             );
-        } catch( OCI8Exception $e ) {
-            throw DBALException::driverException( $this, $e );
+        } catch (OCI8Exception $e) {
+            throw DBALException::driverException($this, $e);
         }
     }
 
@@ -58,10 +56,9 @@ class Driver extends AbstractOracleDriver
      *
      * @return string The DSN.
      */
-    protected function _constructDsn( array $params )
+    protected function _constructDsn(array $params)
     {
-
-        return $this->getEasyConnectString( $params );
+        return $this->getEasyConnectString($params);
     }
 
     /**
@@ -69,7 +66,6 @@ class Driver extends AbstractOracleDriver
      */
     public function getName()
     {
-
         return 'oci8';
     }
 }

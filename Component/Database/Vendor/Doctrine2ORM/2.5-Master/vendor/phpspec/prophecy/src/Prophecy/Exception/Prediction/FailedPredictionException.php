@@ -21,5 +21,4 @@ use RuntimeException;
  */
 class FailedPredictionException extends RuntimeException implements PredictionException
 {
-
 }

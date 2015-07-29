@@ -12,31 +12,23 @@ namespace SebastianBergmann\GlobalState;
 
 /**
  * Exports parts of a Snapshot as PHP code.
- *
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/global-state
  */
 class CodeExporter
 {
-
     /**
      * @param  Snapshot $snapshot
-     *
      * @return string
      */
-    public function constants( Snapshot $snapshot )
+    public function constants(Snapshot $snapshot)
     {
-
         $result = '';
 
         foreach ($snapshot->constants() as $name => $value) {
             $result .= sprintf(
-                'if (!defined(\'%s\')) define(\'%s\', %s);'."\n",
+                'if (!defined(\'%s\')) define(\'%s\', %s);' . "\n",
                 $name,
                 $name,
-                $this->exportVariable( $value )
+                $this->exportVariable($value)
             );
         }
 
@@ -44,63 +36,56 @@ class CodeExporter
     }
 
     /**
-     * @param  mixed $variable
-     *
+     * @param  Snapshot $snapshot
      * @return string
      */
-    private function exportVariable( $variable )
+    public function iniSettings(Snapshot $snapshot)
     {
+        $result = '';
 
-        if (is_scalar( $variable ) || is_null( $variable ) ||
-            ( is_array( $variable ) && $this->arrayOnlyContainsScalars( $variable ) )
-        ) {
-            return var_export( $variable, true );
+        foreach ($snapshot->iniSettings() as $key => $value) {
+            $result .= sprintf(
+                '@ini_set(%s, %s);' . "\n",
+                $this->exportVariable($key),
+                $this->exportVariable($value)
+            );
         }
 
-        return 'unserialize('.var_export( serialize( $variable ), true ).')';
+        return $result;
+    }
+
+    /**
+     * @param  mixed  $variable
+     * @return string
+     */
+    private function exportVariable($variable)
+    {
+        if (is_scalar($variable) || is_null($variable) ||
+            (is_array($variable) && $this->arrayOnlyContainsScalars($variable))) {
+            return var_export($variable, true);
+        }
+
+        return 'unserialize(' . var_export(serialize($variable), true) . ')';
     }
 
     /**
      * @param  array $array
-     *
-     * @return boolean
+     * @return bool
      */
-    private function arrayOnlyContainsScalars( array $array )
+    private function arrayOnlyContainsScalars(array $array)
     {
-
         $result = true;
 
         foreach ($array as $element) {
-            if (is_array( $element )) {
-                $result = self::arrayOnlyContainsScalars( $element );
-            } elseif (!is_scalar( $element ) && !is_null( $element )) {
+            if (is_array($element)) {
+                $result = self::arrayOnlyContainsScalars($element);
+            } elseif (!is_scalar($element) && !is_null($element)) {
                 $result = false;
             }
 
             if ($result === false) {
                 break;
             }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param  Snapshot $snapshot
-     *
-     * @return string
-     */
-    public function iniSettings( Snapshot $snapshot )
-    {
-
-        $result = '';
-
-        foreach ($snapshot->iniSettings() as $key => $value) {
-            $result .= sprintf(
-                '@ini_set(%s, %s);'."\n",
-                $this->exportVariable( $key ),
-                $this->exportVariable( $value )
-            );
         }
 
         return $result;

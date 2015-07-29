@@ -23,7 +23,6 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  */
 class VariableNode extends BaseNode implements PrototypeNodeInterface
 {
-
     protected $defaultValueSet = false;
     protected $defaultValue;
     protected $allowEmptyValue = true;
@@ -31,9 +30,17 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
     /**
      * {@inheritdoc}
      */
+    public function setDefaultValue($value)
+    {
+        $this->defaultValueSet = true;
+        $this->defaultValue = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function hasDefaultValue()
     {
-
         return $this->defaultValueSet;
     }
 
@@ -42,20 +49,9 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
      */
     public function getDefaultValue()
     {
-
         $v = $this->defaultValue;
 
         return $v instanceof \Closure ? $v() : $v;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultValue( $value )
-    {
-
-        $this->defaultValueSet = true;
-        $this->defaultValue = $value;
     }
 
     /**
@@ -63,44 +59,41 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
      *
      * @param bool $boolean True if this entity will accept empty values.
      */
-    public function setAllowEmptyValue( $boolean )
+    public function setAllowEmptyValue($boolean)
     {
-
-        $this->allowEmptyValue = (bool)$boolean;
+        $this->allowEmptyValue = (bool) $boolean;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setName( $name )
+    public function setName($name)
     {
-
         $this->name = $name;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function validateType( $value )
+    protected function validateType($value)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function finalizeValue( $value )
+    protected function finalizeValue($value)
     {
-
-        if (!$this->allowEmptyValue && empty( $value )) {
-            $ex = new InvalidConfigurationException( sprintf(
+        if (!$this->allowEmptyValue && empty($value)) {
+            $ex = new InvalidConfigurationException(sprintf(
                 'The path "%s" cannot contain an empty value, but got %s.',
                 $this->getPath(),
-                json_encode( $value )
-            ) );
+                json_encode($value)
+            ));
             if ($hint = $this->getInfo()) {
-                $ex->addHint( $hint );
+                $ex->addHint($hint);
             }
-            $ex->setPath( $this->getPath() );
+            $ex->setPath($this->getPath());
 
             throw $ex;
         }
@@ -111,18 +104,16 @@ class VariableNode extends BaseNode implements PrototypeNodeInterface
     /**
      * {@inheritdoc}
      */
-    protected function normalizeValue( $value )
+    protected function normalizeValue($value)
     {
-
         return $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function mergeValues( $leftSide, $rightSide )
+    protected function mergeValues($leftSide, $rightSide)
     {
-
         return $rightSide;
     }
 }

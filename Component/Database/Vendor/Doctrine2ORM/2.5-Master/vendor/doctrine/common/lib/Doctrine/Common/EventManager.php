@@ -32,7 +32,6 @@ namespace Doctrine\Common;
  */
 class EventManager
 {
-
     /**
      * Map of registered listeners.
      * <event> => <listeners>
@@ -44,21 +43,20 @@ class EventManager
     /**
      * Dispatches an event to all registered listeners.
      *
-     * @param string $eventName         The name of the event to dispatch. The name of the event is
+     * @param string    $eventName      The name of the event to dispatch. The name of the event is
      *                                  the name of the method that is invoked on listeners.
      * @param EventArgs|null $eventArgs The event arguments to pass to the event handlers/listeners.
      *                                  If not supplied, the single empty EventArgs instance is used.
      *
      * @return boolean
      */
-    public function dispatchEvent( $eventName, EventArgs $eventArgs = null )
+    public function dispatchEvent($eventName, EventArgs $eventArgs = null)
     {
-
-        if (isset( $this->_listeners[$eventName] )) {
+        if (isset($this->_listeners[$eventName])) {
             $eventArgs = $eventArgs === null ? EventArgs::getEmptyInstance() : $eventArgs;
 
             foreach ($this->_listeners[$eventName] as $listener) {
-                $listener->$eventName( $eventArgs );
+                $listener->$eventName($eventArgs);
             }
         }
     }
@@ -70,9 +68,8 @@ class EventManager
      *
      * @return array The event listeners for the specified event, or all event listeners.
      */
-    public function getListeners( $event = null )
+    public function getListeners($event = null)
     {
-
         return $event ? $this->_listeners[$event] : $this->_listeners;
     }
 
@@ -83,24 +80,9 @@ class EventManager
      *
      * @return boolean TRUE if the specified event has any listeners, FALSE otherwise.
      */
-    public function hasListeners( $event )
+    public function hasListeners($event)
     {
-
-        return isset( $this->_listeners[$event] ) && $this->_listeners[$event];
-    }
-
-    /**
-     * Adds an EventSubscriber. The subscriber is asked for all the events it is
-     * interested in and added as a listener for these events.
-     *
-     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
-     *
-     * @return void
-     */
-    public function addEventSubscriber( EventSubscriber $subscriber )
-    {
-
-        $this->addEventListener( $subscriber->getSubscribedEvents(), $subscriber );
+        return isset($this->_listeners[$event]) && $this->_listeners[$event];
     }
 
     /**
@@ -111,31 +93,16 @@ class EventManager
      *
      * @return void
      */
-    public function addEventListener( $events, $listener )
+    public function addEventListener($events, $listener)
     {
-
         // Picks the hash code related to that listener
-        $hash = spl_object_hash( $listener );
+        $hash = spl_object_hash($listener);
 
-        foreach ((array)$events as $event) {
+        foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
             $this->_listeners[$event][$hash] = $listener;
         }
-    }
-
-    /**
-     * Removes an EventSubscriber. The subscriber is asked for all the events it is
-     * interested in and removed as a listener for these events.
-     *
-     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
-     *
-     * @return void
-     */
-    public function removeEventSubscriber( EventSubscriber $subscriber )
-    {
-
-        $this->removeEventListener( $subscriber->getSubscribedEvents(), $subscriber );
     }
 
     /**
@@ -146,17 +113,42 @@ class EventManager
      *
      * @return void
      */
-    public function removeEventListener( $events, $listener )
+    public function removeEventListener($events, $listener)
     {
-
         // Picks the hash code related to that listener
-        $hash = spl_object_hash( $listener );
+        $hash = spl_object_hash($listener);
 
-        foreach ((array)$events as $event) {
+        foreach ((array) $events as $event) {
             // Check if actually have this listener associated
-            if (isset( $this->_listeners[$event][$hash] )) {
-                unset( $this->_listeners[$event][$hash] );
+            if (isset($this->_listeners[$event][$hash])) {
+                unset($this->_listeners[$event][$hash]);
             }
         }
+    }
+
+    /**
+     * Adds an EventSubscriber. The subscriber is asked for all the events it is
+     * interested in and added as a listener for these events.
+     *
+     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
+     *
+     * @return void
+     */
+    public function addEventSubscriber(EventSubscriber $subscriber)
+    {
+        $this->addEventListener($subscriber->getSubscribedEvents(), $subscriber);
+    }
+
+    /**
+     * Removes an EventSubscriber. The subscriber is asked for all the events it is
+     * interested in and removed as a listener for these events.
+     *
+     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
+     *
+     * @return void
+     */
+    public function removeEventSubscriber(EventSubscriber $subscriber)
+    {
+        $this->removeEventListener($subscriber->getSubscribedEvents(), $subscriber);
     }
 }

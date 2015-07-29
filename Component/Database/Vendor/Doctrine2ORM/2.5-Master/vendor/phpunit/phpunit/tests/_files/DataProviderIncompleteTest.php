@@ -1,43 +1,37 @@
 <?php
-
 class DataProviderIncompleteTest extends PHPUnit_Framework_TestCase
 {
-
-    public static function providerMethod()
-    {
-
-        return array(
-            array( 0, 0, 0 ),
-            array( 0, 1, 1 ),
-        );
-    }
-
     /**
      * @dataProvider incompleteTestProviderMethod
      */
-    public function testIncomplete( $a, $b, $c )
+    public function testIncomplete($a, $b, $c)
     {
-
-        $this->assertTrue( true );
+        $this->assertTrue(true);
     }
 
     /**
      * @dataProvider providerMethod
      */
-    public function testAdd( $a, $b, $c )
+    public function testAdd($a, $b, $c)
     {
-
-        $this->assertEquals( $c, $a + $b );
+        $this->assertEquals($c, $a + $b);
     }
 
     public function incompleteTestProviderMethod()
     {
-
-        $this->markTestIncomplete( "incomplete" );
+        $this->markTestIncomplete('incomplete');
 
         return array(
-            array( 0, 0, 0 ),
-            array( 0, 1, 1 ),
+          array(0, 0, 0),
+          array(0, 1, 1),
+        );
+    }
+
+    public static function providerMethod()
+    {
+        return array(
+          array(0, 0, 0),
+          array(0, 1, 1),
         );
     }
 }

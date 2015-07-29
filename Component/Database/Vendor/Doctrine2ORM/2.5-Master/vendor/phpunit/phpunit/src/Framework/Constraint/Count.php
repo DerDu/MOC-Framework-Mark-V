@@ -9,45 +9,22 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.6.0
+ * @since Class available since Release 3.6.0
  */
 class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
 {
-
     /**
-     * @var integer
+     * @var int
      */
     protected $expectedCount = 0;
 
     /**
-     * @param integer $expected
+     * @param int $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
-
         parent::__construct();
         $this->expectedCount = $expected;
-    }
-
-    /**
-     * @return string
-     */
-    public function toString()
-    {
-
-        return sprintf(
-            'count matches %d',
-            $this->expectedCount
-        );
     }
 
     /**
@@ -55,25 +32,21 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      * constraint is met, false otherwise.
      *
      * @param  mixed $other
-     *
-     * @return boolean
+     * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
-
-        return $this->expectedCount === $this->getCountOf( $other );
+        return $this->expectedCount === $this->getCountOf($other);
     }
 
     /**
      * @param  mixed $other
-     *
-     * @return boolean
+     * @return bool
      */
-    protected function getCountOf( $other )
+    protected function getCountOf($other)
     {
-
-        if ($other instanceof Countable || is_array( $other )) {
-            return count( $other );
+        if ($other instanceof Countable || is_array($other)) {
+            return count($other);
         } elseif ($other instanceof Traversable) {
             if ($other instanceof IteratorAggregate) {
                 $iterator = $other->getIterator();
@@ -81,8 +54,8 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
                 $iterator = $other;
             }
 
-            $key = $iterator->key();
-            $count = iterator_count( $iterator );
+            $key   = $iterator->key();
+            $count = iterator_count($iterator);
 
             // manually rewind $iterator to previous key, since iterator_count
             // moves pointer
@@ -103,16 +76,25 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed $other Evaluated value or object.
-     *
+     * @param  mixed  $other Evaluated value or object.
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
-
         return sprintf(
             'actual size %d matches expected size %d',
-            $this->getCountOf( $other ),
+            $this->getCountOf($other),
+            $this->expectedCount
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return sprintf(
+            'count matches %d',
             $this->expectedCount
         );
     }

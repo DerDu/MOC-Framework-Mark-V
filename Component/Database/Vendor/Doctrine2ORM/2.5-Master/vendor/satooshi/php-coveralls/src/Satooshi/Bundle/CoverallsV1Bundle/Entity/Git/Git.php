@@ -28,7 +28,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Entity\Coveralls;
  */
 class Git extends Coveralls
 {
-
     /**
      * Branch name.
      *
@@ -57,11 +56,10 @@ class Git extends Coveralls
      * @param Commit $head    HEAD commit.
      * @param array  $remotes Remote repositories.
      */
-    public function __construct( $branch, Commit $head, array $remotes )
+    public function __construct($branch, Commit $head, array $remotes)
     {
-
-        $this->branch = $branch;
-        $this->head = $head;
+        $this->branch  = $branch;
+        $this->head    = $head;
         $this->remotes = $remotes;
     }
 
@@ -74,7 +72,6 @@ class Git extends Coveralls
      */
     public function toArray()
     {
-
         $remotes = array();
 
         foreach ($this->remotes as $remote) {
@@ -97,7 +94,6 @@ class Git extends Coveralls
      */
     public function getBranch()
     {
-
         return $this->branch;
     }
 
@@ -108,7 +104,6 @@ class Git extends Coveralls
      */
     public function getHead()
     {
-
         return $this->head;
     }
 
@@ -119,7 +114,6 @@ class Git extends Coveralls
      */
     public function getRemotes()
     {
-
         return $this->remotes;
     }
 }

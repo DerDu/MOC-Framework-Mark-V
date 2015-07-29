@@ -2,5 +2,4 @@
 
 class DummyException extends Exception
 {
-
 }

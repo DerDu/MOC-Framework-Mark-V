@@ -8,15 +8,13 @@ namespace Guzzle\Batch;
  */
 class HistoryBatch extends AbstractBatchDecorator
 {
-
     /** @var array Items in the history */
     protected $history = array();
 
-    public function add( $item )
+    public function add($item)
     {
-
         $this->history[] = $item;
-        $this->decoratedBatch->add( $item );
+        $this->decoratedBatch->add($item);
 
         return $this;
     }
@@ -28,7 +26,6 @@ class HistoryBatch extends AbstractBatchDecorator
      */
     public function getHistory()
     {
-
         return $this->history;
     }
 
@@ -37,7 +34,6 @@ class HistoryBatch extends AbstractBatchDecorator
      */
     public function clearHistory()
     {
-
         $this->history = array();
     }
 }

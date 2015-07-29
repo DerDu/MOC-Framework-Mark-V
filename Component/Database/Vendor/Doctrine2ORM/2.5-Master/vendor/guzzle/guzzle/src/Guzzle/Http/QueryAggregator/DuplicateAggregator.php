@@ -11,14 +11,12 @@ use Guzzle\Http\QueryString;
  */
 class DuplicateAggregator implements QueryAggregatorInterface
 {
-
-    public function aggregate( $key, $value, QueryString $query )
+    public function aggregate($key, $value, QueryString $query)
     {
-
         if ($query->isUrlEncoding()) {
-            return array( $query->encodeValue( $key ) => array_map( array( $query, 'encodeValue' ), $value ) );
+            return array($query->encodeValue($key) => array_map(array($query, 'encodeValue'), $value));
         } else {
-            return array( $key => $value );
+            return array($key => $value);
         }
     }
 }

@@ -11,22 +11,20 @@
 
 namespace Symfony\Component\Config\Tests\Definition\Builder;
 
-use Symfony\Component\Config\Definition\Builder\FloatNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\IntegerNodeDefinition as NumericNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\IntegerNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\FloatNodeDefinition;
 
 class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage You cannot define a min(4) as you already have a max(3)
      */
     public function testIncoherentMinAssertion()
     {
-
-        $def = new NumericNodeDefinition( 'foo' );
-        $def->max( 3 )->min( 4 );
+        $def = new NumericNodeDefinition('foo');
+        $def->max(3)->min(4);
     }
 
     /**
@@ -35,9 +33,8 @@ class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIncoherentMaxAssertion()
     {
-
-        $node = new NumericNodeDefinition( 'foo' );
-        $node->min( 3 )->max( 2 );
+        $node = new NumericNodeDefinition('foo');
+        $node->min(3)->max(2);
     }
 
     /**
@@ -46,9 +43,8 @@ class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIntegerMinAssertion()
     {
-
-        $def = new IntegerNodeDefinition( 'foo' );
-        $def->min( 5 )->getNode()->finalize( 4 );
+        $def = new IntegerNodeDefinition('foo');
+        $def->min(5)->getNode()->finalize(4);
     }
 
     /**
@@ -57,17 +53,15 @@ class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIntegerMaxAssertion()
     {
-
-        $def = new IntegerNodeDefinition( 'foo' );
-        $def->max( 3 )->getNode()->finalize( 4 );
+        $def = new IntegerNodeDefinition('foo');
+        $def->max(3)->getNode()->finalize(4);
     }
 
     public function testIntegerValidMinMaxAssertion()
     {
-
-        $def = new IntegerNodeDefinition( 'foo' );
-        $node = $def->min( 3 )->max( 7 )->getNode();
-        $this->assertEquals( 4, $node->finalize( 4 ) );
+        $def = new IntegerNodeDefinition('foo');
+        $node = $def->min(3)->max(7)->getNode();
+        $this->assertEquals(4, $node->finalize(4));
     }
 
     /**
@@ -76,9 +70,8 @@ class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFloatMinAssertion()
     {
-
-        $def = new FloatNodeDefinition( 'foo' );
-        $def->min( 5E2 )->getNode()->finalize( 4e2 );
+        $def = new FloatNodeDefinition('foo');
+        $def->min(5E2)->getNode()->finalize(4e2);
     }
 
     /**
@@ -87,16 +80,14 @@ class NumericNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFloatMaxAssertion()
     {
-
-        $def = new FloatNodeDefinition( 'foo' );
-        $def->max( 0.3 )->getNode()->finalize( 4.3 );
+        $def = new FloatNodeDefinition('foo');
+        $def->max(0.3)->getNode()->finalize(4.3);
     }
 
     public function testFloatValidMinMaxAssertion()
     {
-
-        $def = new FloatNodeDefinition( 'foo' );
-        $node = $def->min( 3.0 )->max( 7e2 )->getNode();
-        $this->assertEquals( 4.5, $node->finalize( 4.5 ) );
+        $def = new FloatNodeDefinition('foo');
+        $node = $def->min(3.0)->max(7e2)->getNode();
+        $this->assertEquals(4.5, $node->finalize(4.5));
     }
 }

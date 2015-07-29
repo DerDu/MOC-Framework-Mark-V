@@ -30,16 +30,14 @@ use UnexpectedValueException as BaseUnexpectedValueException;
  */
 class UnexpectedValueException extends BaseUnexpectedValueException implements ExceptionInterface
 {
-
     /**
      * @param ReflectionClass $reflectionClass
      * @param Exception       $exception
      *
      * @return self
      */
-    public static function fromSerializationTriggeredException( ReflectionClass $reflectionClass, Exception $exception )
+    public static function fromSerializationTriggeredException(ReflectionClass $reflectionClass, Exception $exception)
     {
-
         return new self(
             sprintf(
                 'An exception was raised while trying to instantiate an instance of "%s" via un-serialization',
@@ -66,17 +64,16 @@ class UnexpectedValueException extends BaseUnexpectedValueException implements E
         $errorFile,
         $errorLine
     ) {
-
         return new self(
             sprintf(
                 'Could not produce an instance of "%s" via un-serialization, since an error was triggered '
-                .'in file "%s" at line "%d"',
+                . 'in file "%s" at line "%d"',
                 $reflectionClass->getName(),
                 $errorFile,
                 $errorLine
             ),
             0,
-            new Exception( $errorString, $errorCode )
+            new Exception($errorString, $errorCode)
         );
     }
 }

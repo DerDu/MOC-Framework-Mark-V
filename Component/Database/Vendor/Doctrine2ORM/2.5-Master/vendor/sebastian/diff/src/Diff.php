@@ -11,16 +11,9 @@
 namespace SebastianBergmann\Diff;
 
 /**
- * @package    Diff
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Kore Nordmann <mail@kore-nordmann.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/diff
  */
 class Diff
 {
-
     /**
      * @var string
      */
@@ -41,11 +34,10 @@ class Diff
      * @param string  $to
      * @param Chunk[] $chunks
      */
-    public function __construct( $from, $to, array $chunks = array() )
+    public function __construct($from, $to, array $chunks = array())
     {
-
-        $this->from = $from;
-        $this->to = $to;
+        $this->from   = $from;
+        $this->to     = $to;
         $this->chunks = $chunks;
     }
 
@@ -54,7 +46,6 @@ class Diff
      */
     public function getFrom()
     {
-
         return $this->from;
     }
 
@@ -63,7 +54,6 @@ class Diff
      */
     public function getTo()
     {
-
         return $this->to;
     }
 
@@ -72,16 +62,14 @@ class Diff
      */
     public function getChunks()
     {
-
         return $this->chunks;
     }
 
     /**
      * @param Chunk[] $chunks
      */
-    public function setChunks( array $chunks )
+    public function setChunks(array $chunks)
     {
-
         $this->chunks = $chunks;
     }
 }

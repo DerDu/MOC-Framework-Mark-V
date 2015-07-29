@@ -10,5 +10,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class CoverallsV1Bundle extends Bundle
 {
-
 }

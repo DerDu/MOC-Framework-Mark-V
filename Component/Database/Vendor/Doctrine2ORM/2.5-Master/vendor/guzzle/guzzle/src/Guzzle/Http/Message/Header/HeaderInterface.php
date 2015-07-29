@@ -6,7 +6,6 @@ use Guzzle\Common\ToArrayInterface;
 
 interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggregate
 {
-
     /**
      * Convert the header to a string
      *
@@ -21,7 +20,7 @@ interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggrega
      *
      * @return self
      */
-    public function add( $value );
+    public function add($value);
 
     /**
      * Get the name of the header
@@ -37,7 +36,7 @@ interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggrega
      *
      * @return self
      */
-    public function setName( $name );
+    public function setName($name);
 
     /**
      * Change the glue used to implode the values
@@ -46,7 +45,7 @@ interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggrega
      *
      * @return self
      */
-    public function setGlue( $glue );
+    public function setGlue($glue);
 
     /**
      * Get the glue used to implode multiple values into a string
@@ -62,7 +61,7 @@ interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggrega
      *
      * @return bool
      */
-    public function hasValue( $searchValue );
+    public function hasValue($searchValue);
 
     /**
      * Remove a specific value from the header
@@ -71,7 +70,7 @@ interface HeaderInterface extends ToArrayInterface, \Countable, \IteratorAggrega
      *
      * @return self
      */
-    public function removeValue( $searchValue );
+    public function removeValue($searchValue);
 
     /**
      * Parse a header containing ";" separated data into an array of associative arrays representing the header

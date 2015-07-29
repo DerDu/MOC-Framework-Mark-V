@@ -14,18 +14,10 @@
  *
  * The expected class name is passed in the constructor.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.0.0
+ * @since Class available since Release 3.0.0
  */
 class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constraint
 {
-
     /**
      * @var string
      */
@@ -34,11 +26,41 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
     /**
      * @param string $className
      */
-    public function __construct( $className )
+    public function __construct($className)
     {
-
         parent::__construct();
         $this->className = $className;
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param  mixed $other Value or object to evaluate.
+     * @return bool
+     */
+    protected function matches($other)
+    {
+        return ($other instanceof $this->className);
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed  $other Evaluated value or object.
+     * @return string
+     */
+    protected function failureDescription($other)
+    {
+        return sprintf(
+            '%s is an instance of %s "%s"',
+            $this->exporter->shortenedExport($other),
+            $this->getType(),
+            $this->className
+        );
     }
 
     /**
@@ -48,7 +70,6 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
      */
     public function toString()
     {
-
         return sprintf(
             'is instance of %s "%s"',
             $this->getType(),
@@ -58,50 +79,14 @@ class PHPUnit_Framework_Constraint_IsInstanceOf extends PHPUnit_Framework_Constr
 
     private function getType()
     {
-
         try {
-            $reflection = new ReflectionClass( $this->className );
+            $reflection = new ReflectionClass($this->className);
             if ($reflection->isInterface()) {
                 return 'interface';
             }
-        } catch( ReflectionException $e ) {
+        } catch (ReflectionException $e) {
         }
 
         return 'class';
-    }
-
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * @param  mixed $other Value or object to evaluate.
-     *
-     * @return bool
-     */
-    protected function matches( $other )
-    {
-
-        return ( $other instanceof $this->className );
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed $other Evaluated value or object.
-     *
-     * @return string
-     */
-    protected function failureDescription( $other )
-    {
-
-        return sprintf(
-            '%s is an instance of %s "%s"',
-            $this->exporter->shortenedExport( $other ),
-            $this->getType(),
-            $this->className
-        );
     }
 }

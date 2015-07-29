@@ -7,15 +7,15 @@
          checkForUnintentionallyCoveredCode="true"
          forceCoversAnnotation="true"
          verbose="true">
-    <testsuites>
-        <testsuite name="exporter">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
-            <directory>src</directory>
-        </whitelist>
-    </filter>
+ <testsuites>
+  <testsuite name="exporter">
+   <directory>tests</directory>
+  </testsuite>
+ </testsuites>
+ <filter>
+  <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+   <directory>src</directory>
+  </whitelist>
+ </filter>
 </phpunit>
 

@@ -7,7 +7,6 @@ namespace Guzzle\Service\Command;
  */
 interface ResponseClassInterface
 {
-
     /**
      * Create a response model object from a completed command
      *
@@ -15,5 +14,5 @@ interface ResponseClassInterface
      *
      * @return self
      */
-    public static function fromCommand( OperationCommand $command );
+    public static function fromCommand(OperationCommand $command);
 }

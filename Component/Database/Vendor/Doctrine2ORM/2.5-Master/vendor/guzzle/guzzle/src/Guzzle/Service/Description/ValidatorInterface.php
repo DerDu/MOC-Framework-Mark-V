@@ -7,7 +7,6 @@ namespace Guzzle\Service\Description;
  */
 interface ValidatorInterface
 {
-
     /**
      * Validate a value against the acceptable types, regular expressions, minimum, maximums, instanceOf, enums, etc
      * Add default and static values to the passed in variable. If the validation completes successfully, the input
@@ -18,7 +17,7 @@ interface ValidatorInterface
      *
      * @return bool  Returns true if the input data is valid for the schema
      */
-    public function validate( Parameter $param, &$value );
+    public function validate(Parameter $param, &$value);
 
     /**
      * Get validation errors encountered while validating

@@ -12,97 +12,92 @@
 namespace Symfony\Component\Console\Tests\Helper;
 
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
-use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Helper\TableSeparator;
+use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Output\StreamOutput;
 
 class TableTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $stream;
 
+    protected function setUp()
+    {
+        $this->stream = fopen('php://memory', 'r+');
+    }
+
+    protected function tearDown()
+    {
+        fclose($this->stream);
+        $this->stream = null;
+    }
+
     /**
      * @dataProvider testRenderProvider
      */
-    public function testRender( $headers, $rows, $style, $expected )
+    public function testRender($headers, $rows, $style, $expected)
     {
-
-        $table = new Table( $output = $this->getOutputStream() );
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( $headers )
-            ->setRows( $rows )
-            ->setStyle( $style );
+            ->setHeaders($headers)
+            ->setRows($rows)
+            ->setStyle($style)
+        ;
         $table->render();
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
-    }
-
-    protected function getOutputStream()
-    {
-
-        return new StreamOutput( $this->stream, StreamOutput::VERBOSITY_NORMAL, false );
-    }
-
-    protected function getOutputContent( StreamOutput $output )
-    {
-
-        rewind( $output->getStream() );
-
-        return str_replace( PHP_EOL, "\n", stream_get_contents( $output->getStream() ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
     /**
      * @dataProvider testRenderProvider
      */
-    public function testRenderAddRows( $headers, $rows, $style, $expected )
+    public function testRenderAddRows($headers, $rows, $style, $expected)
     {
-
-        $table = new Table( $output = $this->getOutputStream() );
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( $headers )
-            ->addRows( $rows )
-            ->setStyle( $style );
+            ->setHeaders($headers)
+            ->addRows($rows)
+            ->setStyle($style)
+        ;
         $table->render();
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
     /**
      * @dataProvider testRenderProvider
      */
-    public function testRenderAddRowsOneByOne( $headers, $rows, $style, $expected )
+    public function testRenderAddRowsOneByOne($headers, $rows, $style, $expected)
     {
-
-        $table = new Table( $output = $this->getOutputStream() );
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( $headers )
-            ->setStyle( $style );
+            ->setHeaders($headers)
+            ->setStyle($style)
+        ;
         foreach ($rows as $row) {
-            $table->addRow( $row );
+            $table->addRow($row);
         }
         $table->render();
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
     public function testRenderProvider()
     {
-
         $books = array(
-            array( '99921-58-10-7', 'Divine Comedy', 'Dante Alighieri' ),
-            array( '9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens' ),
-            array( '960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien' ),
-            array( '80-902734-1-6', 'And Then There Were None', 'Agatha Christie' ),
+            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+            array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
+            array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
+            array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
         );
 
         return array(
             array(
-                array( 'ISBN', 'Title', 'Author' ),
+                array('ISBN', 'Title', 'Author'),
                 $books,
                 'default',
-                <<<TABLE
-                +---------------+--------------------------+------------------+
+<<<TABLE
++---------------+--------------------------+------------------+
 | ISBN          | Title                    | Author           |
 +---------------+--------------------------+------------------+
 | 99921-58-10-7 | Divine Comedy            | Dante Alighieri  |
@@ -114,45 +109,45 @@ class TableTest extends \PHPUnit_Framework_TestCase
 TABLE
             ),
             array(
-                array( 'ISBN', 'Title', 'Author' ),
+                array('ISBN', 'Title', 'Author'),
                 $books,
                 'compact',
-                <<<TABLE
-                 ISBN          Title                    Author
- 99921-58-10-7 Divine Comedy            Dante Alighieri
- 9971-5-0210-0 A Tale of Two Cities     Charles Dickens
- 960-425-059-0 The Lord of the Rings    J. R. R. Tolkien
- 80-902734-1-6 And Then There Were None Agatha Christie
+<<<TABLE
+ ISBN          Title                    Author           
+ 99921-58-10-7 Divine Comedy            Dante Alighieri  
+ 9971-5-0210-0 A Tale of Two Cities     Charles Dickens  
+ 960-425-059-0 The Lord of the Rings    J. R. R. Tolkien 
+ 80-902734-1-6 And Then There Were None Agatha Christie  
 
 TABLE
             ),
             array(
-                array( 'ISBN', 'Title', 'Author' ),
+                array('ISBN', 'Title', 'Author'),
                 $books,
                 'borderless',
-                <<<TABLE
-                 =============== ========================== ==================
-  ISBN            Title                      Author
- =============== ========================== ==================
-  99921-58-10-7   Divine Comedy              Dante Alighieri
-  9971-5-0210-0   A Tale of Two Cities       Charles Dickens
-  960-425-059-0   The Lord of the Rings      J. R. R. Tolkien
-  80-902734-1-6   And Then There Were None   Agatha Christie
- =============== ========================== ==================
+<<<TABLE
+ =============== ========================== ================== 
+  ISBN            Title                      Author            
+ =============== ========================== ================== 
+  99921-58-10-7   Divine Comedy              Dante Alighieri   
+  9971-5-0210-0   A Tale of Two Cities       Charles Dickens   
+  960-425-059-0   The Lord of the Rings      J. R. R. Tolkien  
+  80-902734-1-6   And Then There Were None   Agatha Christie   
+ =============== ========================== ================== 
 
 TABLE
             ),
             array(
-                array( 'ISBN', 'Title' ),
+                array('ISBN', 'Title'),
                 array(
-                    array( '99921-58-10-7', 'Divine Comedy', 'Dante Alighieri' ),
-                    array( '9971-5-0210-0' ),
-                    array( '960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien' ),
-                    array( '80-902734-1-6', 'And Then There Were None', 'Agatha Christie' ),
+                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+                    array('9971-5-0210-0'),
+                    array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
+                    array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+--------------------------+------------------+
+<<<TABLE
++---------------+--------------------------+------------------+
 | ISBN          | Title                    |                  |
 +---------------+--------------------------+------------------+
 | 99921-58-10-7 | Divine Comedy            | Dante Alighieri  |
@@ -166,14 +161,14 @@ TABLE
             array(
                 array(),
                 array(
-                    array( '99921-58-10-7', 'Divine Comedy', 'Dante Alighieri' ),
-                    array( '9971-5-0210-0' ),
-                    array( '960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien' ),
-                    array( '80-902734-1-6', 'And Then There Were None', 'Agatha Christie' ),
+                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+                    array('9971-5-0210-0'),
+                    array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
+                    array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+--------------------------+------------------+
+<<<TABLE
++---------------+--------------------------+------------------+
 | 99921-58-10-7 | Divine Comedy            | Dante Alighieri  |
 | 9971-5-0210-0 |                          |                  |
 | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien |
@@ -183,16 +178,16 @@ TABLE
 TABLE
             ),
             array(
-                array( 'ISBN', 'Title', 'Author' ),
+                array('ISBN', 'Title', 'Author'),
                 array(
-                    array( "99921-58-10-7", "Divine\nComedy", "Dante Alighieri" ),
-                    array( "9971-5-0210-2", "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K." ),
-                    array( "9971-5-0210-2", "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K." ),
-                    array( "960-425-059-0", "The Lord of the Rings", "J. R. R.\nTolkien" ),
+                    array('99921-58-10-7', "Divine\nComedy", 'Dante Alighieri'),
+                    array('9971-5-0210-2', "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
+                    array('9971-5-0210-2', "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
+                    array('960-425-059-0', 'The Lord of the Rings', "J. R. R.\nTolkien"),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+----------------------------+-----------------+
+<<<TABLE
++---------------+----------------------------+-----------------+
 | ISBN          | Title                      | Author          |
 +---------------+----------------------------+-----------------+
 | 99921-58-10-7 | Divine                     | Dante Alighieri |
@@ -208,11 +203,11 @@ TABLE
 TABLE
             ),
             array(
-                array( 'ISBN', 'Title' ),
+                array('ISBN', 'Title'),
                 array(),
                 'default',
-                <<<TABLE
-                +------+-------+
+<<<TABLE
++------+-------+
 | ISBN | Title |
 +------+-------+
 
@@ -224,19 +219,15 @@ TABLE
                 'default',
                 '',
             ),
-            'Cell text with tags used for Output styling'                   => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell text with tags used for Output styling' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
-                    array(
-                        '<info>99921-58-10-7</info>',
-                        '<error>Divine Comedy</error>',
-                        '<fg=blue;bg=white>Dante Alighieri</fg=blue;bg=white>'
-                    ),
-                    array( '9971-5-0210-0', 'A Tale of Two Cities', '<info>Charles Dickens</>' ),
+                    array('<info>99921-58-10-7</info>', '<error>Divine Comedy</error>', '<fg=blue;bg=white>Dante Alighieri</fg=blue;bg=white>'),
+                    array('9971-5-0210-0', 'A Tale of Two Cities', '<info>Charles Dickens</>'),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+----------------------+-----------------+
+<<<TABLE
++---------------+----------------------+-----------------+
 | ISBN          | Title                | Author          |
 +---------------+----------------------+-----------------+
 | 99921-58-10-7 | Divine Comedy        | Dante Alighieri |
@@ -245,15 +236,15 @@ TABLE
 
 TABLE
             ),
-            'Cell text with tags not used for Output styling'               => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell text with tags not used for Output styling' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
-                    array( '<strong>99921-58-10-700</strong>', '<f>Divine Com</f>', 'Dante Alighieri' ),
-                    array( '9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens' ),
+                    array('<strong>99921-58-10-700</strong>', '<f>Divine Com</f>', 'Dante Alighieri'),
+                    array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
                 ),
                 'default',
-                <<<TABLE
-                +----------------------------------+----------------------+-----------------+
+<<<TABLE
++----------------------------------+----------------------+-----------------+
 | ISBN                             | Title                | Author          |
 +----------------------------------+----------------------+-----------------+
 | <strong>99921-58-10-700</strong> | <f>Divine Com</f>    | Dante Alighieri |
@@ -262,26 +253,26 @@ TABLE
 
 TABLE
             ),
-            'Cell with colspan'                                             => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell with colspan' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
-                    array( '99921-58-10-7', 'Divine Comedy', 'Dante Alighieri' ),
+                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
                     new TableSeparator(),
-                    array( new TableCell( 'Divine Comedy(Dante Alighieri)', array( 'colspan' => 3 ) ) ),
+                    array(new TableCell('Divine Comedy(Dante Alighieri)', array('colspan' => 3))),
                     new TableSeparator(),
                     array(
-                        new TableCell( 'Arduino: A Quick-Start Guide', array( 'colspan' => 2 ) ),
+                        new TableCell('Arduino: A Quick-Start Guide', array('colspan' => 2)),
                         'Mark Schmidt',
                     ),
                     new TableSeparator(),
                     array(
                         '9971-5-0210-0',
-                        new TableCell( "A Tale of \nTwo Cities", array( 'colspan' => 2 ) ),
+                        new TableCell("A Tale of \nTwo Cities", array('colspan' => 2)),
                     ),
                 ),
                 'default',
-                <<<TABLE
-                +----------------+---------------+-----------------+
+<<<TABLE
++----------------+---------------+-----------------+
 | ISBN           | Title         | Author          |
 +----------------+---------------+-----------------+
 | 99921-58-10-7  | Divine Comedy | Dante Alighieri |
@@ -296,27 +287,23 @@ TABLE
 
 TABLE
             ),
-            'Cell with rowspan'                                             => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell with rowspan' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
                     array(
-                        new TableCell( '9971-5-0210-0', array( 'rowspan' => 3 ) ),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 3)),
                         'Divine Comedy',
                         'Dante Alighieri',
                     ),
-                    array( 'A Tale of Two Cities', 'Charles Dickens' ),
-                    array( "The Lord of \nthe Rings", "J. R. \nR. Tolkien" ),
+                    array('A Tale of Two Cities', 'Charles Dickens'),
+                    array("The Lord of \nthe Rings", "J. R. \nR. Tolkien"),
                     new TableSeparator(),
-                    array(
-                        '80-902734-1-6',
-                        new TableCell( "And Then \nThere \nWere None", array( 'rowspan' => 3 ) ),
-                        'Agatha Christie'
-                    ),
-                    array( '80-902734-1-7', 'Test' ),
+                    array('80-902734-1-6', new TableCell("And Then \nThere \nWere None", array('rowspan' => 3)), 'Agatha Christie'),
+                    array('80-902734-1-7', 'Test'),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+----------------------+-----------------+
+<<<TABLE
++---------------+----------------------+-----------------+
 | ISBN          | Title                | Author          |
 +---------------+----------------------+-----------------+
 | 9971-5-0210-0 | Divine Comedy        | Dante Alighieri |
@@ -331,25 +318,25 @@ TABLE
 
 TABLE
             ),
-            'Cell with rowspan and colspan'                                 => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell with rowspan and colspan' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
                     array(
-                        new TableCell( '9971-5-0210-0', array( 'rowspan' => 2, 'colspan' => 2 ) ),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 2, 'colspan' => 2)),
                         'Dante Alighieri',
                     ),
-                    array( 'Charles Dickens' ),
+                    array('Charles Dickens'),
                     new TableSeparator(),
                     array(
                         'Dante Alighieri',
-                        new TableCell( '9971-5-0210-0', array( 'rowspan' => 3, 'colspan' => 2 ) ),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 3, 'colspan' => 2)),
                     ),
-                    array( 'J. R. R. Tolkien' ),
-                    array( 'J. R. R' ),
+                    array('J. R. R. Tolkien'),
+                    array('J. R. R'),
                 ),
                 'default',
-                <<<TABLE
-                +------------------+--------+-----------------+
+<<<TABLE
++------------------+--------+-----------------+
 | ISBN             | Title  | Author          |
 +------------------+--------+-----------------+
 | 9971-5-0210-0             | Dante Alighieri |
@@ -362,29 +349,29 @@ TABLE
 
 TABLE
             ),
-            'Cell with rowspan and colspan contains new line break'         => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell with rowspan and colspan contains new line break' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
                     array(
-                        new TableCell( "9971\n-5-\n021\n0-0", array( 'rowspan' => 2, 'colspan' => 2 ) ),
+                        new TableCell("9971\n-5-\n021\n0-0", array('rowspan' => 2, 'colspan' => 2)),
                         'Dante Alighieri',
                     ),
-                    array( 'Charles Dickens' ),
+                    array('Charles Dickens'),
                     new TableSeparator(),
                     array(
                         'Dante Alighieri',
-                        new TableCell( "9971\n-5-\n021\n0-0", array( 'rowspan' => 2, 'colspan' => 2 ) ),
+                        new TableCell("9971\n-5-\n021\n0-0", array('rowspan' => 2, 'colspan' => 2)),
                     ),
-                    array( 'Charles Dickens' ),
+                    array('Charles Dickens'),
                     new TableSeparator(),
                     array(
-                        new TableCell( "9971\n-5-\n021\n0-0", array( 'rowspan' => 2, 'colspan' => 2 ) ),
-                        new TableCell( "Dante \nAlighieri", array( 'rowspan' => 2, 'colspan' => 1 ) ),
+                        new TableCell("9971\n-5-\n021\n0-0", array('rowspan' => 2, 'colspan' => 2)),
+                        new TableCell("Dante \nAlighieri", array('rowspan' => 2, 'colspan' => 1)),
                     ),
                 ),
                 'default',
-                <<<TABLE
-                +-----------------+-------+-----------------+
+<<<TABLE
++-----------------+-------+-----------------+
 | ISBN            | Title | Author          |
 +-----------------+-------+-----------------+
 | 9971                    | Dante Alighieri |
@@ -405,23 +392,23 @@ TABLE
 
 TABLE
             ),
-            'Cell with rowspan and colspan without using TableSeparator'    => array(
-                array( 'ISBN', 'Title', 'Author' ),
+            'Cell with rowspan and colspan without using TableSeparator' => array(
+                array('ISBN', 'Title', 'Author'),
                 array(
                     array(
-                        new TableCell( "9971\n-5-\n021\n0-0", array( 'rowspan' => 2, 'colspan' => 2 ) ),
+                        new TableCell("9971\n-5-\n021\n0-0", array('rowspan' => 2, 'colspan' => 2)),
                         'Dante Alighieri',
                     ),
-                    array( 'Charles Dickens' ),
+                    array('Charles Dickens'),
                     array(
                         'Dante Alighieri',
-                        new TableCell( "9971\n-5-\n021\n0-0", array( 'rowspan' => 2, 'colspan' => 2 ) ),
+                        new TableCell("9971\n-5-\n021\n0-0", array('rowspan' => 2, 'colspan' => 2)),
                     ),
-                    array( 'Charles Dickens' ),
+                    array('Charles Dickens'),
                 ),
                 'default',
-                <<<TABLE
-                +-----------------+-------+-----------------+
+<<<TABLE
++-----------------+-------+-----------------+
 | ISBN            | Title | Author          |
 +-----------------+-------+-----------------+
 | 9971                    | Dante Alighieri |
@@ -437,18 +424,18 @@ TABLE
 TABLE
             ),
             'Cell with rowspan and colspan with separator inside a rowspan' => array(
-                array( 'ISBN', 'Author' ),
+                array('ISBN', 'Author'),
                 array(
                     array(
-                        new TableCell( "9971-5-0210-0", array( 'rowspan' => 3, 'colspan' => 1 ) ),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 3, 'colspan' => 1)),
                         'Dante Alighieri',
                     ),
-                    array( new TableSeparator() ),
-                    array( 'Charles Dickens' ),
+                    array(new TableSeparator()),
+                    array('Charles Dickens'),
                 ),
                 'default',
-                <<<TABLE
-                +---------------+-----------------+
+<<<TABLE
++---------------+-----------------+
 | ISBN          | Author          |
 +---------------+-----------------+
 | 9971-5-0210-0 | Dante Alighieri |
@@ -458,15 +445,15 @@ TABLE
 
 TABLE
             ),
-            'Multiple header lines'                                         => array(
+            'Multiple header lines' => array(
                 array(
-                    array( new TableCell( 'Main title', array( 'colspan' => 3 ) ) ),
-                    array( 'ISBN', 'Title', 'Author' ),
+                    array(new TableCell('Main title', array('colspan' => 3))),
+                    array('ISBN', 'Title', 'Author'),
                 ),
                 array(),
                 'default',
-                <<<TABLE
-                +------+-------+--------+
+<<<TABLE
++------+-------+--------+
 | Main title            |
 +------+-------+--------+
 | ISBN | Title | Author |
@@ -479,21 +466,21 @@ TABLE
 
     public function testRenderMultiByte()
     {
-
-        if (!function_exists( 'mb_strlen' )) {
-            $this->markTestSkipped( 'The "mbstring" extension is not available' );
+        if (!function_exists('mb_strlen')) {
+            $this->markTestSkipped('The "mbstring" extension is not available');
         }
 
-        $table = new Table( $output = $this->getOutputStream() );
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( array( '■■' ) )
-            ->setRows( array( array( 1234 ) ) )
-            ->setStyle( 'default' );
+            ->setHeaders(array('■■'))
+            ->setRows(array(array(1234)))
+            ->setStyle('default')
+        ;
         $table->render();
 
         $expected =
-            <<<TABLE
-            +------+
+<<<TABLE
++------+
 | ■■   |
 +------+
 | 1234 |
@@ -501,29 +488,29 @@ TABLE
 
 TABLE;
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
     public function testStyle()
     {
-
         $style = new TableStyle();
         $style
-            ->setHorizontalBorderChar( '.' )
-            ->setVerticalBorderChar( '.' )
-            ->setCrossingChar( '.' );
+            ->setHorizontalBorderChar('.')
+            ->setVerticalBorderChar('.')
+            ->setCrossingChar('.')
+        ;
 
-        Table::setStyleDefinition( 'dotfull', $style );
-        $table = new Table( $output = $this->getOutputStream() );
+        Table::setStyleDefinition('dotfull', $style);
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( array( 'Foo' ) )
-            ->setRows( array( array( 'Bar' ) ) )
-            ->setStyle( 'dotfull' );
+            ->setHeaders(array('Foo'))
+            ->setRows(array(array('Bar')))
+            ->setStyle('dotfull');
         $table->render();
 
         $expected =
-            <<<TABLE
-            .......
+<<<TABLE
+.......
 . Foo .
 .......
 . Bar .
@@ -531,27 +518,26 @@ TABLE;
 
 TABLE;
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
     public function testRowSeparator()
     {
-
-        $table = new Table( $output = $this->getOutputStream() );
+        $table = new Table($output = $this->getOutputStream());
         $table
-            ->setHeaders( array( 'Foo' ) )
-            ->setRows( array(
-                array( 'Bar1' ),
+            ->setHeaders(array('Foo'))
+            ->setRows(array(
+                array('Bar1'),
                 new TableSeparator(),
-                array( 'Bar2' ),
+                array('Bar2'),
                 new TableSeparator(),
-                array( 'Bar3' ),
-            ) );
+                array('Bar3'),
+            ));
         $table->render();
 
         $expected =
-            <<<TABLE
-            +------+
+<<<TABLE
++------+
 | Foo  |
 +------+
 | Bar1 |
@@ -563,19 +549,47 @@ TABLE;
 
 TABLE;
 
-        $this->assertEquals( $expected, $this->getOutputContent( $output ) );
+        $this->assertEquals($expected, $this->getOutputContent($output));
+
+        $this->assertEquals($table, $table->addRow(new TableSeparator()), 'fluent interface on addRow() with a single TableSeparator() works');
     }
 
-    protected function setUp()
+    public function testRenderMultiCalls()
     {
+        $table = new Table($output = $this->getOutputStream());
+        $table->setRows(array(
+            array(new TableCell('foo', array('colspan' => 2))),
+        ));
+        $table->render();
+        $table->render();
+        $table->render();
 
-        $this->stream = fopen( 'php://memory', 'r+' );
+        $expected =
+<<<TABLE
++---+--+
+| foo  |
++---+--+
++---+--+
+| foo  |
++---+--+
++---+--+
+| foo  |
++---+--+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
-    protected function tearDown()
+    protected function getOutputStream()
     {
+        return new StreamOutput($this->stream, StreamOutput::VERBOSITY_NORMAL, false);
+    }
 
-        fclose( $this->stream );
-        $this->stream = null;
+    protected function getOutputContent(StreamOutput $output)
+    {
+        rewind($output->getStream());
+
+        return str_replace(PHP_EOL, "\n", stream_get_contents($output->getStream()));
     }
 }

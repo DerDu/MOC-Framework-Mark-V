@@ -19,20 +19,17 @@ namespace Symfony\Component\Config\Definition\Exception;
  */
 class InvalidConfigurationException extends Exception
 {
-
     private $path;
     private $containsHints = false;
 
-    public function getPath()
+    public function setPath($path)
     {
-
-        return $this->path;
+        $this->path = $path;
     }
 
-    public function setPath( $path )
+    public function getPath()
     {
-
-        $this->path = $path;
+        return $this->path;
     }
 
     /**
@@ -40,9 +37,8 @@ class InvalidConfigurationException extends Exception
      *
      * @param string $hint
      */
-    public function addHint( $hint )
+    public function addHint($hint)
     {
-
         if (!$this->containsHints) {
             $this->message .= "\nHint: ".$hint;
             $this->containsHints = true;

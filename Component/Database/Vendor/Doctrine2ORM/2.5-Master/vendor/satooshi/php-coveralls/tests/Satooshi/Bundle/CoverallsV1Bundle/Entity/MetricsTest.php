@@ -8,17 +8,12 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity;
  */
 class MetricsTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @test
-     */
-    public function shouldNotHaveStatementsOnConstructionWithoutCoverage()
+    protected function setUp()
     {
-
-        $object = new Metrics();
-
-        $this->assertFalse( $object->hasStatements() );
-        $this->assertEquals( 0, $object->getStatements() );
+        $this->coverage = array_fill(0, 5, null);
+        $this->coverage[1] = 1;
+        $this->coverage[3] = 1;
+        $this->coverage[4] = 0;
     }
 
     // hasStatements()
@@ -27,24 +22,23 @@ class MetricsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldHaveStatementsOnConstructionWithCoverage()
+    public function shouldNotHaveStatementsOnConstructionWithoutCoverage()
     {
+        $object = new Metrics();
 
-        $object = new Metrics( $this->coverage );
-
-        $this->assertTrue( $object->hasStatements() );
-        $this->assertEquals( 3, $object->getStatements() );
+        $this->assertFalse($object->hasStatements());
+        $this->assertEquals(0, $object->getStatements());
     }
 
     /**
      * @test
      */
-    public function shouldNotHaveCoveredStatementsOnConstructionWithoutCoverage()
+    public function shouldHaveStatementsOnConstructionWithCoverage()
     {
+        $object = new Metrics($this->coverage);
 
-        $object = new Metrics();
-
-        $this->assertEquals( 0, $object->getCoveredStatements() );
+        $this->assertTrue($object->hasStatements());
+        $this->assertEquals(3, $object->getStatements());
     }
 
     // getCoveredStatements()
@@ -52,23 +46,21 @@ class MetricsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldHaveCoveredStatementsOnConstructionWithCoverage()
+    public function shouldNotHaveCoveredStatementsOnConstructionWithoutCoverage()
     {
+        $object = new Metrics();
 
-        $object = new Metrics( $this->coverage );
-
-        $this->assertEquals( 2, $object->getCoveredStatements() );
+        $this->assertEquals(0, $object->getCoveredStatements());
     }
 
     /**
      * @test
      */
-    public function shouldNotHaveLineCoverageOnConstructionWithoutCoverage()
+    public function shouldHaveCoveredStatementsOnConstructionWithCoverage()
     {
+        $object = new Metrics($this->coverage);
 
-        $object = new Metrics();
-
-        $this->assertEquals( 0, $object->getLineCoverage() );
+        $this->assertEquals(2, $object->getCoveredStatements());
     }
 
     // getLineCoverage()
@@ -76,27 +68,21 @@ class MetricsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldHaveLineCoverageOnConstructionWithCoverage()
+    public function shouldNotHaveLineCoverageOnConstructionWithoutCoverage()
     {
+        $object = new Metrics();
 
-        $object = new Metrics( $this->coverage );
-
-        $this->assertEquals( 200 / 3, $object->getLineCoverage() );
+        $this->assertEquals(0, $object->getLineCoverage());
     }
 
     /**
      * @test
      */
-    public function shouldMergeThatWithEmptyMetrics()
+    public function shouldHaveLineCoverageOnConstructionWithCoverage()
     {
+        $object = new Metrics($this->coverage);
 
-        $object = new Metrics();
-        $that = new Metrics( $this->coverage );
-        $object->merge( $that );
-
-        $this->assertEquals( 3, $object->getStatements() );
-        $this->assertEquals( 2, $object->getCoveredStatements() );
-        $this->assertEquals( 200 / 3, $object->getLineCoverage() );
+        $this->assertEquals(200/3, $object->getLineCoverage());
     }
 
     // merge()
@@ -104,24 +90,28 @@ class MetricsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldMergeThat()
+    public function shouldMergeThatWithEmptyMetrics()
     {
+        $object = new Metrics();
+        $that   = new Metrics($this->coverage);
+        $object->merge($that);
 
-        $object = new Metrics( $this->coverage );
-        $that = new Metrics( $this->coverage );
-        $object->merge( $that );
-
-        $this->assertEquals( 6, $object->getStatements() );
-        $this->assertEquals( 4, $object->getCoveredStatements() );
-        $this->assertEquals( 400 / 6, $object->getLineCoverage() );
+        $this->assertEquals(3, $object->getStatements());
+        $this->assertEquals(2, $object->getCoveredStatements());
+        $this->assertEquals(200/3, $object->getLineCoverage());
     }
 
-    protected function setUp()
+    /**
+     * @test
+     */
+    public function shouldMergeThat()
     {
+        $object = new Metrics($this->coverage);
+        $that   = new Metrics($this->coverage);
+        $object->merge($that);
 
-        $this->coverage = array_fill( 0, 5, null );
-        $this->coverage[1] = 1;
-        $this->coverage[3] = 1;
-        $this->coverage[4] = 0;
+        $this->assertEquals(6, $object->getStatements());
+        $this->assertEquals(4, $object->getCoveredStatements());
+        $this->assertEquals(400/6, $object->getLineCoverage());
     }
 }

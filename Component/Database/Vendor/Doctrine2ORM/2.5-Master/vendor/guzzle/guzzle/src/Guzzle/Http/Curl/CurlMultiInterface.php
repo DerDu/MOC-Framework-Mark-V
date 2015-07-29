@@ -2,8 +2,8 @@
 
 namespace Guzzle\Http\Curl;
 
-use Guzzle\Common\Exception\ExceptionCollection;
 use Guzzle\Common\HasDispatcherInterface;
+use Guzzle\Common\Exception\ExceptionCollection;
 use Guzzle\Http\Message\RequestInterface;
 
 /**
@@ -11,7 +11,6 @@ use Guzzle\Http\Message\RequestInterface;
  */
 interface CurlMultiInterface extends \Countable, HasDispatcherInterface
 {
-
     const POLLING_REQUEST = 'curl_multi.polling_request';
     const ADD_REQUEST = 'curl_multi.add_request';
     const REMOVE_REQUEST = 'curl_multi.remove_request';
@@ -25,7 +24,7 @@ interface CurlMultiInterface extends \Countable, HasDispatcherInterface
      *
      * @return CurlMultiInterface
      */
-    public function add( RequestInterface $request );
+    public function add(RequestInterface $request);
 
     /**
      * Get an array of attached {@see RequestInterface} objects
@@ -41,14 +40,14 @@ interface CurlMultiInterface extends \Countable, HasDispatcherInterface
      *
      * @return bool Returns true on success or false on failure
      */
-    public function remove( RequestInterface $request );
+    public function remove(RequestInterface $request);
 
     /**
      * Reset the state and remove any attached RequestInterface objects
      *
      * @param bool $hard Set to true to close and reopen any open multi handles
      */
-    public function reset( $hard = false );
+    public function reset($hard = false);
 
     /**
      * Send a pool of {@see RequestInterface} requests.

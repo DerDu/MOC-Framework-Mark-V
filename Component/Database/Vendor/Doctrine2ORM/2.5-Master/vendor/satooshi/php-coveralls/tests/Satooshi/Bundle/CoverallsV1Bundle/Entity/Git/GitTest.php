@@ -9,32 +9,35 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity\Git;
  */
 class GitTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @test
-     */
-    public function shouldHaveBranchNameOnConstruction()
+    protected function setUp()
     {
+        $this->branchName = 'branch_name';
+        $this->commit     = $this->createCommit();
+        $this->remote     = $this->createRemote();
 
-        $this->assertEquals( $this->branchName, $this->object->getBranch() );
+        $this->object = new Git($this->branchName, $this->commit, array($this->remote));
     }
 
-    /**
-     * @test
-     */
-    public function shouldHaveHeadCommitOnConstruction()
+    protected function createRemote($name = 'name', $url  = 'url')
     {
+        $remote = new Remote();
 
-        $this->assertSame( $this->commit, $this->object->getHead() );
+        return $remote
+        ->setName($name)
+        ->setUrl($url);
     }
 
-    /**
-     * @test
-     */
-    public function shouldHaveRemotesOnConstruction()
+    protected function createCommit($id = 'id', $authorName  = 'author_name', $authorEmail = 'author_email', $committerName = 'committer_name', $committerEmail = 'committer_email', $message = 'message')
     {
+        $commit = new Commit();
 
-        $this->assertSame( array( $this->remote ), $this->object->getRemotes() );
+        return $commit
+        ->setId($id)
+        ->setAuthorName($authorName)
+        ->setAuthorEmail($authorEmail)
+        ->setCommitterName($committerName)
+        ->setCommitterEmail($committerEmail)
+        ->setMessage($message);
     }
 
     // getBranch()
@@ -42,62 +45,45 @@ class GitTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function shouldConvertToArray()
+    public function shouldHaveBranchNameOnConstruction()
     {
-
-        $expected = array(
-            'branch'  => $this->branchName,
-            'head'    => $this->commit->toArray(),
-            'remotes' => array( $this->remote->toArray() ),
-        );
-
-        $this->assertSame( $expected, $this->object->toArray() );
-        $this->assertSame( json_encode( $expected ), (string)$this->object );
+        $this->assertEquals($this->branchName, $this->object->getBranch());
     }
 
     // getHead()
 
-    protected function setUp()
+    /**
+     * @test
+     */
+    public function shouldHaveHeadCommitOnConstruction()
     {
-
-        $this->branchName = 'branch_name';
-        $this->commit = $this->createCommit();
-        $this->remote = $this->createRemote();
-
-        $this->object = new Git( $this->branchName, $this->commit, array( $this->remote ) );
+        $this->assertSame($this->commit, $this->object->getHead());
     }
 
     // getRemotes()
 
-    protected function createCommit(
-        $id = 'id',
-        $authorName = 'author_name',
-        $authorEmail = 'author_email',
-        $committerName = 'committer_name',
-        $committerEmail = 'committer_email',
-        $message = 'message'
-    ) {
-
-        $commit = new Commit();
-
-        return $commit
-            ->setId( $id )
-            ->setAuthorName( $authorName )
-            ->setAuthorEmail( $authorEmail )
-            ->setCommitterName( $committerName )
-            ->setCommitterEmail( $committerEmail )
-            ->setMessage( $message );
+    /**
+     * @test
+     */
+    public function shouldHaveRemotesOnConstruction()
+    {
+        $this->assertSame(array($this->remote), $this->object->getRemotes());
     }
 
     // toArray()
 
-    protected function createRemote( $name = 'name', $url = 'url' )
+    /**
+     * @test
+     */
+    public function shouldConvertToArray()
     {
+        $expected = array(
+            'branch'  => $this->branchName,
+            'head'    => $this->commit->toArray(),
+            'remotes' => array($this->remote->toArray()),
+        );
 
-        $remote = new Remote();
-
-        return $remote
-            ->setName( $name )
-            ->setUrl( $url );
+        $this->assertSame($expected, $this->object->toArray());
+        $this->assertSame(json_encode($expected), (string)$this->object);
     }
 }

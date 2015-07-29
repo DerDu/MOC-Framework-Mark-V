@@ -34,15 +34,13 @@ use Doctrine\DBAL\Driver\PDOConnection;
  */
 class Driver extends AbstractDB2Driver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         $conn = new PDOConnection(
-            $this->_constructPdoDsn( $params ),
+            $this->_constructPdoDsn($params),
             $username,
             $password,
             $driverOptions
@@ -58,19 +56,18 @@ class Driver extends AbstractDB2Driver
      *
      * @return string The DSN.
      */
-    private function _constructPdoDsn( array $params )
+    private function _constructPdoDsn(array $params)
     {
-
         $dsn = 'ibm:';
-        if (isset( $params['host'] )) {
-            $dsn .= 'HOSTNAME='.$params['host'].';';
+        if (isset($params['host'])) {
+            $dsn .= 'HOSTNAME=' . $params['host'] . ';';
         }
-        if (isset( $params['port'] )) {
-            $dsn .= 'PORT='.$params['port'].';';
+        if (isset($params['port'])) {
+            $dsn .= 'PORT=' . $params['port'] . ';';
         }
         $dsn .= 'PROTOCOL=TCPIP;';
-        if (isset( $params['dbname'] )) {
-            $dsn .= 'DATABASE='.$params['dbname'].';';
+        if (isset($params['dbname'])) {
+            $dsn .= 'DATABASE=' . $params['dbname'] . ';';
         }
 
         return $dsn;
@@ -81,7 +78,6 @@ class Driver extends AbstractDB2Driver
      */
     public function getName()
     {
-
         return 'pdo_ibm';
     }
 }

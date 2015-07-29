@@ -11,25 +11,23 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AbstractHasDispatcher implements HasDispatcherInterface
 {
-
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
     public static function getAllEvents()
     {
-
         return array();
     }
 
-    public function dispatch( $eventName, array $context = array() )
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
     {
+        $this->eventDispatcher = $eventDispatcher;
 
-        return $this->getEventDispatcher()->dispatch( $eventName, new Event( $context ) );
+        return $this;
     }
 
     public function getEventDispatcher()
     {
-
         if (!$this->eventDispatcher) {
             $this->eventDispatcher = new EventDispatcher();
         }
@@ -37,18 +35,14 @@ class AbstractHasDispatcher implements HasDispatcherInterface
         return $this->eventDispatcher;
     }
 
-    public function setEventDispatcher( EventDispatcherInterface $eventDispatcher )
+    public function dispatch($eventName, array $context = array())
     {
-
-        $this->eventDispatcher = $eventDispatcher;
-
-        return $this;
+        return $this->getEventDispatcher()->dispatch($eventName, new Event($context));
     }
 
-    public function addSubscriber( EventSubscriberInterface $subscriber )
+    public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-
-        $this->getEventDispatcher()->addSubscriber( $subscriber );
+        $this->getEventDispatcher()->addSubscriber($subscriber);
 
         return $this;
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Since Tag Test
- *
+ * 
  * PHP version 5.3
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class SinceTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\LinkTag can create
      * a link for the @since doc block.
@@ -33,7 +32,7 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exVersion
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\SinceTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SinceTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -45,13 +44,12 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
         $exDescription,
         $exVersion
     ) {
+        $tag = new SinceTag($type, $content);
 
-        $tag = new SinceTag( $type, $content );
-
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exVersion, $tag->getVersion() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exVersion, $tag->getVersion());
     }
 
     /**
@@ -61,7 +59,6 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-
         // $type, $content, $exContent, $exDescription, $exVersion
         return array(
             array(

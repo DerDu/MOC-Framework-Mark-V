@@ -13,7 +13,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Configurator
 {
-
     // API
 
     /**
@@ -26,13 +25,12 @@ class Configurator
      *
      * @throws \Symfony\Component\Yaml\Exception\ParseException If the YAML is not valid
      */
-    public function load( $coverallsYmlPath, $rootDir )
+    public function load($coverallsYmlPath, $rootDir)
     {
+        $yml     = $this->parse($coverallsYmlPath);
+        $options = $this->process($yml);
 
-        $yml = $this->parse( $coverallsYmlPath );
-        $options = $this->process( $yml );
-
-        return $this->createConfiguration( $options, $rootDir );
+        return $this->createConfiguration($options, $rootDir);
     }
 
     // Internal method
@@ -46,16 +44,15 @@ class Configurator
      *
      * @throws \Symfony\Component\Yaml\Exception\ParseException If the YAML is not valid
      */
-    protected function parse( $coverallsYmlPath )
+    protected function parse($coverallsYmlPath)
     {
-
         $file = new Path();
-        $path = realpath( $coverallsYmlPath );
+        $path = realpath($coverallsYmlPath);
 
-        if ($file->isRealFileReadable( $path )) {
-            $yml = Yaml::parse( $path );
+        if ($file->isRealFileReadable($path)) {
+            $yml = Yaml::parse($path);
 
-            return empty( $yml ) ? array() : $yml;
+            return empty($yml) ? array() : $yml;
         }
 
         return array();
@@ -68,13 +65,12 @@ class Configurator
      *
      * @return array
      */
-    protected function process( array $yml )
+    protected function process(array $yml)
     {
-
-        $processor = new Processor();
+        $processor     = new Processor();
         $configuration = new CoverallsConfiguration();
 
-        return $processor->processConfiguration( $configuration, array( 'coveralls' => $yml ) );
+        return $processor->processConfiguration($configuration, array('coveralls' => $yml));
     }
 
     /**
@@ -85,24 +81,23 @@ class Configurator
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    protected function createConfiguration( array $options, $rootDir )
+    protected function createConfiguration(array $options, $rootDir)
     {
-
         $configuration = new Configuration();
-        $file = new Path();
+        $file          = new Path();
 
-        $repoToken = $options['repo_token'];
+        $repoToken       = $options['repo_token'];
         $repoSecretToken = $options['repo_secret_token'];
 
         return $configuration
-            ->setRepoToken( $repoToken !== null ? $repoToken : $repoSecretToken )
-            ->setServiceName( $options['service_name'] )
-            // for PHP lib
-            ->setSrcDir( $this->ensureSrcDir( $options['src_dir'], $rootDir, $file ) )
-            ->setRootDir( $rootDir )
-            ->setCloverXmlPaths( $this->ensureCloverXmlPaths( $options['coverage_clover'], $rootDir, $file ) )
-            ->setJsonPath( $this->ensureJsonPath( $options['json_path'], $rootDir, $file ) )
-            ->setExcludeNoStatements( $options['exclude_no_stmt'] );
+        ->setRepoToken($repoToken !== null ? $repoToken : $repoSecretToken)
+        ->setServiceName($options['service_name'])
+        // for PHP lib
+        ->setSrcDir($this->ensureSrcDir($options['src_dir'], $rootDir, $file))
+        ->setRootDir($rootDir)
+        ->setCloverXmlPaths($this->ensureCloverXmlPaths($options['coverage_clover'], $rootDir, $file))
+        ->setJsonPath($this->ensureJsonPath($options['json_path'], $rootDir, $file))
+        ->setExcludeNoStatements($options['exclude_no_stmt']);
     }
 
     /**
@@ -116,15 +111,14 @@ class Configurator
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function ensureSrcDir( $option, $rootDir, Path $file )
+    protected function ensureSrcDir($option, $rootDir, Path $file)
     {
-
         // normalize
-        $realpath = $file->getRealPath( $option, $rootDir );
+        $realpath = $file->getRealPath($option, $rootDir);
 
         // validate
-        if (!$file->isRealDirExist( $realpath )) {
-            throw new InvalidConfigurationException( sprintf( 'src directory %s is not found', $realpath ) );
+        if (!$file->isRealDirExist($realpath)) {
+            throw new InvalidConfigurationException(sprintf('src directory %s is not found', $realpath));
         }
 
         return $realpath;
@@ -141,34 +135,37 @@ class Configurator
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function ensureCloverXmlPaths( $option, $rootDir, Path $file )
+    protected function ensureCloverXmlPaths($option, $rootDir, Path $file)
     {
-
-        if (is_array( $option )) {
-            return $this->getGlobPathsFromArrayOption( $option, $rootDir, $file );
+        if (is_array($option)) {
+            return $this->getGlobPathsFromArrayOption($option, $rootDir, $file);
         }
 
-        return $this->getGlobPathsFromStringOption( $option, $rootDir, $file );
+        return $this->getGlobPathsFromStringOption($option, $rootDir, $file);
     }
 
     /**
-     * Return absolute paths from array option values.
+     * Return absolute paths from glob path.
      *
-     * @param array  $options coverage_clover option values.
-     * @param string $rootDir Path to project root directory.
-     * @param Path   $file    Path object.
+     * @param string $path Absolute path.
      *
-     * @return array Absolute pathes.
+     * @return array Absolute paths.
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function getGlobPathsFromArrayOption( array $options, $rootDir, Path $file )
+    protected function getGlobPaths($path)
     {
+        $paths    = array();
+        $iterator = new \GlobIterator($path);
 
-        $paths = array();
+        foreach ($iterator as $fileInfo) {
+            /* @var $fileInfo \SplFileInfo */
+            $paths[] = $fileInfo->getPathname();
+        }
 
-        foreach ($options as $option) {
-            $paths = array_merge( $paths, $this->getGlobPathsFromStringOption( $option, $rootDir, $file ) );
+        // validate
+        if (count($paths) === 0) {
+            throw new InvalidConfigurationException('coverage_clover XML file is not readable');
         }
 
         return $paths;
@@ -185,42 +182,35 @@ class Configurator
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function getGlobPathsFromStringOption( $option, $rootDir, Path $file )
+    protected function getGlobPathsFromStringOption($option, $rootDir, Path $file)
     {
-
-        if (!is_string( $option )) {
-            throw new InvalidConfigurationException( 'coverage_clover XML file is not readable' );
+        if (!is_string($option)) {
+            throw new InvalidConfigurationException('coverage_clover XML file is not readable');
         }
 
         // normalize
-        $path = $file->toAbsolutePath( $option, $rootDir );
+        $path = $file->toAbsolutePath($option, $rootDir);
 
-        return $this->getGlobPaths( $path );
+        return $this->getGlobPaths($path);
     }
 
     /**
-     * Return absolute paths from glob path.
+     * Return absolute paths from array option values.
      *
-     * @param string $path Absolute path.
+     * @param array  $options coverage_clover option values.
+     * @param string $rootDir Path to project root directory.
+     * @param Path   $file    Path object.
      *
-     * @return array Absolute paths.
+     * @return array Absolute pathes.
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function getGlobPaths( $path )
+    protected function getGlobPathsFromArrayOption(array $options, $rootDir, Path $file)
     {
-
         $paths = array();
-        $iterator = new \GlobIterator( $path );
 
-        foreach ($iterator as $fileInfo) {
-            /* @var $fileInfo \SplFileInfo */
-            $paths[] = $fileInfo->getPathname();
-        }
-
-        // validate
-        if (count( $paths ) === 0) {
-            throw new InvalidConfigurationException( 'coverage_clover XML file is not readable' );
+        foreach ($options as $option) {
+            $paths = array_merge($paths, $this->getGlobPathsFromStringOption($option, $rootDir, $file));
         }
 
         return $paths;
@@ -237,24 +227,23 @@ class Configurator
      *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    protected function ensureJsonPath( $option, $rootDir, Path $file )
+    protected function ensureJsonPath($option, $rootDir, Path $file)
     {
-
         // normalize
-        $realpath = $file->getRealWritingFilePath( $option, $rootDir );
+        $realpath = $file->getRealWritingFilePath($option, $rootDir);
 
         // validate file
-        $realFilePath = $file->getRealPath( $realpath, $rootDir );
+        $realFilePath = $file->getRealPath($realpath, $rootDir);
 
-        if ($realFilePath !== false && !$file->isRealFileWritable( $realFilePath )) {
-            throw new InvalidConfigurationException( 'json_path is not writable' );
+        if ($realFilePath !== false && !$file->isRealFileWritable($realFilePath)) {
+            throw new InvalidConfigurationException('json_path is not writable');
         }
 
         // validate parent dir
-        $realDir = $file->getRealDir( $realpath, $rootDir );
+        $realDir = $file->getRealDir($realpath, $rootDir);
 
-        if (!$file->isRealDirWritable( $realDir )) {
-            throw new InvalidConfigurationException( 'json_path is not writable' );
+        if (!$file->isRealDirWritable($realDir)) {
+            throw new InvalidConfigurationException('json_path is not writable');
         }
 
         return $realpath;

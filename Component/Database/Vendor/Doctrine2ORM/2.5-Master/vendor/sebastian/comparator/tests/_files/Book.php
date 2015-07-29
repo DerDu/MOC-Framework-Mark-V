@@ -13,15 +13,9 @@ namespace SebastianBergmann\Comparator;
 /**
  * A book.
  *
- * @package    Comparator
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
  */
 class Book
 {
-
     // the order of properties is important for testing the cycle!
     public $author = null;
 }

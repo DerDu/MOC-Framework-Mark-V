@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./tests/Doctrine/Tests/TestInit.php"
-    >
+>
     <testsuites>
         <testsuite name="Doctrine Cache Test Suite">
             <directory>./tests/Doctrine/</directory>

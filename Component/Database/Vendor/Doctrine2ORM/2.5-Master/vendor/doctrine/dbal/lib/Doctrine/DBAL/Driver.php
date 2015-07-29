@@ -27,7 +27,6 @@ namespace Doctrine\DBAL;
  */
 interface Driver
 {
-
     /**
      * Attempts to create a connection with the database.
      *
@@ -38,7 +37,7 @@ interface Driver
      *
      * @return \Doctrine\DBAL\Driver\Connection The database connection.
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() );
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array());
 
     /**
      * Gets the DatabasePlatform instance that provides all the metadata about
@@ -56,7 +55,7 @@ interface Driver
      *
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
      */
-    public function getSchemaManager( Connection $conn );
+    public function getSchemaManager(Connection $conn);
 
     /**
      * Gets the name of the driver.
@@ -72,5 +71,5 @@ interface Driver
      *
      * @return string The name of the database.
      */
-    public function getDatabase( Connection $conn );
+    public function getDatabase(Connection $conn);
 }

@@ -29,41 +29,36 @@ namespace Doctrine\Common\Cache;
  */
 class ZendDataCache extends CacheProvider
 {
-
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
-
-        return zend_shm_cache_fetch( $id );
+        return zend_shm_cache_fetch($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
-
-        return ( false !== zend_shm_cache_fetch( $id ) );
+        return (false !== zend_shm_cache_fetch($id));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
-        return zend_shm_cache_store( $id, $data, $lifeTime );
+        return zend_shm_cache_store($id, $data, $lifeTime);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
-
-        return zend_shm_cache_delete( $id );
+        return zend_shm_cache_delete($id);
     }
 
     /**
@@ -71,12 +66,11 @@ class ZendDataCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         $namespace = $this->getNamespace();
-        if (empty( $namespace )) {
+        if (empty($namespace)) {
             return zend_shm_cache_clear();
         }
-        return zend_shm_cache_clear( $namespace );
+        return zend_shm_cache_clear($namespace);
     }
 
     /**
@@ -84,7 +78,6 @@ class ZendDataCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         return null;
     }
 }

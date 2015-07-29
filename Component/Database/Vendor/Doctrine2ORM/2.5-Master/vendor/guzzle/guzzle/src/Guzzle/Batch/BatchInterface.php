@@ -7,7 +7,6 @@ namespace Guzzle\Batch;
  */
 interface BatchInterface
 {
-
     /**
      * Add an item to the queue
      *
@@ -15,7 +14,7 @@ interface BatchInterface
      *
      * @return self
      */
-    public function add( $item );
+    public function add($item);
 
     /**
      * Flush the batch and transfer the items

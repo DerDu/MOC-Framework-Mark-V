@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Config\Definition;
 
-use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\Config\Definition\Exception\UnsetKeyException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * Represents a prototyped Array node in the config tree.
@@ -23,7 +23,6 @@ use Symfony\Component\Config\Definition\Exception\UnsetKeyException;
  */
 class PrototypedArrayNode extends ArrayNode
 {
-
     protected $prototype;
     protected $keyAttribute;
     protected $removeKeyAttribute = false;
@@ -37,21 +36,9 @@ class PrototypedArrayNode extends ArrayNode
      *
      * @param int $number
      */
-    public function setMinNumberOfElements( $number )
+    public function setMinNumberOfElements($number)
     {
-
         $this->minNumberOfElements = $number;
-    }
-
-    /**
-     * Retrieves the name of the attribute which value should be used as key.
-     *
-     * @return string The name of the attribute
-     */
-    public function getKeyAttribute()
-    {
-
-        return $this->keyAttribute;
     }
 
     /**
@@ -78,11 +65,36 @@ class PrototypedArrayNode extends ArrayNode
      * @param string $attribute The name of the attribute which value is to be used as a key
      * @param bool   $remove    Whether or not to remove the key
      */
-    public function setKeyAttribute( $attribute, $remove = true )
+    public function setKeyAttribute($attribute, $remove = true)
     {
-
         $this->keyAttribute = $attribute;
         $this->removeKeyAttribute = $remove;
+    }
+
+    /**
+     * Retrieves the name of the attribute which value should be used as key.
+     *
+     * @return string The name of the attribute
+     */
+    public function getKeyAttribute()
+    {
+        return $this->keyAttribute;
+    }
+
+    /**
+     * Sets the default value of this node.
+     *
+     * @param string $value
+     *
+     * @throws \InvalidArgumentException if the default value is not an array
+     */
+    public function setDefaultValue($value)
+    {
+        if (!is_array($value)) {
+            throw new \InvalidArgumentException($this->getPath().': the default value of an array node has to be an array.');
+        }
+
+        $this->defaultValue = $value;
     }
 
     /**
@@ -92,7 +104,6 @@ class PrototypedArrayNode extends ArrayNode
      */
     public function hasDefaultValue()
     {
-
         return true;
     }
 
@@ -101,13 +112,12 @@ class PrototypedArrayNode extends ArrayNode
      *
      * @param int|string|array|null $children The number of children|The child name|The children names to be added
      */
-    public function setAddChildrenIfNoneSet( $children = array( 'defaults' ) )
+    public function setAddChildrenIfNoneSet($children = array('defaults'))
     {
-
         if (null === $children) {
-            $this->defaultChildren = array( 'defaults' );
+            $this->defaultChildren = array('defaults');
         } else {
-            $this->defaultChildren = is_int( $children ) && $children > 0 ? range( 1, $children ) : (array)$children;
+            $this->defaultChildren = is_int($children) && $children > 0 ? range(1, $children) : (array) $children;
         }
     }
 
@@ -121,11 +131,10 @@ class PrototypedArrayNode extends ArrayNode
      */
     public function getDefaultValue()
     {
-
         if (null !== $this->defaultChildren) {
             $default = $this->prototype->hasDefaultValue() ? $this->prototype->getDefaultValue() : array();
             $defaults = array();
-            foreach (array_values( $this->defaultChildren ) as $i => $name) {
+            foreach (array_values($this->defaultChildren) as $i => $name) {
                 $defaults[null === $this->keyAttribute ? $i : $name] = $default;
             }
 
@@ -136,20 +145,13 @@ class PrototypedArrayNode extends ArrayNode
     }
 
     /**
-     * Sets the default value of this node.
+     * Sets the node prototype.
      *
-     * @param string $value
-     *
-     * @throws \InvalidArgumentException if the default value is not an array
+     * @param PrototypeNodeInterface $node
      */
-    public function setDefaultValue( $value )
+    public function setPrototype(PrototypeNodeInterface $node)
     {
-
-        if (!is_array( $value )) {
-            throw new \InvalidArgumentException( $this->getPath().': the default value of an array node has to be an array.' );
-        }
-
-        $this->defaultValue = $value;
+        $this->prototype = $node;
     }
 
     /**
@@ -159,19 +161,7 @@ class PrototypedArrayNode extends ArrayNode
      */
     public function getPrototype()
     {
-
         return $this->prototype;
-    }
-
-    /**
-     * Sets the node prototype.
-     *
-     * @param PrototypeNodeInterface $node
-     */
-    public function setPrototype( PrototypeNodeInterface $node )
-    {
-
-        $this->prototype = $node;
     }
 
     /**
@@ -181,10 +171,9 @@ class PrototypedArrayNode extends ArrayNode
      *
      * @throws Exception
      */
-    public function addChild( NodeInterface $node )
+    public function addChild(NodeInterface $node)
     {
-
-        throw new Exception( 'A prototyped array node can not have concrete children.' );
+        throw new Exception('A prototyped array node can not have concrete children.');
     }
 
     /**
@@ -197,28 +186,26 @@ class PrototypedArrayNode extends ArrayNode
      * @throws UnsetKeyException
      * @throws InvalidConfigurationException if the node doesn't have enough children
      */
-    protected function finalizeValue( $value )
+    protected function finalizeValue($value)
     {
-
         if (false === $value) {
-            $msg = sprintf( 'Unsetting key for path "%s", value: %s', $this->getPath(), json_encode( $value ) );
-            throw new UnsetKeyException( $msg );
+            $msg = sprintf('Unsetting key for path "%s", value: %s', $this->getPath(), json_encode($value));
+            throw new UnsetKeyException($msg);
         }
 
         foreach ($value as $k => $v) {
-            $this->prototype->setName( $k );
+            $this->prototype->setName($k);
             try {
-                $value[$k] = $this->prototype->finalize( $v );
-            } catch( UnsetKeyException $unset ) {
-                unset( $value[$k] );
+                $value[$k] = $this->prototype->finalize($v);
+            } catch (UnsetKeyException $e) {
+                unset($value[$k]);
             }
         }
 
-        if (count( $value ) < $this->minNumberOfElements) {
-            $msg = sprintf( 'The path "%s" should have at least %d element(s) defined.', $this->getPath(),
-                $this->minNumberOfElements );
-            $ex = new InvalidConfigurationException( $msg );
-            $ex->setPath( $this->getPath() );
+        if (count($value) < $this->minNumberOfElements) {
+            $msg = sprintf('The path "%s" should have at least %d element(s) defined.', $this->getPath(), $this->minNumberOfElements);
+            $ex = new InvalidConfigurationException($msg);
+            $ex->setPath($this->getPath());
 
             throw $ex;
         }
@@ -236,54 +223,52 @@ class PrototypedArrayNode extends ArrayNode
      * @throws InvalidConfigurationException
      * @throws DuplicateKeyException
      */
-    protected function normalizeValue( $value )
+    protected function normalizeValue($value)
     {
-
         if (false === $value) {
             return $value;
         }
 
-        $value = $this->remapXml( $value );
+        $value = $this->remapXml($value);
 
-        $isAssoc = array_keys( $value ) !== range( 0, count( $value ) - 1 );
+        $isAssoc = array_keys($value) !== range(0, count($value) - 1);
         $normalized = array();
         foreach ($value as $k => $v) {
-            if (null !== $this->keyAttribute && is_array( $v )) {
-                if (!isset( $v[$this->keyAttribute] ) && is_int( $k ) && !$isAssoc) {
-                    $msg = sprintf( 'The attribute "%s" must be set for path "%s".', $this->keyAttribute,
-                        $this->getPath() );
-                    $ex = new InvalidConfigurationException( $msg );
-                    $ex->setPath( $this->getPath() );
+            if (null !== $this->keyAttribute && is_array($v)) {
+                if (!isset($v[$this->keyAttribute]) && is_int($k) && !$isAssoc) {
+                    $msg = sprintf('The attribute "%s" must be set for path "%s".', $this->keyAttribute, $this->getPath());
+                    $ex = new InvalidConfigurationException($msg);
+                    $ex->setPath($this->getPath());
 
                     throw $ex;
-                } elseif (isset( $v[$this->keyAttribute] )) {
+                } elseif (isset($v[$this->keyAttribute])) {
                     $k = $v[$this->keyAttribute];
 
                     // remove the key attribute when required
                     if ($this->removeKeyAttribute) {
-                        unset( $v[$this->keyAttribute] );
+                        unset($v[$this->keyAttribute]);
                     }
 
                     // if only "value" is left
-                    if (1 == count( $v ) && isset( $v['value'] )) {
+                    if (1 == count($v) && isset($v['value'])) {
                         $v = $v['value'];
                     }
                 }
 
-                if (array_key_exists( $k, $normalized )) {
-                    $msg = sprintf( 'Duplicate key "%s" for path "%s".', $k, $this->getPath() );
-                    $ex = new DuplicateKeyException( $msg );
-                    $ex->setPath( $this->getPath() );
+                if (array_key_exists($k, $normalized)) {
+                    $msg = sprintf('Duplicate key "%s" for path "%s".', $k, $this->getPath());
+                    $ex = new DuplicateKeyException($msg);
+                    $ex->setPath($this->getPath());
 
                     throw $ex;
                 }
             }
 
-            $this->prototype->setName( $k );
+            $this->prototype->setName($k);
             if (null !== $this->keyAttribute || $isAssoc) {
-                $normalized[$k] = $this->prototype->normalize( $v );
+                $normalized[$k] = $this->prototype->normalize($v);
             } else {
-                $normalized[] = $this->prototype->normalize( $v );
+                $normalized[] = $this->prototype->normalize($v);
             }
         }
 
@@ -301,9 +286,8 @@ class PrototypedArrayNode extends ArrayNode
      * @throws InvalidConfigurationException
      * @throws \RuntimeException
      */
-    protected function mergeValues( $leftSide, $rightSide )
+    protected function mergeValues($leftSide, $rightSide)
     {
-
         if (false === $rightSide) {
             // if this is still false after the last config has been merged the
             // finalization pass will take care of removing this key entirely
@@ -322,14 +306,14 @@ class PrototypedArrayNode extends ArrayNode
             }
 
             // no conflict
-            if (!array_key_exists( $k, $leftSide )) {
+            if (!array_key_exists($k, $leftSide)) {
                 if (!$this->allowNewKeys) {
-                    $ex = new InvalidConfigurationException( sprintf(
+                    $ex = new InvalidConfigurationException(sprintf(
                         'You are not allowed to define new elements for path "%s". '.
                         'Please define all elements for this path in one config file.',
                         $this->getPath()
-                    ) );
-                    $ex->setPath( $this->getPath() );
+                    ));
+                    $ex->setPath($this->getPath());
 
                     throw $ex;
                 }
@@ -338,8 +322,8 @@ class PrototypedArrayNode extends ArrayNode
                 continue;
             }
 
-            $this->prototype->setName( $k );
-            $leftSide[$k] = $this->prototype->merge( $leftSide[$k], $v );
+            $this->prototype->setName($k);
+            $leftSide[$k] = $this->prototype->merge($leftSide[$k], $v);
         }
 
         return $leftSide;

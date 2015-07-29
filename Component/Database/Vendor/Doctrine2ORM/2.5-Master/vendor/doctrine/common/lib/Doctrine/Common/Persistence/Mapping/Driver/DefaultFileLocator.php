@@ -32,7 +32,6 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
  */
 class DefaultFileLocator implements FileLocator
 {
-
     /**
      * The paths where to look for mapping files.
      *
@@ -54,10 +53,9 @@ class DefaultFileLocator implements FileLocator
      * @param string|array $paths         One or multiple paths where mapping documents can be found.
      * @param string|null  $fileExtension The file extension of mapping documents.
      */
-    public function __construct( $paths, $fileExtension = null )
+    public function __construct($paths, $fileExtension = null)
     {
-
-        $this->addPaths( (array)$paths );
+        $this->addPaths((array) $paths);
         $this->fileExtension = $fileExtension;
     }
 
@@ -68,10 +66,9 @@ class DefaultFileLocator implements FileLocator
      *
      * @return void
      */
-    public function addPaths( array $paths )
+    public function addPaths(array $paths)
     {
-
-        $this->paths = array_unique( array_merge( $this->paths, $paths ) );
+        $this->paths = array_unique(array_merge($this->paths, $paths));
     }
 
     /**
@@ -81,7 +78,6 @@ class DefaultFileLocator implements FileLocator
      */
     public function getPaths()
     {
-
         return $this->paths;
     }
 
@@ -92,7 +88,6 @@ class DefaultFileLocator implements FileLocator
      */
     public function getFileExtension()
     {
-
         return $this->fileExtension;
     }
 
@@ -103,58 +98,55 @@ class DefaultFileLocator implements FileLocator
      *
      * @return void
      */
-    public function setFileExtension( $fileExtension )
+    public function setFileExtension($fileExtension)
     {
-
         $this->fileExtension = $fileExtension;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function findMappingFile( $className )
+    public function findMappingFile($className)
     {
-
-        $fileName = str_replace( '\\', '.', $className ).$this->fileExtension;
+        $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 
         // Check whether file exists
         foreach ($this->paths as $path) {
-            if (is_file( $path.DIRECTORY_SEPARATOR.$fileName )) {
-                return $path.DIRECTORY_SEPARATOR.$fileName;
+            if (is_file($path . DIRECTORY_SEPARATOR . $fileName)) {
+                return $path . DIRECTORY_SEPARATOR . $fileName;
             }
         }
 
-        throw MappingException::mappingFileNotFound( $className, $fileName );
+        throw MappingException::mappingFileNotFound($className, $fileName);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAllClassNames( $globalBasename )
+    public function getAllClassNames($globalBasename)
     {
-
         $classes = array();
 
         if ($this->paths) {
             foreach ($this->paths as $path) {
-                if (!is_dir( $path )) {
-                    throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath( $path );
+                if ( ! is_dir($path)) {
+                    throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
                 }
 
                 $iterator = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator( $path ),
+                    new \RecursiveDirectoryIterator($path),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 );
 
                 foreach ($iterator as $file) {
-                    $fileName = $file->getBasename( $this->fileExtension );
+                    $fileName = $file->getBasename($this->fileExtension);
 
                     if ($fileName == $file->getBasename() || $fileName == $globalBasename) {
                         continue;
                     }
 
                     // NOTE: All files found here means classes are not transient!
-                    $classes[] = str_replace( '.', '\\', $fileName );
+                    $classes[] = str_replace('.', '\\', $fileName);
                 }
             }
         }
@@ -165,14 +157,13 @@ class DefaultFileLocator implements FileLocator
     /**
      * {@inheritDoc}
      */
-    public function fileExists( $className )
+    public function fileExists($className)
     {
-
-        $fileName = str_replace( '\\', '.', $className ).$this->fileExtension;
+        $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
 
         // Check whether file exists
-        foreach ((array)$this->paths as $path) {
-            if (is_file( $path.DIRECTORY_SEPARATOR.$fileName )) {
+        foreach ((array) $this->paths as $path) {
+            if (is_file($path . DIRECTORY_SEPARATOR . $fileName)) {
                 return true;
             }
         }

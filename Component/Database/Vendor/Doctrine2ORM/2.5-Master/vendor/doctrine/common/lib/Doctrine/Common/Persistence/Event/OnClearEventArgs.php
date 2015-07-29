@@ -32,7 +32,6 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class OnClearEventArgs extends EventArgs
 {
-
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
      */
@@ -49,9 +48,8 @@ class OnClearEventArgs extends EventArgs
      * @param ObjectManager $objectManager The object manager.
      * @param string|null   $entityClass   The optional entity class.
      */
-    public function __construct( $objectManager, $entityClass = null )
+    public function __construct($objectManager, $entityClass = null)
     {
-
         $this->objectManager = $objectManager;
         $this->entityClass = $entityClass;
     }
@@ -63,7 +61,6 @@ class OnClearEventArgs extends EventArgs
      */
     public function getObjectManager()
     {
-
         return $this->objectManager;
     }
 
@@ -74,7 +71,6 @@ class OnClearEventArgs extends EventArgs
      */
     public function getEntityClass()
     {
-
         return $this->entityClass;
     }
 
@@ -85,7 +81,6 @@ class OnClearEventArgs extends EventArgs
      */
     public function clearsAllEntities()
     {
-
-        return ( $this->entityClass === null );
+        return ($this->entityClass === null);
     }
 }

@@ -20,7 +20,6 @@ use Exception;
  */
 class Call
 {
-
     private $methodName;
     private $arguments;
     private $returnValue;
@@ -38,23 +37,17 @@ class Call
      * @param null|string $file
      * @param null|int    $line
      */
-    public function __construct(
-        $methodName,
-        array $arguments,
-        $returnValue,
-        Exception $exception = null,
-        $file,
-        $line
-    ) {
-
-        $this->methodName = $methodName;
-        $this->arguments = $arguments;
+    public function __construct($methodName, array $arguments, $returnValue,
+                                Exception $exception = null, $file, $line)
+    {
+        $this->methodName  = $methodName;
+        $this->arguments   = $arguments;
         $this->returnValue = $returnValue;
-        $this->exception = $exception;
+        $this->exception   = $exception;
 
         if ($file) {
             $this->file = $file;
-            $this->line = intval( $line );
+            $this->line = intval($line);
         }
     }
 
@@ -65,7 +58,6 @@ class Call
      */
     public function getMethodName()
     {
-
         return $this->methodName;
     }
 
@@ -76,7 +68,6 @@ class Call
      */
     public function getArguments()
     {
-
         return $this->arguments;
     }
 
@@ -87,7 +78,6 @@ class Call
      */
     public function getReturnValue()
     {
-
         return $this->returnValue;
     }
 
@@ -98,7 +88,6 @@ class Call
      */
     public function getException()
     {
-
         return $this->exception;
     }
 
@@ -109,7 +98,6 @@ class Call
      */
     public function getFile()
     {
-
         return $this->file;
     }
 
@@ -120,7 +108,6 @@ class Call
      */
     public function getLine()
     {
-
         return $this->line;
     }
 
@@ -131,11 +118,10 @@ class Call
      */
     public function getCallPlace()
     {
-
         if (null === $this->file) {
             return 'unknown';
         }
 
-        return sprintf( '%s:%d', $this->file, $this->line );
+        return sprintf('%s:%d', $this->file, $this->line);
     }
 }

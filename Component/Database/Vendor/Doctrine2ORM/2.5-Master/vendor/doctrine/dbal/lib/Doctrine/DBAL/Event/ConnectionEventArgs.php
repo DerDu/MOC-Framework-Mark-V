@@ -31,7 +31,6 @@ use Doctrine\DBAL\Connection;
  */
 class ConnectionEventArgs extends EventArgs
 {
-
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -40,9 +39,8 @@ class ConnectionEventArgs extends EventArgs
     /**
      * @param \Doctrine\DBAL\Connection $connection
      */
-    public function __construct( Connection $connection )
+    public function __construct(Connection $connection)
     {
-
         $this->_connection = $connection;
     }
 
@@ -51,7 +49,6 @@ class ConnectionEventArgs extends EventArgs
      */
     public function getConnection()
     {
-
         return $this->_connection;
     }
 
@@ -60,7 +57,6 @@ class ConnectionEventArgs extends EventArgs
      */
     public function getDriver()
     {
-
         return $this->_connection->getDriver();
     }
 
@@ -69,7 +65,6 @@ class ConnectionEventArgs extends EventArgs
      */
     public function getDatabasePlatform()
     {
-
         return $this->_connection->getDatabasePlatform();
     }
 
@@ -78,7 +73,6 @@ class ConnectionEventArgs extends EventArgs
      */
     public function getSchemaManager()
     {
-
         return $this->_connection->getSchemaManager();
     }
 }

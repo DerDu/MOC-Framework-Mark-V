@@ -10,7 +10,6 @@ use Guzzle\Http\Message\Response;
  */
 class BadResponseException extends RequestException
 {
-
     /** @var Response */
     private $response;
 
@@ -22,31 +21,40 @@ class BadResponseException extends RequestException
      *
      * @return BadResponseException
      */
-    public static function factory( RequestInterface $request, Response $response )
+    public static function factory(RequestInterface $request, Response $response)
     {
-
         if ($response->isClientError()) {
             $label = 'Client error response';
-            $class = __NAMESPACE__.'\\ClientErrorResponseException';
+            $class = __NAMESPACE__ . '\\ClientErrorResponseException';
         } elseif ($response->isServerError()) {
             $label = 'Server error response';
-            $class = __NAMESPACE__.'\\ServerErrorResponseException';
+            $class = __NAMESPACE__ . '\\ServerErrorResponseException';
         } else {
             $label = 'Unsuccessful response';
             $class = __CLASS__;
         }
 
-        $message = $label.PHP_EOL.implode( PHP_EOL, array(
-                '[status code] '.$response->getStatusCode(),
-                '[reason phrase] '.$response->getReasonPhrase(),
-                '[url] '.$request->getUrl(),
-            ) );
+        $message = $label . PHP_EOL . implode(PHP_EOL, array(
+            '[status code] ' . $response->getStatusCode(),
+            '[reason phrase] ' . $response->getReasonPhrase(),
+            '[url] ' . $request->getUrl(),
+        ));
 
-        $e = new $class( $message );
-        $e->setResponse( $response );
-        $e->setRequest( $request );
+        $e = new $class($message);
+        $e->setResponse($response);
+        $e->setRequest($request);
 
         return $e;
+    }
+
+    /**
+     * Set the response that caused the exception
+     *
+     * @param Response $response Response to set
+     */
+    public function setResponse(Response $response)
+    {
+        $this->response = $response;
     }
 
     /**
@@ -56,18 +64,6 @@ class BadResponseException extends RequestException
      */
     public function getResponse()
     {
-
         return $this->response;
-    }
-
-    /**
-     * Set the response that caused the exception
-     *
-     * @param Response $response Response to set
-     */
-    public function setResponse( Response $response )
-    {
-
-        $this->response = $response;
     }
 }

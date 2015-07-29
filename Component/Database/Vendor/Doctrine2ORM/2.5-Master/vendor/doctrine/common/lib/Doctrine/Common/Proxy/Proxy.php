@@ -31,7 +31,6 @@ use Doctrine\Common\Persistence\Proxy as BaseProxy;
  */
 interface Proxy extends BaseProxy
 {
-
     /**
      * Marks the proxy as initialized or not.
      *
@@ -39,7 +38,7 @@ interface Proxy extends BaseProxy
      *
      * @return void
      */
-    public function __setInitialized( $initialized );
+    public function __setInitialized($initialized);
 
     /**
      * Sets the initializer callback to be used when initializing the proxy. That
@@ -51,7 +50,7 @@ interface Proxy extends BaseProxy
      *
      * @return void
      */
-    public function __setInitializer( Closure $initializer = null );
+    public function __setInitializer(Closure $initializer = null);
 
     /**
      * Retrieves the initializer callback used to initialize the proxy.
@@ -70,7 +69,7 @@ interface Proxy extends BaseProxy
      *
      * @return void
      */
-    public function __setCloner( Closure $cloner = null );
+    public function __setCloner(Closure $cloner = null);
 
     /**
      * Retrieves the callback to be used when cloning the proxy.

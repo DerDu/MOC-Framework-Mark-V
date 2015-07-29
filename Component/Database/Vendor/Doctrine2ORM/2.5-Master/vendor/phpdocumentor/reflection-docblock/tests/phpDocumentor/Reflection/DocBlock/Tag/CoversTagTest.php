@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Covers Tag Test
- *
+ * 
  * PHP version 5.3
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class CoversTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\CoversTag can create
      * a link for the covers doc block.
@@ -32,7 +31,7 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\CoversTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\CoversTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -44,13 +43,12 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
         $exDescription,
         $exReference
     ) {
+        $tag = new CoversTag($type, $content);
 
-        $tag = new CoversTag( $type, $content );
-
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exReference, $tag->getReference() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**
@@ -60,7 +58,6 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-
         // $type, $content, $exContent, $exDescription, $exReference
         return array(
             array(

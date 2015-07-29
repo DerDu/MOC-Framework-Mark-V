@@ -11,55 +11,55 @@
 /**
  * A skipped test case
  *
- * @package    PHPUnit
- * @subpackage Framework
- * @author     Davey Shafik <me@daveyshafik.com>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 4.3.0
+ * @since Class available since Release 4.3.0
  */
 class PHPUnit_Framework_SkippedTestCase extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var string
      */
     protected $message = '';
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $backupGlobals = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $backupStaticAttributes = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $runTestInSeparateProcess = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $useErrorHandler = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $useOutputBuffering = false;
 
     /**
      * @param string $message
      */
-    public function __construct( $className, $methodName, $message = '' )
+    public function __construct($className, $methodName, $message = '')
     {
-
         $this->message = $message;
-        parent::__construct( $className.'::'.$methodName );
+        parent::__construct($className . '::' . $methodName);
+    }
+
+    /**
+     * @throws PHPUnit_Framework_Exception
+     */
+    protected function runTest()
+    {
+        $this->markTestSkipped($this->message);
     }
 
     /**
@@ -67,7 +67,6 @@ class PHPUnit_Framework_SkippedTestCase extends PHPUnit_Framework_TestCase
      */
     public function getMessage()
     {
-
         return $this->message;
     }
 
@@ -78,16 +77,6 @@ class PHPUnit_Framework_SkippedTestCase extends PHPUnit_Framework_TestCase
      */
     public function toString()
     {
-
         return $this->getName();
-    }
-
-    /**
-     * @throws PHPUnit_Framework_Exception
-     */
-    protected function runTest()
-    {
-
-        $this->markTestSkipped( $this->message );
     }
 }

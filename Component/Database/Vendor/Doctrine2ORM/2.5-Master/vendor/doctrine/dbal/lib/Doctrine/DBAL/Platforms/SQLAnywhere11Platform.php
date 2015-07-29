@@ -29,13 +29,11 @@ namespace Doctrine\DBAL\Platforms;
  */
 class SQLAnywhere11Platform extends SQLAnywherePlatform
 {
-
     /**
      * {@inheritdoc}
      */
     public function getRegexpExpression()
     {
-
         return 'REGEXP';
     }
 
@@ -44,7 +42,6 @@ class SQLAnywhere11Platform extends SQLAnywherePlatform
      */
     protected function getReservedKeywordsClass()
     {
-
         return 'Doctrine\DBAL\Platforms\Keywords\SQLAnywhere11Keywords';
     }
 }

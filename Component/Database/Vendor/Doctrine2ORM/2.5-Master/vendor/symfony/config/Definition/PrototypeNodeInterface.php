@@ -18,11 +18,10 @@ namespace Symfony\Component\Config\Definition;
  */
 interface PrototypeNodeInterface extends NodeInterface
 {
-
     /**
      * Sets the name of the node.
      *
      * @param string $name The name of the node
      */
-    public function setName( $name );
+    public function setName($name);
 }

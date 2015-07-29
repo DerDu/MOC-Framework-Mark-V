@@ -30,7 +30,6 @@ use Doctrine\DBAL\Types\Type;
  */
 class SQLAnywhereSchemaManager extends AbstractSchemaManager
 {
-
     /**
      * {@inheritdoc}
      *
@@ -40,22 +39,10 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
      *
      * @see startDatabase
      */
-    public function createDatabase( $database )
+    public function createDatabase($database)
     {
-
-        parent::createDatabase( $database );
-        $this->startDatabase( $database );
-    }
-
-    /**
-     * Starts a database.
-     *
-     * @param string $database The name of the database to start.
-     */
-    public function startDatabase( $database )
-    {
-
-        $this->_execSql( $this->_platform->getStartDatabaseSQL( $database ) );
+        parent::createDatabase($database);
+        $this->startDatabase($database);
     }
 
     /**
@@ -67,11 +54,20 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
      *
      * @see stopDatabase
      */
-    public function dropDatabase( $database )
+    public function dropDatabase($database)
     {
+        $this->tryMethod('stopDatabase', $database);
+        parent::dropDatabase($database);
+    }
 
-        $this->tryMethod( 'stopDatabase', $database );
-        parent::dropDatabase( $database );
+    /**
+     * Starts a database.
+     *
+     * @param string $database The name of the database to start.
+     */
+    public function startDatabase($database)
+    {
+        $this->_execSql($this->_platform->getStartDatabaseSQL($database));
     }
 
     /**
@@ -79,47 +75,43 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
      *
      * @param string $database The name of the database to stop.
      */
-    public function stopDatabase( $database )
+    public function stopDatabase($database)
     {
-
-        $this->_execSql( $this->_platform->getStopDatabaseSQL( $database ) );
+        $this->_execSql($this->_platform->getStopDatabaseSQL($database));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableDatabaseDefinition( $database )
+    protected function _getPortableDatabaseDefinition($database)
     {
-
         return $database['name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableSequenceDefinition( $sequence )
+    protected function _getPortableSequenceDefinition($sequence)
     {
-
-        return new Sequence( $sequence['sequence_name'], $sequence['increment_by'], $sequence['start_with'] );
+        return new Sequence($sequence['sequence_name'], $sequence['increment_by'], $sequence['start_with']);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableColumnDefinition( $tableColumn )
+    protected function _getPortableTableColumnDefinition($tableColumn)
     {
-
-        $type = $this->_platform->getDoctrineTypeMapping( $tableColumn['type'] );
-        $type = $this->extractDoctrineTypeFromComment( $tableColumn['comment'], $type );
-        $tableColumn['comment'] = $this->removeDoctrineTypeFromComment( $tableColumn['comment'], $type );
-        $precision = null;
-        $scale = null;
-        $fixed = false;
-        $default = null;
+        $type                   = $this->_platform->getDoctrineTypeMapping($tableColumn['type']);
+        $type                   = $this->extractDoctrineTypeFromComment($tableColumn['comment'], $type);
+        $tableColumn['comment'] = $this->removeDoctrineTypeFromComment($tableColumn['comment'], $type);
+        $precision              = null;
+        $scale                  = null;
+        $fixed                  = false;
+        $default                = null;
 
         if (null !== $tableColumn['default']) {
             // Strip quotes from default value.
-            $default = preg_replace( array( "/^'(.*)'$/", "/''/" ), array( "$1", "'" ), $tableColumn['default'] );
+            $default = preg_replace(array("/^'(.*)'$/", "/''/"), array("$1", "'"), $tableColumn['default']);
 
             if ('autoincrement' == $default) {
                 $default = null;
@@ -142,37 +134,35 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
 
         return new Column(
             $tableColumn['column_name'],
-            Type::getType( $type ),
+            Type::getType($type),
             array(
                 'length'        => $type == 'string' ? $tableColumn['length'] : null,
                 'precision'     => $precision,
                 'scale'         => $scale,
-                'unsigned'      => (bool)$tableColumn['unsigned'],
+                'unsigned'      => (bool) $tableColumn['unsigned'],
                 'fixed'         => $fixed,
-                'notnull'       => (bool)$tableColumn['notnull'],
+                'notnull'       => (bool) $tableColumn['notnull'],
                 'default'       => $default,
-                'autoincrement' => (bool)$tableColumn['autoincrement'],
-                'comment'       => isset( $tableColumn['comment'] ) && '' !== $tableColumn['comment']
+                'autoincrement' => (bool) $tableColumn['autoincrement'],
+                'comment'       => isset($tableColumn['comment']) && '' !== $tableColumn['comment']
                     ? $tableColumn['comment']
                     : null,
-            ) );
+        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableDefinition( $table )
+    protected function _getPortableTableDefinition($table)
     {
-
         return $table['table_name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableForeignKeyDefinition( $tableForeignKey )
+    protected function _getPortableTableForeignKeyDefinition($tableForeignKey)
     {
-
         return new ForeignKeyConstraint(
             $tableForeignKey['local_columns'],
             $tableForeignKey['foreign_table'],
@@ -185,17 +175,16 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableForeignKeysList( $tableForeignKeys )
+    protected function _getPortableTableForeignKeysList($tableForeignKeys)
     {
-
         $foreignKeys = array();
 
         foreach ($tableForeignKeys as $tableForeignKey) {
-            if (!isset( $foreignKeys[$tableForeignKey['index_name']] )) {
+            if (!isset($foreignKeys[$tableForeignKey['index_name']])) {
                 $foreignKeys[$tableForeignKey['index_name']] = array(
-                    'local_columns'   => array( $tableForeignKey['local_column'] ),
+                    'local_columns'   => array($tableForeignKey['local_column']),
                     'foreign_table'   => $tableForeignKey['foreign_table'],
-                    'foreign_columns' => array( $tableForeignKey['foreign_column'] ),
+                    'foreign_columns' => array($tableForeignKey['foreign_column']),
                     'name'            => $tableForeignKey['index_name'],
                     'options'         => array(
                         'notnull'           => $tableForeignKey['notnull'],
@@ -213,17 +202,16 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
             }
         }
 
-        return parent::_getPortableTableForeignKeysList( $foreignKeys );
+        return parent::_getPortableTableForeignKeysList($foreignKeys);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableIndexesList( $tableIndexRows, $tableName = null )
+    protected function _getPortableTableIndexesList($tableIndexRows, $tableName = null)
     {
-
         foreach ($tableIndexRows as &$tableIndex) {
-            $tableIndex['primary'] = (boolean)$tableIndex['primary'];
+            $tableIndex['primary'] = (boolean) $tableIndex['primary'];
             $tableIndex['flags'] = array();
 
             if ($tableIndex['clustered']) {
@@ -239,18 +227,17 @@ class SQLAnywhereSchemaManager extends AbstractSchemaManager
             }
         }
 
-        return parent::_getPortableTableIndexesList( $tableIndexRows, $tableName );
+        return parent::_getPortableTableIndexesList($tableIndexRows, $tableName);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableViewDefinition( $view )
+    protected function _getPortableViewDefinition($view)
     {
-
         return new View(
             $view['table_name'],
-            preg_replace( '/^.*\s+as\s+SELECT(.*)/i', "SELECT$1", $view['view_def'] )
+            preg_replace('/^.*\s+as\s+SELECT(.*)/i', "SELECT$1", $view['view_def'])
         );
     }
 }

@@ -20,7 +20,6 @@ namespace Symfony\Component\Yaml\Exception;
  */
 class ParseException extends RuntimeException
 {
-
     private $parsedFile;
     private $parsedLine;
     private $snippet;
@@ -29,20 +28,14 @@ class ParseException extends RuntimeException
     /**
      * Constructor.
      *
-     * @param string     $message  The error message
+     * @param string     $message    The error message
      * @param int        $parsedLine The line where the error occurred
-     * @param int        $snippet  The snippet of code near the problem
+     * @param int        $snippet    The snippet of code near the problem
      * @param string     $parsedFile The file name where the error occurred
-     * @param \Exception $previous The previous exception
+     * @param \Exception $previous   The previous exception
      */
-    public function __construct(
-        $message,
-        $parsedLine = -1,
-        $snippet = null,
-        $parsedFile = null,
-        \Exception $previous = null
-    ) {
-
+    public function __construct($message, $parsedLine = -1, $snippet = null, $parsedFile = null, \Exception $previous = null)
+    {
         $this->parsedFile = $parsedFile;
         $this->parsedLine = $parsedLine;
         $this->snippet = $snippet;
@@ -50,40 +43,7 @@ class ParseException extends RuntimeException
 
         $this->updateRepr();
 
-        parent::__construct( $this->message, 0, $previous );
-    }
-
-    private function updateRepr()
-    {
-
-        $this->message = $this->rawMessage;
-
-        $dot = false;
-        if ('.' === substr( $this->message, -1 )) {
-            $this->message = substr( $this->message, 0, -1 );
-            $dot = true;
-        }
-
-        if (null !== $this->parsedFile) {
-            if (PHP_VERSION_ID >= 50400) {
-                $jsonOptions = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
-            } else {
-                $jsonOptions = 0;
-            }
-            $this->message .= sprintf( ' in %s', json_encode( $this->parsedFile, $jsonOptions ) );
-        }
-
-        if ($this->parsedLine >= 0) {
-            $this->message .= sprintf( ' at line %d', $this->parsedLine );
-        }
-
-        if ($this->snippet) {
-            $this->message .= sprintf( ' (near "%s")', $this->snippet );
-        }
-
-        if ($dot) {
-            $this->message .= '.';
-        }
+        parent::__construct($this->message, 0, $previous);
     }
 
     /**
@@ -93,7 +53,6 @@ class ParseException extends RuntimeException
      */
     public function getSnippet()
     {
-
         return $this->snippet;
     }
 
@@ -102,9 +61,8 @@ class ParseException extends RuntimeException
      *
      * @param string $snippet The code snippet
      */
-    public function setSnippet( $snippet )
+    public function setSnippet($snippet)
     {
-
         $this->snippet = $snippet;
 
         $this->updateRepr();
@@ -119,7 +77,6 @@ class ParseException extends RuntimeException
      */
     public function getParsedFile()
     {
-
         return $this->parsedFile;
     }
 
@@ -128,9 +85,8 @@ class ParseException extends RuntimeException
      *
      * @param string $parsedFile The filename
      */
-    public function setParsedFile( $parsedFile )
+    public function setParsedFile($parsedFile)
     {
-
         $this->parsedFile = $parsedFile;
 
         $this->updateRepr();
@@ -143,7 +99,6 @@ class ParseException extends RuntimeException
      */
     public function getParsedLine()
     {
-
         return $this->parsedLine;
     }
 
@@ -152,11 +107,42 @@ class ParseException extends RuntimeException
      *
      * @param int $parsedLine The file line
      */
-    public function setParsedLine( $parsedLine )
+    public function setParsedLine($parsedLine)
     {
-
         $this->parsedLine = $parsedLine;
 
         $this->updateRepr();
+    }
+
+    private function updateRepr()
+    {
+        $this->message = $this->rawMessage;
+
+        $dot = false;
+        if ('.' === substr($this->message, -1)) {
+            $this->message = substr($this->message, 0, -1);
+            $dot = true;
+        }
+
+        if (null !== $this->parsedFile) {
+            if (PHP_VERSION_ID >= 50400) {
+                $jsonOptions = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+            } else {
+                $jsonOptions = 0;
+            }
+            $this->message .= sprintf(' in %s', json_encode($this->parsedFile, $jsonOptions));
+        }
+
+        if ($this->parsedLine >= 0) {
+            $this->message .= sprintf(' at line %d', $this->parsedLine);
+        }
+
+        if ($this->snippet) {
+            $this->message .= sprintf(' (near "%s")', $this->snippet);
+        }
+
+        if ($dot) {
+            $this->message .= '.';
+        }
     }
 }

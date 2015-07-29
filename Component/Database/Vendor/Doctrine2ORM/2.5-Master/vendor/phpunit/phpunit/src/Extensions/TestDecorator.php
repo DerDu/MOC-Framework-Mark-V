@@ -15,21 +15,14 @@
  * test decorators. Test decorator subclasses can be introduced
  * to add behaviour before or after a test is run.
  *
- * @package    PHPUnit
- * @subpackage Extensions
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 2.0.0
+ * @since Class available since Release 2.0.0
  */
 class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implements PHPUnit_Framework_Test, PHPUnit_Framework_SelfDescribing
 {
-
     /**
      * The Test to be decorated.
      *
-     * @var    object
+     * @var object
      */
     protected $test = null;
 
@@ -38,9 +31,8 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      *
      * @param PHPUnit_Framework_Test $test
      */
-    public function __construct( PHPUnit_Framework_Test $test )
+    public function __construct(PHPUnit_Framework_Test $test)
     {
-
         $this->test = $test;
     }
 
@@ -51,51 +43,29 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      */
     public function toString()
     {
-
         return $this->test->toString();
+    }
+
+    /**
+     * Runs the test and collects the
+     * result in a TestResult.
+     *
+     * @param PHPUnit_Framework_TestResult $result
+     */
+    public function basicRun(PHPUnit_Framework_TestResult $result)
+    {
+        $this->test->run($result);
     }
 
     /**
      * Counts the number of test cases that
      * will be run by this test.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
-
-        return count( $this->test );
-    }
-
-    /**
-     * Returns the test to be run.
-     *
-     * @return PHPUnit_Framework_Test
-     */
-    public function getTest()
-    {
-
-        return $this->test;
-    }
-
-    /**
-     * Runs the decorated test and collects the
-     * result in a TestResult.
-     *
-     * @param  PHPUnit_Framework_TestResult $result
-     *
-     * @return PHPUnit_Framework_TestResult
-     */
-    public function run( PHPUnit_Framework_TestResult $result = null )
-    {
-
-        if ($result === null) {
-            $result = $this->createResult();
-        }
-
-        $this->basicRun( $result );
-
-        return $result;
+        return count($this->test);
     }
 
     /**
@@ -105,19 +75,34 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      */
     protected function createResult()
     {
-
         return new PHPUnit_Framework_TestResult;
     }
 
     /**
-     * Runs the test and collects the
+     * Returns the test to be run.
+     *
+     * @return PHPUnit_Framework_Test
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    /**
+     * Runs the decorated test and collects the
      * result in a TestResult.
      *
-     * @param PHPUnit_Framework_TestResult $result
+     * @param  PHPUnit_Framework_TestResult $result
+     * @return PHPUnit_Framework_TestResult
      */
-    public function basicRun( PHPUnit_Framework_TestResult $result )
+    public function run(PHPUnit_Framework_TestResult $result = null)
     {
+        if ($result === null) {
+            $result = $this->createResult();
+        }
 
-        $this->test->run( $result );
+        $this->basicRun($result);
+
+        return $result;
     }
 }

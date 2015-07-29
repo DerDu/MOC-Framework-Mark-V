@@ -2,8 +2,8 @@
 
 namespace Guzzle\Service\Command\LocationVisitor\Request;
 
-use Guzzle\Http\Message\PostFileInterface;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Http\Message\PostFileInterface;
 use Guzzle\Service\Command\CommandInterface;
 use Guzzle\Service\Description\Parameter;
 
@@ -12,15 +12,13 @@ use Guzzle\Service\Description\Parameter;
  */
 class PostFileVisitor extends AbstractRequestVisitor
 {
-
-    public function visit( CommandInterface $command, RequestInterface $request, Parameter $param, $value )
+    public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value)
     {
-
-        $value = $param->filter( $value );
+        $value = $param->filter($value);
         if ($value instanceof PostFileInterface) {
-            $request->addPostFile( $value );
+            $request->addPostFile($value);
         } else {
-            $request->addPostFile( $param->getWireName(), $value );
+            $request->addPostFile($param->getWireName(), $value);
         }
     }
 }

@@ -10,17 +10,13 @@
 
 namespace SebastianBergmann\GlobalState\TestFixture;
 
+use DomDocument;
 use ArrayObject;
 
 /**
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/global-state
  */
 class SnapshotClass
 {
-
     private static $string = 'snapshot';
     private static $dom;
     private static $closure;
@@ -30,12 +26,10 @@ class SnapshotClass
 
     public static function init()
     {
-
         self::$dom = new DomDocument();
-        self::$closure = function () {
-        };
-        self::$arrayObject = new ArrayObject( array( 1, 2, 3 ) );
+        self::$closure = function () {};
+        self::$arrayObject = new ArrayObject(array(1, 2, 3));
         self::$snapshotDomDocument = new SnapshotDomDocument();
-        self::$resource = fopen( 'php://memory', 'r' );
+        self::$resource = fopen('php://memory', 'r');
     }
 }

@@ -31,7 +31,6 @@ namespace Doctrine\Common;
  */
 interface PropertyChangedListener
 {
-
     /**
      * Notifies the listener of a property change.
      *
@@ -42,5 +41,5 @@ interface PropertyChangedListener
      *
      * @return void
      */
-    function propertyChanged( $sender, $propertyName, $oldValue, $newValue );
+    function propertyChanged($sender, $propertyName, $oldValue, $newValue);
 }

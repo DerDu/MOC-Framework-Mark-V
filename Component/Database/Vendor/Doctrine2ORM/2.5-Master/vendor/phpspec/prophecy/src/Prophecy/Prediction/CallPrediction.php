@@ -11,13 +11,13 @@
 
 namespace Prophecy\Prediction;
 
+use Prophecy\Call\Call;
+use Prophecy\Prophecy\ObjectProphecy;
+use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Argument\ArgumentsWildcard;
 use Prophecy\Argument\Token\AnyValuesToken;
-use Prophecy\Call\Call;
-use Prophecy\Exception\Prediction\NoCallsException;
-use Prophecy\Prophecy\MethodProphecy;
-use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Util\StringUtil;
+use Prophecy\Exception\Prediction\NoCallsException;
 
 /**
  * Call prediction.
@@ -26,7 +26,6 @@ use Prophecy\Util\StringUtil;
  */
 class CallPrediction implements PredictionInterface
 {
-
     private $util;
 
     /**
@@ -34,9 +33,8 @@ class CallPrediction implements PredictionInterface
      *
      * @param StringUtil $util
      */
-    public function __construct( StringUtil $util = null )
+    public function __construct(StringUtil $util = null)
     {
-
         $this->util = $util ?: new StringUtil;
     }
 
@@ -49,41 +47,40 @@ class CallPrediction implements PredictionInterface
      *
      * @throws \Prophecy\Exception\Prediction\NoCallsException
      */
-    public function check( array $calls, ObjectProphecy $object, MethodProphecy $method )
+    public function check(array $calls, ObjectProphecy $object, MethodProphecy $method)
     {
-
-        if (count( $calls )) {
+        if (count($calls)) {
             return;
         }
 
         $methodCalls = $object->findProphecyMethodCalls(
             $method->getMethodName(),
-            new ArgumentsWildcard( array( new AnyValuesToken ) )
+            new ArgumentsWildcard(array(new AnyValuesToken))
         );
 
-        if (count( $methodCalls )) {
-            throw new NoCallsException( sprintf(
+        if (count($methodCalls)) {
+            throw new NoCallsException(sprintf(
                 "No calls have been made that match:\n".
                 "  %s->%s(%s)\n".
                 "but expected at least one.\n".
                 "Recorded `%s(...)` calls:\n%s",
 
-                get_class( $object->reveal() ),
+                get_class($object->reveal()),
                 $method->getMethodName(),
                 $method->getArgumentsWildcard(),
                 $method->getMethodName(),
-                $this->util->stringifyCalls( $methodCalls )
-            ), $method );
+                $this->util->stringifyCalls($methodCalls)
+            ), $method);
         }
 
-        throw new NoCallsException( sprintf(
+        throw new NoCallsException(sprintf(
             "No calls have been made that match:\n".
             "  %s->%s(%s)\n".
             "but expected at least one.",
 
-            get_class( $object->reveal() ),
+            get_class($object->reveal()),
             $method->getMethodName(),
             $method->getArgumentsWildcard()
-        ), $method );
+        ), $method);
     }
 }

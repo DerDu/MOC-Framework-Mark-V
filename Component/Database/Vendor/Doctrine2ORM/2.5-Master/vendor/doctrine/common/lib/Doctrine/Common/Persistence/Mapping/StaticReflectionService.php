@@ -26,24 +26,21 @@ namespace Doctrine\Common\Persistence\Mapping;
  */
 class StaticReflectionService implements ReflectionService
 {
-
     /**
      * {@inheritDoc}
      */
-    public function getParentClasses( $class )
+    public function getParentClasses($class)
     {
-
         return array();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getClassShortName( $className )
+    public function getClassShortName($className)
     {
-
-        if (strpos( $className, '\\' ) !== false) {
-            $className = substr( $className, strrpos( $className, "\\" ) + 1 );
+        if (strpos($className, '\\') !== false) {
+            $className = substr($className, strrpos($className, "\\")+1);
         }
         return $className;
     }
@@ -51,12 +48,11 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClassNamespace( $className )
+    public function getClassNamespace($className)
     {
-
         $namespace = '';
-        if (strpos( $className, '\\' ) !== false) {
-            $namespace = strrev( substr( strrev( $className ), strpos( strrev( $className ), '\\' ) + 1 ) );
+        if (strpos($className, '\\') !== false) {
+            $namespace = strrev(substr( strrev($className), strpos(strrev($className), '\\')+1 ));
         }
         return $namespace;
     }
@@ -64,27 +60,24 @@ class StaticReflectionService implements ReflectionService
     /**
      * {@inheritDoc}
      */
-    public function getClass( $class )
+    public function getClass($class)
     {
-
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAccessibleProperty( $class, $property )
+    public function getAccessibleProperty($class, $property)
     {
-
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function hasPublicMethod( $class, $method )
+    public function hasPublicMethod($class, $method)
     {
-
         return true;
     }
 }

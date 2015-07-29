@@ -11,8 +11,8 @@
 
 namespace Prophecy\Promise;
 
-use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
+use Prophecy\Prophecy\MethodProphecy;
 
 /**
  * Promise interface.
@@ -22,7 +22,6 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 interface PromiseInterface
 {
-
     /**
      * Evaluates promise.
      *
@@ -32,5 +31,5 @@ interface PromiseInterface
      *
      * @return mixed
      */
-    public function execute( array $args, ObjectProphecy $object, MethodProphecy $method );
+    public function execute(array $args, ObjectProphecy $object, MethodProphecy $method);
 }

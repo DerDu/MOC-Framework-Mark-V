@@ -29,7 +29,6 @@ namespace Doctrine\Common\Persistence;
  */
 abstract class ObjectManagerDecorator implements ObjectManager
 {
-
     /**
      * @var ObjectManager
      */
@@ -38,64 +37,57 @@ abstract class ObjectManagerDecorator implements ObjectManager
     /**
      * {@inheritdoc}
      */
-    public function find( $className, $id )
+    public function find($className, $id)
     {
-
-        return $this->wrapped->find( $className, $id );
+        return $this->wrapped->find($className, $id);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function persist( $object )
+    public function persist($object)
     {
-
-        return $this->wrapped->persist( $object );
+        return $this->wrapped->persist($object);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function remove( $object )
+    public function remove($object)
     {
-
-        return $this->wrapped->remove( $object );
+        return $this->wrapped->remove($object);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function merge( $object )
+    public function merge($object)
     {
-
-        return $this->wrapped->merge( $object );
+        return $this->wrapped->merge($object);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function clear( $objectName = null )
+    public function clear($objectName = null)
     {
-
-        return $this->wrapped->clear( $objectName );
+        return $this->wrapped->clear($objectName);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function detach( $object )
+    public function detach($object)
     {
-
-        return $this->wrapped->detach( $object );
+        return $this->wrapped->detach($object);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function refresh( $object )
+    public function refresh($object)
     {
-
-        return $this->wrapped->refresh( $object );
+        return $this->wrapped->refresh($object);
     }
 
     /**
@@ -103,26 +95,23 @@ abstract class ObjectManagerDecorator implements ObjectManager
      */
     public function flush()
     {
-
         return $this->wrapped->flush();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRepository( $className )
+    public function getRepository($className)
     {
-
-        return $this->wrapped->getRepository( $className );
+        return $this->wrapped->getRepository($className);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getClassMetadata( $className )
+    public function getClassMetadata($className)
     {
-
-        return $this->wrapped->getClassMetadata( $className );
+        return $this->wrapped->getClassMetadata($className);
     }
 
     /**
@@ -130,25 +119,22 @@ abstract class ObjectManagerDecorator implements ObjectManager
      */
     public function getMetadataFactory()
     {
-
         return $this->wrapped->getMetadataFactory();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function initializeObject( $obj )
+    public function initializeObject($obj)
     {
-
-        return $this->wrapped->initializeObject( $obj );
+        return $this->wrapped->initializeObject($obj);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function contains( $object )
+    public function contains($object)
     {
-
-        return $this->wrapped->contains( $object );
+        return $this->wrapped->contains($object);
     }
 }

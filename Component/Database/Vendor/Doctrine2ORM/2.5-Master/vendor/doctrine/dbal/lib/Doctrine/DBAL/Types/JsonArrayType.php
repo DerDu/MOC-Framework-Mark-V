@@ -29,42 +29,38 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class JsonArrayType extends Type
 {
-
     /**
      * {@inheritdoc}
      */
-    public function getSQLDeclaration( array $fieldDeclaration, AbstractPlatform $platform )
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-
-        return $platform->getJsonTypeDeclarationSQL( $fieldDeclaration );
+        return $platform->getJsonTypeDeclarationSQL($fieldDeclaration);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function convertToDatabaseValue( $value, AbstractPlatform $platform )
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-
         if (null === $value) {
             return null;
         }
 
-        return json_encode( $value );
+        return json_encode($value);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function convertToPHPValue( $value, AbstractPlatform $platform )
+    public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-
         if ($value === null || $value === '') {
             return array();
         }
 
-        $value = ( is_resource( $value ) ) ? stream_get_contents( $value ) : $value;
+        $value = (is_resource($value)) ? stream_get_contents($value) : $value;
 
-        return json_decode( $value, true );
+        return json_decode($value, true);
     }
 
     /**
@@ -72,16 +68,14 @@ class JsonArrayType extends Type
      */
     public function getName()
     {
-
         return Type::JSON_ARRAY;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function requiresSQLCommentHint( AbstractPlatform $platform )
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
     {
-
-        return !$platform->hasNativeJsonType();
+        return ! $platform->hasNativeJsonType();
     }
 }

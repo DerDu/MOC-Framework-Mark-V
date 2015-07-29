@@ -38,7 +38,6 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
  */
 abstract class FileDriver implements MappingDriver
 {
-
     /**
      * @var FileLocator
      */
@@ -62,25 +61,13 @@ abstract class FileDriver implements MappingDriver
      *                                                where mapping documents can be found.
      * @param string|null              $fileExtension
      */
-    public function __construct( $locator, $fileExtension = null )
+    public function __construct($locator, $fileExtension = null)
     {
-
         if ($locator instanceof FileLocator) {
             $this->locator = $locator;
         } else {
-            $this->locator = new DefaultFileLocator( (array)$locator, $fileExtension );
+            $this->locator = new DefaultFileLocator((array)$locator, $fileExtension);
         }
-    }
-
-    /**
-     * Retrieves the global basename.
-     *
-     * @return string|null
-     */
-    public function getGlobalBasename()
-    {
-
-        return $this->globalBasename;
     }
 
     /**
@@ -90,10 +77,19 @@ abstract class FileDriver implements MappingDriver
      *
      * @return void
      */
-    public function setGlobalBasename( $file )
+    public function setGlobalBasename($file)
     {
-
         $this->globalBasename = $file;
+    }
+
+    /**
+     * Retrieves the global basename.
+     *
+     * @return string|null
+     */
+    public function getGlobalBasename()
+    {
+        return $this->globalBasename;
     }
 
     /**
@@ -106,25 +102,65 @@ abstract class FileDriver implements MappingDriver
      *
      * @throws MappingException
      */
-    public function getElement( $className )
+    public function getElement($className)
     {
-
         if ($this->classCache === null) {
             $this->initialize();
         }
 
-        if (isset( $this->classCache[$className] )) {
+        if (isset($this->classCache[$className])) {
             return $this->classCache[$className];
         }
 
-        $result = $this->loadMappingFile( $this->locator->findMappingFile( $className ) );
-        if (!isset( $result[$className] )) {
-            throw MappingException::invalidMappingFile( $className,
-                str_replace( '\\', '.', $className ).$this->locator->getFileExtension() );
+        $result = $this->loadMappingFile($this->locator->findMappingFile($className));
+        if (!isset($result[$className])) {
+            throw MappingException::invalidMappingFile($className, str_replace('\\', '.', $className) . $this->locator->getFileExtension());
         }
 
         return $result[$className];
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isTransient($className)
+    {
+        if ($this->classCache === null) {
+            $this->initialize();
+        }
+
+        if (isset($this->classCache[$className])) {
+            return false;
+        }
+
+        return !$this->locator->fileExists($className);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAllClassNames()
+    {
+        if ($this->classCache === null) {
+            $this->initialize();
+        }
+
+        $classNames = (array)$this->locator->getAllClassNames($this->globalBasename);
+        if ($this->classCache) {
+            $classNames = array_merge(array_keys($this->classCache), $classNames);
+        }
+        return $classNames;
+    }
+
+    /**
+     * Loads a mapping file with the given name and returns a map
+     * from class/entity names to their corresponding file driver elements.
+     *
+     * @param string $file The mapping file to load.
+     *
+     * @return array
+     */
+    abstract protected function loadMappingFile($file);
 
     /**
      * Initializes the class cache from all the global files.
@@ -139,63 +175,18 @@ abstract class FileDriver implements MappingDriver
      */
     protected function initialize()
     {
-
         $this->classCache = array();
         if (null !== $this->globalBasename) {
             foreach ($this->locator->getPaths() as $path) {
                 $file = $path.'/'.$this->globalBasename.$this->locator->getFileExtension();
-                if (is_file( $file )) {
+                if (is_file($file)) {
                     $this->classCache = array_merge(
                         $this->classCache,
-                        $this->loadMappingFile( $file )
+                        $this->loadMappingFile($file)
                     );
                 }
             }
         }
-    }
-
-    /**
-     * Loads a mapping file with the given name and returns a map
-     * from class/entity names to their corresponding file driver elements.
-     *
-     * @param string $file The mapping file to load.
-     *
-     * @return array
-     */
-    abstract protected function loadMappingFile( $file );
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isTransient( $className )
-    {
-
-        if ($this->classCache === null) {
-            $this->initialize();
-        }
-
-        if (isset( $this->classCache[$className] )) {
-            return false;
-        }
-
-        return !$this->locator->fileExists( $className );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAllClassNames()
-    {
-
-        if ($this->classCache === null) {
-            $this->initialize();
-        }
-
-        $classNames = (array)$this->locator->getAllClassNames( $this->globalBasename );
-        if ($this->classCache) {
-            $classNames = array_merge( array_keys( $this->classCache ), $classNames );
-        }
-        return $classNames;
     }
 
     /**
@@ -205,7 +196,6 @@ abstract class FileDriver implements MappingDriver
      */
     public function getLocator()
     {
-
         return $this->locator;
     }
 
@@ -214,9 +204,8 @@ abstract class FileDriver implements MappingDriver
      *
      * @param FileLocator $locator
      */
-    public function setLocator( FileLocator $locator )
+    public function setLocator(FileLocator $locator)
     {
-
         $this->locator = $locator;
     }
 }

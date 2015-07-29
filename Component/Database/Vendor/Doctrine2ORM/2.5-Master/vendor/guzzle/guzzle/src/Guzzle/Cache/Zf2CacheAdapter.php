@@ -11,37 +11,31 @@ use Zend\Cache\Storage\StorageInterface;
  */
 class Zf2CacheAdapter extends AbstractCacheAdapter
 {
-
     /**
      * @param StorageInterface $cache Zend Framework 2 cache adapter
      */
-    public function __construct( StorageInterface $cache )
+    public function __construct(StorageInterface $cache)
     {
-
         $this->cache = $cache;
     }
 
-    public function contains( $id, array $options = null )
+    public function contains($id, array $options = null)
     {
-
-        return $this->cache->hasItem( $id );
+        return $this->cache->hasItem($id);
     }
 
-    public function delete( $id, array $options = null )
+    public function delete($id, array $options = null)
     {
-
-        return $this->cache->removeItem( $id );
+        return $this->cache->removeItem($id);
     }
 
-    public function fetch( $id, array $options = null )
+    public function fetch($id, array $options = null)
     {
-
-        return $this->cache->getItem( $id );
+        return $this->cache->getItem($id);
     }
 
-    public function save( $id, $data, $lifeTime = false, array $options = null )
+    public function save($id, $data, $lifeTime = false, array $options = null)
     {
-
-        return $this->cache->setItem( $id, $data );
+        return $this->cache->setItem($id, $data);
     }
 }

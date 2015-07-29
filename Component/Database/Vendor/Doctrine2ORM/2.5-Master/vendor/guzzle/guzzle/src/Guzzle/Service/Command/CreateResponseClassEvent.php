@@ -9,15 +9,13 @@ use Guzzle\Common\Event;
  */
 class CreateResponseClassEvent extends Event
 {
-
     /**
      * Set the result of the object creation
      *
      * @param mixed $result Result value to set
      */
-    public function setResult( $result )
+    public function setResult($result)
     {
-
         $this['result'] = $result;
         $this->stopPropagation();
     }
@@ -29,7 +27,6 @@ class CreateResponseClassEvent extends Event
      */
     public function getResult()
     {
-
         return $this['result'];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Link Tag Test
- *
+ * 
  * PHP version 5.3
  *
  * @author    Ben Selby <benmatselby@gmail.com>
@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class LinkTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\LinkTag can create
      * a link for the @link doc block.
@@ -33,7 +32,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exLink
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -45,13 +44,12 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
         $exDescription,
         $exLink
     ) {
+        $tag = new LinkTag($type, $content);
 
-        $tag = new LinkTag( $type, $content );
-
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exLink, $tag->getLink() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exLink, $tag->getLink());
     }
 
     /**
@@ -61,7 +59,6 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-
         // $type, $content, $exContent, $exDescription, $exLink
         return array(
             array(

@@ -7,18 +7,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MockObserver implements \Countable, EventSubscriberInterface
 {
-
     public $events = array();
 
     public static function getSubscribedEvents()
     {
-
         return array();
     }
 
-    public function has( $eventName )
+    public function has($eventName)
     {
-
         foreach ($this->events as $event) {
             if ($event->getName() == $eventName) {
                 return true;
@@ -30,33 +27,19 @@ class MockObserver implements \Countable, EventSubscriberInterface
 
     public function getLastEvent()
     {
-
-        return end( $this->events );
+        return end($this->events);
     }
 
     public function count()
     {
-
-        return count( $this->events );
-    }
-
-    public function getData( $event, $key, $occurrence = 0 )
-    {
-
-        $grouped = $this->getGrouped();
-        if (isset( $grouped[$event] )) {
-            return $grouped[$event][$occurrence][$key];
-        }
-
-        return null;
+        return count($this->events);
     }
 
     public function getGrouped()
     {
-
         $events = array();
         foreach ($this->events as $event) {
-            if (!isset( $events[$event->getName()] )) {
+            if (!isset($events[$event->getName()])) {
                 $events[$event->getName()] = array();
             }
             $events[$event->getName()][] = $event;
@@ -65,9 +48,18 @@ class MockObserver implements \Countable, EventSubscriberInterface
         return $events;
     }
 
-    public function update( Event $event )
+    public function getData($event, $key, $occurrence = 0)
     {
+        $grouped = $this->getGrouped();
+        if (isset($grouped[$event])) {
+            return $grouped[$event][$occurrence][$key];
+        }
 
+        return null;
+    }
+
+    public function update(Event $event)
+    {
         $this->events[] = $event;
     }
 }

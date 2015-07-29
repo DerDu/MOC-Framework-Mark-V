@@ -19,13 +19,13 @@
 
 namespace Doctrine\DBAL\Sharding\SQLAzure\Schema;
 
+use Doctrine\DBAL\Schema\Visitor\Visitor;
+use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
-use Doctrine\DBAL\Schema\Index;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Sequence;
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Visitor\Visitor;
+use Doctrine\DBAL\Schema\Index;
 
 /**
  * Converts a single tenant schema into a multi-tenant schema for SQL Azure
@@ -50,7 +50,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  */
 class MultiTenantVisitor implements Visitor
 {
-
     /**
      * @var array
      */
@@ -79,12 +78,8 @@ class MultiTenantVisitor implements Visitor
      * @param string      $tenantColumnName
      * @param string|null $distributionName
      */
-    public function __construct(
-        array $excludedTables = array(),
-        $tenantColumnName = 'tenant_id',
-        $distributionName = null
-    ) {
-
+    public function __construct(array $excludedTables = array(), $tenantColumnName = 'tenant_id', $distributionName = null)
+    {
         $this->excludedTables = $excludedTables;
         $this->tenantColumnName = $tenantColumnName;
         $this->distributionName = $distributionName ?: $tenantColumnName;
@@ -93,29 +88,28 @@ class MultiTenantVisitor implements Visitor
     /**
      * {@inheritdoc}
      */
-    public function acceptTable( Table $table )
+    public function acceptTable(Table $table)
     {
-
-        if (in_array( $table->getName(), $this->excludedTables )) {
+        if (in_array($table->getName(), $this->excludedTables)) {
             return;
         }
 
-        $table->addColumn( $this->tenantColumnName, $this->tenantColumnType, array(
-            'default' => "federation_filtering_value('".$this->distributionName."')",
-        ) );
+        $table->addColumn($this->tenantColumnName, $this->tenantColumnType, array(
+            'default' => "federation_filtering_value('". $this->distributionName ."')",
+        ));
 
-        $clusteredIndex = $this->getClusteredIndex( $table );
+        $clusteredIndex = $this->getClusteredIndex($table);
 
         $indexColumns = $clusteredIndex->getColumns();
         $indexColumns[] = $this->tenantColumnName;
 
         if ($clusteredIndex->isPrimary()) {
             $table->dropPrimaryKey();
-            $table->setPrimaryKey( $indexColumns );
+            $table->setPrimaryKey($indexColumns);
         } else {
-            $table->dropIndex( $clusteredIndex->getName() );
-            $table->addIndex( $indexColumns, $clusteredIndex->getName() );
-            $table->getIndex( $clusteredIndex->getName() )->addFlag( 'clustered' );
+            $table->dropIndex($clusteredIndex->getName());
+            $table->addIndex($indexColumns, $clusteredIndex->getName());
+            $table->getIndex($clusteredIndex->getName())->addFlag('clustered');
         }
     }
 
@@ -126,51 +120,50 @@ class MultiTenantVisitor implements Visitor
      *
      * @throws \RuntimeException
      */
-    private function getClusteredIndex( $table )
+    private function getClusteredIndex($table)
     {
-
         foreach ($table->getIndexes() as $index) {
-            if ($index->isPrimary() && !$index->hasFlag( 'nonclustered' )) {
+            if ($index->isPrimary() && ! $index->hasFlag('nonclustered')) {
                 return $index;
-            } elseif ($index->hasFlag( 'clustered' )) {
+            } elseif ($index->hasFlag('clustered')) {
                 return $index;
             }
         }
-        throw new \RuntimeException( "No clustered index found on table ".$table->getName() );
+        throw new \RuntimeException("No clustered index found on table " . $table->getName());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSchema( Schema $schema )
+    public function acceptSchema(Schema $schema)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptColumn( Table $table, Column $column )
+    public function acceptColumn(Table $table, Column $column)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptForeignKey( Table $localTable, ForeignKeyConstraint $fkConstraint )
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptIndex( Table $table, Index $index )
+    public function acceptIndex(Table $table, Index $index)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSequence( Sequence $sequence )
+    public function acceptSequence(Sequence $sequence)
     {
     }
 }

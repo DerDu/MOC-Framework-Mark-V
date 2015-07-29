@@ -1,27 +1,15 @@
 <?php
-
 class BankAccount
 {
-
     protected $balance = 0;
-
-    public function depositMoney( $balance )
-    {
-
-        $this->setBalance( $this->getBalance() + $balance );
-
-        return $this->getBalance();
-    }
 
     public function getBalance()
     {
-
         return $this->balance;
     }
 
-    protected function setBalance( $balance )
+    protected function setBalance($balance)
     {
-
         if ($balance >= 0) {
             $this->balance = $balance;
         } else {
@@ -29,10 +17,16 @@ class BankAccount
         }
     }
 
-    public function withdrawMoney( $balance )
+    public function depositMoney($balance)
     {
+        $this->setBalance($this->getBalance() + $balance);
 
-        $this->setBalance( $this->getBalance() - $balance );
+        return $this->getBalance();
+    }
+
+    public function withdrawMoney($balance)
+    {
+        $this->setBalance($this->getBalance() - $balance);
 
         return $this->getBalance();
     }

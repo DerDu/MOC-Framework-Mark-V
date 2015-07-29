@@ -15,16 +15,14 @@ use Symfony\Component\Config\Definition\Builder\EnumNodeDefinition;
 
 class EnumNodeDefinitionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage ->values() must be called with at least two distinct values.
      */
     public function testNoDistinctValues()
     {
-
-        $def = new EnumNodeDefinition( 'foo' );
-        $def->values( array( 'foo', 'foo' ) );
+        $def = new EnumNodeDefinition('foo');
+        $def->values(array('foo', 'foo'));
     }
 
     /**
@@ -33,18 +31,16 @@ class EnumNodeDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoValuesPassed()
     {
-
-        $def = new EnumNodeDefinition( 'foo' );
+        $def = new EnumNodeDefinition('foo');
         $def->getNode();
     }
 
     public function testGetNode()
     {
-
-        $def = new EnumNodeDefinition( 'foo' );
-        $def->values( array( 'foo', 'bar' ) );
+        $def = new EnumNodeDefinition('foo');
+        $def->values(array('foo', 'bar'));
 
         $node = $def->getNode();
-        $this->assertEquals( array( 'foo', 'bar' ), $node->getValues() );
+        $this->assertEquals(array('foo', 'bar'), $node->getValues());
     }
 }

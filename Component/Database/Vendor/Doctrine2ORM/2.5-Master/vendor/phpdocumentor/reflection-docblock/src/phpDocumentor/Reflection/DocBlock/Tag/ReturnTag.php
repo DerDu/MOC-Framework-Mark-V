@@ -24,10 +24,9 @@ use phpDocumentor\Reflection\DocBlock\Type\Collection;
  */
 class ReturnTag extends Tag
 {
-
     /** @var string The raw type component. */
     protected $type = '';
-
+    
     /** @var Collection The parsed type component. */
     protected $types = null;
 
@@ -36,7 +35,6 @@ class ReturnTag extends Tag
      */
     public function getContent()
     {
-
         if (null === $this->content) {
             $this->content = "{$this->type} {$this->description}";
         }
@@ -47,18 +45,17 @@ class ReturnTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
+        parent::setContent($content);
 
-        parent::setContent( $content );
-
-        $parts = preg_split( '/\s+/Su', $this->description, 2 );
+        $parts = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
         $this->type = $parts[0];
         $this->types = null;
 
-        $this->setDescription( isset( $parts[1] ) ? $parts[1] : '' );
+        $this->setDescription(isset($parts[1]) ? $parts[1] : '');
 
         $this->content = $content;
         return $this;
@@ -71,25 +68,7 @@ class ReturnTag extends Tag
      */
     public function getTypes()
     {
-
         return $this->getTypesCollection()->getArrayCopy();
-    }
-
-    /**
-     * Returns the type collection.
-     *
-     * @return void
-     */
-    protected function getTypesCollection()
-    {
-
-        if (null === $this->types) {
-            $this->types = new Collection(
-                array( $this->type ),
-                $this->docblock ? $this->docblock->getContext() : null
-            );
-        }
-        return $this->types;
     }
 
     /**
@@ -99,7 +78,22 @@ class ReturnTag extends Tag
      */
     public function getType()
     {
+        return (string) $this->getTypesCollection();
+    }
 
-        return (string)$this->getTypesCollection();
+    /**
+     * Returns the type collection.
+     * 
+     * @return void
+     */
+    protected function getTypesCollection()
+    {
+        if (null === $this->types) {
+            $this->types = new Collection(
+                array($this->type),
+                $this->docblock ? $this->docblock->getContext() : null
+            );
+        }
+        return $this->types;
     }
 }

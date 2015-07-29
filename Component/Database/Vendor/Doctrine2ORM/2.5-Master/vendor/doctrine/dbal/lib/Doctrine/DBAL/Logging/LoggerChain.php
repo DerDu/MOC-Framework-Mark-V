@@ -28,7 +28,6 @@ namespace Doctrine\DBAL\Logging;
  */
 class LoggerChain implements SQLLogger
 {
-
     /**
      * @var \Doctrine\DBAL\Logging\SQLLogger[]
      */
@@ -41,20 +40,18 @@ class LoggerChain implements SQLLogger
      *
      * @return void
      */
-    public function addLogger( SQLLogger $logger )
+    public function addLogger(SQLLogger $logger)
     {
-
         $this->loggers[] = $logger;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function startQuery( $sql, array $params = null, array $types = null )
+    public function startQuery($sql, array $params = null, array $types = null)
     {
-
         foreach ($this->loggers as $logger) {
-            $logger->startQuery( $sql, $params, $types );
+            $logger->startQuery($sql, $params, $types);
         }
     }
 
@@ -63,7 +60,6 @@ class LoggerChain implements SQLLogger
      */
     public function stopQuery()
     {
-
         foreach ($this->loggers as $logger) {
             $logger->stopQuery();
         }

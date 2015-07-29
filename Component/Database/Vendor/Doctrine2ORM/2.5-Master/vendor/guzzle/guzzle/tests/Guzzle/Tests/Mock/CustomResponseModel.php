@@ -2,23 +2,20 @@
 
 namespace Guzzle\Tests\Mock;
 
-use Guzzle\Service\Command\OperationCommand;
 use Guzzle\Service\Command\ResponseClassInterface;
+use Guzzle\Service\Command\OperationCommand;
 
 class CustomResponseModel implements ResponseClassInterface
 {
-
     public $command;
 
-    public function __construct( $command )
+    public static function fromCommand(OperationCommand $command)
     {
-
-        $this->command = $command;
+        return new self($command);
     }
 
-    public static function fromCommand( OperationCommand $command )
+    public function __construct($command)
     {
-
-        return new self( $command );
+        $this->command = $command;
     }
 }

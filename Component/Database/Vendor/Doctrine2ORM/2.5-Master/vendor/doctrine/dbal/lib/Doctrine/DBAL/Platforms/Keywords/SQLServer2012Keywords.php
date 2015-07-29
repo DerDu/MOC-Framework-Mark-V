@@ -29,13 +29,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class SQLServer2012Keywords extends SQLServer2008Keywords
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'SQLServer2012';
     }
 
@@ -46,13 +44,12 @@ class SQLServer2012Keywords extends SQLServer2008Keywords
      */
     protected function getKeywords()
     {
-
-        return array_merge( parent::getKeywords(), array(
+        return array_merge(parent::getKeywords(), array(
             'SEMANTICKEYPHRASETABLE',
             'SEMANTICSIMILARITYDETAILSTABLE',
             'SEMANTICSIMILARITYTABLE',
             'TRY_CONVERT',
             'WITHIN GROUP'
-        ) );
+        ));
     }
 }

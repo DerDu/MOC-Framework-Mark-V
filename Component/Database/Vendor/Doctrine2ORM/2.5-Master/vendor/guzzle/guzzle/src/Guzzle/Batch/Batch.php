@@ -14,7 +14,6 @@ use Guzzle\Batch\Exception\BatchTransferException;
  */
 class Batch implements BatchInterface
 {
-
     /** @var \SplQueue Queue of items in the queue */
     protected $queue;
 
@@ -31,27 +30,24 @@ class Batch implements BatchInterface
      * @param BatchTransferInterface $transferStrategy Strategy used to transfer items
      * @param BatchDivisorInterface  $divisionStrategy Divisor used to create batches
      */
-    public function __construct( BatchTransferInterface $transferStrategy, BatchDivisorInterface $divisionStrategy )
+    public function __construct(BatchTransferInterface $transferStrategy, BatchDivisorInterface $divisionStrategy)
     {
-
         $this->transferStrategy = $transferStrategy;
         $this->divisionStrategy = $divisionStrategy;
         $this->queue = new \SplQueue();
-        $this->queue->setIteratorMode( \SplQueue::IT_MODE_DELETE );
+        $this->queue->setIteratorMode(\SplQueue::IT_MODE_DELETE);
         $this->dividedBatches = array();
     }
 
-    public function add( $item )
+    public function add($item)
     {
-
-        $this->queue->enqueue( $item );
+        $this->queue->enqueue($item);
 
         return $this;
     }
 
     public function flush()
     {
-
         $this->createBatches();
 
         $items = array();
@@ -60,18 +56,22 @@ class Batch implements BatchInterface
                 $batch = $dividedBatch->current();
                 $dividedBatch->next();
                 try {
-                    $this->transferStrategy->transfer( $batch );
-                    $items = array_merge( $items, $batch );
-                } catch( \Exception $e ) {
-                    throw new BatchTransferException( $batch, $items, $e, $this->transferStrategy,
-                        $this->divisionStrategy );
+                    $this->transferStrategy->transfer($batch);
+                    $items = array_merge($items, $batch);
+                } catch (\Exception $e) {
+                    throw new BatchTransferException($batch, $items, $e, $this->transferStrategy, $this->divisionStrategy);
                 }
             }
             // Keep the divided batch down to a minimum in case of a later exception
-            unset( $this->dividedBatches[$batchIndex] );
+            unset($this->dividedBatches[$batchIndex]);
         }
 
         return $items;
+    }
+
+    public function isEmpty()
+    {
+        return count($this->queue) == 0 && count($this->dividedBatches) == 0;
     }
 
     /**
@@ -79,21 +79,14 @@ class Batch implements BatchInterface
      */
     protected function createBatches()
     {
-
-        if (count( $this->queue )) {
-            if ($batches = $this->divisionStrategy->createBatches( $this->queue )) {
+        if (count($this->queue)) {
+            if ($batches = $this->divisionStrategy->createBatches($this->queue)) {
                 // Convert arrays into iterators
-                if (is_array( $batches )) {
-                    $batches = new \ArrayIterator( $batches );
+                if (is_array($batches)) {
+                    $batches = new \ArrayIterator($batches);
                 }
                 $this->dividedBatches[] = $batches;
             }
         }
-    }
-
-    public function isEmpty()
-    {
-
-        return count( $this->queue ) == 0 && count( $this->dividedBatches ) == 0;
     }
 }

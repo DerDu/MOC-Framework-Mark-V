@@ -6,18 +6,15 @@ namespace bar\baz;
  */
 class source_with_namespace
 {
-
 }
 
 /**
  * @param mixed $bar
  */
-function &foo( $bar )
+function &foo($bar)
 {
-
-    $baz = function () {
-    };
-    $a = true ? true : false;
+    $baz = function () {};
+    $a   = true ? true : false;
     $b = "{$a}";
     $c = "${b}";
 }

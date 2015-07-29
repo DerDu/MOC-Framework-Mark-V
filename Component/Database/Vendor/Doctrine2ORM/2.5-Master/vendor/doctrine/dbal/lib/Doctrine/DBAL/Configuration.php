@@ -19,8 +19,8 @@
 
 namespace Doctrine\DBAL;
 
-use Doctrine\Common\Cache\Cache;
 use Doctrine\DBAL\Logging\SQLLogger;
+use Doctrine\Common\Cache\Cache;
 
 /**
  * Configuration container for the Doctrine DBAL.
@@ -34,7 +34,6 @@ use Doctrine\DBAL\Logging\SQLLogger;
  */
 class Configuration
 {
-
     /**
      * The attributes that are contained in the configuration.
      * Values are default values.
@@ -50,9 +49,8 @@ class Configuration
      *
      * @return void
      */
-    public function setSQLLogger( SQLLogger $logger = null )
+    public function setSQLLogger(SQLLogger $logger = null)
     {
-
         $this->_attributes['sqlLogger'] = $logger;
     }
 
@@ -63,9 +61,8 @@ class Configuration
      */
     public function getSQLLogger()
     {
-
-        return isset( $this->_attributes['sqlLogger'] ) ?
-            $this->_attributes['sqlLogger'] : null;
+        return isset($this->_attributes['sqlLogger']) ?
+                $this->_attributes['sqlLogger'] : null;
     }
 
     /**
@@ -75,9 +72,8 @@ class Configuration
      */
     public function getResultCacheImpl()
     {
-
-        return isset( $this->_attributes['resultCacheImpl'] ) ?
-            $this->_attributes['resultCacheImpl'] : null;
+        return isset($this->_attributes['resultCacheImpl']) ?
+                $this->_attributes['resultCacheImpl'] : null;
     }
 
     /**
@@ -87,9 +83,8 @@ class Configuration
      *
      * @return void
      */
-    public function setResultCacheImpl( Cache $cacheImpl )
+    public function setResultCacheImpl(Cache $cacheImpl)
     {
-
         $this->_attributes['resultCacheImpl'] = $cacheImpl;
     }
 
@@ -104,9 +99,8 @@ class Configuration
      *
      * @return void
      */
-    public function setFilterSchemaAssetsExpression( $filterExpression )
+    public function setFilterSchemaAssetsExpression($filterExpression)
     {
-
         $this->_attributes['filterSchemaAssetsExpression'] = $filterExpression;
     }
 
@@ -117,8 +111,7 @@ class Configuration
      */
     public function getFilterSchemaAssetsExpression()
     {
-
-        if (isset( $this->_attributes['filterSchemaAssetsExpression'] )) {
+        if (isset($this->_attributes['filterSchemaAssetsExpression'])) {
             return $this->_attributes['filterSchemaAssetsExpression'];
         }
 
@@ -136,10 +129,9 @@ class Configuration
      *
      * @see   getAutoCommit
      */
-    public function setAutoCommit( $autoCommit )
+    public function setAutoCommit($autoCommit)
     {
-
-        $this->_attributes['autoCommit'] = (boolean)$autoCommit;
+        $this->_attributes['autoCommit'] = (boolean) $autoCommit;
     }
 
     /**
@@ -151,8 +143,7 @@ class Configuration
      */
     public function getAutoCommit()
     {
-
-        if (isset( $this->_attributes['autoCommit'] )) {
+        if (isset($this->_attributes['autoCommit'])) {
             return $this->_attributes['autoCommit'];
         }
 

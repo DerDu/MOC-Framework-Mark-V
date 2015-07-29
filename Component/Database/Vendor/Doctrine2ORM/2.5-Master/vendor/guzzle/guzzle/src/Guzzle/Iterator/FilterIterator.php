@@ -11,7 +11,6 @@ use Guzzle\Common\Exception\InvalidArgumentException;
  */
 class FilterIterator extends \FilterIterator
 {
-
     /** @var mixed Callback used for filtering */
     protected $callback;
 
@@ -21,19 +20,17 @@ class FilterIterator extends \FilterIterator
      *
      * @throws InvalidArgumentException if the callback if not callable
      */
-    public function __construct( \Iterator $iterator, $callback )
+    public function __construct(\Iterator $iterator, $callback)
     {
-
-        parent::__construct( $iterator );
-        if (!is_callable( $callback )) {
-            throw new InvalidArgumentException( 'The callback must be callable' );
+        parent::__construct($iterator);
+        if (!is_callable($callback)) {
+            throw new InvalidArgumentException('The callback must be callable');
         }
         $this->callback = $callback;
     }
 
     public function accept()
     {
-
-        return call_user_func( $this->callback, $this->current() );
+        return call_user_func($this->callback, $this->current());
     }
 }

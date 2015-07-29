@@ -5,37 +5,33 @@ if ($neverHappens) {
     // @codeCoverageIgnoreEnd
 }
 
-interface Bor
-{
-
-    public function foo();
-
-}
-
 /**
  * @codeCoverageIgnore
  */
 class Foo
 {
-
     public function bar()
     {
     }
 }
 
-function baz()
-{
-
-    print '*'; // @codeCoverageIgnore
-}
-
 class Bar
 {
-
     /**
      * @codeCoverageIgnore
      */
     public function foo()
     {
     }
+}
+
+function baz()
+{
+    print '*'; // @codeCoverageIgnore
+}
+
+interface Bor
+{
+    public function foo();
+
 }

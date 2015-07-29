@@ -31,12 +31,11 @@ use Doctrine\DBAL\Connection;
  */
 class ExpressionBuilder
 {
-
-    const EQ = '=';
+    const EQ  = '=';
     const NEQ = '<>';
-    const LT = '<';
+    const LT  = '<';
     const LTE = '<=';
-    const GT = '>';
+    const GT  = '>';
     const GTE = '>=';
 
     /**
@@ -51,9 +50,8 @@ class ExpressionBuilder
      *
      * @param \Doctrine\DBAL\Connection $connection The DBAL Connection.
      */
-    public function __construct( Connection $connection )
+    public function __construct(Connection $connection)
     {
-
         $this->connection = $connection;
     }
 
@@ -71,10 +69,9 @@ class ExpressionBuilder
      *
      * @return \Doctrine\DBAL\Query\Expression\CompositeExpression
      */
-    public function andX( $x = null )
+    public function andX($x = null)
     {
-
-        return new CompositeExpression( CompositeExpression::TYPE_AND, func_get_args() );
+        return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
     }
 
     /**
@@ -91,10 +88,23 @@ class ExpressionBuilder
      *
      * @return \Doctrine\DBAL\Query\Expression\CompositeExpression
      */
-    public function orX( $x = null )
+    public function orX($x = null)
     {
+        return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
+    }
 
-        return new CompositeExpression( CompositeExpression::TYPE_OR, func_get_args() );
+    /**
+     * Creates a comparison expression.
+     *
+     * @param mixed  $x        The left expression.
+     * @param string $operator One of the ExpressionBuilder::* constants.
+     * @param mixed  $y        The right expression.
+     *
+     * @return string
+     */
+    public function comparison($x, $operator, $y)
+    {
+        return $x . ' ' . $operator . ' ' . $y;
     }
 
     /**
@@ -112,25 +122,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function eq( $x, $y )
+    public function eq($x, $y)
     {
-
-        return $this->comparison( $x, self::EQ, $y );
-    }
-
-    /**
-     * Creates a comparison expression.
-     *
-     * @param mixed  $x        The left expression.
-     * @param string $operator One of the ExpressionBuilder::* constants.
-     * @param mixed  $y        The right expression.
-     *
-     * @return string
-     */
-    public function comparison( $x, $operator, $y )
-    {
-
-        return $x.' '.$operator.' '.$y;
+        return $this->comparison($x, self::EQ, $y);
     }
 
     /**
@@ -147,10 +141,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function neq( $x, $y )
+    public function neq($x, $y)
     {
-
-        return $this->comparison( $x, self::NEQ, $y );
+        return $this->comparison($x, self::NEQ, $y);
     }
 
     /**
@@ -167,10 +160,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function lt( $x, $y )
+    public function lt($x, $y)
     {
-
-        return $this->comparison( $x, self::LT, $y );
+        return $this->comparison($x, self::LT, $y);
     }
 
     /**
@@ -187,10 +179,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function lte( $x, $y )
+    public function lte($x, $y)
     {
-
-        return $this->comparison( $x, self::LTE, $y );
+        return $this->comparison($x, self::LTE, $y);
     }
 
     /**
@@ -207,10 +198,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function gt( $x, $y )
+    public function gt($x, $y)
     {
-
-        return $this->comparison( $x, self::GT, $y );
+        return $this->comparison($x, self::GT, $y);
     }
 
     /**
@@ -227,10 +217,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function gte( $x, $y )
+    public function gte($x, $y)
     {
-
-        return $this->comparison( $x, self::GTE, $y );
+        return $this->comparison($x, self::GTE, $y);
     }
 
     /**
@@ -240,10 +229,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function isNull( $x )
+    public function isNull($x)
     {
-
-        return $x.' IS NULL';
+        return $x . ' IS NULL';
     }
 
     /**
@@ -253,10 +241,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function isNotNull( $x )
+    public function isNotNull($x)
     {
-
-        return $x.' IS NOT NULL';
+        return $x . ' IS NOT NULL';
     }
 
     /**
@@ -267,10 +254,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function like( $x, $y )
+    public function like($x, $y)
     {
-
-        return $this->comparison( $x, 'LIKE', $y );
+        return $this->comparison($x, 'LIKE', $y);
     }
 
     /**
@@ -281,10 +267,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function notLike( $x, $y )
+    public function notLike($x, $y)
     {
-
-        return $this->comparison( $x, 'NOT LIKE', $y );
+        return $this->comparison($x, 'NOT LIKE', $y);
     }
 
     /**
@@ -295,10 +280,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function in( $x, $y )
+    public function in($x, $y)
     {
-
-        return $this->comparison( $x, 'IN', '('.implode( ', ', (array)$y ).')' );
+        return $this->comparison($x, 'IN', '('.implode(', ', (array) $y).')');
     }
 
     /**
@@ -309,10 +293,9 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function notIn( $x, $y )
+    public function notIn($x, $y)
     {
-
-        return $this->comparison( $x, 'NOT IN', '('.implode( ', ', (array)$y ).')' );
+        return $this->comparison($x, 'NOT IN', '('.implode(', ', (array) $y).')');
     }
 
     /**
@@ -323,9 +306,8 @@ class ExpressionBuilder
      *
      * @return string
      */
-    public function literal( $input, $type = null )
+    public function literal($input, $type = null)
     {
-
-        return $this->connection->quote( $input, $type );
+        return $this->connection->quote($input, $type);
     }
 }

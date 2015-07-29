@@ -29,7 +29,6 @@ use Symfony\Component\Console\Output\StreamOutput;
  */
 class ApplicationTester
 {
-
     private $application;
     private $input;
     private $output;
@@ -40,9 +39,8 @@ class ApplicationTester
      *
      * @param Application $application An Application instance to test.
      */
-    public function __construct( Application $application )
+    public function __construct(Application $application)
     {
-
         $this->application = $application;
     }
 
@@ -60,23 +58,22 @@ class ApplicationTester
      *
      * @return int The command exit code
      */
-    public function run( array $input, $options = array() )
+    public function run(array $input, $options = array())
     {
-
-        $this->input = new ArrayInput( $input );
-        if (isset( $options['interactive'] )) {
-            $this->input->setInteractive( $options['interactive'] );
+        $this->input = new ArrayInput($input);
+        if (isset($options['interactive'])) {
+            $this->input->setInteractive($options['interactive']);
         }
 
-        $this->output = new StreamOutput( fopen( 'php://memory', 'w', false ) );
-        if (isset( $options['decorated'] )) {
-            $this->output->setDecorated( $options['decorated'] );
+        $this->output = new StreamOutput(fopen('php://memory', 'w', false));
+        if (isset($options['decorated'])) {
+            $this->output->setDecorated($options['decorated']);
         }
-        if (isset( $options['verbosity'] )) {
-            $this->output->setVerbosity( $options['verbosity'] );
+        if (isset($options['verbosity'])) {
+            $this->output->setVerbosity($options['verbosity']);
         }
 
-        return $this->statusCode = $this->application->run( $this->input, $this->output );
+        return $this->statusCode = $this->application->run($this->input, $this->output);
     }
 
     /**
@@ -86,15 +83,14 @@ class ApplicationTester
      *
      * @return string The display
      */
-    public function getDisplay( $normalize = false )
+    public function getDisplay($normalize = false)
     {
+        rewind($this->output->getStream());
 
-        rewind( $this->output->getStream() );
-
-        $display = stream_get_contents( $this->output->getStream() );
+        $display = stream_get_contents($this->output->getStream());
 
         if ($normalize) {
-            $display = str_replace( PHP_EOL, "\n", $display );
+            $display = str_replace(PHP_EOL, "\n", $display);
         }
 
         return $display;
@@ -107,7 +103,6 @@ class ApplicationTester
      */
     public function getInput()
     {
-
         return $this->input;
     }
 
@@ -118,7 +113,6 @@ class ApplicationTester
      */
     public function getOutput()
     {
-
         return $this->output;
     }
 
@@ -129,7 +123,6 @@ class ApplicationTester
      */
     public function getStatusCode()
     {
-
         return $this->statusCode;
     }
 }

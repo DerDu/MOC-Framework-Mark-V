@@ -2,18 +2,18 @@
 /*
  * This file bootstraps the test environment.
  */
-error_reporting( E_ALL | E_STRICT );
+error_reporting(E_ALL | E_STRICT);
 
-if (file_exists( __DIR__.'/../../../vendor/autoload.php' )) {
+if (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
     // dependencies were installed via composer - this is the main project
-    $classLoader = require __DIR__.'/../../../vendor/autoload.php';
-} elseif (file_exists( __DIR__.'/../../../../../autoload.php' )) {
+    $classLoader = require __DIR__ . '/../../../vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/../../../../../autoload.php')) {
     // installed as a dependency in `vendor`
-    $classLoader = require __DIR__.'/../../../../../autoload.php';
+    $classLoader = require __DIR__ . '/../../../../../autoload.php';
 } else {
-    throw new Exception( 'Can\'t find autoload.php. Did you install dependencies via Composer?' );
+    throw new Exception('Can\'t find autoload.php. Did you install dependencies via Composer?');
 }
 
 /* @var $classLoader \Composer\Autoload\ClassLoader */
-$classLoader->add( 'Doctrine\\Tests\\', __DIR__.'/../../' );
-unset( $classLoader );
+$classLoader->add('Doctrine\\Tests\\', __DIR__ . '/../../');
+unset($classLoader);

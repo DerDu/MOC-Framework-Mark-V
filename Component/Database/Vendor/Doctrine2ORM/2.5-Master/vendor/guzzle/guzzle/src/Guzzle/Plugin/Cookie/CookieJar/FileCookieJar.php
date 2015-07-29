@@ -9,7 +9,6 @@ use Guzzle\Common\Exception\RuntimeException;
  */
 class FileCookieJar extends ArrayCookieJar
 {
-
     /** @var string filename */
     protected $filename;
 
@@ -20,28 +19,10 @@ class FileCookieJar extends ArrayCookieJar
      *
      * @throws RuntimeException if the file cannot be found or created
      */
-    public function __construct( $cookieFile )
+    public function __construct($cookieFile)
     {
-
         $this->filename = $cookieFile;
         $this->load();
-    }
-
-    /**
-     * Load the contents of the json formatted file into the data array and discard any unsaved state
-     */
-    protected function load()
-    {
-
-        $json = file_get_contents( $this->filename );
-        if (false === $json) {
-            // @codeCoverageIgnoreStart
-            throw new RuntimeException( 'Unable to open file '.$this->filename );
-            // @codeCoverageIgnoreEnd
-        }
-
-        $this->unserialize( $json );
-        $this->cookies = $this->cookies ?: array();
     }
 
     /**
@@ -49,7 +30,6 @@ class FileCookieJar extends ArrayCookieJar
      */
     public function __destruct()
     {
-
         $this->persist();
     }
 
@@ -60,11 +40,26 @@ class FileCookieJar extends ArrayCookieJar
      */
     protected function persist()
     {
-
-        if (false === file_put_contents( $this->filename, $this->serialize() )) {
+        if (false === file_put_contents($this->filename, $this->serialize())) {
             // @codeCoverageIgnoreStart
-            throw new RuntimeException( 'Unable to open file '.$this->filename );
+            throw new RuntimeException('Unable to open file ' . $this->filename);
             // @codeCoverageIgnoreEnd
         }
+    }
+
+    /**
+     * Load the contents of the json formatted file into the data array and discard any unsaved state
+     */
+    protected function load()
+    {
+        $json = file_get_contents($this->filename);
+        if (false === $json) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('Unable to open file ' . $this->filename);
+            // @codeCoverageIgnoreEnd
+        }
+
+        $this->unserialize($json);
+        $this->cookies = $this->cookies ?: array();
     }
 }

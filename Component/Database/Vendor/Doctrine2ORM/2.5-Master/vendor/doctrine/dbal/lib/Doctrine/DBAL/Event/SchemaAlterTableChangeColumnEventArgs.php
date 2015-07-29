@@ -32,7 +32,6 @@ use Doctrine\DBAL\Schema\TableDiff;
  */
 class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
 {
-
     /**
      * @var \Doctrine\DBAL\Schema\ColumnDiff
      */
@@ -58,12 +57,11 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      * @param \Doctrine\DBAL\Schema\TableDiff           $tableDiff
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      */
-    public function __construct( ColumnDiff $columnDiff, TableDiff $tableDiff, AbstractPlatform $platform )
+    public function __construct(ColumnDiff $columnDiff, TableDiff $tableDiff, AbstractPlatform $platform)
     {
-
         $this->_columnDiff = $columnDiff;
-        $this->_tableDiff = $tableDiff;
-        $this->_platform = $platform;
+        $this->_tableDiff  = $tableDiff;
+        $this->_platform   = $platform;
     }
 
     /**
@@ -71,7 +69,6 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      */
     public function getColumnDiff()
     {
-
         return $this->_columnDiff;
     }
 
@@ -80,7 +77,6 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      */
     public function getTableDiff()
     {
-
         return $this->_tableDiff;
     }
 
@@ -89,7 +85,6 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
-
         return $this->_platform;
     }
 
@@ -98,11 +93,10 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      *
      * @return \Doctrine\DBAL\Event\SchemaAlterTableChangeColumnEventArgs
      */
-    public function addSql( $sql )
+    public function addSql($sql)
     {
-
-        if (is_array( $sql )) {
-            $this->_sql = array_merge( $this->_sql, $sql );
+        if (is_array($sql)) {
+            $this->_sql = array_merge($this->_sql, $sql);
         } else {
             $this->_sql[] = $sql;
         }
@@ -115,7 +109,6 @@ class SchemaAlterTableChangeColumnEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
-
         return $this->_sql;
     }
 }
