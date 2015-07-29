@@ -115,7 +115,8 @@ class PhpExcel extends Bridge implements IBridgeInterface
     {
 
         \PHPExcel_Settings::setCacheStorageMethod(
-            \PHPExcel_CachedObjectStorageFactory::cache_to_apc, array( 'cacheTime' => 3600 )
+//            \PHPExcel_CachedObjectStorageFactory::cache_to_apc, array( 'cacheTime' => 3600 )
+            \PHPExcel_CachedObjectStorageFactory::cache_in_memory, array( 'cacheTime' => 3600 )
         );
         //\PHPExcel_Cell::setValueBinder( new \PHPExcel_Cell_AdvancedValueBinder() );
     }
