@@ -61,7 +61,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -77,7 +77,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         }
 
         if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
-            $statementIndent = strlen( $tokens[$i]['content'] );
+            $statementIndent = strlen($tokens[$i]['content']);
         }
 
         // Each line between the parenthesis should be indented 4 spaces
@@ -89,11 +89,11 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         for ($i = ( $openBracket + 1 ); $i < $closeBracket; $i++) {
             if ($tokens[$i]['line'] !== $lastLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
-                    $next = $phpcsFile->findNext( T_WHITESPACE, $i, null, true );
+                    $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
                     if ($next !== $closeBracket) {
                         // Closing bracket is on the same line as a condition.
                         $error = 'Closing parenthesis of a multi-line IF statement must be on a new line';
-                        $phpcsFile->addError( $error, $i, 'CloseBracketNewLine' );
+                        $phpcsFile->addError($error, $i, 'CloseBracketNewLine');
                         $expectedIndent = ( $statementIndent + $this->indent );
                     } else {
                         // Closing brace needs to be indented to the same level
@@ -108,7 +108,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
                     $foundIndent = 0;
                 } else {
-                    $foundIndent = strlen( $tokens[$i]['content'] );
+                    $foundIndent = strlen($tokens[$i]['content']);
                 }
 
                 if ($expectedIndent !== $foundIndent) {
@@ -117,14 +117,14 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                         $expectedIndent,
                         $foundIndent,
                     );
-                    $phpcsFile->addError( $error, $i, 'Alignment', $data );
+                    $phpcsFile->addError($error, $i, 'Alignment', $data);
                 }
 
                 if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
-                    $next = $phpcsFile->findNext( T_WHITESPACE, $i, null, true );
-                    if (in_array( $tokens[$next]['code'], PHP_CodeSniffer_Tokens::$booleanOperators ) === false) {
+                    $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
+                    if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$booleanOperators) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
-                        $phpcsFile->addError( $error, $i, 'StartWithBoolean' );
+                        $phpcsFile->addError($error, $i, 'StartWithBoolean');
                     }
                 }
 
@@ -132,7 +132,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }//end if
 
             if ($tokens[$i]['code'] === T_STRING) {
-                $next = $phpcsFile->findNext( T_WHITESPACE, ( $i + 1 ), null, true );
+                $next = $phpcsFile->findNext(T_WHITESPACE, ( $i + 1 ), null, true);
                 if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
                     // This is a function call, so skip to the end as they
                     // have their own indentation rules.
@@ -156,12 +156,12 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             if ($tokens[( $closeBracket + 1 )]['content'] === $phpcsFile->eolChar) {
                 $length = -1;
             } else {
-                $length = strlen( $tokens[( $closeBracket + 1 )]['content'] );
+                $length = strlen($tokens[( $closeBracket + 1 )]['content']);
             }
         }
 
         if ($length !== 1) {
-            $data = array( $length );
+            $data = array($length);
             $code = 'SpaceBeforeOpenBrace';
 
             $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found ';
@@ -172,17 +172,17 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 $error .= '%s spaces';
             }
 
-            $phpcsFile->addError( $error, ( $closeBracket + 1 ), $code, $data );
+            $phpcsFile->addError($error, ( $closeBracket + 1 ), $code, $data);
         }
 
         // And just in case they do something funny before the brace...
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $closeBracket + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $closeBracket + 1 ), null, true);
         if ($next !== false
             && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET
             && $tokens[$next]['code'] !== T_COLON
         ) {
             $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement';
-            $phpcsFile->addError( $error, $next, 'NoSpaceBeforeOpenBrace' );
+            $phpcsFile->addError($error, $next, 'NoSpaceBeforeOpenBrace');
         }
 
     }//end process()

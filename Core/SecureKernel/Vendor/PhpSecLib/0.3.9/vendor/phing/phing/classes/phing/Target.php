@@ -105,17 +105,17 @@ class Target implements TaskContainer
      *
      * @throws BuildException
      */
-    public function setDepends( $depends )
+    public function setDepends($depends)
     {
 
         // explode should be faster than strtok
-        $deps = explode( ',', $depends );
-        for ($i = 0, $size = count( $deps ); $i < $size; $i++) {
-            $trimmed = trim( $deps[$i] );
+        $deps = explode(',', $depends);
+        for ($i = 0, $size = count($deps); $i < $size; $i++) {
+            $trimmed = trim($deps[$i]);
             if ($trimmed === "") {
-                throw new BuildException( "Syntax Error: Depend attribute for target ".$this->getName()." is malformed." );
+                throw new BuildException("Syntax Error: Depend attribute for target ".$this->getName()." is malformed.");
             }
-            $this->addDependency( $trimmed );
+            $this->addDependency($trimmed);
         }
     }
 
@@ -135,7 +135,7 @@ class Target implements TaskContainer
      *
      * @param string $name Name of this target
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = (string)$name;
@@ -146,7 +146,7 @@ class Target implements TaskContainer
      *
      * @param string $dependency The dependency target to add
      */
-    public function addDependency( $dependency )
+    public function addDependency($dependency)
     {
 
         $this->dependencies[] = (string)$dependency;
@@ -192,7 +192,7 @@ class Target implements TaskContainer
      *
      * @return Target
      */
-    public function setHidden( $flag )
+    public function setHidden($flag)
     {
 
         $this->hidden = (boolean)$flag;
@@ -205,7 +205,7 @@ class Target implements TaskContainer
      *
      * @param Task $task The task object to add
      */
-    public function addTask( Task $task )
+    public function addTask(Task $task)
     {
 
         $this->children[] = $task;
@@ -217,7 +217,7 @@ class Target implements TaskContainer
      *
      * @param RuntimeConfigurable $rtc The RuntimeConfigurable object
      */
-    public function addDataType( $rtc )
+    public function addDataType($rtc)
     {
 
         $this->children[] = $rtc;
@@ -235,7 +235,7 @@ class Target implements TaskContainer
     {
 
         $tasks = array();
-        for ($i = 0, $size = count( $this->children ); $i < $size; $i++) {
+        for ($i = 0, $size = count($this->children); $i < $size; $i++) {
             $tsk = $this->children[$i];
             if ($tsk instanceof Task) {
                 // note: we're copying objects here!
@@ -252,7 +252,7 @@ class Target implements TaskContainer
      *
      * @param string $property The property name that has to be present
      */
-    public function setIf( $property )
+    public function setIf($property)
     {
 
         $this->ifCondition = ( $property === null ) ? "" : $property;
@@ -265,7 +265,7 @@ class Target implements TaskContainer
      *
      * @param string $property The property name that has to be present
      */
-    public function setUnless( $property )
+    public function setUnless($property)
     {
 
         $this->unlessCondition = ( $property === null ) ? "" : $property;
@@ -287,10 +287,10 @@ class Target implements TaskContainer
      *
      * @param string $description The description text
      */
-    public function setDescription( $description )
+    public function setDescription($description)
     {
 
-        if ($description !== null && strcmp( $description, "" ) !== 0) {
+        if ($description !== null && strcmp($description, "") !== 0) {
             $this->description = (string)$description;
         } else {
             $this->description = null;
@@ -320,12 +320,12 @@ class Target implements TaskContainer
     {
 
         try { // try to execute this target
-            $this->project->fireTargetStarted( $this );
+            $this->project->fireTargetStarted($this);
             $this->main();
-            $this->project->fireTargetFinished( $this, $null = null );
-        } catch( BuildException $exc ) {
+            $this->project->fireTargetFinished($this, $null = null);
+        } catch (BuildException $exc) {
             // log here and rethrow
-            $this->project->fireTargetFinished( $this, $exc );
+            $this->project->fireTargetFinished($this, $exc);
             throw $exc;
         }
     }
@@ -344,7 +344,7 @@ class Target implements TaskContainer
                     $o->perform();
                 } else {
                     // child is a RuntimeConfigurable
-                    $o->maybeConfigure( $this->project );
+                    $o->maybeConfigure($this->project);
                 }
             }
         } elseif (!$this->testIfCondition()) {
@@ -374,7 +374,7 @@ class Target implements TaskContainer
             return true;
         }
 
-        $properties = explode( ",", $this->ifCondition );
+        $properties = explode(",", $this->ifCondition);
 
         $result = true;
         foreach ($properties as $property) {
@@ -383,7 +383,7 @@ class Target implements TaskContainer
                 $property,
                 $this->project->getProperties()
             );
-            $result = $result && ( $this->project->getProperty( $test ) !== null );
+            $result = $result && ( $this->project->getProperty($test) !== null );
         }
 
         return $result;
@@ -405,7 +405,7 @@ class Target implements TaskContainer
      *
      * @param Project $project The reference to the current project
      */
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         $this->project = $project;
@@ -425,7 +425,7 @@ class Target implements TaskContainer
             return true;
         }
 
-        $properties = explode( ",", $this->unlessCondition );
+        $properties = explode(",", $this->unlessCondition);
 
         $result = true;
         foreach ($properties as $property) {
@@ -434,7 +434,7 @@ class Target implements TaskContainer
                 $property,
                 $this->project->getProperties()
             );
-            $result = $result && ( $this->project->getProperty( $test ) === null );
+            $result = $result && ( $this->project->getProperty($test) === null );
         }
 
         return $result;
@@ -447,7 +447,7 @@ class Target implements TaskContainer
     {
 
         if ($this->logSkipped === null) {
-            $this->setLogSkipped( false );
+            $this->setLogSkipped(false);
         }
 
         return $this->logSkipped;
@@ -456,7 +456,7 @@ class Target implements TaskContainer
     /**
      * @param $log
      */
-    public function setLogSkipped( $log )
+    public function setLogSkipped($log)
     {
 
         $this->logSkipped = (bool)$log;

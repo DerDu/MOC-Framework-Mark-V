@@ -38,5 +38,5 @@ interface ChainableReader
      * @return Reader A reader with the same configuration as this one, but
      *                filtering input from the specified reader
      */
-    public function chain( Reader $rdr );
+    public function chain(Reader $rdr);
 }

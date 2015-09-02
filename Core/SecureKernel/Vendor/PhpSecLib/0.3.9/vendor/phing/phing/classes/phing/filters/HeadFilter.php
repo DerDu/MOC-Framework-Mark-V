@@ -69,12 +69,12 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
      *                    if the end of the resulting stream has been reached
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
         // note, if buffer contains fewer lines than
@@ -82,7 +82,7 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
 
         if ($this->_linesRead < $this->_lines) {
 
-            $buffer = $this->in->read( $len );
+            $buffer = $this->in->read($len);
 
             if ($buffer === -1) {
                 return -1;
@@ -90,14 +90,14 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
 
             // now grab first X lines from buffer
 
-            $lines = explode( "\n", $buffer );
+            $lines = explode("\n", $buffer);
 
-            $linesCount = count( $lines );
+            $linesCount = count($lines);
 
             // must account for possibility that the num lines requested could
             // involve more than one buffer read.
             $len = ( $linesCount > $this->_lines ? $this->_lines - $this->_linesRead : $linesCount );
-            $filtered_buffer = implode( "\n", array_slice( $lines, 0, $len ) );
+            $filtered_buffer = implode("\n", array_slice($lines, 0, $len));
             $this->_linesRead += $len;
 
             return $filtered_buffer;
@@ -118,7 +118,7 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0, $_i = count( $params ); $i < $_i; $i++) {
+            for ($i = 0, $_i = count($params); $i < $_i; $i++) {
                 if (self::LINES_KEY == $params[$i]->getName()) {
                     $this->_lines = (int)$params[$i]->getValue();
                     break;
@@ -137,13 +137,13 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
      * @return HeadFilter A new filter based on this configuration, but filtering
      *                    the specified reader.
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new HeadFilter( $reader );
-        $newFilter->setLines( $this->getLines() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new HeadFilter($reader);
+        $newFilter->setLines($this->getLines());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -166,7 +166,7 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader
      *
      * @return void
      */
-    public function setLines( $lines )
+    public function setLines($lines)
     {
 
         $this->_lines = (int)$lines;

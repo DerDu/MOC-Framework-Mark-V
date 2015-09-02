@@ -15,8 +15,8 @@ abstract class Unit_Crypt_AES_TestCase extends PhpseclibTestCase
 
         parent::setUpBeforeClass();
 
-        self::reRequireFile( 'Crypt/Rijndael.php' );
-        self::reRequireFile( 'Crypt/AES.php' );
+        self::reRequireFile('Crypt/Rijndael.php');
+        self::reRequireFile('Crypt/AES.php');
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class Unit_Crypt_AES_TestCase extends PhpseclibTestCase
             foreach ($plaintexts as $plaintext) {
                 foreach ($ivs as $iv) {
                     foreach ($keys as $key) {
-                        $result[] = array( $mode, $plaintext, $iv, $key );
+                        $result[] = array($mode, $plaintext, $iv, $key);
                     }
                 }
             }
@@ -68,20 +68,20 @@ abstract class Unit_Crypt_AES_TestCase extends PhpseclibTestCase
     /**
      * @dataProvider continuousBufferCombos
      */
-    public function testEncryptDecryptWithContinuousBuffer( $mode, $plaintext, $iv, $key )
+    public function testEncryptDecryptWithContinuousBuffer($mode, $plaintext, $iv, $key)
     {
 
-        $aes = new Crypt_AES( constant( $mode ) );
+        $aes = new Crypt_AES(constant($mode));
         $aes->enableContinuousBuffer();
-        $aes->setIV( $iv );
-        $aes->setKey( $key );
+        $aes->setIV($iv);
+        $aes->setKey($key);
 
         $actual = '';
-        for ($i = 0, $strlen = strlen( $plaintext ); $i < $strlen; ++$i) {
-            $actual .= $aes->decrypt( $aes->encrypt( $plaintext[$i] ) );
+        for ($i = 0, $strlen = strlen($plaintext); $i < $strlen; ++$i) {
+            $actual .= $aes->decrypt($aes->encrypt($plaintext[$i]));
         }
 
-        $this->assertEquals( $plaintext, $actual );
+        $this->assertEquals($plaintext, $actual);
     }
 
     /**
@@ -95,9 +95,9 @@ abstract class Unit_Crypt_AES_TestCase extends PhpseclibTestCase
 
         $aes = new Crypt_Rijndael();
         $aes->disablePadding();
-        $aes->setKey( pack( 'H*', '2b7e151628aed2a6abf7158809cf4f3c762e7160' ) ); // 160-bit key. Valid in Rijndael.
-        $ciphertext = $aes->encrypt( pack( 'H*', '3243f6a8885a308d313198a2e0370734' ) );
-        $this->assertEquals( $ciphertext, pack( 'H*', '231d844639b31b412211cfe93712b880' ) );
+        $aes->setKey(pack('H*', '2b7e151628aed2a6abf7158809cf4f3c762e7160')); // 160-bit key. Valid in Rijndael.
+        $ciphertext = $aes->encrypt(pack('H*', '3243f6a8885a308d313198a2e0370734'));
+        $this->assertEquals($ciphertext, pack('H*', '231d844639b31b412211cfe93712b880'));
     }
 
     /**
@@ -110,9 +110,9 @@ abstract class Unit_Crypt_AES_TestCase extends PhpseclibTestCase
 
         $aes = new Crypt_AES();
         $aes->disablePadding();
-        $aes->setKey( pack( 'H*',
-            '2b7e151628aed2a6abf7158809cf4f3c762e7160' ) ); // 160-bit key. AES should null pad to 192-bits
-        $ciphertext = $aes->encrypt( pack( 'H*', '3243f6a8885a308d313198a2e0370734' ) );
-        $this->assertEquals( $ciphertext, pack( 'H*', 'c109292b173f841b88e0ee49f13db8c0' ) );
+        $aes->setKey(pack('H*',
+            '2b7e151628aed2a6abf7158809cf4f3c762e7160')); // 160-bit key. AES should null pad to 192-bits
+        $ciphertext = $aes->encrypt(pack('H*', '3243f6a8885a308d313198a2e0370734'));
+        $this->assertEquals($ciphertext, pack('H*', 'c109292b173f841b88e0ee49f13db8c0'));
     }
 }

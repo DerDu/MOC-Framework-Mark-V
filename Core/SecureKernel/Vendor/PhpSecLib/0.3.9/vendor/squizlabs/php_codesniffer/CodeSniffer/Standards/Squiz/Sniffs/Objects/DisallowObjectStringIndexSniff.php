@@ -31,7 +31,7 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -42,7 +42,7 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
     public function register()
     {
 
-        return array( T_OPEN_SQUARE_BRACKET );
+        return array(T_OPEN_SQUARE_BRACKET);
 
     }//end register()
 
@@ -56,27 +56,27 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Check if the next non whitespace token is a string.
-        $index = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $index = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($tokens[$index]['code'] !== T_CONSTANT_ENCAPSED_STRING) {
             return;
         }
 
         // Make sure it is the only thing in the square brackets.
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $index + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $index + 1 ), null, true);
         if ($tokens[$next]['code'] !== T_CLOSE_SQUARE_BRACKET) {
             return;
         }
 
         // Allow indexes that have dots in them because we can't write
         // them in dot notation.
-        $content = trim( $tokens[$index]['content'], '"\' ' );
-        if (strpos( $content, '.' ) !== false) {
+        $content = trim($tokens[$index]['content'], '"\' ');
+        if (strpos($content, '.') !== false) {
             return;
         }
 
@@ -86,10 +86,10 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
         }
 
         // Token before the opening square bracket cannot be a var name.
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
         if ($tokens[$prev]['code'] === T_STRING) {
             $error = 'Object indexes must be written in dot notation';
-            $phpcsFile->addError( $error, $prev, 'Found' );
+            $phpcsFile->addError($error, $prev, 'Found');
         }
 
     }//end process()

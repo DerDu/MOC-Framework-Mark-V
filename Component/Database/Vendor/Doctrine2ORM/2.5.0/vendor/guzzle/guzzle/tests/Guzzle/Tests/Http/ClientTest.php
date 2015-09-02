@@ -5,7 +5,6 @@ namespace Guzzle\Tests\Http;
 use Guzzle\Common\Collection;
 use Guzzle\Common\Version;
 use Guzzle\Http\Client;
-use Guzzle\Http\Curl\CurlMulti;
 use Guzzle\Http\Message\Response;
 use Guzzle\Log\ClosureLogAdapter;
 use Guzzle\Parser\UriTemplate\UriTemplate;

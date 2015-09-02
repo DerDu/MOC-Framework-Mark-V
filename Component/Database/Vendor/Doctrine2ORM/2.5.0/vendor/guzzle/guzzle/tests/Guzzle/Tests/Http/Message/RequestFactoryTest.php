@@ -11,7 +11,6 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Http\QueryString;
 use Guzzle\Http\Url;
 use Guzzle\Parser\Message\MessageParser;
-use Guzzle\Plugin\Log\LogPlugin;
 use Guzzle\Plugin\Mock\MockPlugin;
 
 /**

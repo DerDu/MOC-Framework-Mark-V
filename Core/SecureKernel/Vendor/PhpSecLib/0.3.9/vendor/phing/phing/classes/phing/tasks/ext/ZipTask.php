@@ -86,7 +86,7 @@ class ZipTask extends MatchingTask
      *
      * @param PhingFile $destFile The output of the zip
      */
-    public function setDestFile( PhingFile $destFile )
+    public function setDestFile(PhingFile $destFile)
     {
 
         $this->zipFile = $destFile;
@@ -97,7 +97,7 @@ class ZipTask extends MatchingTask
      *
      * @param PhingFile $baseDir
      */
-    public function setBasedir( PhingFile $baseDir )
+    public function setBasedir(PhingFile $baseDir)
     {
 
         $this->baseDir = $baseDir;
@@ -110,7 +110,7 @@ class ZipTask extends MatchingTask
      *
      * @return void
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->prefix = $prefix;
@@ -123,7 +123,7 @@ class ZipTask extends MatchingTask
      *
      * @return void
      */
-    public function setIncludeEmptyDirs( $bool )
+    public function setIncludeEmptyDirs($bool)
     {
 
         $this->includeEmpty = (boolean)$bool;
@@ -136,7 +136,7 @@ class ZipTask extends MatchingTask
      *
      * @return void
      */
-    public function setComment( $text )
+    public function setComment($text)
     {
 
         $this->comment = $text;
@@ -150,73 +150,73 @@ class ZipTask extends MatchingTask
     public function main()
     {
 
-        if (!extension_loaded( 'zip' )) {
-            throw new BuildException( "Zip extension is required" );
+        if (!extension_loaded('zip')) {
+            throw new BuildException("Zip extension is required");
         }
 
         if ($this->zipFile === null) {
-            throw new BuildException( "zipfile attribute must be set!", $this->getLocation() );
+            throw new BuildException("zipfile attribute must be set!", $this->getLocation());
         }
 
         if ($this->zipFile->exists() && $this->zipFile->isDirectory()) {
-            throw new BuildException( "zipfile is a directory!", $this->getLocation() );
+            throw new BuildException("zipfile is a directory!", $this->getLocation());
         }
 
         if ($this->zipFile->exists() && !$this->zipFile->canWrite()) {
-            throw new BuildException( "Can not write to the specified zipfile!", $this->getLocation() );
+            throw new BuildException("Can not write to the specified zipfile!", $this->getLocation());
         }
 
         try {
             if ($this->baseDir !== null) {
                 if (!$this->baseDir->exists()) {
-                    throw new BuildException( "basedir '".(string)$this->baseDir."' does not exist!",
-                        $this->getLocation() );
+                    throw new BuildException("basedir '".(string)$this->baseDir."' does not exist!",
+                        $this->getLocation());
                 }
 
                 if (empty( $this->filesets )) {
                     // add the main fileset to the list of filesets to process.
-                    $mainFileSet = new ZipFileSet( $this->fileset );
-                    $mainFileSet->setDir( $this->baseDir );
+                    $mainFileSet = new ZipFileSet($this->fileset);
+                    $mainFileSet->setDir($this->baseDir);
                     $this->filesets[] = $mainFileSet;
                 }
             }
 
             if (empty( $this->filesets )) {
-                throw new BuildException( "You must supply either a basedir "
+                throw new BuildException("You must supply either a basedir "
                     ."attribute or some nested filesets.",
-                    $this->getLocation() );
+                    $this->getLocation());
             }
 
             // check if zip is out of date with respect to each
             // fileset
             if ($this->areFilesetsUpToDate()) {
-                $this->log( "Nothing to do: ".$this->zipFile->__toString()." is up to date.", Project::MSG_INFO );
+                $this->log("Nothing to do: ".$this->zipFile->__toString()." is up to date.", Project::MSG_INFO);
 
                 return;
             }
 
-            $this->log( "Building zip: ".$this->zipFile->__toString(), Project::MSG_INFO );
+            $this->log("Building zip: ".$this->zipFile->__toString(), Project::MSG_INFO);
 
             $zip = new ZipArchive();
-            $res = $zip->open( $this->zipFile->getAbsolutePath(), ZIPARCHIVE::CREATE );
+            $res = $zip->open($this->zipFile->getAbsolutePath(), ZIPARCHIVE::CREATE);
 
             if ($res !== true) {
-                throw new Exception( "ZipArchive::open() failed with code ".$res );
+                throw new Exception("ZipArchive::open() failed with code ".$res);
             }
 
             if ($this->comment !== '') {
-                $isCommented = $zip->setArchiveComment( $this->comment );
+                $isCommented = $zip->setArchiveComment($this->comment);
                 if ($isCommented === false) {
-                    $this->log( "Could not add a comment for the Archive.", Project::MSG_INFO );
+                    $this->log("Could not add a comment for the Archive.", Project::MSG_INFO);
                 }
             }
 
-            $this->addFilesetsToArchive( $zip );
+            $this->addFilesetsToArchive($zip);
 
             $zip->close();
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             $msg = "Problem creating ZIP: ".$ioe->getMessage();
-            throw new BuildException( $msg, $ioe, $this->getLocation() );
+            throw new BuildException($msg, $ioe, $this->getLocation());
         }
     }
 
@@ -228,13 +228,13 @@ class ZipTask extends MatchingTask
     {
 
         foreach ($this->filesets as $fs) {
-            $files = $fs->getFiles( $this->project, $this->includeEmpty );
-            if (!$this->archiveIsUpToDate( $files, $fs->getDir( $this->project ) )) {
+            $files = $fs->getFiles($this->project, $this->includeEmpty);
+            if (!$this->archiveIsUpToDate($files, $fs->getDir($this->project))) {
                 return false;
             }
-            for ($i = 0, $fcount = count( $files ); $i < $fcount; $i++) {
-                if ($this->zipFile->equals( new PhingFile( $fs->getDir( $this->project ), $files[$i] ) )) {
-                    throw new BuildException( "A zip file cannot include itself", $this->getLocation() );
+            for ($i = 0, $fcount = count($files); $i < $fcount; $i++) {
+                if ($this->zipFile->equals(new PhingFile($fs->getDir($this->project), $files[$i]))) {
+                    throw new BuildException("A zip file cannot include itself", $this->getLocation());
                 }
             }
         }
@@ -247,44 +247,44 @@ class ZipTask extends MatchingTask
      *
      * @return boolean
      */
-    private function archiveIsUpToDate( $files, $dir )
+    private function archiveIsUpToDate($files, $dir)
     {
 
-        $sfs = new SourceFileScanner( $this );
+        $sfs = new SourceFileScanner($this);
         $mm = new MergeMapper();
-        $mm->setTo( $this->zipFile->getAbsolutePath() );
+        $mm->setTo($this->zipFile->getAbsolutePath());
 
-        return count( $sfs->restrict( $files, $dir, null, $mm ) ) == 0;
+        return count($sfs->restrict($files, $dir, null, $mm)) == 0;
     }
 
     /**
      * @param $zip
      */
-    private function addFilesetsToArchive( $zip )
+    private function addFilesetsToArchive($zip)
     {
 
         foreach ($this->filesets as $fs) {
             $fsBasedir = ( null != $this->baseDir ) ? $this->baseDir :
-                $fs->getDir( $this->project );
+                $fs->getDir($this->project);
 
-            $files = $fs->getFiles( $this->project, $this->includeEmpty );
+            $files = $fs->getFiles($this->project, $this->includeEmpty);
 
-            for ($i = 0, $fcount = count( $files ); $i < $fcount; $i++) {
-                $f = new PhingFile( $fsBasedir, $files[$i] );
+            for ($i = 0, $fcount = count($files); $i < $fcount; $i++) {
+                $f = new PhingFile($fsBasedir, $files[$i]);
 
                 $pathInZip = $this->prefix
-                    .$f->getPathWithoutBase( $fsBasedir );
+                    .$f->getPathWithoutBase($fsBasedir);
 
-                $pathInZip = str_replace( '\\', '/', $pathInZip );
+                $pathInZip = str_replace('\\', '/', $pathInZip);
 
                 if ($f->isDirectory()) {
                     if ($pathInZip != '.') {
-                        $zip->addEmptyDir( $pathInZip );
+                        $zip->addEmptyDir($pathInZip);
                     }
                 } else {
-                    $zip->addFile( $f->getAbsolutePath(), $pathInZip );
+                    $zip->addFile($f->getAbsolutePath(), $pathInZip);
                 }
-                $this->log( "Adding ".$f->getPath()." as ".$pathInZip." to archive.", Project::MSG_VERBOSE );
+                $this->log("Adding ".$f->getPath()." as ".$pathInZip." to archive.", Project::MSG_VERBOSE);
             }
         }
     }
@@ -314,18 +314,18 @@ class ZipFileSet extends FileSet
      * @return array a list of file and directory names, relative to
      *               the baseDir for the project.
      */
-    public function getFiles( Project $p, $includeEmpty = true )
+    public function getFiles(Project $p, $includeEmpty = true)
     {
 
         if ($this->files === null) {
 
-            $ds = $this->getDirectoryScanner( $p );
+            $ds = $this->getDirectoryScanner($p);
             $this->files = $ds->getIncludedFiles();
 
             // build a list of directories implicitly added by any of the files
             $implicitDirs = array();
             foreach ($this->files as $file) {
-                $implicitDirs[] = dirname( $file );
+                $implicitDirs[] = dirname($file);
             }
 
             $incDirs = $ds->getIncludedDirectories();
@@ -335,13 +335,13 @@ class ZipFileSet extends FileSet
             // we get duplicate directories in the resulting tar
             foreach ($incDirs as $dir) {
                 foreach ($incDirs as $dircheck) {
-                    if (!empty( $dir ) && $dir == dirname( $dircheck )) {
+                    if (!empty( $dir ) && $dir == dirname($dircheck)) {
                         $implicitDirs[] = $dir;
                     }
                 }
             }
 
-            $implicitDirs = array_unique( $implicitDirs );
+            $implicitDirs = array_unique($implicitDirs);
 
             $emptyDirectories = array();
 
@@ -350,15 +350,15 @@ class ZipFileSet extends FileSet
                 // to the files array.
 
                 foreach ($incDirs as $dir) { // we cannot simply use array_diff() since we want to disregard empty/. dirs
-                    if ($dir != "" && $dir != "." && !in_array( $dir, $implicitDirs )) {
+                    if ($dir != "" && $dir != "." && !in_array($dir, $implicitDirs)) {
                         // it's an empty dir, so we'll add it.
                         $emptyDirectories[] = $dir;
                     }
                 }
             } // if $includeEmpty
 
-            $this->files = array_merge( $implicitDirs, $emptyDirectories, $this->files );
-            sort( $this->files );
+            $this->files = array_merge($implicitDirs, $emptyDirectories, $this->files);
+            sort($this->files);
         } // if ($this->files===null)
 
         return $this->files;

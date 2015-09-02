@@ -35,14 +35,14 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
     /**
      * @param Throwable|Exception $e
      */
-    public function __construct( $e )
+    public function __construct($e)
     {
 
         // PDOException::getCode() is a string.
         // @see http://php.net/manual/en/class.pdoexception.php#95812
-        parent::__construct( $e->getMessage(), (int)$e->getCode() );
+        parent::__construct($e->getMessage(), (int)$e->getCode());
 
-        $this->classname = get_class( $e );
+        $this->classname = get_class($e);
         $this->file = $e->getFile();
         $this->line = $e->getLine();
 
@@ -53,7 +53,7 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
         }
 
         if ($e->getPrevious()) {
-            $this->previous = new self( $e->getPrevious() );
+            $this->previous = new self($e->getPrevious());
         }
     }
 
@@ -81,9 +81,9 @@ class PHPUnit_Framework_ExceptionWrapper extends PHPUnit_Framework_Exception
     public function __toString()
     {
 
-        $string = PHPUnit_Framework_TestFailure::exceptionToString( $this );
+        $string = PHPUnit_Framework_TestFailure::exceptionToString($this);
 
-        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace( $this )) {
+        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace($this)) {
             $string .= "\n".$trace;
         }
 

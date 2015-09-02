@@ -17,6 +17,7 @@
  */
 class File_Iterator_Factory
 {
+
     /**
      * @param  array|string $paths
      * @param  array|string $suffixes
@@ -74,10 +75,12 @@ class File_Iterator_Factory
 
     /**
      * @param  array $paths
+     *
      * @return array
      */
     protected function getPathsAfterResolvingWildcards(array $paths)
     {
+
         $_paths = array();
 
         foreach ($paths as $path) {

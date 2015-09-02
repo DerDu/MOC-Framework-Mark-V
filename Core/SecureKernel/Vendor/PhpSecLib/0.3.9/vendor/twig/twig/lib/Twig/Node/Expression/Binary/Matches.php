@@ -12,20 +12,20 @@
 class Twig_Node_Expression_Binary_Matches extends Twig_Node_Expression_Binary
 {
 
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->raw( 'preg_match(' )
-            ->subcompile( $this->getNode( 'right' ) )
-            ->raw( ', ' )
-            ->subcompile( $this->getNode( 'left' ) )
-            ->raw( ')' );
+            ->raw('preg_match(')
+            ->subcompile($this->getNode('right'))
+            ->raw(', ')
+            ->subcompile($this->getNode('left'))
+            ->raw(')');
     }
 
-    public function operator( Twig_Compiler $compiler )
+    public function operator(Twig_Compiler $compiler)
     {
 
-        return $compiler->raw( '' );
+        return $compiler->raw('');
     }
 }

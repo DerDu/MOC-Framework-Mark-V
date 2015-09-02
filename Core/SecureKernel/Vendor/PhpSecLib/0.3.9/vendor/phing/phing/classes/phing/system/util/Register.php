@@ -53,11 +53,11 @@ class Register
      *
      * @return RegisterSlot
      */
-    public static function getSlot( $key )
+    public static function getSlot($key)
     {
 
         if (!isset( self::$slots[$key] )) {
-            self::$slots[$key] = new RegisterSlot( $key );
+            self::$slots[$key] = new RegisterSlot($key);
         }
 
         return self::$slots[$key];
@@ -83,7 +83,7 @@ class RegisterSlot
      *
      * @param string $key
      */
-    public function __construct( $key )
+    public function __construct($key)
     {
 
         $this->key = (string)$key;
@@ -105,7 +105,7 @@ class RegisterSlot
      *
      * @param string $k
      */
-    public function setKey( $k )
+    public function setKey($k)
     {
 
         $this->key = (string)$k;
@@ -127,7 +127,7 @@ class RegisterSlot
      *
      * @param mixed
      */
-    public function setValue( $v )
+    public function setValue($v)
     {
 
         $this->value = $v;
@@ -141,8 +141,8 @@ class RegisterSlot
     public function __toString()
     {
 
-        if (is_array( $this->value )) {
-            return $this->implodeArray( $this->value );
+        if (is_array($this->value)) {
+            return $this->implodeArray($this->value);
         } else {
             return (string)$this->value;
         }
@@ -155,20 +155,20 @@ class RegisterSlot
      *
      * @return string
      */
-    private function implodeArray( array $arr )
+    private function implodeArray(array $arr)
     {
 
         $values = array();
 
         foreach ($arr as $value) {
-            if (is_array( $value )) {
-                $values[] = $this->implodeArray( $value );
+            if (is_array($value)) {
+                $values[] = $this->implodeArray($value);
             } else {
                 $values[] = $value;
             }
         }
 
-        return "{".implode( ",", $values )."}";
+        return "{".implode(",", $values)."}";
     }
 
 }

@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_AbstractParser', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_AbstractParser not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -193,7 +193,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_PairElement
      */
-    protected function parseLicense( $tokens )
+    protected function parseLicense($tokens)
     {
 
         $this->_license = new PHP_CodeSniffer_CommentParser_PairElement(
@@ -214,7 +214,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parseCopyright( $tokens )
+    protected function parseCopyright($tokens)
     {
 
         $copyright = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -236,7 +236,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parseCategory( $tokens )
+    protected function parseCategory($tokens)
     {
 
         $this->_category = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -257,7 +257,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return array(PHP_CodeSniffer_CommentParser_SingleElement)
      */
-    protected function parseAuthor( $tokens )
+    protected function parseAuthor($tokens)
     {
 
         $author = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -279,7 +279,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parseVersion( $tokens )
+    protected function parseVersion($tokens)
     {
 
         $this->_version = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -300,7 +300,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parsePackage( $tokens )
+    protected function parsePackage($tokens)
     {
 
         $this->_package = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -321,7 +321,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parseSubpackage( $tokens )
+    protected function parseSubpackage($tokens)
     {
 
         $this->_subpackage = new PHP_CodeSniffer_CommentParser_SingleElement(

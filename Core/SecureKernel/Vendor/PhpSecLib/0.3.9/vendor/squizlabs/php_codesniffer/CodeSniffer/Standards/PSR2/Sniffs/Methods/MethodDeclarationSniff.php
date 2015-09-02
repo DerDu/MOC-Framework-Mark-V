@@ -12,8 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found' );
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
 /**
@@ -39,7 +39,7 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS, T_INTERFACE ), array( T_FUNCTION ) );
+        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION));
 
     }//end __construct()
 
@@ -53,12 +53,12 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
      *
      * @return void
      */
-    protected function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $methodName = $phpcsFile->getDeclarationName( $stackPtr );
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
             return;
@@ -66,8 +66,8 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
 
         if ($methodName[0] === '_' && isset( $methodName[1] ) === true && $methodName[1] !== '_') {
             $error = 'Method name "%s" should not be prefixed with an underscore to indicate visibility';
-            $data = array( $methodName );
-            $phpcsFile->addWarning( $error, $stackPtr, 'Underscore', $data );
+            $data = array($methodName);
+            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
         }
 
         $visibility = 0;
@@ -77,11 +77,11 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
 
         $find = PHP_CodeSniffer_Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
-        $prev = $phpcsFile->findPrevious( $find, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious($find, ( $stackPtr - 1 ), null, true);
 
         $prefix = $stackPtr;
-        while (( $prefix = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$methodPrefixes, ( $prefix - 1 ),
-                $prev ) ) !== false) {
+        while (( $prefix = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$methodPrefixes, ( $prefix - 1 ),
+                $prev) ) !== false) {
             switch ($tokens[$prefix]['code']) {
                 case T_STATIC:
                     $static = $prefix;
@@ -100,17 +100,17 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
 
         if ($static !== 0 && $static < $visibility) {
             $error = 'The static declaration must come after the visibility declaration';
-            $phpcsFile->addError( $error, $static, 'StaticBeforeVisibility' );
+            $phpcsFile->addError($error, $static, 'StaticBeforeVisibility');
         }
 
         if ($visibility !== 0 && $final > $visibility) {
             $error = 'The final declaration must precede the visibility declaration';
-            $phpcsFile->addError( $error, $final, 'FinalAfterVisibility' );
+            $phpcsFile->addError($error, $final, 'FinalAfterVisibility');
         }
 
         if ($visibility !== 0 && $abstract > $visibility) {
             $error = 'The abstract declaration must precede the visibility declaration';
-            $phpcsFile->addError( $error, $abstract, 'AbstractAfterVisibility' );
+            $phpcsFile->addError($error, $abstract, 'AbstractAfterVisibility');
         }
 
     }//end processTokenWithinScope()

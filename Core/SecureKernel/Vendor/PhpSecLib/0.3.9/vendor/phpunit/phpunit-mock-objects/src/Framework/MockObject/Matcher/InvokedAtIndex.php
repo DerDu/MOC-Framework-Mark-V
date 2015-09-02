@@ -42,7 +42,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     /**
      * @param integer $sequenceIndex
      */
-    public function __construct( $sequenceIndex )
+    public function __construct($sequenceIndex)
     {
 
         $this->sequenceIndex = $sequenceIndex;
@@ -62,7 +62,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
      *
      * @return boolean
      */
-    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
         $this->currentIndex++;
@@ -73,7 +73,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
     /**
      * @param PHPUnit_Framework_MockObject_Invocation $invocation
      */
-    public function invoked( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
     }
 

@@ -40,17 +40,17 @@ class SvnCopyTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'copy' );
+        $this->setup('copy');
 
-        $this->log( "Copying SVN repository from '".$this->getRepositoryUrl()."' to '".$this->getToDir()."'" );
+        $this->log("Copying SVN repository from '".$this->getRepositoryUrl()."' to '".$this->getToDir()."'");
 
         $options = array();
 
-        if (strlen( $this->getMessage() ) > 0) {
+        if (strlen($this->getMessage()) > 0) {
             $options['message'] = $this->getMessage();
         }
 
-        $this->run( array( $this->getToDir() ), $options );
+        $this->run(array($this->getToDir()), $options);
     }
 
     /**
@@ -67,7 +67,7 @@ class SvnCopyTask extends SvnBaseTask
      *
      * @param $message
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
 
         $this->message = $message;

@@ -37,10 +37,10 @@ class DoubleComparator extends NumericComparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
-        return ( is_double( $expected ) || is_double( $actual ) ) && is_numeric( $expected ) && is_numeric( $actual );
+        return ( is_double($expected) || is_double($actual) ) && is_numeric($expected) && is_numeric($actual);
     }
 
     /**
@@ -59,13 +59,13 @@ class DoubleComparator extends NumericComparator
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals( $expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false )
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
 
         if ($delta == 0) {
             $delta = self::EPSILON;
         }
 
-        parent::assertEquals( $expected, $actual, $delta, $canonicalize, $ignoreCase );
+        parent::assertEquals($expected, $actual, $delta, $canonicalize, $ignoreCase);
     }
 }

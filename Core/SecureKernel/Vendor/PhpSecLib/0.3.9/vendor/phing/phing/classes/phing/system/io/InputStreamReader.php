@@ -44,7 +44,7 @@ class InputStreamReader extends Reader
      *
      * @internal param $InputStream $$inStream InputStream to read from
      */
-    public function __construct( InputStream $inStream )
+    public function __construct(InputStream $inStream)
     {
 
         $this->inStream = $inStream;
@@ -66,10 +66,10 @@ class InputStreamReader extends Reader
      *
      * @return int|void
      */
-    public function skip( $n )
+    public function skip($n)
     {
 
-        return $this->inStream->skip( $n );
+        return $this->inStream->skip($n);
     }
 
     /**
@@ -79,10 +79,10 @@ class InputStreamReader extends Reader
      *
      * @return string chars read or -1 if eof.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        return $this->inStream->read( $len );
+        return $this->inStream->read($len);
     }
 
     /**
@@ -139,10 +139,10 @@ class InputStreamReader extends Reader
      * @author     Charlie Killian, charlie@tizac.com
      * @deprecated Use read() or BufferedReader instead.
      */
-    public function readInto( &$rBuffer )
+    public function readInto(&$rBuffer)
     {
 
-        return $this->inStream->readInto( $rBuffer );
+        return $this->inStream->readInto($rBuffer);
     }
 
     /**

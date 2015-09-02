@@ -72,7 +72,7 @@ class StopwatchTask extends Task
      *
      * @return void
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -85,7 +85,7 @@ class StopwatchTask extends Task
      *
      * @return void
      */
-    public function setCategory( $category )
+    public function setCategory($category)
     {
 
         $this->category = $category;
@@ -102,7 +102,7 @@ class StopwatchTask extends Task
      *
      * @return void
      */
-    public function setAction( $action )
+    public function setAction($action)
     {
 
         $this->action = $action;
@@ -131,7 +131,7 @@ class StopwatchTask extends Task
                 $this->lap();
                 break;
             default:
-                throw new BuildException( 'action should be one of start, stop, lap.' );
+                throw new BuildException('action should be one of start, stop, lap.');
         }
     }
 
@@ -145,15 +145,15 @@ class StopwatchTask extends Task
     private function loadStopwatch()
     {
 
-        if (version_compare( PHP_VERSION, '5.3.3', '<' )) {
-            throw new BuildException( "StopwatchTask requires at least PHP 5.3.3 installed." );
+        if (version_compare(PHP_VERSION, '5.3.3', '<')) {
+            throw new BuildException("StopwatchTask requires at least PHP 5.3.3 installed.");
         }
 
         @include_once 'Symfony/Component/Stopwatch/autoload.php';
         @include_once 'vendor/autoload.php';
 
-        if (!class_exists( '\\Symfony\\Component\\Stopwatch\\Stopwatch' )) {
-            throw new BuildException( "StopwatchTask requires Stopwatch to be installed" );
+        if (!class_exists('\\Symfony\\Component\\Stopwatch\\Stopwatch')) {
+            throw new BuildException("StopwatchTask requires Stopwatch to be installed");
         }
     }
 
@@ -166,7 +166,7 @@ class StopwatchTask extends Task
     {
 
         $timer = $this->getStopwatchInstance();
-        $timer->start( $this->name, $this->category );
+        $timer->start($this->name, $this->category);
     }
 
     /**
@@ -194,19 +194,19 @@ class StopwatchTask extends Task
     {
 
         $timer = $this->getStopwatchInstance();
-        $event = $timer->stop( $this->name );
+        $event = $timer->stop($this->name);
 
         foreach ($event->getPeriods() as $period) {
-            $this->log( 'Starttime: '.$period->getStartTime().' - Endtime: '.$period->getEndTime().' - Duration: '.$period->getDuration().' - Memory: '.$period->getMemory(),
-                Project::MSG_INFO );
+            $this->log('Starttime: '.$period->getStartTime().' - Endtime: '.$period->getEndTime().' - Duration: '.$period->getDuration().' - Memory: '.$period->getMemory(),
+                Project::MSG_INFO);
         }
 
-        $this->log( 'Category:   '.$event->getCategory(), Project::MSG_INFO );
-        $this->log( 'Origin:     '.$event->getOrigin(), Project::MSG_INFO );
-        $this->log( 'Start time: '.$event->getStartTime(), Project::MSG_INFO );
-        $this->log( 'End time:   '.$event->getEndTime(), Project::MSG_INFO );
-        $this->log( 'Duration:   '.$event->getDuration(), Project::MSG_INFO );
-        $this->log( 'Memory:     '.$event->getMemory(), Project::MSG_INFO );
+        $this->log('Category:   '.$event->getCategory(), Project::MSG_INFO);
+        $this->log('Origin:     '.$event->getOrigin(), Project::MSG_INFO);
+        $this->log('Start time: '.$event->getStartTime(), Project::MSG_INFO);
+        $this->log('End time:   '.$event->getEndTime(), Project::MSG_INFO);
+        $this->log('Duration:   '.$event->getDuration(), Project::MSG_INFO);
+        $this->log('Memory:     '.$event->getMemory(), Project::MSG_INFO);
     }
 
     /**
@@ -218,6 +218,6 @@ class StopwatchTask extends Task
     {
 
         $timer = $this->getStopwatchInstance();
-        $timer->lap( $this->name );
+        $timer->lap($this->name);
     }
 }

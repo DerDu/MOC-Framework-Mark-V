@@ -64,7 +64,7 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function setFile( PhingFile $path )
+    public function setFile(PhingFile $path)
     {
 
         $this->file = $path;
@@ -77,10 +77,10 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function setPattern( $regexp )
+    public function setPattern($regexp)
     {
 
-        $this->setMatch( $regexp );
+        $this->setMatch($regexp);
     }
 
     /**
@@ -90,10 +90,10 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function setMatch( $regexp )
+    public function setMatch($regexp)
     {
 
-        $this->_regexp->setPattern( $regexp );
+        $this->_regexp->setPattern($regexp);
     }
 
     /**
@@ -103,10 +103,10 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function setReplace( $string )
+    public function setReplace($string)
     {
 
-        $this->_regexp->setReplace( $string );
+        $this->_regexp->setReplace($string);
     }
 
     /**
@@ -118,7 +118,7 @@ class ReplaceRegexpTask extends Task
      *
      * todo ... `$this->_regexp->setFlags( $flags );`
      */
-    public function setFlags( $flags )
+    public function setFlags($flags)
     {
     }
 
@@ -129,7 +129,7 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function setByline( $yesNo )
+    public function setByline($yesNo)
     {
         // TODO... $this->_regexp->
     }
@@ -141,7 +141,7 @@ class ReplaceRegexpTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -169,7 +169,7 @@ class ReplaceRegexpTask extends Task
     {
 
         if ($this->file === null && empty( $this->filesets )) {
-            throw new BuildException( "You must specify a file or fileset(s) for the <ReplaceRegexp> task." );
+            throw new BuildException("You must specify a file or fileset(s) for the <ReplaceRegexp> task.");
         }
 
         // compile a list of all files to modify, both file attrib and fileset elements
@@ -184,65 +184,65 @@ class ReplaceRegexpTask extends Task
             $filenames = array();
             foreach ($this->filesets as $fs) {
                 try {
-                    $ds = $fs->getDirectoryScanner( $this->project );
+                    $ds = $fs->getDirectoryScanner($this->project);
                     $filenames = $ds->getIncludedFiles(); // get included filenames
-                    $dir = $fs->getDir( $this->project );
+                    $dir = $fs->getDir($this->project);
                     foreach ($filenames as $fname) {
-                        $files[] = new PhingFile( $dir, $fname );
+                        $files[] = new PhingFile($dir, $fname);
                     }
-                } catch( BuildException $be ) {
-                    $this->log( $be->getMessage(), Project::MSG_WARN );
+                } catch (BuildException $be) {
+                    $this->log($be->getMessage(), Project::MSG_WARN);
                 }
             }
         }
 
-        $this->log( "Applying Regexp processing to ".count( $files )." files." );
+        $this->log("Applying Regexp processing to ".count($files)." files.");
 
         // These "slots" allow filters to retrieve information about the currently-being-process files
-        $slot = $this->getRegisterSlot( "currentFile" );
-        $basenameSlot = $this->getRegisterSlot( "currentFile.basename" );
+        $slot = $this->getRegisterSlot("currentFile");
+        $basenameSlot = $this->getRegisterSlot("currentFile.basename");
 
-        $filter = new FilterChain( $this->project );
+        $filter = new FilterChain($this->project);
 
         $r = new ReplaceRegexp();
-        $r->setRegexps( array( $this->_regexp ) );
+        $r->setRegexps(array($this->_regexp));
 
-        $filter->addReplaceRegexp( $r );
-        $filters = array( $filter );
+        $filter->addReplaceRegexp($r);
+        $filters = array($filter);
 
         foreach ($files as $file) {
             // set the register slots
 
-            $slot->setValue( $file->getPath() );
-            $basenameSlot->setValue( $file->getName() );
+            $slot->setValue($file->getPath());
+            $basenameSlot->setValue($file->getName());
 
             // 1) read contents of file, pulling through any filters
             $in = null;
             try {
                 $contents = "";
-                $in = FileUtils::getChainedReader( new FileReader( $file ), $filters, $this->project );
+                $in = FileUtils::getChainedReader(new FileReader($file), $filters, $this->project);
                 while (-1 !== ( $buffer = $in->read() )) {
                     $contents .= $buffer;
                 }
                 $in->close();
-            } catch( Exception $e ) {
+            } catch (Exception $e) {
                 if ($in) {
                     $in->close();
                 }
-                $this->log( "Error reading file: ".$e->getMessage(), Project::MSG_WARN );
+                $this->log("Error reading file: ".$e->getMessage(), Project::MSG_WARN);
             }
 
             try {
                 // now create a FileWriter w/ the same file, and write to the file
-                $out = new FileWriter( $file );
-                $out->write( $contents );
+                $out = new FileWriter($file);
+                $out->write($contents);
                 $out->close();
-                $this->log( "Applying regexp processing to ".$file->getPath(), Project::MSG_VERBOSE );
-            } catch( Exception $e ) {
+                $this->log("Applying regexp processing to ".$file->getPath(), Project::MSG_VERBOSE);
+            } catch (Exception $e) {
                 if ($out) {
                     $out->close();
                 }
-                $this->log( "Error writing file back: ".$e->getMessage(), Project::MSG_WARN );
+                $this->log("Error writing file back: ".$e->getMessage(), Project::MSG_WARN);
             }
 
         }

@@ -93,10 +93,10 @@ class BuildEvent extends EventObject
      *
      * @throws Exception
      */
-    public function __construct( $source )
+    public function __construct($source)
     {
 
-        parent::__construct( $source );
+        parent::__construct($source);
         if ($source instanceof Project) {
             $this->project = $source;
             $this->target = null;
@@ -110,7 +110,7 @@ class BuildEvent extends EventObject
             $this->target = $source->getOwningTarget();
             $this->task = $source;
         } else {
-            throw new Exception( "Can not construct BuildEvent, unknown source given." );
+            throw new Exception("Can not construct BuildEvent, unknown source given.");
         }
     }
 
@@ -174,7 +174,7 @@ class BuildEvent extends EventObject
      * @param  string   The string message of the event
      * @param  integer  The priority this message should have
      */
-    public function setMessage( $message, $priority )
+    public function setMessage($message, $priority)
     {
 
         $this->message = (string)$message;
@@ -214,7 +214,7 @@ class BuildEvent extends EventObject
      *
      * @param  Exception The exception that caused the event
      */
-    public function setException( $exception )
+    public function setException($exception)
     {
 
         $this->exception = $exception;

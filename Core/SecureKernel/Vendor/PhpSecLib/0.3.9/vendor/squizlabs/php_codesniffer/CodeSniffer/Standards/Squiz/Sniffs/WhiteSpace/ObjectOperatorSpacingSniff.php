@@ -39,7 +39,7 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
     public function register()
     {
 
-        return array( T_OBJECT_OPERATOR );
+        return array(T_OBJECT_OPERATOR);
 
     }//end register()
 
@@ -53,21 +53,21 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $prevType = $tokens[( $stackPtr - 1 )]['code'];
-        if (in_array( $prevType, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $error = 'Space found before object operator';
-            $phpcsFile->addError( $error, $stackPtr, 'Before' );
+            $phpcsFile->addError($error, $stackPtr, 'Before');
         }
 
         $nextType = $tokens[( $stackPtr + 1 )]['code'];
-        if (in_array( $nextType, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
+        if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $error = 'Space found after object operator';
-            $phpcsFile->addError( $error, $stackPtr, 'After' );
+            $phpcsFile->addError($error, $stackPtr, 'After');
         }
 
     }//end process()

@@ -28,5 +28,5 @@ interface Twig_ParserInterface
      *
      * @throws Twig_Error_Syntax When the token stream is syntactically or semantically wrong
      */
-    public function parse( Twig_TokenStream $stream );
+    public function parse(Twig_TokenStream $stream);
 }

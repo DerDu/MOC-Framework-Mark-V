@@ -12,7 +12,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      * @param array $subNodes   Array of sub nodes
      * @param array $attributes Array of attributes
      */
-    public function __construct( array $subNodes = array(), array $attributes = array() )
+    public function __construct(array $subNodes = array(), array $attributes = array())
     {
 
         $this->subNodes = $subNodes;
@@ -27,7 +27,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function getType()
     {
 
-        return substr( get_class( $this ), 15 );
+        return substr(get_class($this), 15);
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function getSubNodeNames()
     {
 
-        return array_keys( $this->subNodes );
+        return array_keys($this->subNodes);
     }
 
     /**
@@ -49,16 +49,16 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function getLine()
     {
 
-        return $this->getAttribute( 'startLine', -1 );
+        return $this->getAttribute('startLine', -1);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function &getAttribute( $key, $default = null )
+    public function &getAttribute($key, $default = null)
     {
 
-        if (!array_key_exists( $key, $this->attributes )) {
+        if (!array_key_exists($key, $this->attributes)) {
             return $default;
         } else {
             return $this->attributes[$key];
@@ -70,16 +70,16 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      *
      * @param int $line Line
      */
-    public function setLine( $line )
+    public function setLine($line)
     {
 
-        $this->setAttribute( 'startLine', (int)$line );
+        $this->setAttribute('startLine', (int)$line);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setAttribute( $key, $value )
+    public function setAttribute($key, $value)
     {
 
         $this->attributes[$key] = $value;
@@ -95,12 +95,12 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function getDocComment()
     {
 
-        $comments = $this->getAttribute( 'comments' );
+        $comments = $this->getAttribute('comments');
         if (!$comments) {
             return null;
         }
 
-        $lastComment = $comments[count( $comments ) - 1];
+        $lastComment = $comments[count($comments) - 1];
         if (!$lastComment instanceof PHPParser_Comment_Doc) {
             return null;
         }
@@ -111,10 +111,10 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     /**
      * {@inheritDoc}
      */
-    public function hasAttribute( $key )
+    public function hasAttribute($key)
     {
 
-        return array_key_exists( $key, $this->attributes );
+        return array_key_exists($key, $this->attributes);
     }
 
     /**
@@ -128,25 +128,25 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
 
     /* Magic interfaces */
 
-    public function &__get( $name )
+    public function &__get($name)
     {
 
         return $this->subNodes[$name];
     }
 
-    public function __set( $name, $value )
+    public function __set($name, $value)
     {
 
         $this->subNodes[$name] = $value;
     }
 
-    public function __isset( $name )
+    public function __isset($name)
     {
 
         return isset( $this->subNodes[$name] );
     }
 
-    public function __unset( $name )
+    public function __unset($name)
     {
 
         unset( $this->subNodes[$name] );
@@ -155,6 +155,6 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function getIterator()
     {
 
-        return new ArrayIterator( $this->subNodes );
+        return new ArrayIterator($this->subNodes);
     }
 }

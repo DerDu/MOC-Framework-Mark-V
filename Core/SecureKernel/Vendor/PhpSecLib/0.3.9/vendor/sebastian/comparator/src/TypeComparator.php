@@ -30,7 +30,7 @@ class TypeComparator extends Comparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
         return true;
@@ -52,10 +52,10 @@ class TypeComparator extends Comparator
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals( $expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false )
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
 
-        if (gettype( $expected ) != gettype( $actual )) {
+        if (gettype($expected) != gettype($actual)) {
             throw new ComparisonFailure(
                 $expected,
                 $actual,
@@ -65,8 +65,8 @@ class TypeComparator extends Comparator
                 false,
                 sprintf(
                     '%s does not match expected type "%s".',
-                    $this->exporter->shortenedExport( $actual ),
-                    gettype( $expected )
+                    $this->exporter->shortenedExport($actual),
+                    gettype($expected)
                 )
             );
         }

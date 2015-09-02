@@ -26,37 +26,37 @@ class Twig_TokenParser_From extends Twig_TokenParser
      *
      * @return Twig_NodeInterface A Twig_NodeInterface instance
      */
-    public function parse( Twig_Token $token )
+    public function parse(Twig_Token $token)
     {
 
         $macro = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
-        $stream->expect( 'import' );
+        $stream->expect('import');
 
         $targets = array();
         do {
-            $name = $stream->expect( Twig_Token::NAME_TYPE )->getValue();
+            $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
 
             $alias = $name;
-            if ($stream->nextIf( 'as' )) {
-                $alias = $stream->expect( Twig_Token::NAME_TYPE )->getValue();
+            if ($stream->nextIf('as')) {
+                $alias = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
             }
 
             $targets[$name] = $alias;
 
-            if (!$stream->nextIf( Twig_Token::PUNCTUATION_TYPE, ',' )) {
+            if (!$stream->nextIf(Twig_Token::PUNCTUATION_TYPE, ',')) {
                 break;
             }
         } while (true);
 
-        $stream->expect( Twig_Token::BLOCK_END_TYPE );
+        $stream->expect(Twig_Token::BLOCK_END_TYPE);
 
-        $node = new Twig_Node_Import( $macro,
-            new Twig_Node_Expression_AssignName( $this->parser->getVarName(), $token->getLine() ), $token->getLine(),
-            $this->getTag() );
+        $node = new Twig_Node_Import($macro,
+            new Twig_Node_Expression_AssignName($this->parser->getVarName(), $token->getLine()), $token->getLine(),
+            $this->getTag());
 
         foreach ($targets as $name => $alias) {
-            $this->parser->addImportedSymbol( 'function', $alias, 'get'.$name, $node->getNode( 'var' ) );
+            $this->parser->addImportedSymbol('function', $alias, 'get'.$name, $node->getNode('var'));
         }
 
         return $node;

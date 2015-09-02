@@ -26,13 +26,13 @@ class UpdateCommand extends Command
 
         parent::configure();
 
-        $this->getDefinition()->addOption( new InputOption( 'force', '', InputOption::VALUE_NONE,
-            'Forces to rebuild from scratch', null ) );
+        $this->getDefinition()->addOption(new InputOption('force', '', InputOption::VALUE_NONE,
+            'Forces to rebuild from scratch', null));
 
         $this
-            ->setName( 'update' )
-            ->setDescription( 'Parses then renders a project' )
-            ->setHelp( <<<EOF
+            ->setName('update')
+            ->setDescription('Parses then renders a project')
+            ->setHelp(<<<EOF
 The <info>%command.name%</info> command parses and renders a project:
 
     <info>php %command.full_name% update config/symfony.php</info>
@@ -48,11 +48,11 @@ EOF
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( '<bg=cyan;fg=white> Updating project </>' );
+        $output->writeln('<bg=cyan;fg=white> Updating project </>');
 
-        $this->update( $this->sami['project'] );
+        $this->update($this->sami['project']);
     }
 }

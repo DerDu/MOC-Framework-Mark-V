@@ -10,7 +10,7 @@
 class HelloWorld
 {
 
-    public function foo( $silent = true )
+    public function foo($silent = true)
     {
 
         if ($silent) {

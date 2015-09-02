@@ -85,12 +85,12 @@ class PearLogListener implements BuildListener
      *
      * @param  BuildEvent  The BuildEvent
      */
-    public function buildStarted( BuildEvent $event )
+    public function buildStarted(BuildEvent $event)
     {
 
         $this->startTime = Phing::currentTimeMillis();
-        $this->logger()->setIdent( $event->getProject()->getName() );
-        $this->logger()->info( "Starting build with buildfile: ".$event->getProject()->getProperty( "phing.file" ) );
+        $this->logger()->setIdent($event->getProject()->getName());
+        $this->logger()->info("Starting build with buildfile: ".$event->getProject()->getProperty("phing.file"));
     }
 
     /**
@@ -115,10 +115,10 @@ class PearLogListener implements BuildListener
     protected function configureLogging()
     {
 
-        $type = Phing::getDefinedProperty( 'pear.log.type' );
-        $name = Phing::getDefinedProperty( 'pear.log.name' );
-        $ident = Phing::getDefinedProperty( 'pear.log.ident' );
-        $conf = Phing::getDefinedProperty( 'pear.log.conf' );
+        $type = Phing::getDefinedProperty('pear.log.type');
+        $name = Phing::getDefinedProperty('pear.log.name');
+        $ident = Phing::getDefinedProperty('pear.log.ident');
+        $conf = Phing::getDefinedProperty('pear.log.conf');
 
         if ($type === null) {
             $type = 'file';
@@ -134,11 +134,11 @@ class PearLogListener implements BuildListener
         }
 
         include_once 'Log.php';
-        if (!class_exists( 'Log' )) {
-            throw new BuildException( "Cannot find PEAR Log class for use by PearLogger." );
+        if (!class_exists('Log')) {
+            throw new BuildException("Cannot find PEAR Log class for use by PearLogger.");
         }
 
-        $this->logger = Log::singleton( $type, $name, $ident, $conf, self::$levelMap[$this->msgOutputLevel] );
+        $this->logger = Log::singleton($type, $name, $ident, $conf, self::$levelMap[$this->msgOutputLevel]);
     }
 
     /**
@@ -149,7 +149,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getException()
      */
-    public function buildFinished( BuildEvent $event )
+    public function buildFinished(BuildEvent $event)
     {
 
         $error = $event->getException();
@@ -159,7 +159,7 @@ class PearLogListener implements BuildListener
             $msg = "Build failed. [reason: ".$error->getMessage()."]";
         }
         $this->logger()->log(
-            $msg." Total time: ".DefaultLogger::formatTime( Phing::currentTimeMillis() - $this->startTime )
+            $msg." Total time: ".DefaultLogger::formatTime(Phing::currentTimeMillis() - $this->startTime)
         );
     }
 
@@ -170,7 +170,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getTarget()
      */
-    public function targetStarted( BuildEvent $event )
+    public function targetStarted(BuildEvent $event)
     {
     }
 
@@ -182,7 +182,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getException()
      */
-    public function targetFinished( BuildEvent $event )
+    public function targetFinished(BuildEvent $event)
     {
     }
 
@@ -194,7 +194,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getTask()
      */
-    public function taskStarted( BuildEvent $event )
+    public function taskStarted(BuildEvent $event)
     {
     }
 
@@ -206,7 +206,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getException()
      */
-    public function taskFinished( BuildEvent $event )
+    public function taskFinished(BuildEvent $event)
     {
     }
 
@@ -217,7 +217,7 @@ class PearLogListener implements BuildListener
      *
      * @see    BuildEvent::getMessage()
      */
-    public function messageLogged( BuildEvent $event )
+    public function messageLogged(BuildEvent $event)
     {
 
         if ($event->getPriority() <= $this->msgOutputLevel) {
@@ -225,10 +225,10 @@ class PearLogListener implements BuildListener
             if ($event->getTask() !== null) {
                 $name = $event->getTask();
                 $name = $name->getTaskName();
-                $msg = str_pad( "[$name] ", self::LEFT_COLUMN_SIZE, " ", STR_PAD_LEFT );
+                $msg = str_pad("[$name] ", self::LEFT_COLUMN_SIZE, " ", STR_PAD_LEFT);
             }
             $msg .= $event->getMessage();
-            $this->logger()->log( $msg, self::$levelMap[$event->getPriority()] );
+            $this->logger()->log($msg, self::$levelMap[$event->getPriority()]);
         }
     }
 }

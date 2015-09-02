@@ -10,5 +10,5 @@ interface PHPParser_Unserializer
      *
      * @return array Statements
      */
-    public function unserialize( $string );
+    public function unserialize($string);
 }

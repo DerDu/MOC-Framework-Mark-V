@@ -77,18 +77,18 @@ class FileUtils
                 // will be used)
                 $dirMode = ( $preservePermissions ? $sourceFile->getParentFile()->getMode() : $mode );
 
-                $parent->mkdirs( $dirMode );
+                $parent->mkdirs($dirMode);
             }
 
-            if (( is_array( $filterChains ) ) && ( !empty( $filterChains ) )) {
+            if (( is_array($filterChains) ) && ( !empty( $filterChains ) )) {
 
-                $in = self::getChainedReader( new BufferedReader( new FileReader( $sourceFile ) ), $filterChains,
-                    $project );
-                $out = new BufferedWriter( new FileWriter( $destFile ) );
+                $in = self::getChainedReader(new BufferedReader(new FileReader($sourceFile)), $filterChains,
+                    $project);
+                $out = new BufferedWriter(new FileWriter($destFile));
 
                 // New read() methods returns a big buffer.
                 while (-1 !== ( $buffer = $in->read() )) { // -1 indicates EOF
-                    $out->write( $buffer );
+                    $out->write($buffer);
                 }
 
                 if ($in !== null) {
@@ -100,22 +100,22 @@ class FileUtils
 
                 // Set/Copy the permissions on the target
                 if ($preservePermissions === true) {
-                    $destFile->setMode( $sourceFile->getMode() );
+                    $destFile->setMode($sourceFile->getMode());
                 }
 
             } else {
                 // simple copy (no filtering)
-                $sourceFile->copyTo( $destFile );
+                $sourceFile->copyTo($destFile);
 
                 // By default, PHP::Copy also copies the file permissions. Therefore,
                 // re-setting the mode with the "user file-creation mask" information.
                 if ($preservePermissions === false) {
-                    $destFile->setMode( FileUtils::getDefaultFileCreationMask( false, true ) );
+                    $destFile->setMode(FileUtils::getDefaultFileCreationMask(false, true));
                 }
             }
 
             if ($preserveLastModified && !$destFile->isLink()) {
-                $destFile->setLastModified( $sourceFile->lastModified() );
+                $destFile->setLastModified($sourceFile->lastModified());
             }
 
         }
@@ -131,15 +131,15 @@ class FileUtils
      *
      * @return Reader  Assembled Reader (w/ filter chains).
      */
-    public static function getChainedReader( Reader $in, &$filterChains, Project $project )
+    public static function getChainedReader(Reader $in, &$filterChains, Project $project)
     {
 
         if (!empty( $filterChains )) {
             $crh = new ChainReaderHelper();
-            $crh->setBufferSize( 65536 ); // 64k buffer, but isn't being used (yet?)
-            $crh->setPrimaryReader( $in );
-            $crh->setFilterChains( $filterChains );
-            $crh->setProject( $project );
+            $crh->setBufferSize(65536); // 64k buffer, but isn't being used (yet?)
+            $crh->setPrimaryReader($in);
+            $crh->setFilterChains($filterChains);
+            $crh->setProject($project);
             $rdr = $crh->getAssembledReader();
 
             return $rdr;
@@ -157,16 +157,16 @@ class FileUtils
      *
      * @return string  Creation Mask
      */
-    public static function getDefaultFileCreationMask( $dirmode = false, $returnoctal = false )
+    public static function getDefaultFileCreationMask($dirmode = false, $returnoctal = false)
     {
 
         // Preparing the creation mask base permission
         $permission = ( $dirmode === true ) ? 0777 : 0666;
 
         // Default mask information
-        $defaultmask = sprintf( '%03o', ( $permission & ( $permission - (int)sprintf( '%04o', umask() ) ) ) );
+        $defaultmask = sprintf('%03o', ( $permission & ( $permission - (int)sprintf('%04o', umask()) ) ));
 
-        return ( $returnoctal ? octdec( $defaultmask ) : $defaultmask );
+        return ( $returnoctal ? octdec($defaultmask) : $defaultmask );
     }
 
     /**
@@ -183,49 +183,49 @@ class FileUtils
      * @return PhingFile A PhingFile object pointing to an absolute file that doesn't contain ./ or ../ sequences
      *                   and uses the correct separator for the current platform.
      */
-    public function resolveFile( $file, $filename )
+    public function resolveFile($file, $filename)
     {
 
         // remove this and use the static class constant File::seperator
         // as soon as ZE2 is ready
         $fs = FileSystem::getFileSystem();
 
-        $filename = str_replace( '/', $fs->getSeparator(), str_replace( '\\', $fs->getSeparator(), $filename ) );
+        $filename = str_replace('/', $fs->getSeparator(), str_replace('\\', $fs->getSeparator(), $filename));
 
         // deal with absolute files
-        if (StringHelper::startsWith( $fs->getSeparator(), $filename ) ||
-            ( strlen( $filename ) >= 2 && Character::isLetter( $filename{0} ) && $filename{1} === ':' )
+        if (StringHelper::startsWith($fs->getSeparator(), $filename) ||
+            ( strlen($filename) >= 2 && Character::isLetter($filename{0}) && $filename{1} === ':' )
         ) {
-            return new PhingFile( $this->normalize( $filename ) );
+            return new PhingFile($this->normalize($filename));
         }
 
-        if (strlen( $filename ) >= 2 && Character::isLetter( $filename{0} ) && $filename{1} === ':') {
-            return new PhingFile( $this->normalize( $filename ) );
+        if (strlen($filename) >= 2 && Character::isLetter($filename{0}) && $filename{1} === ':') {
+            return new PhingFile($this->normalize($filename));
         }
 
-        $helpFile = new PhingFile( $file->getAbsolutePath() );
+        $helpFile = new PhingFile($file->getAbsolutePath());
 
-        $tok = strtok( $filename, $fs->getSeparator() );
+        $tok = strtok($filename, $fs->getSeparator());
         while ($tok !== false) {
             $part = $tok;
             if ($part === '..') {
                 $parentFile = $helpFile->getParent();
                 if ($parentFile === null) {
                     $msg = "The file or path you specified ($filename) is invalid relative to ".$file->getPath();
-                    throw new IOException( $msg );
+                    throw new IOException($msg);
                 }
-                $helpFile = new PhingFile( $parentFile );
+                $helpFile = new PhingFile($parentFile);
             } else {
                 if ($part === '.') {
                     // Do nothing here
                 } else {
-                    $helpFile = new PhingFile( $helpFile, $part );
+                    $helpFile = new PhingFile($helpFile, $part);
                 }
             }
-            $tok = strtok( $fs->getSeparator() );
+            $tok = strtok($fs->getSeparator());
         }
 
-        return new PhingFile( $helpFile->getAbsolutePath() );
+        return new PhingFile($helpFile->getAbsolutePath());
     }
 
     /**
@@ -244,19 +244,19 @@ class FileUtils
      *
      * @return string
      */
-    public function normalize( $path )
+    public function normalize($path)
     {
 
         $path = (string)$path;
         $orig = $path;
 
-        $path = str_replace( '/', DIRECTORY_SEPARATOR, str_replace( '\\', DIRECTORY_SEPARATOR, $path ) );
+        $path = str_replace('/', DIRECTORY_SEPARATOR, str_replace('\\', DIRECTORY_SEPARATOR, $path));
 
         // make sure we are dealing with an absolute path
-        if (!StringHelper::startsWith( DIRECTORY_SEPARATOR, $path )
-            && !( strlen( $path ) >= 2 && Character::isLetter( $path{0} ) && $path{1} === ':' )
+        if (!StringHelper::startsWith(DIRECTORY_SEPARATOR, $path)
+            && !( strlen($path) >= 2 && Character::isLetter($path{0}) && $path{1} === ':' )
         ) {
-            throw new IOException( "$path is not an absolute path" );
+            throw new IOException("$path is not an absolute path");
         }
 
         $dosWithDrive = false;
@@ -264,15 +264,15 @@ class FileUtils
 
         // Eliminate consecutive slashes after the drive spec
 
-        if (strlen( $path ) >= 2 && Character::isLetter( $path{0} ) && $path{1} === ':') {
+        if (strlen($path) >= 2 && Character::isLetter($path{0}) && $path{1} === ':') {
             $dosWithDrive = true;
 
-            $ca = str_replace( '/', '\\', $path );
-            $ca = StringHelper::toCharArray( $ca );
+            $ca = str_replace('/', '\\', $path);
+            $ca = StringHelper::toCharArray($ca);
 
-            $path = strtoupper( $ca[0] ).':';
+            $path = strtoupper($ca[0]).':';
 
-            for ($i = 2, $_i = count( $ca ); $i < $_i; $i++) {
+            for ($i = 2, $_i = count($ca); $i < $_i; $i++) {
                 if (( $ca[$i] !== '\\' ) ||
                     ( $ca[$i] === '\\' && $ca[$i - 1] !== '\\' )
                 ) {
@@ -280,55 +280,55 @@ class FileUtils
                 }
             }
 
-            $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path );
+            $path = str_replace('\\', DIRECTORY_SEPARATOR, $path);
 
-            if (strlen( $path ) == 2) {
+            if (strlen($path) == 2) {
                 $root = $path;
                 $path = "";
             } else {
-                $root = substr( $path, 0, 3 );
-                $path = substr( $path, 3 );
+                $root = substr($path, 0, 3);
+                $path = substr($path, 3);
             }
 
         } else {
-            if (strlen( $path ) == 1) {
+            if (strlen($path) == 1) {
                 $root = DIRECTORY_SEPARATOR;
                 $path = "";
             } else {
                 if ($path{1} == DIRECTORY_SEPARATOR) {
                     // UNC drive
                     $root = DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR;
-                    $path = substr( $path, 2 );
+                    $path = substr($path, 2);
                 } else {
                     $root = DIRECTORY_SEPARATOR;
-                    $path = substr( $path, 1 );
+                    $path = substr($path, 1);
                 }
             }
         }
 
         $s = array();
-        array_push( $s, $root );
-        $tok = strtok( $path, DIRECTORY_SEPARATOR );
+        array_push($s, $root);
+        $tok = strtok($path, DIRECTORY_SEPARATOR);
         while ($tok !== false) {
             $thisToken = $tok;
             if ("." === $thisToken) {
-                $tok = strtok( DIRECTORY_SEPARATOR );
+                $tok = strtok(DIRECTORY_SEPARATOR);
                 continue;
             } elseif (".." === $thisToken) {
-                if (count( $s ) < 2) {
+                if (count($s) < 2) {
                     // using '..' in path that is too short
-                    throw new IOException( "Cannot resolve path: $orig" );
+                    throw new IOException("Cannot resolve path: $orig");
                 } else {
-                    array_pop( $s );
+                    array_pop($s);
                 }
             } else { // plain component
-                array_push( $s, $thisToken );
+                array_push($s, $thisToken);
             }
-            $tok = strtok( DIRECTORY_SEPARATOR );
+            $tok = strtok(DIRECTORY_SEPARATOR);
         }
 
         $sb = "";
-        for ($i = 0, $_i = count( $s ); $i < $_i; $i++) {
+        for ($i = 0, $_i = count($s); $i < $_i; $i++) {
             if ($i > 1) {
                 // not before the filesystem root and not after it, since root
                 // already contains one
@@ -339,7 +339,7 @@ class FileUtils
 
         $path = (string)$sb;
         if ($dosWithDrive === true) {
-            $path = str_replace( '/', '\\', $path );
+            $path = str_replace('/', '\\', $path);
         }
 
         return $path;
@@ -351,7 +351,7 @@ class FileUtils
      *
      * @return boolean Whether contents of two files is the same.
      */
-    public function contentEquals( PhingFile $file1, PhingFile $file2 )
+    public function contentEquals(PhingFile $file1, PhingFile $file2)
     {
 
         if (!( $file1->exists() || $file2->exists() )) {
@@ -362,9 +362,9 @@ class FileUtils
             return false;
         }
 
-        $c1 = file_get_contents( $file1->getAbsolutePath() );
-        $c2 = file_get_contents( $file2->getAbsolutePath() );
+        $c1 = file_get_contents($file1->getAbsolutePath());
+        $c2 = file_get_contents($file2->getAbsolutePath());
 
-        return trim( $c1 ) == trim( $c2 );
+        return trim($c1) == trim($c2);
     }
 }

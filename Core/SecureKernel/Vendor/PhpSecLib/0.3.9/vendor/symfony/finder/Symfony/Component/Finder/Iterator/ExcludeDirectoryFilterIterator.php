@@ -27,14 +27,14 @@ class ExcludeDirectoryFilterIterator extends FilterIterator
      * @param \Iterator $iterator    The Iterator to filter
      * @param array     $directories An array of directories to exclude
      */
-    public function __construct( \Iterator $iterator, array $directories )
+    public function __construct(\Iterator $iterator, array $directories)
     {
 
         foreach ($directories as $directory) {
-            $this->patterns[] = '#(^|/)'.preg_quote( $directory, '#' ).'(/|$)#';
+            $this->patterns[] = '#(^|/)'.preg_quote($directory, '#').'(/|$)#';
         }
 
-        parent::__construct( $iterator );
+        parent::__construct($iterator);
     }
 
     /**
@@ -46,9 +46,9 @@ class ExcludeDirectoryFilterIterator extends FilterIterator
     {
 
         $path = $this->isDir() ? $this->current()->getRelativePathname() : $this->current()->getRelativePath();
-        $path = strtr( $path, '\\', '/' );
+        $path = strtr($path, '\\', '/');
         foreach ($this->patterns as $pattern) {
-            if (preg_match( $pattern, $path )) {
+            if (preg_match($pattern, $path)) {
                 return false;
             }
         }

@@ -25,75 +25,75 @@ class Parser
     protected $parser;
     protected $traverser;
 
-    public function __construct( $iterator, StoreInterface $store, CodeParser $parser, ClassTraverser $traverser )
+    public function __construct($iterator, StoreInterface $store, CodeParser $parser, ClassTraverser $traverser)
     {
 
-        $this->iterator = $this->createIterator( $iterator );
+        $this->iterator = $this->createIterator($iterator);
         $this->store = $store;
         $this->parser = $parser;
         $this->traverser = $traverser;
     }
 
-    private function createIterator( $iterator )
+    private function createIterator($iterator)
     {
 
-        if (is_string( $iterator )) {
+        if (is_string($iterator)) {
             $it = new Finder();
-            $it->files()->name( '*.php' )->in( $iterator );
+            $it->files()->name('*.php')->in($iterator);
 
             return $it;
         } elseif (!$iterator instanceof \Traversable) {
-            throw new \InvalidArgumentException( 'The iterator must be a directory name or a Finder instance.' );
+            throw new \InvalidArgumentException('The iterator must be a directory name or a Finder instance.');
         }
 
         return $iterator;
     }
 
-    public function parse( Project $project, $callback = null )
+    public function parse(Project $project, $callback = null)
     {
 
         $step = 0;
-        $steps = iterator_count( $this->iterator );
+        $steps = iterator_count($this->iterator);
         $context = $this->parser->getContext();
-        $transaction = new Transaction( $project );
+        $transaction = new Transaction($project);
         foreach ($this->iterator as $file) {
             ++$step;
 
-            $code = file_get_contents( $file );
-            $hash = sha1( $code );
-            if ($transaction->hasHash( $hash )) {
+            $code = file_get_contents($file);
+            $hash = sha1($code);
+            if ($transaction->hasHash($hash)) {
                 continue;
             }
 
-            $context->enterFile( (string)$file, $hash );
+            $context->enterFile((string)$file, $hash);
 
-            $this->parser->parse( $code );
+            $this->parser->parse($code);
 
             if (null !== $callback) {
-                call_user_func( $callback, Message::PARSE_ERROR, $context->getErrors() );
+                call_user_func($callback, Message::PARSE_ERROR, $context->getErrors());
             }
 
             foreach ($context->leaveFile() as $class) {
                 if (null !== $callback) {
-                    call_user_func( $callback, Message::PARSE_CLASS, array( floor( $step / $steps * 100 ), $class ) );
+                    call_user_func($callback, Message::PARSE_CLASS, array(floor($step / $steps * 100), $class));
                 }
 
-                $project->addClass( $class );
-                $transaction->addClass( $class );
-                $this->store->writeClass( $project, $class );
+                $project->addClass($class);
+                $transaction->addClass($class);
+                $this->store->writeClass($project, $class);
             }
         }
 
         // cleanup
         foreach ($transaction->getRemovedClasses() as $class) {
-            $project->removeClass( new LazyClassReflection( $class ) );
-            $this->store->removeClass( $project, $class );
+            $project->removeClass(new LazyClassReflection($class));
+            $this->store->removeClass($project, $class);
         }
 
         // visit each class for stuff that can only be done when all classes are parsed
-        $modified = $this->traverser->traverse( $project );
+        $modified = $this->traverser->traverse($project);
         foreach ($modified as $class) {
-            $this->store->writeClass( $project, $class );
+            $this->store->writeClass($project, $class);
         }
 
         return $transaction;

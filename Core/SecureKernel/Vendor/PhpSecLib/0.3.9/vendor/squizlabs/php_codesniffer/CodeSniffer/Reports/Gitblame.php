@@ -45,11 +45,11 @@ class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionCo
      *
      * @return mixed string or false if impossible to recover.
      */
-    protected function getAuthor( $line )
+    protected function getAuthor($line)
     {
 
         $blameParts = array();
-        $line = preg_replace( '|\s+|', ' ', $line );
+        $line = preg_replace('|\s+|', ' ', $line);
         preg_match(
             '|\(.+[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]+\)|',
             $line,
@@ -60,15 +60,15 @@ class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionCo
             return false;
         }
 
-        $parts = explode( ' ', $blameParts[0] );
+        $parts = explode(' ', $blameParts[0]);
 
-        if (count( $parts ) < 2) {
+        if (count($parts) < 2) {
             return false;
         }
 
-        $parts = array_slice( $parts, 0, ( count( $parts ) - 2 ) );
+        $parts = array_slice($parts, 0, ( count($parts) - 2 ));
 
-        return preg_replace( '|\(|', '', implode( $parts, ' ' ) );
+        return preg_replace('|\(|', '', implode($parts, ' '));
 
     }//end getAuthor()
 
@@ -80,50 +80,50 @@ class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionCo
      *
      * @return array
      */
-    protected function getBlameContent( $filename )
+    protected function getBlameContent($filename)
     {
 
         $cwd = getcwd();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting GIT blame info for '.basename( $filename ).'... ';
+            echo 'Getting GIT blame info for '.basename($filename).'... ';
         }
 
-        $fileParts = explode( DIRECTORY_SEPARATOR, $filename );
+        $fileParts = explode(DIRECTORY_SEPARATOR, $filename);
         $found = false;
         $location = '';
         while (empty( $fileParts ) === false) {
-            array_pop( $fileParts );
-            $location = implode( $fileParts, DIRECTORY_SEPARATOR );
-            if (is_dir( $location.DIRECTORY_SEPARATOR.'.git' ) === true) {
+            array_pop($fileParts);
+            $location = implode($fileParts, DIRECTORY_SEPARATOR);
+            if (is_dir($location.DIRECTORY_SEPARATOR.'.git') === true) {
                 $found = true;
                 break;
             }
         }
 
         if ($found === true) {
-            chdir( $location );
+            chdir($location);
         } else {
             echo 'ERROR: Could not locate .git directory '.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
         $command = 'git blame --date=short "'.$filename.'"';
-        $handle = popen( $command, 'r' );
+        $handle = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
-        $rawContent = stream_get_contents( $handle );
-        fclose( $handle );
+        $rawContent = stream_get_contents($handle);
+        fclose($handle);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'DONE'.PHP_EOL;
         }
 
-        $blames = explode( "\n", $rawContent );
-        chdir( $cwd );
+        $blames = explode("\n", $rawContent);
+        chdir($cwd);
 
         return $blames;
 

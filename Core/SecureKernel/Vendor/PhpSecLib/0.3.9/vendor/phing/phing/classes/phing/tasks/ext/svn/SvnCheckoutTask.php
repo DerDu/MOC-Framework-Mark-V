@@ -50,7 +50,7 @@ class SvnCheckoutTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'checkout' );
+        $this->setup('checkout');
 
         $this->log(
             "Checking out SVN repository to '".$this->getToDir()."'".( $this->revision == 'HEAD' ? '' : " (revision: {$this->revision})" )
@@ -61,13 +61,13 @@ class SvnCheckoutTask extends SvnBaseTask
             'r' => $this->revision,
         );
 
-        $this->run( array( $this->getToDir() ), $switches );
+        $this->run(array($this->getToDir()), $switches);
     }
 
     /**
      * @param $revision
      */
-    public function setRevision( $revision )
+    public function setRevision($revision)
     {
 
         $this->revision = $revision;

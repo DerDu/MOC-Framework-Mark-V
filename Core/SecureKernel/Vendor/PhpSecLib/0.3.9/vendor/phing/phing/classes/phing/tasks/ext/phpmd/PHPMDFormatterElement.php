@@ -81,7 +81,7 @@ class PHPMDFormatterElement
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
@@ -99,7 +99,7 @@ class PHPMDFormatterElement
                 break;
 
             default:
-                throw new BuildException( 'Formatter "'.$this->type.'" not implemented' );
+                throw new BuildException('Formatter "'.$this->type.'" not implemented');
         }
     }
 
@@ -112,7 +112,7 @@ class PHPMDFormatterElement
     public function getRenderer()
     {
 
-        if (!class_exists( '\\PHPMD\\Writer\\StreamWriter' )) {
+        if (!class_exists('\\PHPMD\\Writer\\StreamWriter')) {
             $renderClass = 'PHP_PMD_RENDERER_'.$this->className;
             $writerClass = 'PHP_PMD_Writer_Stream';
             include_once 'PHP/PMD/Renderer/'.$this->className.'.php';
@@ -128,10 +128,10 @@ class PHPMDFormatterElement
         if ($this->getUseFile() === false || $this->getOutfile() === null) {
             $stream = STDOUT;
         } else {
-            $stream = fopen( $this->getOutfile()->getAbsoluteFile(), 'wb' );
+            $stream = fopen($this->getOutfile()->getAbsoluteFile(), 'wb');
         }
 
-        $renderer->setWriter( new $writerClass( $stream ) );
+        $renderer->setWriter(new $writerClass($stream));
 
         return $renderer;
     }
@@ -152,10 +152,10 @@ class PHPMDFormatterElement
      *
      * @param boolean $useFile True or false.
      */
-    public function setUseFile( $useFile )
+    public function setUseFile($useFile)
     {
 
-        $this->useFile = StringHelper::booleanValue( $useFile );
+        $this->useFile = StringHelper::booleanValue($useFile);
     }
 
     /**
@@ -174,7 +174,7 @@ class PHPMDFormatterElement
      *
      * @param PhingFile $outfile The output file
      */
-    public function setOutfile( PhingFile $outfile )
+    public function setOutfile(PhingFile $outfile)
     {
 
         $this->outfile = $outfile;

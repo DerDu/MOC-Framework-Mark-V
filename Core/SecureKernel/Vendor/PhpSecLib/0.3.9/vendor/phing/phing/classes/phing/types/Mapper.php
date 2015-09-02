@@ -52,7 +52,7 @@ class Mapper extends DataType
     /**
      * @param Project $project
      */
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->project = $project;
@@ -65,7 +65,7 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->isReference()) {
@@ -74,7 +74,7 @@ class Mapper extends DataType
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -85,14 +85,14 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setClasspathRef( Reference $r )
+    public function setClasspathRef(Reference $r)
     {
 
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
         }
         $this->classpathId = $r->getRefId();
-        $this->createClasspath()->setRefid( $r );
+        $this->createClasspath()->setRefid($r);
     }
 
     /**
@@ -105,7 +105,7 @@ class Mapper extends DataType
             throw $this->tooManyAttributes();
         }
         if ($this->classpath === null) {
-            $this->classpath = new Path( $this->project );
+            $this->classpath = new Path($this->project);
         }
 
         return $this->classpath->createPath();
@@ -117,7 +117,7 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         if ($this->isReference()) {
@@ -132,7 +132,7 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setClassname( $classname )
+    public function setClassname($classname)
     {
 
         if ($this->isReference()) {
@@ -148,7 +148,7 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
 
         if ($this->isReference()) {
@@ -164,7 +164,7 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
 
         if ($this->isReference()) {
@@ -182,13 +182,13 @@ class Mapper extends DataType
      *
      * @throws BuildException
      */
-    public function setRefid( Reference $r )
+    public function setRefid(Reference $r)
     {
 
         if ($this->type !== null || $this->from !== null || $this->to !== null) {
             throw DataType::tooManyAttributes();
         }
-        parent::setRefid( $r );
+        parent::setRefid($r);
     }
 
     /** Factory, returns inmplementation of file name mapper as new instance */
@@ -202,7 +202,7 @@ class Mapper extends DataType
         }
 
         if ($this->type === null && $this->classname === null) {
-            throw new BuildException( "either type or classname attribute must be set for <mapper>" );
+            throw new BuildException("either type or classname attribute must be set for <mapper>");
         }
 
         if ($this->type !== null) {
@@ -224,17 +224,17 @@ class Mapper extends DataType
                     $this->classname = 'phing.mappers.MergeMapper';
                     break;
                 default:
-                    throw new BuildException( "Mapper type {$this->type} not known" );
+                    throw new BuildException("Mapper type {$this->type} not known");
                     break;
             }
         }
 
         // get the implementing class
-        $cls = Phing::import( $this->classname, $this->classpath );
+        $cls = Phing::import($this->classname, $this->classpath);
 
         $m = new $cls();
-        $m->setFrom( $this->from );
-        $m->setTo( $this->to );
+        $m->setFrom($this->from);
+        $m->setTo($this->to);
 
         return $m;
     }
@@ -246,13 +246,13 @@ class Mapper extends DataType
         if (!$this->checked) {
             $stk = array();
             $stk[] = $this;
-            $this->dieOnCircularReference( $stk, $this->project );
+            $this->dieOnCircularReference($stk, $this->project);
         }
 
-        $o = $this->ref->getReferencedObject( $this->project );
+        $o = $this->ref->getReferencedObject($this->project);
         if (!( $o instanceof Mapper )) {
             $msg = $this->ref->getRefId()." doesn't denote a mapper";
-            throw new BuildException( $msg );
+            throw new BuildException($msg);
         } else {
             return $o;
         }

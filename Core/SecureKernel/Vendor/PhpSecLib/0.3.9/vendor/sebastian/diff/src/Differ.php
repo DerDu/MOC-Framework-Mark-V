@@ -35,7 +35,7 @@ class Differ
     /**
      * @param string $header
      */
-    public function __construct( $header = "--- Original\n+++ New\n" )
+    public function __construct($header = "--- Original\n+++ New\n")
     {
 
         $this->header = $header;
@@ -50,19 +50,19 @@ class Differ
      *
      * @return string
      */
-    public function diff( $from, $to, LongestCommonSubsequence $lcs = null )
+    public function diff($from, $to, LongestCommonSubsequence $lcs = null)
     {
 
-        if (!is_array( $from ) && !is_string( $from )) {
+        if (!is_array($from) && !is_string($from)) {
             $from = (string)$from;
         }
 
-        if (!is_array( $to ) && !is_string( $to )) {
+        if (!is_array($to) && !is_string($to)) {
             $to = (string)$to;
         }
 
         $buffer = $this->header;
-        $diff = $this->diffToArray( $from, $to, $lcs );
+        $diff = $this->diffToArray($from, $to, $lcs);
 
         $inOld = false;
         $i = 0;
@@ -85,9 +85,9 @@ class Differ
         }
 
         $start = isset( $old[0] ) ? $old[0] : 0;
-        $end = count( $diff );
+        $end = count($diff);
 
-        if ($tmp = array_search( $end, $old )) {
+        if ($tmp = array_search($end, $old)) {
             $end = $tmp;
         }
 
@@ -134,25 +134,25 @@ class Differ
      *
      * @return array
      */
-    public function diffToArray( $from, $to, LongestCommonSubsequence $lcs = null )
+    public function diffToArray($from, $to, LongestCommonSubsequence $lcs = null)
     {
 
-        preg_match_all( '(\r\n|\r|\n)', $from, $fromMatches );
-        preg_match_all( '(\r\n|\r|\n)', $to, $toMatches );
+        preg_match_all('(\r\n|\r|\n)', $from, $fromMatches);
+        preg_match_all('(\r\n|\r|\n)', $to, $toMatches);
 
-        if (is_string( $from )) {
-            $from = preg_split( '(\r\n|\r|\n)', $from );
+        if (is_string($from)) {
+            $from = preg_split('(\r\n|\r|\n)', $from);
         }
 
-        if (is_string( $to )) {
-            $to = preg_split( '(\r\n|\r|\n)', $to );
+        if (is_string($to)) {
+            $to = preg_split('(\r\n|\r|\n)', $to);
         }
 
         $start = array();
         $end = array();
-        $fromLength = count( $from );
-        $toLength = count( $to );
-        $length = min( $fromLength, $toLength );
+        $fromLength = count($from);
+        $toLength = count($to);
+        $length = min($fromLength, $toLength);
 
         for ($i = 0; $i < $length; ++$i) {
             if ($from[$i] === $to[$i]) {
@@ -167,7 +167,7 @@ class Differ
 
         for ($i = 1; $i < $length; ++$i) {
             if ($from[$fromLength - $i] === $to[$toLength - $i]) {
-                array_unshift( $end, $from[$fromLength - $i] );
+                array_unshift($end, $from[$fromLength - $i]);
                 unset( $from[$fromLength - $i], $to[$toLength - $i] );
             } else {
                 break;
@@ -175,14 +175,14 @@ class Differ
         }
 
         if ($lcs === null) {
-            $lcs = $this->selectLcsImplementation( $from, $to );
+            $lcs = $this->selectLcsImplementation($from, $to);
         }
 
-        $common = $lcs->calculate( array_values( $from ), array_values( $to ) );
+        $common = $lcs->calculate(array_values($from), array_values($to));
         $diff = array();
 
         if (isset( $fromMatches[0] ) && $toMatches[0] &&
-            count( $fromMatches[0] ) === count( $toMatches[0] ) &&
+            count($fromMatches[0]) === count($toMatches[0]) &&
             $fromMatches[0] !== $toMatches[0]
         ) {
             $diff[] = array(
@@ -192,37 +192,37 @@ class Differ
         }
 
         foreach ($start as $token) {
-            $diff[] = array( $token, 0 /* OLD */ );
+            $diff[] = array($token, 0 /* OLD */);
         }
 
-        reset( $from );
-        reset( $to );
+        reset($from);
+        reset($to);
 
         foreach ($common as $token) {
-            while (( ( $fromToken = reset( $from ) ) !== $token )) {
-                $diff[] = array( array_shift( $from ), 2 /* REMOVED */ );
+            while (( ( $fromToken = reset($from) ) !== $token )) {
+                $diff[] = array(array_shift($from), 2 /* REMOVED */);
             }
 
-            while (( ( $toToken = reset( $to ) ) !== $token )) {
-                $diff[] = array( array_shift( $to ), 1 /* ADDED */ );
+            while (( ( $toToken = reset($to) ) !== $token )) {
+                $diff[] = array(array_shift($to), 1 /* ADDED */);
             }
 
-            $diff[] = array( $token, 0 /* OLD */ );
+            $diff[] = array($token, 0 /* OLD */);
 
-            array_shift( $from );
-            array_shift( $to );
+            array_shift($from);
+            array_shift($to);
         }
 
-        while (( $token = array_shift( $from ) ) !== null) {
-            $diff[] = array( $token, 2 /* REMOVED */ );
+        while (( $token = array_shift($from) ) !== null) {
+            $diff[] = array($token, 2 /* REMOVED */);
         }
 
-        while (( $token = array_shift( $to ) ) !== null) {
-            $diff[] = array( $token, 1 /* ADDED */ );
+        while (( $token = array_shift($to) ) !== null) {
+            $diff[] = array($token, 1 /* ADDED */);
         }
 
         foreach ($end as $token) {
-            $diff[] = array( $token, 0 /* OLD */ );
+            $diff[] = array($token, 0 /* OLD */);
         }
 
         return $diff;
@@ -234,7 +234,7 @@ class Differ
      *
      * @return LongestCommonSubsequence
      */
-    private function selectLcsImplementation( array $from, array $to )
+    private function selectLcsImplementation(array $from, array $to)
     {
 
         // We do not want to use the time-efficient implementation if its memory
@@ -243,7 +243,7 @@ class Differ
         // will typically allocate a bit more memory than this.
         $memoryLimit = 100 * 1024 * 1024;
 
-        if ($this->calculateEstimatedFootprint( $from, $to ) > $memoryLimit) {
+        if ($this->calculateEstimatedFootprint($from, $to) > $memoryLimit) {
             return new MemoryEfficientImplementation;
         }
 
@@ -258,11 +258,11 @@ class Differ
      *
      * @return integer
      */
-    private function calculateEstimatedFootprint( array $from, array $to )
+    private function calculateEstimatedFootprint(array $from, array $to)
     {
 
         $itemSize = PHP_INT_SIZE == 4 ? 76 : 144;
 
-        return $itemSize * pow( min( count( $from ), count( $to ) ), 2 );
+        return $itemSize * pow(min(count($from), count($to)), 2);
     }
 }

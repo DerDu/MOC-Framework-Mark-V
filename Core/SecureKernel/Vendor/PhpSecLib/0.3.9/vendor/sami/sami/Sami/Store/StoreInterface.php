@@ -17,13 +17,13 @@ use Sami\Reflection\ClassReflection;
 interface StoreInterface
 {
 
-    function readClass( Project $project, $name );
+    function readClass(Project $project, $name);
 
-    function writeClass( Project $project, ClassReflection $class );
+    function writeClass(Project $project, ClassReflection $class);
 
-    function removeClass( Project $project, $name );
+    function removeClass(Project $project, $name);
 
-    function readProject( Project $project );
+    function readProject(Project $project);
 
-    function flushProject( Project $project );
+    function flushProject(Project $project);
 }

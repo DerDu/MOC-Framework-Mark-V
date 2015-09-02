@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,7 +58,7 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -90,14 +90,14 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
                 || ( $inStyle !== null
                     && $tokens[$i]['code'] === T_STRING )
             ) {
-                $expected = strtolower( $tokens[$i]['content'] );
+                $expected = strtolower($tokens[$i]['content']);
                 if ($expected !== $tokens[$i]['content']) {
                     $error = 'Style definitions must be lowercase; expected %s but found %s';
                     $data = array(
                         $expected,
                         $tokens[$i]['content'],
                     );
-                    $phpcsFile->addError( $error, $i, 'FoundUpper', $data );
+                    $phpcsFile->addError($error, $i, 'FoundUpper', $data);
                 }
             }
         }//end for

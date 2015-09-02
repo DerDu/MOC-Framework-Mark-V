@@ -27,14 +27,14 @@ class Application extends BaseApplication
     public function __construct()
     {
 
-        error_reporting( -1 );
+        error_reporting(-1);
         ErrorHandler::register();
 
-        parent::__construct( 'Sami', Sami::VERSION );
+        parent::__construct('Sami', Sami::VERSION);
 
-        $this->add( new UpdateCommand() );
-        $this->add( new ParseCommand() );
-        $this->add( new RenderCommand() );
+        $this->add(new UpdateCommand());
+        $this->add(new ParseCommand());
+        $this->add(new RenderCommand());
     }
 
     public function getLongVersion()

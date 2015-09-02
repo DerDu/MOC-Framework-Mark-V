@@ -56,10 +56,10 @@ class VersionTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        parent::setContent( $content );
+        parent::setContent($content);
 
         if (preg_match(
             '/^
@@ -73,7 +73,7 @@ class VersionTag extends Tag
             $matches
         )) {
             $this->version = $matches[1];
-            $this->setDescription( isset( $matches[2] ) ? $matches[2] : '' );
+            $this->setDescription(isset( $matches[2] ) ? $matches[2] : '');
             $this->content = $content;
         }
 
@@ -99,11 +99,11 @@ class VersionTag extends Tag
      *
      * @return $this
      */
-    public function setVersion( $version )
+    public function setVersion($version)
     {
 
         $this->version
-            = preg_match( '/^'.self::REGEX_VECTOR.'$/ux', $version )
+            = preg_match('/^'.self::REGEX_VECTOR.'$/ux', $version)
             ? $version
             : '';
 

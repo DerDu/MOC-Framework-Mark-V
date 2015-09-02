@@ -19,7 +19,7 @@ class DocBlockNode
     protected $tags = array();
     protected $errors = array();
 
-    public function addTag( $key, $value )
+    public function addTag($key, $value)
     {
 
         $this->tags[$key][] = $value;
@@ -39,14 +39,14 @@ class DocBlockNode
 
         foreach ($tags as $name => $values) {
             foreach ($values as $i => $value) {
-                $tags[$name][$i] = explode( ' ', $value );
+                $tags[$name][$i] = explode(' ', $value);
             }
         }
 
         return $tags;
     }
 
-    public function getTag( $key )
+    public function getTag($key)
     {
 
         return isset( $this->tags[$key] ) ? $this->tags[$key] : array();
@@ -58,7 +58,7 @@ class DocBlockNode
         return $this->shortDesc;
     }
 
-    public function setShortDesc( $shortDesc )
+    public function setShortDesc($shortDesc)
     {
 
         $this->shortDesc = $shortDesc;
@@ -70,7 +70,7 @@ class DocBlockNode
         return $this->longDesc;
     }
 
-    public function setLongDesc( $longDesc )
+    public function setLongDesc($longDesc)
     {
 
         $this->longDesc = $longDesc;
@@ -82,7 +82,7 @@ class DocBlockNode
         return $this->shortDesc."\n\n".$this->longDesc;
     }
 
-    public function addError( $error )
+    public function addError($error)
     {
 
         $this->errors[] = $error;

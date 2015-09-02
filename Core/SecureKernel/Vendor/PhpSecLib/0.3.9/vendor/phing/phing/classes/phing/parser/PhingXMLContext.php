@@ -60,19 +60,19 @@ class PhingXMLContext
      *
      * @param Project $project the project to which this antxml context belongs to
      */
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->project = $project;
         $this->implicitTarget = new Target();
-        $this->implicitTarget->setName( "" );
-        $this->implicitTarget->setHidden( true );
+        $this->implicitTarget->setName("");
+        $this->implicitTarget->setHidden(true);
     }
 
     /**
      * @param $cfg
      */
-    public function startConfigure( $cfg )
+    public function startConfigure($cfg)
     {
 
         $this->configurators[] = $cfg;
@@ -81,7 +81,7 @@ class PhingXMLContext
     public function endConfigure()
     {
 
-        array_pop( $this->configurators );
+        array_pop($this->configurators);
     }
 
     /**
@@ -90,7 +90,7 @@ class PhingXMLContext
     public function getConfigurator()
     {
 
-        $l = count( $this->configurators );
+        $l = count($this->configurators);
         if (0 == $l) {
             return null;
         } else {
@@ -101,7 +101,7 @@ class PhingXMLContext
     /**
      * @param $file
      */
-    public function addImport( $file )
+    public function addImport($file)
     {
 
         $this->importStack[] = $file;
@@ -139,7 +139,7 @@ class PhingXMLContext
     /**
      * @param Target $target
      */
-    public function setImplicitTarget( Target $target )
+    public function setImplicitTarget(Target $target)
     {
 
         $this->implicitTarget = $target;
@@ -157,7 +157,7 @@ class PhingXMLContext
     /**
      * @param Target $target
      */
-    public function setCurrentTarget( Target $target )
+    public function setCurrentTarget(Target $target)
     {
 
         $this->currentTarget = $target;
@@ -175,7 +175,7 @@ class PhingXMLContext
     /**
      * @param Target[] $currentTargets
      */
-    public function setCurrentTargets( array $currentTargets )
+    public function setCurrentTargets(array $currentTargets)
     {
 
         $this->currentTargets = $currentTargets;

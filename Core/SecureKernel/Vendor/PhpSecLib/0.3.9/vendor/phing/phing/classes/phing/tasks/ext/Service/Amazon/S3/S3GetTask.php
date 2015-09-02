@@ -20,7 +20,7 @@
  * <http://phing.info>.
  */
 
-require_once dirname( dirname( __FILE__ ) ).'/S3.php';
+require_once dirname(dirname(__FILE__)).'/S3.php';
 
 /**
  * Downloads an object off S3
@@ -57,11 +57,11 @@ class S3GetTask extends Service_Amazon_S3
         $target = $this->getTarget();
 
         // Use the object name as the target if the current target is a directory
-        if (is_dir( $target )) {
-            $target = rtrim( $target, '/' ).'/'.$this->getObject();
+        if (is_dir($target)) {
+            $target = rtrim($target, '/').'/'.$this->getObject();
         }
 
-        file_put_contents( $target, $this->getObjectContents( $this->getObject() ) );
+        file_put_contents($target, $this->getObjectContents($this->getObject()));
     }
 
     /**
@@ -72,7 +72,7 @@ class S3GetTask extends Service_Amazon_S3
     {
 
         if ($this->_target === null) {
-            throw new BuildException( 'Target is not set' );
+            throw new BuildException('Target is not set');
         }
 
         return $this->_target;
@@ -83,16 +83,16 @@ class S3GetTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setTarget( $target )
+    public function setTarget($target)
     {
 
-        if (!is_file( $target ) && !is_dir( $target ) && !is_link( $target )) {
-            if (!is_writable( dirname( $target ) )) {
-                throw new BuildException( 'Target is not writable: '.$target );
+        if (!is_file($target) && !is_dir($target) && !is_link($target)) {
+            if (!is_writable(dirname($target))) {
+                throw new BuildException('Target is not writable: '.$target);
             }
         } else {
-            if (!is_writable( $target )) {
-                throw new BuildException( 'Target is not writable: '.$target );
+            if (!is_writable($target)) {
+                throw new BuildException('Target is not writable: '.$target);
             }
         }
 
@@ -107,7 +107,7 @@ class S3GetTask extends Service_Amazon_S3
     {
 
         if ($this->_object === null) {
-            throw new BuildException( 'Object is not set' );
+            throw new BuildException('Object is not set');
         }
 
         return $this->_object;
@@ -118,11 +118,11 @@ class S3GetTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setObject( $object )
+    public function setObject($object)
     {
 
-        if (empty( $object ) || !is_string( $object )) {
-            throw new BuildException( 'Object must be a non-empty string' );
+        if (empty( $object ) || !is_string($object)) {
+            throw new BuildException('Object must be a non-empty string');
         }
 
         $this->_object = $object;

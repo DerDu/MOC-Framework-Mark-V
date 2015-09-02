@@ -39,7 +39,7 @@ class FilesMatch implements Condition
      *
      * @param PhingFile $file1 The new File1 value
      */
-    public function setFile1( PhingFile $file1 )
+    public function setFile1(PhingFile $file1)
     {
 
         $this->file1 = $file1;
@@ -50,7 +50,7 @@ class FilesMatch implements Condition
      *
      * @param PhingFile $file2 The new File2 value
      */
-    public function setFile2( PhingFile $file2 )
+    public function setFile2(PhingFile $file2)
     {
 
         $this->file2 = $file2;
@@ -66,11 +66,11 @@ class FilesMatch implements Condition
     {
 
         if ($this->file1 == null || $this->file2 == null) {
-            throw new BuildException( "both file1 and file2 are required in filesmatch" );
+            throw new BuildException("both file1 and file2 are required in filesmatch");
         }
 
         $fu = new FileUtils;
 
-        return $fu->contentEquals( $this->file1, $this->file2 );
+        return $fu->contentEquals($this->file1, $this->file2);
     }
 }

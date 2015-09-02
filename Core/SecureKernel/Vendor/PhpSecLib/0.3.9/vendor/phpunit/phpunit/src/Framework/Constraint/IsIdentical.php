@@ -37,7 +37,7 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
     /**
      * @param mixed $value
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
 
         parent::__construct();
@@ -61,14 +61,14 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
-        if (is_double( $this->value ) && is_double( $other ) &&
-            !is_infinite( $this->value ) && !is_infinite( $other ) &&
-            !is_nan( $this->value ) && !is_nan( $other )
+        if (is_double($this->value) && is_double($other) &&
+            !is_infinite($this->value) && !is_infinite($other) &&
+            !is_nan($this->value) && !is_nan($other)
         ) {
-            $success = abs( $this->value - $other ) < self::EPSILON;
+            $success = abs($this->value - $other) < self::EPSILON;
         } else {
             $success = $this->value === $other;
         }
@@ -81,7 +81,7 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
             $f = null;
 
             // if both values are strings, make sure a diff is generated
-            if (is_string( $this->value ) && is_string( $other )) {
+            if (is_string($this->value) && is_string($other)) {
                 $f = new SebastianBergmann\Comparator\ComparisonFailure(
                     $this->value,
                     $other,
@@ -90,7 +90,7 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
                 );
             }
 
-            $this->fail( $other, $description, $f );
+            $this->fail($other, $description, $f);
         }
     }
 
@@ -102,12 +102,12 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
     public function toString()
     {
 
-        if (is_object( $this->value )) {
+        if (is_object($this->value)) {
             return 'is identical to an object of class "'.
-            get_class( $this->value ).'"';
+            get_class($this->value).'"';
         } else {
             return 'is identical to '.
-            $this->exporter->export( $this->value );
+            $this->exporter->export($this->value);
         }
     }
 
@@ -121,17 +121,17 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        if (is_object( $this->value ) && is_object( $other )) {
+        if (is_object($this->value) && is_object($other)) {
             return 'two variables reference the same object';
         }
 
-        if (is_string( $this->value ) && is_string( $other )) {
+        if (is_string($this->value) && is_string($other)) {
             return 'two strings are identical';
         }
 
-        return parent::failureDescription( $other );
+        return parent::failureDescription($other);
     }
 }

@@ -35,7 +35,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedCount extends PHPUnit_Framewor
     /**
      * @param integer $expectedCount
      */
-    public function __construct( $expectedCount )
+    public function __construct($expectedCount)
     {
 
         $this->expectedCount = $expectedCount;
@@ -64,10 +64,10 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedCount extends PHPUnit_Framewor
      *
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function invoked( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
-        parent::invoked( $invocation );
+        parent::invoked($invocation);
 
         $count = $this->getInvocationCount();
 
@@ -93,7 +93,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedCount extends PHPUnit_Framewor
                 }
             }
 
-            throw new PHPUnit_Framework_ExpectationFailedException( $message );
+            throw new PHPUnit_Framework_ExpectationFailedException($message);
         }
     }
 

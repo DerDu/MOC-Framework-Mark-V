@@ -65,14 +65,14 @@ class Regexp
      * @throws BuildException
      * @internal param string $_engineType The regex engine to use.
      */
-    public function __construct( $engineType = 'preg' )
+    public function __construct($engineType = 'preg')
     {
 
         if ($engineType == 'preg') {
             include_once 'phing/util/regexp/PregEngine.php';
             $this->engine = new PregEngine();
         } else {
-            throw new BuildException( "Invalid engine type for Regexp: ".$engineType );
+            throw new BuildException("Invalid engine type for Regexp: ".$engineType);
         }
     }
 
@@ -94,7 +94,7 @@ class Regexp
      *
      * @return void
      */
-    public function setPattern( $pat )
+    public function setPattern($pat)
     {
 
         $this->pattern = (string)$pat;
@@ -118,7 +118,7 @@ class Regexp
      *
      * @return void
      */
-    public function setReplace( $rep )
+    public function setReplace($rep)
     {
 
         $this->replace = (string)$rep;
@@ -132,14 +132,14 @@ class Regexp
      * @throws Exception
      * @return boolean Whether or not pattern matches subject string passed.
      */
-    public function matches( $subject )
+    public function matches($subject)
     {
 
         if ($this->pattern === null) {
-            throw new Exception( "No pattern specified for regexp match()." );
+            throw new Exception("No pattern specified for regexp match().");
         }
 
-        return $this->engine->match( $this->pattern, $subject, $this->groups );
+        return $this->engine->match($this->pattern, $subject, $this->groups);
     }
 
     /**
@@ -150,14 +150,14 @@ class Regexp
      * @throws Exception
      * @return string subject after replacement has been performed.
      */
-    public function replace( $subject )
+    public function replace($subject)
     {
 
         if ($this->pattern === null || $this->replace === null) {
-            throw new Exception( "Missing pattern or replacement string regexp replace()." );
+            throw new Exception("Missing pattern or replacement string regexp replace().");
         }
 
-        return $this->engine->replace( $this->pattern, $this->replace, $subject );
+        return $this->engine->replace($this->pattern, $this->replace, $subject);
     }
 
     /**
@@ -178,7 +178,7 @@ class Regexp
      *
      * @return string  specified group or NULL if group is not set.
      */
-    public function getGroup( $idx )
+    public function getGroup($idx)
     {
 
         if (!isset( $this->groups[$idx] )) {
@@ -195,10 +195,10 @@ class Regexp
      *
      * @return void
      */
-    public function setModifiers( $mods )
+    public function setModifiers($mods)
     {
 
-        $this->engine->setModifiers( $mods );
+        $this->engine->setModifiers($mods);
     }
 
     /**
@@ -221,10 +221,10 @@ class Regexp
      *
      * @param boolean $bit
      */
-    public function setIgnoreCase( $bit )
+    public function setIgnoreCase($bit)
     {
 
-        $this->engine->setIgnoreCase( $bit );
+        $this->engine->setIgnoreCase($bit);
     }
 
     /**
@@ -243,10 +243,10 @@ class Regexp
      *
      * @param boolean $bit
      */
-    public function setMultiline( $bit )
+    public function setMultiline($bit)
     {
 
-        $this->engine->setMultiline( $bit );
+        $this->engine->setMultiline($bit);
     }
 
     /**

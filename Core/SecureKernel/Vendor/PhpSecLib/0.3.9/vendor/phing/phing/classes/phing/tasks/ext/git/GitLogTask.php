@@ -113,56 +113,56 @@ class GitLogTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'log' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('log');
         $command
-            ->setOption( 'stat', $this->getStat() )
-            ->setOption( 'name-status', $this->isNameStatus() )
-            ->setOption( 'no-merges', $this->isNoMerges() )
-            ->setOption( 'format', $this->getFormat() );
+            ->setOption('stat', $this->getStat())
+            ->setOption('name-status', $this->isNameStatus())
+            ->setOption('no-merges', $this->isNoMerges())
+            ->setOption('format', $this->getFormat());
 
         if (null !== $this->getMaxCount()) {
-            $command->setOption( 'max-count', $this->getMaxCount() );
+            $command->setOption('max-count', $this->getMaxCount());
         }
 
         if (null !== $this->getDate()) {
-            $command->setOption( 'date', $this->getDate() );
+            $command->setOption('date', $this->getDate());
         }
 
         if (null !== $this->getSince()) {
-            $command->setOption( 'since', $this->getSince() );
+            $command->setOption('since', $this->getSince());
         }
-        $command->setOption( 'until', $this->getUntil() );
+        $command->setOption('until', $this->getUntil());
 
-        $command->addDoubleDash( true );
+        $command->addDoubleDash(true);
         if (null !== $this->getPaths()) {
-            $command->addDoubleDash( false );
-            $paths = explode( PATH_SEPARATOR, $this->getPaths() );
+            $command->addDoubleDash(false);
+            $paths = explode(PATH_SEPARATOR, $this->getPaths());
             foreach ($paths as $path) {
-                $command->addArgument( $path );
+                $command->addArgument($path);
             }
         }
 
-        $this->log( 'git-log command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-log command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed', $e);
         }
 
         if (null !== $this->outputProperty) {
-            $this->project->setProperty( $this->outputProperty, $output );
+            $this->project->setProperty($this->outputProperty, $output);
         }
 
         $this->log(
-            sprintf( 'git-log: commit log for "%s" repository', $this->getRepository() ),
+            sprintf('git-log: commit log for "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
-        $this->log( 'git-log output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-log output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -177,7 +177,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $stat
      */
-    public function setStat( $stat )
+    public function setStat($stat)
     {
 
         $this->stat = $stat;
@@ -195,7 +195,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $format
      */
-    public function setFormat( $format )
+    public function setFormat($format)
     {
 
         $this->format = $format;
@@ -213,7 +213,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $count
      */
-    public function setMaxCount( $count )
+    public function setMaxCount($count)
     {
 
         $this->maxCount = (int)$count;
@@ -231,7 +231,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $date
      */
-    public function setDate( $date )
+    public function setDate($date)
     {
 
         $this->date = $date;
@@ -267,7 +267,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $paths
      */
-    public function setPaths( $paths )
+    public function setPaths($paths)
     {
 
         $this->paths = $paths;
@@ -294,7 +294,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNameStatus( $flag )
+    public function setNameStatus($flag)
     {
 
         $this->nameStatus = (boolean)$flag;
@@ -321,7 +321,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoMerges( $flag )
+    public function setNoMerges($flag)
     {
 
         $this->noMerges = (bool)$flag;
@@ -330,16 +330,16 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $after
      */
-    public function setAfter( $after )
+    public function setAfter($after)
     {
 
-        $this->setSince( $after );
+        $this->setSince($after);
     }
 
     /**
      * @param $since
      */
-    public function setSince( $since )
+    public function setSince($since)
     {
 
         $this->sinceCommit = $since;
@@ -348,16 +348,16 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $before
      */
-    public function setBefore( $before )
+    public function setBefore($before)
     {
 
-        $this->setUntil( $before );
+        $this->setUntil($before);
     }
 
     /**
      * @param $until
      */
-    public function setUntil( $until )
+    public function setUntil($until)
     {
 
         $this->untilCommit = $until;
@@ -366,7 +366,7 @@ class GitLogTask extends GitBaseTask
     /**
      * @param $prop
      */
-    public function setOutputProperty( $prop )
+    public function setOutputProperty($prop)
     {
 
         $this->outputProperty = $prop;

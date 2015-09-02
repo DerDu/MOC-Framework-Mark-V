@@ -60,7 +60,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -87,7 +87,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         // checking from there, rather than the current token.
         $lineStart = ( $stackPtr - 1 );
         for ($lineStart; $lineStart > 0; $lineStart--) {
-            if (strpos( $tokens[$lineStart]['content'], $phpcsFile->eolChar ) !== false) {
+            if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
                 break;
             }
         }
@@ -95,7 +95,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         // We found a new line, now go forward and find the first non-whitespace
         // token.
         $lineStart = $phpcsFile->findNext(
-            array( T_WHITESPACE ),
+            array(T_WHITESPACE),
             ( $lineStart + 1 ),
             null,
             true
@@ -105,7 +105,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         // Check that the closing brace is on it's own line.
         $lastContent = $phpcsFile->findPrevious(
-            array( T_WHITESPACE ),
+            array(T_WHITESPACE),
             ( $scopeEnd - 1 ),
             $scopeStart,
             true
@@ -113,13 +113,13 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
-            $phpcsFile->addError( $error, $scopeEnd, 'Line' );
+            $phpcsFile->addError($error, $scopeEnd, 'Line');
             return;
         }
 
         // Check now that the closing brace is lined up correctly.
         $braceIndent = $tokens[$scopeEnd]['column'];
-        if (in_array( $tokens[$stackPtr]['code'], array( T_CASE, T_DEFAULT ) ) === true) {
+        if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === true) {
             // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.
             if ($braceIndent !== ( $startColumn + $this->indent )) {
@@ -128,7 +128,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
                     ( $startColumn + $this->indent - 1 ),
                     ( $braceIndent - 1 ),
                 );
-                $phpcsFile->addError( $error, $scopeEnd, 'BreakIdent', $data );
+                $phpcsFile->addError($error, $scopeEnd, 'BreakIdent', $data);
             }
         } else {
             if ($braceIndent !== $startColumn) {
@@ -137,7 +137,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
                     ( $startColumn - 1 ),
                     ( $braceIndent - 1 ),
                 );
-                $phpcsFile->addError( $error, $scopeEnd, 'Indent', $data );
+                $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
         }
 

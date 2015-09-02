@@ -22,10 +22,10 @@ class Twig_Filter_Node extends Twig_Filter
 
     protected $class;
 
-    public function __construct( $class, array $options = array() )
+    public function __construct($class, array $options = array())
     {
 
-        parent::__construct( $options );
+        parent::__construct($options);
 
         $this->class = $class;
     }

@@ -77,22 +77,22 @@ class ContainsRegexpSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::EXPRESSION_KEY:
-                        $this->setExpression( $parameters[$i]->getValue() );
+                        $this->setExpression($parameters[$i]->getValue());
                         break;
                     case self::CASE_KEY:
-                        $this->setCasesensitive( $parameters[$i]->getValue() );
+                        $this->setCasesensitive($parameters[$i]->getValue());
                         break;
                     default:
-                        $this->setError( "Invalid parameter ".$paramname );
+                        $this->setError("Invalid parameter ".$paramname);
                 }
             } // for each param
         } // if params
@@ -103,7 +103,7 @@ class ContainsRegexpSelector extends BaseExtendSelector
      *
      * @param string $exp the string that a file must contain to be selected.
      */
-    public function setExpression( $exp )
+    public function setExpression($exp)
     {
 
         $this->userProvidedExpression = $exp;
@@ -114,7 +114,7 @@ class ContainsRegexpSelector extends BaseExtendSelector
      *
      * @param boolean $casesensitive whether to pay attention to case sensitivity
      */
-    public function setCasesensitive( $casesensitive )
+    public function setCasesensitive($casesensitive)
     {
 
         $this->casesensitive = $casesensitive;
@@ -129,7 +129,7 @@ class ContainsRegexpSelector extends BaseExtendSelector
     {
 
         if ($this->userProvidedExpression === null) {
-            $this->setError( "The expression attribute is required" );
+            $this->setError("The expression attribute is required");
         }
     }
 
@@ -145,7 +145,7 @@ class ContainsRegexpSelector extends BaseExtendSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -156,19 +156,19 @@ class ContainsRegexpSelector extends BaseExtendSelector
 
         if ($this->myRegExp === null) {
             $this->myRegExp = new RegularExpression();
-            $this->myRegExp->setPattern( $this->userProvidedExpression );
+            $this->myRegExp->setPattern($this->userProvidedExpression);
             if (!$this->casesensitive) {
-                $this->myRegExp->setIgnoreCase( true );
+                $this->myRegExp->setIgnoreCase(true);
             }
-            $this->myExpression = $this->myRegExp->getRegexp( $this->getProject() );
+            $this->myExpression = $this->myRegExp->getRegexp($this->getProject());
         }
 
         $in = null;
         try {
-            $in = new BufferedReader( new FileReader( $file ) );
+            $in = new BufferedReader(new FileReader($file));
             $teststr = $in->readLine();
             while ($teststr !== null) {
-                if ($this->myExpression->matches( $teststr )) {
+                if ($this->myExpression->matches($teststr)) {
                     return true;
                 }
                 $teststr = $in->readLine();
@@ -177,11 +177,11 @@ class ContainsRegexpSelector extends BaseExtendSelector
             $in->close();
 
             return false;
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             if ($in) {
                 $in->close();
             }
-            throw new BuildException( "Could not read file ".$filename );
+            throw new BuildException("Could not read file ".$filename);
         }
     }
 

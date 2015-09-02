@@ -1,10 +1,10 @@
-jQuery( document ).ready(
+jQuery(document).ready(
     function()
     {
-        var hash = window.location.hash.replace( /^#/, '' );
+        var hash = window.location.hash.replace(/^#/, '');
 
         if (hash) {
-            jQuery( '#main-frame' ).attr( 'src', hash );
+            jQuery('#main-frame').attr('src', hash);
 
             if (history.pushState) {
                 history.pushState(

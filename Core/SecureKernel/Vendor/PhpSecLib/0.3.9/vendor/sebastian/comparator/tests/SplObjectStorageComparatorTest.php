@@ -31,9 +31,9 @@ class SplObjectStorageComparatorTest extends \PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( new SplObjectStorage, new stdClass ),
-            array( new stdClass, new SplObjectStorage ),
-            array( new stdClass, new stdClass )
+            array(new SplObjectStorage, new stdClass),
+            array(new stdClass, new SplObjectStorage),
+            array(new stdClass, new stdClass)
         );
     }
 
@@ -47,18 +47,18 @@ class SplObjectStorageComparatorTest extends \PHPUnit_Framework_TestCase
         $storage2 = new SplObjectStorage();
 
         $storage3 = new SplObjectStorage();
-        $storage3->attach( $object1 );
-        $storage3->attach( $object2 );
+        $storage3->attach($object1);
+        $storage3->attach($object2);
 
         $storage4 = new SplObjectStorage();
-        $storage4->attach( $object2 );
-        $storage4->attach( $object1 );
+        $storage4->attach($object2);
+        $storage4->attach($object1);
 
         return array(
-            array( $storage1, $storage1 ),
-            array( $storage1, $storage2 ),
-            array( $storage3, $storage3 ),
-            array( $storage3, $storage4 )
+            array($storage1, $storage1),
+            array($storage1, $storage2),
+            array($storage3, $storage3),
+            array($storage3, $storage4)
         );
     }
 
@@ -71,16 +71,16 @@ class SplObjectStorageComparatorTest extends \PHPUnit_Framework_TestCase
         $storage1 = new SplObjectStorage;
 
         $storage2 = new SplObjectStorage;
-        $storage2->attach( $object1 );
+        $storage2->attach($object1);
 
         $storage3 = new SplObjectStorage;
-        $storage3->attach( $object2 );
-        $storage3->attach( $object1 );
+        $storage3->attach($object2);
+        $storage3->attach($object1);
 
         return array(
-            array( $storage1, $storage2 ),
-            array( $storage1, $storage3 ),
-            array( $storage2, $storage3 ),
+            array($storage1, $storage2),
+            array($storage1, $storage3),
+            array($storage2, $storage3),
         );
     }
 
@@ -102,11 +102,11 @@ class SplObjectStorageComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::accepts
      * @dataProvider acceptsFailsProvider
      */
-    public function testAcceptsFails( $expected, $actual )
+    public function testAcceptsFails($expected, $actual)
     {
 
         $this->assertFalse(
-            $this->comparator->accepts( $expected, $actual )
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -114,31 +114,31 @@ class SplObjectStorageComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::assertEquals
      * @dataProvider assertEqualsSucceedsProvider
      */
-    public function testAssertEqualsSucceeds( $expected, $actual )
+    public function testAssertEqualsSucceeds($expected, $actual)
     {
 
         $exception = null;
 
         try {
-            $this->comparator->assertEquals( $expected, $actual );
-        } catch( ComparisonFailure $exception ) {
+            $this->comparator->assertEquals($expected, $actual);
+        } catch (ComparisonFailure $exception) {
         }
 
-        $this->assertNull( $exception, 'Unexpected ComparisonFailure' );
+        $this->assertNull($exception, 'Unexpected ComparisonFailure');
     }
 
     /**
      * @covers       ::assertEquals
      * @dataProvider assertEqualsFailsProvider
      */
-    public function testAssertEqualsFails( $expected, $actual )
+    public function testAssertEqualsFails($expected, $actual)
     {
 
         $this->setExpectedException(
             'SebastianBergmann\\Comparator\\ComparisonFailure',
             'Failed asserting that two objects are equal.'
         );
-        $this->comparator->assertEquals( $expected, $actual );
+        $this->comparator->assertEquals($expected, $actual);
     }
 
     protected function setUp()

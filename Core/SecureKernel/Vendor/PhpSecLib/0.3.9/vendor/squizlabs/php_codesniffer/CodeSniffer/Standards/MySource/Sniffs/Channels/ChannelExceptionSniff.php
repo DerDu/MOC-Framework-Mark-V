@@ -35,7 +35,7 @@ class MySource_Sniffs_Channels_ChannelExceptionSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_THROW );
+        return array(T_THROW);
 
     }//end register()
 
@@ -49,25 +49,25 @@ class MySource_Sniffs_Channels_ChannelExceptionSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $fileName = strtolower( $phpcsFile->getFilename() );
+        $fileName = strtolower($phpcsFile->getFilename());
         $matches = array();
-        if (preg_match( '|/systems/(.*)/([^/]+)?actions.inc$|', $fileName, $matches ) === 0) {
+        if (preg_match('|/systems/(.*)/([^/]+)?actions.inc$|', $fileName, $matches) === 0) {
             // This is not an actions.inc file.
             return;
         }
 
         $tokens = $phpcsFile->getTokens();
 
-        $exception = $phpcsFile->findNext( array( T_STRING, T_VARIABLE ), ( $stackPtr + 1 ) );
+        $exception = $phpcsFile->findNext(array(T_STRING, T_VARIABLE), ( $stackPtr + 1 ));
         $exceptionName = $tokens[$exception]['content'];
 
         if ($exceptionName !== 'ChannelException') {
-            $data = array( $exceptionName );
+            $data = array($exceptionName);
             $error = 'Channel actions can only throw ChannelException; found "%s"';
-            $phpcsFile->addError( $error, $exception, 'WrongExceptionType', $data );
+            $phpcsFile->addError($error, $exception, 'WrongExceptionType', $data);
         }
 
     }//end process()

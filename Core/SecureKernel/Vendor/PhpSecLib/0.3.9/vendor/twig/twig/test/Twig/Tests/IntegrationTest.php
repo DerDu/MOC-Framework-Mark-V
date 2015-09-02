@@ -23,11 +23,11 @@ class Twig_Tests_IntegrationTest extends Twig_Test_IntegrationTestCase
     public function getExtensions()
     {
 
-        $policy = new Twig_Sandbox_SecurityPolicy( array(), array(), array(), array(), array() );
+        $policy = new Twig_Sandbox_SecurityPolicy(array(), array(), array(), array(), array());
 
         return array(
             new Twig_Extension_Debug(),
-            new Twig_Extension_Sandbox( $policy, false ),
+            new Twig_Extension_Sandbox($policy, false),
             new Twig_Extension_StringLoader(),
             new TwigTestExtension(),
         );
@@ -36,11 +36,11 @@ class Twig_Tests_IntegrationTest extends Twig_Test_IntegrationTestCase
     public function getFixturesDir()
     {
 
-        return dirname( __FILE__ ).'/Fixtures/';
+        return dirname(__FILE__).'/Fixtures/';
     }
 }
 
-function test_foo( $value = 'foo' )
+function test_foo($value = 'foo')
 {
 
     return $value;
@@ -52,9 +52,9 @@ class TwigTestFoo implements Iterator
     const BAR_NAME = 'bar';
 
     public $position = 0;
-    public $array = array( 1, 2 );
+    public $array = array(1, 2);
 
-    public function bar( $param1 = null, $param2 = null )
+    public function bar($param1 = null, $param2 = null)
     {
 
         return 'bar'.( $param1 ? '_'.$param1 : '' ).( $param2 ? '-'.$param2 : '' );
@@ -90,10 +90,10 @@ class TwigTestFoo implements Iterator
         return 'not';
     }
 
-    public function strToLower( $value )
+    public function strToLower($value)
     {
 
-        return strtolower( $value );
+        return strtolower($value);
     }
 
     public function rewind()
@@ -130,12 +130,12 @@ class TwigTestFoo implements Iterator
 class TwigTestTokenParser_§ extends Twig_TokenParser
 {
 
-    public function parse( Twig_Token $token )
+    public function parse(Twig_Token $token)
     {
 
-        $this->parser->getStream()->expect( Twig_Token::BLOCK_END_TYPE );
+        $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
 
-        return new Twig_Node_Print( new Twig_Node_Expression_Constant( '§', -1 ), -1 );
+        return new Twig_Node_Print(new Twig_Node_Expression_Constant('§', -1), -1);
     }
 
     public function getTag()
@@ -160,17 +160,17 @@ class TwigTestExtension extends Twig_Extension
     {
 
         return array(
-            new Twig_SimpleFilter( '§', array( $this, '§Filter' ) ),
-            new Twig_SimpleFilter( 'escape_and_nl2br', array( $this, 'escape_and_nl2br' ),
-                array( 'needs_environment' => true, 'is_safe' => array( 'html' ) ) ),
-            new Twig_SimpleFilter( 'nl2br', array( $this, 'nl2br' ),
-                array( 'pre_escape' => 'html', 'is_safe' => array( 'html' ) ) ),
-            new Twig_SimpleFilter( 'escape_something', array( $this, 'escape_something' ),
-                array( 'is_safe' => array( 'something' ) ) ),
-            new Twig_SimpleFilter( 'preserves_safety', array( $this, 'preserves_safety' ),
-                array( 'preserves_safety' => array( 'html' ) ) ),
-            new Twig_SimpleFilter( '*_path', array( $this, 'dynamic_path' ) ),
-            new Twig_SimpleFilter( '*_foo_*_bar', array( $this, 'dynamic_foo' ) ),
+            new Twig_SimpleFilter('§', array($this, '§Filter')),
+            new Twig_SimpleFilter('escape_and_nl2br', array($this, 'escape_and_nl2br'),
+                array('needs_environment' => true, 'is_safe' => array('html'))),
+            new Twig_SimpleFilter('nl2br', array($this, 'nl2br'),
+                array('pre_escape' => 'html', 'is_safe' => array('html'))),
+            new Twig_SimpleFilter('escape_something', array($this, 'escape_something'),
+                array('is_safe' => array('something'))),
+            new Twig_SimpleFilter('preserves_safety', array($this, 'preserves_safety'),
+                array('preserves_safety' => array('html'))),
+            new Twig_SimpleFilter('*_path', array($this, 'dynamic_path')),
+            new Twig_SimpleFilter('*_foo_*_bar', array($this, 'dynamic_foo')),
         );
     }
 
@@ -178,11 +178,11 @@ class TwigTestExtension extends Twig_Extension
     {
 
         return array(
-            new Twig_SimpleFunction( '§', array( $this, '§Function' ) ),
-            new Twig_SimpleFunction( 'safe_br', array( $this, 'br' ), array( 'is_safe' => array( 'html' ) ) ),
-            new Twig_SimpleFunction( 'unsafe_br', array( $this, 'br' ) ),
-            new Twig_SimpleFunction( '*_path', array( $this, 'dynamic_path' ) ),
-            new Twig_SimpleFunction( '*_foo_*_bar', array( $this, 'dynamic_foo' ) ),
+            new Twig_SimpleFunction('§', array($this, '§Function')),
+            new Twig_SimpleFunction('safe_br', array($this, 'br'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('unsafe_br', array($this, 'br')),
+            new Twig_SimpleFunction('*_path', array($this, 'dynamic_path')),
+            new Twig_SimpleFunction('*_foo_*_bar', array($this, 'dynamic_foo')),
         );
     }
 
@@ -190,17 +190,17 @@ class TwigTestExtension extends Twig_Extension
     {
 
         return array(
-            new Twig_SimpleTest( 'multi word', array( $this, 'is_multi_word' ) ),
+            new Twig_SimpleTest('multi word', array($this, 'is_multi_word')),
         );
     }
 
-    public function §Filter( $value )
+    public function §Filter($value)
     {
 
         return "§{$value}§";
     }
 
-    public function §Function( $value )
+    public function §Function($value)
     {
 
         return "§{$value}§";
@@ -209,45 +209,45 @@ class TwigTestExtension extends Twig_Extension
     /**
      * nl2br which also escapes, for testing escaper filters
      */
-    public function escape_and_nl2br( $env, $value, $sep = '<br />' )
+    public function escape_and_nl2br($env, $value, $sep = '<br />')
     {
 
-        return $this->nl2br( twig_escape_filter( $env, $value, 'html' ), $sep );
+        return $this->nl2br(twig_escape_filter($env, $value, 'html'), $sep);
     }
 
     /**
      * nl2br only, for testing filters with pre_escape
      */
-    public function nl2br( $value, $sep = '<br />' )
+    public function nl2br($value, $sep = '<br />')
     {
 
         // not secure if $value contains html tags (not only entities)
         // don't use
-        return str_replace( "\n", "$sep\n", $value );
+        return str_replace("\n", "$sep\n", $value);
     }
 
-    public function dynamic_path( $element, $item )
+    public function dynamic_path($element, $item)
     {
 
         return $element.'/'.$item;
     }
 
-    public function dynamic_foo( $foo, $bar, $item )
+    public function dynamic_foo($foo, $bar, $item)
     {
 
         return $foo.'/'.$bar.'/'.$item;
     }
 
-    public function escape_something( $value )
+    public function escape_something($value)
     {
 
-        return strtoupper( $value );
+        return strtoupper($value);
     }
 
-    public function preserves_safety( $value )
+    public function preserves_safety($value)
     {
 
-        return strtoupper( $value );
+        return strtoupper($value);
     }
 
     public function br()
@@ -256,10 +256,10 @@ class TwigTestExtension extends Twig_Extension
         return '<br />';
     }
 
-    public function is_multi_word( $value )
+    public function is_multi_word($value)
     {
 
-        return false !== strpos( $value, ' ' );
+        return false !== strpos($value, ' ');
     }
 
     public function getName()

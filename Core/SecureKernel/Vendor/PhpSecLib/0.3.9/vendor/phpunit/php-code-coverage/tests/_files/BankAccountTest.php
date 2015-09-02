@@ -3,6 +3,7 @@ require_once 'BankAccount.php';
 
 class BankAccountTest extends PHPUnit_Framework_TestCase
 {
+
     protected $ba;
 
     /**
@@ -19,6 +20,7 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative()
     {
+
         try {
             $this->ba->withdrawMoney(1);
         } catch (RuntimeException $e) {
@@ -35,6 +37,7 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative2()
     {
+
         try {
             $this->ba->depositMoney(-1);
         } catch (RuntimeException $e) {

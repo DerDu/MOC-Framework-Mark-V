@@ -36,10 +36,10 @@ class FileWriter extends OutputStreamWriter
      * @param mixed   $file   PhingFile or string pathname.
      * @param boolean $append Append to existing file?
      */
-    public function __construct( $file, $append = false )
+    public function __construct($file, $append = false)
     {
 
-        $out = new FileOutputStream( $file, $append );
-        parent::__construct( $out );
+        $out = new FileOutputStream($file, $append);
+        parent::__construct($out);
     }
 }

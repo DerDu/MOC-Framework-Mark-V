@@ -50,8 +50,8 @@ class BuildPhingPEARPackageTask extends MatchingTask
     {
 
         include_once 'PEAR/PackageFileManager2.php';
-        if (!class_exists( 'PEAR_PackageFileManager2' )) {
-            throw new BuildException( "You must have installed PEAR_PackageFileManager2 (PEAR_PackageFileManager >= 1.6.0) in order to create a PEAR package.xml file." );
+        if (!class_exists('PEAR_PackageFileManager2')) {
+            throw new BuildException("You must have installed PEAR_PackageFileManager2 (PEAR_PackageFileManager >= 1.6.0) in order to create a PEAR package.xml file.");
         }
     }
 
@@ -64,46 +64,46 @@ class BuildPhingPEARPackageTask extends MatchingTask
     {
 
         if ($this->dir === null) {
-            throw new BuildException( "You must specify the \"dir\" attribute for PEAR package task." );
+            throw new BuildException("You must specify the \"dir\" attribute for PEAR package task.");
         }
 
         if ($this->version === null) {
-            throw new BuildException( "You must specify the \"version\" attribute for PEAR package task." );
+            throw new BuildException("You must specify the \"version\" attribute for PEAR package task.");
         }
 
         $package = new PEAR_PackageFileManager2();
 
-        $this->setOptions( $package );
+        $this->setOptions($package);
 
         // the hard-coded stuff
         if ($this->mode == "docs") {
-            $package->setPackage( 'phingdocs' );
-            $package->setSummary( 'PHP5 project build system based on Apache Ant (documentation)' );
+            $package->setPackage('phingdocs');
+            $package->setSummary('PHP5 project build system based on Apache Ant (documentation)');
         } else {
-            $package->setPackage( 'phing' );
-            $package->setSummary( 'PHP5 project build system based on Apache Ant' );
+            $package->setPackage('phing');
+            $package->setSummary('PHP5 project build system based on Apache Ant');
         }
 
-        $package->setDescription( 'PHing Is Not GNU make; it\'s a project build system based on Apache Ant.
+        $package->setDescription('PHing Is Not GNU make; it\'s a project build system based on Apache Ant.
 You can do anything with it that you could do with a traditional build system like GNU make, and its use of
 simple XML build files and extensible PHP "task" classes make it an easy-to-use and highly flexible build framework.
 Features include file transformations (e.g. token replacement, XSLT transformation, Smarty template transformations,
-etc.), file system operations, interactive build support, SQL execution, and much more.' );
-        $package->setChannel( 'pear.phing.info' );
-        $package->setPackageType( 'php' );
+etc.), file system operations, interactive build support, SQL execution, and much more.');
+        $package->setChannel('pear.phing.info');
+        $package->setPackageType('php');
 
-        $package->setReleaseVersion( $this->version );
-        $package->setAPIVersion( $this->version );
+        $package->setReleaseVersion($this->version);
+        $package->setAPIVersion($this->version);
 
-        $package->setReleaseStability( $this->state );
-        $package->setAPIStability( $this->state );
+        $package->setReleaseStability($this->state);
+        $package->setAPIStability($this->state);
 
-        $package->setNotes( $this->notes );
+        $package->setNotes($this->notes);
 
-        $package->setLicense( 'LGPL', 'http://www.gnu.org/licenses/lgpl.html' );
+        $package->setLicense('LGPL', 'http://www.gnu.org/licenses/lgpl.html');
 
         // Add package maintainers
-        $package->addMaintainer( 'lead', 'mrook', 'Michiel Rook', 'mrook@php.net' );
+        $package->addMaintainer('lead', 'mrook', 'Michiel Rook', 'mrook@php.net');
 
         // (wow ... this is a poor design ...)
         //
@@ -118,72 +118,72 @@ etc.), file system operations, interactive build support, SQL execution, and muc
         if ($this->mode != "docs") {
             // creating a sub-section for 'windows'
             $package->addRelease();
-            $package->setOSInstallCondition( 'windows' );
-            $package->addInstallAs( 'bin/phing.php', 'phing.php' );
-            $package->addInstallAs( 'bin/pear-phing.bat', 'phing.bat' );
-            $package->addIgnoreToRelease( 'bin/pear-phing' );
+            $package->setOSInstallCondition('windows');
+            $package->addInstallAs('bin/phing.php', 'phing.php');
+            $package->addInstallAs('bin/pear-phing.bat', 'phing.bat');
+            $package->addIgnoreToRelease('bin/pear-phing');
 
             // creating a sub-section for non-windows
             $package->addRelease();
-            $package->addInstallAs( 'bin/phing.php', 'phing.php' );
-            $package->addInstallAs( 'bin/pear-phing', 'phing' );
-            $package->addIgnoreToRelease( 'bin/pear-phing.bat' );
+            $package->addInstallAs('bin/phing.php', 'phing.php');
+            $package->addInstallAs('bin/pear-phing', 'phing');
+            $package->addIgnoreToRelease('bin/pear-phing.bat');
         }
 
         // "core" dependencies
-        $package->setPhpDep( '5.2.0' );
-        $package->setPearinstallerDep( '1.8.0' );
+        $package->setPhpDep('5.2.0');
+        $package->setPearinstallerDep('1.8.0');
 
         // "package" dependencies
         if ($this->mode != "docs") {
-            $package->addPackageDepWithChannel( 'optional', 'phingdocs', 'pear.phing.info', $this->version );
-            $package->addPackageDepWithChannel( 'optional', 'VersionControl_SVN', 'pear.php.net', '0.4.0' );
-            $package->addPackageDepWithChannel( 'optional', 'VersionControl_Git', 'pear.php.net', '0.4.3' );
-            $package->addPackageDepWithChannel( 'optional', 'Xdebug', 'pecl.php.net', '2.0.5' );
-            $package->addPackageDepWithChannel( 'optional', 'Archive_Tar', 'pear.php.net', '1.3.8' );
-            $package->addPackageDepWithChannel( 'optional', 'PEAR_PackageFileManager', 'pear.php.net', '1.5.2' );
-            $package->addPackageDepWithChannel( 'optional', 'Services_Amazon_S3', 'pear.php.net', '0.3.1' );
-            $package->addPackageDepWithChannel( 'optional', 'HTTP_Request2', 'pear.php.net', '2.1.1' );
-            $package->addPackageDepWithChannel( 'optional', 'PHP_Depend', 'pear.pdepend.org', '0.10.0' );
-            $package->addPackageDepWithChannel( 'optional', 'PHP_PMD', 'pear.phpmd.org', '1.1.0' );
-            $package->addPackageDepWithChannel( 'optional', 'phpDocumentor', 'pear.phpdoc.org', '2.0.0b7' );
-            $package->addPackageDepWithChannel( 'optional', 'PHP_CodeSniffer', 'pear.php.net', '1.5.0' );
-            $package->addPackageDepWithChannel( 'optional', 'Net_Growl', 'pear.php.net', '2.6.0' );
+            $package->addPackageDepWithChannel('optional', 'phingdocs', 'pear.phing.info', $this->version);
+            $package->addPackageDepWithChannel('optional', 'VersionControl_SVN', 'pear.php.net', '0.4.0');
+            $package->addPackageDepWithChannel('optional', 'VersionControl_Git', 'pear.php.net', '0.4.3');
+            $package->addPackageDepWithChannel('optional', 'Xdebug', 'pecl.php.net', '2.0.5');
+            $package->addPackageDepWithChannel('optional', 'Archive_Tar', 'pear.php.net', '1.3.8');
+            $package->addPackageDepWithChannel('optional', 'PEAR_PackageFileManager', 'pear.php.net', '1.5.2');
+            $package->addPackageDepWithChannel('optional', 'Services_Amazon_S3', 'pear.php.net', '0.3.1');
+            $package->addPackageDepWithChannel('optional', 'HTTP_Request2', 'pear.php.net', '2.1.1');
+            $package->addPackageDepWithChannel('optional', 'PHP_Depend', 'pear.pdepend.org', '0.10.0');
+            $package->addPackageDepWithChannel('optional', 'PHP_PMD', 'pear.phpmd.org', '1.1.0');
+            $package->addPackageDepWithChannel('optional', 'phpDocumentor', 'pear.phpdoc.org', '2.0.0b7');
+            $package->addPackageDepWithChannel('optional', 'PHP_CodeSniffer', 'pear.php.net', '1.5.0');
+            $package->addPackageDepWithChannel('optional', 'Net_Growl', 'pear.php.net', '2.6.0');
 
             // now add the replacements, chdir() to source directory
             // to allow addReplacement() to find the specified files
             $cwd = getcwd();
-            chdir( $this->dir->getAbsolutePath() );
+            chdir($this->dir->getAbsolutePath());
 
-            $package->addReplacement( 'Phing.php', 'pear-config', '@DATA-DIR@', 'data_dir' );
-            $package->addReplacement( 'bin/pear-phing.bat', 'pear-config', '@PHP-BIN@', 'php_bin' );
-            $package->addReplacement( 'bin/pear-phing.bat', 'pear-config', '@BIN-DIR@', 'bin_dir' );
-            $package->addReplacement( 'bin/pear-phing.bat', 'pear-config', '@PEAR-DIR@', 'php_dir' );
-            $package->addReplacement( 'bin/pear-phing', 'pear-config', '@PHP-BIN@', 'php_bin' );
-            $package->addReplacement( 'bin/pear-phing', 'pear-config', '@BIN-DIR@', 'bin_dir' );
-            $package->addReplacement( 'bin/pear-phing', 'pear-config', '@PEAR-DIR@', 'php_dir' );
+            $package->addReplacement('Phing.php', 'pear-config', '@DATA-DIR@', 'data_dir');
+            $package->addReplacement('bin/pear-phing.bat', 'pear-config', '@PHP-BIN@', 'php_bin');
+            $package->addReplacement('bin/pear-phing.bat', 'pear-config', '@BIN-DIR@', 'bin_dir');
+            $package->addReplacement('bin/pear-phing.bat', 'pear-config', '@PEAR-DIR@', 'php_dir');
+            $package->addReplacement('bin/pear-phing', 'pear-config', '@PHP-BIN@', 'php_bin');
+            $package->addReplacement('bin/pear-phing', 'pear-config', '@BIN-DIR@', 'bin_dir');
+            $package->addReplacement('bin/pear-phing', 'pear-config', '@PEAR-DIR@', 'php_dir');
 
-            chdir( $cwd );
+            chdir($cwd);
         }
 
         $package->generateContents();
 
         $e = $package->writePackageFile();
 
-        if (PEAR::isError( $e )) {
-            throw new BuildException( "Unable to write package file.", new Exception( $e->getMessage() ) );
+        if (PEAR::isError($e)) {
+            throw new BuildException("Unable to write package file.", new Exception($e->getMessage()));
         }
 
     }
 
-    private function setOptions( $pkg )
+    private function setOptions($pkg)
     {
 
         $options['baseinstalldir'] = 'phing';
         $options['packagedirectory'] = $this->dir->getAbsolutePath();
 
         if (empty( $this->filesets )) {
-            throw new BuildException( "You must use a <fileset> tag to specify the files to include in the package.xml" );
+            throw new BuildException("You must use a <fileset> tag to specify the files to include in the package.xml");
         }
 
         $options['filelistgenerator'] = 'Fileset';
@@ -194,13 +194,13 @@ etc.), file system operations, interactive build support, SQL execution, and muc
 
         if ($this->packageFile !== null) {
             // create one w/ full path
-            $f = new PhingFile( $this->packageFile->getAbsolutePath() );
+            $f = new PhingFile($this->packageFile->getAbsolutePath());
             $options['packagefile'] = $f->getName();
             // must end in trailing slash
             $options['outputdirectory'] = $f->getParent().DIRECTORY_SEPARATOR;
-            $this->log( "Creating package file: ".$f->getPath(), Project::MSG_INFO );
+            $this->log("Creating package file: ".$f->getPath(), Project::MSG_INFO);
         } else {
-            $this->log( "Creating [default] package.xml file in base directory.", Project::MSG_INFO );
+            $this->log("Creating [default] package.xml file in base directory.", Project::MSG_INFO);
         }
 
         if ($this->mode == "docs") {
@@ -217,7 +217,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
                 'bin/pear-phing.bat' => '/',
             );
 
-            $options['dir_roles'] = array( 'etc' => 'data' );
+            $options['dir_roles'] = array('etc' => 'data');
 
             $options['exceptions'] = array(
                 'bin/pear-phing.bat' => 'script',
@@ -229,7 +229,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
             );
         }
 
-        $pkg->setOptions( $options );
+        $pkg->setOptions($options);
 
     }
 
@@ -256,7 +256,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
     public function createFileSet()
     {
 
-        $num = array_push( $this->filesets, new FileSet() );
+        $num = array_push($this->filesets, new FileSet());
 
         return $this->filesets[$num - 1];
     }
@@ -268,7 +268,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
      *
      * @return void
      */
-    public function setVersion( $v )
+    public function setVersion($v)
     {
 
         $this->version = $v;
@@ -281,7 +281,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
      *
      * @return void
      */
-    public function setState( $v )
+    public function setState($v)
     {
 
         $this->state = $v;
@@ -294,7 +294,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
      *
      * @return void
      */
-    public function setNotes( $v )
+    public function setNotes($v)
     {
 
         $this->notes = $v;
@@ -307,7 +307,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
      *
      * @return void
      */
-    public function setDir( PhingFile $f )
+    public function setDir(PhingFile $f)
     {
 
         $this->dir = $f;
@@ -316,7 +316,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
     /**
      * Sets the file to use for generated package.xml
      */
-    public function setDestFile( PhingFile $f )
+    public function setDestFile(PhingFile $f)
     {
 
         $this->packageFile = $f;
@@ -329,7 +329,7 @@ etc.), file system operations, interactive build support, SQL execution, and muc
      *
      * @return void
      */
-    public function setMode( $v )
+    public function setMode($v)
     {
 
         $this->mode = $v;

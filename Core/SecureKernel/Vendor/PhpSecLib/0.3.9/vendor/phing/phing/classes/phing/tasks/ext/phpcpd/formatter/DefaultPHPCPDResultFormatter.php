@@ -39,12 +39,12 @@ class DefaultPHPCPDResultFormatter extends PHPCPDResultFormatter
      * @param boolean        $useFile
      * @param PhingFile|null $outFile
      */
-    public function processClones( $clones, Project $project, $useFile = false, $outFile = null )
+    public function processClones($clones, Project $project, $useFile = false, $outFile = null)
     {
 
-        if (get_class( $clones ) == 'SebastianBergmann\PHPCPD\CodeCloneMap') {
-            if (class_exists( 'SebastianBergmann\PHPCPD\Log\Text' )) {
-                $this->processClonesNew( $clones, $useFile, $outFile );
+        if (get_class($clones) == 'SebastianBergmann\PHPCPD\CodeCloneMap') {
+            if (class_exists('SebastianBergmann\PHPCPD\Log\Text')) {
+                $this->processClonesNew($clones, $useFile, $outFile);
 
                 return;
             }
@@ -56,14 +56,14 @@ class DefaultPHPCPDResultFormatter extends PHPCPDResultFormatter
 
         // default format goes to logs, no buffering
         ob_start();
-        $logger->printResult( $clones, $project->getBaseDir(), true );
+        $logger->printResult($clones, $project->getBaseDir(), true);
         $output = ob_get_contents();
         ob_end_clean();
 
         if (!$useFile || empty( $outFile )) {
             echo $output;
         } else {
-            file_put_contents( $outFile->getPath(), $output );
+            file_put_contents($outFile->getPath(), $output);
         }
     }
 
@@ -74,17 +74,17 @@ class DefaultPHPCPDResultFormatter extends PHPCPDResultFormatter
      * @param boolean        $useFile
      * @param PhingFile|null $outFile
      */
-    private function processClonesNew( $clones, $useFile = false, $outFile = null )
+    private function processClonesNew($clones, $useFile = false, $outFile = null)
     {
 
         if ($useFile) {
-            $resource = fopen( $outFile->getPath(), "w" );
+            $resource = fopen($outFile->getPath(), "w");
         } else {
-            $resource = fopen( "php://output", "w" );
+            $resource = fopen("php://output", "w");
         }
 
-        $output = new \Symfony\Component\Console\Output\StreamOutput( $resource );
+        $output = new \Symfony\Component\Console\Output\StreamOutput($resource);
         $logger = new \SebastianBergmann\PHPCPD\Log\Text();
-        $logger->printResult( $output, $clones );
+        $logger->printResult($output, $clones);
     }
 }

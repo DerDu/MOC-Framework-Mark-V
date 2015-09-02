@@ -79,33 +79,33 @@ class UnixFileSystem extends FileSystem
      *
      * @return string
      */
-    public function normalize( $strPathname )
+    public function normalize($strPathname)
     {
 
-        if (!strlen( $strPathname )) {
+        if (!strlen($strPathname)) {
             return;
         }
 
         // Start normalising after any scheme that is present.
         // This prevents phar:///foo being normalised into phar:/foo
         // Use a regex as some paths may not by parsed by parse_url().
-        if (preg_match( '{^[a-z][a-z0-9+\-\.]+://}', $strPathname )) {
-            $i = strpos( $strPathname, '://' ) + 3;
+        if (preg_match('{^[a-z][a-z0-9+\-\.]+://}', $strPathname)) {
+            $i = strpos($strPathname, '://') + 3;
         } else {
             $i = 0;
         }
 
-        $n = strlen( $strPathname );
+        $n = strlen($strPathname);
         $prevChar = 0;
         for (; $i < $n; $i++) {
             $c = $strPathname{$i};
             if (( $prevChar === '/' ) && ( $c === '/' )) {
-                return self::normalizer( $strPathname, $n, $i - 1 );
+                return self::normalizer($strPathname, $n, $i - 1);
             }
             $prevChar = $c;
         }
         if ($prevChar === '/') {
-            return self::normalizer( $strPathname, $n, $n - 1 );
+            return self::normalizer($strPathname, $n, $n - 1);
         }
 
         return $strPathname;
@@ -121,7 +121,7 @@ class UnixFileSystem extends FileSystem
      *
      * @return string
      */
-    protected function normalizer( $pathname, $len, $offset )
+    protected function normalizer($pathname, $len, $offset)
     {
 
         if ($len === 0) {
@@ -137,7 +137,7 @@ class UnixFileSystem extends FileSystem
         $sb = "";
 
         if ($offset > 0) {
-            $sb .= substr( $pathname, 0, $offset );
+            $sb .= substr($pathname, 0, $offset);
         }
         $prevChar = 0;
         for ($i = $offset; $i < $n; $i++) {
@@ -160,23 +160,23 @@ class UnixFileSystem extends FileSystem
      *
      * @return int
      */
-    public function prefixLength( $pathname )
+    public function prefixLength($pathname)
     {
 
-        if (strlen( $pathname ) === 0) {
+        if (strlen($pathname) === 0) {
             return 0;
         }
 
-        if (class_exists( 'Phar', false ) && method_exists( 'Phar', 'running' )) {
+        if (class_exists('Phar', false) && method_exists('Phar', 'running')) {
             $phar = Phar::running();
             $pharAlias = 'phar://'.Phing::PHAR_ALIAS;
 
-            if ($phar && strpos( $pathname, $phar ) === 0) {
-                return strlen( $phar );
+            if ($phar && strpos($pathname, $phar) === 0) {
+                return strlen($phar);
             }
 
-            if ($phar && strpos( $pathname, $pharAlias ) === 0) {
-                return strlen( $pharAlias );
+            if ($phar && strpos($pathname, $pharAlias) === 0) {
+                return strlen($pharAlias);
             }
         }
 
@@ -199,14 +199,14 @@ class UnixFileSystem extends FileSystem
      *
      * @return string
      */
-    public function resolveFile( PhingFile $f )
+    public function resolveFile(PhingFile $f)
     {
 
         // resolve if parent is a file oject only
-        if ($this->isAbsolute( $f )) {
+        if ($this->isAbsolute($f)) {
             return $f->getPath();
         } else {
-            return $this->resolve( Phing::getProperty( "user.dir" ), $f->getPath() );
+            return $this->resolve(Phing::getProperty("user.dir"), $f->getPath());
         }
     }
 
@@ -215,7 +215,7 @@ class UnixFileSystem extends FileSystem
      *
      * @return bool
      */
-    public function isAbsolute( PhingFile $f )
+    public function isAbsolute(PhingFile $f)
     {
 
         return ( $f->getPrefixLength() !== 0 );
@@ -231,7 +231,7 @@ class UnixFileSystem extends FileSystem
      *
      * @return string
      */
-    public function resolve( $parent, $child )
+    public function resolve($parent, $child)
     {
 
         if ($child === "") {
@@ -262,12 +262,12 @@ class UnixFileSystem extends FileSystem
      *
      * @return int
      */
-    public function getBooleanAttributes( $f )
+    public function getBooleanAttributes($f)
     {
 
         //$rv = getBooleanAttributes0($f);
         $name = $f->getName();
-        $hidden = ( strlen( $name ) > 0 ) && ( $name{0} == '.' );
+        $hidden = ( strlen($name) > 0 ) && ( $name{0} == '.' );
 
         return ( $hidden ? FileSystem::BA_HIDDEN : 0 );
     }
@@ -280,16 +280,16 @@ class UnixFileSystem extends FileSystem
      * @throws Exception
      * @throws IOException
      */
-    public function setReadOnly( $f )
+    public function setReadOnly($f)
     {
 
         if ($f instanceof PhingFile) {
             $strPath = (string)$f->getPath();
-            $perms = (int)( @fileperms( $strPath ) & 0444 );
+            $perms = (int)( @fileperms($strPath) & 0444 );
 
-            return FileSystem::getFileSystem()->chmod( $strPath, $perms );
+            return FileSystem::getFileSystem()->chmod($strPath, $perms);
         } else {
-            throw new Exception( "IllegalArgumentType: Argument is not File" );
+            throw new Exception("IllegalArgumentType: Argument is not File");
         }
     }
 
@@ -301,13 +301,13 @@ class UnixFileSystem extends FileSystem
      *
      * @return int|void
      */
-    public function compare( PhingFile $f1, PhingFile $f2 )
+    public function compare(PhingFile $f1, PhingFile $f2)
     {
 
         $f1Path = $f1->getPath();
         $f2Path = $f2->getPath();
 
-        return strcmp( (string)$f1Path, (string)$f2Path );
+        return strcmp((string)$f1Path, (string)$f2Path);
     }
 
     /**
@@ -319,22 +319,22 @@ class UnixFileSystem extends FileSystem
      * @return void
      * @throws Exception if file cannot be copied.
      */
-    public function copy( PhingFile $src, PhingFile $dest )
+    public function copy(PhingFile $src, PhingFile $dest)
     {
 
         global $php_errormsg;
 
         if (!$src->isLink()) {
-            return parent::copy( $src, $dest );
+            return parent::copy($src, $dest);
         }
 
         $srcPath = $src->getAbsolutePath();
         $destPath = $dest->getAbsolutePath();
 
         $linkTarget = $src->getLinkTarget();
-        if (false === @symlink( $linkTarget, $destPath )) {
+        if (false === @symlink($linkTarget, $destPath)) {
             $msg = "FileSystem::copy() FAILED. Cannot create symlink from $destPath to $linkTarget.";
-            throw new Exception( $msg );
+            throw new Exception($msg);
         }
     }
 
@@ -346,11 +346,11 @@ class UnixFileSystem extends FileSystem
     public function listRoots()
     {
 
-        if (!$this->checkAccess( '/', false )) {
+        if (!$this->checkAccess('/', false)) {
             die ( "Can not access root" );
         }
 
-        return array( new PhingFile( "/" ) );
+        return array(new PhingFile("/"));
     }
 
     /**
@@ -361,21 +361,21 @@ class UnixFileSystem extends FileSystem
      * @throws Exception
      * @return array
      */
-    public function lister( $f )
+    public function lister($f)
     {
 
-        $dir = @opendir( $f->getAbsolutePath() );
+        $dir = @opendir($f->getAbsolutePath());
         if (!$dir) {
-            throw new Exception( "Can't open directory ".$f->__toString() );
+            throw new Exception("Can't open directory ".$f->__toString());
         }
         $vv = array();
-        while (( $file = @readdir( $dir ) ) !== false) {
+        while (( $file = @readdir($dir) ) !== false) {
             if ($file == "." || $file == "..") {
                 continue;
             }
             $vv[] = (string)$file;
         }
-        @closedir( $dir );
+        @closedir($dir);
 
         return $vv;
     }
@@ -385,13 +385,13 @@ class UnixFileSystem extends FileSystem
      *
      * @return string
      */
-    public function fromURIPath( $p )
+    public function fromURIPath($p)
     {
 
-        if (StringHelper::endsWith( "/", $p ) && ( strlen( $p ) > 1 )) {
+        if (StringHelper::endsWith("/", $p) && ( strlen($p) > 1 )) {
 
             // "/foo/" --> "/foo", but "/" --> "/"
-            $p = substr( $p, 0, strlen( $p ) - 1 );
+            $p = substr($p, 0, strlen($p) - 1);
 
         }
 
@@ -405,13 +405,13 @@ class UnixFileSystem extends FileSystem
      *
      * @return boolean
      */
-    public function canDelete( PhingFile $f )
+    public function canDelete(PhingFile $f)
     {
 
         @clearstatcache();
-        $dir = dirname( $f->getAbsolutePath() );
+        $dir = dirname($f->getAbsolutePath());
 
-        return (bool)@is_writable( $dir );
+        return (bool)@is_writable($dir);
     }
 
 }

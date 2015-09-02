@@ -64,7 +64,7 @@ class PhpDependLoggerElement
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
@@ -78,7 +78,7 @@ class PhpDependLoggerElement
                 break;
 
             default:
-                throw new BuildException( 'Logger "'.$this->type.'" not implemented' );
+                throw new BuildException('Logger "'.$this->type.'" not implemented');
         }
     }
 
@@ -98,7 +98,7 @@ class PhpDependLoggerElement
      *
      * @param PhingFile $outfile The output file
      */
-    public function setOutfile( PhingFile $outfile )
+    public function setOutfile(PhingFile $outfile)
     {
 
         $this->outfile = $outfile;

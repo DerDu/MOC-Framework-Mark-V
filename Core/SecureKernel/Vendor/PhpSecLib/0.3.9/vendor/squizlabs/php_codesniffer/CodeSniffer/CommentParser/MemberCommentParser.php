@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_ClassCommentParser', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -59,7 +59,7 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    protected function parseVar( $tokens )
+    protected function parseVar($tokens)
     {
 
         $this->_var = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -81,7 +81,7 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
     protected function getAllowedTags()
     {
 
-        return array( 'var' => true );
+        return array('var' => true);
 
     }//end getAllowedTags()
 

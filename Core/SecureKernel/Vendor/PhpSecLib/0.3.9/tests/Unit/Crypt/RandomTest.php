@@ -11,7 +11,7 @@ class Unit_Crypt_RandomTest extends PhpseclibTestCase
     public function stringLengthData()
     {
 
-        return array_map( array( $this, 'wrap' ), array(
+        return array_map(array($this, 'wrap'), array(
             1,
             2,
             3,
@@ -52,16 +52,16 @@ class Unit_Crypt_RandomTest extends PhpseclibTestCase
             12345,
             100000,
             123456
-        ) );
+        ));
     }
 
     /** @dataProvider stringLengthData */
-    public function testStringLength( $length )
+    public function testStringLength($length)
     {
 
         $this->assertSame(
             $length,
-            strlen( crypt_random_string( $length ) ),
+            strlen(crypt_random_string($length)),
             'Failed asserting that a string of expected length was generated.'
         );
     }
@@ -75,8 +75,8 @@ class Unit_Crypt_RandomTest extends PhpseclibTestCase
 
         $values = array();
         for ($i = 0; $i < 10000; ++$i) {
-            $rand = crypt_random_string( 16 );
-            $this->assertSame( 16, strlen( $rand ) );
+            $rand = crypt_random_string(16);
+            $this->assertSame(16, strlen($rand));
             $this->assertArrayNotHasKey(
                 $rand,
                 $values,
@@ -86,10 +86,10 @@ class Unit_Crypt_RandomTest extends PhpseclibTestCase
         }
     }
 
-    protected function wrap( $x )
+    protected function wrap($x)
     {
 
         // array() is not a function, but $this->wrap() is.
-        return array( $x );
+        return array($x);
     }
 }

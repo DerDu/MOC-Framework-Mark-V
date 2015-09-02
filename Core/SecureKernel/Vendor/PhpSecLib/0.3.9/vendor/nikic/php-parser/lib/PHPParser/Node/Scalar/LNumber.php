@@ -12,7 +12,7 @@ class PHPParser_Node_Scalar_LNumber extends PHPParser_Node_Scalar
      * @param int   $value      Value of the number
      * @param array $attributes Additional attributes
      */
-    public function __construct( $value = 0, array $attributes = array() )
+    public function __construct($value = 0, array $attributes = array())
     {
 
         parent::__construct(
@@ -30,7 +30,7 @@ class PHPParser_Node_Scalar_LNumber extends PHPParser_Node_Scalar
      *
      * @return int The parsed number
      */
-    public static function parse( $str )
+    public static function parse($str)
     {
 
         // handle plain 0 specially
@@ -42,16 +42,16 @@ class PHPParser_Node_Scalar_LNumber extends PHPParser_Node_Scalar
         if ('0' === $str[0]) {
             // hex
             if ('x' === $str[1] || 'X' === $str[1]) {
-                return hexdec( $str );
+                return hexdec($str);
             }
 
             // bin
             if ('b' === $str[1] || 'B' === $str[1]) {
-                return bindec( $str );
+                return bindec($str);
             }
 
             // oct (intval instead of octdec to get proper cutting behavior with malformed numbers)
-            return intval( $str, 8 );
+            return intval($str, 8);
         }
 
         // dec

@@ -1,4 +1,5 @@
 <?php
+
 class DataProviderTest extends PHPUnit_Framework_TestCase
 {
 

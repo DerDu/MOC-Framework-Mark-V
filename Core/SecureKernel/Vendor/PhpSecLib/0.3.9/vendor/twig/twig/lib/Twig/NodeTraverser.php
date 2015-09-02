@@ -28,13 +28,13 @@ class Twig_NodeTraverser
      * @param Twig_Environment            $env      A Twig_Environment instance
      * @param Twig_NodeVisitorInterface[] $visitors An array of Twig_NodeVisitorInterface instances
      */
-    public function __construct( Twig_Environment $env, array $visitors = array() )
+    public function __construct(Twig_Environment $env, array $visitors = array())
     {
 
         $this->env = $env;
         $this->visitors = array();
         foreach ($visitors as $visitor) {
-            $this->addVisitor( $visitor );
+            $this->addVisitor($visitor);
         }
     }
 
@@ -43,7 +43,7 @@ class Twig_NodeTraverser
      *
      * @param Twig_NodeVisitorInterface $visitor A Twig_NodeVisitorInterface instance
      */
-    public function addVisitor( Twig_NodeVisitorInterface $visitor )
+    public function addVisitor(Twig_NodeVisitorInterface $visitor)
     {
 
         if (!isset( $this->visitors[$visitor->getPriority()] )) {
@@ -60,36 +60,36 @@ class Twig_NodeTraverser
      *
      * @return Twig_NodeInterface
      */
-    public function traverse( Twig_NodeInterface $node )
+    public function traverse(Twig_NodeInterface $node)
     {
 
-        ksort( $this->visitors );
+        ksort($this->visitors);
         foreach ($this->visitors as $visitors) {
             foreach ($visitors as $visitor) {
-                $node = $this->traverseForVisitor( $visitor, $node );
+                $node = $this->traverseForVisitor($visitor, $node);
             }
         }
 
         return $node;
     }
 
-    protected function traverseForVisitor( Twig_NodeVisitorInterface $visitor, Twig_NodeInterface $node = null )
+    protected function traverseForVisitor(Twig_NodeVisitorInterface $visitor, Twig_NodeInterface $node = null)
     {
 
         if (null === $node) {
             return;
         }
 
-        $node = $visitor->enterNode( $node, $this->env );
+        $node = $visitor->enterNode($node, $this->env);
 
         foreach ($node as $k => $n) {
-            if (false !== $n = $this->traverseForVisitor( $visitor, $n )) {
-                $node->setNode( $k, $n );
+            if (false !== $n = $this->traverseForVisitor($visitor, $n)) {
+                $node->setNode($k, $n);
             } else {
-                $node->removeNode( $k );
+                $node->removeNode($k);
             }
         }
 
-        return $visitor->leaveNode( $node, $this->env );
+        return $visitor->leaveNode($node, $this->env);
     }
 }

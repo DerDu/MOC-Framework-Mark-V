@@ -22,7 +22,7 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
     /**
      * @param PHPUnit_Framework_Constraint $innerConstraint
      */
-    public function __construct( PHPUnit_Framework_Constraint $innerConstraint )
+    public function __construct(PHPUnit_Framework_Constraint $innerConstraint)
     {
 
         parent::__construct();
@@ -46,7 +46,7 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
         try {
@@ -55,8 +55,8 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
                 $description,
                 $returnResult
             );
-        } catch( PHPUnit_Framework_ExpectationFailedException $e ) {
-            $this->fail( $other, $description );
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->fail($other, $description);
         }
     }
 
@@ -68,6 +68,6 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
     public function count()
     {
 
-        return count( $this->innerConstraint );
+        return count($this->innerConstraint);
     }
 }

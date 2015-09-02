@@ -93,9 +93,9 @@ abstract class HttpTask extends Task
 
         @include_once 'HTTP/Request2.php';
 
-        if (!class_exists( 'HTTP_Request2' )) {
+        if (!class_exists('HTTP_Request2')) {
             throw new BuildException(
-                get_class( $this ).' depends on HTTP_Request2 being installed '
+                get_class($this).' depends on HTTP_Request2 being installed '
                 .'and on include_path.',
                 $this->getLocation()
             );
@@ -107,7 +107,7 @@ abstract class HttpTask extends Task
      *
      * @param string $url
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -120,7 +120,7 @@ abstract class HttpTask extends Task
      *
      * @param HTTP_Request2 $request
      */
-    public function setRequestPrototype( HTTP_Request2 $request )
+    public function setRequestPrototype(HTTP_Request2 $request)
     {
 
         $this->requestPrototype = $request;
@@ -135,10 +135,10 @@ abstract class HttpTask extends Task
     {
 
         if (!isset( $this->url )) {
-            throw new BuildException( "Required attribute 'url' is missing" );
+            throw new BuildException("Required attribute 'url' is missing");
         }
 
-        $this->processResponse( $this->createRequest()->send() );
+        $this->processResponse($this->createRequest()->send());
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class HttpTask extends Task
      * @return void
      * @throws BuildException
      */
-    abstract protected function processResponse( HTTP_Request2_Response $response );
+    abstract protected function processResponse(HTTP_Request2_Response $response);
 
     /**
      * Creates and configures an instance of HTTP_Request2
@@ -160,16 +160,16 @@ abstract class HttpTask extends Task
     {
 
         if (!$this->requestPrototype) {
-            $request = new HTTP_Request2( $this->url );
+            $request = new HTTP_Request2($this->url);
 
         } else {
             $request = clone $this->requestPrototype;
-            $request->setUrl( $this->url );
+            $request->setUrl($this->url);
         }
 
-        foreach (array_keys( $this->getProject()->getProperties() ) as $propName) {
-            if (0 === strpos( $propName, 'phing.http.' )) {
-                $request->setConfig( substr( $propName, 11 ), $this->getProject()->getProperty( $propName ) );
+        foreach (array_keys($this->getProject()->getProperties()) as $propName) {
+            if (0 === strpos($propName, 'phing.http.')) {
+                $request->setConfig(substr($propName, 11), $this->getProject()->getProperty($propName));
             }
         }
 
@@ -183,11 +183,11 @@ abstract class HttpTask extends Task
         }
 
         foreach ($this->configData as $config) {
-            $request->setConfig( $config->getName(), $config->getValue() );
+            $request->setConfig($config->getName(), $config->getValue());
         }
 
         foreach ($this->headers as $header) {
-            $request->setHeader( $header->getName(), $header->getValue() );
+            $request->setHeader($header->getName(), $header->getValue());
         }
 
         return $request;
@@ -201,7 +201,7 @@ abstract class HttpTask extends Task
     public function createHeader()
     {
 
-        $num = array_push( $this->headers, new Parameter() );
+        $num = array_push($this->headers, new Parameter());
 
         return $this->headers[$num - 1];
     }
@@ -214,7 +214,7 @@ abstract class HttpTask extends Task
     public function createConfig()
     {
 
-        $num = array_push( $this->configData, new Parameter() );
+        $num = array_push($this->configData, new Parameter());
 
         return $this->configData[$num - 1];
     }
@@ -224,7 +224,7 @@ abstract class HttpTask extends Task
      *
      * @param string $user
      */
-    public function setAuthUser( $user )
+    public function setAuthUser($user)
     {
 
         $this->authUser = $user;
@@ -235,7 +235,7 @@ abstract class HttpTask extends Task
      *
      * @param string $password
      */
-    public function setAuthPassword( $password )
+    public function setAuthPassword($password)
     {
 
         $this->authPassword = $password;
@@ -246,7 +246,7 @@ abstract class HttpTask extends Task
      *
      * @param string $scheme
      */
-    public function setAuthScheme( $scheme )
+    public function setAuthScheme($scheme)
     {
 
         $this->authScheme = $scheme;

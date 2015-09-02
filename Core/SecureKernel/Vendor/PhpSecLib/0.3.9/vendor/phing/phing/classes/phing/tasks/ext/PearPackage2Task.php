@@ -95,8 +95,8 @@ class PearPackage2Task extends PearPackageTask
     {
 
         include_once 'PEAR/PackageFileManager2.php';
-        if (!class_exists( 'PEAR_PackageFileManager2' )) {
-            throw new BuildException( "You must have installed PEAR_PackageFileManager in order to create a PEAR package.xml version 2.0 file." );
+        if (!class_exists('PEAR_PackageFileManager2')) {
+            throw new BuildException("You must have installed PEAR_PackageFileManager in order to create a PEAR package.xml version 2.0 file.");
         }
     }
 
@@ -110,11 +110,11 @@ class PearPackage2Task extends PearPackageTask
     {
 
         if ($this->dir === null) {
-            throw new BuildException( "You must specify the \"dir\" attribute for PEAR package 2 task." );
+            throw new BuildException("You must specify the \"dir\" attribute for PEAR package 2 task.");
         }
 
         if ($this->package === null) {
-            throw new BuildException( "You must specify the \"name\" attribute for PEAR package 2 task." );
+            throw new BuildException("You must specify the \"name\" attribute for PEAR package 2 task.");
         }
 
         $this->pkg = new PEAR_PackageFileManager2();
@@ -125,71 +125,71 @@ class PearPackage2Task extends PearPackageTask
         $this->pkg->addRelease();
         $this->pkg->generateContents();
         $e = $this->pkg->writePackageFile();
-        if (PEAR::isError( $e )) {
-            throw new BuildException( "Unable to write package file.", new Exception( $e->getMessage() ) );
+        if (PEAR::isError($e)) {
+            throw new BuildException("Unable to write package file.", new Exception($e->getMessage()));
         }
     }
 
     protected function setVersion2Options()
     {
 
-        $this->pkg->setPackage( $this->package );
-        $this->pkg->setDate( strftime( '%Y-%m-%d' ) );
-        $this->pkg->setTime( strftime( '%H:%M:%S' ) );
+        $this->pkg->setPackage($this->package);
+        $this->pkg->setDate(strftime('%Y-%m-%d'));
+        $this->pkg->setTime(strftime('%H:%M:%S'));
 
         $newopts = array();
         foreach ($this->options as $opt) {
             switch ($opt->getName()) {
                 case 'summary':
-                    $this->pkg->setSummary( $opt->getValue() );
+                    $this->pkg->setSummary($opt->getValue());
                     break;
 
                 case 'description':
-                    $this->pkg->setDescription( $opt->getValue() );
+                    $this->pkg->setDescription($opt->getValue());
                     break;
 
                 case 'uri':
-                    $this->pkg->setUri( $opt->getValue() );
+                    $this->pkg->setUri($opt->getValue());
                     break;
 
                 case 'license':
-                    $this->pkg->setLicense( $opt->getValue() );
+                    $this->pkg->setLicense($opt->getValue());
                     break;
 
                 case 'channel':
-                    $this->pkg->setChannel( $opt->getValue() );
+                    $this->pkg->setChannel($opt->getValue());
                     break;
 
                 case 'apiversion':
-                    $this->pkg->setAPIVersion( $opt->getValue() );
+                    $this->pkg->setAPIVersion($opt->getValue());
                     break;
 
                 case 'releaseversion':
-                    $this->pkg->setReleaseVersion( $opt->getValue() );
+                    $this->pkg->setReleaseVersion($opt->getValue());
                     break;
 
                 case 'releasestability':
-                    $this->pkg->setReleaseStability( $opt->getValue() );
+                    $this->pkg->setReleaseStability($opt->getValue());
                     break;
 
                 case 'apistability':
-                    $this->pkg->setAPIStability( $opt->getValue() );
+                    $this->pkg->setAPIStability($opt->getValue());
                     break;
 
                 case 'notes':
-                    $this->pkg->setNotes( $opt->getValue() );
+                    $this->pkg->setNotes($opt->getValue());
                     break;
 
                 case 'packagetype':
-                    $this->pkg->setPackageType( $opt->getValue() );
+                    $this->pkg->setPackageType($opt->getValue());
                     break;
 
                 case 'phpdep':
-                    $this->pkg->setPhpDep( $opt->getValue() );
+                    $this->pkg->setPhpDep($opt->getValue());
                     break;
 
                 case 'pearinstallerdep':
-                    $this->pkg->setPearinstallerDep( $opt->getValue() );
+                    $this->pkg->setPearinstallerDep($opt->getValue());
                     break;
 
                 default:
@@ -283,7 +283,7 @@ class PearPackage2Task extends PearPackageTask
 
                 case 'role':
                     foreach ($map->getValue() as $role) {
-                        $this->pkg->addRole( $role['extension'], $role['role'] );
+                        $this->pkg->addRole($role['extension'], $role['role']);
                     }
                     break;
 

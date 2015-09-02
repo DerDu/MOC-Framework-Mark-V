@@ -117,7 +117,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -130,9 +130,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if (empty( $this->_closeTagIndents ) === false
                 && $indent === $this->_closeTagIndents[0]
             ) {
-                array_shift( $this->_closeTagIndents );
+                array_shift($this->_closeTagIndents);
             } else {
-                array_unshift( $this->_openTagIndents, $indent );
+                array_unshift($this->_openTagIndents, $indent);
             }
 
             return;
@@ -141,9 +141,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         if ($tokens[$stackPtr]['code'] == T_CLOSE_TAG) {
             $indent = ( $tokens[$stackPtr]['column'] - 1 );
             if ($indent === $this->_openTagIndents[0]) {
-                array_shift( $this->_openTagIndents );
+                array_shift($this->_openTagIndents);
             } else {
-                array_unshift( $this->_closeTagIndents, $indent );
+                array_unshift($this->_closeTagIndents, $indent);
             }
 
             return;
@@ -173,7 +173,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $firstToken = $stackPtr;
         for ($i = $stackPtr; $i >= 0; $i--) {
             // Record the first code token on the line.
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 $firstToken = $i;
             }
 
@@ -185,7 +185,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         // Based on the conditions that surround this token, determine the
         // indent that we expect this current content to be.
-        $expectedIndent = $this->calculateExpectedIndent( $tokens, $firstToken );
+        $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
 
         // Don't process the first token if it is a closure because they have
         // different indentation rules as they are often used as function arguments
@@ -209,7 +209,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     ( $expectedIndent - 1 ),
                     ( $tokens[$firstToken]['column'] - 1 ),
                 );
-                $phpcsFile->addError( $error, $stackPtr, 'Incorrect', $data );
+                $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
             }
         }//end if
 
@@ -217,7 +217,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
         // Some scopes are expected not to have indents.
-        if (in_array( $tokens[$firstToken]['code'], $this->nonIndentingScopes ) === false) {
+        if (in_array($tokens[$firstToken]['code'], $this->nonIndentingScopes) === false) {
             $indent = ( $expectedIndent + $this->indent );
         } else {
             $indent = $expectedIndent;
@@ -233,7 +233,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // If this token is another scope, skip it as it will be handled by
             // another call to this sniff.
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners ) === true) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
                 if (isset( $tokens[$i]['scope_opener'] ) === true) {
                     $i = $tokens[$i]['scope_closer'];
 
@@ -241,7 +241,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     // of the closer and should also be ignored. This most commonly happens with
                     // CASE statements that end with "break;", where we don't want to stop
                     // ignoring at the break, but rather at the semi-colon.
-                    $nextToken = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $i + 1 ), null, true );
+                    $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $i + 1 ), null, true);
                     if ($tokens[$nextToken]['code'] === T_SEMICOLON) {
                         $i = $nextToken;
                     }
@@ -250,7 +250,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     // it's probably an inline scope, so let's skip to the next
                     // semicolon. Inline scopes include inline if's, abstract
                     // methods etc.
-                    $nextToken = $phpcsFile->findNext( T_SEMICOLON, $i, $scopeCloser );
+                    $nextToken = $phpcsFile->findNext(T_SEMICOLON, $i, $scopeCloser);
                     if ($nextToken !== false) {
                         $i = $nextToken;
                     }
@@ -294,8 +294,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $column = $tokens[$firstToken]['column'];
 
                 // Ignore the token for indentation if it's in the ignore list.
-                if (in_array( $tokens[$firstToken]['code'], $this->ignoreIndentationTokens )
-                    || in_array( $tokens[$firstToken]['type'], $this->ignoreIndentationTokens )
+                if (in_array($tokens[$firstToken]['code'], $this->ignoreIndentationTokens)
+                    || in_array($tokens[$firstToken]['type'], $this->ignoreIndentationTokens)
                 ) {
                     continue;
                 }
@@ -303,21 +303,21 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
                     $trimmedContentLength
-                        = strlen( ltrim( $tokens[$firstToken]['content'] ) );
+                        = strlen(ltrim($tokens[$firstToken]['content']));
                     if ($trimmedContentLength === 0) {
                         continue;
                     }
 
-                    $contentLength = strlen( $tokens[$firstToken]['content'] );
+                    $contentLength = strlen($tokens[$firstToken]['content']);
                     $column = ( $contentLength - $trimmedContentLength + 1 );
                 }
 
                 // Check to see if this constant string spans multiple lines.
                 // If so, then make sure that the strings on lines other than the
                 // first line are indented appropriately, based on their whitespace.
-                if (in_array( $tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens ) === true) {
-                    if (in_array( $tokens[( $firstToken - 1 )]['code'],
-                            PHP_CodeSniffer_Tokens::$stringTokens ) === true
+                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                    if (in_array($tokens[( $firstToken - 1 )]['code'],
+                            PHP_CodeSniffer_Tokens::$stringTokens) === true
                     ) {
                         // If we find a string that directly follows another string
                         // then its just a string that spans multiple lines, so we
@@ -328,13 +328,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // This is a special condition for T_DOC_COMMENT and C-style
                 // comments, which contain whitespace between each line.
-                if (in_array( $tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$commentTokens ) === true) {
-                    $content = trim( $tokens[$firstToken]['content'] );
-                    if (preg_match( '|^/\*|', $content ) !== 0) {
+                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                    $content = trim($tokens[$firstToken]['content']);
+                    if (preg_match('|^/\*|', $content) !== 0) {
                         // Check to see if the end of the comment is on the same line
                         // as the start of the comment. If it is, then we don't
                         // have to worry about opening a comment.
-                        if (preg_match( '|\*/$|', $content ) === 0) {
+                        if (preg_match('|\*/$|', $content) === 0) {
                             // We don't have to calculate the column for the
                             // start of the comment as there is a whitespace
                             // token before it.
@@ -348,12 +348,12 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                                 continue;
                             }
 
-                            $contentLength = strlen( $tokens[$firstToken]['content'] );
+                            $contentLength = strlen($tokens[$firstToken]['content']);
                             $trimmedContentLength
-                                = strlen( ltrim( $tokens[$firstToken]['content'] ) );
+                                = strlen(ltrim($tokens[$firstToken]['content']));
 
                             $column = ( $contentLength - $trimmedContentLength + 1 );
-                            if (preg_match( '|\*/$|', $content ) !== 0) {
+                            if (preg_match('|\*/$|', $content) !== 0) {
                                 $commentOpen = false;
                             }
 
@@ -385,7 +385,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             ( $indent - 1 ),
                             ( $column - 1 ),
                         );
-                        $phpcsFile->addError( $error, $firstToken, $type, $data );
+                        $phpcsFile->addError($error, $firstToken, $type, $data);
                     }
                 }//end if
             }//end if
@@ -405,7 +405,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @return int
      */
-    protected function calculateExpectedIndent( array $tokens, $stackPtr )
+    protected function calculateExpectedIndent(array $tokens, $stackPtr)
     {
 
         $conditionStack = array();
@@ -436,7 +436,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         foreach ($tokenConditions as $id => $condition) {
             // If it's not an indenting scope i.e., it's in our array of
             // scopes that don't indent, skip it.
-            if (in_array( $condition, $this->nonIndentingScopes ) === true) {
+            if (in_array($condition, $this->nonIndentingScopes) === true) {
                 continue;
             }
 
@@ -453,7 +453,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         break;
                     }
 
-                    if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                    if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         $lastContent = $i;
                     }
                 }

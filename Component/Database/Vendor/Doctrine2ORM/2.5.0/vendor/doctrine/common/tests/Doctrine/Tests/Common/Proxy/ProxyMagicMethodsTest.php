@@ -19,7 +19,6 @@
 
 namespace Doctrine\Tests\Common\Proxy;
 
-use Doctrine\Common\Proxy\Exception\UnexpectedValueException;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Common\Proxy\ProxyGenerator;
 use PHPUnit_Framework_TestCase;

@@ -3,7 +3,6 @@
 namespace Guzzle\Tests\Plugin\Cache;
 
 use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cache\DefaultCanCacheStrategy;
 
 /**

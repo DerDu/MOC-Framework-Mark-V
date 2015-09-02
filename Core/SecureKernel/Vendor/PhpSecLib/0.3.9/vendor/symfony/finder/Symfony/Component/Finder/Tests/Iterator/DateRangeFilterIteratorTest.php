@@ -20,16 +20,16 @@ class DateRangeFilterIteratorTest extends RealIteratorTestCase
     /**
      * @dataProvider getAcceptData
      */
-    public function testAccept( $size, $expected )
+    public function testAccept($size, $expected)
     {
 
         $files = self::$files;
-        $files[] = self::toAbsolute( 'doesnotexist' );
-        $inner = new Iterator( $files );
+        $files[] = self::toAbsolute('doesnotexist');
+        $inner = new Iterator($files);
 
-        $iterator = new DateRangeFilterIterator( $inner, $size );
+        $iterator = new DateRangeFilterIterator($inner, $size);
 
-        $this->assertIterator( $expected, $iterator );
+        $this->assertIterator($expected, $iterator);
     }
 
     public function getAcceptData()
@@ -67,9 +67,9 @@ class DateRangeFilterIteratorTest extends RealIteratorTestCase
         );
 
         return array(
-            array( array( new DateComparator( 'since 20 years ago' ) ), $this->toAbsolute( $since20YearsAgo ) ),
-            array( array( new DateComparator( 'since 2 months ago' ) ), $this->toAbsolute( $since2MonthsAgo ) ),
-            array( array( new DateComparator( 'until last month' ) ), $this->toAbsolute( $untilLastMonth ) ),
+            array(array(new DateComparator('since 20 years ago')), $this->toAbsolute($since20YearsAgo)),
+            array(array(new DateComparator('since 2 months ago')), $this->toAbsolute($since2MonthsAgo)),
+            array(array(new DateComparator('until last month')), $this->toAbsolute($untilLastMonth)),
         );
     }
 }

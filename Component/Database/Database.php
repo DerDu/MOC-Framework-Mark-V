@@ -26,10 +26,10 @@ class Database implements IVendorInterface
     /**
      * @param IVendorInterface $VendorInterface
      */
-    function __construct( IVendorInterface $VendorInterface )
+    function __construct(IVendorInterface $VendorInterface)
     {
 
-        $this->setVendorInterface( $VendorInterface );
+        $this->setVendorInterface($VendorInterface);
     }
 
     /**
@@ -80,11 +80,11 @@ class Database implements IVendorInterface
         );
 
         $Doctrine->getBridgeInterface()->registerConnection(
-            new UsernameParameter( $Username ),
-            new PasswordParameter( $Password ),
-            new DatabaseParameter( $Database ),
-            new DriverParameter( $Driver ),
-            new HostParameter( $Host ),
+            new UsernameParameter($Username),
+            new PasswordParameter($Password),
+            new DatabaseParameter($Database),
+            new DriverParameter($Driver),
+            new HostParameter($Host),
             new PortParameter($Port),
             $Timeout
         );
@@ -115,7 +115,7 @@ class Database implements IVendorInterface
      *
      * @return IVendorInterface
      */
-    public function setVendorInterface( IVendorInterface $VendorInterface )
+    public function setVendorInterface(IVendorInterface $VendorInterface)
     {
 
         $this->VendorInterface = $VendorInterface;
@@ -127,9 +127,9 @@ class Database implements IVendorInterface
      *
      * @return \MOC\V\Component\Database\Component\IBridgeInterface
      */
-    public function setBridgeInterface( IBridgeInterface $BridgeInterface )
+    public function setBridgeInterface(IBridgeInterface $BridgeInterface)
     {
 
-        return $this->VendorInterface->setBridgeInterface( $BridgeInterface );
+        return $this->VendorInterface->setBridgeInterface($BridgeInterface);
     }
 }

@@ -62,11 +62,11 @@ class MoveTask extends CopyTask
             if (( $this->destFile !== null && $this->destDir !== null )
                 || ( $this->destFile === null && $this->destDir === null )
             ) {
-                throw new BuildException( "One and only one of tofile and todir must be set." );
+                throw new BuildException("One and only one of tofile and todir must be set.");
             }
 
             if ($this->destFile === null) {
-                $this->destFile = new PhingFile( $this->destDir, $this->file->getName() );
+                $this->destFile = new PhingFile($this->destDir, $this->file->getName());
             }
 
             if ($this->destDir === null) {
@@ -84,14 +84,14 @@ class MoveTask extends CopyTask
     protected function doWork()
     {
 
-        if (count( $this->completeDirMap ) > 0) {
+        if (count($this->completeDirMap) > 0) {
             foreach ($this->completeDirMap as $from => $to) {
-                $f = new PhingFile( $from );
-                $d = new PhingFile( $to );
+                $f = new PhingFile($from);
+                $d = new PhingFile($to);
 
                 $moved = false;
                 try { // try to rename
-                    $this->log( "Attempting to rename $from to $to", $this->verbosity );
+                    $this->log("Attempting to rename $from to $to", $this->verbosity);
                     $this->fileUtils->copyFile(
                         $f,
                         $d,
@@ -101,31 +101,31 @@ class MoveTask extends CopyTask
                         $this->getProject(),
                         $this->mode
                     );
-                    $f->delete( true );
+                    $f->delete(true);
                     $moved = true;
-                } catch( IOException $ioe ) {
+                } catch (IOException $ioe) {
                     $moved = false;
-                    $this->logError( "Failed to rename $from to $to: ".$ioe->getMessage() );
+                    $this->logError("Failed to rename $from to $to: ".$ioe->getMessage());
                 }
             }
         }
 
-        $copyMapSize = count( $this->fileCopyMap );
+        $copyMapSize = count($this->fileCopyMap);
         if ($copyMapSize > 0) {
             // files to move
-            $this->log( "Moving $copyMapSize files to ".$this->destDir->getAbsolutePath() );
+            $this->log("Moving $copyMapSize files to ".$this->destDir->getAbsolutePath());
 
             foreach ($this->fileCopyMap as $from => $to) {
                 if ($from == $to) {
-                    $this->log( "Skipping self-move of $from", $this->verbosity );
+                    $this->log("Skipping self-move of $from", $this->verbosity);
                     continue;
                 }
 
-                $f = new PhingFile( $from );
-                $d = new PhingFile( $to );
+                $f = new PhingFile($from);
+                $d = new PhingFile($to);
 
                 try { // try to move
-                    $this->log( "Moving $from to $to", $this->verbosity );
+                    $this->log("Moving $from to $to", $this->verbosity);
 
                     $this->fileUtils->copyFile(
                         $f,
@@ -138,8 +138,8 @@ class MoveTask extends CopyTask
                     );
 
                     $f->delete();
-                } catch( IOException $ioe ) {
-                    $this->logError( "Failed to move $from to $to: ".$ioe->getMessage(), $this->location );
+                } catch (IOException $ioe) {
+                    $this->logError("Failed to move $from to $to: ".$ioe->getMessage(), $this->location);
                 }
             } // foreach fileCopyMap
         } // if copyMapSize
@@ -148,10 +148,10 @@ class MoveTask extends CopyTask
         if ($this->includeEmpty) {
             $count = 0;
             foreach ($this->dirCopyMap as $srcDir => $destDir) {
-                $d = new PhingFile( (string)$destDir );
+                $d = new PhingFile((string)$destDir);
                 if (!$d->exists()) {
                     if (!$d->mkdirs()) {
-                        $this->logError( "Unable to create directory ".$d->getAbsolutePath() );
+                        $this->logError("Unable to create directory ".$d->getAbsolutePath());
                     } else {
                         $count++;
                     }
@@ -164,12 +164,12 @@ class MoveTask extends CopyTask
             }
         }
 
-        if (count( $this->filesets ) > 0) {
+        if (count($this->filesets) > 0) {
             // process filesets
             foreach ($this->filesets as $fs) {
-                $dir = $fs->getDir( $this->project );
-                if ($this->okToDelete( $dir )) {
-                    $this->deleteDir( $dir );
+                $dir = $fs->getDir($this->project);
+                if ($this->okToDelete($dir)) {
+                    $this->deleteDir($dir);
                 }
             }
         }
@@ -184,7 +184,7 @@ class MoveTask extends CopyTask
      *
      * @return bool
      */
-    private function okToDelete( $d )
+    private function okToDelete($d)
     {
 
         $list = $d->listDir();
@@ -193,9 +193,9 @@ class MoveTask extends CopyTask
         }
 
         foreach ($list as $s) {
-            $f = new PhingFile( $d, $s );
+            $f = new PhingFile($d, $s);
             if ($f->isDirectory()) {
-                if (!$this->okToDelete( $f )) {
+                if (!$this->okToDelete($f)) {
                     return false;
                 }
             } else {
@@ -215,7 +215,7 @@ class MoveTask extends CopyTask
      * @throws BuildException
      * @throws IOException
      */
-    private function deleteDir( $d )
+    private function deleteDir($d)
     {
 
         $list = $d->listDir();
@@ -224,19 +224,19 @@ class MoveTask extends CopyTask
         }
 
         foreach ($list as $fname) {
-            $f = new PhingFile( $d, $fname );
+            $f = new PhingFile($d, $fname);
             if ($f->isDirectory()) {
-                $this->deleteDir( $f );
+                $this->deleteDir($f);
             } else {
-                throw new BuildException( "UNEXPECTED ERROR - The file ".$f->getAbsolutePath()." should not exist!" );
+                throw new BuildException("UNEXPECTED ERROR - The file ".$f->getAbsolutePath()." should not exist!");
             }
         }
 
-        $this->log( "Deleting directory ".$d->getPath(), $this->verbosity );
+        $this->log("Deleting directory ".$d->getPath(), $this->verbosity);
         try {
             $d->delete();
-        } catch( Exception $e ) {
-            $this->logError( "Unable to delete directory ".$d->__toString().": ".$e->getMessage() );
+        } catch (Exception $e) {
+            $this->logError("Unable to delete directory ".$d->__toString().": ".$e->getMessage());
         }
     }
 }

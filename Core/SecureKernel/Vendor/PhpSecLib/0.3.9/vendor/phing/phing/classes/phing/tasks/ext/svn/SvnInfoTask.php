@@ -56,7 +56,7 @@ class SvnInfoTask extends SvnBaseTask
      *
      * @return void
      */
-    public function setElement( $element )
+    public function setElement($element)
     {
 
         $this->element = $element;
@@ -80,7 +80,7 @@ class SvnInfoTask extends SvnBaseTask
      *
      * @return void
      */
-    public function setSubElement( $subElement )
+    public function setSubElement($subElement)
     {
 
         $this->subElement = $subElement;
@@ -96,13 +96,13 @@ class SvnInfoTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'info' );
+        $this->setup('info');
 
         if ($this->oldVersion) {
-            $output = $this->run( array( '--xml', '--incremental' ) );
+            $output = $this->run(array('--xml', '--incremental'));
 
-            if (!( $xmlObj = @simplexml_load_string( $output ) )) {
-                throw new BuildException( "Failed to parse the output of 'svn info --xml'." );
+            if (!( $xmlObj = @simplexml_load_string($output) )) {
+                throw new BuildException("Failed to parse the output of 'svn info --xml'.");
             }
 
             $object = $xmlObj->{$this->element};
@@ -114,7 +114,7 @@ class SvnInfoTask extends SvnBaseTask
             $output = $this->run();
 
             if (empty( $output ) || !isset( $output['entry'][0] )) {
-                throw new BuildException( "Failed to parse the output of 'svn info'." );
+                throw new BuildException("Failed to parse the output of 'svn info'.");
             }
 
             $object = $output['entry'][0][$this->element];
@@ -124,7 +124,7 @@ class SvnInfoTask extends SvnBaseTask
             }
         }
 
-        $this->project->setProperty( $this->getPropertyName(), (string)$object );
+        $this->project->setProperty($this->getPropertyName(), (string)$object);
     }
 
     /**
@@ -141,7 +141,7 @@ class SvnInfoTask extends SvnBaseTask
      *
      * @param $propertyName
      */
-    public function setPropertyName( $propertyName )
+    public function setPropertyName($propertyName)
     {
 
         $this->propertyName = $propertyName;

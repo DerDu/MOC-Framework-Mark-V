@@ -52,7 +52,7 @@ class Chunk
      * @param int   $endRange
      * @param array $lines
      */
-    public function __construct( $start = 0, $startRange = 1, $end = 0, $endRange = 1, array $lines = array() )
+    public function __construct($start = 0, $startRange = 1, $end = 0, $endRange = 1, array $lines = array())
     {
 
         $this->start = (int)$start;
@@ -110,7 +110,7 @@ class Chunk
     /**
      * @param array $lines
      */
-    public function setLines( array $lines )
+    public function setLines(array $lines)
     {
 
         $this->lines = $lines;

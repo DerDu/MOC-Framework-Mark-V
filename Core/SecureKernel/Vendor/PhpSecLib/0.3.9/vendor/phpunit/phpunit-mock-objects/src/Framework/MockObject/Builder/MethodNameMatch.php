@@ -15,6 +15,7 @@
  */
 interface PHPUnit_Framework_MockObject_Builder_MethodNameMatch extends PHPUnit_Framework_MockObject_Builder_ParametersMatch
 {
+
     /**
      * Adds a new method name match and returns the parameter match object for
      * further matching possibilities.

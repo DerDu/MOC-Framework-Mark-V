@@ -76,26 +76,26 @@ class SelectorUtils
      * @return bool whether or not a given path matches the start of a given
      *                 pattern up to the first "**".
      */
-    public static function matchPatternStart( $pattern, $str, $isCaseSensitive = true )
+    public static function matchPatternStart($pattern, $str, $isCaseSensitive = true)
     {
 
         // When str starts with a DIRECTORY_SEPARATOR, pattern has to start with a
         // DIRECTORY_SEPARATOR.
         // When pattern starts with a DIRECTORY_SEPARATOR, str has to start with a
         // DIRECTORY_SEPARATOR.
-        if (StringHelper::startsWith( DIRECTORY_SEPARATOR, $str ) !==
-            StringHelper::startsWith( DIRECTORY_SEPARATOR, $pattern )
+        if (StringHelper::startsWith(DIRECTORY_SEPARATOR, $str) !==
+            StringHelper::startsWith(DIRECTORY_SEPARATOR, $pattern)
         ) {
             return false;
         }
 
-        $patDirs = explode( DIRECTORY_SEPARATOR, $pattern );
-        $strDirs = explode( DIRECTORY_SEPARATOR, $str );
+        $patDirs = explode(DIRECTORY_SEPARATOR, $pattern);
+        $strDirs = explode(DIRECTORY_SEPARATOR, $str);
 
         $patIdxStart = 0;
-        $patIdxEnd = count( $patDirs ) - 1;
+        $patIdxEnd = count($patDirs) - 1;
         $strIdxStart = 0;
-        $strIdxEnd = count( $strDirs ) - 1;
+        $strIdxEnd = count($strDirs) - 1;
 
         // up to first '**'
         while ($patIdxStart <= $patIdxEnd && $strIdxStart <= $strIdxEnd) {
@@ -103,7 +103,7 @@ class SelectorUtils
             if ($patDir == "**") {
                 break;
             }
-            if (!self::match( $patDir, $strDirs[$strIdxStart], $isCaseSensitive )) {
+            if (!self::match($patDir, $strDirs[$strIdxStart], $isCaseSensitive)) {
                 return false;
             }
             $patIdxStart++;
@@ -140,14 +140,14 @@ class SelectorUtils
      * @return bool <code>true</code> if the string matches against the pattern,
      *                           or <code>false</code> otherwise.
      */
-    public static function match( $pattern, $str, $isCaseSensitive = true )
+    public static function match($pattern, $str, $isCaseSensitive = true)
     {
 
-        $rePattern = preg_quote( $pattern, '/' );
-        $rePattern = str_replace( array( "\*", "\?" ), array( '.*', '.' ), $rePattern );
+        $rePattern = preg_quote($pattern, '/');
+        $rePattern = str_replace(array("\*", "\?"), array('.*', '.'), $rePattern);
         $rePattern = '/^'.$rePattern.'$/'.( $isCaseSensitive ? '' : 'i' );
 
-        return (bool)preg_match( $rePattern, $str );
+        return (bool)preg_match($rePattern, $str);
     }
 
     /**
@@ -166,7 +166,7 @@ class SelectorUtils
      *
      * @return bool <code>true</code> if the pattern matches against the string,
      */
-    public static function matchPath( $pattern, $str, $isCaseSensitive = true )
+    public static function matchPath($pattern, $str, $isCaseSensitive = true)
     {
 
         // explicitly exclude directory itself
@@ -174,8 +174,8 @@ class SelectorUtils
             return false;
         }
 
-        $rePattern = preg_quote( $pattern, '/' );
-        $dirSep = preg_quote( DIRECTORY_SEPARATOR, '/' );
+        $rePattern = preg_quote($pattern, '/');
+        $dirSep = preg_quote(DIRECTORY_SEPARATOR, '/');
         $trailingDirSep = '(('.$dirSep.')?|('.$dirSep.').+)';
         $patternReplacements = array(
             $dirSep.'\*\*'.$dirSep => $dirSep.'.*'.$trailingDirSep,
@@ -185,11 +185,11 @@ class SelectorUtils
             '\*'                   => '[^'.$dirSep.']*',
             '\?'                   => '[^'.$dirSep.']'
         );
-        $rePattern = str_replace( array_keys( $patternReplacements ), array_values( $patternReplacements ),
-            $rePattern );
+        $rePattern = str_replace(array_keys($patternReplacements), array_values($patternReplacements),
+            $rePattern);
         $rePattern = '/^'.$rePattern.'$/'.( $isCaseSensitive ? '' : 'i' );
 
-        return (bool)preg_match( $rePattern, $str );
+        return (bool)preg_match($rePattern, $str);
     }
 
     /**
@@ -207,7 +207,7 @@ class SelectorUtils
      *
      * @return bool whether   the target is out of date
      */
-    public static function isOutOfDate( PhingFile $src, PhingFile $target, $granularity )
+    public static function isOutOfDate(PhingFile $src, PhingFile $target, $granularity)
     {
 
         if (!$src->exists()) {

@@ -60,17 +60,17 @@ class File_Iterator extends FilterIterator
         $basepath = null
     ) {
 
-        $exclude = array_filter( array_map( 'realpath', $exclude ) );
+        $exclude = array_filter(array_map('realpath', $exclude));
 
         if ($basepath !== null) {
-            $basepath = realpath( $basepath );
+            $basepath = realpath($basepath);
         }
 
         if ($basepath === false) {
             $basepath = null;
         } else {
             foreach ($exclude as &$_exclude) {
-                $_exclude = str_replace( $basepath, '', $_exclude );
+                $_exclude = str_replace($basepath, '', $_exclude);
             }
         }
 
@@ -79,7 +79,7 @@ class File_Iterator extends FilterIterator
         $this->exclude = $exclude;
         $this->basepath = $basepath;
 
-        parent::__construct( $iterator );
+        parent::__construct($iterator);
     }
 
     /**
@@ -93,17 +93,17 @@ class File_Iterator extends FilterIterator
         $realpath = $current->getRealPath();
 
         if ($this->basepath !== null) {
-            $realpath = str_replace( $this->basepath, '', $realpath );
+            $realpath = str_replace($this->basepath, '', $realpath);
         }
 
         // Filter files in hidden directories.
-        if (preg_match( '=/\.[^/]*/=', $realpath )) {
+        if (preg_match('=/\.[^/]*/=', $realpath)) {
             return false;
         }
 
-        return $this->acceptPath( $realpath ) &&
-        $this->acceptPrefix( $filename ) &&
-        $this->acceptSuffix( $filename );
+        return $this->acceptPath($realpath) &&
+        $this->acceptPrefix($filename) &&
+        $this->acceptSuffix($filename);
     }
 
     /**
@@ -112,11 +112,11 @@ class File_Iterator extends FilterIterator
      * @return boolean
      * @since  Method available since Release 1.1.0
      */
-    protected function acceptPath( $path )
+    protected function acceptPath($path)
     {
 
         foreach ($this->exclude as $exclude) {
-            if (strpos( $path, $exclude ) === 0) {
+            if (strpos($path, $exclude) === 0) {
                 return false;
             }
         }
@@ -130,21 +130,21 @@ class File_Iterator extends FilterIterator
      * @return boolean
      * @since  Method available since Release 1.1.0
      */
-    protected function acceptPrefix( $filename )
+    protected function acceptPrefix($filename)
     {
 
-        return $this->acceptSubString( $filename, $this->prefixes, self::PREFIX );
+        return $this->acceptSubString($filename, $this->prefixes, self::PREFIX);
     }
 
     /**
-     * @param  string $filename
-     * @param  array $subString
+     * @param  string  $filename
+     * @param  array   $subString
      * @param  integer $type
      *
      * @return boolean
      * @since  Method available since Release 1.1.0
      */
-    protected function acceptSubString( $filename, array $subStrings, $type )
+    protected function acceptSubString($filename, array $subStrings, $type)
     {
 
         if (empty( $subStrings )) {
@@ -154,9 +154,9 @@ class File_Iterator extends FilterIterator
         $matched = false;
 
         foreach ($subStrings as $string) {
-            if (( $type == self::PREFIX && strpos( $filename, $string ) === 0 ) ||
+            if (( $type == self::PREFIX && strpos($filename, $string) === 0 ) ||
                 ( $type == self::SUFFIX &&
-                    substr( $filename, -1 * strlen( $string ) ) == $string )
+                    substr($filename, -1 * strlen($string)) == $string )
             ) {
                 $matched = true;
                 break;
@@ -172,9 +172,9 @@ class File_Iterator extends FilterIterator
      * @return boolean
      * @since  Method available since Release 1.1.0
      */
-    protected function acceptSuffix( $filename )
+    protected function acceptSuffix($filename)
     {
 
-        return $this->acceptSubString( $filename, $this->suffixes, self::SUFFIX );
+        return $this->acceptSubString($filename, $this->suffixes, self::SUFFIX);
     }
 }

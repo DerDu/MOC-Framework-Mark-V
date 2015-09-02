@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_AbstractDocElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractDocElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -88,7 +88,7 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
         PHP_CodeSniffer_File $phpcsFile
     ) {
 
-        parent::__construct( $previousElement, $tokens, $tag, $phpcsFile );
+        parent::__construct($previousElement, $tokens, $tag, $phpcsFile);
 
     }//end __construct()
 
@@ -156,7 +156,7 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
      * @return void
      * @see getSubElements()
      */
-    protected function processSubElement( $name, $content, $whitespaceBefore )
+    protected function processSubElement($name, $content, $whitespaceBefore)
     {
 
         $element = '_'.$name;

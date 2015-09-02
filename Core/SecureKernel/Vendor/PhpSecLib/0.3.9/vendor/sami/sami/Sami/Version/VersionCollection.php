@@ -20,22 +20,22 @@ abstract class VersionCollection implements \Iterator, \Countable
     protected $indice;
     protected $project;
 
-    public function __construct( $versions )
+    public function __construct($versions)
     {
 
-        $this->add( $versions );
+        $this->add($versions);
     }
 
-    public function add( $version, $longname = null )
+    public function add($version, $longname = null)
     {
 
-        if (is_array( $version )) {
+        if (is_array($version)) {
             foreach ($version as $v) {
-                $this->add( $v );
+                $this->add($v);
             }
         } else {
             if (!$version instanceof Version) {
-                $version = new Version( $version, $longname );
+                $version = new Version($version, $longname);
             }
 
             $this->versions[] = $version;
@@ -47,12 +47,12 @@ abstract class VersionCollection implements \Iterator, \Countable
     static public function create()
     {
 
-        $r = new \ReflectionClass( get_called_class() );
+        $r = new \ReflectionClass(get_called_class());
 
-        return $r->newInstanceArgs( func_get_args() );
+        return $r->newInstanceArgs(func_get_args());
     }
 
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         $this->project = $project;
@@ -85,8 +85,8 @@ abstract class VersionCollection implements \Iterator, \Countable
     public function valid()
     {
 
-        if ($this->indice < count( $this->versions )) {
-            $this->switchVersion( $this->current() );
+        if ($this->indice < count($this->versions)) {
+            $this->switchVersion($this->current());
 
             return true;
         }
@@ -94,7 +94,7 @@ abstract class VersionCollection implements \Iterator, \Countable
         return false;
     }
 
-    abstract protected function switchVersion( Version $version );
+    abstract protected function switchVersion(Version $version);
 
     public function current()
     {
@@ -105,6 +105,6 @@ abstract class VersionCollection implements \Iterator, \Countable
     public function count()
     {
 
-        return count( $this->versions );
+        return count($this->versions);
     }
 }

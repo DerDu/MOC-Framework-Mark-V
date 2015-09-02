@@ -20,21 +20,21 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
      * @param PHP_CodeCoverage_Report_Node_Directory $node
      * @param string                                 $file
      */
-    public function render( PHP_CodeCoverage_Report_Node_Directory $node, $file )
+    public function render(PHP_CodeCoverage_Report_Node_Directory $node, $file)
     {
 
-        $template = new Text_Template( $this->templatePath.'directory.html', '{{', '}}' );
+        $template = new Text_Template($this->templatePath.'directory.html', '{{', '}}');
 
-        $this->setCommonTemplateVariables( $template, $node );
+        $this->setCommonTemplateVariables($template, $node);
 
-        $items = $this->renderItem( $node, true );
+        $items = $this->renderItem($node, true);
 
         foreach ($node->getDirectories() as $item) {
-            $items .= $this->renderItem( $item );
+            $items .= $this->renderItem($item);
         }
 
         foreach ($node->getFiles() as $item) {
-            $items .= $this->renderItem( $item );
+            $items .= $this->renderItem($item);
         }
 
         $template->setVar(
@@ -44,7 +44,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
             )
         );
 
-        $template->renderTo( $file );
+        $template->renderTo($file);
     }
 
     /**
@@ -53,7 +53,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
      *
      * @return string
      */
-    protected function renderItem( PHP_CodeCoverage_Report_Node $item, $total = false )
+    protected function renderItem(PHP_CodeCoverage_Report_Node $item, $total = false)
     {
 
         $data = array(
@@ -61,13 +61,13 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
             'numTestedClasses'             => $item->getNumTestedClassesAndTraits(),
             'numMethods'                   => $item->getNumMethods(),
             'numTestedMethods'             => $item->getNumTestedMethods(),
-            'linesExecutedPercent'         => $item->getLineExecutedPercent( false ),
+            'linesExecutedPercent'         => $item->getLineExecutedPercent(false),
             'linesExecutedPercentAsString' => $item->getLineExecutedPercent(),
             'numExecutedLines'             => $item->getNumExecutedLines(),
             'numExecutableLines'           => $item->getNumExecutableLines(),
-            'testedMethodsPercent'         => $item->getTestedMethodsPercent( false ),
+            'testedMethodsPercent'         => $item->getTestedMethodsPercent(false),
             'testedMethodsPercentAsString' => $item->getTestedMethodsPercent(),
-            'testedClassesPercent'         => $item->getTestedClassesAndTraitsPercent( false ),
+            'testedClassesPercent'         => $item->getTestedClassesAndTraitsPercent(false),
             'testedClassesPercentAsString' => $item->getTestedClassesAndTraitsPercent()
         );
 
@@ -94,7 +94,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
         }
 
         return $this->renderItemTemplate(
-            new Text_Template( $this->templatePath.'directory_item.html', '{{', '}}' ),
+            new Text_Template($this->templatePath.'directory_item.html', '{{', '}}'),
             $data
         );
     }

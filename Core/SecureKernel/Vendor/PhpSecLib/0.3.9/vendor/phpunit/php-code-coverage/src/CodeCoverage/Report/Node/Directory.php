@@ -118,7 +118,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
             $this->numFiles = 0;
 
             foreach ($this->children as $child) {
-                $this->numFiles += count( $child );
+                $this->numFiles += count($child);
             }
         }
 
@@ -134,7 +134,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
     {
 
         return new RecursiveIteratorIterator(
-            new PHP_CodeCoverage_Report_Node_Iterator( $this ),
+            new PHP_CodeCoverage_Report_Node_Iterator($this),
             RecursiveIteratorIterator::SELF_FIRST
         );
     }
@@ -146,13 +146,13 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
      *
      * @return PHP_CodeCoverage_Report_Node_Directory
      */
-    public function addDirectory( $name )
+    public function addDirectory($name)
     {
 
-        $directory = new PHP_CodeCoverage_Report_Node_Directory( $name, $this );
+        $directory = new PHP_CodeCoverage_Report_Node_Directory($name, $this);
 
         $this->children[] = $directory;
-        $this->directories[] = &$this->children[count( $this->children ) - 1];
+        $this->directories[] = &$this->children[count($this->children) - 1];
 
         return $directory;
     }
@@ -168,7 +168,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
      * @return PHP_CodeCoverage_Report_Node_File
      * @throws PHP_CodeCoverage_Exception
      */
-    public function addFile( $name, array $coverageData, array $testData, $cacheTokens )
+    public function addFile($name, array $coverageData, array $testData, $cacheTokens)
     {
 
         $file = new PHP_CodeCoverage_Report_Node_File(
@@ -180,7 +180,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
         );
 
         $this->children[] = $file;
-        $this->files[] = &$this->children[count( $this->children ) - 1];
+        $this->files[] = &$this->children[count($this->children) - 1];
 
         $this->numExecutableLines = -1;
         $this->numExecutedLines = -1;
@@ -296,7 +296,7 @@ class PHP_CodeCoverage_Report_Node_Directory extends PHP_CodeCoverage_Report_Nod
     {
 
         if ($this->linesOfCode === null) {
-            $this->linesOfCode = array( 'loc' => 0, 'cloc' => 0, 'ncloc' => 0 );
+            $this->linesOfCode = array('loc' => 0, 'cloc' => 0, 'ncloc' => 0);
 
             foreach ($this->children as $child) {
                 $linesOfCode = $child->getLinesOfCode();

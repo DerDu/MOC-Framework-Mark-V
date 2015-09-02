@@ -33,7 +33,7 @@ class PHPUnit_Framework_ExpectationFailedException extends PHPUnit_Framework_Ass
 
         $this->comparisonFailure = $comparisonFailure;
 
-        parent::__construct( $message, 0, $previous );
+        parent::__construct($message, 0, $previous);
     }
 
     /**

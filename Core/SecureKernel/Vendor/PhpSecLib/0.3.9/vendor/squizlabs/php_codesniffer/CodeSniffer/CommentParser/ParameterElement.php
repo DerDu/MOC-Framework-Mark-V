@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_AbstractDocElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractDocElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -95,20 +95,20 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
         PHP_CodeSniffer_File $phpcsFile
     ) {
 
-        parent::__construct( $previousElement, $tokens, 'param', $phpcsFile );
+        parent::__construct($previousElement, $tokens, 'param', $phpcsFile);
 
         // Handle special variable type: array(x => y).
-        $type = strtolower( $this->_type );
-        if ($this->_varName === '=>' && strpos( $type, 'array(' ) !== false) {
+        $type = strtolower($this->_type);
+        if ($this->_varName === '=>' && strpos($type, 'array(') !== false) {
             $rawContent = $this->getRawContent();
             $matches = array();
             $pattern = '/^(\s+)(array\(.*\))(\s+)(\$\S*)(\s+)(.*)/i';
-            if (preg_match( $pattern, $rawContent, $matches ) !== 0) {
+            if (preg_match($pattern, $rawContent, $matches) !== 0) {
                 // Process the sub elements correctly for this special case.
-                if (count( $matches ) === 7) {
-                    $this->processSubElement( 'type', $matches[2], $matches[1] );
-                    $this->processSubElement( 'varName', $matches[4], $matches[3] );
-                    $this->processSubElement( 'comment', $matches[6], $matches[5] );
+                if (count($matches) === 7) {
+                    $this->processSubElement('type', $matches[2], $matches[1]);
+                    $this->processSubElement('varName', $matches[4], $matches[3]);
+                    $this->processSubElement('comment', $matches[6], $matches[5]);
                 }
             }
         }
@@ -126,7 +126,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * @return void
      * @see getSubElements()
      */
-    protected function processSubElement( $name, $content, $beforeWhitespace )
+    protected function processSubElement($name, $content, $beforeWhitespace)
     {
 
         $element = '_'.$name;
@@ -242,14 +242,14 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      *
      * @return boolean
      */
-    public function alignsWith( PHP_CodeSniffer_CommentParser_ParameterElement $other )
+    public function alignsWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
     {
 
-        if ($this->alignsVariableWith( $other ) === false) {
+        if ($this->alignsVariableWith($other) === false) {
             return false;
         }
 
-        if ($this->alignsCommentWith( $other ) === false) {
+        if ($this->alignsCommentWith($other) === false) {
             return false;
         }
 
@@ -274,8 +274,8 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
         // @param type $variable Comment.
         // @param <-a-><---b---->
         // Compares the index before param variable.
-        $otherVar = ( strlen( $other->_type ) + strlen( $other->_varNameWhitespace ) );
-        $thisVar = ( strlen( $this->_type ) + strlen( $this->_varNameWhitespace ) );
+        $otherVar = ( strlen($other->_type) + strlen($other->_varNameWhitespace) );
+        $thisVar = ( strlen($this->_type) + strlen($this->_varNameWhitespace) );
         if ($otherVar !== $thisVar) {
             return false;
         }
@@ -299,14 +299,14 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     ) {
 
         // Compares the index before param comment.
-        if (strlen( $other->_commentWhitespace ) === 0 && strlen( $this->_commentWhitespace ) === 0) {
+        if (strlen($other->_commentWhitespace) === 0 && strlen($this->_commentWhitespace) === 0) {
             return true;
         }
 
         $otherComment
-            = ( strlen( $other->_varName ) + strlen( $other->_commentWhitespace ) );
+            = ( strlen($other->_varName) + strlen($other->_commentWhitespace) );
         $thisComment
-            = ( strlen( $this->_varName ) + strlen( $this->_commentWhitespace ) );
+            = ( strlen($this->_varName) + strlen($this->_commentWhitespace) );
 
         if ($otherComment !== $thisComment) {
             return false;

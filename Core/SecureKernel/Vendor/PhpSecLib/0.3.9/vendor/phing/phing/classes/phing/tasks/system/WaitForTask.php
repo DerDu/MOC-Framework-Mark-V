@@ -69,7 +69,7 @@ class WaitForTask extends ConditionBase
      *
      * @param int $maxWait
      */
-    public function setMaxWait( $maxWait )
+    public function setMaxWait($maxWait)
     {
 
         $this->maxWait = (int)$maxWait;
@@ -80,10 +80,10 @@ class WaitForTask extends ConditionBase
      *
      * @param string $maxWaitUnit
      */
-    public function setMaxWaitUnit( $maxWaitUnit )
+    public function setMaxWaitUnit($maxWaitUnit)
     {
 
-        $this->maxWaitMultiplier = $this->_convertUnit( $maxWaitUnit );
+        $this->maxWaitMultiplier = $this->_convertUnit($maxWaitUnit);
     }
 
     /**
@@ -94,7 +94,7 @@ class WaitForTask extends ConditionBase
      * @throws BuildException
      * @return int
      */
-    protected function _convertUnit( $unit )
+    protected function _convertUnit($unit)
     {
 
         switch ($unit) {
@@ -123,7 +123,7 @@ class WaitForTask extends ConditionBase
             }
 
             default: {
-                throw new BuildException( "Illegal unit '$unit'" );
+                throw new BuildException("Illegal unit '$unit'");
             }
         }
     }
@@ -133,7 +133,7 @@ class WaitForTask extends ConditionBase
      *
      * @param int $checkEvery
      */
-    public function setCheckEvery( $checkEvery )
+    public function setCheckEvery($checkEvery)
     {
 
         $this->checkEvery = (int)$checkEvery;
@@ -146,10 +146,10 @@ class WaitForTask extends ConditionBase
      *
      * @return void
      */
-    public function setCheckEveryUnit( $checkEveryUnit )
+    public function setCheckEveryUnit($checkEveryUnit)
     {
 
-        $this->checkEveryMultiplier = $this->_convertUnit( $checkEveryUnit );
+        $this->checkEveryMultiplier = $this->_convertUnit($checkEveryUnit);
     }
 
     /**
@@ -159,7 +159,7 @@ class WaitForTask extends ConditionBase
      *
      * @return void
      */
-    public function setTimeoutProperty( $timeoutProperty )
+    public function setTimeoutProperty($timeoutProperty)
     {
 
         $this->timeoutProperty = $timeoutProperty;
@@ -175,11 +175,11 @@ class WaitForTask extends ConditionBase
     {
 
         if ($this->countConditions() > 1) {
-            throw new BuildException( "You must not nest more than one condition into <waitfor>" );
+            throw new BuildException("You must not nest more than one condition into <waitfor>");
         }
 
         if ($this->countConditions() < 1) {
-            throw new BuildException( "You must nest a condition into <waitfor>" );
+            throw new BuildException("You must nest a condition into <waitfor>");
         }
 
         $cs = $this->getIterator();
@@ -188,23 +188,23 @@ class WaitForTask extends ConditionBase
         $maxWaitMillis = $this->maxWait * $this->maxWaitMultiplier;
         $checkEveryMillis = $this->checkEvery * $this->checkEveryMultiplier;
 
-        $start = microtime( true ) * 1000;
+        $start = microtime(true) * 1000;
         $end = $start + $maxWaitMillis;
 
-        while (microtime( true ) * 1000 < $end) {
+        while (microtime(true) * 1000 < $end) {
             if ($condition->evaluate()) {
-                $this->log( "waitfor: condition was met", Project::MSG_VERBOSE );
+                $this->log("waitfor: condition was met", Project::MSG_VERBOSE);
 
                 return;
             }
 
-            usleep( $checkEveryMillis * 1000 );
+            usleep($checkEveryMillis * 1000);
         }
 
-        $this->log( "waitfor: timeout", Project::MSG_VERBOSE );
+        $this->log("waitfor: timeout", Project::MSG_VERBOSE);
 
         if ($this->timeoutProperty != null) {
-            $this->project->setNewProperty( $this->timeoutProperty, "true" );
+            $this->project->setNewProperty($this->timeoutProperty, "true");
         }
     }
 }

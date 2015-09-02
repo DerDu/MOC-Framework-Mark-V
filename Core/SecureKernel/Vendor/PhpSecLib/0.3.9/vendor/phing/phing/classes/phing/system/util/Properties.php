@@ -47,12 +47,12 @@ class Properties
      *
      * @param array $properties
      */
-    public function __construct( $properties = null )
+    public function __construct($properties = null)
     {
 
-        if (is_array( $properties )) {
+        if (is_array($properties)) {
             foreach ($properties as $key => $value) {
-                $this->setProperty( $key, $value );
+                $this->setProperty($key, $value);
             }
         }
     }
@@ -65,7 +65,7 @@ class Properties
      *
      * @return mixed  Old property value or NULL if none was set.
      */
-    public function setProperty( $key, $value )
+    public function setProperty($key, $value)
     {
 
         $oldValue = null;
@@ -85,15 +85,15 @@ class Properties
      * @return void
      * @throws IOException - if unable to read file.
      */
-    public function load( PhingFile $file )
+    public function load(PhingFile $file)
     {
 
         if ($file->canRead()) {
-            $this->parse( $file->getPath(), false );
+            $this->parse($file->getPath(), false);
 
             $this->file = $file;
         } else {
-            throw new IOException( "Can not read file ".$file->getPath() );
+            throw new IOException("Can not read file ".$file->getPath());
         }
 
     }
@@ -109,22 +109,22 @@ class Properties
      * @internal param bool $processSections Whether to honor [SectionName] sections in INI file.
      * @return array   Properties loaded from file (no prop replacements done yet).
      */
-    protected function parse( $filePath )
+    protected function parse($filePath)
     {
 
         // load() already made sure that file is readable
         // but we'll double check that when reading the file into
         // an array
 
-        if (( $lines = @file( $filePath ) ) === false) {
-            throw new IOException( "Unable to parse contents of $filePath" );
+        if (( $lines = @file($filePath) ) === false) {
+            throw new IOException("Unable to parse contents of $filePath");
         }
 
         // concatenate lines ending with backslash
-        $linesCount = count( $lines );
+        $linesCount = count($lines);
         for ($i = 0; $i < $linesCount; $i++) {
-            if (substr( $lines[$i], -2, 1 ) === '\\') {
-                $lines[$i + 1] = substr( $lines[$i], 0, -2 ).ltrim( $lines[$i + 1] );
+            if (substr($lines[$i], -2, 1) === '\\') {
+                $lines[$i + 1] = substr($lines[$i], 0, -2).ltrim($lines[$i + 1]);
                 $lines[$i] = '';
             }
         }
@@ -134,16 +134,16 @@ class Properties
 
         foreach ($lines as $line) {
             // strip comments and leading/trailing spaces
-            $line = trim( preg_replace( "/\s+[;#]\s.+$/", "", $line ) );
+            $line = trim(preg_replace("/\s+[;#]\s.+$/", "", $line));
 
             if (empty( $line ) || $line[0] == ';' || $line[0] == '#') {
                 continue;
             }
 
-            $pos = strpos( $line, '=' );
-            $property = trim( substr( $line, 0, $pos ) );
-            $value = trim( substr( $line, $pos + 1 ) );
-            $this->properties[$property] = $this->inVal( $value );
+            $pos = strpos($line, '=');
+            $property = trim(substr($line, 0, $pos));
+            $value = trim(substr($line, $pos + 1));
+            $this->properties[$property] = $this->inVal($value);
 
         } // for each line
     }
@@ -156,7 +156,7 @@ class Properties
      *
      * @return mixed  The new property value (may be boolean, etc.)
      */
-    protected function inVal( $val )
+    protected function inVal($val)
     {
 
         if ($val === "true") {
@@ -177,7 +177,7 @@ class Properties
      * @return void
      * @throws IOException - on error writing properties file.
      */
-    public function store( PhingFile $file = null, $header = null )
+    public function store(PhingFile $file = null, $header = null)
     {
 
         if ($file == null) {
@@ -185,21 +185,21 @@ class Properties
         }
 
         if ($file == null) {
-            throw new IOException( "Unable to write to empty filename" );
+            throw new IOException("Unable to write to empty filename");
         }
 
         // stores the properties in this object in the file denoted
         // if file is not given and the properties were loaded from a
         // file prior, this method stores them in the file used by load()
         try {
-            $fw = new FileWriter( $file );
+            $fw = new FileWriter($file);
             if ($header !== null) {
-                $fw->write( "# ".$header.PHP_EOL );
+                $fw->write("# ".$header.PHP_EOL);
             }
-            $fw->write( $this->toString() );
+            $fw->write($this->toString());
             $fw->close();
-        } catch( IOException $e ) {
-            throw new IOException( "Error writing property file: ".$e->getMessage() );
+        } catch (IOException $e) {
+            throw new IOException("Error writing property file: ".$e->getMessage());
         }
     }
 
@@ -216,7 +216,7 @@ class Properties
 
         $buf = "";
         foreach ($this->properties as $key => $item) {
-            $buf .= $key."=".$this->outVal( $item ).PHP_EOL;
+            $buf .= $key."=".$this->outVal($item).PHP_EOL;
         }
 
         return $buf;
@@ -230,7 +230,7 @@ class Properties
      *
      * @return string
      */
-    protected function outVal( $val )
+    protected function outVal($val)
     {
 
         if ($val === true) {
@@ -242,37 +242,37 @@ class Properties
         return $val;
     }
 
-    public function storeOutputStream( OutputStream $os, $comments )
+    public function storeOutputStream(OutputStream $os, $comments)
     {
 
-        $this->_storeOutputStream( new BufferedWriter( new OutputStreamWriter( $os ) ), $comments );
+        $this->_storeOutputStream(new BufferedWriter(new OutputStreamWriter($os)), $comments);
     }
 
-    private function _storeOutputStream( BufferedWriter $bw, $comments )
+    private function _storeOutputStream(BufferedWriter $bw, $comments)
     {
 
         if ($comments != null) {
-            self::writeComments( $bw, $comments );
+            self::writeComments($bw, $comments);
         }
-        $bw->write( "#".gmdate( 'D, d M Y H:i:s', time() ).' GMT' );
+        $bw->write("#".gmdate('D, d M Y H:i:s', time()).' GMT');
         $bw->newLine();
         foreach ($this->getProperties() as $key => $value) {
-            $bw->write( $key."=".$value );
+            $bw->write($key."=".$value);
             $bw->newLine();
 
         }
         $bw->flush();
     }
 
-    private static function writeComments( BufferedWriter $bw, $comments )
+    private static function writeComments(BufferedWriter $bw, $comments)
     {
 
-        $rows = explode( "\n", $comments );
-        $bw->write( "#".PHP_EOL );
+        $rows = explode("\n", $comments);
+        $bw->write("#".PHP_EOL);
         foreach ($rows as $row) {
-            $bw->write( sprintf( "#%s%s", trim( $row ), PHP_EOL ) );
+            $bw->write(sprintf("#%s%s", trim($row), PHP_EOL));
         }
-        $bw->write( "#" );
+        $bw->write("#");
         $bw->newLine();
     }
 
@@ -298,7 +298,7 @@ class Properties
      * @return mixed
      * @see get()
      */
-    public function getProperty( $prop )
+    public function getProperty($prop)
     {
 
         if (!isset( $this->properties[$prop] )) {
@@ -318,7 +318,7 @@ class Properties
      * @return mixed
      * @see getProperty()
      */
-    public function get( $prop )
+    public function get($prop)
     {
 
         if (!isset( $this->properties[$prop] )) {
@@ -338,10 +338,10 @@ class Properties
      *
      * @return mixed
      */
-    public function put( $key, $value )
+    public function put($key, $value)
     {
 
-        return $this->setProperty( $key, $value );
+        return $this->setProperty($key, $value);
     }
 
     /**
@@ -353,7 +353,7 @@ class Properties
      * @param mixed  $value
      * @param string $delimiter
      */
-    public function append( $key, $value, $delimiter = ',' )
+    public function append($key, $value, $delimiter = ',')
     {
 
         $newValue = $value;
@@ -384,7 +384,7 @@ class Properties
     public function keys()
     {
 
-        return array_keys( $this->properties );
+        return array_keys($this->properties);
     }
 
     /**
@@ -394,7 +394,7 @@ class Properties
      *
      * @return boolean
      */
-    public function containsKey( $key )
+    public function containsKey($key)
     {
 
         return isset( $this->properties[$key] );

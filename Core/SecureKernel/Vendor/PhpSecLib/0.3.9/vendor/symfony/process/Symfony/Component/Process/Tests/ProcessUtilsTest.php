@@ -19,10 +19,10 @@ class ProcessUtilsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataArguments
      */
-    public function testEscapeArgument( $result, $argument )
+    public function testEscapeArgument($result, $argument)
     {
 
-        $this->assertSame( $result, ProcessUtils::escapeArgument( $argument ) );
+        $this->assertSame($result, ProcessUtils::escapeArgument($argument));
     }
 
     public function dataArguments()
@@ -30,22 +30,22 @@ class ProcessUtilsTest extends \PHPUnit_Framework_TestCase
 
         if ('\\' === DIRECTORY_SEPARATOR) {
             return array(
-                array( '"\"php\" \"-v\""', '"php" "-v"' ),
-                array( '"foo bar"', 'foo bar' ),
-                array( '^%"path"^%', '%path%' ),
-                array( '"<|>\\" \\"\'f"', '<|>" "\'f' ),
-                array( '""', '' ),
-                array( '"with\trailingbs\\\\"', 'with\trailingbs\\' ),
+                array('"\"php\" \"-v\""', '"php" "-v"'),
+                array('"foo bar"', 'foo bar'),
+                array('^%"path"^%', '%path%'),
+                array('"<|>\\" \\"\'f"', '<|>" "\'f'),
+                array('""', ''),
+                array('"with\trailingbs\\\\"', 'with\trailingbs\\'),
             );
         }
 
         return array(
-            array( "'\"php\" \"-v\"'", '"php" "-v"' ),
-            array( "'foo bar'", 'foo bar' ),
-            array( "'%path%'", '%path%' ),
-            array( "'<|>\" \"'\\''f'", '<|>" "\'f' ),
-            array( "''", '' ),
-            array( "'with\\trailingbs\\'", 'with\trailingbs\\' ),
+            array("'\"php\" \"-v\"'", '"php" "-v"'),
+            array("'foo bar'", 'foo bar'),
+            array("'%path%'", '%path%'),
+            array("'<|>\" \"'\\''f'", '<|>" "\'f'),
+            array("''", ''),
+            array("'with\\trailingbs\\'", 'with\trailingbs\\'),
         );
     }
 }

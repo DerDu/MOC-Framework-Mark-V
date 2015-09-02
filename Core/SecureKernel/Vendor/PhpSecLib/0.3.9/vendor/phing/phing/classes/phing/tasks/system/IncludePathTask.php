@@ -73,13 +73,13 @@ class IncludePathTask extends Task
      *
      * @param Path $classpath An Path object containing the classpath.
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -90,11 +90,11 @@ class IncludePathTask extends Task
      *
      * @throws BuildException
      */
-    public function setClasspathRef( Reference $r )
+    public function setClasspathRef(Reference $r)
     {
 
         $this->classpathId = $r->getRefId();
-        $this->createClasspath()->setRefid( $r );
+        $this->createClasspath()->setRefid($r);
     }
 
     /**
@@ -104,7 +104,7 @@ class IncludePathTask extends Task
     {
 
         if ($this->classpath === null) {
-            $this->classpath = new Path( $this->project );
+            $this->classpath = new Path($this->project);
         }
 
         return $this->classpath->createPath();
@@ -115,11 +115,11 @@ class IncludePathTask extends Task
      *
      * @throws BuildException
      */
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
-        if (!in_array( $mode, array( 'append', 'prepend', 'replace' ) )) {
-            throw new BuildException( "Illegal mode: needs to be either append, prepend or replace" );
+        if (!in_array($mode, array('append', 'prepend', 'replace'))) {
+            throw new BuildException("Illegal mode: needs to be either append, prepend or replace");
         }
 
         $this->mode = $mode;
@@ -130,20 +130,20 @@ class IncludePathTask extends Task
     {
 
         // Apparently casting to (string) no longer invokes __toString() automatically.
-        if (is_object( $this->classpath )) {
+        if (is_object($this->classpath)) {
             $classpath = $this->classpath->__toString();
         }
 
         if (empty( $classpath )) {
-            throw new BuildException( "Provided classpath was empty." );
+            throw new BuildException("Provided classpath was empty.");
         }
 
         $curr_parts = Phing::explodeIncludePath();
-        $add_parts = Phing::explodeIncludePath( $classpath );
-        $new_parts = array_diff( $add_parts, $curr_parts );
+        $add_parts = Phing::explodeIncludePath($classpath);
+        $new_parts = array_diff($add_parts, $curr_parts);
 
         if ($new_parts) {
-            $this->updateIncludePath( $new_parts, $curr_parts );
+            $this->updateIncludePath($new_parts, $curr_parts);
         }
     }
 
@@ -151,7 +151,7 @@ class IncludePathTask extends Task
      * @param $new_parts
      * @param $curr_parts
      */
-    private function updateIncludePath( $new_parts, $curr_parts )
+    private function updateIncludePath($new_parts, $curr_parts)
     {
 
         $includePath = array();
@@ -159,7 +159,7 @@ class IncludePathTask extends Task
 
         switch ($this->mode) {
             case "append":
-                $includePath = array_merge( $curr_parts, $new_parts );
+                $includePath = array_merge($curr_parts, $new_parts);
                 $verb = "Appending";
                 break;
 
@@ -169,16 +169,16 @@ class IncludePathTask extends Task
                 break;
 
             case "prepend":
-                $includePath = array_merge( $new_parts, $curr_parts );
+                $includePath = array_merge($new_parts, $curr_parts);
                 $verb = "Prepending";
                 break;
         }
 
         $this->log(
-            $verb." new include_path components: ".implode( PATH_SEPARATOR, $new_parts ),
+            $verb." new include_path components: ".implode(PATH_SEPARATOR, $new_parts),
             Project::MSG_VERBOSE
         );
 
-        set_include_path( implode( PATH_SEPARATOR, $includePath ) );
+        set_include_path(implode(PATH_SEPARATOR, $includePath));
     }
 }

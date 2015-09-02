@@ -84,19 +84,19 @@ class RegexTask extends AbstractPropertySetterTask
     /**
      * @param $subject
      */
-    public function setSubject( $subject )
+    public function setSubject($subject)
     {
 
-        $this->subject = preg_quote( $subject, $this->delimiter );
+        $this->subject = preg_quote($subject, $this->delimiter);
     }
 
     /**
      * @param $limit
      */
-    public function setLimit( $limit )
+    public function setLimit($limit)
     {
 
-        $this->log( 'Set limit to '.$limit, Project::MSG_DEBUG );
+        $this->log('Set limit to '.$limit, Project::MSG_DEBUG);
 
         $this->limit = $limit;
     }
@@ -104,10 +104,10 @@ class RegexTask extends AbstractPropertySetterTask
     /**
      * @param $defaultValue
      */
-    public function setDefaultValue( $defaultValue )
+    public function setDefaultValue($defaultValue)
     {
 
-        $this->log( 'Set default value to '.$defaultValue, Project::MSG_DEBUG );
+        $this->log('Set default value to '.$defaultValue, Project::MSG_DEBUG);
 
         $this->defaultValue = $defaultValue;
     }
@@ -117,15 +117,15 @@ class RegexTask extends AbstractPropertySetterTask
      *
      * @throws BuildException
      */
-    public function setPattern( $pattern )
+    public function setPattern($pattern)
     {
 
         if ($this->pattern !== null) {
-            throw new BuildException( "Cannot specify more than one regular expression" );
+            throw new BuildException("Cannot specify more than one regular expression");
         }
 
-        $pattern = addslashes( $pattern );
-        $this->log( 'Set pattern to '.$pattern, Project::MSG_DEBUG );
+        $pattern = addslashes($pattern);
+        $this->log('Set pattern to '.$pattern, Project::MSG_DEBUG);
 
         $this->pattern = $pattern;
     }
@@ -135,17 +135,17 @@ class RegexTask extends AbstractPropertySetterTask
      *
      * @throws BuildException
      */
-    public function setReplace( $replace )
+    public function setReplace($replace)
     {
 
         if ($this->replace !== null) {
-            throw new BuildException( "Cannot specify more than one replace expression" );
+            throw new BuildException("Cannot specify more than one replace expression");
         }
         if ($this->match !== null) {
-            throw new BuildException( "You cannot specify both a select and replace expression" );
+            throw new BuildException("You cannot specify both a select and replace expression");
         }
 
-        $this->log( 'Set replace to '.$replace, Project::MSG_DEBUG );
+        $this->log('Set replace to '.$replace, Project::MSG_DEBUG);
 
         $this->replace = $replace;
     }
@@ -155,14 +155,14 @@ class RegexTask extends AbstractPropertySetterTask
      *
      * @throws BuildException
      */
-    public function setMatch( $match )
+    public function setMatch($match)
     {
 
         if ($this->match !== null) {
-            throw new BuildException( "Cannot specify more than one match expression" );
+            throw new BuildException("Cannot specify more than one match expression");
         }
 
-        $this->log( 'Set match to '.$match, Project::MSG_DEBUG );
+        $this->log('Set match to '.$match, Project::MSG_DEBUG);
 
         $this->match = $match;
     }
@@ -170,10 +170,10 @@ class RegexTask extends AbstractPropertySetterTask
     /**
      * @param $caseSensitive
      */
-    public function setCaseSensitive( $caseSensitive )
+    public function setCaseSensitive($caseSensitive)
     {
 
-        $this->log( 'Set case-sensitive to '.$caseSensitive, Project::MSG_DEBUG );
+        $this->log('Set case-sensitive to '.$caseSensitive, Project::MSG_DEBUG);
 
         $this->caseSensitive = $caseSensitive;
     }
@@ -195,7 +195,7 @@ class RegexTask extends AbstractPropertySetterTask
         }
 
         if ($output !== null) {
-            $this->setPropertyValue( $output );
+            $this->setPropertyValue($output);
         }
     }
 
@@ -206,10 +206,10 @@ class RegexTask extends AbstractPropertySetterTask
     {
 
         if ($this->pattern === null) {
-            throw new BuildException( "No match expression specified." );
+            throw new BuildException("No match expression specified.");
         }
         if ($this->replace === null && $this->match === null) {
-            throw new BuildException( "You must specify either a preg_replace or preg_match pattern" );
+            throw new BuildException("You must specify either a preg_replace or preg_match pattern");
         }
     }
 
@@ -221,15 +221,15 @@ class RegexTask extends AbstractPropertySetterTask
     {
 
         if ($this->replace === null) {
-            throw new BuildException( "No replace expression specified." );
+            throw new BuildException("No replace expression specified.");
         }
         $options = '';
         if (!$this->caseSensitive) {
             $options .= $this->modifiers['PCRE_CASELESS'];
         }
 
-        $pattern = sprintf( '%s%s%s%s', $this->delimiter, $this->pattern, $this->delimiter, $options );
-        $output = preg_replace( $pattern, $this->replace, $this->subject, $this->limit );
+        $pattern = sprintf('%s%s%s%s', $this->delimiter, $this->pattern, $this->delimiter, $options);
+        $output = preg_replace($pattern, $this->replace, $this->subject, $this->limit);
 
         if ($this->subject === $output || $output === null) {
             $output = $this->defaultValue;
@@ -249,12 +249,12 @@ class RegexTask extends AbstractPropertySetterTask
             $options .= $this->modifiers['PCRE_CASELESS'];
         }
 
-        $pattern = sprintf( '%s%s%s%s', $this->delimiter, $this->pattern, $this->delimiter, $options );
-        $group = ltrim( $this->match, '$' );
+        $pattern = sprintf('%s%s%s%s', $this->delimiter, $this->pattern, $this->delimiter, $options);
+        $group = ltrim($this->match, '$');
 
         $output = $this->defaultValue;
 
-        if (preg_match( $pattern, $this->subject, $matches )) {
+        if (preg_match($pattern, $this->subject, $matches)) {
             $output = $matches[(int)$group];
         }
 

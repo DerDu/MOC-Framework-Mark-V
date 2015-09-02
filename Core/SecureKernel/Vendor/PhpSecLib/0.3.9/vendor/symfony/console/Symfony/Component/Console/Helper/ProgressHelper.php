@@ -107,15 +107,15 @@ class ProgressHelper extends Helper
      * @var array
      */
     private $timeFormats = array(
-        array( 0, '???' ),
-        array( 2, '1 sec' ),
-        array( 59, 'secs', 1 ),
-        array( 60, '1 min' ),
-        array( 3600, 'mins', 60 ),
-        array( 5400, '1 hr' ),
-        array( 86400, 'hrs', 3600 ),
-        array( 129600, '1 day' ),
-        array( 604800, 'days', 86400 ),
+        array(0, '???'),
+        array(2, '1 sec'),
+        array(59, 'secs', 1),
+        array(60, '1 min'),
+        array(3600, 'mins', 60),
+        array(5400, '1 hr'),
+        array(86400, 'hrs', 3600),
+        array(129600, '1 day'),
+        array(604800, 'days', 86400),
     );
 
     /**
@@ -123,7 +123,7 @@ class ProgressHelper extends Helper
      *
      * @param int $size The progress bar size
      */
-    public function setBarWidth( $size )
+    public function setBarWidth($size)
     {
 
         $this->barWidth = (int)$size;
@@ -134,7 +134,7 @@ class ProgressHelper extends Helper
      *
      * @param string $char A character
      */
-    public function setBarCharacter( $char )
+    public function setBarCharacter($char)
     {
 
         $this->barChar = $char;
@@ -145,7 +145,7 @@ class ProgressHelper extends Helper
      *
      * @param string $char A character
      */
-    public function setEmptyBarCharacter( $char )
+    public function setEmptyBarCharacter($char)
     {
 
         $this->emptyBarChar = $char;
@@ -156,7 +156,7 @@ class ProgressHelper extends Helper
      *
      * @param string $char A character
      */
-    public function setProgressCharacter( $char )
+    public function setProgressCharacter($char)
     {
 
         $this->progressChar = $char;
@@ -167,7 +167,7 @@ class ProgressHelper extends Helper
      *
      * @param string $format The format
      */
-    public function setFormat( $format )
+    public function setFormat($format)
     {
 
         $this->format = $format;
@@ -178,7 +178,7 @@ class ProgressHelper extends Helper
      *
      * @param int $freq The frequency in steps
      */
-    public function setRedrawFrequency( $freq )
+    public function setRedrawFrequency($freq)
     {
 
         $this->redrawFreq = (int)$freq;
@@ -190,7 +190,7 @@ class ProgressHelper extends Helper
      * @param OutputInterface $output An Output instance
      * @param int|null        $max    Maximum steps
      */
-    public function start( OutputInterface $output, $max = null )
+    public function start(OutputInterface $output, $max = null)
     {
 
         $this->startTime = time();
@@ -238,13 +238,13 @@ class ProgressHelper extends Helper
 
         $this->formatVars = array();
         foreach ($this->defaultFormatVars as $var) {
-            if (false !== strpos( $this->format, "%{$var}%" )) {
+            if (false !== strpos($this->format, "%{$var}%")) {
                 $this->formatVars[$var] = true;
             }
         }
 
         if ($this->max > 0) {
-            $this->widths['max'] = $this->strlen( $this->max );
+            $this->widths['max'] = $this->strlen($this->max);
             $this->widths['current'] = $this->widths['max'];
         } else {
             $this->barCharOriginal = $this->barChar;
@@ -260,10 +260,10 @@ class ProgressHelper extends Helper
      *
      * @throws \LogicException
      */
-    public function advance( $step = 1, $redraw = false )
+    public function advance($step = 1, $redraw = false)
     {
 
-        $this->setCurrent( $this->current + $step, $redraw );
+        $this->setCurrent($this->current + $step, $redraw);
     }
 
     /**
@@ -274,17 +274,17 @@ class ProgressHelper extends Helper
      *
      * @throws \LogicException
      */
-    public function setCurrent( $current, $redraw = false )
+    public function setCurrent($current, $redraw = false)
     {
 
         if (null === $this->startTime) {
-            throw new \LogicException( 'You must start the progress bar before calling setCurrent().' );
+            throw new \LogicException('You must start the progress bar before calling setCurrent().');
         }
 
         $current = (int)$current;
 
         if ($current < $this->current) {
-            throw new \LogicException( 'You can\'t regress the progress bar' );
+            throw new \LogicException('You can\'t regress the progress bar');
         }
 
         if (0 === $this->current) {
@@ -308,18 +308,18 @@ class ProgressHelper extends Helper
      *
      * @throws \LogicException
      */
-    public function display( $finish = false )
+    public function display($finish = false)
     {
 
         if (null === $this->startTime) {
-            throw new \LogicException( 'You must start the progress bar before calling display().' );
+            throw new \LogicException('You must start the progress bar before calling display().');
         }
 
         $message = $this->format;
-        foreach ($this->generate( $finish ) as $name => $value) {
-            $message = str_replace( "%{$name}%", $value, $message );
+        foreach ($this->generate($finish) as $name => $value) {
+            $message = str_replace("%{$name}%", $value, $message);
         }
-        $this->overwrite( $this->output, $message );
+        $this->overwrite($this->output, $message);
     }
 
     /**
@@ -329,7 +329,7 @@ class ProgressHelper extends Helper
      *
      * @return array Array of format vars and values
      */
-    private function generate( $finish = false )
+    private function generate($finish = false)
     {
 
         $vars = array();
@@ -342,20 +342,20 @@ class ProgressHelper extends Helper
             $completeBars = 0;
 
             if ($this->max > 0) {
-                $completeBars = floor( $percent * $this->barWidth );
+                $completeBars = floor($percent * $this->barWidth);
             } else {
                 if (!$finish) {
-                    $completeBars = floor( $this->current % $this->barWidth );
+                    $completeBars = floor($this->current % $this->barWidth);
                 } else {
                     $completeBars = $this->barWidth;
                 }
             }
 
-            $emptyBars = $this->barWidth - $completeBars - $this->strlen( $this->progressChar );
-            $bar = str_repeat( $this->barChar, $completeBars );
+            $emptyBars = $this->barWidth - $completeBars - $this->strlen($this->progressChar);
+            $bar = str_repeat($this->barChar, $completeBars);
             if ($completeBars < $this->barWidth) {
                 $bar .= $this->progressChar;
-                $bar .= str_repeat( $this->emptyBarChar, $emptyBars );
+                $bar .= str_repeat($this->emptyBarChar, $emptyBars);
             }
 
             $vars['bar'] = $bar;
@@ -363,11 +363,11 @@ class ProgressHelper extends Helper
 
         if (isset( $this->formatVars['elapsed'] )) {
             $elapsed = time() - $this->startTime;
-            $vars['elapsed'] = str_pad( $this->humaneTime( $elapsed ), $this->widths['elapsed'], ' ', STR_PAD_LEFT );
+            $vars['elapsed'] = str_pad($this->humaneTime($elapsed), $this->widths['elapsed'], ' ', STR_PAD_LEFT);
         }
 
         if (isset( $this->formatVars['current'] )) {
-            $vars['current'] = str_pad( $this->current, $this->widths['current'], ' ', STR_PAD_LEFT );
+            $vars['current'] = str_pad($this->current, $this->widths['current'], ' ', STR_PAD_LEFT);
         }
 
         if (isset( $this->formatVars['max'] )) {
@@ -375,7 +375,7 @@ class ProgressHelper extends Helper
         }
 
         if (isset( $this->formatVars['percent'] )) {
-            $vars['percent'] = str_pad( floor( $percent * 100 ), $this->widths['percent'], ' ', STR_PAD_LEFT );
+            $vars['percent'] = str_pad(floor($percent * 100), $this->widths['percent'], ' ', STR_PAD_LEFT);
         }
 
         return $vars;
@@ -388,17 +388,17 @@ class ProgressHelper extends Helper
      *
      * @return string Time in readable format
      */
-    private function humaneTime( $secs )
+    private function humaneTime($secs)
     {
 
         $text = '';
         foreach ($this->timeFormats as $format) {
             if ($secs < $format[0]) {
-                if (count( $format ) == 2) {
+                if (count($format) == 2) {
                     $text = $format[1];
                     break;
                 } else {
-                    $text = ceil( $secs / $format[2] ).' '.$format[1];
+                    $text = ceil($secs / $format[2]).' '.$format[1];
                     break;
                 }
             }
@@ -413,21 +413,21 @@ class ProgressHelper extends Helper
      * @param OutputInterface $output  An Output instance
      * @param string          $message The message
      */
-    private function overwrite( OutputInterface $output, $message )
+    private function overwrite(OutputInterface $output, $message)
     {
 
-        $length = $this->strlen( $message );
+        $length = $this->strlen($message);
 
         // append whitespace to match the last line's length
         if (null !== $this->lastMessagesLength && $this->lastMessagesLength > $length) {
-            $message = str_pad( $message, $this->lastMessagesLength, "\x20", STR_PAD_RIGHT );
+            $message = str_pad($message, $this->lastMessagesLength, "\x20", STR_PAD_RIGHT);
         }
 
         // carriage return
-        $output->write( "\x0D" );
-        $output->write( $message );
+        $output->write("\x0D");
+        $output->write($message);
 
-        $this->lastMessagesLength = $this->strlen( $message );
+        $this->lastMessagesLength = $this->strlen($message);
     }
 
     /**
@@ -440,7 +440,7 @@ class ProgressHelper extends Helper
     public function clear()
     {
 
-        $this->overwrite( $this->output, '' );
+        $this->overwrite($this->output, '');
     }
 
     /**
@@ -450,16 +450,16 @@ class ProgressHelper extends Helper
     {
 
         if (null === $this->startTime) {
-            throw new \LogicException( 'You must start the progress bar before calling finish().' );
+            throw new \LogicException('You must start the progress bar before calling finish().');
         }
 
         if (null !== $this->startTime) {
             if (!$this->max) {
                 $this->barChar = $this->barCharOriginal;
-                $this->display( true );
+                $this->display(true);
             }
             $this->startTime = null;
-            $this->output->writeln( '' );
+            $this->output->writeln('');
             $this->output = null;
         }
     }

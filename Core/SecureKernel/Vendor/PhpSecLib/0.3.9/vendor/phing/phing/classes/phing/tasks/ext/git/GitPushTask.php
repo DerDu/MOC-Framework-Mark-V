@@ -102,29 +102,29 @@ class GitPushTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'push' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('push');
         $command
-            ->setOption( 'tags', $this->isTags() )
-            ->setOption( 'mirror', $this->isMirror() )
-            ->setOption( 'delete', $this->isDelete() )
-            ->setOption( 'q', $this->isQuiet() )
-            ->setOption( 'force', $this->isForce() );
+            ->setOption('tags', $this->isTags())
+            ->setOption('mirror', $this->isMirror())
+            ->setOption('delete', $this->isDelete())
+            ->setOption('q', $this->isQuiet())
+            ->setOption('force', $this->isForce());
 
         // set operation target
         if ($this->isAllRemotes()) { // --all
-            $command->setOption( 'all', true );
-            $this->log( 'git-push: push to all refs', Project::MSG_INFO );
+            $command->setOption('all', true);
+            $this->log('git-push: push to all refs', Project::MSG_INFO);
         } elseif ($this->isMirror()) { // <repository> [<refspec>]
-            $command->setOption( 'mirror', true );
-            $this->log( 'git-push: mirror all refs', Project::MSG_INFO );
+            $command->setOption('mirror', true);
+            $this->log('git-push: mirror all refs', Project::MSG_INFO);
         } elseif ($this->getDestination()) { // <repository> [<refspec>]
-            $command->addArgument( $this->getDestination() );
+            $command->addArgument($this->getDestination());
             if ($this->getRefspec()) {
-                $command->addArgument( $this->getRefspec() );
+                $command->addArgument($this->getRefspec());
             }
             $this->log(
                 sprintf(
@@ -135,22 +135,22 @@ class GitPushTask extends GitBaseTask
                 Project::MSG_INFO
             );
         } else {
-            throw new BuildException( 'At least one destination must be provided' );
+            throw new BuildException('At least one destination must be provided');
         }
 
-        $this->log( 'git-push command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-push command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed.', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed.', $e);
         }
 
-        $this->log( 'git-push: complete', Project::MSG_INFO );
+        $this->log('git-push: complete', Project::MSG_INFO);
         if ($this->isDelete()) {
-            $this->log( 'git-push: branch delete requested', Project::MSG_INFO );
+            $this->log('git-push: branch delete requested', Project::MSG_INFO);
         }
-        $this->log( 'git-push output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-push output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -174,7 +174,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setDelete( $flag )
+    public function setDelete($flag)
     {
 
         $this->delete = (boolean)$flag;
@@ -210,7 +210,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $destination
      */
-    public function setDestination( $destination )
+    public function setDestination($destination)
     {
 
         $this->destination = $destination;
@@ -228,7 +228,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $spec
      */
-    public function setRefspec( $spec )
+    public function setRefspec($spec)
     {
 
         $this->refspec = $spec;
@@ -237,7 +237,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAll( $flag )
+    public function setAll($flag)
     {
 
         $this->allRemotes = $flag;
@@ -264,7 +264,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setMirror( $flag )
+    public function setMirror($flag)
     {
 
         $this->mirror = (boolean)$flag;
@@ -291,7 +291,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setTags( $flag )
+    public function setTags($flag)
     {
 
         $this->tags = $flag;
@@ -318,7 +318,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForce( $flag )
+    public function setForce($flag)
     {
 
         $this->force = $flag;
@@ -345,7 +345,7 @@ class GitPushTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setQuiet( $flag )
+    public function setQuiet($flag)
     {
 
         $this->quiet = $flag;

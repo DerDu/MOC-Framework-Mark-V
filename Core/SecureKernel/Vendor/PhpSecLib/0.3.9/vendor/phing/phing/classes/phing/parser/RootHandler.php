@@ -69,7 +69,7 @@ class RootHandler extends AbstractHandler
         $this->configurator = $configurator;
         $this->context = $context;
 
-        parent::__construct( $parser, $this );
+        parent::__construct($parser, $this);
     }
 
     /**
@@ -86,15 +86,15 @@ class RootHandler extends AbstractHandler
      * @throws ExpatParseException if the first element within our build file
      *                                   is not the &gt;project&lt; element
      */
-    public function startElement( $tag, $attrs )
+    public function startElement($tag, $attrs)
     {
 
         if ($tag === "project") {
-            $ph = new ProjectHandler( $this->parser, $this, $this->configurator, $this->context );
-            $ph->init( $tag, $attrs );
+            $ph = new ProjectHandler($this->parser, $this, $this->configurator, $this->context);
+            $ph->init($tag, $attrs);
         } else {
-            throw new ExpatParseException( "Unexpected tag <$tag> in top-level of build file.",
-                $this->parser->getLocation() );
+            throw new ExpatParseException("Unexpected tag <$tag> in top-level of build file.",
+                $this->parser->getLocation());
         }
     }
 }

@@ -17,7 +17,7 @@ class Unit_Crypt_RSA_LoadKeyTest extends PhpseclibTestCase
 
         $key = 'zzzzzzzzzzzzzz';
 
-        $this->assertFalse( $rsa->loadKey( $key ) );
+        $this->assertFalse($rsa->loadKey($key));
     }
 
     public function testPKCS1Key()
@@ -39,8 +39,8 @@ U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
 37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=
 -----END RSA PRIVATE KEY-----';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testPKCS1SpacesKey()
@@ -61,10 +61,10 @@ X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl
 U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
 37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=
 -----END RSA PRIVATE KEY-----';
-        $key = str_replace( array( "\r", "\n", "\r\n" ), ' ', $key );
+        $key = str_replace(array("\r", "\n", "\r\n"), ' ', $key);
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testPKCS1NoHeaderKey()
@@ -84,8 +84,8 @@ X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl
 U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
 37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testPKCS1NoWhitespaceNoHeaderKey()
@@ -105,8 +105,8 @@ U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
             'U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ'.
             '37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testRawPKCS1Key()
@@ -125,17 +125,17 @@ U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
             'X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl'.
             'U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ'.
             '37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=';
-        $key = base64_decode( $key );
+        $key = base64_decode($key);
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testLoadPKCS8PrivateKey()
     {
 
         $rsa = new Crypt_RSA();
-        $rsa->setPassword( 'password' );
+        $rsa->setPassword('password');
 
         $key = '-----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIE6TAbBgkqhkiG9w0BBQMwDgQIcWWgZeQYPTcCAggABIIEyLoa5b3ktcPmy4VB
@@ -167,8 +167,8 @@ GF/qoZyC1mbqdtyyeWgHtVbJVUORmpbNnXOII9duEqBUNDiO9VSZNn/8h/VsYeAB
 xryZaRDVmtMuf/OZBQ==
 -----END ENCRYPTED PRIVATE KEY-----';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPrivateKey());
     }
 
     public function testSavePKCS8PrivateKey()
@@ -189,14 +189,14 @@ X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl
 U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
 37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=
 -----END RSA PRIVATE KEY-----';
-        $rsa->setPassword( 'password' );
+        $rsa->setPassword('password');
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
+        $this->assertTrue($rsa->loadKey($key));
 
-        $key = $rsa->getPrivateKey( CRYPT_RSA_PRIVATE_FORMAT_PKCS8 );
-        $this->assertInternalType( 'string', $key );
+        $key = $rsa->getPrivateKey(CRYPT_RSA_PRIVATE_FORMAT_PKCS8);
+        $this->assertInternalType('string', $key);
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
+        $this->assertTrue($rsa->loadKey($key));
     }
 
     public function testPubKey1()
@@ -213,9 +213,9 @@ gPiUWOPatVkt7+Bs3h5Ramxh7XjBOXeulmCpGSynXNcpZ/06+vofGi/2MlpQZNhH
 Ao8eayMp6FcvNucIpUndo1X8dKMv3Y26ZQIDAQAB
 -----END RSA PUBLIC KEY-----';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPublicKey() );
-        $this->assertFalse( $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPublicKey());
+        $this->assertFalse($rsa->getPrivateKey());
     }
 
     public function testPubKey2()
@@ -233,9 +233,9 @@ lmCpGSynXNcpZ/06+vofGi/2MlpQZNhHAo8eayMp6FcvNucIpUndo1X8dKMv3Y26
 ZQIDAQAB
 -----END PUBLIC KEY-----';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPublicKey() );
-        $this->assertFalse( $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPublicKey());
+        $this->assertFalse($rsa->getPrivateKey());
     }
 
     public function testSSHPubKey()
@@ -248,9 +248,9 @@ ZQIDAQAB
             'GkVb1/3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZw== '.
             'phpseclib-generated-key';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertInternalType( 'string', $rsa->getPublicKey() );
-        $this->assertFalse( $rsa->getPrivateKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertInternalType('string', $rsa->getPublicKey());
+        $this->assertFalse($rsa->getPrivateKey());
     }
 
     public function testSetPrivate()
@@ -267,10 +267,10 @@ gPiUWOPatVkt7+Bs3h5Ramxh7XjBOXeulmCpGSynXNcpZ/06+vofGi/2MlpQZNhH
 Ao8eayMp6FcvNucIpUndo1X8dKMv3Y26ZQIDAQAB
 -----END RSA PUBLIC KEY-----';
 
-        $this->assertTrue( $rsa->loadKey( $key ) );
-        $this->assertTrue( $rsa->setPrivateKey() );
-        $this->assertGreaterThanOrEqual( 1, strlen( "$rsa" ) );
-        $this->assertFalse( $rsa->getPublicKey() );
+        $this->assertTrue($rsa->loadKey($key));
+        $this->assertTrue($rsa->setPrivateKey());
+        $this->assertGreaterThanOrEqual(1, strlen("$rsa"));
+        $this->assertFalse($rsa->getPublicKey());
     }
 
     /**
@@ -289,11 +289,11 @@ Ao8eayMp6FcvNucIpUndo1X8dKMv3Y26ZQIDAQAB
   <Exponent>AQAB</Exponent>
 </RSAKeyValue>';
 
-        $rsa->loadKey( $key );
+        $rsa->loadKey($key);
         $rsa->setPublicKey();
-        $newkey = $rsa->getPublicKey( CRYPT_RSA_PUBLIC_FORMAT_XML );
+        $newkey = $rsa->getPublicKey(CRYPT_RSA_PUBLIC_FORMAT_XML);
 
-        $this->assertSame( preg_replace( '#\s#', '', $key ), preg_replace( '#\s#', '', $newkey ) );
+        $this->assertSame(preg_replace('#\s#', '', $key), preg_replace('#\s#', '', $newkey));
     }
 
     /**
@@ -311,10 +311,10 @@ JWrQdxx/WNN+ABG426rgYYbeGcIlWLZCw6Bx/1HtN5ef6nVEoiGNChYKIRB4QFOi
 01smFxps1w8ZIQnD6wIDAQAB
 -----END PUBLIC KEY-----';
 
-        $rsa->loadKey( $key );
+        $rsa->loadKey($key);
         $rsa->setPublicKey();
         $newkey = $rsa->getPublicKey();
 
-        $this->assertSame( preg_replace( '#\s#', '', $key ), preg_replace( '#\s#', '', $newkey ) );
+        $this->assertSame(preg_replace('#\s#', '', $key), preg_replace('#\s#', '', $newkey));
     }
 }

@@ -61,10 +61,10 @@ class RegexpMapper implements FileNameMapper
      *
      * @return void
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
 
-        $this->reg->setPattern( $from );
+        $this->reg->setPattern($from);
     }
 
     /**
@@ -79,7 +79,7 @@ class RegexpMapper implements FileNameMapper
      * @intern [HL] I'm changing the way this works for now to just use string
      *              <code>$this->to = StringHelper::toCharArray($to);</code>
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
 
         $this->to = $to;
@@ -92,14 +92,14 @@ class RegexpMapper implements FileNameMapper
      *
      * @return array|null
      */
-    public function main( $sourceFileName )
+    public function main($sourceFileName)
     {
 
-        if ($this->reg === null || $this->to === null || !$this->reg->matches( (string)$sourceFileName )) {
+        if ($this->reg === null || $this->to === null || !$this->reg->matches((string)$sourceFileName)) {
             return null;
         }
 
-        return array( $this->replaceReferences( $sourceFileName ) );
+        return array($this->replaceReferences($sourceFileName));
     }
 
     /**
@@ -116,10 +116,10 @@ class RegexpMapper implements FileNameMapper
      *         so no need to pass $source again to the engine.
      *         Replaces \1 with value of reg->getGroup(1) and return the modified "to" string.
      */
-    private function replaceReferences( $source )
+    private function replaceReferences($source)
     {
 
-        return preg_replace_callback( '/\\\([\d]+)/', array( $this, 'replaceReferencesCallback' ), $this->to );
+        return preg_replace_callback('/\\\([\d]+)/', array($this, 'replaceReferencesCallback'), $this->to);
     }
 
     /**
@@ -129,9 +129,9 @@ class RegexpMapper implements FileNameMapper
      *
      * @return string
      */
-    private function replaceReferencesCallback( $matches )
+    private function replaceReferencesCallback($matches)
     {
 
-        return (string)$this->reg->getGroup( $matches[1] );
+        return (string)$this->reg->getGroup($matches[1]);
     }
 }

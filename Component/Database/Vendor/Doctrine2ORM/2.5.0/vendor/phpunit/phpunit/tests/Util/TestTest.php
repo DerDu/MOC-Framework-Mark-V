@@ -80,26 +80,29 @@ class Util_TestTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertArraySubset(
-            array('class'   => 'Class',
-                  'code'    => My\Space\ExceptionNamespaceTest::ERROR_CODE,
-                  'message' => My\Space\ExceptionNamespaceTest::ERROR_MESSAGE
+            array(
+                'class'   => 'Class',
+                'code'    => My\Space\ExceptionNamespaceTest::ERROR_CODE,
+                'message' => My\Space\ExceptionNamespaceTest::ERROR_MESSAGE
             ),
             PHPUnit_Util_Test::getExpectedException('My\Space\ExceptionNamespaceTest', 'testConstants')
         );
 
         // Ensure the Class::CONST expression is only evaluated when the constant really exists
         $this->assertArraySubset(
-            array('class'   => 'Class',
-                  'code'    => 'ExceptionTest::UNKNOWN_CODE_CONSTANT',
-                  'message' => 'ExceptionTest::UNKNOWN_MESSAGE_CONSTANT'
+            array(
+                'class'   => 'Class',
+                'code'    => 'ExceptionTest::UNKNOWN_CODE_CONSTANT',
+                'message' => 'ExceptionTest::UNKNOWN_MESSAGE_CONSTANT'
             ),
             PHPUnit_Util_Test::getExpectedException('ExceptionTest', 'testUnknownConstants')
         );
 
         $this->assertArraySubset(
-            array('class'   => 'Class',
-                  'code'    => 'My\Space\ExceptionNamespaceTest::UNKNOWN_CODE_CONSTANT',
-                  'message' => 'My\Space\ExceptionNamespaceTest::UNKNOWN_MESSAGE_CONSTANT'
+            array(
+                'class'   => 'Class',
+                'code'    => 'My\Space\ExceptionNamespaceTest::UNKNOWN_CODE_CONSTANT',
+                'message' => 'My\Space\ExceptionNamespaceTest::UNKNOWN_MESSAGE_CONSTANT'
             ),
             PHPUnit_Util_Test::getExpectedException('My\Space\ExceptionNamespaceTest', 'testUnknownConstants')
         );

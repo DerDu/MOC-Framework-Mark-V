@@ -46,7 +46,7 @@ class SvnLogTask extends SvnBaseTask
      *
      * @param $force
      */
-    public function setForceCompatible( $force )
+    public function setForceCompatible($force)
     {
     }
 
@@ -55,7 +55,7 @@ class SvnLogTask extends SvnBaseTask
      *
      * @param $limit
      */
-    public function setLimit( $limit )
+    public function setLimit($limit)
     {
 
         $this->limit = (int)$limit;
@@ -69,14 +69,14 @@ class SvnLogTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'log' );
+        $this->setup('log');
 
         $switches = array();
         if ($this->limit > 0) {
             $switches['limit'] = $this->limit;
         }
 
-        $output = $this->run( array(), $switches );
+        $output = $this->run(array(), $switches);
         $result = null;
 
         if ($this->oldVersion) {
@@ -92,9 +92,9 @@ class SvnLogTask extends SvnBaseTask
         }
 
         if (!empty( $result )) {
-            $this->project->setProperty( $this->getPropertyName(), $result );
+            $this->project->setProperty($this->getPropertyName(), $result);
         } else {
-            throw new BuildException( "Failed to parse the output of 'svn log'." );
+            throw new BuildException("Failed to parse the output of 'svn log'.");
         }
     }
 
@@ -112,7 +112,7 @@ class SvnLogTask extends SvnBaseTask
      *
      * @param $propertyName
      */
-    public function setPropertyName( $propertyName )
+    public function setPropertyName($propertyName)
     {
 
         $this->propertyName = $propertyName;

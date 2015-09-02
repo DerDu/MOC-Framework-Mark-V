@@ -29,12 +29,12 @@ class SizeRangeFilterIterator extends FilterIterator
      * @param \Iterator          $iterator    The Iterator to filter
      * @param NumberComparator[] $comparators An array of NumberComparator instances
      */
-    public function __construct( \Iterator $iterator, array $comparators )
+    public function __construct(\Iterator $iterator, array $comparators)
     {
 
         $this->comparators = $comparators;
 
-        parent::__construct( $iterator );
+        parent::__construct($iterator);
     }
 
     /**
@@ -52,7 +52,7 @@ class SizeRangeFilterIterator extends FilterIterator
 
         $filesize = $fileinfo->getSize();
         foreach ($this->comparators as $compare) {
-            if (!$compare->test( $filesize )) {
+            if (!$compare->test($filesize)) {
                 return false;
             }
         }

@@ -117,7 +117,7 @@ class XmlLogger implements BuildLogger
     public function __construct()
     {
 
-        $this->doc = new DOMDocument( "1.0", "UTF-8" );
+        $this->doc = new DOMDocument("1.0", "UTF-8");
         $this->doc->formatOutput = true;
     }
 
@@ -127,13 +127,13 @@ class XmlLogger implements BuildLogger
      *
      * @param BuildEvent Ignored.
      */
-    public function buildStarted( BuildEvent $event )
+    public function buildStarted(BuildEvent $event)
     {
 
         $this->buildTimerStart = Phing::currentTimeMillis();
-        $this->buildElement = $this->doc->createElement( XmlLogger::BUILD_TAG );
-        array_push( $this->elementStack, $this->buildElement );
-        array_push( $this->timesStack, $this->buildTimerStart );
+        $this->buildElement = $this->doc->createElement(XmlLogger::BUILD_TAG);
+        array_push($this->elementStack, $this->buildElement);
+        array_push($this->timesStack, $this->buildTimerStart);
     }
 
     /**
@@ -145,24 +145,24 @@ class XmlLogger implements BuildLogger
      *
      * @throws BuildException
      */
-    public function buildFinished( BuildEvent $event )
+    public function buildFinished(BuildEvent $event)
     {
 
         $elapsedTime = Phing::currentTimeMillis() - $this->buildTimerStart;
 
-        $this->buildElement->setAttribute( XmlLogger::TIME_ATTR, DefaultLogger::formatTime( $elapsedTime ) );
+        $this->buildElement->setAttribute(XmlLogger::TIME_ATTR, DefaultLogger::formatTime($elapsedTime));
 
         if ($event->getException() != null) {
-            $this->buildElement->setAttribute( XmlLogger::ERROR_ATTR, $event->getException()->getMessage() );
-            $errText = $this->doc->createCDATASection( $event->getException()->getTraceAsString() );
-            $stacktrace = $this->doc->createElement( XmlLogger::STACKTRACE_TAG );
-            $stacktrace->appendChild( $errText );
-            $this->buildElement->appendChild( $stacktrace );
+            $this->buildElement->setAttribute(XmlLogger::ERROR_ATTR, $event->getException()->getMessage());
+            $errText = $this->doc->createCDATASection($event->getException()->getTraceAsString());
+            $stacktrace = $this->doc->createElement(XmlLogger::STACKTRACE_TAG);
+            $stacktrace->appendChild($errText);
+            $this->buildElement->appendChild($stacktrace);
         }
 
-        $this->doc->appendChild( $this->buildElement );
+        $this->doc->appendChild($this->buildElement);
 
-        $outFilename = $event->getProject()->getProperty( "XmlLogger.file" );
+        $outFilename = $event->getProject()->getProperty("XmlLogger.file");
         if ($outFilename == null) {
             $outFilename = "log.xml";
         }
@@ -170,27 +170,27 @@ class XmlLogger implements BuildLogger
         try {
             $stream = $this->out;
             if ($stream === null) {
-                $stream = new FileOutputStream( $outFilename );
+                $stream = new FileOutputStream($outFilename);
             }
 
             // Yes, we could just stream->write() but this will eventually be the better
             // way to do this (when we need to worry about charset conversions.
-            $writer = new OutputStreamWriter( $stream );
-            $writer->write( $this->doc->saveXML() );
+            $writer = new OutputStreamWriter($stream);
+            $writer->write($this->doc->saveXML());
             $writer->close();
-        } catch( IOException $exc ) {
+        } catch (IOException $exc) {
             try {
                 $stream->close(); // in case there is a stream open still ...
-            } catch( Exception $x ) {
+            } catch (Exception $x) {
             }
-            throw new BuildException( "Unable to write log file.", $exc );
+            throw new BuildException("Unable to write log file.", $exc);
         }
 
         // cleanup:remove the buildElement
         $this->buildElement = null;
 
-        array_pop( $this->elementStack );
-        array_pop( $this->timesStack );
+        array_pop($this->elementStack);
+        array_pop($this->timesStack);
     }
 
     /**
@@ -199,16 +199,16 @@ class XmlLogger implements BuildLogger
      * @param BuildEvent $event An event with any relevant extra information.
      *                          Will not be <code>null</code>.
      */
-    public function targetStarted( BuildEvent $event )
+    public function targetStarted(BuildEvent $event)
     {
 
         $target = $event->getTarget();
 
-        $targetElement = $this->doc->createElement( XmlLogger::TARGET_TAG );
-        $targetElement->setAttribute( XmlLogger::NAME_ATTR, $target->getName() );
+        $targetElement = $this->doc->createElement(XmlLogger::TARGET_TAG);
+        $targetElement->setAttribute(XmlLogger::NAME_ATTR, $target->getName());
 
-        array_push( $this->timesStack, Phing::currentTimeMillis() );
-        array_push( $this->elementStack, $targetElement );
+        array_push($this->timesStack, Phing::currentTimeMillis());
+        array_push($this->elementStack, $targetElement);
     }
 
     /**
@@ -218,17 +218,17 @@ class XmlLogger implements BuildLogger
      * @param BuildEvent $event An event with any relevant extra information.
      *                          Will not be <code>null</code>.
      */
-    public function targetFinished( BuildEvent $event )
+    public function targetFinished(BuildEvent $event)
     {
 
-        $targetTimerStart = array_pop( $this->timesStack );
-        $targetElement = array_pop( $this->elementStack );
+        $targetTimerStart = array_pop($this->timesStack);
+        $targetElement = array_pop($this->elementStack);
 
         $elapsedTime = Phing::currentTimeMillis() - $targetTimerStart;
-        $targetElement->setAttribute( XmlLogger::TIME_ATTR, DefaultLogger::formatTime( $elapsedTime ) );
+        $targetElement->setAttribute(XmlLogger::TIME_ATTR, DefaultLogger::formatTime($elapsedTime));
 
-        $parentElement = $this->elementStack[count( $this->elementStack ) - 1];
-        $parentElement->appendChild( $targetElement );
+        $parentElement = $this->elementStack[count($this->elementStack) - 1];
+        $parentElement->appendChild($targetElement);
     }
 
     /**
@@ -237,17 +237,17 @@ class XmlLogger implements BuildLogger
      * @param BuildEvent $event An event with any relevant extra information.
      *                          Will not be <code>null</code>.
      */
-    public function taskStarted( BuildEvent $event )
+    public function taskStarted(BuildEvent $event)
     {
 
         $task = $event->getTask();
 
-        $taskElement = $this->doc->createElement( XmlLogger::TASK_TAG );
-        $taskElement->setAttribute( XmlLogger::NAME_ATTR, $task->getTaskName() );
-        $taskElement->setAttribute( XmlLogger::LOCATION_ATTR, $task->getLocation()->toString() );
+        $taskElement = $this->doc->createElement(XmlLogger::TASK_TAG);
+        $taskElement->setAttribute(XmlLogger::NAME_ATTR, $task->getTaskName());
+        $taskElement->setAttribute(XmlLogger::LOCATION_ATTR, $task->getLocation()->toString());
 
-        array_push( $this->timesStack, Phing::currentTimeMillis() );
-        array_push( $this->elementStack, $taskElement );
+        array_push($this->timesStack, Phing::currentTimeMillis());
+        array_push($this->elementStack, $taskElement);
     }
 
     /**
@@ -257,17 +257,17 @@ class XmlLogger implements BuildLogger
      * @param BuildEvent $event An event with any relevant extra information.
      *                          Will not be <code>null</code>.
      */
-    public function taskFinished( BuildEvent $event )
+    public function taskFinished(BuildEvent $event)
     {
 
-        $taskTimerStart = array_pop( $this->timesStack );
-        $taskElement = array_pop( $this->elementStack );
+        $taskTimerStart = array_pop($this->timesStack);
+        $taskElement = array_pop($this->elementStack);
 
         $elapsedTime = Phing::currentTimeMillis() - $taskTimerStart;
-        $taskElement->setAttribute( XmlLogger::TIME_ATTR, DefaultLogger::formatTime( $elapsedTime ) );
+        $taskElement->setAttribute(XmlLogger::TIME_ATTR, DefaultLogger::formatTime($elapsedTime));
 
-        $parentElement = $this->elementStack[count( $this->elementStack ) - 1];
-        $parentElement->appendChild( $taskElement );
+        $parentElement = $this->elementStack[count($this->elementStack) - 1];
+        $parentElement->appendChild($taskElement);
     }
 
     /**
@@ -278,7 +278,7 @@ class XmlLogger implements BuildLogger
      * @param BuildEvent An event with any relevant extra information.
      *                   Will not be <code>null</code>.
      */
-    public function messageLogged( BuildEvent $event )
+    public function messageLogged(BuildEvent $event)
     {
 
         $priority = $event->getPriority();
@@ -287,7 +287,7 @@ class XmlLogger implements BuildLogger
             return;
         }
 
-        $messageElement = $this->doc->createElement( XmlLogger::MESSAGE_TAG );
+        $messageElement = $this->doc->createElement(XmlLogger::MESSAGE_TAG);
 
         switch ($priority) {
             case Project::MSG_ERR:
@@ -304,20 +304,20 @@ class XmlLogger implements BuildLogger
                 break;
         }
 
-        $messageElement->setAttribute( XmlLogger::PRIORITY_ATTR, $name );
+        $messageElement->setAttribute(XmlLogger::PRIORITY_ATTR, $name);
 
-        if (function_exists( 'mb_convert_encoding' )) {
-            $messageConverted = mb_convert_encoding( $event->getMessage(), 'UTF-8' );
+        if (function_exists('mb_convert_encoding')) {
+            $messageConverted = mb_convert_encoding($event->getMessage(), 'UTF-8');
         } else {
-            $messageConverted = utf8_encode( $event->getMessage() );
+            $messageConverted = utf8_encode($event->getMessage());
         }
 
-        $messageText = $this->doc->createCDATASection( $messageConverted );
+        $messageText = $this->doc->createCDATASection($messageConverted);
 
-        $messageElement->appendChild( $messageText );
+        $messageElement->appendChild($messageText);
 
         if (!empty( $this->elementStack )) {
-            $this->elementStack[count( $this->elementStack ) - 1]->appendChild( $messageElement );
+            $this->elementStack[count($this->elementStack) - 1]->appendChild($messageElement);
         }
     }
 
@@ -344,7 +344,7 @@ class XmlLogger implements BuildLogger
      *
      * @see BuildLogger#setMessageOutputLevel()
      */
-    public function setMessageOutputLevel( $level )
+    public function setMessageOutputLevel($level)
     {
 
         $this->msgOutputLevel = (int)$level;
@@ -357,7 +357,7 @@ class XmlLogger implements BuildLogger
      *
      * @see BuildLogger#setOutputStream()
      */
-    public function setOutputStream( OutputStream $output )
+    public function setOutputStream(OutputStream $output)
     {
 
         $this->out = $output;
@@ -370,7 +370,7 @@ class XmlLogger implements BuildLogger
      *
      * @see BuildLogger#setErrorStream()
      */
-    public function setErrorStream( OutputStream $err )
+    public function setErrorStream(OutputStream $err)
     {
 
         $this->err = $err;
@@ -382,7 +382,7 @@ class XmlLogger implements BuildLogger
      * @param bool $emacsMode      true if output is to be unadorned so that emacs and other editors
      *                             can parse files names, etc.
      */
-    public function setEmacsMode( $emacsMode )
+    public function setEmacsMode($emacsMode)
     {
     }
 }

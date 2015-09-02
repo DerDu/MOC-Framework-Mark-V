@@ -90,7 +90,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -112,7 +112,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         // The assignment may span over multiple lines, so look for the
         // end of the assignment so we can check assignment blocks correctly.
-        $lineEnd = $phpcsFile->findNext( T_SEMICOLON, ( $stackPtr + 1 ) );
+        $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ( $stackPtr + 1 ));
 
         $nextAssign = $phpcsFile->findNext(
             PHP_CodeSniffer_Tokens::$assignmentTokens,
@@ -146,8 +146,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $prevAssignment = $stackPtr;
         $lastLine = $tokens[$stackPtr]['line'];
 
-        while (( $prevAssignment = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$assignmentTokens,
-                ( $prevAssignment - 1 ) ) ) !== false) {
+        while (( $prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens,
+                ( $prevAssignment - 1 )) ) !== false) {
 
             // We are not interested in double arrows as they assign values inside
             // arrays and loops and do not use the same indentation rules.
@@ -157,7 +157,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
             // The assignment's end token must be on the line directly
             // above the current one to be in the same assignment block.
-            $lineEnd = $phpcsFile->findNext( T_SEMICOLON, ( $prevAssignment + 1 ) );
+            $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ( $prevAssignment + 1 ));
 
             // And the end token must actually belong to this assignment.
             $nextOpener = $phpcsFile->findNext(
@@ -204,14 +204,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $maxVariableLength = $endColumn;
             }
 
-            if ($maxAssignmentLength < strlen( $tokens[$assignment]['content'] )) {
-                $maxAssignmentLength = strlen( $tokens[$assignment]['content'] );
+            if ($maxAssignmentLength < strlen($tokens[$assignment]['content'])) {
+                $maxAssignmentLength = strlen($tokens[$assignment]['content']);
             }
 
             $assignmentData[$assignment]
                 = array(
                 'variable_length'   => $endColumn,
-                'assignment_length' => strlen( $tokens[$assignment]['content'] ),
+                'assignment_length' => strlen($tokens[$assignment]['content']),
             );
         }//end foreach
 
@@ -235,7 +235,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         // Determine the actual position that each equals sign should be in.
         foreach ($assignments as $assignment) {
             // Actual column takes into account the length of the assignment operator.
-            $actualColumn = ( $column + $maxAssignmentLength - strlen( $tokens[$assignment]['content'] ) );
+            $actualColumn = ( $column + $maxAssignmentLength - strlen($tokens[$assignment]['content']) );
             if ($tokens[$assignment]['column'] !== $actualColumn) {
                 $prev = $phpcsFile->findPrevious(
                     PHP_CodeSniffer_Tokens::$emptyTokens,
@@ -278,7 +278,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     $found .= ( $found === 1 ) ? ' space' : ' spaces';
                 }
 
-                if (count( $assignments ) === 1) {
+                if (count($assignments) === 1) {
                     $type = 'Incorrect';
                     $error = 'Equals sign not aligned correctly; expected %s but found %s';
                 } else {
@@ -292,9 +292,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 );
 
                 if ($this->error === true) {
-                    $phpcsFile->addError( $error, $assignment, $type, $errorData );
+                    $phpcsFile->addError($error, $assignment, $type, $errorData);
                 } else {
-                    $phpcsFile->addWarning( $error, $assignment, $type.'Warning', $errorData );
+                    $phpcsFile->addWarning($error, $assignment, $type.'Warning', $errorData);
                 }
             }//end if
         }//end foreach

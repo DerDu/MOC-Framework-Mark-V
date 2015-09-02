@@ -21,10 +21,10 @@ class ParameterReflection extends Reflection
     protected $modifiers;
     protected $default;
 
-    static public function fromArray( Project $project, $array )
+    static public function fromArray(Project $project, $array)
     {
 
-        $parameter = new self( $array['name'], $array['line'] );
+        $parameter = new self($array['name'], $array['line']);
         $parameter->shortDesc = $array['short_desc'];
         $parameter->longDesc = $array['long_desc'];
         $parameter->hint = $array['hint'];
@@ -48,13 +48,13 @@ class ParameterReflection extends Reflection
         return $this->method->getClass();
     }
 
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
         $this->modifiers = $modifiers;
     }
 
-    public function setByRef( $boolean )
+    public function setByRef($boolean)
     {
 
         $this->byRef = $boolean;
@@ -72,7 +72,7 @@ class ParameterReflection extends Reflection
         return $this->default;
     }
 
-    public function setDefault( $default )
+    public function setDefault($default)
     {
 
         $this->default = $default;
@@ -84,7 +84,7 @@ class ParameterReflection extends Reflection
         return $this->method;
     }
 
-    public function setMethod( MethodReflection $method )
+    public function setMethod(MethodReflection $method)
     {
 
         $this->method = $method;

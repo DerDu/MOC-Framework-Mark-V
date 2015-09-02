@@ -2,8 +2,6 @@
 
 namespace Guzzle\Http;
 
-use Guzzle\Http\Client;
-use Guzzle\Http\ClientInterface;
 use Guzzle\Stream\PhpStreamRequestFactory;
 use Guzzle\Stream\StreamRequestFactoryInterface;
 

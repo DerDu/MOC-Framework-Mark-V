@@ -43,7 +43,7 @@ class LiquibaseTask extends AbstractLiquibaseTask
     /**
      * @param $command
      */
-    public function setCommand( $command )
+    public function setCommand($command)
     {
 
         $this->command = (string)$command;
@@ -53,7 +53,7 @@ class LiquibaseTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( $this->command, '' );
+        $this->execute($this->command, '');
     }
 
     protected function checkParams()
@@ -62,7 +62,7 @@ class LiquibaseTask extends AbstractLiquibaseTask
         parent::checkParams();
 
         if (null === $this->command) {
-            throw new BuildException( 'Please provide a liquibase command.' );
+            throw new BuildException('Please provide a liquibase command.');
         }
     }
 

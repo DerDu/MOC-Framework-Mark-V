@@ -25,7 +25,7 @@ class PHPUnit_Framework_Constraint_StringEndsWith extends PHPUnit_Framework_Cons
     /**
      * @param string $suffix
      */
-    public function __construct( $suffix )
+    public function __construct($suffix)
     {
 
         parent::__construct();
@@ -51,9 +51,9 @@ class PHPUnit_Framework_Constraint_StringEndsWith extends PHPUnit_Framework_Cons
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return substr( $other, 0 - strlen( $this->suffix ) ) == $this->suffix;
+        return substr($other, 0 - strlen($this->suffix)) == $this->suffix;
     }
 }

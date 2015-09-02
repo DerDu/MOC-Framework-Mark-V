@@ -44,10 +44,10 @@ class ExportUtil
      *
      * @return string
      */
-    public static function export( $value, $indentation = 0 )
+    public static function export($value, $indentation = 0)
     {
 
-        return static::recursiveExport( $value, $indentation );
+        return static::recursiveExport($value, $indentation);
     }
 
     /**
@@ -60,7 +60,7 @@ class ExportUtil
      *
      * @return string
      */
-    protected static function recursiveExport( $value, $indentation, &$processedObjects = array() )
+    protected static function recursiveExport($value, $indentation, &$processedObjects = array())
     {
 
         if ($value === null) {
@@ -75,37 +75,37 @@ class ExportUtil
             return 'false';
         }
 
-        if (is_string( $value )) {
+        if (is_string($value)) {
             // Match for most non printable chars somewhat taking multibyte chars into account
-            if (preg_match( '/[^\x09-\x0d\x20-\xff]/', $value )) {
-                return 'Binary String: 0x'.bin2hex( $value );
+            if (preg_match('/[^\x09-\x0d\x20-\xff]/', $value)) {
+                return 'Binary String: 0x'.bin2hex($value);
             }
 
-            return "'".str_replace( array( "\r\n", "\n\r", "\r" ), array( "\n", "\n", "\n" ), $value )."'";
+            return "'".str_replace(array("\r\n", "\n\r", "\r"), array("\n", "\n", "\n"), $value)."'";
         }
 
         $origValue = $value;
 
-        if (is_object( $value )) {
+        if (is_object($value)) {
             if ($value instanceof ProphecyInterface) {
-                return sprintf( '%s Object (*Prophecy*)', get_class( $value ) );
-            } elseif (in_array( $value, $processedObjects, true )) {
-                return sprintf( '%s Object (*RECURSION*)', get_class( $value ) );
+                return sprintf('%s Object (*Prophecy*)', get_class($value));
+            } elseif (in_array($value, $processedObjects, true)) {
+                return sprintf('%s Object (*RECURSION*)', get_class($value));
             }
 
             $processedObjects[] = $value;
 
             // Convert object to array
-            $value = self::toArray( $value );
+            $value = self::toArray($value);
         }
 
-        if (is_array( $value )) {
-            $whitespace = str_repeat( '    ', $indentation );
+        if (is_array($value)) {
+            $whitespace = str_repeat('    ', $indentation);
 
             // There seems to be no other way to check arrays for recursion
             // http://www.php.net/manual/en/language.types.array.php#73936
-            preg_match_all( '/\n            \[(\w+)\] => Array\s+\*RECURSION\*/', print_r( $value, true ), $matches );
-            $recursiveKeys = array_unique( $matches[1] );
+            preg_match_all('/\n            \[(\w+)\] => Array\s+\*RECURSION\*/', print_r($value, true), $matches);
+            $recursiveKeys = array_unique($matches[1]);
 
             // Convert to valid array keys
             // Numeric integer strings are automatically converted to integers
@@ -119,27 +119,27 @@ class ExportUtil
             $content = '';
 
             foreach ($value as $key => $val) {
-                if (in_array( $key, $recursiveKeys, true )) {
+                if (in_array($key, $recursiveKeys, true)) {
                     $val = 'Array (*RECURSION*)';
                 } else {
-                    $val = self::recursiveExport( $val, $indentation + 1, $processedObjects );
+                    $val = self::recursiveExport($val, $indentation + 1, $processedObjects);
                 }
 
-                $content .= $whitespace.'    '.self::export( $key ).' => '.$val."\n";
+                $content .= $whitespace.'    '.self::export($key).' => '.$val."\n";
             }
 
-            if (strlen( $content ) > 0) {
+            if (strlen($content) > 0) {
                 $content = "\n".$content.$whitespace;
             }
 
             return sprintf(
                 "%s (%s)",
-                is_object( $origValue ) ? sprintf( '%s:%s', get_class( $origValue ),
-                        spl_object_hash( $origValue ) ).' Object' : 'Array', $content
+                is_object($origValue) ? sprintf('%s:%s', get_class($origValue),
+                        spl_object_hash($origValue)).' Object' : 'Array', $content
             );
         }
 
-        if (is_double( $value ) && (double)(integer)$value === $value) {
+        if (is_double($value) && (double)(integer)$value === $value) {
             return $value.'.0';
         }
 
@@ -154,7 +154,7 @@ class ExportUtil
      *
      * @return array
      */
-    public static function toArray( $object )
+    public static function toArray($object)
     {
 
         $array = array();
@@ -166,7 +166,7 @@ class ExportUtil
             // protected $property => "\0*\0property"
             // public    $property => "property"
 
-            if (preg_match( '/^\0.+\0(.+)$/', $key, $matches )) {
+            if (preg_match('/^\0.+\0(.+)$/', $key, $matches)) {
                 $key = $matches[1];
             }
 
@@ -178,7 +178,7 @@ class ExportUtil
         // Format the output similarly to print_r() in this case
         if ($object instanceof SplObjectStorage) {
             foreach ($object as $key => $value) {
-                $array[spl_object_hash( $value )] = array(
+                $array[spl_object_hash($value)] = array(
                     'obj' => $value,
                     'inf' => $object->getInfo(),
                 );

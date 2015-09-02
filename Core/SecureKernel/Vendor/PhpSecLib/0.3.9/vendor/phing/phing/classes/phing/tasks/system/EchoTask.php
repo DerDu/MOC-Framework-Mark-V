@@ -63,25 +63,25 @@ class EchoTask extends Task
                 break;
         }
 
-        if (count( $this->filesets )) {
-            if (trim( substr( $this->msg, -1 ) ) != '') {
+        if (count($this->filesets)) {
+            if (trim(substr($this->msg, -1)) != '') {
                 $this->msg .= "\n";
             }
             $this->msg .= $this->getFilesetsMsg();
         }
 
         if (empty( $this->file )) {
-            $this->log( $this->msg, $loglevel );
+            $this->log($this->msg, $loglevel);
         } else {
             if ($this->append) {
-                $handle = fopen( $this->file, "a" );
+                $handle = fopen($this->file, "a");
             } else {
-                $handle = fopen( $this->file, "w" );
+                $handle = fopen($this->file, "w");
             }
 
-            fwrite( $handle, $this->msg );
+            fwrite($handle, $this->msg);
 
-            fclose( $handle );
+            fclose($handle);
         }
     }
 
@@ -96,12 +96,12 @@ class EchoTask extends Task
         $project = $this->getProject();
         $msg = '';
         foreach ($this->filesets as $fs) {
-            $ds = $fs->getDirectoryScanner( $project );
-            $fromDir = $fs->getDir( $project );
+            $ds = $fs->getDirectoryScanner($project);
+            $fromDir = $fs->getDir($project);
             $srcDirs = $ds->getIncludedDirectories();
             $srcFiles = $ds->getIncludedFiles();
             $msg .= 'Directory: '.$fromDir.' => '
-                .realpath( $fromDir )."\n";
+                .realpath($fromDir)."\n";
             foreach ($srcDirs as $dir) {
                 $relPath = $fromDir.DIRECTORY_SEPARATOR.$dir;
                 $msg .= $relPath."\n";
@@ -119,7 +119,7 @@ class EchoTask extends Task
      *
      * @param $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = (string)$file;
@@ -129,7 +129,7 @@ class EchoTask extends Task
      *
      * @param $level
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         $this->level = (string)$level;
@@ -139,7 +139,7 @@ class EchoTask extends Task
      *
      * @param $append
      */
-    public function setAppend( $append )
+    public function setAppend($append)
     {
 
         $this->append = $append;
@@ -149,17 +149,17 @@ class EchoTask extends Task
      *
      * @param $msg
      */
-    public function setMsg( $msg )
+    public function setMsg($msg)
     {
 
-        $this->setMessage( $msg );
+        $this->setMessage($msg);
     }
 
     /** alias setter
      *
      * @param $msg
      */
-    public function setMessage( $msg )
+    public function setMessage($msg)
     {
 
         $this->msg = (string)$msg;
@@ -169,7 +169,7 @@ class EchoTask extends Task
      *
      * @param $msg
      */
-    public function addText( $msg )
+    public function addText($msg)
     {
 
         $this->msg = (string)$msg;
@@ -182,7 +182,7 @@ class EchoTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;

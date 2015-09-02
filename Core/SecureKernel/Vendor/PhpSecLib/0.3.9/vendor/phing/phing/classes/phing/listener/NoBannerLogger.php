@@ -37,7 +37,7 @@ class NoBannerLogger extends DefaultLogger
     /**
      * @param BuildEvent $event
      */
-    public function targetStarted( BuildEvent $event )
+    public function targetStarted(BuildEvent $event)
     {
 
         $target = $event->getTarget();
@@ -47,7 +47,7 @@ class NoBannerLogger extends DefaultLogger
     /**
      * @param BuildEvent $event
      */
-    public function targetFinished( BuildEvent $event )
+    public function targetFinished(BuildEvent $event)
     {
 
         $this->targetName = null;
@@ -56,7 +56,7 @@ class NoBannerLogger extends DefaultLogger
     /**
      * @param BuildEvent $event
      */
-    public function messageLogged( BuildEvent $event )
+    public function messageLogged(BuildEvent $event)
     {
 
         if ($event->getPriority() > $this->msgOutputLevel || null === $event->getMessage() || trim(
@@ -68,10 +68,10 @@ class NoBannerLogger extends DefaultLogger
 
         if ($this->targetName !== null) {
             $msg = PHP_EOL.$event->getProject()->getName().' > '.$this->targetName.':'.PHP_EOL;
-            $this->printMessage( $msg, $this->out, $event->getPriority() );
+            $this->printMessage($msg, $this->out, $event->getPriority());
             $this->targetName = null;
         }
 
-        parent::messageLogged( $event );
+        parent::messageLogged($event);
     }
 }

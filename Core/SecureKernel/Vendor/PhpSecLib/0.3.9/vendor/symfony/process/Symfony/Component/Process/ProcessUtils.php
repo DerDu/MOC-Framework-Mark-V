@@ -37,7 +37,7 @@ class ProcessUtils
      *
      * @return string The escaped argument
      */
-    public static function escapeArgument( $argument )
+    public static function escapeArgument($argument)
     {
 
         //Fix for PHP bug #43784 escapeshellarg removes % from given string
@@ -46,20 +46,20 @@ class ProcessUtils
         //@see https://bugs.php.net/bug.php?id=49446
         if ('\\' === DIRECTORY_SEPARATOR) {
             if ('' === $argument) {
-                return escapeshellarg( $argument );
+                return escapeshellarg($argument);
             }
 
             $escapedArgument = '';
             $quote = false;
-            foreach (preg_split( '/(")/i', $argument, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE ) as $part) {
+            foreach (preg_split('/(")/i', $argument, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE) as $part) {
                 if ('"' === $part) {
                     $escapedArgument .= '\\"';
-                } elseif (self::isSurroundedBy( $part, '%' )) {
+                } elseif (self::isSurroundedBy($part, '%')) {
                     // Avoid environment variable expansion
-                    $escapedArgument .= '^%"'.substr( $part, 1, -1 ).'"^%';
+                    $escapedArgument .= '^%"'.substr($part, 1, -1).'"^%';
                 } else {
                     // escape trailing backslash
-                    if ('\\' === substr( $part, -1 )) {
+                    if ('\\' === substr($part, -1)) {
                         $part .= '\\';
                     }
                     $quote = true;
@@ -73,13 +73,13 @@ class ProcessUtils
             return $escapedArgument;
         }
 
-        return escapeshellarg( $argument );
+        return escapeshellarg($argument);
     }
 
-    private static function isSurroundedBy( $arg, $char )
+    private static function isSurroundedBy($arg, $char)
     {
 
-        return 2 < strlen( $arg ) && $char === $arg[0] && $char === $arg[strlen( $arg ) - 1];
+        return 2 < strlen($arg) && $char === $arg[0] && $char === $arg[strlen($arg) - 1];
     }
 
     /**
@@ -92,22 +92,22 @@ class ProcessUtils
      *
      * @throws InvalidArgumentException In case the input is not valid
      */
-    public static function validateInput( $caller, $input )
+    public static function validateInput($caller, $input)
     {
 
         if (null !== $input) {
-            if (is_resource( $input )) {
+            if (is_resource($input)) {
                 return $input;
             }
-            if (is_scalar( $input )) {
+            if (is_scalar($input)) {
                 return (string)$input;
             }
             // deprecated as of Symfony 2.5, to be removed in 3.0
-            if (is_object( $input ) && method_exists( $input, '__toString' )) {
+            if (is_object($input) && method_exists($input, '__toString')) {
                 return (string)$input;
             }
 
-            throw new InvalidArgumentException( sprintf( '%s only accepts strings or stream resources.', $caller ) );
+            throw new InvalidArgumentException(sprintf('%s only accepts strings or stream resources.', $caller));
         }
 
         return $input;

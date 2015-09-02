@@ -39,7 +39,7 @@ class LiquibaseTagTask extends AbstractLiquibaseTask
      *
      * @param string the name to tag the database with
      */
-    public function setTag( $tag )
+    public function setTag($tag)
     {
 
         $this->tag = $tag;
@@ -52,7 +52,7 @@ class LiquibaseTagTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( 'tag', escapeshellarg( $this->tag ) );
+        $this->execute('tag', escapeshellarg($this->tag));
     }
 
     /**

@@ -78,12 +78,12 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $width = 80
     ) {
 
-        $blames = $this->getBlameContent( $report['filename'] );
+        $blames = $this->getBlameContent($report['filename']);
 
         foreach ($report['messages'] as $line => $lineErrors) {
             $author = 'Unknown';
             if (isset( $blames[( $line - 1 )] ) === true) {
-                $blameAuthor = $this->getAuthor( $blames[( $line - 1 )] );
+                $blameAuthor = $this->getAuthor($blames[( $line - 1 )]);
                 if ($blameAuthor !== false) {
                     $author = $blameAuthor;
                 }
@@ -120,7 +120,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         // No go through and give the authors some credit for
         // all the lines that do not have errors.
         foreach ($blames as $line) {
-            $author = $this->getAuthor( $line );
+            $author = $this->getAuthor($line);
             if ($author === false) {
                 $author = 'Unknown';
             }
@@ -152,7 +152,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      *
      * @return array
      */
-    abstract protected function getBlameContent( $filename );//end generate()
+    abstract protected function getBlameContent($filename);//end generate()
 
     /**
      * Extract the author from a blame line.
@@ -161,7 +161,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      *
      * @return mixed string or false if impossible to recover.
      */
-    abstract protected function getAuthor( $line );
+    abstract protected function getAuthor($line);
 
     /**
      * Prints the author of all errors and warnings, as given by "version control blame".
@@ -193,17 +193,17 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             return;
         }
 
-        $width = max( $width, 70 );
-        arsort( $this->_authorCache );
+        $width = max($width, 70);
+        arsort($this->_authorCache);
 
         echo PHP_EOL.'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         if ($showSources === true) {
-            echo 'AUTHOR   SOURCE'.str_repeat( ' ', ( $width - 43 ) ).'(Author %) (Overall %) COUNT'.PHP_EOL;
-            echo str_repeat( '-', $width ).PHP_EOL;
+            echo 'AUTHOR   SOURCE'.str_repeat(' ', ( $width - 43 )).'(Author %) (Overall %) COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         } else {
-            echo 'AUTHOR'.str_repeat( ' ', ( $width - 34 ) ).'(Author %) (Overall %) COUNT'.PHP_EOL;
-            echo str_repeat( '-', $width ).PHP_EOL;
+            echo 'AUTHOR'.str_repeat(' ', ( $width - 34 )).'(Author %) (Overall %) COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         }
 
         foreach ($this->_authorCache as $author => $count) {
@@ -211,45 +211,45 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
                 $percent = 0;
             } else {
                 $total = ( $this->_praiseCache[$author]['bad'] + $this->_praiseCache[$author]['good'] );
-                $percent = round( ( $this->_praiseCache[$author]['bad'] / $total * 100 ), 2 );
+                $percent = round(( $this->_praiseCache[$author]['bad'] / $total * 100 ), 2);
             }
 
-            $overallPercent = '('.round( ( ( $count / $errorsShown ) * 100 ), 2 ).')';
+            $overallPercent = '('.round(( ( $count / $errorsShown ) * 100 ), 2).')';
             $authorPercent = '('.$percent.')';
-            $line = str_repeat( ' ', ( 6 - strlen( $count ) ) ).$count;
-            $line = str_repeat( ' ', ( 12 - strlen( $overallPercent ) ) ).$overallPercent.$line;
-            $line = str_repeat( ' ', ( 11 - strlen( $authorPercent ) ) ).$authorPercent.$line;
-            $line = $author.str_repeat( ' ', ( $width - strlen( $author ) - strlen( $line ) ) ).$line;
+            $line = str_repeat(' ', ( 6 - strlen($count) )).$count;
+            $line = str_repeat(' ', ( 12 - strlen($overallPercent) )).$overallPercent.$line;
+            $line = str_repeat(' ', ( 11 - strlen($authorPercent) )).$authorPercent.$line;
+            $line = $author.str_repeat(' ', ( $width - strlen($author) - strlen($line) )).$line;
 
             echo $line.PHP_EOL;
 
             if ($showSources === true && isset( $this->_sourceCache[$author] ) === true) {
                 $errors = $this->_sourceCache[$author];
-                asort( $errors );
-                $errors = array_reverse( $errors );
+                asort($errors);
+                $errors = array_reverse($errors);
 
                 foreach ($errors as $source => $count) {
                     if ($source === 'count') {
                         continue;
                     }
 
-                    $line = str_repeat( ' ', ( 5 - strlen( $count ) ) ).$count;
-                    echo '         '.$source.str_repeat( ' ', ( $width - 14 - strlen( $source ) ) ).$line.PHP_EOL;
+                    $line = str_repeat(' ', ( 5 - strlen($count) )).$count;
+                    echo '         '.$source.str_repeat(' ', ( $width - 14 - strlen($source) )).$line.PHP_EOL;
                 }
             }
         }//end foreach
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION(S) ';
-        echo 'WERE COMMITTED BY '.count( $this->_authorCache ).' AUTHOR(S)'.PHP_EOL;
+        echo 'WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR(S)'.PHP_EOL;
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'UPGRADE TO PHP_CODESNIFFER 2.0 TO FIX ERRORS AUTOMATICALLY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists( 'PHP_Timer', false ) === true
+            && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }

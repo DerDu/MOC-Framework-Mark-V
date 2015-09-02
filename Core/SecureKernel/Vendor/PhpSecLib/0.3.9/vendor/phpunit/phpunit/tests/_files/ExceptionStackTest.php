@@ -1,8 +1,11 @@
 <?php
+
 class ExceptionStackTest extends PHPUnit_Framework_TestCase
 {
+
     public function testPrintingChildException()
     {
+
         try {
             $this->assertEquals(array(1), array(2), 'message');
         } catch (PHPUnit_Framework_ExpectationFailedException $e) {

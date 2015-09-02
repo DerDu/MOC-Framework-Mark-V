@@ -39,70 +39,70 @@ class PHP_CodeSniffer_Tokenizers_JS
      */
     public $scopeOpeners = array(
         T_IF       => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => false,
             'shared' => false,
             'with'   => array(),
         ),
         T_TRY      => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => true,
             'shared' => false,
             'with'   => array(),
         ),
         T_CATCH    => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => true,
             'shared' => false,
             'with'   => array(),
         ),
         T_ELSE     => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => false,
             'shared' => false,
             'with'   => array(),
         ),
         T_FOR      => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => false,
             'shared' => false,
             'with'   => array(),
         ),
         T_FUNCTION => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => false,
             'shared' => false,
             'with'   => array(),
         ),
         T_WHILE    => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => false,
             'shared' => false,
             'with'   => array(),
         ),
         T_DO       => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => true,
             'shared' => false,
             'with'   => array(),
         ),
         T_SWITCH   => array(
-            'start'  => array( T_OPEN_CURLY_BRACKET ),
-            'end'    => array( T_CLOSE_CURLY_BRACKET ),
+            'start' => array(T_OPEN_CURLY_BRACKET),
+            'end'   => array(T_CLOSE_CURLY_BRACKET),
             'strict' => true,
             'shared' => false,
             'with'   => array(),
         ),
         T_CASE     => array(
-            'start'  => array( T_COLON ),
+            'start' => array(T_COLON),
             'end'    => array(
                 T_BREAK,
                 T_RETURN,
@@ -118,7 +118,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             ),
         ),
         T_DEFAULT  => array(
-            'start'  => array( T_COLON ),
+            'start' => array(T_COLON),
             'end'    => array(
                 T_BREAK,
                 T_RETURN,
@@ -253,19 +253,19 @@ class PHP_CodeSniffer_Tokenizers_JS
      *
      * @return array
      */
-    public function tokenizeString( $string, $eolChar = '\n' )
+    public function tokenizeString($string, $eolChar = '\n')
     {
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START JS TOKENIZING ***".PHP_EOL;
         }
 
-        $tokenTypes = array_keys( $this->tokenValues );
+        $tokenTypes = array_keys($this->tokenValues);
 
         $maxTokenLength = 0;
         foreach ($tokenTypes as $token) {
-            if (strlen( $token ) > $maxTokenLength) {
-                $maxTokenLength = strlen( $token );
+            if (strlen($token) > $maxTokenLength) {
+                $maxTokenLength = strlen($token);
             }
         }
 
@@ -285,16 +285,16 @@ class PHP_CodeSniffer_Tokenizers_JS
 
         // Convert newlines to single characters for ease of
         // processing. We will change them back later.
-        $string = str_replace( $eolChar, "\n", $string );
+        $string = str_replace($eolChar, "\n", $string);
 
-        $chars = str_split( $string );
-        $numChars = count( $chars );
+        $chars = str_split($string);
+        $numChars = count($chars);
         for ($i = 0; $i < $numChars; $i++) {
             $char = $chars[$i];
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = str_replace( "\n", '\n', $char );
-                $bufferContent = str_replace( "\n", '\n', $buffer );
+                $content = str_replace("\n", '\n', $char);
+                $bufferContent = str_replace("\n", '\n', $buffer);
                 if ($inString !== '') {
                     echo "\t";
                 }
@@ -309,15 +309,15 @@ class PHP_CodeSniffer_Tokenizers_JS
             if ($inString === '' && $inComment === '' && $buffer !== '') {
                 // If the buffer only has whitespace and we are about to
                 // add a character, store the whitespace first.
-                if (trim( $char ) !== '' && trim( $buffer ) === '') {
+                if (trim($char) !== '' && trim($buffer) === '') {
                     $tokens[] = array(
                         'code'    => T_WHITESPACE,
                         'type'    => 'T_WHITESPACE',
-                        'content' => str_replace( "\n", $eolChar, $buffer ),
+                        'content' => str_replace("\n", $eolChar, $buffer),
                     );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace( "\n", '\n', $buffer );
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
                     }
 
@@ -328,17 +328,17 @@ class PHP_CodeSniffer_Tokenizers_JS
                 // add a whitespace character, store the content first.
                 if ($inString === ''
                     && $inComment === ''
-                    && trim( $char ) === ''
-                    && trim( $buffer ) !== ''
+                    && trim($char) === ''
+                    && trim($buffer) !== ''
                 ) {
                     $tokens[] = array(
                         'code'    => T_STRING,
                         'type'    => 'T_STRING',
-                        'content' => str_replace( "\n", $eolChar, $buffer ),
+                        'content' => str_replace("\n", $eolChar, $buffer),
                     );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace( "\n", '\n', $buffer );
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
 
@@ -347,7 +347,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             }//end if
 
             // Process strings.
-            if ($inComment === '' && in_array( $char, $this->stringTokens ) === true) {
+            if ($inComment === '' && in_array($char, $this->stringTokens) === true) {
                 if ($inString === $char) {
                     // This could be the end of the string, but make sure it
                     // is not escaped first.
@@ -366,12 +366,12 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $tokens[] = array(
                             'code'    => T_CONSTANT_ENCAPSED_STRING,
                             'type'    => 'T_CONSTANT_ENCAPSED_STRING',
-                            'content' => str_replace( "\n", $eolChar, $buffer ).$char,
+                            'content' => str_replace("\n", $eolChar, $buffer).$char,
                         );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* found end of string *".PHP_EOL;
-                            $content = str_replace( "\n", '\n', $buffer.$char );
+                            $content = str_replace("\n", '\n', $buffer.$char);
                             echo "\t=> Added token T_CONSTANT_ENCAPSED_STRING ($content)".PHP_EOL;
                         }
 
@@ -440,7 +440,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace( "\n", '\n', $regex['content'] );
+                        $content = str_replace("\n", '\n', $regex['content']);
                         echo "\t=> Added token T_REGULAR_EXPRESSION ($content)".PHP_EOL;
                     }
 
@@ -453,13 +453,13 @@ class PHP_CodeSniffer_Tokenizers_JS
 
             // Check for known tokens, but ignore tokens found that are not at
             // the end of a string, like FOR and this.FORmat.
-            if (in_array( strtolower( $buffer ), $tokenTypes ) === true
-                && ( preg_match( '|[a-zA-z0-9_]|', $char ) === 0
+            if (in_array(strtolower($buffer), $tokenTypes) === true
+                && ( preg_match('|[a-zA-z0-9_]|', $char) === 0
                     || isset( $chars[( $i + 1 )] ) === false
-                    || preg_match( '|[a-zA-z0-9_]|', $chars[( $i + 1 )] ) === 0 )
+                    || preg_match('|[a-zA-z0-9_]|', $chars[( $i + 1 )]) === 0 )
             ) {
                 $matchedToken = false;
-                $lookAheadLength = ( $maxTokenLength - strlen( $buffer ) );
+                $lookAheadLength = ( $maxTokenLength - strlen($buffer) );
 
                 if ($lookAheadLength > 0) {
                     // The buffer contains a token type, but we need
@@ -479,17 +479,17 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $charBuffer .= $chars[( $i + $x )];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace( "\n", '\n', $charBuffer );
+                            $content = str_replace("\n", '\n', $charBuffer);
                             echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
 
-                        if (in_array( strtolower( $charBuffer ), $tokenTypes ) === true) {
+                        if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
                             // We've found something larger that matches
                             // so we can ignore this char. Except for 1 very specific
                             // case where a comment like /**/ needs to tokenize as
                             // T_COMMENT and not T_DOC_COMMENT.
-                            $oldType = $this->tokenValues[strtolower( $buffer )];
-                            $newType = $this->tokenValues[strtolower( $charBuffer )];
+                            $oldType = $this->tokenValues[strtolower($buffer)];
+                            $newType = $this->tokenValues[strtolower($charBuffer)];
                             if ($oldType === 'T_COMMENT'
                                 && $newType === 'T_DOC_COMMENT'
                                 && $chars[( $i + $x + 1 )] === '/'
@@ -514,26 +514,26 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
                     }
 
-                    $value = $this->tokenValues[strtolower( $buffer )];
+                    $value = $this->tokenValues[strtolower($buffer)];
                     $tokens[] = array(
-                        'code'    => constant( $value ),
+                        'code' => constant($value),
                         'type'    => $value,
                         'content' => $buffer,
                     );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace( "\n", '\n', $buffer );
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "\t=> Added token $value ($content)".PHP_EOL;
                     }
 
                     $cleanBuffer = true;
                 }//end if
             } else {
-                if (in_array( strtolower( $char ), $tokenTypes ) === true) {
+                if (in_array(strtolower($char), $tokenTypes) === true) {
                     // No matter what token we end up using, we don't
                     // need the content in the buffer any more because we have
                     // found a valid token.
-                    $newContent = substr( str_replace( "\n", $eolChar, $buffer ), 0, -1 );
+                    $newContent = substr(str_replace("\n", $eolChar, $buffer), 0, -1);
                     if ($newContent !== '') {
                         $tokens[] = array(
                             'code'    => T_STRING,
@@ -542,7 +542,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace( "\n", '\n', substr( $buffer, 0, -1 ) );
+                            $content = str_replace("\n", '\n', substr($buffer, 0, -1));
                             echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                         }
                     }
@@ -564,15 +564,15 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $charBuffer .= $chars[( $i + $x )];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace( "\n", '\n', $charBuffer );
+                            $content = str_replace("\n", '\n', $charBuffer);
                             echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
 
-                        if (in_array( strtolower( $charBuffer ), $tokenTypes ) === true) {
+                        if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
                             // We've found something larger that matches
                             // so we can ignore this char.
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                $type = $this->tokenValues[strtolower( $charBuffer )];
+                                $type = $this->tokenValues[strtolower($charBuffer)];
                                 echo "\t\t* look ahead found more specific token ($type), ignoring $i *".PHP_EOL;
                             }
 
@@ -582,16 +582,16 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }//end for
 
                     if ($matchedToken === false) {
-                        $value = $this->tokenValues[strtolower( $char )];
+                        $value = $this->tokenValues[strtolower($char)];
                         $tokens[] = array(
-                            'code'    => constant( $value ),
+                            'code' => constant($value),
                             'type'    => $value,
                             'content' => $char,
                         );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* look ahead found nothing *".PHP_EOL;
-                            $content = str_replace( "\n", '\n', $char );
+                            $content = str_replace("\n", '\n', $char);
                             echo "\t=> Added token $value ($content)".PHP_EOL;
                         }
 
@@ -604,32 +604,32 @@ class PHP_CodeSniffer_Tokenizers_JS
 
             // Keep track of content inside comments.
             if ($inComment === ''
-                && array_key_exists( $buffer, $this->commentTokens ) === true
+                && array_key_exists($buffer, $this->commentTokens) === true
             ) {
                 // This is not really a comment if the content
                 // looks like \// (i.e., it is escaped).
                 if (isset( $chars[( $i - 2 )] ) === true && $chars[( $i - 2 )] === '\\') {
-                    $lastToken = array_pop( $tokens );
+                    $lastToken = array_pop($tokens);
                     $lastContent = $lastToken['content'];
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $value = $this->tokenValues[strtolower( $lastContent )];
-                        $content = str_replace( "\n", '\n', $lastContent );
+                        $value = $this->tokenValues[strtolower($lastContent)];
+                        $content = str_replace("\n", '\n', $lastContent);
                         echo "\t=> Removed token $value ($content)".PHP_EOL;
                     }
 
-                    $lastChars = str_split( $lastContent );
-                    $lastNumChars = count( $lastChars );
+                    $lastChars = str_split($lastContent);
+                    $lastNumChars = count($lastChars);
                     for ($x = 0; $x < $lastNumChars; $x++) {
                         $lastChar = $lastChars[$x];
-                        $value = $this->tokenValues[strtolower( $lastChar )];
+                        $value = $this->tokenValues[strtolower($lastChar)];
                         $tokens[] = array(
-                            'code'    => constant( $value ),
+                            'code' => constant($value),
                             'type'    => $value,
                             'content' => $lastChar,
                         );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace( "\n", '\n', $lastChar );
+                            $content = str_replace("\n", '\n', $lastChar);
                             echo "\t=> Added token $value ($content)".PHP_EOL;
                         }
                     }
@@ -645,7 +645,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 if ($inComment !== '') {
                     if ($this->commentTokens[$inComment] === null) {
                         // Comment ends at the next newline.
-                        if (strpos( $buffer, "\n" ) !== false) {
+                        if (strpos($buffer, "\n") !== false) {
                             $inComment = '';
                         }
                     } else {
@@ -664,11 +664,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $tokens[] = array(
                             'code'    => T_STRING,
                             'type'    => 'T_STRING',
-                            'content' => str_replace( "\n", $eolChar, $buffer ),
+                            'content' => str_replace("\n", $eolChar, $buffer),
                         );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace( "\n", '\n', $buffer );
+                            $content = str_replace("\n", '\n', $buffer);
                             echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                         }
 
@@ -688,11 +688,11 @@ class PHP_CodeSniffer_Tokenizers_JS
             $tokens[] = array(
                 'code'    => T_WHITESPACE,
                 'type'    => 'T_WHITESPACE',
-                'content' => str_replace( "\n", $eolChar, $buffer ),
+                'content' => str_replace("\n", $eolChar, $buffer),
             );
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = str_replace( $eolChar, '\n', $buffer );
+                $content = str_replace($eolChar, '\n', $buffer);
                 echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
             }
         }
@@ -711,7 +711,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
         $finalTokens = array();
         $newStackPtr = 0;
-        $numTokens = count( $tokens );
+        $numTokens = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
@@ -719,25 +719,25 @@ class PHP_CodeSniffer_Tokenizers_JS
                 Look for comments and join the tokens together.
             */
 
-            if (array_key_exists( $token['content'], $this->commentTokens ) === true) {
+            if (array_key_exists($token['content'], $this->commentTokens) === true) {
                 $newContent = '';
                 $tokenContent = $token['content'];
                 $endContent = $this->commentTokens[$tokenContent];
                 while ($tokenContent !== $endContent) {
                     if ($endContent === null
-                        && strpos( $tokenContent, $eolChar ) !== false
+                        && strpos($tokenContent, $eolChar) !== false
                     ) {
                         // A null end token means the comment ends at the end of
                         // the line so we look for newlines and split the token.
                         $tokens[$stackPtr]['content'] = substr(
                             $tokenContent,
-                            ( strpos( $tokenContent, $eolChar ) + strlen( $eolChar ) )
+                            ( strpos($tokenContent, $eolChar) + strlen($eolChar) )
                         );
 
                         $tokenContent = substr(
                             $tokenContent,
                             0,
-                            ( strpos( $tokenContent, $eolChar ) + strlen( $eolChar ) )
+                            ( strpos($tokenContent, $eolChar) + strlen($eolChar) )
                         );
 
                         // If the substr failed, skip the token as the content
@@ -770,9 +770,9 @@ class PHP_CodeSniffer_Tokenizers_JS
                 Note that $token[1] is the token's content.
             */
 
-            if (strpos( $token['content'], $eolChar ) !== false) {
-                $tokenLines = explode( $eolChar, $token['content'] );
-                $numLines = count( $tokenLines );
+            if (strpos($token['content'], $eolChar) !== false) {
+                $tokenLines = explode($eolChar, $token['content']);
+                $numLines = count($tokenLines);
 
                 for ($i = 0; $i < $numLines; $i++) {
                     $newToken['content'] = $tokenLines[$i];
@@ -800,20 +800,20 @@ class PHP_CodeSniffer_Tokenizers_JS
             ) {
                 $newContent = '';
                 $oldStackPtr = $stackPtr;
-                while (preg_match( '|^[0-9\.]+$|', $tokens[$stackPtr]['content'] ) !== 0) {
+                while (preg_match('|^[0-9\.]+$|', $tokens[$stackPtr]['content']) !== 0) {
                     $newContent .= $tokens[$stackPtr]['content'];
                     $stackPtr++;
                 }
 
                 if ($newContent !== '' && $newContent !== '.') {
                     $finalTokens[( $newStackPtr - 1 )]['content'] = $newContent;
-                    if (ctype_digit( $newContent ) === true) {
+                    if (ctype_digit($newContent) === true) {
                         $finalTokens[( $newStackPtr - 1 )]['code']
-                            = constant( 'T_LNUMBER' );
+                            = constant('T_LNUMBER');
                         $finalTokens[( $newStackPtr - 1 )]['type'] = 'T_LNUMBER';
                     } else {
                         $finalTokens[( $newStackPtr - 1 )]['code']
-                            = constant( 'T_DNUMBER' );
+                            = constant('T_DNUMBER');
                         $finalTokens[( $newStackPtr - 1 )]['type'] = 'T_DNUMBER';
                     }
 
@@ -846,7 +846,7 @@ class PHP_CodeSniffer_Tokenizers_JS
      *
      * @return void
      */
-    public function getRegexToken( $char, $string, $chars, $tokens, $eolChar )
+    public function getRegexToken($char, $string, $chars, $tokens, $eolChar)
     {
 
         $beforeTokens = array(
@@ -873,24 +873,24 @@ class PHP_CodeSniffer_Tokenizers_JS
 
         // Find the last non-whitespace token that was added
         // to the tokens array.
-        $numTokens = count( $tokens );
+        $numTokens = count($tokens);
         for ($prev = ( $numTokens - 1 ); $prev >= 0; $prev--) {
-            if (in_array( $tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 break;
             }
         }
 
-        if (in_array( $tokens[$prev]['code'], $beforeTokens ) === false) {
+        if (in_array($tokens[$prev]['code'], $beforeTokens) === false) {
             return null;
         }
 
         // This is probably a regular expression, so look for the end of it.
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $content = str_replace( "\n", '\n', $char );
+            $content = str_replace("\n", '\n', $char);
             echo "\t* token possibly starts a regular expression *".PHP_EOL;
         }
 
-        $numChars = count( $chars );
+        $numChars = count($chars);
         for ($next = ( $char + 1 ); $next < $numChars; $next++) {
             if ($chars[$next] === '/') {
                 // Just make sure this is not escaped first.
@@ -904,7 +904,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
                 }
             } else {
-                $possibleEolChar = substr( $string, $next, strlen( $eolChar ) );
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
                 if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line and regular
                     // expressions need to be defined on a single line,
@@ -922,7 +922,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             return null;
         }
 
-        while (preg_match( '|[a-zA-Z]|', $chars[( $next + 1 )] ) !== 0) {
+        while (preg_match('|[a-zA-Z]|', $chars[( $next + 1 )]) !== 0) {
             // The token directly after the end of the regex can
             // be modifiers like global and case insensitive
             // (.e.g, /pattern/gi).
@@ -938,7 +938,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             if ($chars[$next] !== ' ') {
                 break;
             } else {
-                $possibleEolChar = substr( $string, $next, strlen( $eolChar ) );
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
                 if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line.
                     break;
@@ -946,7 +946,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }
 
-        if (in_array( $chars[$next], $afterTokens ) === false) {
+        if (in_array($chars[$next], $afterTokens) === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\t* tokens after regular expression do not look correct *".PHP_EOL;
             }
@@ -981,21 +981,21 @@ class PHP_CodeSniffer_Tokenizers_JS
      *
      * @return void
      */
-    public function processAdditional( &$tokens, $eolChar )
+    public function processAdditional(&$tokens, $eolChar)
     {
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
         }
 
-        $numTokens = count( $tokens );
+        $numTokens = count($tokens);
         $classStack = array();
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type = $tokens[$i]['type'];
-                $content = str_replace( $eolChar, '\n', $tokens[$i]['content'] );
-                echo str_repeat( "\t", count( $classStack ) );
+                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                echo str_repeat("\t", count($classStack));
 
                 echo "\tProcess token $i: $type => $content".PHP_EOL;
             }
@@ -1005,13 +1005,13 @@ class PHP_CodeSniffer_Tokenizers_JS
             ) {
                 $classStack[] = $i;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo str_repeat( "\t", count( $classStack ) );
+                    echo str_repeat("\t", count($classStack));
                     echo "\t=> Found property opener".PHP_EOL;
                 }
 
                 // This could also be an object definition.
                 for ($x = ( $i - 1 ); $x >= 0; $x--) {
-                    if (in_array( $tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                    if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         // Non-whitespace content.
                         break;
                     }
@@ -1019,7 +1019,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 if ($tokens[$x]['code'] === T_EQUAL) {
                     for ($x--; $x >= 0; $x--) {
-                        if (in_array( $tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                        if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                             break;
                         }
                     }
@@ -1036,7 +1036,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 T_OBJECT_OPERATOR,
                             );
 
-                            if (in_array( $tokens[$x]['code'], $wantedTokens ) === false) {
+                            if (in_array($tokens[$x]['code'], $wantedTokens) === false) {
                                 $x++;
                                 break;
                             }
@@ -1053,9 +1053,9 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $tokens[$x]['type'] = 'T_OBJECT';
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            echo str_repeat( "\t", count( $classStack ) );
+                            echo str_repeat("\t", count($classStack));
                             echo "\t* token $x converted from T_STRING to T_OBJECT *".PHP_EOL;
-                            echo str_repeat( "\t", count( $classStack ) );
+                            echo str_repeat("\t", count($classStack));
                             echo "\t* set scope opener ($i) and closer ($closer) for token $x *".PHP_EOL;
                         }
                     }//end if
@@ -1065,10 +1065,10 @@ class PHP_CodeSniffer_Tokenizers_JS
                     && ( isset( $tokens[$i]['scope_condition'] ) === false
                         || $tokens[$tokens[$i]['scope_condition']]['code'] === T_OBJECT )
                 ) {
-                    $opener = array_pop( $classStack );
+                    $opener = array_pop($classStack);
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat( "\t", count( $classStack ) );
+                        echo str_repeat("\t", count($classStack));
                         echo "\t\t=> Found property closer for $opener".PHP_EOL;
                     }
                 } else {
@@ -1086,7 +1086,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 $tokens[$i]['type'] = 'T_INLINE_ELSE';
 
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo str_repeat( "\t", count( $classStack ) );
+                                    echo str_repeat("\t", count($classStack));
                                     echo "\t* token $i converted from T_COLON to T_INLINE_THEN *".PHP_EOL;
                                 }
 
@@ -1100,7 +1100,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                         // The string to the left of the colon is either a property or label.
                         for ($label = ( $i - 1 ); $label >= 0; $label--) {
-                            if (in_array( $tokens[$label]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                            if (in_array($tokens[$label]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                                 break;
                             }
                         }
@@ -1114,7 +1114,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             $tokens[$label]['type'] = 'T_PROPERTY';
 
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                echo str_repeat( "\t", count( $classStack ) );
+                                echo str_repeat("\t", count($classStack));
                                 echo "\t* token $label converted from T_STRING to T_PROPERTY *".PHP_EOL;
                             }
 
@@ -1122,7 +1122,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             // this property is actually an object, so we can give it
                             // and opener and closer.
                             for ($x = ( $i + 1 ); $x < $numTokens; $x++) {
-                                if (in_array( $tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                                if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                                     break;
                                 }
                             }
@@ -1136,7 +1136,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 $tokens[$closer]['scope_condition'] = $label;
                                 $tokens[$closer]['scope_opener'] = $x;
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo str_repeat( "\t", count( $classStack ) );
+                                    echo str_repeat("\t", count($classStack));
                                     echo "\t* set scope opener ($x) and closer ($closer) for token $label *".PHP_EOL;
                                 }
                             }
@@ -1145,7 +1145,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             $tokens[$label]['type'] = 'T_LABEL';
 
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                echo str_repeat( "\t", count( $classStack ) );
+                                echo str_repeat("\t", count($classStack));
                                 echo "\t* token $label converted from T_STRING to T_LABEL *".PHP_EOL;
                             }
                         }

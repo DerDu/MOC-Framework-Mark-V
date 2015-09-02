@@ -20,7 +20,7 @@ class Twig_Markup implements Countable
     protected $content;
     protected $charset;
 
-    public function __construct( $content, $charset )
+    public function __construct($content, $charset)
     {
 
         $this->content = (string)$content;
@@ -36,7 +36,7 @@ class Twig_Markup implements Countable
     public function count()
     {
 
-        return function_exists( 'mb_get_info' ) ? mb_strlen( $this->content,
-            $this->charset ) : strlen( $this->content );
+        return function_exists('mb_get_info') ? mb_strlen($this->content,
+            $this->charset) : strlen($this->content);
     }
 }

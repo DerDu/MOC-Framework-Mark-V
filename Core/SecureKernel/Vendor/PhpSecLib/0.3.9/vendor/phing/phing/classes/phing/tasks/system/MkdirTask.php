@@ -64,23 +64,23 @@ class MkdirTask extends Task
     {
 
         if ($this->dir === null) {
-            throw new BuildException( "dir attribute is required", $this->location );
+            throw new BuildException("dir attribute is required", $this->location);
         }
         if ($this->dir->isFile()) {
-            throw new BuildException( "Unable to create directory as a file already exists with that name: ".$this->dir->getAbsolutePath() );
+            throw new BuildException("Unable to create directory as a file already exists with that name: ".$this->dir->getAbsolutePath());
         }
         if (!$this->dir->exists()) {
-            $result = $this->dir->mkdirs( $this->mode );
+            $result = $this->dir->mkdirs($this->mode);
             if (!$result) {
                 if ($this->dir->exists()) {
-                    $this->log( "A different process or task has already created ".$this->dir->getAbsolutePath() );
+                    $this->log("A different process or task has already created ".$this->dir->getAbsolutePath());
 
                     return;
                 }
                 $msg = "Directory ".$this->dir->getAbsolutePath()." creation was not successful for an unknown reason";
-                throw new BuildException( $msg, $this->location );
+                throw new BuildException($msg, $this->location);
             }
-            $this->log( "Created dir: ".$this->dir->getAbsolutePath() );
+            $this->log("Created dir: ".$this->dir->getAbsolutePath());
         }
     }
 
@@ -91,7 +91,7 @@ class MkdirTask extends Task
      *
      * @return void
      */
-    public function setDir( PhingFile $dir )
+    public function setDir(PhingFile $dir)
     {
 
         $this->dir = $dir;
@@ -104,9 +104,9 @@ class MkdirTask extends Task
      *
      * @return void
      */
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
-        $this->mode = base_convert( (int)$mode, 8, 10 );
+        $this->mode = base_convert((int)$mode, 8, 10);
     }
 }

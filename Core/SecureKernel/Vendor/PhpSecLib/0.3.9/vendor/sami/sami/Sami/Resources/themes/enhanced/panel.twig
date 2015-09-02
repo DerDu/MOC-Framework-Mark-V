@@ -9,42 +9,42 @@
     <script src="{{ path('js/searchdoc.js') }}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
         //<![CDATA[
-        $( document ).ready( function()
+        $(document).ready(function()
         {
-            $( '#version-switcher' ).change( function()
+            $('#version-switcher').change(function()
             {
-                window.parent.location = $( this ).val()
-            } )
-        } );
-        $( function()
+                window.parent.location = $(this).val()
+            })
+        });
+        $(function()
         {
-            $.ajax( {
+            $.ajax({
                 url: 'search_index.js',
                 dataType: 'script',
                 success: function()
                 {
-                    $( '.loader' ).css( 'display', 'none' );
-                    var panel = new Searchdoc.Panel( $( '#panel' ), search_data, tree, parent.frames[1] );
-                    $( '#search' ).focus();
+                    $('.loader').css('display', 'none');
+                    var panel = new Searchdoc.Panel($('#panel'), search_data, tree, parent.frames[1]);
+                    $('#search').focus();
 
                     for (var i = 0; i < {{ project.config('default_opened_level', 0) }}; i++) {
-                        $( '.level_' + i ).each( function( $li )
+                        $('.level_' + i).each(function($li)
                         {
-                            panel.tree.toggle( $( this ) );
-                        } );
+                            panel.tree.toggle($(this));
+                        });
                     }
 
-                    var s = window.parent.location.search.match( /\?q=([^&]+)/ );
+                    var s = window.parent.location.search.match(/\?q=([^&]+)/);
                     if (s) {
-                        s = decodeURIComponent( s[1] ).replace( /\+/g, ' ' );
+                        s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
                         if (s.length > 0) {
-                            $( '#search' ).val( s );
-                            panel.search( s, true );
+                            $('#search').val(s);
+                            panel.search(s, true);
                         }
                     }
                 }
-            } );
-        } );
+            });
+        });
         //]]>
     </script>
 </head>

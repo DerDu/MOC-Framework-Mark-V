@@ -30,10 +30,10 @@ class ArrayComparator extends Comparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
-        return is_array( $expected ) && is_array( $actual );
+        return is_array($expected) && is_array($actual);
     }
 
     /**
@@ -63,8 +63,8 @@ class ArrayComparator extends Comparator
     ) {
 
         if ($canonicalize) {
-            sort( $expected );
-            sort( $actual );
+            sort($expected);
+            sort($actual);
         }
 
         $remaining = $actual;
@@ -74,11 +74,11 @@ class ArrayComparator extends Comparator
         foreach ($expected as $key => $value) {
             unset( $remaining[$key] );
 
-            if (!array_key_exists( $key, $actual )) {
+            if (!array_key_exists($key, $actual)) {
                 $expString .= sprintf(
                     "    %s => %s\n",
-                    $this->exporter->export( $key ),
-                    $this->exporter->shortenedExport( $value )
+                    $this->exporter->export($key),
+                    $this->exporter->shortenedExport($value)
                 );
 
                 $equal = false;
@@ -87,34 +87,34 @@ class ArrayComparator extends Comparator
             }
 
             try {
-                $comparator = $this->factory->getComparatorFor( $value, $actual[$key] );
-                $comparator->assertEquals( $value, $actual[$key], $delta, $canonicalize, $ignoreCase, $processed );
+                $comparator = $this->factory->getComparatorFor($value, $actual[$key]);
+                $comparator->assertEquals($value, $actual[$key], $delta, $canonicalize, $ignoreCase, $processed);
 
                 $expString .= sprintf(
                     "    %s => %s\n",
-                    $this->exporter->export( $key ),
-                    $this->exporter->shortenedExport( $value )
+                    $this->exporter->export($key),
+                    $this->exporter->shortenedExport($value)
                 );
                 $actString .= sprintf(
                     "    %s => %s\n",
-                    $this->exporter->export( $key ),
-                    $this->exporter->shortenedExport( $actual[$key] )
+                    $this->exporter->export($key),
+                    $this->exporter->shortenedExport($actual[$key])
                 );
-            } catch( ComparisonFailure $e ) {
+            } catch (ComparisonFailure $e) {
                 $expString .= sprintf(
                     "    %s => %s\n",
-                    $this->exporter->export( $key ),
+                    $this->exporter->export($key),
                     $e->getExpectedAsString()
-                        ? $this->indent( $e->getExpectedAsString() )
-                        : $this->exporter->shortenedExport( $e->getExpected() )
+                        ? $this->indent($e->getExpectedAsString())
+                        : $this->exporter->shortenedExport($e->getExpected())
                 );
 
                 $actString .= sprintf(
                     "    %s => %s\n",
-                    $this->exporter->export( $key ),
+                    $this->exporter->export($key),
                     $e->getActualAsString()
-                        ? $this->indent( $e->getActualAsString() )
-                        : $this->exporter->shortenedExport( $e->getActual() )
+                        ? $this->indent($e->getActualAsString())
+                        : $this->exporter->shortenedExport($e->getActual())
                 );
 
                 $equal = false;
@@ -124,8 +124,8 @@ class ArrayComparator extends Comparator
         foreach ($remaining as $key => $value) {
             $actString .= sprintf(
                 "    %s => %s\n",
-                $this->exporter->export( $key ),
-                $this->exporter->shortenedExport( $value )
+                $this->exporter->export($key),
+                $this->exporter->shortenedExport($value)
             );
 
             $equal = false;
@@ -146,9 +146,9 @@ class ArrayComparator extends Comparator
         }
     }
 
-    protected function indent( $lines )
+    protected function indent($lines)
     {
 
-        return trim( str_replace( "\n", "\n    ", $lines ) );
+        return trim(str_replace("\n", "\n    ", $lines));
     }
 }

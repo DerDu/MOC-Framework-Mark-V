@@ -35,7 +35,7 @@ class ExactValueToken implements TokenInterface
      * @param StringUtil        $util
      * @param ComparatorFactory $comparatorFactory
      */
-    public function __construct( $value, StringUtil $util = null, ComparatorFactory $comparatorFactory = null )
+    public function __construct($value, StringUtil $util = null, ComparatorFactory $comparatorFactory = null)
     {
 
         $this->value = $value;
@@ -51,33 +51,33 @@ class ExactValueToken implements TokenInterface
      *
      * @return bool|int
      */
-    public function scoreArgument( $argument )
+    public function scoreArgument($argument)
     {
 
-        if (is_object( $argument ) && is_object( $this->value )) {
+        if (is_object($argument) && is_object($this->value)) {
             $comparator = $this->comparatorFactory->getComparatorFor(
                 $argument, $this->value
             );
 
             try {
-                $comparator->assertEquals( $argument, $this->value );
+                $comparator->assertEquals($argument, $this->value);
                 return 10;
-            } catch( ComparisonFailure $failure ) {
+            } catch (ComparisonFailure $failure) {
             }
         }
 
         // If either one is an object it should be castable to a string
-        if (is_object( $argument ) xor is_object( $this->value )) {
-            if (is_object( $argument ) && !method_exists( $argument, '__toString' )) {
+        if (is_object($argument) xor is_object($this->value)) {
+            if (is_object($argument) && !method_exists($argument, '__toString')) {
                 return false;
             }
 
-            if (is_object( $this->value ) && !method_exists( $this->value, '__toString' )) {
+            if (is_object($this->value) && !method_exists($this->value, '__toString')) {
                 return false;
             }
-        } elseif (is_numeric( $argument ) && is_numeric( $this->value )) {
+        } elseif (is_numeric($argument) && is_numeric($this->value)) {
             // noop
-        } elseif (gettype( $argument ) !== gettype( $this->value )) {
+        } elseif (gettype($argument) !== gettype($this->value)) {
             return false;
         }
 
@@ -115,7 +115,7 @@ class ExactValueToken implements TokenInterface
     {
 
         if (null === $this->string) {
-            $this->string = sprintf( 'exact(%s)', $this->util->stringify( $this->value ) );
+            $this->string = sprintf('exact(%s)', $this->util->stringify($this->value));
         }
 
         return $this->string;

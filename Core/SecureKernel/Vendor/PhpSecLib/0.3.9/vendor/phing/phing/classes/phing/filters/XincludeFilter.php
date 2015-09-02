@@ -70,7 +70,7 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
      *
      * @since 2.4
      */
-    public function setResolveExternals( $resolveExternals )
+    public function setResolveExternals($resolveExternals)
     {
 
         $this->resolveExternals = (bool)$resolveExternals;
@@ -84,11 +84,11 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
      * @throws BuildException
      * @return string         transformed buffer.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        if (!class_exists( 'DomDocument' )) {
-            throw new BuildException( "Could not find the DomDocument class. Make sure PHP has been compiled/configured to support DOM XML." );
+        if (!class_exists('DomDocument')) {
+            throw new BuildException("Could not find the DomDocument class. Make sure PHP has been compiled/configured to support DOM XML.");
         }
 
         if ($this->processed === true) {
@@ -97,7 +97,7 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
 
         // Read XML
         $_xml = null;
-        while (( $data = $this->in->read( $len ) ) !== -1) {
+        while (( $data = $this->in->read($len) ) !== -1) {
             $_xml .= $data;
         }
 
@@ -107,19 +107,19 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
         }
 
         if (empty( $_xml )) {
-            $this->log( "XML file is empty!", Project::MSG_WARN );
+            $this->log("XML file is empty!", Project::MSG_WARN);
 
             return '';
         }
 
-        $this->log( "Transforming XML ".$this->in->getResource()." using Xinclude ", Project::MSG_VERBOSE );
+        $this->log("Transforming XML ".$this->in->getResource()." using Xinclude ", Project::MSG_VERBOSE);
 
         $out = '';
         try {
-            $out = $this->process( $_xml );
+            $out = $this->process($_xml);
             $this->processed = true;
-        } catch( IOException $e ) {
-            throw new BuildException( $e );
+        } catch (IOException $e) {
+            throw new BuildException($e);
         }
 
         return $out;
@@ -133,24 +133,24 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
      * @return string
      * @throws BuildException On errors
      */
-    protected function process( $xml )
+    protected function process($xml)
     {
 
         if ($this->basedir) {
             $cwd = getcwd();
-            chdir( $this->basedir );
+            chdir($this->basedir);
         }
 
         // Create and setup document.
         $xmlDom = new DomDocument();
         $xmlDom->resolveExternals = $this->resolveExternals;
 
-        $xmlDom->loadXML( $xml );
+        $xmlDom->loadXML($xml);
 
         $xmlDom->xinclude();
 
         if ($this->basedir) {
-            chdir( $cwd );
+            chdir($cwd);
         }
 
         return $xmlDom->saveXML();
@@ -166,12 +166,12 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
      * @return Reader A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new XincludeFilter( $reader );
-        $newFilter->setProject( $this->getProject() );
-        $newFilter->setBasedir( $this->getBasedir() );
+        $newFilter = new XincludeFilter($reader);
+        $newFilter->setProject($this->getProject());
+        $newFilter->setBasedir($this->getBasedir());
 
         return $newFilter;
     }
@@ -188,7 +188,7 @@ class XincludeFilter extends BaseParamFilterReader implements ChainableReader
     /**
      * @param PhingFile $dir
      */
-    public function setBasedir( PhingFile $dir )
+    public function setBasedir(PhingFile $dir)
     {
 
         $this->basedir = $dir;

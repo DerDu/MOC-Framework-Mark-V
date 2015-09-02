@@ -48,7 +48,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -62,7 +62,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -74,11 +74,11 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Get function name.
-        $methodName = $phpcsFile->getDeclarationName( $stackPtr );
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         // Get all parameters from method signature.
         $signature = array();
-        foreach ($phpcsFile->getMethodParameters( $stackPtr ) as $param) {
+        foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
             $signature[] = $param['name'];
         }
 
@@ -88,7 +88,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
+            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 continue;
             } else {
                 if ($code === T_RETURN) {
@@ -105,7 +105,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be double colon.
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
 
         // Skip for invalid code.
         if ($next === false || $tokens[$next]['code'] !== T_DOUBLE_COLON) {
@@ -113,7 +113,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be the function name.
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
 
         // Skip for invalid code or other method.
         if ($next === false || $tokens[$next]['content'] !== $methodName) {
@@ -121,7 +121,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be the open parenthesis.
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
 
         // Skip for invalid code.
         if ($next === false || $tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
@@ -134,9 +134,9 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
             T_CONSTANT_ENCAPSED_STRING,
         );
 
-        $parameters = array( '' );
+        $parameters = array('');
         $parenthesisCount = 1;
-        $count = count( $tokens );
+        $count = count($tokens);
         for (++$next; $next < $count; ++$next) {
             $code = $tokens[$next]['code'];
 
@@ -149,8 +149,8 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
                     if ($parenthesisCount === 1 && $code === T_COMMA) {
                         $parameters[] = '';
                     } else {
-                        if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
-                            $parameters[( count( $parameters ) - 1 )] .= $tokens[$next]['content'];
+                        if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                            $parameters[( count($parameters) - 1 )] .= $tokens[$next]['content'];
                         }
                     }
                 }
@@ -161,7 +161,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
             }
         }//end for
 
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
         if ($next === false || $tokens[$next]['code'] !== T_SEMICOLON) {
             return;
         }
@@ -170,16 +170,16 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (++$next; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
             // Skip for any other content.
-            if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 return;
             }
         }
 
-        $parameters = array_map( 'trim', $parameters );
-        $parameters = array_filter( $parameters );
+        $parameters = array_map('trim', $parameters);
+        $parameters = array_filter($parameters);
 
-        if (count( $parameters ) === count( $signature ) && $parameters === $signature) {
-            $phpcsFile->addWarning( 'Possible useless method overriding detected', $stackPtr, 'Found' );
+        if (count($parameters) === count($signature) && $parameters === $signature) {
+            $phpcsFile->addWarning('Possible useless method overriding detected', $stackPtr, 'Found');
         }
 
     }//end process()

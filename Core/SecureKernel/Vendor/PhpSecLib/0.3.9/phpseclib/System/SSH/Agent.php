@@ -55,14 +55,14 @@
  * @access private
  */
 // to request SSH1 keys you have to use SSH_AGENTC_REQUEST_RSA_IDENTITIES (1)
-define( 'SYSTEM_SSH_AGENTC_REQUEST_IDENTITIES', 11 );
+define('SYSTEM_SSH_AGENTC_REQUEST_IDENTITIES', 11);
 // this is the SSH2 response; the SSH1 response is SSH_AGENT_RSA_IDENTITIES_ANSWER (2).
-define( 'SYSTEM_SSH_AGENT_IDENTITIES_ANSWER', 12 );
-define( 'SYSTEM_SSH_AGENT_FAILURE', 5 );
+define('SYSTEM_SSH_AGENT_IDENTITIES_ANSWER', 12);
+define('SYSTEM_SSH_AGENT_FAILURE', 5);
 // the SSH1 request is SSH_AGENTC_RSA_CHALLENGE (3)
-define( 'SYSTEM_SSH_AGENTC_SIGN_REQUEST', 13 );
+define('SYSTEM_SSH_AGENTC_SIGN_REQUEST', 13);
 // the SSH1 response is SSH_AGENT_RSA_RESPONSE (4)
-define( 'SYSTEM_SSH_AGENT_SIGN_RESPONSE', 14 );
+define('SYSTEM_SSH_AGENT_SIGN_RESPONSE', 14);
 /**#@-*/
 
 /**
@@ -117,7 +117,7 @@ class System_SSH_Agent_Identity
      * @return System_SSH_Agent_Identity
      * @access private
      */
-    function System_SSH_Agent_Identity( $fsock )
+    function System_SSH_Agent_Identity($fsock)
     {
 
         $this->fsock = $fsock;
@@ -132,7 +132,7 @@ class System_SSH_Agent_Identity
      *
      * @access private
      */
-    function setPublicKey( $key )
+    function setPublicKey($key)
     {
 
         $this->key = $key;
@@ -149,7 +149,7 @@ class System_SSH_Agent_Identity
      *
      * @access private
      */
-    function setPublicKeyBlob( $key_blob )
+    function setPublicKeyBlob($key_blob)
     {
 
         $this->key_blob = $key_blob;
@@ -165,10 +165,10 @@ class System_SSH_Agent_Identity
      * @return Mixed
      * @access public
      */
-    function getPublicKey( $format = null )
+    function getPublicKey($format = null)
     {
 
-        return !isset( $format ) ? $this->key->getPublicKey() : $this->key->getPublicKey( $format );
+        return !isset( $format ) ? $this->key->getPublicKey() : $this->key->getPublicKey($format);
     }
 
     /**
@@ -181,7 +181,7 @@ class System_SSH_Agent_Identity
      *
      * @access public
      */
-    function setSignatureMode( $mode )
+    function setSignatureMode($mode)
     {
     }
 
@@ -195,27 +195,27 @@ class System_SSH_Agent_Identity
      * @return String
      * @access public
      */
-    function sign( $message )
+    function sign($message)
     {
 
         // the last parameter (currently 0) is for flags and ssh-agent only defines one flag (for ssh-dss): SSH_AGENT_OLD_SIGNATURE
-        $packet = pack( 'CNa*Na*N', SYSTEM_SSH_AGENTC_SIGN_REQUEST, strlen( $this->key_blob ), $this->key_blob,
-            strlen( $message ), $message, 0 );
-        $packet = pack( 'Na*', strlen( $packet ), $packet );
-        if (strlen( $packet ) != fputs( $this->fsock, $packet )) {
-            user_error( 'Connection closed during signing' );
+        $packet = pack('CNa*Na*N', SYSTEM_SSH_AGENTC_SIGN_REQUEST, strlen($this->key_blob), $this->key_blob,
+            strlen($message), $message, 0);
+        $packet = pack('Na*', strlen($packet), $packet);
+        if (strlen($packet) != fputs($this->fsock, $packet)) {
+            user_error('Connection closed during signing');
         }
 
-        $length = current( unpack( 'N', fread( $this->fsock, 4 ) ) );
-        $type = ord( fread( $this->fsock, 1 ) );
+        $length = current(unpack('N', fread($this->fsock, 4)));
+        $type = ord(fread($this->fsock, 1));
         if ($type != SYSTEM_SSH_AGENT_SIGN_RESPONSE) {
-            user_error( 'Unable to retreive signature' );
+            user_error('Unable to retreive signature');
         }
 
-        $signature_blob = fread( $this->fsock, $length - 1 );
+        $signature_blob = fread($this->fsock, $length - 1);
         // the only other signature format defined - ssh-dss - is the same length as ssh-rsa
         // the + 12 is for the other various SSH added length fields
-        return substr( $signature_blob, strlen( 'ssh-rsa' ) + 12 );
+        return substr($signature_blob, strlen('ssh-rsa') + 12);
     }
 }
 
@@ -256,13 +256,13 @@ class System_SSH_Agent
                 $address = $_ENV['SSH_AUTH_SOCK'];
                 break;
             default:
-                user_error( 'SSH_AUTH_SOCK not found' );
+                user_error('SSH_AUTH_SOCK not found');
                 return false;
         }
 
-        $this->fsock = fsockopen( 'unix://'.$address, 0, $errno, $errstr );
+        $this->fsock = fsockopen('unix://'.$address, 0, $errno, $errstr);
         if (!$this->fsock) {
-            user_error( "Unable to connect to ssh-agent (Error $errno: $errstr)" );
+            user_error("Unable to connect to ssh-agent (Error $errno: $errstr)");
         }
     }
 
@@ -282,33 +282,33 @@ class System_SSH_Agent
             return array();
         }
 
-        $packet = pack( 'NC', 1, SYSTEM_SSH_AGENTC_REQUEST_IDENTITIES );
-        if (strlen( $packet ) != fputs( $this->fsock, $packet )) {
-            user_error( 'Connection closed while requesting identities' );
+        $packet = pack('NC', 1, SYSTEM_SSH_AGENTC_REQUEST_IDENTITIES);
+        if (strlen($packet) != fputs($this->fsock, $packet)) {
+            user_error('Connection closed while requesting identities');
         }
 
-        $length = current( unpack( 'N', fread( $this->fsock, 4 ) ) );
-        $type = ord( fread( $this->fsock, 1 ) );
+        $length = current(unpack('N', fread($this->fsock, 4)));
+        $type = ord(fread($this->fsock, 1));
         if ($type != SYSTEM_SSH_AGENT_IDENTITIES_ANSWER) {
-            user_error( 'Unable to request identities' );
+            user_error('Unable to request identities');
         }
 
         $identities = array();
-        $keyCount = current( unpack( 'N', fread( $this->fsock, 4 ) ) );
+        $keyCount = current(unpack('N', fread($this->fsock, 4)));
         for ($i = 0; $i < $keyCount; $i++) {
-            $length = current( unpack( 'N', fread( $this->fsock, 4 ) ) );
-            $key_blob = fread( $this->fsock, $length );
-            $length = current( unpack( 'N', fread( $this->fsock, 4 ) ) );
-            $key_comment = fread( $this->fsock, $length );
-            $length = current( unpack( 'N', substr( $key_blob, 0, 4 ) ) );
-            $key_type = substr( $key_blob, 4, $length );
+            $length = current(unpack('N', fread($this->fsock, 4)));
+            $key_blob = fread($this->fsock, $length);
+            $length = current(unpack('N', fread($this->fsock, 4)));
+            $key_comment = fread($this->fsock, $length);
+            $length = current(unpack('N', substr($key_blob, 0, 4)));
+            $key_type = substr($key_blob, 4, $length);
             switch ($key_type) {
                 case 'ssh-rsa':
-                    if (!class_exists( 'Crypt_RSA' )) {
+                    if (!class_exists('Crypt_RSA')) {
                         include_once 'Crypt/RSA.php';
                     }
                     $key = new Crypt_RSA();
-                    $key->loadKey( 'ssh-rsa '.base64_encode( $key_blob ).' '.$key_comment );
+                    $key->loadKey('ssh-rsa '.base64_encode($key_blob).' '.$key_comment);
                     break;
                 case 'ssh-dss':
                     // not currently supported
@@ -316,9 +316,9 @@ class System_SSH_Agent
             }
             // resources are passed by reference by default
             if (isset( $key )) {
-                $identity = new System_SSH_Agent_Identity( $this->fsock );
-                $identity->setPublicKey( $key );
-                $identity->setPublicKeyBlob( $key_blob );
+                $identity = new System_SSH_Agent_Identity($this->fsock);
+                $identity->setPublicKey($key);
+                $identity->setPublicKeyBlob($key_blob);
                 $identities[] = $identity;
                 unset( $key );
             }

@@ -69,10 +69,10 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return $this
      */
-    public function willExtend( $class )
+    public function willExtend($class)
     {
 
-        $this->lazyDouble->setParentClass( $class );
+        $this->lazyDouble->setParentClass($class);
 
         return $this;
     }
@@ -84,10 +84,10 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return $this
      */
-    public function willImplement( $interface )
+    public function willImplement($interface)
     {
 
-        $this->lazyDouble->addInterface( $interface );
+        $this->lazyDouble->addInterface($interface);
 
         return $this;
     }
@@ -99,10 +99,10 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return $this
      */
-    public function willBeConstructedWith( array $arguments = null )
+    public function willBeConstructedWith(array $arguments = null)
     {
 
-        $this->lazyDouble->setArguments( $arguments );
+        $this->lazyDouble->setArguments($arguments);
 
         return $this;
     }
@@ -115,17 +115,17 @@ class ObjectProphecy implements ProphecyInterface
      * @throws \Prophecy\Exception\Prophecy\MethodProphecyException If method prophecy doesn't
      *                                                              have arguments wildcard
      */
-    public function addMethodProphecy( MethodProphecy $methodProphecy )
+    public function addMethodProphecy(MethodProphecy $methodProphecy)
     {
 
         $argumentsWildcard = $methodProphecy->getArgumentsWildcard();
         if (null === $argumentsWildcard) {
-            throw new MethodProphecyException( sprintf(
+            throw new MethodProphecyException(sprintf(
                 "Can not add prophecy for a method `%s::%s()`\n".
                 "as you did not specify arguments wildcard for it.",
-                get_class( $this->reveal() ),
+                get_class($this->reveal()),
                 $methodProphecy->getMethodName()
-            ), $methodProphecy );
+            ), $methodProphecy);
         }
 
         $methodName = $methodProphecy->getMethodName();
@@ -157,7 +157,7 @@ class ObjectProphecy implements ProphecyInterface
             );
         }
 
-        $double->setProphecy( $this );
+        $double->setProphecy($this);
 
         return $double;
     }
@@ -170,13 +170,13 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return mixed
      */
-    public function makeProphecyMethodCall( $methodName, array $arguments )
+    public function makeProphecyMethodCall($methodName, array $arguments)
     {
 
-        $arguments = $this->revealer->reveal( $arguments );
-        $return = $this->callCenter->makeCall( $this, $methodName, $arguments );
+        $arguments = $this->revealer->reveal($arguments);
+        $return = $this->callCenter->makeCall($this, $methodName, $arguments);
 
-        return $this->revealer->reveal( $return );
+        return $this->revealer->reveal($return);
     }
 
     /**
@@ -187,10 +187,10 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return Call[]
      */
-    public function findProphecyMethodCalls( $methodName, ArgumentsWildcard $wildcard )
+    public function findProphecyMethodCalls($methodName, ArgumentsWildcard $wildcard)
     {
 
-        return $this->callCenter->findCalls( $methodName, $wildcard );
+        return $this->callCenter->findCalls($methodName, $wildcard);
     }
 
     /**
@@ -201,20 +201,20 @@ class ObjectProphecy implements ProphecyInterface
     public function checkProphecyMethodsPredictions()
     {
 
-        $exception = new AggregateException( sprintf( "%s:\n", get_class( $this->reveal() ) ) );
-        $exception->setObjectProphecy( $this );
+        $exception = new AggregateException(sprintf("%s:\n", get_class($this->reveal())));
+        $exception->setObjectProphecy($this);
 
         foreach ($this->methodProphecies as $prophecies) {
             foreach ($prophecies as $prophecy) {
                 try {
                     $prophecy->checkPrediction();
-                } catch( PredictionException $e ) {
-                    $exception->append( $e );
+                } catch (PredictionException $e) {
+                    $exception->append($e);
                 }
             }
         }
 
-        if (count( $exception->getExceptions() )) {
+        if (count($exception->getExceptions())) {
             throw $exception;
         }
     }
@@ -227,25 +227,25 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return MethodProphecy
      */
-    public function __call( $methodName, array $arguments )
+    public function __call($methodName, array $arguments)
     {
 
-        $arguments = new ArgumentsWildcard( $this->revealer->reveal( $arguments ) );
+        $arguments = new ArgumentsWildcard($this->revealer->reveal($arguments));
 
-        foreach ($this->getMethodProphecies( $methodName ) as $prophecy) {
+        foreach ($this->getMethodProphecies($methodName) as $prophecy) {
             $argumentsWildcard = $prophecy->getArgumentsWildcard();
             $comparator = $this->comparatorFactory->getComparatorFor(
                 $argumentsWildcard, $arguments
             );
 
             try {
-                $comparator->assertEquals( $argumentsWildcard, $arguments );
+                $comparator->assertEquals($argumentsWildcard, $arguments);
                 return $prophecy;
-            } catch( ComparisonFailure $failure ) {
+            } catch (ComparisonFailure $failure) {
             }
         }
 
-        return new MethodProphecy( $this, $methodName, $arguments );
+        return new MethodProphecy($this, $methodName, $arguments);
     }
 
     /**
@@ -255,7 +255,7 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @return MethodProphecy[]
      */
-    public function getMethodProphecies( $methodName = null )
+    public function getMethodProphecies($methodName = null)
     {
 
         if (null === $methodName) {
@@ -274,7 +274,7 @@ class ObjectProphecy implements ProphecyInterface
      *
      * @param string $name
      */
-    public function __get( $name )
+    public function __get($name)
     {
 
         return $this->reveal()->$name;
@@ -286,9 +286,9 @@ class ObjectProphecy implements ProphecyInterface
      * @param string $name
      * @param string $value
      */
-    public function __set( $name, $value )
+    public function __set($name, $value)
     {
 
-        $this->reveal()->$name = $this->revealer->reveal( $value );
+        $this->reveal()->$name = $this->revealer->reveal($value);
     }
 }

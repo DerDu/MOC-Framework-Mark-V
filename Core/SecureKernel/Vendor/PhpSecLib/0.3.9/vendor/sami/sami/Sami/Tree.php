@@ -14,23 +14,23 @@ namespace Sami;
 class Tree
 {
 
-    public function getTree( Project $project )
+    public function getTree(Project $project)
     {
 
         $namespaces = array();
-        $ns = $project->getConfig( 'simulate_namespaces' ) ? $project->getSimulatedNamespaces() : $project->getNamespaces();
+        $ns = $project->getConfig('simulate_namespaces') ? $project->getSimulatedNamespaces() : $project->getNamespaces();
         foreach ($ns as $namespace) {
-            if (false !== $pos = strpos( $namespace, '\\' )) {
-                $namespaces[substr( $namespace, 0, $pos )][] = $namespace;
+            if (false !== $pos = strpos($namespace, '\\')) {
+                $namespaces[substr($namespace, 0, $pos)][] = $namespace;
             } else {
                 $namespaces[$namespace][] = $namespace;
             }
         }
 
-        return $this->generateClassTreeLevel( $project, 1, $namespaces, array() );
+        return $this->generateClassTreeLevel($project, 1, $namespaces, array());
     }
 
-    protected function generateClassTreeLevel( Project $project, $level, array $namespaces, array $classes )
+    protected function generateClassTreeLevel(Project $project, $level, array $namespaces, array $classes)
     {
 
         ++$level;
@@ -38,42 +38,42 @@ class Tree
         $tree = array();
         foreach ($namespaces as $namespace => $subnamespaces) {
             // classes
-            if ($project->getConfig( 'simulate_namespaces' )) {
-                $cl = $project->getSimulatedNamespaceAllClasses( $namespace );
+            if ($project->getConfig('simulate_namespaces')) {
+                $cl = $project->getSimulatedNamespaceAllClasses($namespace);
             } else {
-                $cl = $project->getNamespaceAllClasses( $namespace );
+                $cl = $project->getNamespaceAllClasses($namespace);
             }
 
             // subnamespaces
             $ns = array();
             foreach ($subnamespaces as $subnamespace) {
-                $parts = explode( '\\', $subnamespace );
+                $parts = explode('\\', $subnamespace);
                 if (!isset( $parts[$level - 1] )) {
                     continue;
                 }
 
-                $ns[implode( '\\', array_slice( $parts, 0, $level ) )][] = $subnamespace;
+                $ns[implode('\\', array_slice($parts, 0, $level))][] = $subnamespace;
             }
 
-            $parts = explode( '\\', $namespace );
+            $parts = explode('\\', $namespace);
             $url = '';
-            if (!$project->getConfig( 'simulate_namespaces' )) {
-                $url = $parts[count( $parts ) - 1] && count( $cl ) ? $namespace : '';
+            if (!$project->getConfig('simulate_namespaces')) {
+                $url = $parts[count($parts) - 1] && count($cl) ? $namespace : '';
             }
-            $short = $parts[count( $parts ) - 1] ? $parts[count( $parts ) - 1] : '[Global Namespace]';
+            $short = $parts[count($parts) - 1] ? $parts[count($parts) - 1] : '[Global Namespace]';
 
-            $tree[] = array( $short, $url, $this->generateClassTreeLevel( $project, $level, $ns, $cl ) );
+            $tree[] = array($short, $url, $this->generateClassTreeLevel($project, $level, $ns, $cl));
         }
 
         foreach ($classes as $class) {
-            if ($project->getConfig( 'simulate_namespaces' )) {
-                $parts = explode( '_', $class->getShortName() );
-                $short = array_pop( $parts );
+            if ($project->getConfig('simulate_namespaces')) {
+                $parts = explode('_', $class->getShortName());
+                $short = array_pop($parts);
             } else {
                 $short = $class->getShortName();
             }
 
-            $tree[] = array( $short, $class, array() );
+            $tree[] = array($short, $class, array());
         }
 
         return $tree;

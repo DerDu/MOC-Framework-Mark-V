@@ -36,6 +36,6 @@ class LiquibaseUpdateTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( 'update' );
+        $this->execute('update');
     }
 }

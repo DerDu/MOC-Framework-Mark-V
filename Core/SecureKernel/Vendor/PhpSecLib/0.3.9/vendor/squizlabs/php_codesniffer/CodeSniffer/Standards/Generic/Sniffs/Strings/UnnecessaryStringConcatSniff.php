@@ -72,7 +72,7 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // Work out which type of file this is for.
@@ -87,22 +87,22 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             }
         }
 
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($prev === false || $next === false) {
             return;
         }
 
         $stringTokens = PHP_CodeSniffer_Tokens::$stringTokens;
-        if (in_array( $tokens[$prev]['code'], $stringTokens ) === true
-            && in_array( $tokens[$next]['code'], $stringTokens ) === true
+        if (in_array($tokens[$prev]['code'], $stringTokens) === true
+            && in_array($tokens[$next]['code'], $stringTokens) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
                 // Before we throw an error for PHP, allow strings to be
                 // combined if they would have < and ? next to each other because
                 // this trick is sometimes required in PHP strings.
                 if ($phpcsFile->tokenizerType === 'PHP') {
-                    $prevChar = substr( $tokens[$prev]['content'], -2, 1 );
+                    $prevChar = substr($tokens[$prev]['content'], -2, 1);
                     $nextChar = $tokens[$next]['content'][1];
                     $combined = $prevChar.$nextChar;
                     if ($combined === '?'.'>' || $combined === '<'.'?') {
@@ -112,9 +112,9 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
 
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
-                    $phpcsFile->addError( $error, $stackPtr, 'Found' );
+                    $phpcsFile->addError($error, $stackPtr, 'Found');
                 } else {
-                    $phpcsFile->addWarning( $error, $stackPtr, 'Found' );
+                    $phpcsFile->addWarning($error, $stackPtr, 'Found');
                 }
             }
         }

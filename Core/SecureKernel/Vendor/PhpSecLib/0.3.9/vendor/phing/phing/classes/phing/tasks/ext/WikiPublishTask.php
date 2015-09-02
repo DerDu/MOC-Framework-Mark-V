@@ -113,7 +113,7 @@ class WikiPublishTask extends Task
     /**
      * @param string $apiPassword
      */
-    public function setApiPassword( $apiPassword )
+    public function setApiPassword($apiPassword)
     {
 
         $this->apiPassword = $apiPassword;
@@ -131,7 +131,7 @@ class WikiPublishTask extends Task
     /**
      * @param string $apiUrl
      */
-    public function setApiUrl( $apiUrl )
+    public function setApiUrl($apiUrl)
     {
 
         $this->apiUrl = $apiUrl;
@@ -149,7 +149,7 @@ class WikiPublishTask extends Task
     /**
      * @param string $apiUser
      */
-    public function setApiUser( $apiUser )
+    public function setApiUser($apiUser)
     {
 
         $this->apiUser = $apiUser;
@@ -167,7 +167,7 @@ class WikiPublishTask extends Task
     /**
      * @param int $id
      */
-    public function setId( $id )
+    public function setId($id)
     {
 
         $this->id = $id;
@@ -187,14 +187,14 @@ class WikiPublishTask extends Task
      *
      * @throws BuildException
      */
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
         if (false === isset( $this->modeMap[$mode] )) {
-            throw new BuildException( 'Mode is invalid ('.$mode.', should be one of '.implode(
+            throw new BuildException('Mode is invalid ('.$mode.', should be one of '.implode(
                     ',',
-                    array_keys( $this->modeMap )
-                ).')' );
+                    array_keys($this->modeMap)
+                ).')');
         }
         $this->mode = $mode;
     }
@@ -211,7 +211,7 @@ class WikiPublishTask extends Task
     /**
      * @param string $title
      */
-    public function setTitle( $title )
+    public function setTitle($title)
     {
 
         $this->title = $title;
@@ -229,7 +229,7 @@ class WikiPublishTask extends Task
     /**
      * @param string $content
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
         $this->content = $content;
@@ -243,16 +243,16 @@ class WikiPublishTask extends Task
     public function init()
     {
 
-        $this->cookiesFile = tempnam( sys_get_temp_dir(), 'WikiPublish.'.uniqid().'.cookies' );
+        $this->cookiesFile = tempnam(sys_get_temp_dir(), 'WikiPublish.'.uniqid().'.cookies');
 
         $this->curl = curl_init();
-        if (false === is_resource( $this->curl )) {
-            throw new BuildException( 'Curl init failed ('.$this->apiUrl.')' );
+        if (false === is_resource($this->curl)) {
+            throw new BuildException('Curl init failed ('.$this->apiUrl.')');
         }
 
-        curl_setopt( $this->curl, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $this->curl, CURLOPT_COOKIEJAR, $this->cookiesFile );
-        curl_setopt( $this->curl, CURLOPT_COOKIEFILE, $this->cookiesFile );
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curl, CURLOPT_COOKIEJAR, $this->cookiesFile);
+        curl_setopt($this->curl, CURLOPT_COOKIEFILE, $this->cookiesFile);
     }
 
     /**
@@ -275,11 +275,11 @@ class WikiPublishTask extends Task
     {
 
         if (null === $this->apiUrl) {
-            throw new BuildException( 'Wiki apiUrl is required' );
+            throw new BuildException('Wiki apiUrl is required');
         }
 
         if (null === $this->id && null === $this->title) {
-            throw new BuildException( 'Wiki page id or title is required' );
+            throw new BuildException('Wiki page id or title is required');
         }
 
     }
@@ -291,25 +291,25 @@ class WikiPublishTask extends Task
      *
      * @throws BuildException
      */
-    private function callApiLogin( $token = null )
+    private function callApiLogin($token = null)
     {
 
-        $postData = array( 'lgname' => $this->apiUser, 'lgpassword' => $this->apiPassword );
+        $postData = array('lgname' => $this->apiUser, 'lgpassword' => $this->apiPassword);
         if (null !== $token) {
             $postData['lgtoken'] = $token;
         }
 
-        $result = $this->callApi( 'action=login', $postData );
+        $result = $this->callApi('action=login', $postData);
         try {
-            $this->checkApiResponseResult( 'login', $result );
-        } catch( BuildException $e ) {
+            $this->checkApiResponseResult('login', $result);
+        } catch (BuildException $e) {
             if (null !== $token) {
                 throw $e;
             }
             // if token is required then call login again with token
-            $this->checkApiResponseResult( 'login', $result, 'NeedToken' );
+            $this->checkApiResponseResult('login', $result, 'NeedToken');
             if (isset( $result['login'] ) && isset( $result['login']['token'] )) {
-                $this->callApiLogin( $result['login']['token'] );
+                $this->callApiLogin($result['login']['token']);
             } else {
                 throw $e;
             }
@@ -325,25 +325,25 @@ class WikiPublishTask extends Task
      * @return array
      * @throws BuildException
      */
-    protected function callApi( $queryString, $postData = null )
+    protected function callApi($queryString, $postData = null)
     {
 
-        $this->setPostData( $postData );
+        $this->setPostData($postData);
 
         $url = $this->apiUrl.'?'.$queryString.'&format=php';
 
-        curl_setopt( $this->curl, CURLOPT_URL, $url );
+        curl_setopt($this->curl, CURLOPT_URL, $url);
 
-        $response = curl_exec( $this->curl );
-        $responseCode = curl_getinfo( $this->curl, CURLINFO_HTTP_CODE );
+        $response = curl_exec($this->curl);
+        $responseCode = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
         if (200 !== $responseCode) {
-            throw new BuildException( 'Wiki webapi call failed (http response '.$responseCode.')' );
+            throw new BuildException('Wiki webapi call failed (http response '.$responseCode.')');
         }
 
-        $result = @unserialize( $response );
+        $result = @unserialize($response);
         if (false === $result) {
-            throw new BuildException( 'Couldn\'t unserialize Wiki webapi response' );
+            throw new BuildException('Couldn\'t unserialize Wiki webapi response');
         }
 
         return $result;
@@ -354,21 +354,21 @@ class WikiPublishTask extends Task
      *
      * @param array|null $data
      */
-    private function setPostData( $data = null )
+    private function setPostData($data = null)
     {
 
         if (null === $data) {
-            curl_setopt( $this->curl, CURLOPT_POST, false );
+            curl_setopt($this->curl, CURLOPT_POST, false);
 
             return;
         }
         $postData = '';
         foreach ($data as $key => $value) {
-            $postData .= urlencode( $key ).'='.urlencode( $value ).'&';
+            $postData .= urlencode($key).'='.urlencode($value).'&';
         }
         if ($postData != '') {
-            curl_setopt( $this->curl, CURLOPT_POST, true );
-            curl_setopt( $this->curl, CURLOPT_POSTFIELDS, substr( $postData, 0, -1 ) );
+            curl_setopt($this->curl, CURLOPT_POST, true);
+            curl_setopt($this->curl, CURLOPT_POSTFIELDS, substr($postData, 0, -1));
         }
     }
 
@@ -381,19 +381,19 @@ class WikiPublishTask extends Task
      *
      * @throws BuildException
      */
-    private function checkApiResponseResult( $action, $response, $expect = 'Success' )
+    private function checkApiResponseResult($action, $response, $expect = 'Success')
     {
 
         if (isset( $response['error'] )) {
             throw new BuildException(
-                'Wiki response error (action: '.$action.', error code: '.$response['error']['code'].')' );
+                'Wiki response error (action: '.$action.', error code: '.$response['error']['code'].')');
         }
         if (false == isset( $response[$action] ) || false == isset( $response[$action]['result'] )) {
-            throw new BuildException( 'Wiki response result not found (action: '.$action.')' );
+            throw new BuildException('Wiki response result not found (action: '.$action.')');
         }
         if ($response[$action]['result'] !== $expect) {
             throw new BuildException(
-                'Unexpected Wiki response result '.$response[$action]['result'].' (expected: '.$expect.')' );
+                'Unexpected Wiki response result '.$response[$action]['result'].' (expected: '.$expect.')');
         }
     }
 
@@ -404,8 +404,8 @@ class WikiPublishTask extends Task
     {
 
         $this->callApiTokens();
-        $result = $this->callApi( 'action=edit&token='.urlencode( $this->apiEditToken ), $this->getApiEditData() );
-        $this->checkApiResponseResult( 'edit', $result );
+        $result = $this->callApi('action=edit&token='.urlencode($this->apiEditToken), $this->getApiEditData());
+        $this->checkApiResponseResult('edit', $result);
     }
 
     /**
@@ -416,9 +416,9 @@ class WikiPublishTask extends Task
     private function callApiTokens()
     {
 
-        $result = $this->callApi( 'action=tokens&type=edit' );
+        $result = $this->callApi('action=tokens&type=edit');
         if (false == isset( $result['tokens'] ) || false == isset( $result['tokens']['edittoken'] )) {
-            throw new BuildException( 'Wiki token not found' );
+            throw new BuildException('Wiki token not found');
         }
 
         $this->apiEditToken = $result['tokens']['edittoken'];
@@ -452,11 +452,11 @@ class WikiPublishTask extends Task
     public function __destruct()
     {
 
-        if (null !== $this->curl && is_resource( $this->curl )) {
-            curl_close( $this->curl );
+        if (null !== $this->curl && is_resource($this->curl)) {
+            curl_close($this->curl);
         }
-        if (null !== $this->cookiesFile && file_exists( $this->cookiesFile )) {
-            unlink( $this->cookiesFile );
+        if (null !== $this->cookiesFile && file_exists($this->cookiesFile)) {
+            unlink($this->cookiesFile);
         }
     }
 }

@@ -40,7 +40,7 @@ class DateSelector extends BaseExtendSelector
     const CHECKDIRS_KEY = "checkdirs";
     const GRANULARITY_KEY = "granularity";
     const WHEN_KEY = "when";
-    private static $timeComparisons = array( "before", "after", "equal" );
+    private static $timeComparisons = array("before", "after", "equal");
     private $seconds = -1;
     private $dateTime = null;
     private $includeDirs = false;
@@ -96,7 +96,7 @@ class DateSelector extends BaseExtendSelector
      * @param int $seconds the time to compare file's last modified date to,
      *                     expressed in milliseconds
      */
-    public function setSeconds( $seconds )
+    public function setSeconds($seconds)
     {
 
         $this->seconds = (int)$seconds;
@@ -110,31 +110,31 @@ class DateSelector extends BaseExtendSelector
      *
      * @return mixed|void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::MILLIS_KEY:
-                        $this->setMillis( $parameters[$i]->getValue() );
+                        $this->setMillis($parameters[$i]->getValue());
                         break;
                     case self::DATETIME_KEY:
-                        $this->setDatetime( $parameters[$i]->getValue() );
+                        $this->setDatetime($parameters[$i]->getValue());
                         break;
                     case self::CHECKDIRS_KEY:
-                        $this->setCheckdirs( $parameters[$i]->getValue() );
+                        $this->setCheckdirs($parameters[$i]->getValue());
                         break;
                     case self::GRANULARITY_KEY:
-                        $this->setGranularity( $parameters[$i]->getValue() );
+                        $this->setGranularity($parameters[$i]->getValue());
                         break;
                     case self::WHEN_KEY:
-                        $this->setWhen( $parameters[$i]->getValue() );
+                        $this->setWhen($parameters[$i]->getValue());
                         break;
                     default:
-                        $this->setError( "Invalid parameter ".$paramname );
+                        $this->setError("Invalid parameter ".$paramname);
                 } // switch
             }
         }
@@ -146,10 +146,10 @@ class DateSelector extends BaseExtendSelector
      *
      * @param string $dateTime a string in MM/DD/YYYY HH:MM AM_PM format
      */
-    public function setDatetime( $dateTime )
+    public function setDatetime($dateTime)
     {
 
-        $dt = strtotime( $dateTime );
+        $dt = strtotime($dateTime);
         if ($dt == -1) {
             $this->setError(
                 "Date of ".$dateTime
@@ -158,7 +158,7 @@ class DateSelector extends BaseExtendSelector
             );
         } else {
             $this->dateTime = $dateTime;
-            $this->setSeconds( $dt );
+            $this->setSeconds($dt);
         }
     }
 
@@ -167,7 +167,7 @@ class DateSelector extends BaseExtendSelector
      *
      * @param boolean $includeDirs whether to check the timestamp on directories
      */
-    public function setCheckdirs( $includeDirs )
+    public function setCheckdirs($includeDirs)
     {
 
         $this->includeDirs = (boolean)$includeDirs;
@@ -179,7 +179,7 @@ class DateSelector extends BaseExtendSelector
      *
      * @param int $granularity
      */
-    public function setGranularity( $granularity )
+    public function setGranularity($granularity)
     {
 
         $this->granularity = (int)$granularity;
@@ -191,12 +191,12 @@ class DateSelector extends BaseExtendSelector
      *
      * @param string $cmp The comparison to perform
      */
-    public function setWhen( $cmp )
+    public function setWhen($cmp)
     {
 
-        $idx = array_search( $cmp, self::$timeComparisons, true );
+        $idx = array_search($cmp, self::$timeComparisons, true);
         if ($idx === null) {
-            $this->setError( "Invalid value for ".self::WHEN_KEY.": ".$cmp );
+            $this->setError("Invalid value for ".self::WHEN_KEY.": ".$cmp);
         } else {
             $this->cmp = $idx;
         }
@@ -233,7 +233,7 @@ class DateSelector extends BaseExtendSelector
      *
      * @return boolean   Whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -245,7 +245,7 @@ class DateSelector extends BaseExtendSelector
         } elseif ($this->cmp === 1) {
             return ( ( $file->lastModified() - $this->granularity ) > $this->seconds );
         } else {
-            return ( abs( $file->lastModified() - $this->seconds ) <= $this->granularity );
+            return ( abs($file->lastModified() - $this->seconds) <= $this->granularity );
         }
     }
 

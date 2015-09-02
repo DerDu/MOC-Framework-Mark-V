@@ -45,12 +45,12 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
         $exReference
     ) {
 
-        $tag = new UsesTag( $type, $content );
+        $tag = new UsesTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exReference, $tag->getReference() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**

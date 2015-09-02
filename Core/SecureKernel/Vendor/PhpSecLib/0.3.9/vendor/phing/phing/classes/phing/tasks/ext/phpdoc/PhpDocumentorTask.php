@@ -141,7 +141,7 @@ class PhpDocumentorTask extends Task
      *
      * @param $title
      */
-    public function setTitle( $title )
+    public function setTitle($title)
     {
 
         $this->title = $title;
@@ -154,10 +154,10 @@ class PhpDocumentorTask extends Task
      *
      * @param PhingFile $destdir
      */
-    public function setTarget( PhingFile $destdir )
+    public function setTarget(PhingFile $destdir)
     {
 
-        $this->setDestdir( $destdir );
+        $this->setDestdir($destdir);
     }
 
     /**
@@ -165,7 +165,7 @@ class PhpDocumentorTask extends Task
      *
      * @param PhingFile $destdir
      */
-    public function setDestdir( PhingFile $destdir )
+    public function setDestdir(PhingFile $destdir)
     {
 
         $this->destdir = $destdir;
@@ -176,7 +176,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $output
      */
-    public function setOutput( $output )
+    public function setOutput($output)
     {
 
         $this->output = $output;
@@ -187,10 +187,10 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean
      */
-    public function setSourcecode( $b )
+    public function setSourcecode($b)
     {
 
-        $this->setLinksource( $b );
+        $this->setLinksource($b);
     }
 
     /**
@@ -198,7 +198,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean
      */
-    public function setLinksource( $b )
+    public function setLinksource($b)
     {
 
         $this->linksource = $b;
@@ -209,7 +209,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean $b
      */
-    public function setQuiet( $b )
+    public function setQuiet($b)
     {
 
         $this->quiet = $b;
@@ -220,7 +220,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean
      */
-    public function setParseprivate( $parseprivate )
+    public function setParseprivate($parseprivate)
     {
 
         $this->parsePrivate = $parseprivate;
@@ -231,7 +231,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean
      */
-    public function setJavadocdesc( $javadoc )
+    public function setJavadocdesc($javadoc)
     {
 
         $this->javadocDesc = $javadoc;
@@ -242,7 +242,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $packages
      */
-    public function setPackageoutput( $packages )
+    public function setPackageoutput($packages)
     {
 
         $this->packages = $packages;
@@ -253,7 +253,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $tags
      */
-    public function setIgnoretags( $tags )
+    public function setIgnoretags($tags)
     {
 
         $this->ignoreTags = $tags;
@@ -264,7 +264,7 @@ class PhpDocumentorTask extends Task
      *
      * @param PhingFile $d
      */
-    public function setExamplesdir( PhingFile $d )
+    public function setExamplesdir(PhingFile $d)
     {
 
         $this->examplesDir = $d;
@@ -275,7 +275,7 @@ class PhpDocumentorTask extends Task
      *
      * @param PhingFile $d
      */
-    public function setConfigdir( PhingFile $d )
+    public function setConfigdir(PhingFile $d)
     {
 
         $this->configDir = $d;
@@ -286,7 +286,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $name
      */
-    public function setDefaultpackagename( $name )
+    public function setDefaultpackagename($name)
     {
 
         $this->defaultPackageName = $name;
@@ -297,7 +297,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $name
      */
-    public function setDefaultcategoryname( $name )
+    public function setDefaultcategoryname($name)
     {
 
         $this->defaultCategoryName = $name;
@@ -308,7 +308,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean $b
      */
-    public function setPear( $b )
+    public function setPear($b)
     {
 
         $this->pear = $b;
@@ -322,7 +322,7 @@ class PhpDocumentorTask extends Task
     public function createFileset()
     {
 
-        $num = array_push( $this->filesets, new FileSet() );
+        $num = array_push($this->filesets, new FileSet());
 
         return $this->filesets[$num - 1];
     }
@@ -335,7 +335,7 @@ class PhpDocumentorTask extends Task
     public function createProjdocfileset()
     {
 
-        $num = array_push( $this->projDocFilesets, new FileSet() );
+        $num = array_push($this->projDocFilesets, new FileSet());
 
         return $this->projDocFilesets[$num - 1];
     }
@@ -347,7 +347,7 @@ class PhpDocumentorTask extends Task
      *
      * @param boolean $b
      */
-    public function setUndocumentedelements( $b )
+    public function setUndocumentedelements($b)
     {
 
         $this->undocumentedelements = $b;
@@ -359,7 +359,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $sCustomtags
      */
-    public function setCustomtags( $sCustomtags )
+    public function setCustomtags($sCustomtags)
     {
 
         $this->customtags = $sCustomtags;
@@ -372,7 +372,7 @@ class PhpDocumentorTask extends Task
      *
      * @internal param PhingFile $destdir
      */
-    public function setTemplateBase( PhingFile $oTemplateBase )
+    public function setTemplateBase(PhingFile $oTemplateBase)
     {
 
         $this->templateBase = $oTemplateBase;
@@ -383,7 +383,7 @@ class PhpDocumentorTask extends Task
      *
      * @param string $sIgnore
      */
-    public function setIgnore( $sIgnore )
+    public function setIgnore($sIgnore)
     {
 
         $this->ignore = $sIgnore;
@@ -403,10 +403,10 @@ class PhpDocumentorTask extends Task
 
         $this->validate();
         $configdir = $this->configDir ? $this->configDir->getAbsolutePath() : null;
-        $phpdoc = new PhingPhpDocumentorSetup( $configdir, $this );
-        $this->setPhpDocumentorOptions( $phpdoc );
+        $phpdoc = new PhingPhpDocumentorSetup($configdir, $this);
+        $this->setPhpDocumentorOptions($phpdoc);
         //$phpdoc->readCommandLineSettings();
-        $phpdoc->setupConverters( $this->output );
+        $phpdoc->setupConverters($this->output);
         $phpdoc->createDocs();
     }
 
@@ -421,20 +421,20 @@ class PhpDocumentorTask extends Task
         $found = null;
         foreach (Phing::explodeIncludePath() as $path) {
             $testpath = $path.DIRECTORY_SEPARATOR.'PhpDocumentor';
-            if (file_exists( $testpath )) {
+            if (file_exists($testpath)) {
                 $found = $testpath;
                 break;
             }
         }
         if (!$found) {
-            throw new BuildException( "PhpDocumentor task depends on PhpDocumentor being installed and on include_path.",
-                $this->getLocation() );
+            throw new BuildException("PhpDocumentor task depends on PhpDocumentor being installed and on include_path.",
+                $this->getLocation());
         }
         // otherwise, adjust the include_path to path to include the PhpDocumentor directory ...
-        set_include_path( get_include_path().PATH_SEPARATOR.$found );
+        set_include_path(get_include_path().PATH_SEPARATOR.$found);
         include_once "phpDocumentor/Setup.inc.php";
-        if (!class_exists( 'phpDocumentor_setup' )) {
-            throw new BuildException( "Error including PhpDocumentor setup class file." );
+        if (!class_exists('phpDocumentor_setup')) {
+            throw new BuildException("Error including PhpDocumentor setup class file.");
         }
     }
 
@@ -447,15 +447,15 @@ class PhpDocumentorTask extends Task
     {
 
         if (!$this->destdir) {
-            throw new BuildException( "You must specify a destdir for phpdoc.", $this->getLocation() );
+            throw new BuildException("You must specify a destdir for phpdoc.", $this->getLocation());
         }
         if (!$this->output) {
-            throw new BuildException( "You must specify an output format for phpdoc (e.g. HTML:frames:default).",
-                $this->getLocation() );
+            throw new BuildException("You must specify an output format for phpdoc (e.g. HTML:frames:default).",
+                $this->getLocation());
         }
         if (empty( $this->filesets )) {
-            throw new BuildException( "You have not specified any files to include (<fileset>) for phpdoc.",
-                $this->getLocation() );
+            throw new BuildException("You have not specified any files to include (<fileset>) for phpdoc.",
+                $this->getLocation());
         }
     }
 
@@ -464,12 +464,12 @@ class PhpDocumentorTask extends Task
      *
      * @param PhingPhpDocumentorSetup $phpdoc
      */
-    protected function setPhpDocumentorOptions( PhingPhpDocumentorSetup $phpdoc )
+    protected function setPhpDocumentorOptions(PhingPhpDocumentorSetup $phpdoc)
     {
 
         // Title MUST be set first ... (because it re-initializes the internal state of the PhpDocu renderer)
         if ($this->title) {
-            $phpdoc->setTitle( $this->title );
+            $phpdoc->setTitle($this->title);
         }
 
         if ($this->parsePrivate) {
@@ -485,74 +485,74 @@ class PhpDocumentorTask extends Task
         }
 
         if ($this->destdir) {
-            $phpdoc->setTargetDir( $this->destdir->getAbsolutePath() );
+            $phpdoc->setTargetDir($this->destdir->getAbsolutePath());
         }
 
         if ($this->packages) {
-            $phpdoc->setPackageOutput( $this->packages );
+            $phpdoc->setPackageOutput($this->packages);
         }
 
         if ($this->templateBase) {
-            $phpdoc->setTemplateBase( $this->templateBase->getAbsolutePath() );
+            $phpdoc->setTemplateBase($this->templateBase->getAbsolutePath());
         }
 
         if ($this->linksource) {
-            $phpdoc->setGenerateSourcecode( $this->linksource );
+            $phpdoc->setGenerateSourcecode($this->linksource);
         }
 
         if ($this->examplesDir) {
-            $phpdoc->setExamplesDir( $this->examplesDir->getAbsolutePath() );
+            $phpdoc->setExamplesDir($this->examplesDir->getAbsolutePath());
         }
 
         if ($this->ignoreTags) {
-            $phpdoc->setIgnoreTags( $this->ignoreTags );
+            $phpdoc->setIgnoreTags($this->ignoreTags);
         }
 
         if ($this->defaultPackageName) {
-            $phpdoc->setDefaultPackageName( $this->defaultPackageName );
+            $phpdoc->setDefaultPackageName($this->defaultPackageName);
         }
 
         if ($this->defaultCategoryName) {
-            $phpdoc->setDefaultCategoryName( $this->defaultCategoryName );
+            $phpdoc->setDefaultCategoryName($this->defaultCategoryName);
         }
 
         if ($this->pear) {
-            $phpdoc->setPear( $this->pear );
+            $phpdoc->setPear($this->pear);
         }
 
         if ($this->ignore) {
-            $phpdoc->setIgnore( $this->ignore );
+            $phpdoc->setIgnore($this->ignore);
         }
 
         // append any files in filesets
         $filesToParse = array();
         foreach ($this->filesets as $fs) {
-            $files = $fs->getDirectoryScanner( $this->project )->getIncludedFiles();
+            $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
             foreach ($files as $filename) {
-                $f = new PhingFile( $fs->getDir( $this->project ), $filename );
+                $f = new PhingFile($fs->getDir($this->project), $filename);
                 $filesToParse[] = $f->getAbsolutePath();
             }
         }
         //print_r(implode(",", $filesToParse));
-        $phpdoc->setFilesToParse( implode( ",", $filesToParse ) );
+        $phpdoc->setFilesToParse(implode(",", $filesToParse));
 
         // append any files in filesets
         $ricFiles = array();
         foreach ($this->projDocFilesets as $fs) {
-            $files = $fs->getDirectoryScanner( $this->project )->getIncludedFiles();
+            $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
             foreach ($files as $filename) {
-                $f = new PhingFile( $fs->getDir( $this->project ), $filename );
+                $f = new PhingFile($fs->getDir($this->project), $filename);
                 $ricFiles[] = $f->getName();
             }
         }
-        $phpdoc->setRicFiles( $ricFiles );
+        $phpdoc->setRicFiles($ricFiles);
 
         if ($this->undocumentedelements) {
-            $phpdoc->setUndocumentedelements( $this->undocumentedelements );
+            $phpdoc->setUndocumentedelements($this->undocumentedelements);
         }
 
         if ($this->customtags) {
-            $phpdoc->setCustomtags( $this->customtags );
+            $phpdoc->setCustomtags($this->customtags);
         }
     }
 }

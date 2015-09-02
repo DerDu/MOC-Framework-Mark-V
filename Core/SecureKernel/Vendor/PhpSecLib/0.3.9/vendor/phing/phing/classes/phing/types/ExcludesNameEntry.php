@@ -45,10 +45,10 @@ class ExcludesNameEntry
      *
      * @param string $pattern The file pattern
      */
-    public function addText( $pattern )
+    public function addText($pattern)
     {
 
-        $this->setName( $pattern );
+        $this->setName($pattern);
     }
 
     /**
@@ -67,7 +67,7 @@ class ExcludesNameEntry
      *
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = (string)$name;

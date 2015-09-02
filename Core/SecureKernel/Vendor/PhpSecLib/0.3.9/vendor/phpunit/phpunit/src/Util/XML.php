@@ -27,14 +27,14 @@ class PHPUnit_Util_XML
      * @return string
      * @since  Method available since Release 3.4.6
      */
-    public static function prepareString( $string )
+    public static function prepareString($string)
     {
 
         return preg_replace(
             '/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]/',
             '',
             htmlspecialchars(
-                PHPUnit_Util_String::convertToUtf8( $string ),
+                PHPUnit_Util_String::convertToUtf8($string),
                 ENT_QUOTES,
                 'UTF-8'
             )
@@ -52,12 +52,12 @@ class PHPUnit_Util_XML
      * @return DOMDocument
      * @since  Method available since Release 3.3.0
      */
-    public static function loadFile( $filename, $isHtml = false, $xinclude = false, $strict = false )
+    public static function loadFile($filename, $isHtml = false, $xinclude = false, $strict = false)
     {
 
-        $reporting = error_reporting( 0 );
-        $contents = file_get_contents( $filename );
-        error_reporting( $reporting );
+        $reporting = error_reporting(0);
+        $contents = file_get_contents($filename);
+        error_reporting($reporting);
 
         if ($contents === false) {
             throw new PHPUnit_Framework_Exception(
@@ -68,7 +68,7 @@ class PHPUnit_Util_XML
             );
         }
 
-        return self::load( $contents, $isHtml, $filename, $xinclude, $strict );
+        return self::load($contents, $isHtml, $filename, $xinclude, $strict);
     }
 
     /**
@@ -94,7 +94,7 @@ class PHPUnit_Util_XML
      * @return DOMDocument
      * @since  Method available since Release 3.3.0
      */
-    public static function load( $actual, $isHtml = false, $filename = '', $xinclude = false, $strict = false )
+    public static function load($actual, $isHtml = false, $filename = '', $xinclude = false, $strict = false)
     {
 
         if ($actual instanceof DOMDocument) {
@@ -104,14 +104,14 @@ class PHPUnit_Util_XML
         // Required for XInclude on Windows.
         if ($xinclude) {
             $cwd = getcwd();
-            @chdir( dirname( $filename ) );
+            @chdir(dirname($filename));
         }
 
         $document = new DOMDocument;
 
-        $internal = libxml_use_internal_errors( true );
+        $internal = libxml_use_internal_errors(true);
         $message = '';
-        $reporting = error_reporting( 0 );
+        $reporting = error_reporting(0);
 
         if ('' !== $filename) {
             // Necessary for xinclude
@@ -119,9 +119,9 @@ class PHPUnit_Util_XML
         }
 
         if ($isHtml) {
-            $loaded = $document->loadHTML( $actual );
+            $loaded = $document->loadHTML($actual);
         } else {
-            $loaded = $document->loadXML( $actual );
+            $loaded = $document->loadXML($actual);
         }
 
         if (!$isHtml && $xinclude) {
@@ -132,11 +132,11 @@ class PHPUnit_Util_XML
             $message .= "\n".$error->message;
         }
 
-        libxml_use_internal_errors( $internal );
-        error_reporting( $reporting );
+        libxml_use_internal_errors($internal);
+        error_reporting($reporting);
 
         if ($xinclude) {
-            @chdir( $cwd );
+            @chdir($cwd);
         }
 
         if ($loaded === false || ( $strict && $message !== '' )) {
@@ -149,7 +149,7 @@ class PHPUnit_Util_XML
                     )
                 );
             } else {
-                throw new PHPUnit_Framework_Exception( $message );
+                throw new PHPUnit_Framework_Exception($message);
             }
         }
 
@@ -162,7 +162,7 @@ class PHPUnit_Util_XML
      * @return string
      * @since  Method available since Release 3.4.0
      */
-    public static function nodeToText( DOMNode $node )
+    public static function nodeToText(DOMNode $node)
     {
 
         if ($node->childNodes->length == 1) {
@@ -172,7 +172,7 @@ class PHPUnit_Util_XML
         $result = '';
 
         foreach ($node->childNodes as $childNode) {
-            $result .= $node->ownerDocument->saveXML( $childNode );
+            $result .= $node->ownerDocument->saveXML($childNode);
         }
 
         return $result;
@@ -183,13 +183,13 @@ class PHPUnit_Util_XML
      *
      * @since  Method available since Release 3.3.0
      */
-    public static function removeCharacterDataNodes( DOMNode $node )
+    public static function removeCharacterDataNodes(DOMNode $node)
     {
 
         if ($node->hasChildNodes()) {
             for ($i = $node->childNodes->length - 1; $i >= 0; $i--) {
-                if (( $child = $node->childNodes->item( $i ) ) instanceof DOMCharacterData) {
-                    $node->removeChild( $child );
+                if (( $child = $node->childNodes->item($i) ) instanceof DOMCharacterData) {
+                    $node->removeChild($child);
                 }
             }
         }
@@ -203,7 +203,7 @@ class PHPUnit_Util_XML
      * @return mixed
      * @since  Method available since Release 3.4.0
      */
-    public static function xmlToVariable( DOMElement $element )
+    public static function xmlToVariable(DOMElement $element)
     {
 
         $variable = null;
@@ -212,11 +212,11 @@ class PHPUnit_Util_XML
             case 'array':
                 $variable = array();
 
-                foreach ($element->getElementsByTagName( 'element' ) as $element) {
-                    $value = self::xmlToVariable( $element->childNodes->item( 1 ) );
+                foreach ($element->getElementsByTagName('element') as $element) {
+                    $value = self::xmlToVariable($element->childNodes->item(1));
 
-                    if ($element->hasAttribute( 'key' )) {
-                        $variable[(string)$element->getAttribute( 'key' )] = $value;
+                    if ($element->hasAttribute('key')) {
+                        $variable[(string)$element->getAttribute('key')] = $value;
                     } else {
                         $variable[] = $value;
                     }
@@ -224,20 +224,20 @@ class PHPUnit_Util_XML
                 break;
 
             case 'object':
-                $className = $element->getAttribute( 'class' );
+                $className = $element->getAttribute('class');
 
                 if ($element->hasChildNodes()) {
-                    $arguments = $element->childNodes->item( 1 )->childNodes;
+                    $arguments = $element->childNodes->item(1)->childNodes;
                     $constructorArgs = array();
 
                     foreach ($arguments as $argument) {
                         if ($argument instanceof DOMElement) {
-                            $constructorArgs[] = self::xmlToVariable( $argument );
+                            $constructorArgs[] = self::xmlToVariable($argument);
                         }
                     }
 
-                    $class = new ReflectionClass( $className );
-                    $variable = $class->newInstanceArgs( $constructorArgs );
+                    $class = new ReflectionClass($className);
+                    $variable = $class->newInstanceArgs($constructorArgs);
                 } else {
                     $variable = new $className;
                 }
@@ -252,7 +252,7 @@ class PHPUnit_Util_XML
             case 'string':
                 $variable = $element->nodeValue;
 
-                settype( $variable, $element->tagName );
+                settype($variable, $element->tagName);
                 break;
         }
 
@@ -279,12 +279,12 @@ class PHPUnit_Util_XML
      * @return bool|array
      * @since  Method available since Release 3.3.0
      */
-    public static function cssSelect( $selector, $content, $actual, $isHtml = true )
+    public static function cssSelect($selector, $content, $actual, $isHtml = true)
     {
 
-        $matcher = self::convertSelectToTag( $selector, $content );
-        $dom = self::load( $actual, $isHtml );
-        $tags = self::findNodes( $dom, $matcher, $isHtml );
+        $matcher = self::convertSelectToTag($selector, $content);
+        $dom = self::load($actual, $isHtml);
+        $tags = self::findNodes($dom, $matcher, $isHtml);
 
         return $tags;
     }
@@ -299,13 +299,13 @@ class PHPUnit_Util_XML
      * @return array
      * @since  Method available since Release 3.3.0
      */
-    public static function convertSelectToTag( $selector, $content = true )
+    public static function convertSelectToTag($selector, $content = true)
     {
 
-        $selector = trim( preg_replace( "/\s+/", ' ', $selector ) );
+        $selector = trim(preg_replace("/\s+/", ' ', $selector));
 
         // substitute spaces within attribute value
-        while (preg_match( '/\[[^\]]+"[^"]+\s[^"]+"\]/', $selector )) {
+        while (preg_match('/\[[^\]]+"[^"]+\s[^"]+"\]/', $selector)) {
             $selector = preg_replace(
                 '/(\[[^\]]+"[^"]+)\s([^"]+"\])/',
                 '$1__SPACE__$2',
@@ -313,33 +313,33 @@ class PHPUnit_Util_XML
             );
         }
 
-        if (strstr( $selector, ' ' )) {
-            $elements = explode( ' ', $selector );
+        if (strstr($selector, ' ')) {
+            $elements = explode(' ', $selector);
         } else {
-            $elements = array( $selector );
+            $elements = array($selector);
         }
 
         $previousTag = array();
 
-        foreach (array_reverse( $elements ) as $element) {
-            $element = str_replace( '__SPACE__', ' ', $element );
+        foreach (array_reverse($elements) as $element) {
+            $element = str_replace('__SPACE__', ' ', $element);
 
             // child selector
             if ($element == '>') {
-                $previousTag = array( 'child' => $previousTag['descendant'] );
+                $previousTag = array('child' => $previousTag['descendant']);
                 continue;
             }
 
             // adjacent-sibling selector
             if ($element == '+') {
-                $previousTag = array( 'adjacent-sibling' => $previousTag['descendant'] );
+                $previousTag = array('adjacent-sibling' => $previousTag['descendant']);
                 continue;
             }
 
             $tag = array();
 
             // match element tag
-            preg_match( "/^([^\.#\[]*)/", $element, $eltMatches );
+            preg_match("/^([^\.#\[]*)/", $element, $eltMatches);
 
             if (!empty( $eltMatches[1] )) {
                 $tag['tag'] = $eltMatches[1];
@@ -359,29 +359,29 @@ class PHPUnit_Util_XML
 
                 foreach ($matches[1] as $match) {
                     // id matched
-                    if (substr( $match, 0, 1 ) == '#') {
-                        $tag['id'] = substr( $match, 1 );
+                    if (substr($match, 0, 1) == '#') {
+                        $tag['id'] = substr($match, 1);
                     } // class matched
-                    elseif (substr( $match, 0, 1 ) == '.') {
-                        $classes[] = substr( $match, 1 );
+                    elseif (substr($match, 0, 1) == '.') {
+                        $classes[] = substr($match, 1);
                     } // attribute matched
-                    elseif (substr( $match, 0, 1 ) == '[' &&
-                        substr( $match, -1, 1 ) == ']'
+                    elseif (substr($match, 0, 1) == '[' &&
+                        substr($match, -1, 1) == ']'
                     ) {
-                        $attribute = substr( $match, 1, strlen( $match ) - 2 );
-                        $attribute = str_replace( '"', '', $attribute );
+                        $attribute = substr($match, 1, strlen($match) - 2);
+                        $attribute = str_replace('"', '', $attribute);
 
                         // match single word
-                        if (strstr( $attribute, '~=' )) {
-                            list( $key, $value ) = explode( '~=', $attribute );
+                        if (strstr($attribute, '~=')) {
+                            list( $key, $value ) = explode('~=', $attribute);
                             $value = "regexp:/.*\b$value\b.*/";
                         } // match substring
-                        elseif (strstr( $attribute, '*=' )) {
-                            list( $key, $value ) = explode( '*=', $attribute );
+                        elseif (strstr($attribute, '*=')) {
+                            list( $key, $value ) = explode('*=', $attribute);
                             $value = "regexp:/.*$value.*/";
                         } // exact match
                         else {
-                            list( $key, $value ) = explode( '=', $attribute );
+                            list( $key, $value ) = explode('=', $attribute);
                         }
 
                         $attrs[$key] = $value;
@@ -389,7 +389,7 @@ class PHPUnit_Util_XML
                 }
 
                 if ($classes) {
-                    $tag['class'] = implode( ' ', $classes );
+                    $tag['class'] = implode(' ', $classes);
                 }
 
                 if ($attrs) {
@@ -398,7 +398,7 @@ class PHPUnit_Util_XML
             }
 
             // tag content
-            if (is_string( $content )) {
+            if (is_string($content)) {
                 $tag['content'] = $content;
             }
 
@@ -412,7 +412,7 @@ class PHPUnit_Util_XML
                 unset( $tag['content'] );
             }
 
-            $previousTag = array( 'descendant' => $tag );
+            $previousTag = array('descendant' => $tag);
         }
 
         return $tag;
@@ -428,7 +428,7 @@ class PHPUnit_Util_XML
      * @return array
      * @since  Method available since Release 3.3.0
      */
-    public static function findNodes( DOMDocument $dom, array $options, $isHtml = true )
+    public static function findNodes(DOMDocument $dom, array $options, $isHtml = true)
     {
 
         $valid = array(
@@ -446,7 +446,7 @@ class PHPUnit_Util_XML
         );
 
         $filtered = array();
-        $options = self::assertValidKeys( $options, $valid );
+        $options = self::assertValidKeys($options, $valid);
 
         // find the element by id
         if ($options['id']) {
@@ -465,7 +465,7 @@ class PHPUnit_Util_XML
                     $options['tag']
                 );
             } else {
-                $elements = $dom->getElementsByTagName( $options['tag'] );
+                $elements = $dom->getElementsByTagName($options['tag']);
             }
 
             foreach ($elements as $element) {
@@ -600,7 +600,7 @@ class PHPUnit_Util_XML
                         $tag
                     );
                 } else {
-                    $elements = $dom->getElementsByTagName( $tag );
+                    $elements = $dom->getElementsByTagName($tag);
                 }
 
                 foreach ($elements as $element) {
@@ -620,8 +620,8 @@ class PHPUnit_Util_XML
 
                 foreach ($options['attributes'] as $name => $value) {
                     // match by regexp if like "regexp:/foo/i"
-                    if (preg_match( '/^regexp\s*:\s*(.*)/i', $value, $matches )) {
-                        if (!preg_match( $matches[1], $node->getAttribute( $name ) )) {
+                    if (preg_match('/^regexp\s*:\s*(.*)/i', $value, $matches)) {
+                        if (!preg_match($matches[1], $node->getAttribute($name))) {
                             $invalid = true;
                         }
                     } // class can match only a part
@@ -629,23 +629,23 @@ class PHPUnit_Util_XML
                         // split to individual classes
                         $findClasses = explode(
                             ' ',
-                            preg_replace( "/\s+/", ' ', $value )
+                            preg_replace("/\s+/", ' ', $value)
                         );
 
                         $allClasses = explode(
                             ' ',
-                            preg_replace( "/\s+/", ' ', $node->getAttribute( $name ) )
+                            preg_replace("/\s+/", ' ', $node->getAttribute($name))
                         );
 
                         // make sure each class given is in the actual node
                         foreach ($findClasses as $findClass) {
-                            if (!in_array( $findClass, $allClasses )) {
+                            if (!in_array($findClass, $allClasses)) {
                                 $invalid = true;
                             }
                         }
                     } // match by exact string
                     else {
-                        if ($node->getAttribute( $name ) != $value) {
+                        if ($node->getAttribute($name) != $value) {
                             $invalid = true;
                         }
                     }
@@ -671,17 +671,17 @@ class PHPUnit_Util_XML
                 $invalid = false;
 
                 // match by regexp if like "regexp:/foo/i"
-                if (preg_match( '/^regexp\s*:\s*(.*)/i', $options['content'], $matches )) {
-                    if (!preg_match( $matches[1], self::getNodeText( $node ) )) {
+                if (preg_match('/^regexp\s*:\s*(.*)/i', $options['content'], $matches)) {
+                    if (!preg_match($matches[1], self::getNodeText($node))) {
                         $invalid = true;
                     }
                 } // match empty string
                 elseif ($options['content'] === '') {
-                    if (self::getNodeText( $node ) !== '') {
+                    if (self::getNodeText($node) !== '') {
                         $invalid = true;
                     }
                 } // match by exact string
-                elseif (strstr( self::getNodeText( $node ), $options['content'] ) === false) {
+                elseif (strstr(self::getNodeText($node), $options['content']) === false) {
                     $invalid = true;
                 }
 
@@ -700,7 +700,7 @@ class PHPUnit_Util_XML
 
         // filter by parent node
         if ($options['parent']) {
-            $parentNodes = self::findNodes( $dom, $options['parent'], $isHtml );
+            $parentNodes = self::findNodes($dom, $options['parent'], $isHtml);
             $parentNode = isset( $parentNodes[0] ) ? $parentNodes[0] : null;
 
             foreach ($nodes as $node) {
@@ -721,7 +721,7 @@ class PHPUnit_Util_XML
 
         // filter by child node
         if ($options['child']) {
-            $childNodes = self::findNodes( $dom, $options['child'], $isHtml );
+            $childNodes = self::findNodes($dom, $options['child'], $isHtml);
             $childNodes = !empty( $childNodes ) ? $childNodes : array();
 
             foreach ($nodes as $node) {
@@ -744,7 +744,7 @@ class PHPUnit_Util_XML
 
         // filter by adjacent-sibling
         if ($options['adjacent-sibling']) {
-            $adjacentSiblingNodes = self::findNodes( $dom, $options['adjacent-sibling'], $isHtml );
+            $adjacentSiblingNodes = self::findNodes($dom, $options['adjacent-sibling'], $isHtml);
             $adjacentSiblingNodes = !empty( $adjacentSiblingNodes ) ? $adjacentSiblingNodes : array();
 
             foreach ($nodes as $node) {
@@ -776,7 +776,7 @@ class PHPUnit_Util_XML
 
         // filter by ancestor
         if ($options['ancestor']) {
-            $ancestorNodes = self::findNodes( $dom, $options['ancestor'], $isHtml );
+            $ancestorNodes = self::findNodes($dom, $options['ancestor'], $isHtml);
             $ancestorNode = isset( $ancestorNodes[0] ) ? $ancestorNodes[0] : null;
 
             foreach ($nodes as $node) {
@@ -801,11 +801,11 @@ class PHPUnit_Util_XML
 
         // filter by descendant
         if ($options['descendant']) {
-            $descendantNodes = self::findNodes( $dom, $options['descendant'], $isHtml );
+            $descendantNodes = self::findNodes($dom, $options['descendant'], $isHtml);
             $descendantNodes = !empty( $descendantNodes ) ? $descendantNodes : array();
 
             foreach ($nodes as $node) {
-                foreach (self::getDescendants( $node ) as $descendant) {
+                foreach (self::getDescendants($node) as $descendant) {
                     foreach ($descendantNodes as $descendantNode) {
                         if ($descendantNode === $descendant) {
                             $filtered[] = $node;
@@ -824,7 +824,7 @@ class PHPUnit_Util_XML
 
         // filter by children
         if ($options['children']) {
-            $validChild = array( 'count', 'greater_than', 'less_than', 'only' );
+            $validChild = array('count', 'greater_than', 'less_than', 'only');
             $childOptions = self::assertValidKeys(
                 $options['children'],
                 $validChild
@@ -845,26 +845,26 @@ class PHPUnit_Util_XML
                 if (!empty( $children )) {
                     // exact count of children
                     if ($childOptions['count'] !== null) {
-                        if (count( $children ) !== $childOptions['count']) {
+                        if (count($children) !== $childOptions['count']) {
                             break;
                         }
                     } // range count of children
                     elseif ($childOptions['less_than'] !== null &&
                         $childOptions['greater_than'] !== null
                     ) {
-                        if (count( $children ) >= $childOptions['less_than'] ||
-                            count( $children ) <= $childOptions['greater_than']
+                        if (count($children) >= $childOptions['less_than'] ||
+                            count($children) <= $childOptions['greater_than']
                         ) {
                             break;
                         }
                     } // less than a given count
                     elseif ($childOptions['less_than'] !== null) {
-                        if (count( $children ) >= $childOptions['less_than']) {
+                        if (count($children) >= $childOptions['less_than']) {
                             break;
                         }
                     } // more than a given count
                     elseif ($childOptions['greater_than'] !== null) {
-                        if (count( $children ) <= $childOptions['greater_than']) {
+                        if (count($children) <= $childOptions['greater_than']) {
                             break;
                         }
                     }
@@ -918,7 +918,7 @@ class PHPUnit_Util_XML
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.3.0
      */
-    public static function assertValidKeys( array $hash, array $validKeys )
+    public static function assertValidKeys(array $hash, array $validKeys)
     {
 
         $valids = array();
@@ -926,21 +926,21 @@ class PHPUnit_Util_XML
         // Normalize validation keys so that we can use both indexed and
         // associative arrays.
         foreach ($validKeys as $key => $val) {
-            is_int( $key ) ? $valids[$val] = null : $valids[$key] = $val;
+            is_int($key) ? $valids[$val] = null : $valids[$key] = $val;
         }
 
-        $validKeys = array_keys( $valids );
+        $validKeys = array_keys($valids);
 
         // Check for invalid keys.
         foreach ($hash as $key => $value) {
-            if (!in_array( $key, $validKeys )) {
+            if (!in_array($key, $validKeys)) {
                 $unknown[] = $key;
             }
         }
 
         if (!empty( $unknown )) {
             throw new PHPUnit_Framework_Exception(
-                'Unknown key(s): '.implode( ', ', $unknown )
+                'Unknown key(s): '.implode(', ', $unknown)
             );
         }
 
@@ -963,13 +963,13 @@ class PHPUnit_Util_XML
      * @return DOMNodeList
      * @since  Method available since Release 3.4.0
      */
-    protected static function getElementsByCaseInsensitiveTagName( DOMDocument $dom, $tag )
+    protected static function getElementsByCaseInsensitiveTagName(DOMDocument $dom, $tag)
     {
 
-        $elements = $dom->getElementsByTagName( strtolower( $tag ) );
+        $elements = $dom->getElementsByTagName(strtolower($tag));
 
         if ($elements->length == 0) {
-            $elements = $dom->getElementsByTagName( strtoupper( $tag ) );
+            $elements = $dom->getElementsByTagName(strtoupper($tag));
         }
 
         return $elements;
@@ -983,7 +983,7 @@ class PHPUnit_Util_XML
      * @return string
      * @since  Method available since Release 3.3.0
      */
-    protected static function getNodeText( DOMNode $node )
+    protected static function getNodeText(DOMNode $node)
     {
 
         if (!$node->childNodes instanceof DOMNodeList) {
@@ -996,13 +996,13 @@ class PHPUnit_Util_XML
             if ($childNode->nodeType === XML_TEXT_NODE ||
                 $childNode->nodeType === XML_CDATA_SECTION_NODE
             ) {
-                $result .= trim( $childNode->data ).' ';
+                $result .= trim($childNode->data).' ';
             } else {
-                $result .= self::getNodeText( $childNode );
+                $result .= self::getNodeText($childNode);
             }
         }
 
-        return str_replace( '  ', ' ', $result );
+        return str_replace('  ', ' ', $result);
     }
 
     /**
@@ -1013,7 +1013,7 @@ class PHPUnit_Util_XML
      * @return array
      * @since  Method available since Release 3.3.0
      */
-    protected static function getDescendants( DOMNode $node )
+    protected static function getDescendants(DOMNode $node)
     {
 
         $allChildren = array();
@@ -1026,8 +1026,8 @@ class PHPUnit_Util_XML
                 continue;
             }
 
-            $children = self::getDescendants( $child );
-            $allChildren = array_merge( $allChildren, $children, array( $child ) );
+            $children = self::getDescendants($child);
+            $allChildren = array_merge($allChildren, $children, array($child));
         }
 
         return isset( $allChildren ) ? $allChildren : array();

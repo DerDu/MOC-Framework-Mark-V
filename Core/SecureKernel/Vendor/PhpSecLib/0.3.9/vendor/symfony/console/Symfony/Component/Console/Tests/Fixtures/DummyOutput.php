@@ -28,9 +28,9 @@ class DummyOutput extends BufferedOutput
     {
 
         $logs = array();
-        foreach (explode( "\n", trim( $this->fetch() ) ) as $message) {
-            preg_match( '/^\[(.*)\] (.*)/', $message, $matches );
-            $logs[] = sprintf( '%s %s', $matches[1], $matches[2] );
+        foreach (explode("\n", trim($this->fetch())) as $message) {
+            preg_match('/^\[(.*)\] (.*)/', $message, $matches);
+            $logs[] = sprintf('%s %s', $matches[1], $matches[2]);
         }
 
         return $logs;

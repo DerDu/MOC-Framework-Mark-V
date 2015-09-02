@@ -14,8 +14,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (is_file( dirname( __FILE__ ).'/../CodeSniffer.php' ) === true) {
-    include_once dirname( __FILE__ ).'/../CodeSniffer.php';
+if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer.php';
 } else {
     include_once 'PHP/CodeSniffer.php';
 }
@@ -86,7 +86,7 @@ class PHP_CodeSniffer_Reporting
      *
      * @return void
      */
-    public function cacheFileReport( PHP_CodeSniffer_File $phpcsFile, array $cliValues )
+    public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
     {
 
         if (isset( $cliValues['reports'] ) === false) {
@@ -95,15 +95,15 @@ class PHP_CodeSniffer_Reporting
             return;
         }
 
-        $reportData = $this->prepareFileReport( $phpcsFile );
+        $reportData = $this->prepareFileReport($phpcsFile);
         $errorsShown = false;
 
         foreach ($cliValues['reports'] as $report => $output) {
-            $reportClass = $this->factory( $report );
+            $reportClass = $this->factory($report);
 
             ob_start();
-            $result = $reportClass->generateFileReport( $reportData, $cliValues['showSources'],
-                $cliValues['reportWidth'] );
+            $result = $reportClass->generateFileReport($reportData, $cliValues['showSources'],
+                $cliValues['reportWidth']);
             if ($result === true) {
                 $errorsShown = true;
             }
@@ -121,7 +121,7 @@ class PHP_CodeSniffer_Reporting
                     $this->_tmpFiles[$report] = tmpfile();
                 }
 
-                fwrite( $this->_tmpFiles[$report], $generatedReport );
+                fwrite($this->_tmpFiles[$report], $generatedReport);
             } else {
                 $flags = FILE_APPEND;
                 if (isset( $this->_cachedReports[$report] ) === false) {
@@ -129,7 +129,7 @@ class PHP_CodeSniffer_Reporting
                     $flags = null;
                 }
 
-                file_put_contents( $output, $generatedReport, $flags );
+                file_put_contents($output, $generatedReport, $flags);
             }
         }//end foreach
 
@@ -150,7 +150,7 @@ class PHP_CodeSniffer_Reporting
      *
      * @return array
      */
-    public function prepareFileReport( PHP_CodeSniffer_File $phpcsFile )
+    public function prepareFileReport(PHP_CodeSniffer_File $phpcsFile)
     {
 
         $report = array(
@@ -169,7 +169,7 @@ class PHP_CodeSniffer_Reporting
 
         // Merge errors and warnings.
         foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
-            if (is_array( $lineErrors ) === false) {
+            if (is_array($lineErrors) === false) {
                 continue;
             }
 
@@ -187,11 +187,11 @@ class PHP_CodeSniffer_Reporting
                 $errors[$line][$column] = $newErrors;
             }//end foreach
 
-            ksort( $errors[$line] );
+            ksort($errors[$line]);
         }//end foreach
 
         foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
-            if (is_array( $lineWarnings ) === false) {
+            if (is_array($lineWarnings) === false) {
                 continue;
             }
 
@@ -220,10 +220,10 @@ class PHP_CodeSniffer_Reporting
                 }
             }//end foreach
 
-            ksort( $errors[$line] );
+            ksort($errors[$line]);
         }//end foreach
 
-        ksort( $errors );
+        ksort($errors);
         $report['messages'] = $errors;
         return $report;
 
@@ -237,23 +237,23 @@ class PHP_CodeSniffer_Reporting
      * @return PHP_CodeSniffer_Report
      * @throws PHP_CodeSniffer_Exception If report is not available.
      */
-    public function factory( $type )
+    public function factory($type)
     {
 
-        $type = ucfirst( $type );
+        $type = ucfirst($type);
         if (isset( $this->_reports[$type] ) === true) {
             return $this->_reports[$type];
         }
 
         $filename = $type.'.php';
         $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
-        if (class_exists( $reportClassName, true ) === false) {
-            throw new PHP_CodeSniffer_Exception( 'Report type "'.$type.'" not found.' );
+        if (class_exists($reportClassName, true) === false) {
+            throw new PHP_CodeSniffer_Exception('Report type "'.$type.'" not found.');
         }
 
         $reportClass = new $reportClassName();
         if (false === ( $reportClass instanceof PHP_CodeSniffer_Report )) {
-            throw new PHP_CodeSniffer_Exception( 'Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer_Report" interface.' );
+            throw new PHP_CodeSniffer_Exception('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer_Report" interface.');
         }
 
         $this->_reports[$type] = $reportClass;
@@ -278,24 +278,24 @@ class PHP_CodeSniffer_Reporting
         $reportWidth = 80
     ) {
 
-        $reportClass = $this->factory( $report );
+        $reportClass = $this->factory($report);
 
         if ($reportFile !== null) {
             $filename = $reportFile;
             $toScreen = false;
             ob_start();
 
-            if (file_exists( $filename ) === true) {
-                $reportCache = file_get_contents( $filename );
+            if (file_exists($filename) === true) {
+                $reportCache = file_get_contents($filename);
             } else {
                 $reportCache = '';
             }
         } else {
             if (isset( $this->_tmpFiles[$report] ) === true) {
-                $data = stream_get_meta_data( $this->_tmpFiles[$report] );
+                $data = stream_get_meta_data($this->_tmpFiles[$report]);
                 $filename = $data['uri'];
-                $reportCache = file_get_contents( $filename );
-                fclose( $this->_tmpFiles[$report] );
+                $reportCache = file_get_contents($filename);
+                fclose($this->_tmpFiles[$report]);
             } else {
                 $reportCache = '';
                 $filename = null;
@@ -322,11 +322,11 @@ class PHP_CodeSniffer_Reporting
                 echo $generatedReport;
             }
 
-            $generatedReport = trim( $generatedReport );
-            file_put_contents( $reportFile, $generatedReport.PHP_EOL );
+            $generatedReport = trim($generatedReport);
+            file_put_contents($reportFile, $generatedReport.PHP_EOL);
         } else {
-            if ($filename !== null && file_exists( $filename ) === true) {
-                unlink( $filename );
+            if ($filename !== null && file_exists($filename) === true) {
+                unlink($filename);
             }
         }
 

@@ -8,6 +8,6 @@ class Foo4Command extends Command
     protected function configure()
     {
 
-        $this->setName( 'foo3:bar:toh' );
+        $this->setName('foo3:bar:toh');
     }
 }

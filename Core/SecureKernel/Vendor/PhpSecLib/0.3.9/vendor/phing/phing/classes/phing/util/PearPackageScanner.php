@@ -41,8 +41,8 @@ class PearPackageScanner extends DirectoryScanner
         @include_once 'PEAR/Config.php';
         @include_once 'PEAR/PackageFile.php';
 
-        if (!class_exists( 'PEAR_Config' )) {
-            throw new BuildException( __CLASS__." requires PEAR to be installed" );
+        if (!class_exists('PEAR_Config')) {
+            throw new BuildException(__CLASS__." requires PEAR to be installed");
         }
     }
 
@@ -55,10 +55,10 @@ class PearPackageScanner extends DirectoryScanner
      * @throws BuildException
      * @return void
      */
-    public function setDescFile( $descfile )
+    public function setDescFile($descfile)
     {
 
-        if ($descfile != '' && !file_exists( $descfile )) {
+        if ($descfile != '' && !file_exists($descfile)) {
             throw new BuildException(
                 'PEAR package xml file "'.$descfile.'" does not exist'
             );
@@ -74,7 +74,7 @@ class PearPackageScanner extends DirectoryScanner
      *
      * @return void
      */
-    public function setPackage( $package )
+    public function setPackage($package)
     {
 
         $this->package = $package;
@@ -87,7 +87,7 @@ class PearPackageScanner extends DirectoryScanner
      *
      * @return void
      */
-    public function setChannel( $channel )
+    public function setChannel($channel)
     {
 
         $this->channel = $channel;
@@ -101,11 +101,11 @@ class PearPackageScanner extends DirectoryScanner
      * @throws BuildException
      * @return void
      */
-    public function setConfig( $config )
+    public function setConfig($config)
     {
 
         if ($config != '') {
-            if (!file_exists( $config )) {
+            if (!file_exists($config)) {
                 throw new BuildException(
                     'PEAR configuration file "'.$config.'" does not exist'
                 );
@@ -118,7 +118,7 @@ class PearPackageScanner extends DirectoryScanner
                 $config = 'pear.ini';
             }
             $config = PEAR_CONFIG_DEFAULT_BIN_DIR.DIRECTORY_SEPARATOR.$config;
-            if (!file_exists( $config )) {
+            if (!file_exists($config)) {
                 // cannot find a pear local installation
                 $config = '';
             }
@@ -140,11 +140,11 @@ class PearPackageScanner extends DirectoryScanner
      * We do not verify the role against a hardcoded list since that
      * would break packages with additional roles.
      */
-    public function setRole( $role )
+    public function setRole($role)
     {
 
         if ($role == '' && $this->packageFile == '') {
-            throw new BuildException( 'A non-empty role is required' );
+            throw new BuildException('A non-empty role is required');
         }
 
         $this->role = $role;
@@ -173,7 +173,7 @@ class PearPackageScanner extends DirectoryScanner
 
         if ($this->includes === null) {
             // No includes supplied, so set it to 'matches all'
-            $this->includes = array( "**" );
+            $this->includes = array("**");
         }
         if ($this->excludes === null) {
             $this->excludes = array();
@@ -199,22 +199,22 @@ class PearPackageScanner extends DirectoryScanner
                 $file = $att['install-as'];
             } else {
                 if (isset( $att['baseinstalldir'] )) {
-                    $file = ltrim( $att['baseinstalldir'].'/'.$file, '/' );
+                    $file = ltrim($att['baseinstalldir'].'/'.$file, '/');
                 }
             }
-            $file = str_replace( '/', DIRECTORY_SEPARATOR, $file );
+            $file = str_replace('/', DIRECTORY_SEPARATOR, $file);
 
-            if ($this->isIncluded( $file )) {
+            if ($this->isIncluded($file)) {
 
-                if ($this->isExcluded( $file )) {
+                if ($this->isExcluded($file)) {
                     $this->everythingIncluded = false;
-                    if (@is_dir( $file )) {
+                    if (@is_dir($file)) {
                         $this->dirsExcluded[] = $file;
                     } else {
                         $this->filesExcluded[] = $file;
                     }
                 } else {
-                    if (@is_dir( $file )) {
+                    if (@is_dir($file)) {
                         $this->dirsIncluded[] = $file;
                     } else {
                         $this->filesIncluded[] = $file;
@@ -225,7 +225,7 @@ class PearPackageScanner extends DirectoryScanner
                 }
             } else {
                 $this->everythingIncluded = false;
-                if (@is_dir( $file )) {
+                if (@is_dir($file)) {
                     $this->dirsNotIncluded[] = $file;
                 } else {
                     $this->filesNotIncluded[] = $file;
@@ -233,18 +233,18 @@ class PearPackageScanner extends DirectoryScanner
             }
         }
 
-        if (count( $this->filesIncluded ) > 0) {
+        if (count($this->filesIncluded) > 0) {
             if (empty( $this->packageFile )) {
                 $att = $list[$origFirstFile];
                 $base_dir = substr(
                     $att['installed_as'],
                     0,
-                    -strlen( $this->filesIncluded[0] )
+                    -strlen($this->filesIncluded[0])
                 );
             } else {
-                $base_dir = dirname( $this->packageFile );
+                $base_dir = dirname($this->packageFile);
             }
-            $this->setBaseDir( $base_dir );
+            $this->setBaseDir($base_dir);
         }
 
         return true;
@@ -275,12 +275,12 @@ class PearPackageScanner extends DirectoryScanner
     protected function loadPackageInfo()
     {
 
-        $config = PEAR_Config::singleton( $this->config );
+        $config = PEAR_Config::singleton($this->config);
 
         if (empty( $this->packageFile )) {
             // loads informations from PEAR package installed
             $reg = $config->getRegistry();
-            if (!$reg->packageExists( $this->package, $this->channel )) {
+            if (!$reg->packageExists($this->package, $this->channel)) {
                 throw new BuildException(
                     sprintf(
                         'PEAR package %s/%s does not exist',
@@ -289,15 +289,15 @@ class PearPackageScanner extends DirectoryScanner
                     )
                 );
             }
-            $packageInfo = $reg->getPackage( $this->package, $this->channel );
+            $packageInfo = $reg->getPackage($this->package, $this->channel);
         } else {
             // loads informations from PEAR package XML description file
-            PEAR::staticPushErrorHandling( PEAR_ERROR_RETURN );
-            $pkg = new PEAR_PackageFile( $config );
-            $packageInfo = $pkg->fromPackageFile( $this->packageFile, PEAR_VALIDATE_NORMAL );
+            PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
+            $pkg = new PEAR_PackageFile($config);
+            $packageInfo = $pkg->fromPackageFile($this->packageFile, PEAR_VALIDATE_NORMAL);
             PEAR::staticPopErrorHandling();
-            if (PEAR::isError( $packageInfo )) {
-                throw new BuildException( "Errors in package file: ".$packageInfo->getMessage() );
+            if (PEAR::isError($packageInfo)) {
+                throw new BuildException("Errors in package file: ".$packageInfo->getMessage());
             }
         }
 

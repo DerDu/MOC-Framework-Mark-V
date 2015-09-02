@@ -55,10 +55,10 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $test_name
      */
-    public function paintCaseStart( $test_name )
+    public function paintCaseStart($test_name)
     {
 
-        parent::paintCaseStart( $test_name );
+        parent::paintCaseStart($test_name);
 
         $this->inner = "";
     }
@@ -66,10 +66,10 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $test_name
      */
-    public function paintCaseEnd( $test_name )
+    public function paintCaseEnd($test_name)
     {
 
-        parent::paintCaseEnd( $test_name );
+        parent::paintCaseEnd($test_name);
 
         $sb = "";
         /* Only count suites where more than one test was run */
@@ -82,8 +82,8 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
             $sb .= " sec\n";
 
             if ($this->out != null) {
-                $this->out->write( $sb );
-                $this->out->write( $this->inner );
+                $this->out->write($sb);
+                $this->out->write($this->inner);
             }
         }
     }
@@ -91,19 +91,19 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $message
      */
-    public function paintError( $message )
+    public function paintError($message)
     {
 
-        parent::paintError( $message );
+        parent::paintError($message);
 
-        $this->formatError( "ERROR", $message );
+        $this->formatError("ERROR", $message);
     }
 
     /**
      * @param $type
      * @param $message
      */
-    private function formatError( $type, $message )
+    private function formatError($type, $message)
     {
 
         $this->inner .= $this->getTestName()." ".$type."\n";
@@ -113,11 +113,11 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $message
      */
-    public function paintFail( $message )
+    public function paintFail($message)
     {
 
-        parent::paintFail( $message );
+        parent::paintFail($message);
 
-        $this->formatError( "FAILED", $message );
+        $this->formatError("FAILED", $message);
     }
 }

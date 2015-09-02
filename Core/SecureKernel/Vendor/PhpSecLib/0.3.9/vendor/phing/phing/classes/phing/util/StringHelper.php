@@ -32,10 +32,10 @@ class StringHelper
 {
 
     /** @var array */
-    private static $TRUE_VALUES = array( "on", "true", "t", "yes" );
+    private static $TRUE_VALUES = array("on", "true", "t", "yes");
 
     /** @var array */
-    private static $FALSE_VALUES = array( "off", "false", "f", "no" );
+    private static $FALSE_VALUES = array("off", "false", "f", "no");
 
     /**
      * Replaces identifier tokens with corresponding text values in passed string.
@@ -46,13 +46,13 @@ class StringHelper
      *
      * @return string
      */
-    public static function multiply( $strings, $tokens, $replacements )
+    public static function multiply($strings, $tokens, $replacements)
     {
 
         $strings = (array)$strings;
         $results = array();
         foreach ($strings as $string) {
-            $results[] = str_replace( $tokens, $replacements, $string );
+            $results[] = str_replace($tokens, $replacements, $string);
         }
 
         return $results;
@@ -67,15 +67,15 @@ class StringHelper
      *
      * @return string
      */
-    public static function unqualify( $qualifiedName, $separator = '.' )
+    public static function unqualify($qualifiedName, $separator = '.')
     {
 
         // if false, then will be 0
-        $pos = strrpos( $qualifiedName, $separator );
+        $pos = strrpos($qualifiedName, $separator);
         if ($pos === false) {
             return $qualifiedName; // there is no '.' in the qualifed name
         } else {
-            return substr( $qualifiedName, $pos + 1 ); // start just after '.'
+            return substr($qualifiedName, $pos + 1); // start just after '.'
         }
     }
 
@@ -90,11 +90,11 @@ class StringHelper
      *
      * @deprecated
      */
-    public static function toCharArray( $str )
+    public static function toCharArray($str)
     {
 
         $ret = array();
-        $len = strlen( $str );
+        $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
             $ret[] = $str{$i};
         }
@@ -111,14 +111,14 @@ class StringHelper
      *
      * @return string
      */
-    public static function qualifier( $qualifiedName, $seperator = '.' )
+    public static function qualifier($qualifiedName, $seperator = '.')
     {
 
-        $pos = strrchr( $qualifiedName, $seperator );
+        $pos = strrchr($qualifiedName, $seperator);
         if ($pos === false) {
             return '';
         } else {
-            return substr( $qualifiedName, 0, $pos );
+            return substr($qualifiedName, 0, $pos);
         }
     }
 
@@ -128,7 +128,7 @@ class StringHelper
      *
      * @return array  String[]
      */
-    public static function prefix( $columns, $prefix )
+    public static function prefix($columns, $prefix)
     {
 
         if ($prefix == null) {
@@ -148,12 +148,12 @@ class StringHelper
      *
      * @return string
      */
-    public static function root( $qualifiedName, $separator = '.' )
+    public static function root($qualifiedName, $separator = '.')
     {
 
-        $loc = strpos( $qualifiedName, $separator );
+        $loc = strpos($qualifiedName, $separator);
 
-        return ( $loc === false ) ? $qualifiedName : substr( $qualifiedName, 0, $loc );
+        return ( $loc === false ) ? $qualifiedName : substr($qualifiedName, 0, $loc);
     }
 
     /**
@@ -161,10 +161,10 @@ class StringHelper
      *
      * @return int
      */
-    public static function hashCode( $string )
+    public static function hashCode($string)
     {
 
-        return crc32( $string );
+        return crc32($string);
     }
 
     /**
@@ -172,16 +172,16 @@ class StringHelper
      *
      * @return boolean
      */
-    public static function booleanValue( $s )
+    public static function booleanValue($s)
     {
 
-        if (is_bool( $s )) {
+        if (is_bool($s)) {
             return $s; // it's already boolean (not a string)
         }
         // otherwise assume it's something like "true" or "t"
-        $trimmed = strtolower( trim( $s ) );
+        $trimmed = strtolower(trim($s));
 
-        return (boolean)in_array( $trimmed, self::$TRUE_VALUES );
+        return (boolean)in_array($trimmed, self::$TRUE_VALUES);
     }
 
     /**
@@ -191,20 +191,20 @@ class StringHelper
      *
      * @return bool
      */
-    public static function isBoolean( $s )
+    public static function isBoolean($s)
     {
 
-        if (is_bool( $s )) {
+        if (is_bool($s)) {
             return true; // it already is boolean
         }
 
-        if ($s === "" || $s === null || !is_string( $s )) {
+        if ($s === "" || $s === null || !is_string($s)) {
             return false; // not a valid string for testing
         }
 
-        $test = trim( strtolower( $s ) );
+        $test = trim(strtolower($s));
 
-        return (boolean)in_array( $test, array_merge( self::$FALSE_VALUES, self::$TRUE_VALUES ) );
+        return (boolean)in_array($test, array_merge(self::$FALSE_VALUES, self::$TRUE_VALUES));
     }
 
     /**
@@ -217,7 +217,7 @@ class StringHelper
 
         $args = func_get_args();
 
-        return serialize( $args );
+        return serialize($args);
     }
 
     /**
@@ -228,13 +228,13 @@ class StringHelper
      *
      * @return bool
      */
-    public static function startsWith( $check, $string )
+    public static function startsWith($check, $string)
     {
 
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return ( strpos( $string, $check ) === 0 ) ? true : false;
+            return ( strpos($string, $check) === 0 ) ? true : false;
         }
     }
 
@@ -246,13 +246,13 @@ class StringHelper
      *
      * @return bool
      */
-    public static function endsWith( $check, $string )
+    public static function endsWith($check, $string)
     {
 
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return ( strpos( strrev( $string ), strrev( $check ) ) === 0 ) ? true : false;
+            return ( strpos(strrev($string), strrev($check)) === 0 ) ? true : false;
         }
     }
 
@@ -266,16 +266,16 @@ class StringHelper
      *
      * @return string
      */
-    public static function substring( $string, $startpos, $endpos = -1 )
+    public static function substring($string, $startpos, $endpos = -1)
     {
 
-        $len = strlen( $string );
+        $len = strlen($string);
         $endpos = (int)( ( $endpos === -1 ) ? $len - 1 : $endpos );
         if ($startpos > $len - 1 || $startpos < 0) {
-            trigger_error( "substring(), Startindex out of bounds must be 0<n<$len", E_USER_ERROR );
+            trigger_error("substring(), Startindex out of bounds must be 0<n<$len", E_USER_ERROR);
         }
         if ($endpos > $len - 1 || $endpos < $startpos) {
-            trigger_error( "substring(), Endindex out of bounds must be $startpos<n<".( $len - 1 ), E_USER_ERROR );
+            trigger_error("substring(), Endindex out of bounds must be $startpos<n<".( $len - 1 ), E_USER_ERROR);
         }
         if ($startpos === $endpos) {
             return (string)$string{$startpos};
@@ -283,7 +283,7 @@ class StringHelper
             $len = $endpos - $startpos;
         }
 
-        return substr( $string, $startpos, $len + 1 );
+        return substr($string, $startpos, $len + 1);
     }
 
     /**
@@ -293,15 +293,15 @@ class StringHelper
      *
      * @return bool|int
      */
-    public static function isSlotVar( $value )
+    public static function isSlotVar($value)
     {
 
-        $value = trim( $value );
+        $value = trim($value);
         if ($value === "") {
             return false;
         }
 
-        return preg_match( '/^%\{([\w\.\-]+)\}$/', $value );
+        return preg_match('/^%\{([\w\.\-]+)\}$/', $value);
     }
 
     /**
@@ -311,9 +311,9 @@ class StringHelper
      *
      * @return string Extracted name part.
      */
-    public static function slotVar( $var )
+    public static function slotVar($var)
     {
 
-        return trim( $var, '%{} ' );
+        return trim($var, '%{} ');
     }
 }

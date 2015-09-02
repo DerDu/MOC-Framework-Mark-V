@@ -20,15 +20,15 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getParseTests
      */
-    public function testParse( $comment, $expected )
+    public function testParse($comment, $expected)
     {
 
         $parser = new DocBlockParser();
 
-        $this->assertEquals( $this->createDocblock( $expected ), $parser->parse( $comment ) );
+        $this->assertEquals($this->createDocblock($expected), $parser->parse($comment));
     }
 
-    private function createDocblock( array $elements )
+    private function createDocblock(array $elements)
     {
 
         $docblock = new DocBlockNode();
@@ -36,17 +36,17 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
             switch ($key) {
                 case 'tags':
                     foreach ($value as $tag => $value) {
-                        if (!is_array( $value )) {
-                            $value = array( $value );
+                        if (!is_array($value)) {
+                            $value = array($value);
                         }
                         foreach ($value as $v) {
-                            $docblock->addTag( $tag, $v );
+                            $docblock->addTag($tag, $v);
                         }
                     }
                     break;
                 default:
                     $method = 'set'.$key;
-                    $docblock->$method( $value );
+                    $docblock->$method($value);
             }
         }
 
@@ -70,11 +70,11 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
                  * The short desc.
                  */
                 ',
-                array( 'shortdesc' => 'The short desc.' ),
+                array('shortdesc' => 'The short desc.'),
             ),
             array(
                 '/** The short desc. */',
-                array( 'shortdesc' => 'The short desc.' ),
+                array('shortdesc' => 'The short desc.'),
             ),
             array(
                 '
@@ -83,7 +83,7 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
                  * lines.
                  */
                 ',
-                array( 'shortdesc' => 'The short desc on two lines.' ),
+                array('shortdesc' => 'The short desc on two lines.'),
             ),
             array(
                 '
@@ -93,7 +93,7 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
                  * And a long desc.
                  */
                 ',
-                array( 'shortdesc' => 'The short desc.', 'longdesc' => 'And a long desc.' ),
+                array('shortdesc' => 'The short desc.', 'longdesc' => 'And a long desc.'),
             ),
             array(
                 '
@@ -129,7 +129,7 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
                  * @see http://symfony.com/
                  */
                 ',
-                array( 'tags' => array( 'see' => 'http://symfony.com/' ) ),
+                array('tags' => array('see' => 'http://symfony.com/')),
             ),
             array(
                 '
@@ -137,7 +137,7 @@ class DocBlockParserTest extends \PHPUnit_Framework_TestCase
                  * @author fabien@example.com
                  */
                 ',
-                array( 'tags' => array( 'author' => 'fabien@example.com' ) ),
+                array('tags' => array('author' => 'fabien@example.com')),
             ),
             array(
                 '

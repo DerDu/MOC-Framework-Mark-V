@@ -14,7 +14,7 @@ class PHPParser_Node_Stmt_ElseIf extends PHPParser_Node_Stmt
      * @param PHPParser_Node[]    $stmts      Statements
      * @param array               $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Expr $cond, array $stmts = array(), array $attributes = array() )
+    public function __construct(PHPParser_Node_Expr $cond, array $stmts = array(), array $attributes = array())
     {
 
         parent::__construct(

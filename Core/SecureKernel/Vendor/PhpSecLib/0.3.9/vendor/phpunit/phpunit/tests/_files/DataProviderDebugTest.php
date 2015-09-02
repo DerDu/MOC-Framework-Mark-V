@@ -1,6 +1,8 @@
 <?php
+
 class DataProviderDebugTest extends PHPUnit_Framework_TestCase
 {
+
     public static function provider()
     {
 

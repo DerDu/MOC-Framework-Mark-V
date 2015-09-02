@@ -1,9 +1,11 @@
 <?php
+
 /**
  * Represents foo.
  */
 class Foo
 {
+
 }
 
 /**

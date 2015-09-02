@@ -35,10 +35,10 @@ class SummaryPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    public function endTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
 
-        parent::endTestSuite( $suite );
+        parent::endTestSuite($suite);
     }
 
     public function endTestRun()
@@ -51,10 +51,10 @@ class SummaryPHPUnitResultFormatter extends PHPUnitResultFormatter
         $sb .= ", Errors: ".$this->getErrorCount();
         $sb .= ", Incomplete: ".$this->getIncompleteCount();
         $sb .= ", Skipped: ".$this->getSkippedCount();
-        $sb .= ", Time elapsed: ".sprintf( '%0.5f', $this->getElapsedTime() )." s\n";
+        $sb .= ", Time elapsed: ".sprintf('%0.5f', $this->getElapsedTime())." s\n";
 
         if ($this->out != null) {
-            $this->out->write( $sb );
+            $this->out->write($sb);
             $this->out->close();
         }
     }

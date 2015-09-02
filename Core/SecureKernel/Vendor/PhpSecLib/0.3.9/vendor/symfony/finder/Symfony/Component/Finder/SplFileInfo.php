@@ -29,10 +29,10 @@ class SplFileInfo extends \SplFileInfo
      * @param string $relativePath     The relative path
      * @param string $relativePathname The relative path name
      */
-    public function __construct( $file, $relativePath, $relativePathname )
+    public function __construct($file, $relativePath, $relativePathname)
     {
 
-        parent::__construct( $file );
+        parent::__construct($file);
         $this->relativePath = $relativePath;
         $this->relativePathname = $relativePathname;
     }
@@ -69,12 +69,12 @@ class SplFileInfo extends \SplFileInfo
     public function getContents()
     {
 
-        $level = error_reporting( 0 );
-        $content = file_get_contents( $this->getPathname() );
-        error_reporting( $level );
+        $level = error_reporting(0);
+        $content = file_get_contents($this->getPathname());
+        error_reporting($level);
         if (false === $content) {
             $error = error_get_last();
-            throw new \RuntimeException( $error['message'] );
+            throw new \RuntimeException($error['message']);
         }
 
         return $content;

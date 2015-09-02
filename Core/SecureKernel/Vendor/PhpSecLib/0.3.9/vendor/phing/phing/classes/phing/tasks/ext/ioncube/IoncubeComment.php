@@ -44,9 +44,9 @@ class IoncubeComment
     /**
      * @param $txt
      */
-    public function addText( $txt )
+    public function addText($txt)
     {
 
-        $this->value = trim( $txt );
+        $this->value = trim($txt);
     }
 }

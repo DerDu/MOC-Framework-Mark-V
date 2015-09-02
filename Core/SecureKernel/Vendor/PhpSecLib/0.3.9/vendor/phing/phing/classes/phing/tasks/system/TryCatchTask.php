@@ -53,18 +53,18 @@ class TryCatchTask extends Task
         $exc = null;
 
         if (empty( $this->tryContainer )) {
-            throw new BuildException( 'A nested <try> element is required' );
+            throw new BuildException('A nested <try> element is required');
         }
 
         try {
             $this->tryContainer->perform();
-        } catch( BuildException $e ) {
+        } catch (BuildException $e) {
             if (!empty( $this->propertyName )) {
-                $this->project->setProperty( $this->propertyName, $e->getMessage() );
+                $this->project->setProperty($this->propertyName, $e->getMessage());
             }
 
             if (!empty( $this->referenceName )) {
-                $this->project->addReference( $this->referenceName, $e );
+                $this->project->addReference($this->referenceName, $e);
             }
 
             if (!empty( $this->catchContainer )) {
@@ -89,7 +89,7 @@ class TryCatchTask extends Task
      *
      * @param string $property
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->propertyName = (string)$property;
@@ -103,7 +103,7 @@ class TryCatchTask extends Task
      *
      * @return void
      */
-    public function setReference( $reference )
+    public function setReference($reference)
     {
 
         $this->referenceName = $reference;
@@ -114,7 +114,7 @@ class TryCatchTask extends Task
      *
      * @param SequentialTask $container
      */
-    public function addTry( SequentialTask $container )
+    public function addTry(SequentialTask $container)
     {
 
         $this->tryContainer = $container;
@@ -125,7 +125,7 @@ class TryCatchTask extends Task
      *
      * @param SequentialTask $container
      */
-    public function addCatch( SequentialTask $container )
+    public function addCatch(SequentialTask $container)
     {
 
         $this->catchContainer = $container;
@@ -136,7 +136,7 @@ class TryCatchTask extends Task
      *
      * @param SequentialTask $container
      */
-    public function addFinally( SequentialTask $container )
+    public function addFinally(SequentialTask $container)
     {
 
         $this->finallyContainer = $container;

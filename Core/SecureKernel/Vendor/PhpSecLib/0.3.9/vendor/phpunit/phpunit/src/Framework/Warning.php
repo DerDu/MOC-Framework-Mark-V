@@ -44,11 +44,11 @@ class PHPUnit_Framework_Warning extends PHPUnit_Framework_TestCase
     /**
      * @param string $message
      */
-    public function __construct( $message = '' )
+    public function __construct($message = '')
     {
 
         $this->message = $message;
-        parent::__construct( 'Warning' );
+        parent::__construct('Warning');
     }
 
     /**
@@ -79,6 +79,6 @@ class PHPUnit_Framework_Warning extends PHPUnit_Framework_TestCase
     protected function runTest()
     {
 
-        $this->fail( $this->message );
+        $this->fail($this->message);
     }
 }

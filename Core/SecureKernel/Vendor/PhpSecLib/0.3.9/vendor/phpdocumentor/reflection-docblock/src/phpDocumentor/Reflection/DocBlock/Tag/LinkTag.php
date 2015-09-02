@@ -43,15 +43,15 @@ class LinkTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        parent::setContent( $content );
-        $parts = preg_split( '/\s+/Su', $this->description, 2 );
+        parent::setContent($content);
+        $parts = preg_split('/\s+/Su', $this->description, 2);
 
         $this->link = $parts[0];
 
-        $this->setDescription( isset( $parts[1] ) ? $parts[1] : $parts[0] );
+        $this->setDescription(isset( $parts[1] ) ? $parts[1] : $parts[0]);
 
         $this->content = $content;
         return $this;
@@ -75,7 +75,7 @@ class LinkTag extends Tag
      *
      * @return $this
      */
-    public function setLink( $link )
+    public function setLink($link)
     {
 
         $this->link = $link;

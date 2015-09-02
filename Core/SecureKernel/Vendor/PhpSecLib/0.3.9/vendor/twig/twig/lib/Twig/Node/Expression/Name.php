@@ -19,37 +19,37 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
         '_charset' => '$this->env->getCharset()',
     );
 
-    public function __construct( $name, $lineno )
+    public function __construct($name, $lineno)
     {
 
-        parent::__construct( array(), array(
+        parent::__construct(array(), array(
             'name'                => $name,
             'is_defined_test'     => false,
             'ignore_strict_check' => false,
             'always_defined'      => false
-        ), $lineno );
+        ), $lineno);
     }
 
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $name = $this->getAttribute( 'name' );
+        $name = $this->getAttribute('name');
 
-        $compiler->addDebugInfo( $this );
+        $compiler->addDebugInfo($this);
 
-        if ($this->getAttribute( 'is_defined_test' )) {
+        if ($this->getAttribute('is_defined_test')) {
             if ($this->isSpecial()) {
-                $compiler->repr( true );
+                $compiler->repr(true);
             } else {
-                $compiler->raw( 'array_key_exists(' )->repr( $name )->raw( ', $context)' );
+                $compiler->raw('array_key_exists(')->repr($name)->raw(', $context)');
             }
         } elseif ($this->isSpecial()) {
-            $compiler->raw( $this->specialVars[$name] );
-        } elseif ($this->getAttribute( 'always_defined' )) {
+            $compiler->raw($this->specialVars[$name]);
+        } elseif ($this->getAttribute('always_defined')) {
             $compiler
-                ->raw( '$context[' )
-                ->string( $name )
-                ->raw( ']' );
+                ->raw('$context[')
+                ->string($name)
+                ->raw(']');
         } else {
             // remove the non-PHP 5.4 version when PHP 5.3 support is dropped
             // as the non-optimized version is just a workaround for slow ternary operator
@@ -57,28 +57,28 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
             if (PHP_VERSION_ID >= 50400) {
                 // PHP 5.4 ternary operator performance was optimized
                 $compiler
-                    ->raw( '(isset($context[' )
-                    ->string( $name )
-                    ->raw( ']) ? $context[' )
-                    ->string( $name )
-                    ->raw( '] : ' );
+                    ->raw('(isset($context[')
+                    ->string($name)
+                    ->raw(']) ? $context[')
+                    ->string($name)
+                    ->raw('] : ');
 
-                if ($this->getAttribute( 'ignore_strict_check' ) || !$compiler->getEnvironment()->isStrictVariables()) {
-                    $compiler->raw( 'null)' );
+                if ($this->getAttribute('ignore_strict_check') || !$compiler->getEnvironment()->isStrictVariables()) {
+                    $compiler->raw('null)');
                 } else {
-                    $compiler->raw( '$this->getContext($context, ' )->string( $name )->raw( '))' );
+                    $compiler->raw('$this->getContext($context, ')->string($name)->raw('))');
                 }
             } else {
                 $compiler
-                    ->raw( '$this->getContext($context, ' )
-                    ->string( $name );
+                    ->raw('$this->getContext($context, ')
+                    ->string($name);
 
-                if ($this->getAttribute( 'ignore_strict_check' )) {
-                    $compiler->raw( ', true' );
+                if ($this->getAttribute('ignore_strict_check')) {
+                    $compiler->raw(', true');
                 }
 
                 $compiler
-                    ->raw( ')' );
+                    ->raw(')');
             }
         }
     }
@@ -86,12 +86,12 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
     public function isSpecial()
     {
 
-        return isset( $this->specialVars[$this->getAttribute( 'name' )] );
+        return isset( $this->specialVars[$this->getAttribute('name')] );
     }
 
     public function isSimple()
     {
 
-        return !$this->isSpecial() && !$this->getAttribute( 'is_defined_test' );
+        return !$this->isSpecial() && !$this->getAttribute('is_defined_test');
     }
 }

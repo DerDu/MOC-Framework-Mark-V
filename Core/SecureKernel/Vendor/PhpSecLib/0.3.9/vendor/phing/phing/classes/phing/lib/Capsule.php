@@ -62,12 +62,12 @@ class Capsule
      *
      * @return void
      */
-    public function clear( $which = null )
+    public function clear($which = null)
     {
 
         if ($which === null) {
             $this->vars = array();
-        } elseif (is_array( $which )) {
+        } elseif (is_array($which)) {
             foreach ($which as $var) {
                 unset( $this->vars[$var] );
             }
@@ -92,10 +92,10 @@ class Capsule
      *
      * @param string $v
      */
-    public function setTemplatePath( $v )
+    public function setTemplatePath($v)
     {
 
-        $this->templatePath = rtrim( $v, DIRECTORY_SEPARATOR.'/' );
+        $this->templatePath = rtrim($v, DIRECTORY_SEPARATOR.'/');
     }
 
     /**
@@ -114,10 +114,10 @@ class Capsule
      *
      * @param string $v
      */
-    public function setOutputDirectory( $v )
+    public function setOutputDirectory($v)
     {
 
-        $this->outputDirectory = rtrim( $v, DIRECTORY_SEPARATOR.'/' );
+        $this->outputDirectory = rtrim($v, DIRECTORY_SEPARATOR.'/');
     }
 
     /**
@@ -131,7 +131,7 @@ class Capsule
      * @return string    The "parsed" template output.
      * @throws Exception - if template not found.
      */
-    public function parse( $template, $outputFile = null, $append = false )
+    public function parse($template, $outputFile = null, $append = false)
     {
 
         // main work done right here:
@@ -139,8 +139,8 @@ class Capsule
         ob_start();
 
         try {
-            $this->display( $template );
-        } catch( Exception $e ) {
+            $this->display($template);
+        } catch (Exception $e) {
             ob_end_flush(); // flush the output on error (so we can see up to what point it parsed everything)
             throw $e;
         }
@@ -149,15 +149,15 @@ class Capsule
         ob_end_clean();
 
         if ($outputFile !== null) {
-            $outputFile = $this->resolvePath( $outputFile, $this->outputDirectory );
+            $outputFile = $this->resolvePath($outputFile, $this->outputDirectory);
 
             $flags = null;
             if ($append) {
                 $flags = FILE_APPEND;
             }
 
-            if (!file_put_contents( $outputFile, $output, $flags ) && $output != "") {
-                throw new Exception( "Unable to write output to ".$outputFile );
+            if (!file_put_contents($outputFile, $output, $flags) && $output != "") {
+                throw new Exception("Unable to write output to ".$outputFile);
             }
         }
 
@@ -173,7 +173,7 @@ class Capsule
      * @return void
      * @throws Exception - if template cannot be found
      */
-    public function display( $__template )
+    public function display($__template)
     {
 
         // Prepend "private" variable names with $__ in this function
@@ -183,26 +183,26 @@ class Capsule
         $generator = $this;
 
         if (isset( $this->vars['this'] )) {
-            throw new Exception( "Assigning a variable named \$this to a context conflicts with class namespace." );
+            throw new Exception("Assigning a variable named \$this to a context conflicts with class namespace.");
         }
 
         // extract variables into local namespace
-        extract( $this->vars );
+        extract($this->vars);
 
         // prepend template path to include path,
         // so that include "path/relative/to/templates"; can be used within templates
-        $__old_inc_path = ini_get( 'include_path' );
-        ini_set( 'include_path', $this->templatePath.PATH_SEPARATOR.$__old_inc_path );
+        $__old_inc_path = ini_get('include_path');
+        ini_set('include_path', $this->templatePath.PATH_SEPARATOR.$__old_inc_path);
 
-        @ini_set( 'track_errors', true );
+        @ini_set('track_errors', true);
         include $__template;
-        @ini_restore( 'track_errors' );
+        @ini_restore('track_errors');
 
         // restore the include path
-        ini_set( 'include_path', $__old_inc_path );
+        ini_set('include_path', $__old_inc_path);
 
         if (!empty( $php_errormsg )) {
-            throw new Exception( "Unable to parse template ".$__template.": ".$php_errormsg );
+            throw new Exception("Unable to parse template ".$__template.": ".$php_errormsg);
         }
     }
 
@@ -214,7 +214,7 @@ class Capsule
      *
      * @return string "Best guess" path for this file.
      */
-    protected function resolvePath( $file, $basepath )
+    protected function resolvePath($file, $basepath)
     {
 
         if (!( $file{0} == DIRECTORY_SEPARATOR || $file{0} == '/' )
@@ -236,7 +236,7 @@ class Capsule
      *
      * @return mixed
      */
-    public function get( $name )
+    public function get($name)
     {
 
         if (!isset( $this->vars[$name] )) {
@@ -261,13 +261,13 @@ class Capsule
      *
      * @return void
      */
-    public function putAll( $vars, $recursiveMerge = false )
+    public function putAll($vars, $recursiveMerge = false)
     {
 
         if ($recursiveMerge) {
-            $this->vars = array_merge_recursive( $this->vars, $vars );
+            $this->vars = array_merge_recursive($this->vars, $vars);
         } else {
-            $this->vars = array_merge( $this->vars, $vars );
+            $this->vars = array_merge($this->vars, $vars);
         }
     }
 
@@ -279,7 +279,7 @@ class Capsule
      * @param string $name
      * @param mixed  $value
      */
-    public function put( $name, $value )
+    public function put($name, $value)
     {
 
         $this->vars[$name] = $value;
@@ -293,7 +293,7 @@ class Capsule
      * @param $name
      * @param &$value
      */
-    public function putRef( $name, &$value )
+    public function putRef($name, &$value)
     {
 
         $this->vars[$name] = &$value;
@@ -307,10 +307,10 @@ class Capsule
      * @param string $name
      * @param mixed  $value
      */
-    public function putCopy( $name, $value )
+    public function putCopy($name, $value)
     {
 
-        if (is_object( $value )) {
+        if (is_object($value)) {
             $value = clone $value;
         }
         $this->vars[$name] = $value;

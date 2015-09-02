@@ -35,7 +35,7 @@ class MySource_Sniffs_Objects_DisallowNewWidgetSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_NEW );
+        return array(T_NEW);
 
     }//end register()
 
@@ -49,21 +49,21 @@ class MySource_Sniffs_Objects_DisallowNewWidgetSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $className = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $className = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($tokens[$className]['code'] !== T_STRING) {
             return;
         }
 
-        if (substr( strtolower( $tokens[$className]['content'] ), -10 ) === 'widgettype') {
-            $widgetType = substr( $tokens[$className]['content'], 0, -10 );
+        if (substr(strtolower($tokens[$className]['content']), -10) === 'widgettype') {
+            $widgetType = substr($tokens[$className]['content'], 0, -10);
             $error = 'Manual creation of widget objects is banned; use Widget::getWidget(\'%s\'); instead';
-            $data = array( $widgetType );
-            $phpcsFile->addError( $error, $stackPtr, 'Found', $data );
+            $data = array($widgetType);
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

@@ -19,7 +19,7 @@ class PHPParser_Node_Expr_Include extends PHPParser_Node_Expr
      * @param int                 $type       Type of include
      * @param array               $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Expr $expr, $type, array $attributes = array() )
+    public function __construct(PHPParser_Node_Expr $expr, $type, array $attributes = array())
     {
 
         parent::__construct(

@@ -19,10 +19,10 @@
 class Twig_Node_Spaceless extends Twig_Node
 {
 
-    public function __construct( Twig_NodeInterface $body, $lineno, $tag = 'spaceless' )
+    public function __construct(Twig_NodeInterface $body, $lineno, $tag = 'spaceless')
     {
 
-        parent::__construct( array( 'body' => $body ), array(), $lineno, $tag );
+        parent::__construct(array('body' => $body), array(), $lineno, $tag);
     }
 
     /**
@@ -30,13 +30,13 @@ class Twig_Node_Spaceless extends Twig_Node
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->addDebugInfo( $this )
-            ->write( "ob_start();\n" )
-            ->subcompile( $this->getNode( 'body' ) )
-            ->write( "echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));\n" );
+            ->addDebugInfo($this)
+            ->write("ob_start();\n")
+            ->subcompile($this->getNode('body'))
+            ->write("echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));\n");
     }
 }

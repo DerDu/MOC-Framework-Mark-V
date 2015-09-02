@@ -35,7 +35,7 @@ class Generic_Sniffs_PHP_ClosingPHPTagSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -49,13 +49,13 @@ class Generic_Sniffs_PHP_ClosingPHPTagSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $closeTag = $phpcsFile->findNext( T_CLOSE_TAG, $stackPtr );
+        $closeTag = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
         if ($closeTag === false) {
             $error = 'The PHP open tag does not have a corresponding PHP close tag';
-            $phpcsFile->addError( $error, $stackPtr, 'NotFound' );
+            $phpcsFile->addError($error, $stackPtr, 'NotFound');
         }
 
     }//end process()

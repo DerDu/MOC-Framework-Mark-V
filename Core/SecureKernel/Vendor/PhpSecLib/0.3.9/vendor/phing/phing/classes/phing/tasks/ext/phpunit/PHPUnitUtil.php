@@ -39,12 +39,12 @@ class PHPUnitUtil
      *
      * @return string the name of the package
      */
-    public static function getPackageName( $classname )
+    public static function getPackageName($classname)
     {
 
-        $reflect = new ReflectionClass( $classname );
+        $reflect = new ReflectionClass($classname);
 
-        if (method_exists( $reflect, 'getNamespaceName' )) {
+        if (method_exists($reflect, 'getNamespaceName')) {
             $namespace = $reflect->getNamespaceName();
 
             if ($namespace != '') {
@@ -52,7 +52,7 @@ class PHPUnitUtil
             }
         }
 
-        if (preg_match( '/@package[\s]+([\.\w]+)/', $reflect->getDocComment(), $matches )) {
+        if (preg_match('/@package[\s]+([\.\w]+)/', $reflect->getDocComment(), $matches)) {
             return $matches[1];
         }
 
@@ -68,12 +68,12 @@ class PHPUnitUtil
      * @author Benjamin Schultz <bschultz@proqrent.de>
      * @return string|null the name of the subpackage
      */
-    public static function getSubpackageName( $classname )
+    public static function getSubpackageName($classname)
     {
 
-        $reflect = new ReflectionClass( $classname );
+        $reflect = new ReflectionClass($classname);
 
-        if (preg_match( '/@subpackage[\s]+([\.\w]+)/', $reflect->getDocComment(), $matches )) {
+        if (preg_match('/@subpackage[\s]+([\.\w]+)/', $reflect->getDocComment(), $matches)) {
             return $matches[1];
         } else {
             return null;
@@ -89,15 +89,15 @@ class PHPUnitUtil
      *
      * @return string the name fo the class
      */
-    public static function getClassFromFileName( $filename )
+    public static function getClassFromFileName($filename)
     {
 
-        $filename = basename( $filename );
+        $filename = basename($filename);
 
-        $rpos = strrpos( $filename, '.' );
+        $rpos = strrpos($filename, '.');
 
         if ($rpos != -1) {
-            $filename = substr( $filename, 0, $rpos );
+            $filename = substr($filename, 0, $rpos);
         }
 
         return $filename;
@@ -112,29 +112,29 @@ class PHPUnitUtil
      * @internal param optional $Path classpath
      * @return array list of classes defined in the file
      */
-    public static function getDefinedClasses( $filename, $classpath = null )
+    public static function getDefinedClasses($filename, $classpath = null)
     {
 
-        $filename = realpath( $filename );
+        $filename = realpath($filename);
 
-        if (!file_exists( $filename )) {
-            throw new Exception( "File '".$filename."' does not exist" );
+        if (!file_exists($filename)) {
+            throw new Exception("File '".$filename."' does not exist");
         }
 
         if (isset( self::$definedClasses[$filename] )) {
             return self::$definedClasses[$filename];
         }
 
-        Phing::__import( $filename, $classpath );
+        Phing::__import($filename, $classpath);
 
         $declaredClasses = get_declared_classes();
 
         foreach ($declaredClasses as $classname) {
-            $reflect = new ReflectionClass( $classname );
+            $reflect = new ReflectionClass($classname);
 
             self::$definedClasses[$reflect->getFilename()][] = $classname;
 
-            if (is_array( self::$definedClasses[$reflect->getFilename()] )) {
+            if (is_array(self::$definedClasses[$reflect->getFilename()])) {
                 self::$definedClasses[$reflect->getFilename()] = array_unique(
                     self::$definedClasses[$reflect->getFilename()]
                 );

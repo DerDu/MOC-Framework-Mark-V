@@ -233,9 +233,10 @@ class OperationTest extends \Guzzle\Tests\GuzzleTestCase
                 'test_function' => array('type' => 'string', 'filters' => __CLASS__.'::strtoupper')
             ),
             'errorResponses' => array(
-                array('code'   => 503,
-                      'reason' => 'InsufficientCapacity',
-                      'class'  => 'Guzzle\\Exception\\RuntimeException'
+                array(
+                    'code'   => 503,
+                    'reason' => 'InsufficientCapacity',
+                    'class'  => 'Guzzle\\Exception\\RuntimeException'
                 )
             )
         ));

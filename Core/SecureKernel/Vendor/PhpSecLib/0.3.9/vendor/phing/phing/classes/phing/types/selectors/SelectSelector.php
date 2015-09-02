@@ -74,7 +74,7 @@ class SelectSelector extends AndSelector
     private function getRef()
     {
 
-        $o = $this->getCheckedRef( get_class( $this ), "SelectSelector" );
+        $o = $this->getCheckedRef(get_class($this), "SelectSelector");
 
         return $o;
     }
@@ -86,14 +86,14 @@ class SelectSelector extends AndSelector
      *
      * @return \an|array
      */
-    public function getSelectors( Project $p )
+    public function getSelectors(Project $p)
     {
 
         if ($this->isReference()) {
-            return $this->getRef()->getSelectors( $p );
+            return $this->getRef()->getSelectors($p);
         }
 
-        return parent::getSelectors( $p );
+        return parent::getSelectors($p);
     }
 
     /**
@@ -118,13 +118,13 @@ class SelectSelector extends AndSelector
      * @internal param the $selector new selector to add
      * @return the selector that was added
      */
-    public function appendSelector( FileSelector $selector )
+    public function appendSelector(FileSelector $selector)
     {
 
         if ($this->isReference()) {
             throw $this->noChildrenAllowed();
         }
-        parent::appendSelector( $selector );
+        parent::appendSelector($selector);
     }
 
     /**

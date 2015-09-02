@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'Squiz_Sniffs_Commenting_FunctionCommentSniff', true ) === false) {
+if (class_exists('Squiz_Sniffs_Commenting_FunctionCommentSniff', true) === false) {
     $error = 'Class Squiz_Sniffs_Commenting_FunctionCommentSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -43,7 +43,7 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
      *
      * @return void
      */
-    protected function processUnknownTags( $commentStart, $commentEnd )
+    protected function processUnknownTags($commentStart, $commentEnd)
     {
 
         $unknownTags = $this->commentParser->getUnknown();
@@ -57,7 +57,7 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                     // We've come across an API tag already, which means
                     // we were not the first tag in the API list.
                     $error = 'The @api tag must come first in the @api tag list in a function comment';
-                    $this->currentFile->addError( $error, ( $commentStart + $errorTag['line'] ), 'ApiNotFirst' );
+                    $this->currentFile->addError($error, ( $commentStart + $errorTag['line'] ), 'ApiNotFirst');
                 }
 
                 $hasApiTag = true;
@@ -65,31 +65,31 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                 // There needs to be a blank line before the @api tag.
                 // So expect a single space before the tag, then 2 newlines before
                 // that, then some content.
-                if (trim( $words[( $pos - 2 )] ) !== ''
-                    || strpos( $words[( $pos - 2 )], $this->currentFile->eolChar ) === false
-                    || strpos( $words[( $pos - 3 )], $this->currentFile->eolChar ) === false
-                    || trim( $words[( $pos - 4 )] ) === ''
+                if (trim($words[( $pos - 2 )]) !== ''
+                    || strpos($words[( $pos - 2 )], $this->currentFile->eolChar) === false
+                    || strpos($words[( $pos - 3 )], $this->currentFile->eolChar) === false
+                    || trim($words[( $pos - 4 )]) === ''
                 ) {
                     $error = 'There must be one blank line before the @api tag in a function comment';
-                    $this->currentFile->addError( $error, ( $commentStart + $errorTag['line'] ), 'ApiSpacing' );
+                    $this->currentFile->addError($error, ( $commentStart + $errorTag['line'] ), 'ApiSpacing');
                 }
             } else {
-                if (substr( $errorTag['tag'], 0, 4 ) === 'api-') {
+                if (substr($errorTag['tag'], 0, 4) === 'api-') {
                     $hasApiTag = true;
 
-                    $tagLength = strlen( $errorTag['tag'] );
+                    $tagLength = strlen($errorTag['tag']);
                     if ($tagLength > $apiLength) {
                         $apiLength = $tagLength;
                     }
 
-                    if (trim( $words[( $pos - 2 )] ) !== ''
-                        || strpos( $words[( $pos - 2 )], $this->currentFile->eolChar ) === false
-                        || trim( $words[( $pos - 3 )] ) === ''
+                    if (trim($words[( $pos - 2 )]) !== ''
+                        || strpos($words[( $pos - 2 )], $this->currentFile->eolChar) === false
+                        || trim($words[( $pos - 3 )]) === ''
                     ) {
                         $error = 'There must be no blank line before the @%s tag in a function comment';
-                        $data = array( $errorTag['tag'] );
-                        $this->currentFile->addError( $error, ( $commentStart + $errorTag['line'] ), 'ApiTagSpacing',
-                            $data );
+                        $data = array($errorTag['tag']);
+                        $this->currentFile->addError($error, ( $commentStart + $errorTag['line'] ), 'ApiTagSpacing',
+                            $data);
                     }
                 }
             }//end if
@@ -98,21 +98,21 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
         if ($hasApiTag === true) {
             // API tags must be the last tags in a function comment.
             $order = $this->commentParser->getTagOrders();
-            $lastTag = array_pop( $order );
+            $lastTag = array_pop($order);
             if ($lastTag !== 'api'
-                && substr( $lastTag, 0, 4 ) !== 'api-'
+                && substr($lastTag, 0, 4) !== 'api-'
             ) {
                 $error = 'The @api tags must be the last tags in a function comment';
-                $this->currentFile->addError( $error, $commentEnd, 'ApiNotLast' );
+                $this->currentFile->addError($error, $commentEnd, 'ApiNotLast');
             }
 
             // Check API tag indenting.
             foreach ($unknownTags as $errorTag) {
                 if ($errorTag['tag'] === 'api'
-                    || substr( $errorTag['tag'], 0, 4 ) === 'api-'
+                    || substr($errorTag['tag'], 0, 4) === 'api-'
                 ) {
-                    $expected = ( $apiLength - strlen( $errorTag['tag'] ) + 1 );
-                    $found = strlen( $words[( $errorTag['pos'] + 1 )] );
+                    $expected = ( $apiLength - strlen($errorTag['tag']) + 1 );
+                    $found = strlen($words[( $errorTag['pos'] + 1 )]);
                     if ($found !== $expected) {
                         $error = '@%s tag indented incorrectly; expected %s spaces but found %s';
                         $data = array(
@@ -120,8 +120,8 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                             $expected,
                             $found,
                         );
-                        $this->currentFile->addError( $error, ( $commentStart + $errorTag['line'] ), 'ApiTagIndent',
-                            $data );
+                        $this->currentFile->addError($error, ( $commentStart + $errorTag['line'] ), 'ApiTagIndent',
+                            $data);
                     }
                 }
             }

@@ -27,13 +27,13 @@ abstract class AbstractPropertySetterTask extends Task
     private $property;
     private $override = false;
 
-    public function setOverride( $override )
+    public function setOverride($override)
     {
 
         $this->override = $override;
     }
 
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -43,24 +43,24 @@ abstract class AbstractPropertySetterTask extends Task
     {
 
         if ($this->property == null) {
-            throw new BuildException( "You must specify a property to set." );
+            throw new BuildException("You must specify a property to set.");
         }
     }
 
-    protected function setPropertyValue( $value )
+    protected function setPropertyValue($value)
     {
 
         if ($value !== null) {
             if ($this->override) {
-                if ($this->getProject()->getUserProperty( $this->property ) == null) {
-                    $this->getProject()->setProperty( $this->property, $value );
+                if ($this->getProject()->getUserProperty($this->property) == null) {
+                    $this->getProject()->setProperty($this->property, $value);
                 } else {
-                    $this->getProject()->setUserProperty( $this->property, $value );
+                    $this->getProject()->setUserProperty($this->property, $value);
                 }
             } else {
-                $p = $this->project->createTask( "property" );
-                $p->setName( $this->property );
-                $p->setValue( $value );
+                $p = $this->project->createTask("property");
+                $p->setName($this->property);
+                $p->setValue($value);
                 $p->main();
             }
         }

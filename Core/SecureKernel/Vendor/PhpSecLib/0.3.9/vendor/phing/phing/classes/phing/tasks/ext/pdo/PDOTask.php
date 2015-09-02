@@ -73,8 +73,8 @@ abstract class PDOTask extends Task
     public function init()
     {
 
-        if (!class_exists( 'PDO' )) {
-            throw new Exception( "PDOTask depends on PDO feature being included in PHP." );
+        if (!class_exists('PDO')) {
+            throw new Exception("PDOTask depends on PDO feature being included in PHP.");
         }
     }
 
@@ -86,7 +86,7 @@ abstract class PDOTask extends Task
      *
      * @internal param The $autocommit autocommit to set
      */
-    public function setAutocommit( $autocommit )
+    public function setAutocommit($autocommit)
     {
 
         $this->autocommit = $autocommit;
@@ -100,7 +100,7 @@ abstract class PDOTask extends Task
      *
      * @internal param The $version version to set
      */
-    public function setVersion( $version )
+    public function setVersion($version)
     {
 
         $this->version = $version;
@@ -109,7 +109,7 @@ abstract class PDOTask extends Task
     /**
      * @param $value
      */
-    public function isCaching( $value )
+    public function isCaching($value)
     {
 
         $this->caching = $value;
@@ -122,7 +122,7 @@ abstract class PDOTask extends Task
      *
      * @param $enable
      */
-    public function setCaching( $enable )
+    public function setCaching($enable)
     {
 
         $this->caching = $enable;
@@ -159,12 +159,12 @@ abstract class PDOTask extends Task
     {
 
         if ($this->url === null) {
-            throw new BuildException( "Url attribute must be set!", $this->location );
+            throw new BuildException("Url attribute must be set!", $this->location);
         }
 
         try {
 
-            $this->log( "Connecting to ".$this->getUrl(), Project::MSG_VERBOSE );
+            $this->log("Connecting to ".$this->getUrl(), Project::MSG_VERBOSE);
 
             $user = null;
             $pass = null;
@@ -177,12 +177,12 @@ abstract class PDOTask extends Task
                 $pass = $this->getPassword();
             }
 
-            $conn = new PDO( $this->getUrl(), $user, $pass );
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $conn = new PDO($this->getUrl(), $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             try {
-                $conn->setAttribute( PDO::ATTR_AUTOCOMMIT, $this->autocommit );
-            } catch( PDOException $pe ) {
+                $conn->setAttribute(PDO::ATTR_AUTOCOMMIT, $this->autocommit);
+            } catch (PDOException $pe) {
                 $this->log(
                     "Unable to enable auto-commit for this database: ".$pe->getMessage(),
                     Project::MSG_VERBOSE
@@ -191,8 +191,8 @@ abstract class PDOTask extends Task
 
             return $conn;
 
-        } catch( PDOException $e ) {
-            throw new BuildException( $e->getMessage(), $this->location );
+        } catch (PDOException $e) {
+            throw new BuildException($e->getMessage(), $this->location);
         }
 
     }
@@ -215,7 +215,7 @@ abstract class PDOTask extends Task
      *
      * @internal param The $url url to set
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -237,7 +237,7 @@ abstract class PDOTask extends Task
      *
      * @param string $userId
      */
-    public function setUserid( $userId )
+    public function setUserid($userId)
     {
 
         $this->userId = $userId;
@@ -261,7 +261,7 @@ abstract class PDOTask extends Task
      *
      * @internal param The $password password to set
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;

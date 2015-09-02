@@ -13,56 +13,56 @@ class PHPParser_Tests_Builder_InterfaceTest extends PHPUnit_Framework_TestCase
     {
 
         $contract = $this->builder->getNode();
-        $this->assertInstanceOf( 'PHPParser_Node_Stmt_Interface', $contract );
-        $this->assertEquals( 'Contract', $contract->name );
+        $this->assertInstanceOf('PHPParser_Node_Stmt_Interface', $contract);
+        $this->assertEquals('Contract', $contract->name);
     }
 
     public function testExtending()
     {
 
-        $contract = $this->builder->extend( 'Space\Root1', 'Root2' )->getNode();
+        $contract = $this->builder->extend('Space\Root1', 'Root2')->getNode();
         $this->assertEquals(
-            new PHPParser_Node_Stmt_Interface( 'Contract', array(
+            new PHPParser_Node_Stmt_Interface('Contract', array(
                 'extends' => array(
-                    new PHPParser_Node_Name( 'Space\Root1' ),
-                    new PHPParser_Node_Name( 'Root2' )
+                    new PHPParser_Node_Name('Space\Root1'),
+                    new PHPParser_Node_Name('Root2')
                 ),
-            ) ), $contract
+            )), $contract
         );
     }
 
     public function testAddMethod()
     {
 
-        $method = new PHPParser_Node_Stmt_ClassMethod( 'doSomething' );
-        $contract = $this->builder->addStmt( $method )->getNode();
-        $this->assertEquals( array( $method ), $contract->stmts );
+        $method = new PHPParser_Node_Stmt_ClassMethod('doSomething');
+        $contract = $this->builder->addStmt($method)->getNode();
+        $this->assertEquals(array($method), $contract->stmts);
     }
 
     public function testAddConst()
     {
 
-        $const = new PHPParser_Node_Stmt_ClassConst( array(
-            new PHPParser_Node_Const( 'SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber( 299792458 ) )
-        ) );
-        $contract = $this->builder->addStmt( $const )->getNode();
-        $this->assertEquals( 299792458, $contract->stmts[0]->consts[0]->value->value );
+        $const = new PHPParser_Node_Stmt_ClassConst(array(
+            new PHPParser_Node_Const('SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber(299792458))
+        ));
+        $contract = $this->builder->addStmt($const)->getNode();
+        $this->assertEquals(299792458, $contract->stmts[0]->consts[0]->value->value);
     }
 
     public function testOrder()
     {
 
-        $const = new PHPParser_Node_Stmt_ClassConst( array(
-            new PHPParser_Node_Const( 'SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber( 299792458 ) )
-        ) );
-        $method = new PHPParser_Node_Stmt_ClassMethod( 'doSomething' );
+        $const = new PHPParser_Node_Stmt_ClassConst(array(
+            new PHPParser_Node_Const('SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber(299792458))
+        ));
+        $method = new PHPParser_Node_Stmt_ClassMethod('doSomething');
         $contract = $this->builder
-            ->addStmt( $method )
-            ->addStmt( $const )
+            ->addStmt($method)
+            ->addStmt($const)
             ->getNode();
 
-        $this->assertInstanceOf( 'PHPParser_Node_Stmt_ClassConst', $contract->stmts[0] );
-        $this->assertInstanceOf( 'PHPParser_Node_Stmt_ClassMethod', $contract->stmts[1] );
+        $this->assertInstanceOf('PHPParser_Node_Stmt_ClassConst', $contract->stmts[0]);
+        $this->assertInstanceOf('PHPParser_Node_Stmt_ClassMethod', $contract->stmts[1]);
     }
 
     /**
@@ -72,37 +72,37 @@ class PHPParser_Tests_Builder_InterfaceTest extends PHPUnit_Framework_TestCase
     public function testInvalidStmtError()
     {
 
-        $this->builder->addStmt( new PHPParser_Node_Stmt_PropertyProperty( 'invalid' ) );
+        $this->builder->addStmt(new PHPParser_Node_Stmt_PropertyProperty('invalid'));
     }
 
     public function testFullFunctional()
     {
 
-        $const = new PHPParser_Node_Stmt_ClassConst( array(
-            new PHPParser_Node_Const( 'SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber( 299792458 ) )
-        ) );
-        $method = new PHPParser_Node_Stmt_ClassMethod( 'doSomething' );
+        $const = new PHPParser_Node_Stmt_ClassConst(array(
+            new PHPParser_Node_Const('SPEED_OF_LIGHT', new PHPParser_Node_Scalar_DNumber(299792458))
+        ));
+        $method = new PHPParser_Node_Stmt_ClassMethod('doSomething');
         $contract = $this->builder
-            ->addStmt( $method )
-            ->addStmt( $const )
+            ->addStmt($method)
+            ->addStmt($const)
             ->getNode();
 
-        eval( $this->dump( $contract ) );
+        eval( $this->dump($contract) );
 
-        $this->assertTrue( interface_exists( 'Contract', false ) );
+        $this->assertTrue(interface_exists('Contract', false));
     }
 
-    private function dump( $node )
+    private function dump($node)
     {
 
         $pp = new PHPParser_PrettyPrinter_Default();
-        return $pp->prettyPrint( array( $node ) );
+        return $pp->prettyPrint(array($node));
     }
 
     protected function setUp()
     {
 
-        $this->builder = new PHPParser_Builder_Interface( 'Contract' );
+        $this->builder = new PHPParser_Builder_Interface('Contract');
     }
 }
 

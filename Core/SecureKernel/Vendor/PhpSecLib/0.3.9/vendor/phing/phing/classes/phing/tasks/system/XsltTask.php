@@ -50,8 +50,8 @@ class XsltTask extends CopyTask
     {
 
         $xf = new XsltFilter();
-        $chain = $this->createFilterChain( $this->getProject() );
-        $chain->addXsltFilter( $xf );
+        $chain = $this->createFilterChain($this->getProject());
+        $chain->addXsltFilter($xf);
         $this->xsltFilter = $xf;
     }
 
@@ -63,8 +63,8 @@ class XsltTask extends CopyTask
     public function main()
     {
 
-        $this->log( "Doing XSLT transformation using stylesheet ".$this->xsltFilter->getStyle(), Project::MSG_VERBOSE );
-        $this->xsltFilter->setParams( $this->parameters );
+        $this->log("Doing XSLT transformation using stylesheet ".$this->xsltFilter->getStyle(), Project::MSG_VERBOSE);
+        $this->xsltFilter->setParams($this->parameters);
         parent::main();
     }
 
@@ -73,10 +73,10 @@ class XsltTask extends CopyTask
      *
      * @param PhingFile $style
      */
-    public function setStyle( PhingFile $style )
+    public function setStyle(PhingFile $style)
     {
 
-        $this->xsltFilter->setStyle( $style );
+        $this->xsltFilter->setStyle($style);
     }
 
     /**
@@ -86,10 +86,10 @@ class XsltTask extends CopyTask
      *
      * @since 2.4
      */
-    public function setResolveDocumentExternals( $resolveExternals )
+    public function setResolveDocumentExternals($resolveExternals)
     {
 
-        $this->xsltFilter->setResolveDocumentExternals( (bool)$resolveExternals );
+        $this->xsltFilter->setResolveDocumentExternals((bool)$resolveExternals);
     }
 
     /**
@@ -99,10 +99,10 @@ class XsltTask extends CopyTask
      *
      * @since 2.4
      */
-    public function setResolveStylesheetExternals( $resolveExternals )
+    public function setResolveStylesheetExternals($resolveExternals)
     {
 
-        $this->xsltFilter->setResolveStylesheetExternals( (bool)$resolveExternals );
+        $this->xsltFilter->setResolveStylesheetExternals((bool)$resolveExternals);
     }
 
     /**
@@ -113,7 +113,7 @@ class XsltTask extends CopyTask
     public function createParam()
     {
 
-        $num = array_push( $this->parameters, new XSLTParam() );
+        $num = array_push($this->parameters, new XSLTParam());
 
         return $this->parameters[$num - 1];
     }

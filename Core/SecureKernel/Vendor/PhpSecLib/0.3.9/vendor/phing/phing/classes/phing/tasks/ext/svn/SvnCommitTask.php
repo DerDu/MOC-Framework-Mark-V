@@ -52,20 +52,20 @@ class SvnCommitTask extends SvnBaseTask
     public function main()
     {
 
-        if (trim( $this->message ) === '') {
-            throw new BuildException( 'SVN Commit message can not be empty.' );
+        if (trim($this->message) === '') {
+            throw new BuildException('SVN Commit message can not be empty.');
         }
 
-        $this->setup( 'commit' );
+        $this->setup('commit');
 
         $this->log(
             "Commiting SVN working copy at '".$this->getWorkingCopy()."' with message '".$this->GetMessage()."'"
         );
 
-        $output = $this->run( array(), array( 'message' => $this->GetMessage() ) );
+        $output = $this->run(array(), array('message' => $this->GetMessage()));
 
-        if (preg_match( '/[\s]*Committed revision[\s]+([\d]+)/', $output, $matches )) {
-            $this->project->setProperty( $this->getPropertyName(), $matches[1] );
+        if (preg_match('/[\s]*Committed revision[\s]+([\d]+)/', $output, $matches)) {
+            $this->project->setProperty($this->getPropertyName(), $matches[1]);
         } else {
             /**
              * If no new revision was committed set revision to "empty". Remember that
@@ -73,7 +73,7 @@ class SvnCommitTask extends SvnBaseTask
              * copy is identical to the copy in the repository and in that case
              * there will be no update and no new revision number.
              */
-            $this->project->setProperty( $this->getPropertyName(), '' );
+            $this->project->setProperty($this->getPropertyName(), '');
         }
 
     }
@@ -92,7 +92,7 @@ class SvnCommitTask extends SvnBaseTask
      *
      * @param $message
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
 
         $this->message = $message;
@@ -112,7 +112,7 @@ class SvnCommitTask extends SvnBaseTask
      *
      * @param $propertyName
      */
-    public function setPropertyName( $propertyName )
+    public function setPropertyName($propertyName)
     {
 
         $this->propertyName = $propertyName;

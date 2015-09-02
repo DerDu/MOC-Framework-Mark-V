@@ -17,7 +17,7 @@ class HintReflection
     protected $name;
     protected $array;
 
-    public function __construct( $name, $array )
+    public function __construct($name, $array)
     {
 
         $this->name = $name;
@@ -36,7 +36,7 @@ class HintReflection
         return $this->name;
     }
 
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -54,7 +54,7 @@ class HintReflection
         return $this->array;
     }
 
-    public function setArray( $boolean )
+    public function setArray($boolean)
     {
 
         $this->array = (Boolean)$boolean;

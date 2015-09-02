@@ -23,16 +23,16 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
     protected $options;
     protected $arguments = array();
 
-    public function __construct( array $options = array() )
+    public function __construct(array $options = array())
     {
 
-        $this->options = array_merge( array(
+        $this->options = array_merge(array(
             'needs_environment' => false,
             'needs_context'     => false,
             'pre_escape'        => null,
             'preserves_safety'  => null,
             'callable'          => null,
-        ), $options );
+        ), $options);
     }
 
     public function getArguments()
@@ -41,7 +41,7 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
         return $this->arguments;
     }
 
-    public function setArguments( $arguments )
+    public function setArguments($arguments)
     {
 
         $this->arguments = $arguments;
@@ -59,7 +59,7 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
         return $this->options['needs_context'];
     }
 
-    public function getSafe( Twig_Node $filterArgs )
+    public function getSafe(Twig_Node $filterArgs)
     {
 
         if (isset( $this->options['is_safe'] )) {
@@ -67,7 +67,7 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
         }
 
         if (isset( $this->options['is_safe_callback'] )) {
-            return call_user_func( $this->options['is_safe_callback'], $filterArgs );
+            return call_user_func($this->options['is_safe_callback'], $filterArgs);
         }
     }
 

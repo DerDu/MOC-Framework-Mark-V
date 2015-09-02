@@ -11,13 +11,13 @@ abstract class PhpseclibFunctionalTestCase extends PhpseclibTestCase
     static public function setUpBeforeClass()
     {
 
-        if (extension_loaded( 'runkit' )) {
-            if (extension_loaded( 'gmp' )) {
+        if (extension_loaded('runkit')) {
+            if (extension_loaded('gmp')) {
                 self::ensureConstant(
                     'MATH_BIGINTEGER_MODE',
                     MATH_BIGINTEGER_MODE_GMP
                 );
-            } elseif (extension_loaded( 'bcmath' )) {
+            } elseif (extension_loaded('bcmath')) {
                 self::ensureConstant(
                     'MATH_BIGINTEGER_MODE',
                     MATH_BIGINTEGER_MODE_BCMATH
@@ -27,9 +27,9 @@ abstract class PhpseclibFunctionalTestCase extends PhpseclibTestCase
                     'Should have gmp or bcmath extension for functional test.'
                 );
             }
-            self::ensureConstant( 'CRYPT_HASH_MODE', CRYPT_HASH_MODE_HASH );
-            self::reRequireFile( 'Math/BigInteger.php' );
-            self::reRequireFile( 'Crypt/Hash.php' );
+            self::ensureConstant('CRYPT_HASH_MODE', CRYPT_HASH_MODE_HASH);
+            self::reRequireFile('Math/BigInteger.php');
+            self::reRequireFile('Crypt/Hash.php');
         }
         parent::setUpBeforeClass();
     }
@@ -39,11 +39,11 @@ abstract class PhpseclibFunctionalTestCase extends PhpseclibTestCase
      *
      * @return string
      */
-    protected function getEnv( $variable )
+    protected function getEnv($variable)
     {
 
-        $this->requireEnv( $variable );
-        return $this->_getEnv( $variable );
+        $this->requireEnv($variable);
+        return $this->_getEnv($variable);
     }
 
     /**
@@ -52,25 +52,25 @@ abstract class PhpseclibFunctionalTestCase extends PhpseclibTestCase
      *
      * @return null
      */
-    protected function requireEnv( $variable, $message = null )
+    protected function requireEnv($variable, $message = null)
     {
 
-        if ($this->_getEnv( $variable ) === false) {
+        if ($this->_getEnv($variable) === false) {
             $msg = $message ? $message : sprintf(
                 "This test requires the '%s' environment variable.",
-                $this->_prefixEnvVariable( $variable )
+                $this->_prefixEnvVariable($variable)
             );
-            $this->markTestSkipped( $msg );
+            $this->markTestSkipped($msg);
         }
     }
 
-    private function _getEnv( $variable )
+    private function _getEnv($variable)
     {
 
-        return getenv( $this->_prefixEnvVariable( $variable ) );
+        return getenv($this->_prefixEnvVariable($variable));
     }
 
-    private function _prefixEnvVariable( $variable )
+    private function _prefixEnvVariable($variable)
     {
 
         return 'PHPSECLIB_'.$variable;

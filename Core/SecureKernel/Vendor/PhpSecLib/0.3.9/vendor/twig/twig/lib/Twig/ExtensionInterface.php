@@ -24,7 +24,7 @@ interface Twig_ExtensionInterface
      *
      * @param Twig_Environment $environment The current Twig_Environment instance
      */
-    public function initRuntime( Twig_Environment $environment );
+    public function initRuntime(Twig_Environment $environment);
 
     /**
      * Returns the token parser instances to add to the existing list.

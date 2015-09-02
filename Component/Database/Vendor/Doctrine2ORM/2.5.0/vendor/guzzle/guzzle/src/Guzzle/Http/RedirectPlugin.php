@@ -10,7 +10,6 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

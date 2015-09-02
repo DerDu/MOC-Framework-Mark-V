@@ -33,7 +33,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -58,25 +58,25 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $fileName = $phpcsFile->getFilename();
 
-        $csslintPath = PHP_CodeSniffer::getConfigData( 'csslint_path' );
+        $csslintPath = PHP_CodeSniffer::getConfigData('csslint_path');
         if ($csslintPath === null) {
             return;
         }
 
-        $cmd = $csslintPath.' '.escapeshellarg( $fileName );
-        exec( $cmd, $output, $retval );
+        $cmd = $csslintPath.' '.escapeshellarg($fileName);
+        exec($cmd, $output, $retval);
 
-        if (is_array( $output ) === false) {
+        if (is_array($output) === false) {
             return;
         }
 
         $tokens = $phpcsFile->getTokens();
-        $count = count( $output );
+        $count = count($output);
 
         for ($i = 0; $i < $count; $i++) {
             $matches = array();
@@ -107,7 +107,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($lineToken !== null) {
-                $phpcsFile->addWarning( $message, $lineToken, 'ExternalTool' );
+                $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
             }
         }//end for
 

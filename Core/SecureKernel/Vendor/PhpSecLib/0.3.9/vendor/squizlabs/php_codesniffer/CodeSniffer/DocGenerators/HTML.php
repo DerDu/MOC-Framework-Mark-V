@@ -13,8 +13,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_DocGenerators_Generator', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_DocGenerators_Generator not found' );
+if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_DocGenerators_Generator not found');
 }
 
 /**
@@ -50,13 +50,13 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         $this->printHeader();
 
         $standardFiles = $this->getStandardFiles();
-        $this->printToc( $standardFiles );
+        $this->printToc($standardFiles);
 
         foreach ($standardFiles as $standard) {
             $doc = new DOMDocument();
-            $doc->load( $standard );
-            $documentation = $doc->getElementsByTagName( 'documentation' )->item( 0 );
-            $this->processSniff( $documentation );
+            $doc->load($standard);
+            $documentation = $doc->getElementsByTagName('documentation')->item(0);
+            $this->processSniff($documentation);
         }
 
         $this->printFooter();
@@ -163,7 +163,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      *
      * @return void
      */
-    protected function printToc( $standardFiles )
+    protected function printToc($standardFiles)
     {
 
         echo '  <h2>Table of Contents</h2>'.PHP_EOL;
@@ -171,10 +171,10 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
 
         foreach ($standardFiles as $standard) {
             $doc = new DOMDocument();
-            $doc->load( $standard );
-            $documentation = $doc->getElementsByTagName( 'documentation' )->item( 0 );
-            $title = $this->getTitle( $documentation );
-            echo '   <li><a href="#'.str_replace( ' ', '-', $title )."\">$title</a></li>".PHP_EOL;
+            $doc->load($standard);
+            $documentation = $doc->getElementsByTagName('documentation')->item(0);
+            $title = $this->getTitle($documentation);
+            echo '   <li><a href="#'.str_replace(' ', '-', $title)."\">$title</a></li>".PHP_EOL;
         }
 
         echo '  </ul>'.PHP_EOL;
@@ -190,19 +190,19 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      *
      * @return void
      */
-    public function processSniff( DOMNode $doc )
+    public function processSniff(DOMNode $doc)
     {
 
-        $title = $this->getTitle( $doc );
-        echo '  <a name="'.str_replace( ' ', '-', $title ).'" />'.PHP_EOL;
+        $title = $this->getTitle($doc);
+        echo '  <a name="'.str_replace(' ', '-', $title).'" />'.PHP_EOL;
         echo "  <h2>$title</h2>".PHP_EOL;
 
         foreach ($doc->childNodes as $node) {
             if ($node->nodeName === 'standard') {
-                $this->printTextBlock( $node );
+                $this->printTextBlock($node);
             } else {
                 if ($node->nodeName === 'code_comparison') {
-                    $this->printCodeComparisonBlock( $node );
+                    $this->printCodeComparisonBlock($node);
                 }
             }
         }
@@ -216,15 +216,15 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      *
      * @return void
      */
-    protected function printTextBlock( $node )
+    protected function printTextBlock($node)
     {
 
-        $content = trim( $node->nodeValue );
-        $content = htmlspecialchars( $content );
+        $content = trim($node->nodeValue);
+        $content = htmlspecialchars($content);
 
         // Allow em tags only.
-        $content = str_replace( '&lt;em&gt;', '<em>', $content );
-        $content = str_replace( '&lt;/em&gt;', '</em>', $content );
+        $content = str_replace('&lt;em&gt;', '<em>', $content);
+        $content = str_replace('&lt;/em&gt;', '</em>', $content);
 
         echo "  <p class=\"text\">$content</p>".PHP_EOL;
 
@@ -237,26 +237,26 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      *
      * @return void
      */
-    protected function printCodeComparisonBlock( $node )
+    protected function printCodeComparisonBlock($node)
     {
 
-        $codeBlocks = $node->getElementsByTagName( 'code' );
+        $codeBlocks = $node->getElementsByTagName('code');
 
-        $firstTitle = $codeBlocks->item( 0 )->getAttribute( 'title' );
-        $first = trim( $codeBlocks->item( 0 )->nodeValue );
-        $first = str_replace( '<?php', '&lt;?php', $first );
-        $first = str_replace( "\n", '</br>', $first );
-        $first = str_replace( ' ', '&nbsp;', $first );
-        $first = str_replace( '<em>', '<span class="code-comparison-highlight">', $first );
-        $first = str_replace( '</em>', '</span>', $first );
+        $firstTitle = $codeBlocks->item(0)->getAttribute('title');
+        $first = trim($codeBlocks->item(0)->nodeValue);
+        $first = str_replace('<?php', '&lt;?php', $first);
+        $first = str_replace("\n", '</br>', $first);
+        $first = str_replace(' ', '&nbsp;', $first);
+        $first = str_replace('<em>', '<span class="code-comparison-highlight">', $first);
+        $first = str_replace('</em>', '</span>', $first);
 
-        $secondTitle = $codeBlocks->item( 1 )->getAttribute( 'title' );
-        $second = trim( $codeBlocks->item( 1 )->nodeValue );
-        $second = str_replace( '<?php', '&lt;?php', $second );
-        $second = str_replace( "\n", '</br>', $second );
-        $second = str_replace( ' ', '&nbsp;', $second );
-        $second = str_replace( '<em>', '<span class="code-comparison-highlight">', $second );
-        $second = str_replace( '</em>', '</span>', $second );
+        $secondTitle = $codeBlocks->item(1)->getAttribute('title');
+        $second = trim($codeBlocks->item(1)->nodeValue);
+        $second = str_replace('<?php', '&lt;?php', $second);
+        $second = str_replace("\n", '</br>', $second);
+        $second = str_replace(' ', '&nbsp;', $second);
+        $second = str_replace('<em>', '<span class="code-comparison-highlight">', $second);
+        $second = str_replace('</em>', '</span>', $second);
 
         echo '  <table class="code-comparison">'.PHP_EOL;
         echo '   <tr>'.PHP_EOL;
@@ -281,12 +281,12 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
 
         // Turn off errors so we don't get timezone warnings if people
         // don't have their timezone set.
-        error_reporting( 0 );
+        error_reporting(0);
         echo '  <div class="tag-line">';
-        echo 'Documentation generated on '.date( 'r' );
+        echo 'Documentation generated on '.date('r');
         echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'</a>';
         echo '</div>'.PHP_EOL;
-        error_reporting( E_ALL | E_STRICT );
+        error_reporting(E_ALL | E_STRICT);
 
         echo ' </body>'.PHP_EOL;
         echo '</html>'.PHP_EOL;

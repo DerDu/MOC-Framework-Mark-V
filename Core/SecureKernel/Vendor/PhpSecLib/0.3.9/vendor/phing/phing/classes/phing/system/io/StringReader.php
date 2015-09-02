@@ -45,7 +45,7 @@ class StringReader extends Reader
     /**
      * @param $string
      */
-    public function __construct( $string )
+    public function __construct($string)
     {
 
         $this->_string = $string;
@@ -54,7 +54,7 @@ class StringReader extends Reader
     /**
      * @param int $n
      */
-    public function skip( $n )
+    public function skip($n)
     {
     }
 
@@ -63,16 +63,16 @@ class StringReader extends Reader
      *
      * @return int|string
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if ($len === null) {
             return $this->_string;
         } else {
-            if ($this->currPos >= strlen( $this->_string )) {
+            if ($this->currPos >= strlen($this->_string)) {
                 return -1;
             }
-            $out = substr( $this->_string, $this->currPos, $len );
+            $out = substr($this->_string, $this->currPos, $len);
             $this->currPos += $len;
 
             return $out;

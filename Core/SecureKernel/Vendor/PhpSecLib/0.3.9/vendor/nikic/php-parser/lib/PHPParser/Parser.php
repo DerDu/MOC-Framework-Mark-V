@@ -6055,7 +6055,7 @@ class PHPParser_Parser
      *
      * @param PHPParser_Lexer $lexer A lexer
      */
-    public function __construct( PHPParser_Lexer $lexer )
+    public function __construct(PHPParser_Lexer $lexer)
     {
 
         $this->lexer = $lexer;
@@ -6068,10 +6068,10 @@ class PHPParser_Parser
      *
      * @return PHPParser_Node[] Array of statements
      */
-    public function parse( $code )
+    public function parse($code)
     {
 
-        $this->lexer->startLexing( $code );
+        $this->lexer->startLexing($code);
 
         // We start off with no lookahead-token
         $tokenId = self::TOKEN_NONE;
@@ -6079,16 +6079,16 @@ class PHPParser_Parser
         // The attributes for a node are taken from the first and last token of the node.
         // From the first token only the startAttributes are taken and from the last only
         // the endAttributes. Both are merged using the array union operator (+).
-        $startAttributes = array( 'startLine' => 1 );
+        $startAttributes = array('startLine' => 1);
         $endAttributes = array();
 
         // In order to figure out the attributes for the starting token, we have to keep
         // them in a stack
-        $attributeStack = array( $startAttributes );
+        $attributeStack = array($startAttributes);
 
         // Start off in the initial state and keep a stack of previous states
         $state = 0;
-        $stateStack = array( $state );
+        $stateStack = array($state);
 
         // AST stack (?)
         $this->yyastk = array();
@@ -6105,7 +6105,7 @@ class PHPParser_Parser
                     // The end attributes are fetched into a temporary variable and only set once the token is really
                     // shifted (not during read). Otherwise you would sometimes get off-by-one errors, when a rule is
                     // reduced after a token was read but not yet shifted.
-                    $origTokenId = $this->lexer->getNextToken( $tokenValue, $startAttributes, $nextEndAttributes );
+                    $origTokenId = $this->lexer->getNextToken($tokenValue, $startAttributes, $nextEndAttributes);
 
                     // map the lexer token id to the internally used token id's
                     $tokenId = $origTokenId >= 0 && $origTokenId < self::TOKEN_MAP_SIZE
@@ -6113,10 +6113,10 @@ class PHPParser_Parser
                         : self::TOKEN_INVALID;
 
                     if ($tokenId === self::TOKEN_INVALID) {
-                        throw new RangeException( sprintf(
+                        throw new RangeException(sprintf(
                             'The lexer returned an invalid token (id=%d, value=%s)',
                             $origTokenId, $tokenValue
-                        ) );
+                        ));
                     }
 
                     $attributeStack[$this->stackPos] = $startAttributes;
@@ -6173,9 +6173,9 @@ class PHPParser_Parser
                             $attributeStack[$this->stackPos - self::$yylen[$yyn]]
                             + $endAttributes
                         );
-                    } catch( PHPParser_Error $e ) {
+                    } catch (PHPParser_Error $e) {
                         if (-1 === $e->getRawLine()) {
-                            $e->setRawLine( $startAttributes['startLine'] );
+                            $e->setRawLine($startAttributes['startLine']);
                         }
 
                         throw $e;
@@ -6211,7 +6211,7 @@ class PHPParser_Parser
                             && $n < self::YYLAST && self::$yycheck[$n] == $i
                         ) {
                             if (self::$yyaction[$n] != self::YYUNEXPECTED) {
-                                if (count( $expected ) == 4) {
+                                if (count($expected) == 4) {
                                     /* Too many expected tokens */
                                     $expected = array();
                                     break;
@@ -6224,7 +6224,7 @@ class PHPParser_Parser
 
                     $expectedString = '';
                     if ($expected) {
-                        $expectedString = ', expecting '.implode( ' or ', $expected );
+                        $expectedString = ', expecting '.implode(' or ', $expected);
                     }
 
                     throw new PHPParser_Error(
@@ -6248,666 +6248,666 @@ class PHPParser_Parser
         $this->yyval = $this->yyastk[$this->stackPos];
     }
 
-    protected function yyn1( $attributes )
+    protected function yyn1($attributes)
     {
 
-        $this->yyval = PHPParser_Node_Stmt_Namespace::postprocess( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = PHPParser_Node_Stmt_Namespace::postprocess($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn2( $attributes )
+    protected function yyn2($attributes)
     {
 
-        if (is_array( $this->yyastk[$this->stackPos - ( 2 - 2 )] )) {
-            $this->yyval = array_merge( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-                $this->yyastk[$this->stackPos - ( 2 - 2 )] );
+        if (is_array($this->yyastk[$this->stackPos - ( 2 - 2 )])) {
+            $this->yyval = array_merge($this->yyastk[$this->stackPos - ( 2 - 1 )],
+                $this->yyastk[$this->stackPos - ( 2 - 2 )]);
         } else {
             $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
             $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
         };
     }
 
-    protected function yyn3( $attributes )
+    protected function yyn3($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn4( $attributes )
+    protected function yyn4($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn5( $attributes )
+    protected function yyn5($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn6( $attributes )
+    protected function yyn6($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn7( $attributes )
+    protected function yyn7($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn8( $attributes )
+    protected function yyn8($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn9( $attributes )
+    protected function yyn9($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_HaltCompiler( $this->lexer->handleHaltCompiler(), $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_HaltCompiler($this->lexer->handleHaltCompiler(), $attributes);
     }
 
-    protected function yyn10( $attributes )
+    protected function yyn10($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Namespace( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            $attributes ), null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            $attributes), null, $attributes);
     }
 
-    protected function yyn11( $attributes )
+    protected function yyn11($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Namespace( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 5 - 2 )],
-            $attributes ), $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 5 - 2 )],
+            $attributes), $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes);
     }
 
-    protected function yyn12( $attributes )
+    protected function yyn12($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Namespace( null, $this->yyastk[$this->stackPos - ( 4 - 3 )],
-            $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Namespace(null, $this->yyastk[$this->stackPos - ( 4 - 3 )],
+            $attributes);
     }
 
-    protected function yyn13( $attributes )
+    protected function yyn13($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Use( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Use($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn14( $attributes )
+    protected function yyn14($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Const( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Const($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn15( $attributes )
+    protected function yyn15($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn16( $attributes )
+    protected function yyn16($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn17( $attributes )
+    protected function yyn17($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 1 - 1 )],
-            $attributes ), null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 1 - 1 )],
+            $attributes), null, $attributes);
     }
 
-    protected function yyn18( $attributes )
+    protected function yyn18($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $attributes ), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $attributes), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn19( $attributes )
+    protected function yyn19($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            $attributes ), null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            $attributes), null, $attributes);
     }
 
-    protected function yyn20( $attributes )
+    protected function yyn20($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 4 - 2 )],
-            $attributes ), $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 4 - 2 )],
+            $attributes), $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn21( $attributes )
+    protected function yyn21($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn22( $attributes )
+    protected function yyn22($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn23( $attributes )
+    protected function yyn23($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Const( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Const($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn24( $attributes )
+    protected function yyn24($attributes)
     {
 
-        if (is_array( $this->yyastk[$this->stackPos - ( 2 - 2 )] )) {
-            $this->yyval = array_merge( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-                $this->yyastk[$this->stackPos - ( 2 - 2 )] );
+        if (is_array($this->yyastk[$this->stackPos - ( 2 - 2 )])) {
+            $this->yyval = array_merge($this->yyastk[$this->stackPos - ( 2 - 1 )],
+                $this->yyastk[$this->stackPos - ( 2 - 2 )]);
         } else {
             $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
             $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
         };
     }
 
-    protected function yyn25( $attributes )
+    protected function yyn25($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn26( $attributes )
+    protected function yyn26($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn27( $attributes )
+    protected function yyn27($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn28( $attributes )
+    protected function yyn28($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn29( $attributes )
+    protected function yyn29($attributes)
     {
 
-        throw new PHPParser_Error( '__HALT_COMPILER() can only be used from the outermost scope' );
+        throw new PHPParser_Error('__HALT_COMPILER() can only be used from the outermost scope');
     }
 
-    protected function yyn30( $attributes )
+    protected function yyn30($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn31( $attributes )
+    protected function yyn31($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_If( $this->yyastk[$this->stackPos - ( 5 - 2 )], array(
-            'stmts'   => is_array( $this->yyastk[$this->stackPos - ( 5 - 3 )] ) ? $this->yyastk[$this->stackPos - ( 5 - 3 )] : array( $this->yyastk[$this->stackPos - ( 5 - 3 )] ),
+        $this->yyval = new PHPParser_Node_Stmt_If($this->yyastk[$this->stackPos - ( 5 - 2 )], array(
+            'stmts'   => is_array($this->yyastk[$this->stackPos - ( 5 - 3 )]) ? $this->yyastk[$this->stackPos - ( 5 - 3 )] : array($this->yyastk[$this->stackPos - ( 5 - 3 )]),
             'elseifs' => $this->yyastk[$this->stackPos - ( 5 - 4 )],
             'else'    => $this->yyastk[$this->stackPos - ( 5 - 5 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn32( $attributes )
+    protected function yyn32($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_If( $this->yyastk[$this->stackPos - ( 8 - 2 )], array(
+        $this->yyval = new PHPParser_Node_Stmt_If($this->yyastk[$this->stackPos - ( 8 - 2 )], array(
             'stmts'   => $this->yyastk[$this->stackPos - ( 8 - 4 )],
             'elseifs' => $this->yyastk[$this->stackPos - ( 8 - 5 )],
             'else'    => $this->yyastk[$this->stackPos - ( 8 - 6 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn33( $attributes )
+    protected function yyn33($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_While( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_While($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn34( $attributes )
+    protected function yyn34($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Do( $this->yyastk[$this->stackPos - ( 5 - 4 )],
-            is_array( $this->yyastk[$this->stackPos - ( 5 - 2 )] ) ? $this->yyastk[$this->stackPos - ( 5 - 2 )] : array( $this->yyastk[$this->stackPos - ( 5 - 2 )] ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Do($this->yyastk[$this->stackPos - ( 5 - 4 )],
+            is_array($this->yyastk[$this->stackPos - ( 5 - 2 )]) ? $this->yyastk[$this->stackPos - ( 5 - 2 )] : array($this->yyastk[$this->stackPos - ( 5 - 2 )]),
+            $attributes);
     }
 
-    protected function yyn35( $attributes )
+    protected function yyn35($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_For( array(
+        $this->yyval = new PHPParser_Node_Stmt_For(array(
             'init'  => $this->yyastk[$this->stackPos - ( 9 - 3 )],
             'cond'  => $this->yyastk[$this->stackPos - ( 9 - 5 )],
             'loop'  => $this->yyastk[$this->stackPos - ( 9 - 7 )],
             'stmts' => $this->yyastk[$this->stackPos - ( 9 - 9 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn36( $attributes )
+    protected function yyn36($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Switch( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Switch($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn37( $attributes )
+    protected function yyn37($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Break( null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Break(null, $attributes);
     }
 
-    protected function yyn38( $attributes )
+    protected function yyn38($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Break( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Break($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn39( $attributes )
+    protected function yyn39($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Continue( null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Continue(null, $attributes);
     }
 
-    protected function yyn40( $attributes )
+    protected function yyn40($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Continue( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Continue($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn41( $attributes )
+    protected function yyn41($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Return( null, $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Return(null, $attributes);
     }
 
-    protected function yyn42( $attributes )
+    protected function yyn42($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Return( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Return($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn43( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
-    }
-
-    protected function yyn44( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_Global( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
-    }
-
-    protected function yyn45( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_Static( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
-    }
-
-    protected function yyn46( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_Echo( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
-    }
-
-    protected function yyn47( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_InlineHTML( $this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes );
-    }
-
-    protected function yyn48( $attributes )
+    protected function yyn43($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn49( $attributes )
+    protected function yyn44($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Unset( $this->yyastk[$this->stackPos - ( 5 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Global($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn50( $attributes )
+    protected function yyn45($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Foreach( $this->yyastk[$this->stackPos - ( 7 - 3 )],
+        $this->yyval = new PHPParser_Node_Stmt_Static($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
+    }
+
+    protected function yyn46($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_Echo($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
+    }
+
+    protected function yyn47($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_InlineHTML($this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes);
+    }
+
+    protected function yyn48($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
+    }
+
+    protected function yyn49($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_Unset($this->yyastk[$this->stackPos - ( 5 - 3 )], $attributes);
+    }
+
+    protected function yyn50($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_Foreach($this->yyastk[$this->stackPos - ( 7 - 3 )],
             $this->yyastk[$this->stackPos - ( 7 - 5 )][0], array(
                 'keyVar' => null,
                 'byRef'  => $this->yyastk[$this->stackPos - ( 7 - 5 )][1],
                 'stmts'  => $this->yyastk[$this->stackPos - ( 7 - 7 )]
-            ), $attributes );
+            ), $attributes);
     }
 
-    protected function yyn51( $attributes )
+    protected function yyn51($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Foreach( $this->yyastk[$this->stackPos - ( 9 - 3 )],
+        $this->yyval = new PHPParser_Node_Stmt_Foreach($this->yyastk[$this->stackPos - ( 9 - 3 )],
             $this->yyastk[$this->stackPos - ( 9 - 7 )][0], array(
                 'keyVar' => $this->yyastk[$this->stackPos - ( 9 - 5 )],
                 'byRef'  => $this->yyastk[$this->stackPos - ( 9 - 7 )][1],
                 'stmts'  => $this->yyastk[$this->stackPos - ( 9 - 9 )]
-            ), $attributes );
+            ), $attributes);
     }
 
-    protected function yyn52( $attributes )
+    protected function yyn52($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Declare( $this->yyastk[$this->stackPos - ( 5 - 3 )],
-            $this->yyastk[$this->stackPos - ( 5 - 5 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Declare($this->yyastk[$this->stackPos - ( 5 - 3 )],
+            $this->yyastk[$this->stackPos - ( 5 - 5 )], $attributes);
     }
 
-    protected function yyn53( $attributes )
+    protected function yyn53($attributes)
     {
 
         $this->yyval = array(); /* means: no statement */
     }
 
-    protected function yyn54( $attributes )
+    protected function yyn54($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TryCatch( $this->yyastk[$this->stackPos - ( 6 - 3 )],
-            $this->yyastk[$this->stackPos - ( 6 - 5 )], $this->yyastk[$this->stackPos - ( 6 - 6 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_TryCatch($this->yyastk[$this->stackPos - ( 6 - 3 )],
+            $this->yyastk[$this->stackPos - ( 6 - 5 )], $this->yyastk[$this->stackPos - ( 6 - 6 )], $attributes);
     }
 
-    protected function yyn55( $attributes )
+    protected function yyn55($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Throw( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Throw($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn56( $attributes )
+    protected function yyn56($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Goto( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Goto($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn57( $attributes )
+    protected function yyn57($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Label( $this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Label($this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes);
     }
 
-    protected function yyn58( $attributes )
+    protected function yyn58($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn59( $attributes )
+    protected function yyn59($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn60( $attributes )
+    protected function yyn60($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Catch( $this->yyastk[$this->stackPos - ( 8 - 3 )],
-            substr( $this->yyastk[$this->stackPos - ( 8 - 4 )], 1 ), $this->yyastk[$this->stackPos - ( 8 - 7 )],
-            $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Catch($this->yyastk[$this->stackPos - ( 8 - 3 )],
+            substr($this->yyastk[$this->stackPos - ( 8 - 4 )], 1), $this->yyastk[$this->stackPos - ( 8 - 7 )],
+            $attributes);
     }
 
-    protected function yyn61( $attributes )
+    protected function yyn61($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn62( $attributes )
+    protected function yyn62($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 3 )];
     }
 
-    protected function yyn63( $attributes )
+    protected function yyn63($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn64( $attributes )
+    protected function yyn64($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn65( $attributes )
+    protected function yyn65($attributes)
     {
 
         $this->yyval = false;
     }
 
-    protected function yyn66( $attributes )
+    protected function yyn66($attributes)
     {
 
         $this->yyval = true;
     }
 
-    protected function yyn67( $attributes )
+    protected function yyn67($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Function( $this->yyastk[$this->stackPos - ( 9 - 3 )], array(
+        $this->yyval = new PHPParser_Node_Stmt_Function($this->yyastk[$this->stackPos - ( 9 - 3 )], array(
             'byRef'  => $this->yyastk[$this->stackPos - ( 9 - 2 )],
             'params' => $this->yyastk[$this->stackPos - ( 9 - 5 )],
             'stmts'  => $this->yyastk[$this->stackPos - ( 9 - 8 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn68( $attributes )
+    protected function yyn68($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Class( $this->yyastk[$this->stackPos - ( 7 - 2 )], array(
+        $this->yyval = new PHPParser_Node_Stmt_Class($this->yyastk[$this->stackPos - ( 7 - 2 )], array(
             'type'       => $this->yyastk[$this->stackPos - ( 7 - 1 )],
             'extends'    => $this->yyastk[$this->stackPos - ( 7 - 3 )],
             'implements' => $this->yyastk[$this->stackPos - ( 7 - 4 )],
             'stmts'      => $this->yyastk[$this->stackPos - ( 7 - 6 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn69( $attributes )
+    protected function yyn69($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Interface( $this->yyastk[$this->stackPos - ( 6 - 2 )], array(
+        $this->yyval = new PHPParser_Node_Stmt_Interface($this->yyastk[$this->stackPos - ( 6 - 2 )], array(
             'extends' => $this->yyastk[$this->stackPos - ( 6 - 3 )],
             'stmts'   => $this->yyastk[$this->stackPos - ( 6 - 5 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn70( $attributes )
+    protected function yyn70($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Trait( $this->yyastk[$this->stackPos - ( 5 - 2 )],
-            $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Trait($this->yyastk[$this->stackPos - ( 5 - 2 )],
+            $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes);
     }
 
-    protected function yyn71( $attributes )
+    protected function yyn71($attributes)
     {
 
         $this->yyval = 0;
     }
 
-    protected function yyn72( $attributes )
+    protected function yyn72($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT;
     }
 
-    protected function yyn73( $attributes )
+    protected function yyn73($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_FINAL;
     }
 
-    protected function yyn74( $attributes )
+    protected function yyn74($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn75( $attributes )
+    protected function yyn75($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 2 )];
     }
 
-    protected function yyn76( $attributes )
+    protected function yyn76($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn77( $attributes )
+    protected function yyn77($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 2 )];
     }
 
-    protected function yyn78( $attributes )
+    protected function yyn78($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn79( $attributes )
+    protected function yyn79($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 2 )];
     }
 
-    protected function yyn80( $attributes )
+    protected function yyn80($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn81( $attributes )
+    protected function yyn81($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn82( $attributes )
+    protected function yyn82($attributes)
     {
 
-        $this->yyval = is_array( $this->yyastk[$this->stackPos - ( 1 - 1 )] ) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = is_array($this->yyastk[$this->stackPos - ( 1 - 1 )]) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn83( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
-    }
-
-    protected function yyn84( $attributes )
-    {
-
-        $this->yyval = is_array( $this->yyastk[$this->stackPos - ( 1 - 1 )] ) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
-    }
-
-    protected function yyn85( $attributes )
+    protected function yyn83($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
     }
 
-    protected function yyn86( $attributes )
+    protected function yyn84($attributes)
     {
 
-        $this->yyval = is_array( $this->yyastk[$this->stackPos - ( 1 - 1 )] ) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = is_array($this->yyastk[$this->stackPos - ( 1 - 1 )]) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn87( $attributes )
+    protected function yyn85($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
     }
 
-    protected function yyn88( $attributes )
+    protected function yyn86($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = is_array($this->yyastk[$this->stackPos - ( 1 - 1 )]) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn89( $attributes )
+    protected function yyn87($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
+    }
+
+    protected function yyn88($attributes)
+    {
+
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
+    }
+
+    protected function yyn89($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn90( $attributes )
+    protected function yyn90($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_DeclareDeclare( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_DeclareDeclare($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn91( $attributes )
+    protected function yyn91($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn92( $attributes )
+    protected function yyn92($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 3 )];
     }
 
-    protected function yyn93( $attributes )
+    protected function yyn93($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
     }
 
-    protected function yyn94( $attributes )
+    protected function yyn94($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 5 - 3 )];
     }
 
-    protected function yyn95( $attributes )
+    protected function yyn95($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn96( $attributes )
+    protected function yyn96($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn97( $attributes )
+    protected function yyn97($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Case( $this->yyastk[$this->stackPos - ( 4 - 2 )],
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Case($this->yyastk[$this->stackPos - ( 4 - 2 )],
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn98( $attributes )
+    protected function yyn98($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Case( null, $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Case(null, $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
     protected function yyn99()
@@ -6922,1274 +6922,1274 @@ class PHPParser_Parser
         $this->yyval = $this->yyastk[$this->stackPos];
     }
 
-    protected function yyn101( $attributes )
+    protected function yyn101($attributes)
     {
 
-        $this->yyval = is_array( $this->yyastk[$this->stackPos - ( 1 - 1 )] ) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = is_array($this->yyastk[$this->stackPos - ( 1 - 1 )]) ? $this->yyastk[$this->stackPos - ( 1 - 1 )] : array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn102( $attributes )
+    protected function yyn102($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 2 )];
     }
 
-    protected function yyn103( $attributes )
+    protected function yyn103($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn104( $attributes )
+    protected function yyn104($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn105( $attributes )
+    protected function yyn105($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_ElseIf( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            is_array( $this->yyastk[$this->stackPos - ( 3 - 3 )] ) ? $this->yyastk[$this->stackPos - ( 3 - 3 )] : array( $this->yyastk[$this->stackPos - ( 3 - 3 )] ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_ElseIf($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            is_array($this->yyastk[$this->stackPos - ( 3 - 3 )]) ? $this->yyastk[$this->stackPos - ( 3 - 3 )] : array($this->yyastk[$this->stackPos - ( 3 - 3 )]),
+            $attributes);
     }
 
-    protected function yyn106( $attributes )
+    protected function yyn106($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn107( $attributes )
+    protected function yyn107($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn108( $attributes )
+    protected function yyn108($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_ElseIf( $this->yyastk[$this->stackPos - ( 4 - 2 )],
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_ElseIf($this->yyastk[$this->stackPos - ( 4 - 2 )],
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn109( $attributes )
-    {
-
-        $this->yyval = null;
-    }
-
-    protected function yyn110( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_Else( is_array( $this->yyastk[$this->stackPos - ( 2 - 2 )] ) ? $this->yyastk[$this->stackPos - ( 2 - 2 )] : array( $this->yyastk[$this->stackPos - ( 2 - 2 )] ),
-            $attributes );
-    }
-
-    protected function yyn111( $attributes )
+    protected function yyn109($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn112( $attributes )
+    protected function yyn110($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Else( $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Else(is_array($this->yyastk[$this->stackPos - ( 2 - 2 )]) ? $this->yyastk[$this->stackPos - ( 2 - 2 )] : array($this->yyastk[$this->stackPos - ( 2 - 2 )]),
+            $attributes);
     }
 
-    protected function yyn113( $attributes )
+    protected function yyn111($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )], false );
+        $this->yyval = null;
     }
 
-    protected function yyn114( $attributes )
+    protected function yyn112($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 2 - 2 )], true );
+        $this->yyval = new PHPParser_Node_Stmt_Else($this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn115( $attributes )
+    protected function yyn113($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )], false );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )], false);
     }
 
-    protected function yyn116( $attributes )
+    protected function yyn114($attributes)
+    {
+
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 2 - 2 )], true);
+    }
+
+    protected function yyn115($attributes)
+    {
+
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )], false);
+    }
+
+    protected function yyn116($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn117( $attributes )
+    protected function yyn117($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn118( $attributes )
+    protected function yyn118($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn119( $attributes )
+    protected function yyn119($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn120( $attributes )
+    protected function yyn120($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Param( substr( $this->yyastk[$this->stackPos - ( 3 - 3 )], 1 ), null,
-            $this->yyastk[$this->stackPos - ( 3 - 1 )], $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Param(substr($this->yyastk[$this->stackPos - ( 3 - 3 )], 1), null,
+            $this->yyastk[$this->stackPos - ( 3 - 1 )], $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn121( $attributes )
+    protected function yyn121($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Param( substr( $this->yyastk[$this->stackPos - ( 5 - 3 )], 1 ),
+        $this->yyval = new PHPParser_Node_Param(substr($this->yyastk[$this->stackPos - ( 5 - 3 )], 1),
             $this->yyastk[$this->stackPos - ( 5 - 5 )], $this->yyastk[$this->stackPos - ( 5 - 1 )],
-            $this->yyastk[$this->stackPos - ( 5 - 2 )], $attributes );
+            $this->yyastk[$this->stackPos - ( 5 - 2 )], $attributes);
     }
 
-    protected function yyn122( $attributes )
+    protected function yyn122($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn123( $attributes )
+    protected function yyn123($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn124( $attributes )
+    protected function yyn124($attributes)
     {
 
         $this->yyval = 'array';
     }
 
-    protected function yyn125( $attributes )
+    protected function yyn125($attributes)
     {
 
         $this->yyval = 'callable';
     }
 
-    protected function yyn126( $attributes )
+    protected function yyn126($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn127( $attributes )
+    protected function yyn127($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn128( $attributes )
+    protected function yyn128($attributes)
     {
 
         $this->yyval = array(
-            new PHPParser_Node_Arg( $this->yyastk[$this->stackPos - ( 3 - 2 )], false, $attributes )
+            new PHPParser_Node_Arg($this->yyastk[$this->stackPos - ( 3 - 2 )], false, $attributes)
         );
     }
 
-    protected function yyn129( $attributes )
+    protected function yyn129($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn130( $attributes )
-    {
-
-        $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
-        $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
-    }
-
-    protected function yyn131( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Arg( $this->yyastk[$this->stackPos - ( 1 - 1 )], false, $attributes );
-    }
-
-    protected function yyn132( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Arg( $this->yyastk[$this->stackPos - ( 2 - 2 )], true, $attributes );
-    }
-
-    protected function yyn133( $attributes )
+    protected function yyn130($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn134( $attributes )
+    protected function yyn131($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = new PHPParser_Node_Arg($this->yyastk[$this->stackPos - ( 1 - 1 )], false, $attributes);
     }
 
-    protected function yyn135( $attributes )
+    protected function yyn132($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )], 1 ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Arg($this->yyastk[$this->stackPos - ( 2 - 2 )], true, $attributes);
     }
 
-    protected function yyn136( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn137( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
-    }
-
-    protected function yyn138( $attributes )
+    protected function yyn133($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn139( $attributes )
+    protected function yyn134($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn140( $attributes )
+    protected function yyn135($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_StaticVar( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )], 1 ), null,
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 1 - 1 )], 1),
+            $attributes);
     }
 
-    protected function yyn141( $attributes )
+    protected function yyn136($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_StaticVar( substr( $this->yyastk[$this->stackPos - ( 3 - 1 )], 1 ),
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn142( $attributes )
+    protected function yyn137($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn138($attributes)
+    {
+
+        $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
+        $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
+    }
+
+    protected function yyn139($attributes)
+    {
+
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
+    }
+
+    protected function yyn140($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_StaticVar(substr($this->yyastk[$this->stackPos - ( 1 - 1 )], 1), null,
+            $attributes);
+    }
+
+    protected function yyn141($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_StaticVar(substr($this->yyastk[$this->stackPos - ( 3 - 1 )], 1),
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn142($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn143( $attributes )
+    protected function yyn143($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn144( $attributes )
+    protected function yyn144($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_Property( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_Property($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn145( $attributes )
+    protected function yyn145($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_ClassConst( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_ClassConst($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn146( $attributes )
+    protected function yyn146($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_ClassMethod( $this->yyastk[$this->stackPos - ( 8 - 4 )], array(
+        $this->yyval = new PHPParser_Node_Stmt_ClassMethod($this->yyastk[$this->stackPos - ( 8 - 4 )], array(
             'type'   => $this->yyastk[$this->stackPos - ( 8 - 1 )],
             'byRef'  => $this->yyastk[$this->stackPos - ( 8 - 3 )],
             'params' => $this->yyastk[$this->stackPos - ( 8 - 6 )],
             'stmts'  => $this->yyastk[$this->stackPos - ( 8 - 8 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn147( $attributes )
+    protected function yyn147($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TraitUse( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_TraitUse($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn148( $attributes )
+    protected function yyn148($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn149( $attributes )
+    protected function yyn149($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn150( $attributes )
+    protected function yyn150($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn151( $attributes )
+    protected function yyn151($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn152( $attributes )
+    protected function yyn152($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Precedence( $this->yyastk[$this->stackPos - ( 4 - 1 )][0],
-            $this->yyastk[$this->stackPos - ( 4 - 1 )][1], $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Precedence($this->yyastk[$this->stackPos - ( 4 - 1 )][0],
+            $this->yyastk[$this->stackPos - ( 4 - 1 )][1], $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn153( $attributes )
+    protected function yyn153($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias( $this->yyastk[$this->stackPos - ( 5 - 1 )][0],
+        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias($this->yyastk[$this->stackPos - ( 5 - 1 )][0],
             $this->yyastk[$this->stackPos - ( 5 - 1 )][1], $this->yyastk[$this->stackPos - ( 5 - 3 )],
-            $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes );
+            $this->yyastk[$this->stackPos - ( 5 - 4 )], $attributes);
     }
 
-    protected function yyn154( $attributes )
+    protected function yyn154($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias( $this->yyastk[$this->stackPos - ( 4 - 1 )][0],
+        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias($this->yyastk[$this->stackPos - ( 4 - 1 )][0],
             $this->yyastk[$this->stackPos - ( 4 - 1 )][1], $this->yyastk[$this->stackPos - ( 4 - 3 )], null,
-            $attributes );
+            $attributes);
     }
 
-    protected function yyn155( $attributes )
+    protected function yyn155($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias( $this->yyastk[$this->stackPos - ( 4 - 1 )][0],
+        $this->yyval = new PHPParser_Node_Stmt_TraitUseAdaptation_Alias($this->yyastk[$this->stackPos - ( 4 - 1 )][0],
             $this->yyastk[$this->stackPos - ( 4 - 1 )][1], null, $this->yyastk[$this->stackPos - ( 4 - 3 )],
-            $attributes );
+            $attributes);
     }
 
-    protected function yyn156( $attributes )
+    protected function yyn156($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 3 - 1 )], $this->yyastk[$this->stackPos - ( 3 - 3 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 3 - 1 )], $this->yyastk[$this->stackPos - ( 3 - 3 )]);
     }
 
-    protected function yyn157( $attributes )
+    protected function yyn157($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn158( $attributes )
+    protected function yyn158($attributes)
     {
 
-        $this->yyval = array( null, $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array(null, $this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn159( $attributes )
+    protected function yyn159($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn160( $attributes )
+    protected function yyn160($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn161( $attributes )
+    protected function yyn161($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn162( $attributes )
+    protected function yyn162($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC;
     }
 
-    protected function yyn163( $attributes )
+    protected function yyn163($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC;
     }
 
-    protected function yyn164( $attributes )
+    protected function yyn164($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn165( $attributes )
+    protected function yyn165($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn166( $attributes )
+    protected function yyn166($attributes)
     {
 
-        PHPParser_Node_Stmt_Class::verifyModifier( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-            $this->yyastk[$this->stackPos - ( 2 - 2 )] );
+        PHPParser_Node_Stmt_Class::verifyModifier($this->yyastk[$this->stackPos - ( 2 - 1 )],
+            $this->yyastk[$this->stackPos - ( 2 - 2 )]);
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )] | $this->yyastk[$this->stackPos - ( 2 - 2 )];
     }
 
-    protected function yyn167( $attributes )
+    protected function yyn167($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC;
     }
 
-    protected function yyn168( $attributes )
+    protected function yyn168($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED;
     }
 
-    protected function yyn169( $attributes )
+    protected function yyn169($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE;
     }
 
-    protected function yyn170( $attributes )
+    protected function yyn170($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_STATIC;
     }
 
-    protected function yyn171( $attributes )
+    protected function yyn171($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT;
     }
 
-    protected function yyn172( $attributes )
+    protected function yyn172($attributes)
     {
 
         $this->yyval = PHPParser_Node_Stmt_Class::MODIFIER_FINAL;
     }
 
-    protected function yyn173( $attributes )
+    protected function yyn173($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn174( $attributes )
-    {
-
-        $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
-        $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
-    }
-
-    protected function yyn175( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_PropertyProperty( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )],
-            1 ), null, $attributes );
-    }
-
-    protected function yyn176( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Stmt_PropertyProperty( substr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            1 ), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn177( $attributes )
+    protected function yyn174($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn178( $attributes )
+    protected function yyn175($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = new PHPParser_Node_Stmt_PropertyProperty(substr($this->yyastk[$this->stackPos - ( 1 - 1 )],
+            1), null, $attributes);
     }
 
-    protected function yyn179( $attributes )
+    protected function yyn176($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Stmt_PropertyProperty(substr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            1), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn177($attributes)
+    {
+
+        $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
+        $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
+    }
+
+    protected function yyn178($attributes)
+    {
+
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
+    }
+
+    protected function yyn179($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn180( $attributes )
+    protected function yyn180($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn181( $attributes )
+    protected function yyn181($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn182( $attributes )
+    protected function yyn182($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Assign( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Assign($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn183( $attributes )
+    protected function yyn183($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Assign( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Assign($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn184( $attributes )
+    protected function yyn184($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_AssignRef( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_AssignRef($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn185( $attributes )
+    protected function yyn185($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_AssignRef( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_AssignRef($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn186( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn187( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Clone( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn188( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignPlus( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn189( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignMinus( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn190( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignMul( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn191( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignDiv( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn192( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignConcat( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn193( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignMod( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn194( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseAnd( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn195( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseOr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn196( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseXor( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn197( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignShiftLeft( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn198( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_AssignShiftRight( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn199( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_PostInc( $this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes );
-    }
-
-    protected function yyn200( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_PreInc( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn201( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_PostDec( $this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes );
-    }
-
-    protected function yyn202( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_PreDec( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn203( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BooleanOr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn204( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BooleanAnd( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn205( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_LogicalOr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn206( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_LogicalAnd( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn207( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_LogicalXor( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn208( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BitwiseOr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn209( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BitwiseAnd( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn210( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BitwiseXor( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn211( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Concat( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn212( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Plus( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn213( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Minus( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn214( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Mul( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn215( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Div( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn216( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Mod( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn217( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ShiftLeft( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn218( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ShiftRight( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn219( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_UnaryPlus( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn220( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_UnaryMinus( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn221( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BooleanNot( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn222( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_BitwiseNot( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn223( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Identical( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn224( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_NotIdentical( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn225( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Equal( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn226( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_NotEqual( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn227( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Smaller( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn228( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_SmallerOrEqual( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn229( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Greater( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn230( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_GreaterOrEqual( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn231( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Instanceof( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn232( $attributes )
+    protected function yyn186($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn233( $attributes )
+    protected function yyn187($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Clone($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn188($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignPlus($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn189($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignMinus($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn190($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignMul($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn191($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignDiv($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn192($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignConcat($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn193($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignMod($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn194($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseAnd($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn195($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseOr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn196($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignBitwiseXor($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn197($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignShiftLeft($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn198($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_AssignShiftRight($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn199($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_PostInc($this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes);
+    }
+
+    protected function yyn200($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_PreInc($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn201($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_PostDec($this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes);
+    }
+
+    protected function yyn202($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_PreDec($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn203($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BooleanOr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn204($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BooleanAnd($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn205($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_LogicalOr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn206($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_LogicalAnd($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn207($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_LogicalXor($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn208($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BitwiseOr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn209($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BitwiseAnd($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn210($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BitwiseXor($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn211($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Concat($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn212($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Plus($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn213($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Minus($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn214($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Mul($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn215($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Div($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn216($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Mod($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn217($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ShiftLeft($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn218($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ShiftRight($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn219($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_UnaryPlus($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn220($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_UnaryMinus($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn221($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BooleanNot($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn222($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_BitwiseNot($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn223($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Identical($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn224($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_NotIdentical($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn225($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Equal($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn226($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_NotEqual($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn227($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Smaller($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn228($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_SmallerOrEqual($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn229($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Greater($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn230($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_GreaterOrEqual($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn231($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Instanceof($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn232($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
+    }
+
+    protected function yyn233($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn234( $attributes )
+    protected function yyn234($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Ternary( $this->yyastk[$this->stackPos - ( 5 - 1 )],
-            $this->yyastk[$this->stackPos - ( 5 - 3 )], $this->yyastk[$this->stackPos - ( 5 - 5 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Ternary($this->yyastk[$this->stackPos - ( 5 - 1 )],
+            $this->yyastk[$this->stackPos - ( 5 - 3 )], $this->yyastk[$this->stackPos - ( 5 - 5 )], $attributes);
     }
 
-    protected function yyn235( $attributes )
+    protected function yyn235($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Ternary( $this->yyastk[$this->stackPos - ( 4 - 1 )], null,
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Ternary($this->yyastk[$this->stackPos - ( 4 - 1 )], null,
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn236( $attributes )
+    protected function yyn236($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Isset( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Isset($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn237( $attributes )
+    protected function yyn237($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Empty( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Empty($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn238( $attributes )
+    protected function yyn238($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Include( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            PHPParser_Node_Expr_Include::TYPE_INCLUDE, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Include($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            PHPParser_Node_Expr_Include::TYPE_INCLUDE, $attributes);
     }
 
-    protected function yyn239( $attributes )
+    protected function yyn239($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Include( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            PHPParser_Node_Expr_Include::TYPE_INCLUDE_ONCE, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Include($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            PHPParser_Node_Expr_Include::TYPE_INCLUDE_ONCE, $attributes);
     }
 
-    protected function yyn240( $attributes )
+    protected function yyn240($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Eval( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Eval($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn241( $attributes )
+    protected function yyn241($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Include( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            PHPParser_Node_Expr_Include::TYPE_REQUIRE, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Include($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            PHPParser_Node_Expr_Include::TYPE_REQUIRE, $attributes);
     }
 
-    protected function yyn242( $attributes )
+    protected function yyn242($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Include( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            PHPParser_Node_Expr_Include::TYPE_REQUIRE_ONCE, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Include($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            PHPParser_Node_Expr_Include::TYPE_REQUIRE_ONCE, $attributes);
     }
 
-    protected function yyn243( $attributes )
+    protected function yyn243($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Int( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Int($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn244( $attributes )
+    protected function yyn244($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Double( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Double($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn245( $attributes )
+    protected function yyn245($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_String( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_String($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn246( $attributes )
+    protected function yyn246($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Array( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Array($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn247( $attributes )
+    protected function yyn247($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Object( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Object($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn248( $attributes )
+    protected function yyn248($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Bool( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Bool($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn249( $attributes )
+    protected function yyn249($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Cast_Unset( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Cast_Unset($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn250( $attributes )
+    protected function yyn250($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Exit( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Exit($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn251( $attributes )
+    protected function yyn251($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ErrorSuppress( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ErrorSuppress($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn252( $attributes )
+    protected function yyn252($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn253( $attributes )
+    protected function yyn253($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn254( $attributes )
+    protected function yyn254($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn255( $attributes )
+    protected function yyn255($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ShellExec( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ShellExec($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn256( $attributes )
+    protected function yyn256($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Print( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Print($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn257( $attributes )
+    protected function yyn257($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Yield( null, null, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Yield(null, null, $attributes);
     }
 
-    protected function yyn258( $attributes )
+    protected function yyn258($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Closure( array(
+        $this->yyval = new PHPParser_Node_Expr_Closure(array(
             'static' => false,
             'byRef'  => $this->yyastk[$this->stackPos - ( 9 - 2 )],
             'params' => $this->yyastk[$this->stackPos - ( 9 - 4 )],
             'uses'   => $this->yyastk[$this->stackPos - ( 9 - 6 )],
             'stmts'  => $this->yyastk[$this->stackPos - ( 9 - 8 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn259( $attributes )
+    protected function yyn259($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Closure( array(
+        $this->yyval = new PHPParser_Node_Expr_Closure(array(
             'static' => true,
             'byRef'  => $this->yyastk[$this->stackPos - ( 10 - 3 )],
             'params' => $this->yyastk[$this->stackPos - ( 10 - 5 )],
             'uses'   => $this->yyastk[$this->stackPos - ( 10 - 7 )],
             'stmts'  => $this->yyastk[$this->stackPos - ( 10 - 9 )]
-        ), $attributes );
+        ), $attributes);
     }
 
-    protected function yyn260( $attributes )
+    protected function yyn260($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn261( $attributes )
+    protected function yyn261($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn262( $attributes )
+    protected function yyn262($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Yield( $this->yyastk[$this->stackPos - ( 2 - 2 )], null, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Yield($this->yyastk[$this->stackPos - ( 2 - 2 )], null, $attributes);
     }
 
-    protected function yyn263( $attributes )
+    protected function yyn263($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Yield( $this->yyastk[$this->stackPos - ( 4 - 4 )],
-            $this->yyastk[$this->stackPos - ( 4 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Yield($this->yyastk[$this->stackPos - ( 4 - 4 )],
+            $this->yyastk[$this->stackPos - ( 4 - 2 )], $attributes);
     }
 
-    protected function yyn264( $attributes )
+    protected function yyn264($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Array( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Array($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn265( $attributes )
+    protected function yyn265($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Array( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Array($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn266( $attributes )
+    protected function yyn266($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn267( $attributes )
+    protected function yyn267($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( new PHPParser_Node_Scalar_String( PHPParser_Node_Scalar_String::parse( $this->yyastk[$this->stackPos - ( 4 - 1 )] ),
-            $attributes ), $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch(new PHPParser_Node_Scalar_String(PHPParser_Node_Scalar_String::parse($this->yyastk[$this->stackPos - ( 4 - 1 )]),
+            $attributes), $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn268( $attributes )
+    protected function yyn268($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn269( $attributes )
+    protected function yyn269($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_New( $this->yyastk[$this->stackPos - ( 3 - 2 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_New($this->yyastk[$this->stackPos - ( 3 - 2 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn270( $attributes )
+    protected function yyn270($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn271( $attributes )
+    protected function yyn271($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 4 - 3 )];
     }
 
-    protected function yyn272( $attributes )
+    protected function yyn272($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn273( $attributes )
+    protected function yyn273($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn274( $attributes )
+    protected function yyn274($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ClosureUse( substr( $this->yyastk[$this->stackPos - ( 2 - 2 )], 1 ),
-            $this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ClosureUse(substr($this->yyastk[$this->stackPos - ( 2 - 2 )], 1),
+            $this->yyastk[$this->stackPos - ( 2 - 1 )], $attributes);
     }
 
-    protected function yyn275( $attributes )
+    protected function yyn275($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_FuncCall( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_FuncCall($this->yyastk[$this->stackPos - ( 2 - 1 )],
+            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn276( $attributes )
+    protected function yyn276($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_StaticCall( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_StaticCall($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn277( $attributes )
+    protected function yyn277($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_StaticCall( $this->yyastk[$this->stackPos - ( 6 - 1 )],
-            $this->yyastk[$this->stackPos - ( 6 - 4 )], $this->yyastk[$this->stackPos - ( 6 - 6 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_StaticCall($this->yyastk[$this->stackPos - ( 6 - 1 )],
+            $this->yyastk[$this->stackPos - ( 6 - 4 )], $this->yyastk[$this->stackPos - ( 6 - 6 )], $attributes);
     }
 
-    protected function yyn278( $attributes )
+    protected function yyn278($attributes)
     {
 
         if ($this->yyastk[$this->stackPos - ( 2 - 1 )] instanceof PHPParser_Node_Expr_StaticPropertyFetch) {
-            $this->yyval = new PHPParser_Node_Expr_StaticCall( $this->yyastk[$this->stackPos - ( 2 - 1 )]->class,
-                new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 2 - 1 )]->name, $attributes ),
-                $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+            $this->yyval = new PHPParser_Node_Expr_StaticCall($this->yyastk[$this->stackPos - ( 2 - 1 )]->class,
+                new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 2 - 1 )]->name, $attributes),
+                $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
         } elseif ($this->yyastk[$this->stackPos - ( 2 - 1 )] instanceof PHPParser_Node_Expr_ArrayDimFetch) {
             $tmp = $this->yyastk[$this->stackPos - ( 2 - 1 )];
             while ($tmp->var instanceof PHPParser_Node_Expr_ArrayDimFetch) {
                 $tmp = $tmp->var;
             }
 
-            $this->yyval = new PHPParser_Node_Expr_StaticCall( $tmp->var->class,
-                $this->yyastk[$this->stackPos - ( 2 - 1 )], $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-            $tmp->var = new PHPParser_Node_Expr_Variable( $tmp->var->name, $attributes );
+            $this->yyval = new PHPParser_Node_Expr_StaticCall($tmp->var->class,
+                $this->yyastk[$this->stackPos - ( 2 - 1 )], $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+            $tmp->var = new PHPParser_Node_Expr_Variable($tmp->var->name, $attributes);
         } else {
             throw new Exception;
         }
 
     }
 
-    protected function yyn279( $attributes )
+    protected function yyn279($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_FuncCall( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_FuncCall($this->yyastk[$this->stackPos - ( 2 - 1 )],
+            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn280( $attributes )
+    protected function yyn280($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn281( $attributes )
+    protected function yyn281($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Name( 'static', $attributes );
+        $this->yyval = new PHPParser_Node_Name('static', $attributes);
     }
 
-    protected function yyn282( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn283( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Name( $this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes );
-    }
-
-    protected function yyn284( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Name_FullyQualified( $this->yyastk[$this->stackPos - ( 2 - 2 )],
-            $attributes );
-    }
-
-    protected function yyn285( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Name_Relative( $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn286( $attributes )
+    protected function yyn282($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn287( $attributes )
+    protected function yyn283($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Name($this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes);
+    }
+
+    protected function yyn284($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Name_FullyQualified($this->yyastk[$this->stackPos - ( 2 - 2 )],
+            $attributes);
+    }
+
+    protected function yyn285($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Name_Relative($this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn286($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn288( $attributes )
+    protected function yyn287($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn289( $attributes )
+    protected function yyn288($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn290( $attributes )
+    protected function yyn289($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn291( $attributes )
+    protected function yyn290($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
+    }
+
+    protected function yyn291($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
@@ -8201,272 +8201,272 @@ class PHPParser_Parser
         $this->yyval = $this->yyastk[$this->stackPos];
     }
 
-    protected function yyn293( $attributes )
+    protected function yyn293($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_PropertyFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_PropertyFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn294( $attributes )
+    protected function yyn294($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_PropertyFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_PropertyFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn295( $attributes )
+    protected function yyn295($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn296( $attributes )
+    protected function yyn296($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn297( $attributes )
-    {
-
-        $this->yyval = null;
-    }
-
-    protected function yyn298( $attributes )
+    protected function yyn297($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn299( $attributes )
+    protected function yyn298($attributes)
+    {
+
+        $this->yyval = null;
+    }
+
+    protected function yyn299($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn300( $attributes )
+    protected function yyn300($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn301( $attributes )
+    protected function yyn301($attributes)
     {
 
         $this->yyval = array(
-            PHPParser_Node_Scalar_String::parseEscapeSequences( $this->yyastk[$this->stackPos - ( 1 - 1 )], '`' )
+            PHPParser_Node_Scalar_String::parseEscapeSequences($this->yyastk[$this->stackPos - ( 1 - 1 )], '`')
         );
     }
 
-    protected function yyn302( $attributes )
+    protected function yyn302($attributes)
     {
 
         foreach ($this->yyastk[$this->stackPos - ( 1 - 1 )] as &$s) {
-            if (is_string( $s )) {
-                $s = PHPParser_Node_Scalar_String::parseEscapeSequences( $s, '`' );
+            if (is_string($s)) {
+                $s = PHPParser_Node_Scalar_String::parseEscapeSequences($s, '`');
             }
         };
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn303( $attributes )
+    protected function yyn303($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn304( $attributes )
+    protected function yyn304($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn305( $attributes )
+    protected function yyn305($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_LNumber( PHPParser_Node_Scalar_LNumber::parse( $this->yyastk[$this->stackPos - ( 1 - 1 )] ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_LNumber(PHPParser_Node_Scalar_LNumber::parse($this->yyastk[$this->stackPos - ( 1 - 1 )]),
+            $attributes);
     }
 
-    protected function yyn306( $attributes )
+    protected function yyn306($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_DNumber( PHPParser_Node_Scalar_DNumber::parse( $this->yyastk[$this->stackPos - ( 1 - 1 )] ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_DNumber(PHPParser_Node_Scalar_DNumber::parse($this->yyastk[$this->stackPos - ( 1 - 1 )]),
+            $attributes);
     }
 
-    protected function yyn307( $attributes )
+    protected function yyn307($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_String( PHPParser_Node_Scalar_String::parse( $this->yyastk[$this->stackPos - ( 1 - 1 )] ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_String(PHPParser_Node_Scalar_String::parse($this->yyastk[$this->stackPos - ( 1 - 1 )]),
+            $attributes);
     }
 
-    protected function yyn308( $attributes )
+    protected function yyn308($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_LineConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_LineConst($attributes);
     }
 
-    protected function yyn309( $attributes )
+    protected function yyn309($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_FileConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_FileConst($attributes);
     }
 
-    protected function yyn310( $attributes )
+    protected function yyn310($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_DirConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_DirConst($attributes);
     }
 
-    protected function yyn311( $attributes )
+    protected function yyn311($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_ClassConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_ClassConst($attributes);
     }
 
-    protected function yyn312( $attributes )
+    protected function yyn312($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_TraitConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_TraitConst($attributes);
     }
 
-    protected function yyn313( $attributes )
+    protected function yyn313($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_MethodConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_MethodConst($attributes);
     }
 
-    protected function yyn314( $attributes )
+    protected function yyn314($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_FuncConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_FuncConst($attributes);
     }
 
-    protected function yyn315( $attributes )
+    protected function yyn315($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_NSConst( $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_NSConst($attributes);
     }
 
-    protected function yyn316( $attributes )
+    protected function yyn316($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_String( PHPParser_Node_Scalar_String::parseDocString( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 2 )] ), $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_String(PHPParser_Node_Scalar_String::parseDocString($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 2 )]), $attributes);
     }
 
-    protected function yyn317( $attributes )
+    protected function yyn317($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_String( '', $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_String('', $attributes);
     }
 
-    protected function yyn318( $attributes )
+    protected function yyn318($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ConstFetch( $this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ConstFetch($this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes);
     }
 
-    protected function yyn319( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn320( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ClassConstFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn321( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_UnaryPlus( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn322( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_UnaryMinus( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn323( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Array( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
-    }
-
-    protected function yyn324( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_Array( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
-    }
-
-    protected function yyn325( $attributes )
+    protected function yyn319($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn326( $attributes )
+    protected function yyn320($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ClassConstFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ClassConstFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn327( $attributes )
+    protected function yyn321($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_UnaryPlus($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn322($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_UnaryMinus($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn323($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Array($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn324($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Array($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
+    }
+
+    protected function yyn325($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
+    }
+
+    protected function yyn326($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ClassConstFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn327($attributes)
     {
 
         foreach ($this->yyastk[$this->stackPos - ( 3 - 2 )] as &$s) {
-            if (is_string( $s )) {
-                $s = PHPParser_Node_Scalar_String::parseEscapeSequences( $s, '"' );
+            if (is_string($s)) {
+                $s = PHPParser_Node_Scalar_String::parseEscapeSequences($s, '"');
             }
         };
-        $this->yyval = new PHPParser_Node_Scalar_Encapsed( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_Encapsed($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn328( $attributes )
+    protected function yyn328($attributes)
     {
 
         foreach ($this->yyastk[$this->stackPos - ( 3 - 2 )] as &$s) {
-            if (is_string( $s )) {
-                $s = PHPParser_Node_Scalar_String::parseEscapeSequences( $s, null );
+            if (is_string($s)) {
+                $s = PHPParser_Node_Scalar_String::parseEscapeSequences($s, null);
             }
         }
-        $s = preg_replace( '~(\r\n|\n|\r)$~', '', $s );
+        $s = preg_replace('~(\r\n|\n|\r)$~', '', $s);
         if ('' === $s) {
-            array_pop( $this->yyastk[$this->stackPos - ( 3 - 2 )] );
+            array_pop($this->yyastk[$this->stackPos - ( 3 - 2 )]);
         };
-        $this->yyval = new PHPParser_Node_Scalar_Encapsed( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_Encapsed($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn329( $attributes )
+    protected function yyn329($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn330( $attributes )
+    protected function yyn330($attributes)
     {
 
         $this->yyval = 'class';
     }
 
-    protected function yyn331( $attributes )
+    protected function yyn331($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn332( $attributes )
+    protected function yyn332($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
@@ -8484,418 +8484,418 @@ class PHPParser_Parser
         $this->yyval = $this->yyastk[$this->stackPos];
     }
 
-    protected function yyn335( $attributes )
+    protected function yyn335($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn336( $attributes )
+    protected function yyn336($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn337( $attributes )
+    protected function yyn337($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 3 - 3 )],
-            $this->yyastk[$this->stackPos - ( 3 - 1 )], false, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 3 - 3 )],
+            $this->yyastk[$this->stackPos - ( 3 - 1 )], false, $attributes);
     }
 
-    protected function yyn338( $attributes )
+    protected function yyn338($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 1 - 1 )], null, false,
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 1 - 1 )], null, false,
+            $attributes);
     }
 
-    protected function yyn339( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn340( $attributes )
+    protected function yyn339($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn341( $attributes )
+    protected function yyn340($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn342( $attributes )
+    protected function yyn341($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn343( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 6 - 2 )],
-            $this->yyastk[$this->stackPos - ( 6 - 5 )], $attributes );
-    }
-
-    protected function yyn344( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
-    }
-
-    protected function yyn345( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_PropertyFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
-    }
-
-    protected function yyn346( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_MethodCall( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
-    }
-
-    protected function yyn347( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_FuncCall( $this->yyastk[$this->stackPos - ( 2 - 1 )],
-            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
-    }
-
-    protected function yyn348( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
-    }
-
-    protected function yyn349( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
-    }
-
-    protected function yyn350( $attributes )
+    protected function yyn342($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn351( $attributes )
+    protected function yyn343($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 6 - 2 )],
+            $this->yyastk[$this->stackPos - ( 6 - 5 )], $attributes);
+    }
+
+    protected function yyn344($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn345($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_PropertyFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
+    }
+
+    protected function yyn346($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_MethodCall($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
+    }
+
+    protected function yyn347($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_FuncCall($this->yyastk[$this->stackPos - ( 2 - 1 )],
+            $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
+    }
+
+    protected function yyn348($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn349($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn350($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
+    }
+
+    protected function yyn351($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn352( $attributes )
+    protected function yyn352($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn353( $attributes )
+    protected function yyn353($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 2 - 2 )], $attributes);
     }
 
-    protected function yyn354( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn355( $attributes )
+    protected function yyn354($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn356( $attributes )
-    {
-
-        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes );
-    }
-
-    protected function yyn357( $attributes )
+    protected function yyn355($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn358( $attributes )
+    protected function yyn356($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            substr( $this->yyastk[$this->stackPos - ( 3 - 3 )], 1 ), $attributes );
+        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 4 )], $attributes);
     }
 
-    protected function yyn359( $attributes )
+    protected function yyn357($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch( $this->yyastk[$this->stackPos - ( 6 - 1 )],
-            $this->yyastk[$this->stackPos - ( 6 - 5 )], $attributes );
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn360( $attributes )
+    protected function yyn358($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            substr($this->yyastk[$this->stackPos - ( 3 - 3 )], 1), $attributes);
     }
 
-    protected function yyn361( $attributes )
+    protected function yyn359($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_StaticPropertyFetch($this->yyastk[$this->stackPos - ( 6 - 1 )],
+            $this->yyastk[$this->stackPos - ( 6 - 5 )], $attributes);
     }
 
-    protected function yyn362( $attributes )
+    protected function yyn360($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn363( $attributes )
+    protected function yyn361($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn364( $attributes )
+    protected function yyn362($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )], 1 ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn365( $attributes )
+    protected function yyn363($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn366( $attributes )
+    protected function yyn364($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 1 - 1 )], 1),
+            $attributes);
+    }
+
+    protected function yyn365($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
+    }
+
+    protected function yyn366($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn367( $attributes )
+    protected function yyn367($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn368( $attributes )
+    protected function yyn368($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn369( $attributes )
+    protected function yyn369($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn370( $attributes )
+    protected function yyn370($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn371( $attributes )
+    protected function yyn371($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_List( $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_List($this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn372( $attributes )
+    protected function yyn372($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn373( $attributes )
+    protected function yyn373($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn374( $attributes )
-    {
-
-        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
-    }
-
-    protected function yyn375( $attributes )
+    protected function yyn374($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
     }
 
-    protected function yyn376( $attributes )
+    protected function yyn375($attributes)
+    {
+
+        $this->yyval = $this->yyastk[$this->stackPos - ( 1 - 1 )];
+    }
+
+    protected function yyn376($attributes)
     {
 
         $this->yyval = null;
     }
 
-    protected function yyn377( $attributes )
+    protected function yyn377($attributes)
     {
 
         $this->yyval = array();
     }
 
-    protected function yyn378( $attributes )
+    protected function yyn378($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn379( $attributes )
+    protected function yyn379($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 3 - 1 )][] = $this->yyastk[$this->stackPos - ( 3 - 3 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 1 )];
     }
 
-    protected function yyn380( $attributes )
+    protected function yyn380($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn381( $attributes )
+    protected function yyn381($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 3 - 3 )],
-            $this->yyastk[$this->stackPos - ( 3 - 1 )], false, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 3 - 3 )],
+            $this->yyastk[$this->stackPos - ( 3 - 1 )], false, $attributes);
     }
 
-    protected function yyn382( $attributes )
+    protected function yyn382($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 1 - 1 )], null, false,
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 1 - 1 )], null, false,
+            $attributes);
     }
 
-    protected function yyn383( $attributes )
+    protected function yyn383($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 4 - 4 )],
-            $this->yyastk[$this->stackPos - ( 4 - 1 )], true, $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 4 - 4 )],
+            $this->yyastk[$this->stackPos - ( 4 - 1 )], true, $attributes);
     }
 
-    protected function yyn384( $attributes )
+    protected function yyn384($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayItem( $this->yyastk[$this->stackPos - ( 2 - 2 )], null, true,
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayItem($this->yyastk[$this->stackPos - ( 2 - 2 )], null, true,
+            $attributes);
     }
 
-    protected function yyn385( $attributes )
-    {
-
-        $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
-        $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
-    }
-
-    protected function yyn386( $attributes )
+    protected function yyn385($attributes)
     {
 
         $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
         $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn387( $attributes )
+    protected function yyn386($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 1 - 1 )] );
+        $this->yyastk[$this->stackPos - ( 2 - 1 )][] = $this->yyastk[$this->stackPos - ( 2 - 2 )];
+        $this->yyval = $this->yyastk[$this->stackPos - ( 2 - 1 )];
     }
 
-    protected function yyn388( $attributes )
+    protected function yyn387($attributes)
     {
 
-        $this->yyval = array( $this->yyastk[$this->stackPos - ( 2 - 1 )], $this->yyastk[$this->stackPos - ( 2 - 2 )] );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 1 - 1 )]);
     }
 
-    protected function yyn389( $attributes )
+    protected function yyn388($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )], 1 ),
-            $attributes );
+        $this->yyval = array($this->yyastk[$this->stackPos - ( 2 - 1 )], $this->yyastk[$this->stackPos - ( 2 - 2 )]);
     }
 
-    protected function yyn390( $attributes )
+    protected function yyn389($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 4 - 1 )],
-            1 ), $attributes ), $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 1 - 1 )], 1),
+            $attributes);
     }
 
-    protected function yyn391( $attributes )
+    protected function yyn390($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_PropertyFetch( new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 3 - 1 )],
-            1 ), $attributes ), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch(new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 4 - 1 )],
+            1), $attributes), $this->yyastk[$this->stackPos - ( 4 - 3 )], $attributes);
     }
 
-    protected function yyn392( $attributes )
+    protected function yyn391($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_PropertyFetch(new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 3 - 1 )],
+            1), $attributes), $this->yyastk[$this->stackPos - ( 3 - 3 )], $attributes);
     }
 
-    protected function yyn393( $attributes )
+    protected function yyn392($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn394( $attributes )
+    protected function yyn393($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch( new PHPParser_Node_Expr_Variable( $this->yyastk[$this->stackPos - ( 6 - 2 )],
-            $attributes ), $this->yyastk[$this->stackPos - ( 6 - 4 )], $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 3 - 2 )], $attributes);
     }
 
-    protected function yyn395( $attributes )
+    protected function yyn394($attributes)
+    {
+
+        $this->yyval = new PHPParser_Node_Expr_ArrayDimFetch(new PHPParser_Node_Expr_Variable($this->yyastk[$this->stackPos - ( 6 - 2 )],
+            $attributes), $this->yyastk[$this->stackPos - ( 6 - 4 )], $attributes);
+    }
+
+    protected function yyn395($attributes)
     {
 
         $this->yyval = $this->yyastk[$this->stackPos - ( 3 - 2 )];
     }
 
-    protected function yyn396( $attributes )
+    protected function yyn396($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_String( $this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_String($this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes);
     }
 
-    protected function yyn397( $attributes )
+    protected function yyn397($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Scalar_String( $this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes );
+        $this->yyval = new PHPParser_Node_Scalar_String($this->yyastk[$this->stackPos - ( 1 - 1 )], $attributes);
     }
 
-    protected function yyn398( $attributes )
+    protected function yyn398($attributes)
     {
 
-        $this->yyval = new PHPParser_Node_Expr_Variable( substr( $this->yyastk[$this->stackPos - ( 1 - 1 )], 1 ),
-            $attributes );
+        $this->yyval = new PHPParser_Node_Expr_Variable(substr($this->yyastk[$this->stackPos - ( 1 - 1 )], 1),
+            $attributes);
     }
 }

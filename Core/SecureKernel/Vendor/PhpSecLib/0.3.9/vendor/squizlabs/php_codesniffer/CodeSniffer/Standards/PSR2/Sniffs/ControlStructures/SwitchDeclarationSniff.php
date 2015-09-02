@@ -44,7 +44,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
     public function register()
     {
 
-        return array( T_SWITCH );
+        return array(T_SWITCH);
 
     }//end register()
 
@@ -58,7 +58,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -76,8 +76,8 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         $caseCount = 0;
         $foundDefault = false;
 
-        while (( $nextCase = $this->_findNextCase( $phpcsFile, ( $nextCase + 1 ),
-                $switch['scope_closer'] ) ) !== false) {
+        while (( $nextCase = $this->_findNextCase($phpcsFile, ( $nextCase + 1 ),
+                $switch['scope_closer']) ) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
                 $type = 'default';
                 $foundDefault = true;
@@ -86,19 +86,19 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $caseCount++;
             }
 
-            if ($tokens[$nextCase]['content'] !== strtolower( $tokens[$nextCase]['content'] )) {
-                $expected = strtolower( $tokens[$nextCase]['content'] );
-                $error = strtoupper( $type ).' keyword must be lowercase; expected "%s" but found "%s"';
+            if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
+                $expected = strtolower($tokens[$nextCase]['content']);
+                $error = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
                 $data = array(
                     $expected,
                     $tokens[$nextCase]['content'],
                 );
-                $phpcsFile->addError( $error, $nextCase, $type.'NotLower', $data );
+                $phpcsFile->addError($error, $nextCase, $type.'NotLower', $data);
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
-                $error = strtoupper( $type ).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
-                $phpcsFile->addError( $error, $nextCase, $type.'Indent' );
+                $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
+                $phpcsFile->addError($error, $nextCase, $type.'Indent');
             }
 
             if ($type === 'case'
@@ -106,18 +106,18 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                     || $tokens[( $nextCase + 1 )]['content'] !== ' ' )
             ) {
                 $error = 'CASE keyword must be followed by a single space';
-                $phpcsFile->addError( $error, $nextCase, 'SpacingAfterCase' );
+                $phpcsFile->addError($error, $nextCase, 'SpacingAfterCase');
             }
 
             $opener = $tokens[$nextCase]['scope_opener'];
             if ($tokens[$opener]['code'] === T_COLON) {
                 if ($tokens[( $opener - 1 )]['code'] === T_WHITESPACE) {
-                    $error = 'There must be no space before the colon in a '.strtoupper( $type ).' statement';
-                    $phpcsFile->addError( $error, $nextCase, 'SpaceBeforeColon'.$type );
+                    $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
+                    $phpcsFile->addError($error, $nextCase, 'SpaceBeforeColon'.$type);
                 }
             } else {
-                $error = strtoupper( $type ).' statements must not be defined using curly braces';
-                $phpcsFile->addError( $error, $nextCase, 'WrongOpener'.$type );
+                $error = strtoupper($type).' statements must not be defined using curly braces';
+                $phpcsFile->addError($error, $nextCase, 'WrongOpener'.$type);
             }
 
             $nextCloser = $tokens[$nextCase]['scope_closer'];
@@ -127,7 +127,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 // the default case.
                 if ($tokens[$nextCloser]['column'] !== ( $caseAlignment + $this->indent )) {
                     $error = 'Terminating statement must be indented to the same level as the CASE body';
-                    $phpcsFile->addError( $error, $nextCloser, 'BreakIndent' );
+                    $phpcsFile->addError($error, $nextCloser, 'BreakIndent');
                 }
             }
 
@@ -147,12 +147,12 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 // This case statement has content. If the next case or default comes
                 // before the closer, it means we dont have a terminating statement
                 // and instead need a comment.
-                $nextCode = $this->_findNextCase( $phpcsFile, ( $tokens[$nextCase]['scope_opener'] + 1 ), $nextCloser );
+                $nextCode = $this->_findNextCase($phpcsFile, ( $tokens[$nextCase]['scope_opener'] + 1 ), $nextCloser);
                 if ($nextCode !== false) {
-                    $prevCode = $phpcsFile->findPrevious( T_WHITESPACE, ( $nextCode - 1 ), $nextCase, true );
+                    $prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ( $nextCode - 1 ), $nextCase, true);
                     if ($tokens[$prevCode]['code'] !== T_COMMENT) {
                         $error = 'There must be a comment when fall-through is intentional in a non-empty case body';
-                        $phpcsFile->addError( $error, $nextCase, 'TerminatingComment' );
+                        $phpcsFile->addError($error, $nextCase, 'TerminatingComment');
                     }
                 }
             }
@@ -172,12 +172,12 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
      *
      * @return int | bool
      */
-    private function _findNextCase( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end )
+    private function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end)
     {
 
         $tokens = $phpcsFile->getTokens();
-        while (( $stackPtr = $phpcsFile->findNext( array( T_CASE, T_DEFAULT, T_SWITCH ), $stackPtr,
-                $end ) ) !== false) {
+        while (( $stackPtr = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), $stackPtr,
+                $end) ) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
             if ($tokens[$stackPtr]['code'] === T_SWITCH) {
                 $stackPtr = $tokens[$stackPtr]['scope_closer'];

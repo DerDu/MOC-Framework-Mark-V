@@ -74,8 +74,8 @@ class TarTask extends MatchingTask
     {
 
         include_once 'Archive/Tar.php';
-        if (!class_exists( 'Archive_Tar' )) {
-            throw new BuildException( "You must have installed the PEAR Archive_Tar class in order to use TarTask." );
+        if (!class_exists('Archive_Tar')) {
+            throw new BuildException("You must have installed the PEAR Archive_Tar class in order to use TarTask.");
         }
     }
 
@@ -113,7 +113,7 @@ class TarTask extends MatchingTask
      *
      * @param PhingFile $destFile The output of the tar
      */
-    public function setDestFile( PhingFile $destFile )
+    public function setDestFile(PhingFile $destFile)
     {
 
         $this->tarFile = $destFile;
@@ -124,7 +124,7 @@ class TarTask extends MatchingTask
      *
      * @param PhingFile $baseDir
      */
-    public function setBasedir( PhingFile $baseDir )
+    public function setBasedir(PhingFile $baseDir)
     {
 
         $this->baseDir = $baseDir;
@@ -137,7 +137,7 @@ class TarTask extends MatchingTask
      *
      * @return void
      */
-    public function setIncludeEmptyDirs( $bool )
+    public function setIncludeEmptyDirs($bool)
     {
 
         $this->includeEmpty = (boolean)$bool;
@@ -158,7 +158,7 @@ class TarTask extends MatchingTask
      *
      * @param $mode
      */
-    public function setLongfile( $mode )
+    public function setLongfile($mode)
     {
 
         $this->longFileMode = $mode;
@@ -175,7 +175,7 @@ class TarTask extends MatchingTask
      *
      * @param string $mode
      */
-    public function setCompression( $mode )
+    public function setCompression($mode)
     {
 
         switch ($mode) {
@@ -189,7 +189,7 @@ class TarTask extends MatchingTask
                 $this->compression = null;
                 break;
             default:
-                $this->log( "Ignoring unknown compression mode: ".$mode, Project::MSG_WARN );
+                $this->log("Ignoring unknown compression mode: ".$mode, Project::MSG_WARN);
                 $this->compression = null;
         }
     }
@@ -201,7 +201,7 @@ class TarTask extends MatchingTask
      *
      * @return void
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->prefix = $prefix;
@@ -216,15 +216,15 @@ class TarTask extends MatchingTask
     {
 
         if ($this->tarFile === null) {
-            throw new BuildException( "tarfile attribute must be set!", $this->getLocation() );
+            throw new BuildException("tarfile attribute must be set!", $this->getLocation());
         }
 
         if ($this->tarFile->exists() && $this->tarFile->isDirectory()) {
-            throw new BuildException( "tarfile is a directory!", $this->getLocation() );
+            throw new BuildException("tarfile is a directory!", $this->getLocation());
         }
 
         if ($this->tarFile->exists() && !$this->tarFile->canWrite()) {
-            throw new BuildException( "Can not write to the specified tarfile!", $this->getLocation() );
+            throw new BuildException("Can not write to the specified tarfile!", $this->getLocation());
         }
 
         // shouldn't need to clone, since the entries in filesets
@@ -234,63 +234,63 @@ class TarTask extends MatchingTask
         try {
             if ($this->baseDir !== null) {
                 if (!$this->baseDir->exists()) {
-                    throw new BuildException( "basedir '".(string)$this->baseDir."' does not exist!",
-                        $this->getLocation() );
+                    throw new BuildException("basedir '".(string)$this->baseDir."' does not exist!",
+                        $this->getLocation());
                 }
                 if (empty( $this->filesets )) { // if there weren't any explicit filesets specivied, then
                     // create a default, all-inclusive fileset using the specified basedir.
-                    $mainFileSet = new TarFileSet( $this->fileset );
-                    $mainFileSet->setDir( $this->baseDir );
+                    $mainFileSet = new TarFileSet($this->fileset);
+                    $mainFileSet->setDir($this->baseDir);
                     $this->filesets[] = $mainFileSet;
                 }
             }
 
             if (empty( $this->filesets )) {
-                throw new BuildException( "You must supply either a basedir "
+                throw new BuildException("You must supply either a basedir "
                     ."attribute or some nested filesets.",
-                    $this->getLocation() );
+                    $this->getLocation());
             }
 
             // check if tar is out of date with respect to each fileset
             if ($this->tarFile->exists() && $this->isArchiveUpToDate()) {
-                $this->log( "Nothing to do: ".$this->tarFile->__toString()." is up to date.", Project::MSG_INFO );
+                $this->log("Nothing to do: ".$this->tarFile->__toString()." is up to date.", Project::MSG_INFO);
                 return;
             }
 
-            $this->log( "Building tar: ".$this->tarFile->__toString(), Project::MSG_INFO );
+            $this->log("Building tar: ".$this->tarFile->__toString(), Project::MSG_INFO);
 
-            $tar = new Archive_Tar( $this->tarFile->getAbsolutePath(), $this->compression );
+            $tar = new Archive_Tar($this->tarFile->getAbsolutePath(), $this->compression);
 
-            if (PEAR::isError( $tar->error_object )) {
-                throw new BuildException( $tar->error_object->getMessage() );
+            if (PEAR::isError($tar->error_object)) {
+                throw new BuildException($tar->error_object->getMessage());
             }
 
             foreach ($this->filesets as $fs) {
-                $files = $fs->getFiles( $this->project, $this->includeEmpty );
-                if (count( $files ) > 1 && strlen( $fs->getFullpath() ) > 0) {
-                    throw new BuildException( "fullpath attribute may only "
+                $files = $fs->getFiles($this->project, $this->includeEmpty);
+                if (count($files) > 1 && strlen($fs->getFullpath()) > 0) {
+                    throw new BuildException("fullpath attribute may only "
                         ."be specified for "
                         ."filesets that specify a "
-                        ."single file." );
+                        ."single file.");
                 }
-                $fsBasedir = $fs->getDir( $this->project );
+                $fsBasedir = $fs->getDir($this->project);
                 $filesToTar = array();
-                for ($i = 0, $fcount = count( $files ); $i < $fcount; $i++) {
-                    $f = new PhingFile( $fsBasedir, $files[$i] );
+                for ($i = 0, $fcount = count($files); $i < $fcount; $i++) {
+                    $f = new PhingFile($fsBasedir, $files[$i]);
                     $filesToTar[] = $f->getAbsolutePath();
-                    $this->log( "Adding file ".$f->getPath()." to archive.", Project::MSG_VERBOSE );
+                    $this->log("Adding file ".$f->getPath()." to archive.", Project::MSG_VERBOSE);
                 }
-                $tar->addModify( $filesToTar, $this->prefix, $fsBasedir->getAbsolutePath() );
+                $tar->addModify($filesToTar, $this->prefix, $fsBasedir->getAbsolutePath());
 
-                if (PEAR::isError( $tar->error_object )) {
-                    throw new BuildException( $tar->error_object->getMessage() );
+                if (PEAR::isError($tar->error_object)) {
+                    throw new BuildException($tar->error_object->getMessage());
                 }
             }
 
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             $msg = "Problem creating TAR: ".$ioe->getMessage();
             $this->filesets = $savedFileSets;
-            throw new BuildException( $msg, $ioe, $this->getLocation() );
+            throw new BuildException($msg, $ioe, $this->getLocation());
         }
 
         $this->filesets = $savedFileSets;
@@ -304,13 +304,13 @@ class TarTask extends MatchingTask
     {
 
         foreach ($this->filesets as $fs) {
-            $files = $fs->getFiles( $this->project, $this->includeEmpty );
-            if (!$this->areFilesUpToDate( $files, $fs->getDir( $this->project ) )) {
+            $files = $fs->getFiles($this->project, $this->includeEmpty);
+            if (!$this->areFilesUpToDate($files, $fs->getDir($this->project))) {
                 return false;
             }
-            for ($i = 0, $fcount = count( $files ); $i < $fcount; $i++) {
-                if ($this->tarFile->equals( new PhingFile( $fs->getDir( $this->project ), $files[$i] ) )) {
-                    throw new BuildException( "A tar file cannot include itself", $this->getLocation() );
+            for ($i = 0, $fcount = count($files); $i < $fcount; $i++) {
+                if ($this->tarFile->equals(new PhingFile($fs->getDir($this->project), $files[$i]))) {
+                    throw new BuildException("A tar file cannot include itself", $this->getLocation());
                 }
             }
         }
@@ -323,14 +323,14 @@ class TarTask extends MatchingTask
      *
      * @return boolean
      */
-    protected function areFilesUpToDate( $files, $dir )
+    protected function areFilesUpToDate($files, $dir)
     {
 
-        $sfs = new SourceFileScanner( $this );
+        $sfs = new SourceFileScanner($this);
         $mm = new MergeMapper();
-        $mm->setTo( $this->tarFile->getAbsolutePath() );
+        $mm->setTo($this->tarFile->getAbsolutePath());
 
-        return count( $sfs->restrict( $files, $dir, null, $mm ) ) == 0;
+        return count($sfs->restrict($files, $dir, null, $mm)) == 0;
     }
 }
 
@@ -367,12 +367,12 @@ class TarFileSet extends FileSet
      * @return array a list of file and directory names, relative to
      *               the baseDir for the project.
      */
-    public function getFiles( Project $p, $includeEmpty = true )
+    public function getFiles(Project $p, $includeEmpty = true)
     {
 
         if ($this->files === null) {
 
-            $ds = $this->getDirectoryScanner( $p );
+            $ds = $this->getDirectoryScanner($p);
             $this->files = $ds->getIncludedFiles();
 
             if ($includeEmpty) {
@@ -380,7 +380,7 @@ class TarFileSet extends FileSet
                 // first any empty directories that will not be implicitly added by any of the files
                 $implicitDirs = array();
                 foreach ($this->files as $file) {
-                    $implicitDirs[] = dirname( $file );
+                    $implicitDirs[] = dirname($file);
                 }
 
                 $incDirs = $ds->getIncludedDirectories();
@@ -390,19 +390,19 @@ class TarFileSet extends FileSet
                 // we get duplicate directories in the resulting tar
                 foreach ($incDirs as $dir) {
                     foreach ($incDirs as $dircheck) {
-                        if (!empty( $dir ) && $dir == dirname( $dircheck )) {
+                        if (!empty( $dir ) && $dir == dirname($dircheck)) {
                             $implicitDirs[] = $dir;
                         }
                     }
                 }
 
-                $implicitDirs = array_unique( $implicitDirs );
+                $implicitDirs = array_unique($implicitDirs);
 
                 // Now add any empty dirs (dirs not covered by the implicit dirs)
                 // to the files array.
 
                 foreach ($incDirs as $dir) { // we cannot simply use array_diff() since we want to disregard empty/. dirs
-                    if ($dir != "" && $dir != "." && !in_array( $dir, $implicitDirs )) {
+                    if ($dir != "" && $dir != "." && !in_array($dir, $implicitDirs)) {
                         // it's an empty dir, so we'll add it.
                         $this->files[] = $dir;
                     }
@@ -430,7 +430,7 @@ class TarFileSet extends FileSet
      *
      * @param string $octalString
      */
-    public function setMode( $octalString )
+    public function setMode($octalString)
     {
 
         $octal = (int)$octalString;
@@ -453,7 +453,7 @@ class TarFileSet extends FileSet
      *
      * @param $userName
      */
-    public function setUserName( $userName )
+    public function setUserName($userName)
     {
 
         $this->userName = $userName;
@@ -466,7 +466,7 @@ class TarFileSet extends FileSet
      *
      * @param $groupName
      */
-    public function setGroup( $groupName )
+    public function setGroup($groupName)
     {
 
         $this->groupName = $groupName;
@@ -497,7 +497,7 @@ class TarFileSet extends FileSet
      *
      * @param bool $prefix
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->prefix = $prefix;
@@ -520,7 +520,7 @@ class TarFileSet extends FileSet
      *
      * @param $fullpath
      */
-    public function setFullpath( $fullpath )
+    public function setFullpath($fullpath)
     {
 
         $this->fullpath = $fullpath;
@@ -544,7 +544,7 @@ class TarFileSet extends FileSet
      *
      * @return void
      */
-    public function setPreserveLeadingSlashes( $b )
+    public function setPreserveLeadingSlashes($b)
     {
 
         $this->preserveLeadingSlashes = (boolean)$b;

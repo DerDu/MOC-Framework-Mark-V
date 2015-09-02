@@ -49,7 +49,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     public function selectorCount()
     {
 
-        return count( $this->selectorsList );
+        return count($this->selectorsList);
     }
 
     /**
@@ -59,11 +59,11 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
      *
      * @return array
      */
-    public function getSelectors( Project $p )
+    public function getSelectors(Project $p)
     {
 
         $result = array();
-        for ($i = 0, $size = count( $this->selectorsList ); $i < $size; $i++) {
+        for ($i = 0, $size = count($this->selectorsList); $i < $size; $i++) {
             $result[] = clone $this->selectorsList[$i];
         }
 
@@ -82,7 +82,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
 
         $buf = "";
         $arr = $this->selectorElements();
-        for ($i = 0, $size = count( $arr ); $i < $size; $i++) {
+        for ($i = 0, $size = count($arr); $i < $size; $i++) {
             $buf .= $arr[$i]->toString().( isset( $arr[$i + 1] ) ? ', ' : '' );
         }
 
@@ -120,7 +120,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
         $this->verifySettings();
         $errmsg = $this->getError();
         if ($errmsg !== null) {
-            throw new BuildException( $errmsg );
+            throw new BuildException($errmsg);
         }
         foreach ($this->selectorsList as $o) {
             if ($o instanceof BaseSelector) {
@@ -136,7 +136,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new SelectSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -151,7 +151,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
      * @internal param the $selector new selector to add
      * @return the selector that was added
      */
-    public function appendSelector( FileSelector $selector )
+    public function appendSelector(FileSelector $selector)
     {
 
         $this->selectorsList[] = $selector;
@@ -164,7 +164,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new AndSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -176,7 +176,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new OrSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -188,7 +188,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new NotSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -200,7 +200,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new NoneSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -212,7 +212,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new MajoritySelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -224,7 +224,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new DateSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -236,7 +236,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new SizeSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -248,7 +248,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new FilenameSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -260,7 +260,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new ExtendSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -272,7 +272,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new ContainsSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -284,7 +284,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new ContainsRegexpSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -296,7 +296,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new PresentSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -308,7 +308,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new DepthSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -320,7 +320,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new DependSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }
@@ -332,7 +332,7 @@ abstract class BaseSelectorContainer extends BaseSelector implements SelectorCon
     {
 
         $o = new TypeSelector();
-        $this->appendSelector( $o );
+        $this->appendSelector($o);
 
         return $o;
     }

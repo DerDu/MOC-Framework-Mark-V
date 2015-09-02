@@ -62,15 +62,15 @@ class Commandline
      *
      * @throws BuildException
      */
-    public function __construct( $to_process = null )
+    public function __construct($to_process = null)
     {
 
         if ($to_process !== null) {
-            $tmp = $this->translateCommandline( $to_process );
+            $tmp = $this->translateCommandline($to_process);
             if ($tmp) {
-                $this->setExecutable( array_shift( $tmp ) ); // removes first el
+                $this->setExecutable(array_shift($tmp)); // removes first el
                 foreach ($tmp as $arg) { // iterate through remaining elements
-                    $this->createArgument()->setValue( $arg );
+                    $this->createArgument()->setValue($arg);
                 }
             }
         }
@@ -83,7 +83,7 @@ class Commandline
      * @throws BuildException
      * @return array
      */
-    public static function translateCommandline( $to_process )
+    public static function translateCommandline($to_process)
     {
 
         if (!$to_process) {
@@ -101,9 +101,9 @@ class Commandline
         $current = "";
         $lastTokenHasBeenQuoted = false;
 
-        $tok = strtok( $to_process, "" );
-        $tokens = preg_split( '/(["\' ])/', $to_process, -1, PREG_SPLIT_DELIM_CAPTURE );
-        while (( $nextTok = array_shift( $tokens ) ) !== null) {
+        $tok = strtok($to_process, "");
+        $tokens = preg_split('/(["\' ])/', $to_process, -1, PREG_SPLIT_DELIM_CAPTURE);
+        while (( $nextTok = array_shift($tokens) ) !== null) {
             switch ($state) {
                 case $inQuote:
                     if ("'" == $nextTok) {
@@ -127,7 +127,7 @@ class Commandline
                     } elseif ("\"" == $nextTok) {
                         $state = $inDoubleQuote;
                     } elseif (" " == $nextTok) {
-                        if ($lastTokenHasBeenQuoted || strlen( $current ) != 0) {
+                        if ($lastTokenHasBeenQuoted || strlen($current) != 0) {
                             $args[] = $current;
                             $current = "";
                         }
@@ -139,12 +139,12 @@ class Commandline
             }
         }
 
-        if ($lastTokenHasBeenQuoted || strlen( $current ) != 0) {
+        if ($lastTokenHasBeenQuoted || strlen($current) != 0) {
             $args[] = $current;
         }
 
         if ($state == $inQuote || $state == $inDoubleQuote) {
-            throw new BuildException( "unbalanced quotes in ".$to_process );
+            throw new BuildException("unbalanced quotes in ".$to_process);
         }
 
         return $args;
@@ -161,14 +161,14 @@ class Commandline
      *
      * @return CommandlineArgument
      */
-    public function createArgument( $insertAtStart = false )
+    public function createArgument($insertAtStart = false)
     {
 
-        $argument = new CommandlineArgument( $this );
+        $argument = new CommandlineArgument($this);
         if ($insertAtStart) {
-            array_unshift( $this->arguments, $argument );
+            array_unshift($this->arguments, $argument);
         } else {
-            array_push( $this->arguments, $argument );
+            array_push($this->arguments, $argument);
         }
 
         return $argument;
@@ -188,15 +188,15 @@ class Commandline
      *
      * @param $executable
      */
-    public function setExecutable( $executable )
+    public function setExecutable($executable)
     {
 
         if (!$executable) {
             return;
         }
         $this->executable = $executable;
-        $this->executable = strtr( $this->executable, '/', DIRECTORY_SEPARATOR );
-        $this->executable = strtr( $this->executable, '\\', DIRECTORY_SEPARATOR );
+        $this->executable = strtr($this->executable, '/', DIRECTORY_SEPARATOR);
+        $this->executable = strtr($this->executable, '\\', DIRECTORY_SEPARATOR);
     }
 
     /**
@@ -205,7 +205,7 @@ class Commandline
     public function __toString()
     {
 
-        return self::toString( $this->getCommandline() );
+        return self::toString($this->getCommandline());
     }
 
     /**
@@ -218,7 +218,7 @@ class Commandline
      * @throws BuildException
      * @return string
      */
-    public static function toString( $lines, $escape = false )
+    public static function toString($lines, $escape = false)
     {
 
         // empty path return empty string
@@ -228,11 +228,11 @@ class Commandline
 
         // path containing one or more elements
         $result = "";
-        for ($i = 0, $len = count( $lines ); $i < $len; $i++) {
+        for ($i = 0, $len = count($lines); $i < $len; $i++) {
             if ($i > 0) {
                 $result .= ' ';
             }
-            $result .= self::quoteArgument( $lines[$i], $escape );
+            $result .= self::quoteArgument($lines[$i], $escape);
         }
 
         return $result;
@@ -254,19 +254,19 @@ class Commandline
      * @throws BuildException
      * @return string
      */
-    public static function quoteArgument( $argument, $escape = false )
+    public static function quoteArgument($argument, $escape = false)
     {
 
         if ($escape) {
-            return escapeshellarg( $argument );
-        } elseif (strpos( $argument, "\"" ) !== false && $argument != '""') {
-            if (strpos( $argument, "'" ) !== false) {
-                throw new BuildException( "Can't handle single and double quotes in same argument" );
+            return escapeshellarg($argument);
+        } elseif (strpos($argument, "\"") !== false && $argument != '""') {
+            if (strpos($argument, "'") !== false) {
+                throw new BuildException("Can't handle single and double quotes in same argument");
             } else {
-                return escapeshellarg( $argument );
+                return escapeshellarg($argument);
             }
-        } elseif (strpos( $argument, "'" ) !== false || strpos( $argument, " " ) !== false) {
-            return escapeshellarg( $argument );
+        } elseif (strpos($argument, "'") !== false || strpos($argument, " ") !== false) {
+            return escapeshellarg($argument);
             //return '\"' . $argument . '\"';
         } else {
             return $argument;
@@ -286,7 +286,7 @@ class Commandline
             return $args;
         }
 
-        return array_merge( array( $this->executable ), $args );
+        return array_merge(array($this->executable), $args);
     }
 
     /**
@@ -315,7 +315,7 @@ class Commandline
     public function size()
     {
 
-        return count( $this->getCommandline() );
+        return count($this->getCommandline());
     }
 
     /**
@@ -325,8 +325,8 @@ class Commandline
     {
 
         $c = new Commandline();
-        $c->setExecutable( $this->executable );
-        $c->addArguments( $this->getArguments() );
+        $c->setExecutable($this->executable);
+        $c->addArguments($this->getArguments());
 
         return $c;
     }
@@ -334,11 +334,11 @@ class Commandline
     /**
      * @param $line
      */
-    public function addArguments( $line )
+    public function addArguments($line)
     {
 
         foreach ($line as $arg) {
-            $this->createArgument()->setValue( $arg );
+            $this->createArgument()->setValue($arg);
         }
     }
 
@@ -373,7 +373,7 @@ class Commandline
     public function createMarker()
     {
 
-        return new CommandlineMarker( $this, count( $this->arguments ) );
+        return new CommandlineMarker($this, count($this->arguments));
     }
 
     /**
@@ -388,7 +388,7 @@ class Commandline
      *
      * @return string
      */
-    public function describeCommand( $args = null )
+    public function describeCommand($args = null)
     {
 
         if ($args === null) {
@@ -402,9 +402,9 @@ class Commandline
         $buf = "Executing '";
         $buf .= $args[0];
         $buf .= "'";
-        if (count( $args ) > 0) {
+        if (count($args) > 0) {
             $buf .= " with ";
-            $buf .= $this->describeArguments( $args, 1 );
+            $buf .= $this->describeArguments($args, 1);
         } else {
             $buf .= self::DISCLAIMER;
         }
@@ -422,23 +422,23 @@ class Commandline
      *
      * @return string
      */
-    protected function describeArguments( $args = null, $offset = 0 )
+    protected function describeArguments($args = null, $offset = 0)
     {
 
         if ($args === null) {
             $args = $this->getArguments();
         }
 
-        if ($args === null || count( $args ) <= $offset) {
+        if ($args === null || count($args) <= $offset) {
             return "";
         }
 
         $buf = "argument";
-        if (count( $args ) > $offset) {
+        if (count($args) > $offset) {
             $buf .= "s";
         }
         $buf .= ":".PHP_EOL;
-        for ($i = $offset, $alen = count( $args ); $i < $alen; $i++) {
+        for ($i = $offset, $alen = count($args); $i < $alen; $i++) {
             $buf .= "'".$args[$i]."'".PHP_EOL;
         }
         $buf .= self::DISCLAIMER;
@@ -461,7 +461,7 @@ class CommandlineArgument
     /**
      * @param Commandline $outer
      */
-    public function __construct( Commandline $outer )
+    public function __construct(Commandline $outer)
     {
 
         $this->outer = $outer;
@@ -472,10 +472,10 @@ class CommandlineArgument
      *
      * @param string $value a single commandline argument.
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
-        $this->parts = array( $value );
+        $this->parts = array($value);
     }
 
     /**
@@ -483,13 +483,13 @@ class CommandlineArgument
      *
      * @param line line to split into several commandline arguments
      */
-    public function setLine( $line )
+    public function setLine($line)
     {
 
         if ($line === null) {
             return;
         }
-        $this->parts = $this->outer->translateCommandline( $line );
+        $this->parts = $this->outer->translateCommandline($line);
     }
 
     /**
@@ -501,10 +501,10 @@ class CommandlineArgument
      *
      * @internal param a $value single commandline argument.
      */
-    public function setPath( $value )
+    public function setPath($value)
     {
 
-        $this->parts = array( (string)$value );
+        $this->parts = array((string)$value);
     }
 
     /**
@@ -515,10 +515,10 @@ class CommandlineArgument
      *
      * @internal param a $value single commandline argument.
      */
-    public function setFile( PhingFile $value )
+    public function setFile(PhingFile $value)
     {
 
-        $this->parts = array( $value->getAbsolutePath() );
+        $this->parts = array($value->getAbsolutePath());
     }
 
     /**
@@ -553,7 +553,7 @@ class CommandlineMarker
      * @param Comandline $outer
      * @param            $position
      */
-    public function __construct( Comandline $outer, $position )
+    public function __construct(Comandline $outer, $position)
     {
 
         $this->outer = $outer;
@@ -573,7 +573,7 @@ class CommandlineMarker
             $realPos = ( $this->outer->executable === null ? 0 : 1 );
             for ($i = 0; $i < $position; $i++) {
                 $arg = $this->arguments[$i];
-                $realPos += count( $arg->getParts() );
+                $realPos += count($arg->getParts());
             }
         }
 

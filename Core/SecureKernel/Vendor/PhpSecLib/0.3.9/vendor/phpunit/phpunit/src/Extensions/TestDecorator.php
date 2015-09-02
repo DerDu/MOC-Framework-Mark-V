@@ -32,7 +32,7 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      *
      * @param PHPUnit_Framework_Test $test
      */
-    public function __construct( PHPUnit_Framework_Test $test )
+    public function __construct(PHPUnit_Framework_Test $test)
     {
 
         $this->test = $test;
@@ -58,7 +58,7 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
     public function count()
     {
 
-        return count( $this->test );
+        return count($this->test);
     }
 
     /**
@@ -80,14 +80,14 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      *
      * @return PHPUnit_Framework_TestResult
      */
-    public function run( PHPUnit_Framework_TestResult $result = null )
+    public function run(PHPUnit_Framework_TestResult $result = null)
     {
 
         if ($result === null) {
             $result = $this->createResult();
         }
 
-        $this->basicRun( $result );
+        $this->basicRun($result);
 
         return $result;
     }
@@ -109,9 +109,9 @@ class PHPUnit_Extensions_TestDecorator extends PHPUnit_Framework_Assert implemen
      *
      * @param PHPUnit_Framework_TestResult $result
      */
-    public function basicRun( PHPUnit_Framework_TestResult $result )
+    public function basicRun(PHPUnit_Framework_TestResult $result)
     {
 
-        $this->test->run( $result );
+        $this->test->run($result);
     }
 }

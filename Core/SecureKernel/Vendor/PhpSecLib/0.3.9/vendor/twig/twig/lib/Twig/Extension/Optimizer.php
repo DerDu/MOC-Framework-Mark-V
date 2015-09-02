@@ -14,7 +14,7 @@ class Twig_Extension_Optimizer extends Twig_Extension
 
     protected $optimizers;
 
-    public function __construct( $optimizers = -1 )
+    public function __construct($optimizers = -1)
     {
 
         $this->optimizers = $optimizers;
@@ -26,7 +26,7 @@ class Twig_Extension_Optimizer extends Twig_Extension
     public function getNodeVisitors()
     {
 
-        return array( new Twig_NodeVisitor_Optimizer( $this->optimizers ) );
+        return array(new Twig_NodeVisitor_Optimizer($this->optimizers));
     }
 
     /**

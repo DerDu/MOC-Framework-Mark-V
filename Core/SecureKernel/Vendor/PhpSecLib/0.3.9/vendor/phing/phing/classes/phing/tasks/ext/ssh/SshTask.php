@@ -70,7 +70,7 @@ class SshTask extends Task
     /**
      * @param $host
      */
-    public function setHost( $host )
+    public function setHost($host)
     {
 
         $this->host = $host;
@@ -88,7 +88,7 @@ class SshTask extends Task
     /**
      * @param $port
      */
-    public function setPort( $port )
+    public function setPort($port)
     {
 
         $this->port = $port;
@@ -106,7 +106,7 @@ class SshTask extends Task
     /**
      * @param $username
      */
-    public function setUsername( $username )
+    public function setUsername($username)
     {
 
         $this->username = $username;
@@ -124,7 +124,7 @@ class SshTask extends Task
     /**
      * @param $password
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;
@@ -144,7 +144,7 @@ class SshTask extends Task
      *
      * @param $pubkeyfile
      */
-    public function setPubkeyfile( $pubkeyfile )
+    public function setPubkeyfile($pubkeyfile)
     {
 
         $this->pubkeyfile = $pubkeyfile;
@@ -164,7 +164,7 @@ class SshTask extends Task
      *
      * @param $privkeyfile
      */
-    public function setPrivkeyfile( $privkeyfile )
+    public function setPrivkeyfile($privkeyfile)
     {
 
         $this->privkeyfile = $privkeyfile;
@@ -177,7 +177,7 @@ class SshTask extends Task
      *
      * @return string
      */
-    public function getPrivkeyfilepassphrase( $privkeyfilepassphrase )
+    public function getPrivkeyfilepassphrase($privkeyfilepassphrase)
     {
 
         return $this->privkeyfilepassphrase;
@@ -188,7 +188,7 @@ class SshTask extends Task
      *
      * @param $privkeyfilepassphrase
      */
-    public function setPrivkeyfilepassphrase( $privkeyfilepassphrase )
+    public function setPrivkeyfilepassphrase($privkeyfilepassphrase)
     {
 
         $this->privkeyfilepassphrase = $privkeyfilepassphrase;
@@ -206,7 +206,7 @@ class SshTask extends Task
     /**
      * @param $command
      */
-    public function setCommand( $command )
+    public function setCommand($command)
     {
 
         $this->command = $command;
@@ -224,7 +224,7 @@ class SshTask extends Task
     /**
      * @param $pty
      */
-    public function setPty( $pty )
+    public function setPty($pty)
     {
 
         $this->pty = $pty;
@@ -235,7 +235,7 @@ class SshTask extends Task
      *
      * @param string $property
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -246,7 +246,7 @@ class SshTask extends Task
      *
      * @param boolean $display
      */
-    public function setDisplay( $display )
+    public function setDisplay($display)
     {
 
         $this->display = (boolean)$display;
@@ -259,7 +259,7 @@ class SshTask extends Task
      *
      * @internal param bool $failOnError
      */
-    public function setFailonerror( $failonerror )
+    public function setFailonerror($failonerror)
     {
 
         $this->failonerror = (boolean)$failonerror;
@@ -288,12 +288,12 @@ class SshTask extends Task
         $this->setupConnection();
 
         if ($this->pty != '') {
-            $stream = ssh2_exec( $this->connection, $this->command, $this->pty );
+            $stream = ssh2_exec($this->connection, $this->command, $this->pty);
         } else {
-            $stream = ssh2_exec( $this->connection, $this->command );
+            $stream = ssh2_exec($this->connection, $this->command);
         }
 
-        $this->handleStream( $stream );
+        $this->handleStream($stream);
     }
 
     /**
@@ -305,14 +305,14 @@ class SshTask extends Task
 
         $p = $this->getProject();
 
-        if (!function_exists( 'ssh2_connect' )) {
-            throw new BuildException( "To use SshTask, you need to install the PHP SSH2 extension." );
+        if (!function_exists('ssh2_connect')) {
+            throw new BuildException("To use SshTask, you need to install the PHP SSH2 extension.");
         }
 
-        $methods = !empty( $this->methods ) ? $this->methods->toArray( $p ) : array();
-        $this->connection = ssh2_connect( $this->host, $this->port, $methods );
+        $methods = !empty( $this->methods ) ? $this->methods->toArray($p) : array();
+        $this->connection = ssh2_connect($this->host, $this->port, $methods);
         if (!$this->connection) {
-            throw new BuildException( "Could not establish connection to ".$this->host.":".$this->port."!" );
+            throw new BuildException("Could not establish connection to ".$this->host.":".$this->port."!");
         }
 
         $could_auth = null;
@@ -325,10 +325,10 @@ class SshTask extends Task
                 $this->privkeyfilepassphrase
             );
         } else {
-            $could_auth = ssh2_auth_password( $this->connection, $this->username, $this->password );
+            $could_auth = ssh2_auth_password($this->connection, $this->username, $this->password);
         }
         if (!$could_auth) {
-            throw new BuildException( "Could not authenticate connection!" );
+            throw new BuildException("Could not authenticate connection!");
         }
     }
 
@@ -341,38 +341,38 @@ class SshTask extends Task
      *
      * @throws BuildException
      */
-    protected function handleStream( $stream )
+    protected function handleStream($stream)
     {
 
         if (!$stream) {
-            throw new BuildException( "Could not execute command!" );
+            throw new BuildException("Could not execute command!");
         }
 
-        $this->log( "Executing command {$this->command}", Project::MSG_VERBOSE );
+        $this->log("Executing command {$this->command}", Project::MSG_VERBOSE);
 
-        stream_set_blocking( $stream, true );
-        $result = stream_get_contents( $stream );
+        stream_set_blocking($stream, true);
+        $result = stream_get_contents($stream);
 
         // always load contents of error stream, to make sure not one command failed
-        $stderr_stream = ssh2_fetch_stream( $stream, SSH2_STREAM_STDERR );
-        stream_set_blocking( $stderr_stream, true );
-        $result_error = stream_get_contents( $stderr_stream );
+        $stderr_stream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+        stream_set_blocking($stderr_stream, true);
+        $result_error = stream_get_contents($stderr_stream);
 
         if ($this->display) {
             print( $result );
         }
 
         if (!empty( $this->property )) {
-            $this->project->setProperty( $this->property, $result );
+            $this->project->setProperty($this->property, $result);
         }
 
-        fclose( $stream );
+        fclose($stream);
         if (isset( $stderr_stream )) {
-            fclose( $stderr_stream );
+            fclose($stderr_stream);
         }
 
         if ($this->failonerror && !empty( $result_error )) {
-            throw new BuildException( "SSH Task failed: ".$result_error );
+            throw new BuildException("SSH Task failed: ".$result_error);
         }
     }
 

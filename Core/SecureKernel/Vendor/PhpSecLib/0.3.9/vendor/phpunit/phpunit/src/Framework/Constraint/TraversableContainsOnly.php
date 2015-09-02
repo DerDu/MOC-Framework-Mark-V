@@ -31,13 +31,13 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      * @param string $type
      * @param bool   $isNativeType
      */
-    public function __construct( $type, $isNativeType = true )
+    public function __construct($type, $isNativeType = true)
     {
 
         parent::__construct();
 
         if ($isNativeType) {
-            $this->constraint = new PHPUnit_Framework_Constraint_IsType( $type );
+            $this->constraint = new PHPUnit_Framework_Constraint_IsType($type);
         } else {
             $this->constraint = new PHPUnit_Framework_Constraint_IsInstanceOf(
                 $type
@@ -64,13 +64,13 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
         $success = true;
 
         foreach ($other as $item) {
-            if (!$this->constraint->evaluate( $item, '', true )) {
+            if (!$this->constraint->evaluate($item, '', true)) {
                 $success = false;
                 break;
             }
@@ -81,7 +81,7 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 

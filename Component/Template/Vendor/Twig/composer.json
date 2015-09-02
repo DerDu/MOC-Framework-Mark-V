@@ -2,7 +2,9 @@
     "name": "twig/twig",
     "type": "library",
     "description": "Twig, the flexible, fast, and secure template language for PHP",
-    "keywords": ["templating"],
+    "keywords": [
+        "templating"
+    ],
     "homepage": "http://twig.sensiolabs.org",
     "license": "BSD-3-Clause",
     "authors": [
@@ -30,8 +32,8 @@
         "php": ">=5.2.4"
     },
     "autoload": {
-        "psr-0" : {
-            "Twig_" : "lib/"
+        "psr-0": {
+            "Twig_": "lib/"
         }
     },
     "extra": {

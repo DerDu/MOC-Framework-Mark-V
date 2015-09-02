@@ -35,12 +35,12 @@ abstract class Command extends BaseCommand
     protected $input;
     protected $output;
 
-    public function update( Project $project )
+    public function update(Project $project)
     {
 
-        $callback = $this->output->isDecorated() ? array( $this, 'messageCallback' ) : null;
+        $callback = $this->output->isDecorated() ? array($this, 'messageCallback') : null;
 
-        $project->update( $callback, $this->input->getOption( 'force' ) );
+        $project->update($callback, $this->input->getOption('force'));
 
         $this->displayParseSummary();
         $this->displayRenderSummary();
@@ -49,70 +49,70 @@ abstract class Command extends BaseCommand
     public function displayParseSummary()
     {
 
-        if (count( $this->transactions ) <= 0) {
+        if (count($this->transactions) <= 0) {
             return;
         }
 
-        $this->output->writeln( '' );
-        $this->output->writeln( '<bg=cyan;fg=white> Version </>  <bg=cyan;fg=white> Updated C </>  <bg=cyan;fg=white> Removed C </>' );
+        $this->output->writeln('');
+        $this->output->writeln('<bg=cyan;fg=white> Version </>  <bg=cyan;fg=white> Updated C </>  <bg=cyan;fg=white> Removed C </>');
 
         foreach ($this->transactions as $version => $transaction) {
-            $this->output->writeln( sprintf( '%9s  %11d  %11d', $version, count( $transaction->getModifiedClasses() ),
-                count( $transaction->getRemovedClasses() ) ) );
+            $this->output->writeln(sprintf('%9s  %11d  %11d', $version, count($transaction->getModifiedClasses()),
+                count($transaction->getRemovedClasses())));
         }
-        $this->output->writeln( '' );
+        $this->output->writeln('');
     }
 
     public function displayRenderSummary()
     {
 
-        if (count( $this->diffs ) <= 0) {
+        if (count($this->diffs) <= 0) {
             return;
         }
 
-        $this->output->writeln( '<bg=cyan;fg=white> Version </>  <bg=cyan;fg=white> Updated C </>  <bg=cyan;fg=white> Updated N </>  <bg=cyan;fg=white> Removed C </>  <bg=cyan;fg=white> Removed N </>' );
+        $this->output->writeln('<bg=cyan;fg=white> Version </>  <bg=cyan;fg=white> Updated C </>  <bg=cyan;fg=white> Updated N </>  <bg=cyan;fg=white> Removed C </>  <bg=cyan;fg=white> Removed N </>');
 
         foreach ($this->diffs as $version => $diff) {
-            $this->output->writeln( sprintf( '%9s  %11d  %11d  %11d  %11d', $version,
-                count( $diff->getModifiedClasses() ),
-                count( $diff->getModifiedNamespaces() ),
-                count( $diff->getRemovedClasses() ),
-                count( $diff->getRemovedNamespaces() )
-            ) );
+            $this->output->writeln(sprintf('%9s  %11d  %11d  %11d  %11d', $version,
+                count($diff->getModifiedClasses()),
+                count($diff->getModifiedNamespaces()),
+                count($diff->getRemovedClasses()),
+                count($diff->getRemovedNamespaces())
+            ));
         }
-        $this->output->writeln( '' );
+        $this->output->writeln('');
     }
 
-    public function parse( Project $project )
+    public function parse(Project $project)
     {
 
-        $callback = $this->output->isDecorated() ? array( $this, 'messageCallback' ) : null;
+        $callback = $this->output->isDecorated() ? array($this, 'messageCallback') : null;
 
-        $project->parse( $callback, $this->input->getOption( 'force' ) );
+        $project->parse($callback, $this->input->getOption('force'));
 
         $this->displayParseSummary();
     }
 
-    public function render( Project $project )
+    public function render(Project $project)
     {
 
-        $callback = $this->output->isDecorated() ? array( $this, 'messageCallback' ) : null;
+        $callback = $this->output->isDecorated() ? array($this, 'messageCallback') : null;
 
-        $project->render( $callback, $this->input->getOption( 'force' ) );
+        $project->render($callback, $this->input->getOption('force'));
 
         $this->displayRenderSummary();
     }
 
-    public function messageCallback( $message, $data )
+    public function messageCallback($message, $data)
     {
 
         switch ($message) {
             case Message::PARSE_CLASS:
                 list( $progress, $class ) = $data;
-                $this->displayParseProgress( $progress, $class );
+                $this->displayParseProgress($progress, $class);
                 break;
             case Message::PARSE_ERROR:
-                $this->errors = array_merge( $this->errors, $data );
+                $this->errors = array_merge($this->errors, $data);
                 break;
             case Message::SWITCH_VERSION:
                 $this->version = $data;
@@ -122,93 +122,93 @@ abstract class Command extends BaseCommand
                 break;
             case Message::PARSE_VERSION_FINISHED:
                 $this->transactions[(string)$this->version] = $data;
-                $this->displayParseEnd( $data );
+                $this->displayParseEnd($data);
                 $this->started = false;
                 break;
             case Message::RENDER_VERSION_FINISHED:
                 $this->diffs[(string)$this->version] = $data;
-                $this->displayRenderEnd( $data );
+                $this->displayRenderEnd($data);
                 $this->started = false;
                 break;
             case Message::RENDER_PROGRESS:
                 list ( $section, $message, $progression ) = $data;
-                $this->displayRenderProgress( $section, $message, $progression );
+                $this->displayRenderProgress($section, $message, $progression);
                 break;
         }
     }
 
-    public function displayParseProgress( $progress, $class )
+    public function displayParseProgress($progress, $class)
     {
 
         if ($this->started) {
-            $this->output->write( "\033[2A" );
+            $this->output->write("\033[2A");
         }
         $this->started = true;
 
-        $this->output->write( sprintf(
+        $this->output->write(sprintf(
                 "  Parsing <comment>%s</comment>%s\033[K\n          %s\033[K\n",
-                $this->renderProgressBar( $progress, 50 ),
-                count( $this->errors ) ? ' <fg=red>'.count( $this->errors ).' error'.( 1 == count( $this->errors ) ? '' : 's' ).'</>' : '',
-                $class->getName() )
+                $this->renderProgressBar($progress, 50),
+                count($this->errors) ? ' <fg=red>'.count($this->errors).' error'.( 1 == count($this->errors) ? '' : 's' ).'</>' : '',
+                $class->getName())
         );
     }
 
-    public function renderProgressBar( $percent, $length )
+    public function renderProgressBar($percent, $length)
     {
 
         return
-            str_repeat( '#', floor( $percent / 100 * $length ) )
-            .sprintf( ' %d%%', $percent )
-            .str_repeat( ' ', $length - floor( $percent / 100 * $length ) );
+            str_repeat('#', floor($percent / 100 * $length))
+            .sprintf(' %d%%', $percent)
+            .str_repeat(' ', $length - floor($percent / 100 * $length));
     }
 
     public function displaySwitch()
     {
 
-        $this->output->writeln( sprintf( "\n<fg=cyan>Version %s</>", $this->version ) );
+        $this->output->writeln(sprintf("\n<fg=cyan>Version %s</>", $this->version));
     }
 
-    public function displayParseEnd( Transaction $transaction )
+    public function displayParseEnd(Transaction $transaction)
     {
 
         if (!$this->started) {
             return;
         }
 
-        $this->output->write( sprintf( "\033[2A<info>  Parsing   done</info>\033[K\n\033[K\n\033[1A",
-            count( $this->errors ) ? ' <fg=red>'.count( $this->errors ).' errors</>' : '' ) );
+        $this->output->write(sprintf("\033[2A<info>  Parsing   done</info>\033[K\n\033[K\n\033[1A",
+            count($this->errors) ? ' <fg=red>'.count($this->errors).' errors</>' : ''));
 
-        if ($this->input->getOption( 'verbose' ) && count( $this->errors )) {
+        if ($this->input->getOption('verbose') && count($this->errors)) {
             foreach ($this->errors as $error) {
-                $this->output->write( sprintf( "<fg=red>ERROR</>: " ) );
-                $this->output->writeln( $error, OutputInterface::OUTPUT_RAW );
+                $this->output->write(sprintf("<fg=red>ERROR</>: "));
+                $this->output->writeln($error, OutputInterface::OUTPUT_RAW);
             }
-            $this->output->writeln( '' );
+            $this->output->writeln('');
         }
     }
 
-    public function displayRenderEnd( Diff $diff )
+    public function displayRenderEnd(Diff $diff)
     {
 
         if (!$this->started) {
             return;
         }
 
-        $this->output->write( "\033[2A<info>  Rendering done</info>\033[K\n\033[K\n\033[1A" );
+        $this->output->write("\033[2A<info>  Rendering done</info>\033[K\n\033[K\n\033[1A");
     }
 
-    public function displayRenderProgress( $section, $message, $progression )
+    public function displayRenderProgress($section, $message, $progression)
     {
 
         if ($this->started) {
-            $this->output->write( "\033[2A" );
+            $this->output->write("\033[2A");
         }
         $this->started = true;
 
-        $this->output->write( sprintf(
+        $this->output->write(sprintf(
             "  Rendering <comment>%s</comment>\033[K\n            <info>%s</info> %s\033[K\n",
-            $this->renderProgressBar( $progression, 50 ), $section, $message
-        ) );
+            $this->renderProgressBar($progression, 50), $section, $message
+        ));
     }
 
     /**
@@ -217,37 +217,37 @@ abstract class Command extends BaseCommand
     protected function configure()
     {
 
-        $this->getDefinition()->addArgument( new InputArgument( 'config', InputArgument::REQUIRED,
-            'The configuration' ) );
-        $this->getDefinition()->addOption( new InputOption( 'only-version', '', InputOption::VALUE_REQUIRED,
-            'The version to build' ) );
+        $this->getDefinition()->addArgument(new InputArgument('config', InputArgument::REQUIRED,
+            'The configuration'));
+        $this->getDefinition()->addOption(new InputOption('only-version', '', InputOption::VALUE_REQUIRED,
+            'The version to build'));
     }
 
-    protected function initialize( InputInterface $input, OutputInterface $output )
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
 
         $this->input = $input;
         $this->output = $output;
 
-        $config = $input->getArgument( 'config' );
+        $config = $input->getArgument('config');
         $filesystem = new Filesystem();
 
-        if (!$filesystem->isAbsolutePath( $config )) {
+        if (!$filesystem->isAbsolutePath($config)) {
             $config = getcwd().'/'.$config;
         }
 
-        if (!is_file( $config )) {
-            throw new \InvalidArgumentException( sprintf( 'Configuration file "%s" does not exist.', $config ) );
+        if (!is_file($config)) {
+            throw new \InvalidArgumentException(sprintf('Configuration file "%s" does not exist.', $config));
         }
 
         $this->sami = require $config;
 
-        if ($input->getOption( 'only-version' )) {
-            $this->sami['versions'] = $input->getOption( 'only-version' );
+        if ($input->getOption('only-version')) {
+            $this->sami['versions'] = $input->getOption('only-version');
         }
 
         if (!$this->sami instanceof Sami) {
-            throw new \RuntimeException( sprintf( 'Configuration file "%s" must return a Sami instance.', $config ) );
+            throw new \RuntimeException(sprintf('Configuration file "%s" must return a Sami instance.', $config));
         }
     }
 }

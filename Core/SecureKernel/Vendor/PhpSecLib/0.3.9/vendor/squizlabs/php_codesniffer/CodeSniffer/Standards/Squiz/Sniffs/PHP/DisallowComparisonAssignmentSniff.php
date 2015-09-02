@@ -37,7 +37,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
     public function register()
     {
 
-        return array( T_EQUAL );
+        return array(T_EQUAL);
 
     }//end register()
 
@@ -51,13 +51,13 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious( T_FUNCTION, ( $stackPtr - 1 ) );
+        $function = $phpcsFile->findPrevious(T_FUNCTION, ( $stackPtr - 1 ));
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];
@@ -87,7 +87,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
             T_OBJECT_OPERATOR,
         );
 
-        $next = $phpcsFile->findNext( $ignore, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext($ignore, ( $stackPtr + 1 ), null, true);
         if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS
             && $tokens[( $next - 1 )]['code'] === T_STRING
         ) {
@@ -96,7 +96,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
             return;
         }
 
-        $endStatement = $phpcsFile->findNext( T_SEMICOLON, ( $stackPtr + 1 ) );
+        $endStatement = $phpcsFile->findNext(T_SEMICOLON, ( $stackPtr + 1 ));
         if ($tokens[$stackPtr]['conditions'] !== $tokens[$endStatement]['conditions']) {
             // This statement doesn't end with a semicolon, which is the case for
             // the last expression in a for loop.
@@ -104,17 +104,17 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
         }
 
         for ($i = ( $stackPtr + 1 ); $i < $endStatement; $i++) {
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens ) === true) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
                 $error = 'The value of a comparison must not be assigned to a variable';
-                $phpcsFile->addError( $error, $stackPtr, 'AssignedComparison' );
+                $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
                 break;
             }
 
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$booleanOperators ) === true
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$booleanOperators) === true
                 || $tokens[$i]['code'] === T_BOOLEAN_NOT
             ) {
                 $error = 'The value of a boolean operation must not be assigned to a variable';
-                $phpcsFile->addError( $error, $stackPtr, 'AssignedBool' );
+                $phpcsFile->addError($error, $stackPtr, 'AssignedBool');
                 break;
             }
         }

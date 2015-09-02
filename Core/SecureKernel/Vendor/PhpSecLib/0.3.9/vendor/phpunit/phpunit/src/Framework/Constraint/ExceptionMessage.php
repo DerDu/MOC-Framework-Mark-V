@@ -22,7 +22,7 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
     /**
      * @param string $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
 
         parent::__construct();
@@ -46,10 +46,10 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return strpos( $other->getMessage(), $this->expectedMessage ) !== false;
+        return strpos($other->getMessage(), $this->expectedMessage) !== false;
     }
 
     /**
@@ -62,7 +62,7 @@ class PHPUnit_Framework_Constraint_ExceptionMessage extends PHPUnit_Framework_Co
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return sprintf(

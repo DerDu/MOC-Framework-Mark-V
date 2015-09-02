@@ -36,10 +36,10 @@ class BankAccount
      *
      * @throws BankAccountException
      */
-    public function depositMoney( $balance )
+    public function depositMoney($balance)
     {
 
-        $this->setBalance( $this->getBalance() + $balance );
+        $this->setBalance($this->getBalance() + $balance);
 
         return $this->getBalance();
     }
@@ -62,7 +62,7 @@ class BankAccount
      *
      * @throws BankAccountException
      */
-    protected function setBalance( $balance )
+    protected function setBalance($balance)
     {
 
         if ($balance >= 0) {
@@ -79,10 +79,10 @@ class BankAccount
      *
      * @throws BankAccountException
      */
-    public function withdrawMoney( $balance )
+    public function withdrawMoney($balance)
     {
 
-        $this->setBalance( $this->getBalance() - $balance );
+        $this->setBalance($this->getBalance() - $balance);
 
         return $this->getBalance();
     }

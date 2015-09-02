@@ -2,6 +2,7 @@
 
 class CoveredClassWithAnonymousFunctionInStaticMethod
 {
+
     public static function runAnonymous()
     {
 

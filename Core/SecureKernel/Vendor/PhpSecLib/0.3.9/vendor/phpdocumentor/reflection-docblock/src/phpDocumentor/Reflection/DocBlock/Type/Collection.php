@@ -85,7 +85,7 @@ class Collection extends \ArrayObject
         $this->context = null === $context ? new Context() : $context;
 
         foreach ($types as $type) {
-            $this->add( $type );
+            $this->add($type);
         }
     }
 
@@ -106,20 +106,20 @@ class Collection extends \ArrayObject
      *
      * @return void
      */
-    public function add( $type )
+    public function add($type)
     {
 
-        if (!is_string( $type )) {
+        if (!is_string($type)) {
             throw new \InvalidArgumentException(
                 'A type should be represented by a string, received: '
-                .var_export( $type, true )
+                .var_export($type, true)
             );
         }
 
         // separate the type by the OR operator
-        $type_parts = explode( self::OPERATOR_OR, $type );
+        $type_parts = explode(self::OPERATOR_OR, $type);
         foreach ($type_parts as $part) {
-            $expanded_type = $this->expand( $part );
+            $expanded_type = $this->expand($part);
             if ($expanded_type) {
                 $this[] = $expanded_type;
             }
@@ -144,20 +144,20 @@ class Collection extends \ArrayObject
      *
      * @return string
      */
-    protected function expand( $type )
+    protected function expand($type)
     {
 
-        $type = trim( $type );
+        $type = trim($type);
         if (!$type) {
             return '';
         }
 
-        if ($this->isTypeAnArray( $type )) {
-            return $this->expand( substr( $type, 0, -2 ) ).self::OPERATOR_ARRAY;
+        if ($this->isTypeAnArray($type)) {
+            return $this->expand(substr($type, 0, -2)).self::OPERATOR_ARRAY;
         }
 
-        if ($this->isRelativeType( $type ) && !$this->isTypeAKeyword( $type )) {
-            $type_parts = explode( self::OPERATOR_NAMESPACE, $type, 2 );
+        if ($this->isRelativeType($type) && !$this->isTypeAKeyword($type)) {
+            $type_parts = explode(self::OPERATOR_NAMESPACE, $type, 2);
 
             $namespace_aliases = $this->context->getNamespaceAliases();
             // if the first segment is not an alias; prepend namespace name and
@@ -171,7 +171,7 @@ class Collection extends \ArrayObject
             }
 
             $type_parts[0] = $namespace_aliases[$type_parts[0]];
-            $type = implode( self::OPERATOR_NAMESPACE, $type_parts );
+            $type = implode(self::OPERATOR_NAMESPACE, $type_parts);
         }
 
         return $type;
@@ -185,10 +185,10 @@ class Collection extends \ArrayObject
      *
      * @return bool
      */
-    protected function isTypeAnArray( $type )
+    protected function isTypeAnArray($type)
     {
 
-        return substr( $type, -2 ) === self::OPERATOR_ARRAY;
+        return substr($type, -2) === self::OPERATOR_ARRAY;
     }
 
     /**
@@ -202,11 +202,11 @@ class Collection extends \ArrayObject
      *
      * @return bool
      */
-    protected function isRelativeType( $type )
+    protected function isRelativeType($type)
     {
 
         return ( $type[0] !== self::OPERATOR_NAMESPACE )
-        || $this->isTypeAKeyword( $type );
+        || $this->isTypeAKeyword($type);
     }
 
     /**
@@ -217,10 +217,10 @@ class Collection extends \ArrayObject
      *
      * @return bool
      */
-    protected function isTypeAKeyword( $type )
+    protected function isTypeAKeyword($type)
     {
 
-        return in_array( strtolower( $type ), static::$keywords, true );
+        return in_array(strtolower($type), static::$keywords, true);
     }
 
     /**
@@ -243,6 +243,6 @@ class Collection extends \ArrayObject
     public function __toString()
     {
 
-        return implode( self::OPERATOR_OR, $this->getArrayCopy() );
+        return implode(self::OPERATOR_OR, $this->getArrayCopy());
     }
 }

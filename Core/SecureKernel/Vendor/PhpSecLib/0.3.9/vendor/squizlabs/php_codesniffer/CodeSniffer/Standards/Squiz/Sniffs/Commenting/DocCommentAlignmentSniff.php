@@ -39,7 +39,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_DOC_COMMENT );
+        return array(T_DOC_COMMENT);
 
     }//end register()
 
@@ -53,13 +53,13 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // We are only interested in function/class/interface doc block comments.
-        $nextToken = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
+        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true);
         $ignore = array(
             T_CLASS,
             T_INTERFACE,
@@ -71,10 +71,10 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
             T_ABSTRACT,
         );
 
-        if (in_array( $tokens[$nextToken]['code'], $ignore ) === false) {
+        if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
             // Could be a file comment.
-            $prevToken = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null,
-                true );
+            $prevToken = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null,
+                true);
             if ($tokens[$prevToken]['code'] !== T_OPEN_TAG) {
                 return;
             }
@@ -82,17 +82,17 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
         // We only want to get the first comment in a block. If there is
         // a comment on the line before this one, return.
-        $docComment = $phpcsFile->findPrevious( T_DOC_COMMENT, ( $stackPtr - 1 ) );
+        $docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ( $stackPtr - 1 ));
         if ($docComment !== false) {
             if ($tokens[$docComment]['line'] === ( $tokens[$stackPtr]['line'] - 1 )) {
                 return;
             }
         }
 
-        $comments = array( $stackPtr );
+        $comments = array($stackPtr);
         $currentComment = $stackPtr;
         $lastComment = $stackPtr;
-        while (( $currentComment = $phpcsFile->findNext( T_DOC_COMMENT, ( $currentComment + 1 ) ) ) !== false) {
+        while (( $currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ( $currentComment + 1 )) ) !== false) {
             if ($tokens[$lastComment]['line'] === ( $tokens[$currentComment]['line'] - 1 )) {
                 $comments[] = $currentComment;
                 $lastComment = $currentComment;
@@ -103,34 +103,34 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
         // The $comments array now contains pointers to each token in the
         // comment block.
-        $requiredColumn = strpos( $tokens[$stackPtr]['content'], '*' );
+        $requiredColumn = strpos($tokens[$stackPtr]['content'], '*');
         $requiredColumn += $tokens[$stackPtr]['column'];
 
         foreach ($comments as $commentPointer) {
             // Check the spacing after each asterisk.
             $content = $tokens[$commentPointer]['content'];
-            $firstChar = substr( $content, 0, 1 );
-            $lastChar = substr( $content, -1 );
+            $firstChar = substr($content, 0, 1);
+            $lastChar = substr($content, -1);
             if ($firstChar !== '/' && $lastChar !== '/') {
                 $matches = array();
-                preg_match( '|^(\s+)?\*(\s+)?@|', $content, $matches );
+                preg_match('|^(\s+)?\*(\s+)?@|', $content, $matches);
                 if (empty( $matches ) === false) {
                     if (isset( $matches[2] ) === false) {
                         $error = 'Expected 1 space between asterisk and tag; 0 found';
-                        $phpcsFile->addError( $error, $commentPointer, 'NoSpaceBeforeTag' );
+                        $phpcsFile->addError($error, $commentPointer, 'NoSpaceBeforeTag');
                     } else {
-                        $length = strlen( $matches[2] );
+                        $length = strlen($matches[2]);
                         if ($length !== 1) {
                             $error = 'Expected 1 space between asterisk and tag; %s found';
-                            $data = array( $length );
-                            $phpcsFile->addError( $error, $commentPointer, 'SpaceBeforeTag', $data );
+                            $data = array($length);
+                            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeTag', $data);
                         }
                     }
                 }
             }//end foreach
 
             // Check the alignment of each asterisk.
-            $currentColumn = strpos( $content, '*' );
+            $currentColumn = strpos($content, '*');
             $currentColumn += $tokens[$commentPointer]['column'];
 
             if ($currentColumn === $requiredColumn) {
@@ -143,7 +143,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                 ( $requiredColumn - 1 ),
                 ( $currentColumn - 1 ),
             );
-            $phpcsFile->addError( $error, $commentPointer, 'SpaceBeforeAsterisk', $data );
+            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeAsterisk', $data);
         }//end foreach
 
     }//end process()

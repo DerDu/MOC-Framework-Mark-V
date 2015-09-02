@@ -51,7 +51,7 @@ class PharMetadataElement
     /**
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -75,7 +75,7 @@ class PharMetadataElement
     /**
      * @param string $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = $value;

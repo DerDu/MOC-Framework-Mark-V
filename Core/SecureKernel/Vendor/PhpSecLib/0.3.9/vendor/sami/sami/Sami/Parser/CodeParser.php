@@ -31,7 +31,7 @@ class CodeParser
 
         // hack for a BC break between PHPParser 0.9.1 and 0.9.2
         // the Parser::parse() method argument changed
-        $m = new \ReflectionMethod( $this->parser, 'parse' );
+        $m = new \ReflectionMethod($this->parser, 'parse');
         $parameters = $m->getParameters();
         $this->passCode = null === $parameters[0]->getClass();
     }
@@ -42,17 +42,17 @@ class CodeParser
         return $this->context;
     }
 
-    public function parse( $code )
+    public function parse($code)
     {
 
         try {
             if ($this->passCode) {
-                $this->traverser->traverse( $this->parser->parse( $code ) );
+                $this->traverser->traverse($this->parser->parse($code));
             } else {
-                $this->traverser->traverse( $this->parser->parse( new \PHPParser_Lexer( $code ) ) );
+                $this->traverser->traverse($this->parser->parse(new \PHPParser_Lexer($code)));
             }
-        } catch( \PHPParser_Error $e ) {
-            $this->context->addError( $this->context->getFile(), 0, $e->getMessage() );
+        } catch (\PHPParser_Error $e) {
+            $this->context->addError($this->context->getFile(), 0, $e->getMessage());
         }
     }
 }

@@ -39,7 +39,7 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -53,21 +53,21 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $phpPath = PHP_CodeSniffer::getConfigData( 'php_path' );
+        $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         if ($phpPath === null) {
             return;
         }
 
         $fileName = $phpcsFile->getFilename();
         $cmd = "$phpPath -l \"$fileName\" 2>&1";
-        $output = shell_exec( $cmd );
+        $output = shell_exec($cmd);
 
         $matches = array();
-        if (preg_match( '/^.*error:(.*) in .* on line ([0-9]+)/', $output, $matches )) {
-            $error = trim( $matches[1] );
+        if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', $output, $matches)) {
+            $error = trim($matches[1]);
             $line = (int)$matches[2];
 
             $tokens = $phpcsFile->getTokens();
@@ -78,7 +78,7 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
 
             foreach ($tokens as $id => $token) {
                 if ($token['line'] === $line) {
-                    $phpcsFile->addError( "PHP syntax error: $error", $id, 'PHPSyntax' );
+                    $phpcsFile->addError("PHP syntax error: $error", $id, 'PHPSyntax');
                     break;
                 }
             }

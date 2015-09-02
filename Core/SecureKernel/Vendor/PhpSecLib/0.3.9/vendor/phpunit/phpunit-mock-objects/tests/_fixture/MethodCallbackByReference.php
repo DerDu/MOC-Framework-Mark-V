@@ -1,4 +1,5 @@
 <?php
+
 class MethodCallbackByReference
 {
 
@@ -10,6 +11,7 @@ class MethodCallbackByReference
 
     public function callback(&$a, &$b, $c)
     {
+
         $b = 1;
     }
 }

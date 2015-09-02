@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,7 +58,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -67,7 +67,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
         $endLine = $tokens[$end]['line'];
 
         // Do not check nested style definitions as, for example, in @media style rules.
-        $nested = $phpcsFile->findNext( T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ), $end );
+        $nested = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ), $end);
         if ($nested !== false) {
             return;
         }
@@ -80,7 +80,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
                 if ($foundColon === false && $foundString !== false) {
                     // We didn't find a colon on the previous line.
                     $error = 'No style definition found on line; check for missing colon';
-                    $phpcsFile->addError( $error, $foundString, 'Found' );
+                    $phpcsFile->addError($error, $foundString, 'Found');
                 }
 
                 $foundColon = false;

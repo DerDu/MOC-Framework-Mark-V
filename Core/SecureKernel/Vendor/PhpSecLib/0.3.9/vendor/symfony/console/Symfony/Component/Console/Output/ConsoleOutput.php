@@ -53,9 +53,9 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
             $outputStream = 'php://output';
         }
 
-        parent::__construct( fopen( $outputStream, 'w' ), $verbosity, $decorated, $formatter );
+        parent::__construct(fopen($outputStream, 'w'), $verbosity, $decorated, $formatter);
 
-        $this->stderr = new StreamOutput( fopen( 'php://stderr', 'w' ), $verbosity, $decorated, $this->getFormatter() );
+        $this->stderr = new StreamOutput(fopen('php://stderr', 'w'), $verbosity, $decorated, $this->getFormatter());
     }
 
     /**
@@ -71,37 +71,37 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     protected function hasStdoutSupport()
     {
 
-        return ( 'OS400' != php_uname( 's' ) );
+        return ( 'OS400' != php_uname('s') );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDecorated( $decorated )
+    public function setDecorated($decorated)
     {
 
-        parent::setDecorated( $decorated );
-        $this->stderr->setDecorated( $decorated );
+        parent::setDecorated($decorated);
+        $this->stderr->setDecorated($decorated);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setFormatter( OutputFormatterInterface $formatter )
+    public function setFormatter(OutputFormatterInterface $formatter)
     {
 
-        parent::setFormatter( $formatter );
-        $this->stderr->setFormatter( $formatter );
+        parent::setFormatter($formatter);
+        $this->stderr->setFormatter($formatter);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity( $level )
+    public function setVerbosity($level)
     {
 
-        parent::setVerbosity( $level );
-        $this->stderr->setVerbosity( $level );
+        parent::setVerbosity($level);
+        $this->stderr->setVerbosity($level);
     }
 
     /**
@@ -116,7 +116,7 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setErrorOutput( OutputInterface $error )
+    public function setErrorOutput(OutputInterface $error)
     {
 
         $this->stderr = $error;

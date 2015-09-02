@@ -90,7 +90,7 @@ class PhpDocumentor2Wrapper
      *
      * @param Project $project
      */
-    public function setProject( $project )
+    public function setProject($project)
     {
 
         $this->project = $project;
@@ -101,7 +101,7 @@ class PhpDocumentor2Wrapper
      *
      * @param FileSet[] $filesets
      */
-    public function setFilesets( $filesets )
+    public function setFilesets($filesets)
     {
 
         $this->filesets = $filesets;
@@ -112,7 +112,7 @@ class PhpDocumentor2Wrapper
      *
      * @param PhingFile $destDir
      */
-    public function setDestDir( PhingFile $destDir )
+    public function setDestDir(PhingFile $destDir)
     {
 
         $this->destDir = $destDir;
@@ -123,7 +123,7 @@ class PhpDocumentor2Wrapper
      *
      * @param string $template
      */
-    public function setTemplate( $template )
+    public function setTemplate($template)
     {
 
         $this->template = (string)$template;
@@ -134,7 +134,7 @@ class PhpDocumentor2Wrapper
      *
      * @param string $title
      */
-    public function setTitle( $title )
+    public function setTitle($title)
     {
 
         $this->title = (string)$title;
@@ -145,7 +145,7 @@ class PhpDocumentor2Wrapper
      *
      * @param string $defaultPackageName
      */
-    public function setDefaultPackageName( $defaultPackageName )
+    public function setDefaultPackageName($defaultPackageName)
     {
 
         $this->defaultPackageName = (string)$defaultPackageName;
@@ -160,11 +160,11 @@ class PhpDocumentor2Wrapper
         $this->initializePhpDocumentor();
 
         $cache = $this->app['descriptor.cache'];
-        $cache->getOptions()->setCacheDir( $this->destDir->getAbsolutePath() );
+        $cache->getOptions()->setCacheDir($this->destDir->getAbsolutePath());
 
         $this->parseFiles();
 
-        $this->project->log( "Transforming...", Project::MSG_VERBOSE );
+        $this->project->log("Transforming...", Project::MSG_VERBOSE);
 
         $this->transformFiles();
     }
@@ -175,19 +175,19 @@ class PhpDocumentor2Wrapper
     private function initializePhpDocumentor()
     {
 
-        if (class_exists( 'Composer\\Autoload\\ClassLoader', false )) {
-            if (!class_exists( 'phpDocumentor\\Bootstrap' )) {
-                throw new BuildException( 'You need to install PhpDocumentor 2 or add your include path to your composer installation.' );
+        if (class_exists('Composer\\Autoload\\ClassLoader', false)) {
+            if (!class_exists('phpDocumentor\\Bootstrap')) {
+                throw new BuildException('You need to install PhpDocumentor 2 or add your include path to your composer installation.');
             }
             $phpDocumentorPath = '';
         } else {
             $phpDocumentorPath = $this->findPhpDocumentorPath();
 
             if (empty( $phpDocumentorPath )) {
-                throw new BuildException( "Please make sure PhpDocumentor 2 is installed and on the include_path." );
+                throw new BuildException("Please make sure PhpDocumentor 2 is installed and on the include_path.");
             }
 
-            set_include_path( $phpDocumentorPath.PATH_SEPARATOR.get_include_path() );
+            set_include_path($phpDocumentorPath.PATH_SEPARATOR.get_include_path());
 
             require_once $phpDocumentorPath.'/phpDocumentor/Bootstrap.php';
         }
@@ -206,11 +206,11 @@ class PhpDocumentor2Wrapper
     {
 
         $phpDocumentorPath = null;
-        $directories = array( 'phpDocumentor', 'phpdocumentor' );
+        $directories = array('phpDocumentor', 'phpdocumentor');
         foreach ($directories as $directory) {
             foreach (Phing::explodeIncludePath() as $path) {
                 $testPhpDocumentorPath = $path.DIRECTORY_SEPARATOR.$directory.DIRECTORY_SEPARATOR.'src';
-                if (file_exists( $testPhpDocumentorPath )) {
+                if (file_exists($testPhpDocumentorPath)) {
                     $phpDocumentorPath = $testPhpDocumentorPath;
                 }
             }
@@ -233,14 +233,14 @@ class PhpDocumentor2Wrapper
 
         $builder->createProjectDescriptor();
         $projectDescriptor = $builder->getProjectDescriptor();
-        $projectDescriptor->setName( $this->title );
+        $projectDescriptor->setName($this->title);
 
         $paths = array();
 
         // filesets
         foreach ($this->filesets as $fs) {
-            $ds = $fs->getDirectoryScanner( $this->project );
-            $dir = $fs->getDir( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
+            $dir = $fs->getDir($this->project);
             $srcFiles = $ds->getIncludedFiles();
 
             foreach ($srcFiles as $file) {
@@ -248,21 +248,21 @@ class PhpDocumentor2Wrapper
             }
         }
 
-        $this->project->log( "Will parse ".count( $paths )." file(s)", Project::MSG_VERBOSE );
+        $this->project->log("Will parse ".count($paths)." file(s)", Project::MSG_VERBOSE);
 
         $files = new \phpDocumentor\Fileset\Collection();
-        $files->addFiles( $paths );
+        $files->addFiles($paths);
 
-        $mapper = new \phpDocumentor\Descriptor\Cache\ProjectDescriptorMapper( $this->app['descriptor.cache'] );
-        $mapper->garbageCollect( $files );
-        $mapper->populate( $projectDescriptor );
+        $mapper = new \phpDocumentor\Descriptor\Cache\ProjectDescriptorMapper($this->app['descriptor.cache']);
+        $mapper->garbageCollect($files);
+        $mapper->populate($projectDescriptor);
 
-        $parser->setPath( $files->getProjectRoot() );
-        $parser->setDefaultPackageName( $this->defaultPackageName );
+        $parser->setPath($files->getProjectRoot());
+        $parser->setDefaultPackageName($this->defaultPackageName);
 
-        $parser->parse( $builder, $files );
+        $parser->parse($builder, $files);
 
-        $mapper->save( $projectDescriptor );
+        $mapper->save($projectDescriptor);
 
         return $mapper;
     }
@@ -278,11 +278,11 @@ class PhpDocumentor2Wrapper
         $builder = $this->app['descriptor.builder'];
         $projectDescriptor = $builder->getProjectDescriptor();
 
-        $transformer->getTemplates()->load( $this->template, $transformer );
-        $transformer->setTarget( $this->destDir->getAbsolutePath() );
+        $transformer->getTemplates()->load($this->template, $transformer);
+        $transformer->setTarget($this->destDir->getAbsolutePath());
 
         foreach ($compiler as $pass) {
-            $pass->execute( $projectDescriptor );
+            $pass->execute($projectDescriptor);
         }
     }
 }

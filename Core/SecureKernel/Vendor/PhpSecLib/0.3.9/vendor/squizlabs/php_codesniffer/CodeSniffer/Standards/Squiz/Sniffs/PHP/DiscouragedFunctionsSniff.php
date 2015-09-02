@@ -12,8 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'Generic_Sniffs_PHP_ForbiddenFunctionsSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class Generic_Sniffs_PHP_ForbiddenFunctionsSniff not found' );
+if (class_exists('Generic_Sniffs_PHP_ForbiddenFunctionsSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_PHP_ForbiddenFunctionsSniff not found');
 }
 
 /**

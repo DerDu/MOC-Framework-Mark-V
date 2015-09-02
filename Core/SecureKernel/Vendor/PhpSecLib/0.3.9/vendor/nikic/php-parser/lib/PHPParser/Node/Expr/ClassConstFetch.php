@@ -14,7 +14,7 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr
      * @param string                                  $name       Constant name
      * @param array                                   $attributes Additional attributes
      */
-    public function __construct( $class, $name, array $attributes = array() )
+    public function __construct($class, $name, array $attributes = array())
     {
 
         parent::__construct(

@@ -21,19 +21,19 @@ class PhpProcessTest extends \PHPUnit_Framework_TestCase
     {
 
         $expected = 'hello world!';
-        $process = new PhpProcess( <<<PHP
+        $process = new PhpProcess(<<<PHP
 <?php echo '$expected';
 PHP
         );
         $process->start();
         $process->wait();
-        $this->assertEquals( $expected, $process->getOutput() );
+        $this->assertEquals($expected, $process->getOutput());
     }
 
     public function testCommandLine()
     {
 
-        $process = new PhpProcess( <<<PHP
+        $process = new PhpProcess(<<<PHP
 <?php echo 'foobar';
 PHP
         );
@@ -41,15 +41,15 @@ PHP
         $f = new PhpExecutableFinder();
         $commandLine = $f->find();
 
-        $this->assertSame( $commandLine, $process->getCommandLine(),
-            '::getCommandLine() returns the command line of PHP before start' );
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP before start');
 
         $process->start();
-        $this->assertSame( $commandLine, $process->getCommandLine(),
-            '::getCommandLine() returns the command line of PHP after start' );
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP after start');
 
         $process->wait();
-        $this->assertSame( $commandLine, $process->getCommandLine(),
-            '::getCommandLine() returns the command line of PHP after wait' );
+        $this->assertSame($commandLine, $process->getCommandLine(),
+            '::getCommandLine() returns the command line of PHP after wait');
     }
 }

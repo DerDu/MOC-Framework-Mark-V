@@ -18,10 +18,10 @@ class ConstantReflection extends Reflection
 
     protected $class;
 
-    static public function fromArray( Project $project, $array )
+    static public function fromArray(Project $project, $array)
     {
 
-        $constant = new self( $array['name'], $array['line'] );
+        $constant = new self($array['name'], $array['line']);
         $constant->shortDesc = $array['short_desc'];
         $constant->longDesc = $array['long_desc'];
 
@@ -40,7 +40,7 @@ class ConstantReflection extends Reflection
         return $this->class;
     }
 
-    public function setClass( ClassReflection $class )
+    public function setClass(ClassReflection $class)
     {
 
         $this->class = $class;

@@ -39,19 +39,19 @@ class PMDPHPCPDResultFormatter extends PHPCPDResultFormatter
      *
      * @throws BuildException
      */
-    public function processClones( $clones, Project $project, $useFile = false, $outFile = null )
+    public function processClones($clones, Project $project, $useFile = false, $outFile = null)
     {
 
         if (!$useFile || empty( $outFile )) {
-            throw new BuildException( 'Output filename required for this formatter' );
+            throw new BuildException('Output filename required for this formatter');
         }
 
-        if (get_class( $clones ) == 'PHPCPD_CloneMap') {
-            $logger = new PHPCPD_Log_XML_PMD( $outFile );
+        if (get_class($clones) == 'PHPCPD_CloneMap') {
+            $logger = new PHPCPD_Log_XML_PMD($outFile);
         } else {
-            $logger = new \SebastianBergmann\PHPCPD\Log\PMD( $outFile );
+            $logger = new \SebastianBergmann\PHPCPD\Log\PMD($outFile);
         }
 
-        $logger->processClones( $clones );
+        $logger->processClones($clones);
     }
 }

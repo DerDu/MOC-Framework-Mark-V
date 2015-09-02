@@ -86,11 +86,11 @@ class PatchTask extends Task
      * @return void
      * @throws BuildException if $file not exists
      */
-    public function setPatchFile( $file )
+    public function setPatchFile($file)
     {
 
-        if (!is_file( $file )) {
-            throw new BuildException( sprintf( 'Patchfile %s doesn\'t exist', $file ) );
+        if (!is_file($file)) {
+            throw new BuildException(sprintf('Patchfile %s doesn\'t exist', $file));
         }
         $this->patchFile = $file;
     }
@@ -104,7 +104,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setOriginalFile( $file )
+    public function setOriginalFile($file)
     {
 
         $this->originalFile = $file;
@@ -120,7 +120,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setDestFile( $file )
+    public function setDestFile($file)
     {
 
         if ($file !== null) {
@@ -137,7 +137,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setBackups( $backups )
+    public function setBackups($backups)
     {
 
         if ($backups) {
@@ -154,7 +154,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setIgnoreWhiteSpace( $ignore )
+    public function setIgnoreWhiteSpace($ignore)
     {
 
         if ($ignore) {
@@ -173,11 +173,11 @@ class PatchTask extends Task
      * @return void
      * @throws BuildException if num is < 0, or other errors
      */
-    public function setStrip( $num )
+    public function setStrip($num)
     {
 
         if ($num < 0) {
-            throw new BuildException( 'strip has to be >= 0' );
+            throw new BuildException('strip has to be >= 0');
         }
 
         $this->strip = $num;
@@ -192,7 +192,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setQuiet( $flag )
+    public function setQuiet($flag)
     {
 
         if ($flag) {
@@ -209,7 +209,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setReverse( $flag )
+    public function setReverse($flag)
     {
 
         if ($flag) {
@@ -226,7 +226,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setDir( $directory )
+    public function setDir($directory)
     {
 
         $this->cmdArgs [] = "--directory=$directory";
@@ -239,7 +239,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setForward( $flag )
+    public function setForward($flag)
     {
 
         if ($flag) {
@@ -256,7 +256,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setFuzz( $value )
+    public function setFuzz($value)
     {
 
         $this->cmdArgs [] = "--fuzz=$value";
@@ -272,7 +272,7 @@ class PatchTask extends Task
      *
      * @return void
      */
-    public function setHaltOnFailure( $value )
+    public function setHaltOnFailure($value)
     {
 
         $this->haltOnFailure = $value;
@@ -288,7 +288,7 @@ class PatchTask extends Task
     {
 
         if ($this->patchFile == null) {
-            throw new BuildException( 'patchfile argument is required' );
+            throw new BuildException('patchfile argument is required');
         }
 
         // Define patch file
@@ -302,18 +302,18 @@ class PatchTask extends Task
             $this->cmdArgs [] = $this->originalFile;
         }
 
-        $cmd = self::CMD.implode( ' ', $this->cmdArgs );
+        $cmd = self::CMD.implode(' ', $this->cmdArgs);
 
-        $this->log( 'Applying patch: '.$this->patchFile );
+        $this->log('Applying patch: '.$this->patchFile);
 
-        exec( $cmd, $output, $exitCode );
+        exec($cmd, $output, $exitCode);
 
         foreach ($output as $line) {
-            $this->log( $line, Project::MSG_VERBOSE );
+            $this->log($line, Project::MSG_VERBOSE);
         }
 
         if ($exitCode != 0 && $this->haltOnFailure) {
-            throw new BuildException( "Task exited with code $exitCode" );
+            throw new BuildException("Task exited with code $exitCode");
         }
 
     }

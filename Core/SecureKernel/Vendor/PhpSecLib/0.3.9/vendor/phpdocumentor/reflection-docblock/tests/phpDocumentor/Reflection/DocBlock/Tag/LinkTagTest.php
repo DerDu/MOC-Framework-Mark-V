@@ -46,12 +46,12 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
         $exLink
     ) {
 
-        $tag = new LinkTag( $type, $content );
+        $tag = new LinkTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exLink, $tag->getLink() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exLink, $tag->getLink());
     }
 
     /**

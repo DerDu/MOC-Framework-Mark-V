@@ -155,7 +155,7 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
     {
 
         foreach ($this->htmlSpecialChars as $key => $value) {
-            $this->assertEquals( $value, twig_escape_filter( $this->env, $key, 'html' ), 'Failed to escape: '.$key );
+            $this->assertEquals($value, twig_escape_filter($this->env, $key, 'html'), 'Failed to escape: '.$key);
         }
     }
 
@@ -163,8 +163,8 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
     {
 
         foreach ($this->htmlAttrSpecialChars as $key => $value) {
-            $this->assertEquals( $value, twig_escape_filter( $this->env, $key, 'html_attr' ),
-                'Failed to escape: '.$key );
+            $this->assertEquals($value, twig_escape_filter($this->env, $key, 'html_attr'),
+                'Failed to escape: '.$key);
         }
     }
 
@@ -172,47 +172,47 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
     {
 
         foreach ($this->jsSpecialChars as $key => $value) {
-            $this->assertEquals( $value, twig_escape_filter( $this->env, $key, 'js' ), 'Failed to escape: '.$key );
+            $this->assertEquals($value, twig_escape_filter($this->env, $key, 'js'), 'Failed to escape: '.$key);
         }
     }
 
     public function testJavascriptEscapingReturnsStringIfZeroLength()
     {
 
-        $this->assertEquals( '', twig_escape_filter( $this->env, '', 'js' ) );
+        $this->assertEquals('', twig_escape_filter($this->env, '', 'js'));
     }
 
     public function testJavascriptEscapingReturnsStringIfContainsOnlyDigits()
     {
 
-        $this->assertEquals( '123', twig_escape_filter( $this->env, '123', 'js' ) );
+        $this->assertEquals('123', twig_escape_filter($this->env, '123', 'js'));
     }
 
     public function testCssEscapingConvertsSpecialChars()
     {
 
         foreach ($this->cssSpecialChars as $key => $value) {
-            $this->assertEquals( $value, twig_escape_filter( $this->env, $key, 'css' ), 'Failed to escape: '.$key );
+            $this->assertEquals($value, twig_escape_filter($this->env, $key, 'css'), 'Failed to escape: '.$key);
         }
     }
 
     public function testCssEscapingReturnsStringIfZeroLength()
     {
 
-        $this->assertEquals( '', twig_escape_filter( $this->env, '', 'css' ) );
+        $this->assertEquals('', twig_escape_filter($this->env, '', 'css'));
     }
 
     public function testCssEscapingReturnsStringIfContainsOnlyDigits()
     {
 
-        $this->assertEquals( '123', twig_escape_filter( $this->env, '123', 'css' ) );
+        $this->assertEquals('123', twig_escape_filter($this->env, '123', 'css'));
     }
 
     public function testUrlEscapingConvertsSpecialChars()
     {
 
         foreach ($this->urlSpecialChars as $key => $value) {
-            $this->assertEquals( $value, twig_escape_filter( $this->env, $key, 'url' ), 'Failed to escape: '.$key );
+            $this->assertEquals($value, twig_escape_filter($this->env, $key, 'url'), 'Failed to escape: '.$key);
         }
     }
 
@@ -228,12 +228,12 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
     {
 
         $expected = " ~ޙ";
-        $codepoints = array( 0x20, 0x7e, 0x799 );
+        $codepoints = array(0x20, 0x7e, 0x799);
         $result = '';
         foreach ($codepoints as $value) {
-            $result .= $this->codepointToUtf8( $value );
+            $result .= $this->codepointToUtf8($value);
         }
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -243,50 +243,50 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
      *
      * @return string UTF-8 literal string
      */
-    protected function codepointToUtf8( $codepoint )
+    protected function codepointToUtf8($codepoint)
     {
 
         if ($codepoint < 0x80) {
-            return chr( $codepoint );
+            return chr($codepoint);
         }
         if ($codepoint < 0x800) {
-            return chr( $codepoint >> 6 & 0x3f | 0xc0 )
-            .chr( $codepoint & 0x3f | 0x80 );
+            return chr($codepoint >> 6 & 0x3f | 0xc0)
+            .chr($codepoint & 0x3f | 0x80);
         }
         if ($codepoint < 0x10000) {
-            return chr( $codepoint >> 12 & 0x0f | 0xe0 )
-            .chr( $codepoint >> 6 & 0x3f | 0x80 )
-            .chr( $codepoint & 0x3f | 0x80 );
+            return chr($codepoint >> 12 & 0x0f | 0xe0)
+            .chr($codepoint >> 6 & 0x3f | 0x80)
+            .chr($codepoint & 0x3f | 0x80);
         }
         if ($codepoint < 0x110000) {
-            return chr( $codepoint >> 18 & 0x07 | 0xf0 )
-            .chr( $codepoint >> 12 & 0x3f | 0x80 )
-            .chr( $codepoint >> 6 & 0x3f | 0x80 )
-            .chr( $codepoint & 0x3f | 0x80 );
+            return chr($codepoint >> 18 & 0x07 | 0xf0)
+            .chr($codepoint >> 12 & 0x3f | 0x80)
+            .chr($codepoint >> 6 & 0x3f | 0x80)
+            .chr($codepoint & 0x3f | 0x80);
         }
-        throw new Exception( 'Codepoint requested outside of Unicode range' );
+        throw new Exception('Codepoint requested outside of Unicode range');
     }
 
     public function testJavascriptEscapingEscapesOwaspRecommendedRanges()
     {
 
-        $immune = array( ',', '.', '_' ); // Exceptions to escaping ranges
+        $immune = array(',', '.', '_'); // Exceptions to escaping ranges
         for ($chr = 0; $chr < 0xFF; $chr++) {
             if ($chr >= 0x30 && $chr <= 0x39
                 || $chr >= 0x41 && $chr <= 0x5A
                 || $chr >= 0x61 && $chr <= 0x7A
             ) {
-                $literal = $this->codepointToUtf8( $chr );
-                $this->assertEquals( $literal, twig_escape_filter( $this->env, $literal, 'js' ) );
+                $literal = $this->codepointToUtf8($chr);
+                $this->assertEquals($literal, twig_escape_filter($this->env, $literal, 'js'));
             } else {
-                $literal = $this->codepointToUtf8( $chr );
-                if (in_array( $literal, $immune )) {
-                    $this->assertEquals( $literal, twig_escape_filter( $this->env, $literal, 'js' ) );
+                $literal = $this->codepointToUtf8($chr);
+                if (in_array($literal, $immune)) {
+                    $this->assertEquals($literal, twig_escape_filter($this->env, $literal, 'js'));
                 } else {
                     $this->assertNotEquals(
                         $literal,
-                        twig_escape_filter( $this->env, $literal, 'js' ),
-                        "$literal should be escaped!" );
+                        twig_escape_filter($this->env, $literal, 'js'),
+                        "$literal should be escaped!");
                 }
             }
         }
@@ -295,23 +295,23 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
     public function testHtmlAttributeEscapingEscapesOwaspRecommendedRanges()
     {
 
-        $immune = array( ',', '.', '-', '_' ); // Exceptions to escaping ranges
+        $immune = array(',', '.', '-', '_'); // Exceptions to escaping ranges
         for ($chr = 0; $chr < 0xFF; $chr++) {
             if ($chr >= 0x30 && $chr <= 0x39
                 || $chr >= 0x41 && $chr <= 0x5A
                 || $chr >= 0x61 && $chr <= 0x7A
             ) {
-                $literal = $this->codepointToUtf8( $chr );
-                $this->assertEquals( $literal, twig_escape_filter( $this->env, $literal, 'html_attr' ) );
+                $literal = $this->codepointToUtf8($chr);
+                $this->assertEquals($literal, twig_escape_filter($this->env, $literal, 'html_attr'));
             } else {
-                $literal = $this->codepointToUtf8( $chr );
-                if (in_array( $literal, $immune )) {
-                    $this->assertEquals( $literal, twig_escape_filter( $this->env, $literal, 'html_attr' ) );
+                $literal = $this->codepointToUtf8($chr);
+                if (in_array($literal, $immune)) {
+                    $this->assertEquals($literal, twig_escape_filter($this->env, $literal, 'html_attr'));
                 } else {
                     $this->assertNotEquals(
                         $literal,
-                        twig_escape_filter( $this->env, $literal, 'html_attr' ),
-                        "$literal should be escaped!" );
+                        twig_escape_filter($this->env, $literal, 'html_attr'),
+                        "$literal should be escaped!");
                 }
             }
         }
@@ -326,14 +326,14 @@ class Twig_Test_EscapingTest extends PHPUnit_Framework_TestCase
                 || $chr >= 0x41 && $chr <= 0x5A
                 || $chr >= 0x61 && $chr <= 0x7A
             ) {
-                $literal = $this->codepointToUtf8( $chr );
-                $this->assertEquals( $literal, twig_escape_filter( $this->env, $literal, 'css' ) );
+                $literal = $this->codepointToUtf8($chr);
+                $this->assertEquals($literal, twig_escape_filter($this->env, $literal, 'css'));
             } else {
-                $literal = $this->codepointToUtf8( $chr );
+                $literal = $this->codepointToUtf8($chr);
                 $this->assertNotEquals(
                     $literal,
-                    twig_escape_filter( $this->env, $literal, 'css' ),
-                    "$literal should be escaped!" );
+                    twig_escape_filter($this->env, $literal, 'css'),
+                    "$literal should be escaped!");
             }
         }
     }

@@ -56,7 +56,7 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
     public function register()
     {
 
-        return array( T_FOR );
+        return array(T_FOR);
 
     }//end register()
 
@@ -70,7 +70,7 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -82,10 +82,10 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
         }
 
         // Find incrementors for outer loop.
-        $outer = $this->findIncrementers( $tokens, $token );
+        $outer = $this->findIncrementers($tokens, $token);
 
         // Skip if empty.
-        if (count( $outer ) === 0) {
+        if (count($outer) === 0) {
             return;
         }
 
@@ -98,13 +98,13 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
                 continue;
             }
 
-            $inner = $this->findIncrementers( $tokens, $tokens[$start] );
-            $diff = array_intersect( $outer, $inner );
+            $inner = $this->findIncrementers($tokens, $tokens[$start]);
+            $diff = array_intersect($outer, $inner);
 
-            if (count( $diff ) !== 0) {
+            if (count($diff) !== 0) {
                 $error = 'Loop incrementor (%s) jumbling with inner loop';
-                $data = array( join( ', ', $diff ) );
-                $phpcsFile->addWarning( $error, $stackPtr, 'Found', $data );
+                $data = array(join(', ', $diff));
+                $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }
 
@@ -119,7 +119,7 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
      *
      * @return string[] List of all found incrementer variables.
      */
-    protected function findIncrementers( array $tokens, array $token )
+    protected function findIncrementers(array $tokens, array $token)
     {
 
         // Skip invalid statement.

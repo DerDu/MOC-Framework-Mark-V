@@ -64,8 +64,8 @@ abstract class SvnBaseTask extends Task
 
         include_once 'VersionControl/SVN.php';
         $this->fetchMode = VERSIONCONTROL_SVN_FETCHMODE_ASSOC;
-        if (!class_exists( 'VersionControl_SVN' )) {
-            throw new Exception( "The SVN tasks depend on PEAR VersionControl_SVN package being installed." );
+        if (!class_exists('VersionControl_SVN')) {
+            throw new Exception("The SVN tasks depend on PEAR VersionControl_SVN package being installed.");
         }
     }
 
@@ -83,7 +83,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $workingCopy
      */
-    public function setWorkingCopy( $workingCopy )
+    public function setWorkingCopy($workingCopy)
     {
 
         $this->workingCopy = $workingCopy;
@@ -103,7 +103,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $repositoryUrl
      */
-    public function setRepositoryUrl( $repositoryUrl )
+    public function setRepositoryUrl($repositoryUrl)
     {
 
         $this->repositoryUrl = $repositoryUrl;
@@ -123,7 +123,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $toDir
      */
-    public function setToDir( $toDir )
+    public function setToDir($toDir)
     {
 
         $this->toDir = $toDir;
@@ -138,7 +138,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setForce( $value )
+    public function setForce($value)
     {
 
         $this->svnSwitches['force'] = $value;
@@ -162,7 +162,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setUsername( $value )
+    public function setUsername($value)
     {
 
         $this->svnSwitches['username'] = $value;
@@ -182,7 +182,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setPassword( $value )
+    public function setPassword($value)
     {
 
         $this->svnSwitches['password'] = $value;
@@ -202,7 +202,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setNoCache( $value )
+    public function setNoCache($value)
     {
 
         $this->svnSwitches['no-auth-cache'] = $value;
@@ -224,7 +224,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setRecursive( $value )
+    public function setRecursive($value)
     {
     }
 
@@ -242,7 +242,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setDepth( $value )
+    public function setDepth($value)
     {
 
         $this->svnSwitches['depth'] = $value;
@@ -262,7 +262,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setIgnoreExternals( $value )
+    public function setIgnoreExternals($value)
     {
 
         $this->svnSwitches['ignore-externals'] = $value;
@@ -282,7 +282,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $value
      */
-    public function setTrustServerCert( $value )
+    public function setTrustServerCert($value)
     {
 
         $this->svnSwitches['trust-server-cert'] = $value;
@@ -304,14 +304,14 @@ abstract class SvnBaseTask extends Task
      *
      * @throws BuildException
      */
-    protected function setup( $mode )
+    protected function setup($mode)
     {
 
         $this->mode = $mode;
 
         // Set up runtime options. Will be passed to all
         // subclasses.
-        $options = array( 'fetchmode' => $this->fetchMode );
+        $options = array('fetchmode' => $this->fetchMode);
 
         if ($this->oldVersion) {
             $options['svn_path'] = $this->getSvnPath();
@@ -320,28 +320,28 @@ abstract class SvnBaseTask extends Task
         }
 
         // Pass array of subcommands we need to factory
-        $this->svn = VersionControl_SVN::factory( $mode, $options );
+        $this->svn = VersionControl_SVN::factory($mode, $options);
 
-        if (get_parent_class( $this->svn ) !== 'VersionControl_SVN_Command') {
+        if (get_parent_class($this->svn) !== 'VersionControl_SVN_Command') {
             $this->oldVersion = true;
             $this->svn->use_escapeshellcmd = false;
         }
 
         if (!empty( $this->repositoryUrl )) {
-            $this->svnArgs = array( $this->repositoryUrl );
+            $this->svnArgs = array($this->repositoryUrl);
         } else {
             if (!empty( $this->workingCopy )) {
-                if (is_dir( $this->workingCopy )) {
-                    $this->svnArgs = array( $this->workingCopy );
+                if (is_dir($this->workingCopy)) {
+                    $this->svnArgs = array($this->workingCopy);
                 } else {
                     if ($mode == 'info') {
-                        if (is_file( $this->workingCopy )) {
-                            $this->svnArgs = array( $this->workingCopy );
+                        if (is_file($this->workingCopy)) {
+                            $this->svnArgs = array($this->workingCopy);
                         } else {
-                            throw new BuildException( "'".$this->workingCopy."' is not a directory nor a file" );
+                            throw new BuildException("'".$this->workingCopy."' is not a directory nor a file");
                         }
                     } else {
-                        throw new BuildException( "'".$this->workingCopy."' is not a directory" );
+                        throw new BuildException("'".$this->workingCopy."' is not a directory");
                     }
                 }
             }
@@ -362,7 +362,7 @@ abstract class SvnBaseTask extends Task
      *
      * @param $svnPath
      */
-    public function setSvnPath( $svnPath )
+    public function setSvnPath($svnPath)
     {
 
         $this->svnPath = $svnPath;
@@ -379,34 +379,34 @@ abstract class SvnBaseTask extends Task
      * @internal param Switches $array to pass to SVN.
      * @return string Output generated by SVN.
      */
-    protected function run( $args = array(), $switches = array() )
+    protected function run($args = array(), $switches = array())
     {
 
-        $tempArgs = array_merge( $this->svnArgs, $args );
-        $tempSwitches = array_merge( $this->svnSwitches, $switches );
+        $tempArgs = array_merge($this->svnArgs, $args);
+        $tempSwitches = array_merge($this->svnSwitches, $switches);
 
         if ($this->oldVersion) {
-            $svnstack = PEAR_ErrorStack::singleton( 'VersionControl_SVN' );
+            $svnstack = PEAR_ErrorStack::singleton('VersionControl_SVN');
 
-            if ($output = $this->svn->run( $tempArgs, $tempSwitches )) {
+            if ($output = $this->svn->run($tempArgs, $tempSwitches)) {
                 return $output;
             }
 
-            if (count( $errs = $svnstack->getErrors() )) {
-                $err = current( $errs );
+            if (count($errs = $svnstack->getErrors())) {
+                $err = current($errs);
                 $errorMessage = $err['message'];
 
                 if (isset( $err['params']['errstr'] )) {
                     $errorMessage = $err['params']['errstr'];
                 }
 
-                throw new BuildException( "Failed to run the 'svn ".$this->mode."' command: ".$errorMessage );
+                throw new BuildException("Failed to run the 'svn ".$this->mode."' command: ".$errorMessage);
             }
         } else {
             try {
-                return $this->svn->run( $tempArgs, $tempSwitches );
-            } catch( Exception $e ) {
-                throw new BuildException( "Failed to run the 'svn ".$this->mode."' command: ".$e->getMessage() );
+                return $this->svn->run($tempArgs, $tempSwitches);
+            } catch (Exception $e) {
+                throw new BuildException("Failed to run the 'svn ".$this->mode."' command: ".$e->getMessage());
             }
         }
     }

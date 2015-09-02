@@ -35,5 +35,5 @@ interface TaskContainer
      *
      * @param Task $task The task to be added to the container.
      */
-    public function addTask( Task $task );
+    public function addTask(Task $task);
 }

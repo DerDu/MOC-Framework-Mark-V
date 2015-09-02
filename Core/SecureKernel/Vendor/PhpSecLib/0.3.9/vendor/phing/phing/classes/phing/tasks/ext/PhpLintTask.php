@@ -57,7 +57,7 @@ class PhpLintTask extends Task
     public function init()
     {
 
-        $this->setInterpreter( $this->project->getProperty( 'php.interpreter' ) );
+        $this->setInterpreter($this->project->getProperty('php.interpreter'));
     }
 
     /**
@@ -68,11 +68,11 @@ class PhpLintTask extends Task
      *
      * @param string $sPhp
      */
-    public function setInterpreter( $sPhp )
+    public function setInterpreter($sPhp)
     {
 
-        if (strpos( $sPhp, ' ' ) !== false) {
-            $sPhp = escapeshellarg( $sPhp );
+        if (strpos($sPhp, ' ') !== false) {
+            $sPhp = escapeshellarg($sPhp);
         }
         $this->interpreter = $sPhp;
     }
@@ -82,7 +82,7 @@ class PhpLintTask extends Task
      *
      * @param boolean $aValue
      */
-    public function setHaltOnFailure( $aValue )
+    public function setHaltOnFailure($aValue)
     {
 
         $this->haltOnFailure = $aValue;
@@ -93,7 +93,7 @@ class PhpLintTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -104,7 +104,7 @@ class PhpLintTask extends Task
      *
      * @param string $propname
      */
-    public function setErrorproperty( $propname )
+    public function setErrorproperty($propname)
     {
 
         $this->errorProperty = $propname;
@@ -115,10 +115,10 @@ class PhpLintTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setCacheFile( PhingFile $file )
+    public function setCacheFile(PhingFile $file)
     {
 
-        $this->cache = new DataStore( $file );
+        $this->cache = new DataStore($file);
     }
 
     /**
@@ -128,7 +128,7 @@ class PhpLintTask extends Task
      *
      * @internal param PhingFile $file
      */
-    public function setToFile( PhingFile $tofile )
+    public function setToFile(PhingFile $tofile)
     {
 
         $this->tofile = $tofile;
@@ -141,7 +141,7 @@ class PhpLintTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -152,7 +152,7 @@ class PhpLintTask extends Task
      *
      * @param string $level
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         switch ($level) {
@@ -179,7 +179,7 @@ class PhpLintTask extends Task
      *
      * @param boolean $deprecatedAsError
      */
-    public function setDeprecatedAsError( $deprecatedAsError )
+    public function setDeprecatedAsError($deprecatedAsError)
     {
 
         $this->deprecatedAsError = $deprecatedAsError;
@@ -191,31 +191,31 @@ class PhpLintTask extends Task
     public function main()
     {
 
-        if (!isset( $this->file ) and count( $this->filesets ) == 0) {
-            throw new BuildException( "Missing either a nested fileset or attribute 'file' set" );
+        if (!isset( $this->file ) and count($this->filesets) == 0) {
+            throw new BuildException("Missing either a nested fileset or attribute 'file' set");
         }
 
         if ($this->file instanceof PhingFile) {
-            $this->lint( $this->file->getPath() );
+            $this->lint($this->file->getPath());
         } else { // process filesets
             $project = $this->getProject();
             foreach ($this->filesets as $fs) {
-                $ds = $fs->getDirectoryScanner( $project );
+                $ds = $fs->getDirectoryScanner($project);
                 $files = $ds->getIncludedFiles();
-                $dir = $fs->getDir( $this->project )->getPath();
+                $dir = $fs->getDir($this->project)->getPath();
                 foreach ($files as $file) {
-                    $this->lint( $dir.DIRECTORY_SEPARATOR.$file );
+                    $this->lint($dir.DIRECTORY_SEPARATOR.$file);
                 }
             }
         }
 
         // write list of 'bad files' to file (if specified)
         if ($this->tofile) {
-            $writer = new FileWriter( $this->tofile );
+            $writer = new FileWriter($this->tofile);
 
             foreach ($this->badFiles as $file => $messages) {
                 foreach ($messages as $msg) {
-                    $writer->write( $file."=".$msg.PHP_EOL );
+                    $writer->write($file."=".$msg.PHP_EOL);
                 }
             }
 
@@ -231,7 +231,7 @@ class PhpLintTask extends Task
 
         // save list of 'bad files' with errors to property errorproperty (if specified)
         if ($this->errorProperty) {
-            $this->project->setProperty( $this->errorProperty, $message );
+            $this->project->setProperty($this->errorProperty, $message);
         }
 
         if (!empty( $this->cache )) {
@@ -239,7 +239,7 @@ class PhpLintTask extends Task
         }
 
         if ($this->haltOnFailure && $this->hasErrors) {
-            throw new BuildException( 'Syntax error(s) in PHP files: '.$message );
+            throw new BuildException('Syntax error(s) in PHP files: '.$message);
         }
     }
 
@@ -251,14 +251,14 @@ class PhpLintTask extends Task
      * @throws BuildException
      * @return void
      */
-    protected function lint( $file )
+    protected function lint($file)
     {
 
         $command = $this->interpreter == ''
             ? 'php'
             : $this->interpreter;
 
-        if (strpos( $command, 'hhvm' ) !== false) {
+        if (strpos($command, 'hhvm') !== false) {
             $command .= ' --no-config -l';
         } else {
             if ($this->deprecatedAsError) {
@@ -268,19 +268,19 @@ class PhpLintTask extends Task
             $command .= ' -n -l ';
         }
 
-        if (!file_exists( $file )) {
-            throw new BuildException( 'File not found: '.$file );
+        if (!file_exists($file)) {
+            throw new BuildException('File not found: '.$file);
         }
 
-        if (!is_readable( $file )) {
-            throw new BuildException( 'Permission denied: '.$file );
+        if (!is_readable($file)) {
+            throw new BuildException('Permission denied: '.$file);
         }
 
         if ($this->cache) {
-            $lastmtime = $this->cache->get( $file );
+            $lastmtime = $this->cache->get($file);
 
-            if ($lastmtime >= filemtime( $file )) {
-                $this->log( "Not linting '".$file."' due to cache", Project::MSG_DEBUG );
+            if ($lastmtime >= filemtime($file)) {
+                $this->log("Not linting '".$file."' due to cache", Project::MSG_DEBUG);
 
                 return false;
             }
@@ -289,26 +289,26 @@ class PhpLintTask extends Task
         $messages = array();
         $errorCount = 0;
 
-        exec( $command.'"'.$file.'" 2>&1', $messages );
+        exec($command.'"'.$file.'" 2>&1', $messages);
 
-        for ($i = 0; $i < count( $messages ); $i++) {
+        for ($i = 0; $i < count($messages); $i++) {
             $message = $messages[$i];
-            if (trim( $message ) == '') {
+            if (trim($message) == '') {
                 continue;
             }
 
-            if (( !preg_match( '/^(.*)Deprecated:/', $message ) || $this->deprecatedAsError ) && !preg_match(
+            if (( !preg_match('/^(.*)Deprecated:/', $message) || $this->deprecatedAsError ) && !preg_match(
                     '/^No syntax errors detected/',
                     $message
                 )
             ) {
-                $this->log( $message, Project::MSG_ERR );
+                $this->log($message, Project::MSG_ERR);
 
                 if (!isset( $this->badFiles[$file] )) {
                     $this->badFiles[$file] = array();
                 }
 
-                array_push( $this->badFiles[$file], $message );
+                array_push($this->badFiles[$file], $message);
 
                 $this->hasErrors = true;
                 $errorCount++;
@@ -316,10 +316,10 @@ class PhpLintTask extends Task
         }
 
         if (!$errorCount) {
-            $this->log( $file.': No syntax errors detected', $this->logLevel );
+            $this->log($file.': No syntax errors detected', $this->logLevel);
 
             if ($this->cache) {
-                $this->cache->put( $file, filemtime( $file ) );
+                $this->cache->put($file, filemtime($file));
             }
         }
     }

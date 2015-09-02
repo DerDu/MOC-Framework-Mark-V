@@ -52,7 +52,7 @@ class BatchTest
      *
      * @param Project the project it depends on.
      */
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->project = $project;
@@ -63,7 +63,7 @@ class BatchTest
      *
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -76,10 +76,10 @@ class BatchTest
      *
      * @return void
      */
-    public function setExclude( $exclude )
+    public function setExclude($exclude)
     {
 
-        $this->excludeClasses = explode( " ", $exclude );
+        $this->excludeClasses = explode(" ", $exclude);
     }
 
     /**
@@ -113,13 +113,13 @@ class BatchTest
      *
      * @return void
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -130,7 +130,7 @@ class BatchTest
      *
      * @return void
      */
-    public function addFileSet( FileSet $fileset )
+    public function addFileSet(FileSet $fileset)
     {
 
         $this->filesets[] = $fileset;
@@ -150,16 +150,16 @@ class BatchTest
         $declaredClasses = array();
 
         foreach ($filenames as $filename) {
-            $definedClasses = PHPUnitUtil::getDefinedClasses( $filename, $this->classpath );
+            $definedClasses = PHPUnitUtil::getDefinedClasses($filename, $this->classpath);
 
             foreach ($definedClasses as $definedClass) {
-                $this->project->log( "(PHPUnit) Adding $definedClass (from $filename) to tests.", Project::MSG_DEBUG );
+                $this->project->log("(PHPUnit) Adding $definedClass (from $filename) to tests.", Project::MSG_DEBUG);
             }
 
-            $declaredClasses = array_merge( $declaredClasses, $definedClasses );
+            $declaredClasses = array_merge($declaredClasses, $definedClasses);
         }
 
-        $elements = array_filter( $declaredClasses, array( $this, "filterTests" ) );
+        $elements = array_filter($declaredClasses, array($this, "filterTests"));
 
         return $elements;
     }
@@ -175,7 +175,7 @@ class BatchTest
         $filenames = array();
 
         foreach ($this->filesets as $fileset) {
-            $ds = $fileset->getDirectoryScanner( $this->project );
+            $ds = $fileset->getDirectoryScanner($this->project);
             $ds->scan();
 
             $files = $ds->getIncludedFiles();
@@ -196,12 +196,12 @@ class BatchTest
      *
      * @return bool
      */
-    private function filterTests( $input )
+    private function filterTests($input)
     {
 
-        $reflect = new ReflectionClass( $input );
+        $reflect = new ReflectionClass($input);
 
-        return $this->isTestCase( $input ) && ( !$reflect->isAbstract() );
+        return $this->isTestCase($input) && ( !$reflect->isAbstract() );
     }
 
     /**
@@ -211,10 +211,10 @@ class BatchTest
      *
      * @return bool
      */
-    private function isTestCase( $input )
+    private function isTestCase($input)
     {
 
-        return is_subclass_of( $input, 'PHPUnit_Framework_TestCase' ) || is_subclass_of(
+        return is_subclass_of($input, 'PHPUnit_Framework_TestCase') || is_subclass_of(
             $input,
             'PHPUnit_Framework_TestSuite'
         );

@@ -36,7 +36,7 @@ class MethodNode
      * @param string $name
      * @param string $code
      */
-    public function __construct( $name, $code = null )
+    public function __construct($name, $code = null)
     {
 
         $this->name = $name;
@@ -52,15 +52,15 @@ class MethodNode
     /**
      * @param string $visibility
      */
-    public function setVisibility( $visibility )
+    public function setVisibility($visibility)
     {
 
-        $visibility = strtolower( $visibility );
+        $visibility = strtolower($visibility);
 
-        if (!in_array( $visibility, array( 'public', 'private', 'protected' ) )) {
-            throw new InvalidArgumentException( sprintf(
+        if (!in_array($visibility, array('public', 'private', 'protected'))) {
+            throw new InvalidArgumentException(sprintf(
                 '`%s` method visibility is not supported.', $visibility
-            ) );
+            ));
         }
 
         $this->visibility = $visibility;
@@ -72,7 +72,7 @@ class MethodNode
         return $this->static;
     }
 
-    public function setStatic( $static = true )
+    public function setStatic($static = true)
     {
 
         $this->static = (bool)$static;
@@ -90,7 +90,7 @@ class MethodNode
         $this->returnsReference = true;
     }
 
-    public function addArgument( ArgumentNode $argument )
+    public function addArgument(ArgumentNode $argument)
     {
 
         $this->arguments[] = $argument;
@@ -118,7 +118,7 @@ class MethodNode
     /**
      * @param string $code
      */
-    public function setCode( $code )
+    public function setCode($code)
     {
 
         $this->code = $code;
@@ -128,11 +128,11 @@ class MethodNode
     {
 
         $this->code = sprintf(
-            'return parent::%s(%s);', $this->getName(), implode( ', ',
-                array_map( function ( ArgumentNode $arg ) {
+            'return parent::%s(%s);', $this->getName(), implode(', ',
+                array_map(function (ArgumentNode $arg) {
 
                     return '$'.$arg->getName();
-                }, $this->arguments )
+                }, $this->arguments)
             )
         );
     }

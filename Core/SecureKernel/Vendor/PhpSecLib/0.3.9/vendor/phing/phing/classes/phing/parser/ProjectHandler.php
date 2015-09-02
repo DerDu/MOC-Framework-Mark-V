@@ -55,10 +55,10 @@ class ProjectHandler extends AbstractHandler
      * @param  ProjectConfigurator $configurator the ProjectConfigurator object
      * @param PhingXMLContext      $context
      */
-    public function __construct( $parser, $parentHandler, $configurator, PhingXMLContext $context )
+    public function __construct($parser, $parentHandler, $configurator, PhingXMLContext $context)
     {
 
-        parent::__construct( $parser, $parentHandler );
+        parent::__construct($parser, $parentHandler);
 
         $this->configurator = $configurator;
         $this->context = $context;
@@ -73,7 +73,7 @@ class ProjectHandler extends AbstractHandler
      *
      * @throws ExpatParseException if attributes are incomplete or invalid
      */
-    public function init( $tag, $attrs )
+    public function init($tag, $attrs)
     {
 
         $def = null;
@@ -101,19 +101,19 @@ class ProjectHandler extends AbstractHandler
             } elseif ($key === "phingVersion") {
                 $ver = $value;
             } else {
-                throw new ExpatParseException( "Unexpected attribute '$key'" );
+                throw new ExpatParseException("Unexpected attribute '$key'");
             }
         }
         // these things get done no matter what
         if (null == $name) {
-            $name = basename( $this->configurator->getBuildFile() );
+            $name = basename($this->configurator->getBuildFile());
         }
 
-        $canonicalName = self::canonicalName( $name );
-        $this->configurator->setCurrentProjectName( $canonicalName );
+        $canonicalName = self::canonicalName($name);
+        $this->configurator->setCurrentProjectName($canonicalName);
         $path = (string)$this->configurator->getBuildFile();
-        $project->setUserProperty( "phing.file.{$canonicalName}", $path );
-        $project->setUserProperty( "phing.dir.{$canonicalName}", dirname( $path ) );
+        $project->setUserProperty("phing.file.{$canonicalName}", $path);
+        $project->setUserProperty("phing.dir.{$canonicalName}", dirname($path));
 
         if ($this->configurator->isIgnoringProjectTag()) {
             return;
@@ -121,45 +121,45 @@ class ProjectHandler extends AbstractHandler
 
         if ($def === null) {
             throw new ExpatParseException(
-                "The default attribute of project is required" );
+                "The default attribute of project is required");
         }
 
-        $project->setDefaultTarget( $def );
+        $project->setDefaultTarget($def);
 
         if ($name !== null) {
-            $project->setName( $name );
-            $project->addReference( $name, $project );
+            $project->setName($name);
+            $project->addReference($name, $project);
         }
 
         if ($id !== null) {
-            $project->addReference( $id, $project );
+            $project->addReference($id, $project);
         }
 
         if ($desc !== null) {
-            $project->setDescription( $desc );
+            $project->setDescription($desc);
         }
 
         if ($ver !== null) {
-            $project->setPhingVersion( $ver );
+            $project->setPhingVersion($ver);
         }
 
-        if ($project->getProperty( "project.basedir" ) !== null) {
-            $project->setBasedir( $project->getProperty( "project.basedir" ) );
+        if ($project->getProperty("project.basedir") !== null) {
+            $project->setBasedir($project->getProperty("project.basedir"));
         } else {
             if ($baseDir === null) {
-                $project->setBasedir( $buildFileParent->getAbsolutePath() );
+                $project->setBasedir($buildFileParent->getAbsolutePath());
             } else {
                 // check whether the user has specified an absolute path
-                $f = new PhingFile( $baseDir );
+                $f = new PhingFile($baseDir);
                 if ($f->isAbsolute()) {
-                    $project->setBasedir( $baseDir );
+                    $project->setBasedir($baseDir);
                 } else {
-                    $project->setBaseDir( $project->resolveFile( $baseDir, new PhingFile( getcwd() ) ) );
+                    $project->setBaseDir($project->resolveFile($baseDir, new PhingFile(getcwd())));
                 }
             }
         }
 
-        $project->addTarget( "", $this->context->getImplicitTarget() );
+        $project->addTarget("", $this->context->getImplicitTarget());
     }
 
     /**
@@ -167,10 +167,10 @@ class ProjectHandler extends AbstractHandler
      *
      * @return mixed
      */
-    public static function canonicalName( $name )
+    public static function canonicalName($name)
     {
 
-        return preg_replace( '/\W/', '_', strtolower( $name ) );
+        return preg_replace('/\W/', '_', strtolower($name));
     }
 
     /**
@@ -182,19 +182,19 @@ class ProjectHandler extends AbstractHandler
      *
      * @throws ExpatParseException if a unxepected element occurs
      */
-    public function startElement( $name, $attrs )
+    public function startElement($name, $attrs)
     {
 
         $project = $this->configurator->project;
         $types = $project->getDataTypeDefinitions();
 
         if ($name == "target") {
-            $tf = new TargetHandler( $this->parser, $this, $this->configurator, $this->context );
-            $tf->init( $name, $attrs );
+            $tf = new TargetHandler($this->parser, $this, $this->configurator, $this->context);
+            $tf->init($name, $attrs);
         } else {
-            $tf = new ElementHandler( $this->parser, $this, $this->configurator, null, null,
-                $this->context->getImplicitTarget() );
-            $tf->init( $name, $attrs );
+            $tf = new ElementHandler($this->parser, $this, $this->configurator, null, null,
+                $this->context->getImplicitTarget());
+            $tf->init($name, $attrs);
         }
     }
 }

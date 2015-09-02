@@ -48,7 +48,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
     public function register()
     {
 
-        return array( T_WHITESPACE );
+        return array(T_WHITESPACE);
 
     }//end register()
 
@@ -62,7 +62,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -73,11 +73,11 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
             return;
         }
 
-        if (strpos( $tokens[$stackPtr]['content'], ' ' ) !== false) {
+        if (strpos($tokens[$stackPtr]['content'], ' ') !== false) {
             // Space are considered ok if they are proceeded by tabs and not followed
             // by tabs, as is the case with standard docblock comments.
             $error = 'Tabs must be used to indent lines; spaces are not allowed';
-            $phpcsFile->addError( $error, $stackPtr, 'TabsUsed' );
+            $phpcsFile->addError($error, $stackPtr, 'TabsUsed');
         }
 
     }//end process()

@@ -88,7 +88,7 @@ class JsHintTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -101,7 +101,7 @@ class JsHintTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -110,7 +110,7 @@ class JsHintTask extends Task
     /**
      * @param $haltOnError
      */
-    public function setHaltOnError( $haltOnError )
+    public function setHaltOnError($haltOnError)
     {
 
         $this->haltOnError = $haltOnError;
@@ -119,7 +119,7 @@ class JsHintTask extends Task
     /**
      * @param $haltOnWarning
      */
-    public function setHaltOnWarning( $haltOnWarning )
+    public function setHaltOnWarning($haltOnWarning)
     {
 
         $this->haltOnWarning = $haltOnWarning;
@@ -128,7 +128,7 @@ class JsHintTask extends Task
     /**
      * @param $checkstyleReportPath
      */
-    public function setCheckstyleReportPath( $checkstyleReportPath )
+    public function setCheckstyleReportPath($checkstyleReportPath)
     {
 
         $this->checkstyleReportPath = $checkstyleReportPath;
@@ -137,7 +137,7 @@ class JsHintTask extends Task
     /**
      * @param $reporter
      */
-    public function setReporter( $reporter )
+    public function setReporter($reporter)
     {
 
         $this->reporter = $reporter;
@@ -145,7 +145,7 @@ class JsHintTask extends Task
         switch ($this->reporter) {
             case 'jslint':
                 $this->xmlAttributes = array(
-                    'severity'  => array( 'error' => 'E', 'warning' => 'W', 'info' => 'I' ),
+                    'severity'  => array('error' => 'E', 'warning' => 'W', 'info' => 'I'),
                     'fileError' => 'issue',
                     'line'      => 'line',
                     'column'    => 'char',
@@ -154,7 +154,7 @@ class JsHintTask extends Task
                 break;
             default:
                 $this->xmlAttributes = array(
-                    'severity'  => array( 'error' => 'error', 'warning' => 'warning', 'info' => 'info' ),
+                    'severity'  => array('error' => 'error', 'warning' => 'warning', 'info' => 'info'),
                     'fileError' => 'error',
                     'line'      => 'line',
                     'column'    => 'column',
@@ -167,32 +167,32 @@ class JsHintTask extends Task
     public function main()
     {
 
-        if (!isset( $this->file ) && count( $this->filesets ) === 0) {
-            throw new BuildException( "Missing either a nested fileset or attribute 'file' set" );
+        if (!isset( $this->file ) && count($this->filesets) === 0) {
+            throw new BuildException("Missing either a nested fileset or attribute 'file' set");
         }
 
         if (!isset( $this->file )) {
             $fileList = array();
             $project = $this->getProject();
             foreach ($this->filesets as $fs) {
-                $ds = $fs->getDirectoryScanner( $project );
+                $ds = $fs->getDirectoryScanner($project);
                 $files = $ds->getIncludedFiles();
-                $dir = $fs->getDir( $this->project )->getAbsolutePath();
+                $dir = $fs->getDir($this->project)->getAbsolutePath();
                 foreach ($files as $file) {
                     $fileList[] = $dir.DIRECTORY_SEPARATOR.$file;
                 }
             }
         } else {
-            $fileList = array( $this->file );
+            $fileList = array($this->file);
         }
 
         $this->_checkJsHintIsInstalled();
 
-        $command = 'jshint --reporter='.$this->reporter.' '.implode( ' ', $fileList );
+        $command = 'jshint --reporter='.$this->reporter.' '.implode(' ', $fileList);
         $output = array();
-        exec( $command, $output );
-        $output = implode( PHP_EOL, $output );
-        $xml = simplexml_load_string( $output );
+        exec($command, $output);
+        $output = implode(PHP_EOL, $output);
+        $xml = simplexml_load_string($output);
 
         $projectBasedir = $this->_getProjectBasedir();
         $errorsCount = 0;
@@ -203,23 +203,23 @@ class JsHintTask extends Task
             $fileError = $file->{$this->xmlAttributes['fileError']};
             foreach ($fileError as $error) {
                 $errAttr = (array)$error->attributes();
-                $attrs = current( $errAttr );
+                $attrs = current($errAttr);
 
                 if ($attrs['severity'] === $this->xmlAttributes['severity']['error']) {
                     $errorsCount++;
                 } elseif ($attrs['severity'] === $this->xmlAttributes['severity']['warning']) {
                     $warningsCount++;
                 } elseif ($attrs['severity'] !== $this->xmlAttributes['severity']['info']) {
-                    throw new BuildException( sprintf( 'Unknown severity "%s"', $attrs['severity'] ) );
+                    throw new BuildException(sprintf('Unknown severity "%s"', $attrs['severity']));
                 }
                 $e = sprintf(
                     '%s: line %d, col %d, %s',
-                    str_replace( $projectBasedir, '', $fileName ),
+                    str_replace($projectBasedir, '', $fileName),
                     $attrs[$this->xmlAttributes['line']],
                     $attrs[$this->xmlAttributes['column']],
                     $attrs[$this->xmlAttributes['message']]
                 );
-                $this->log( $e );
+                $this->log($e);
             }
         }
 
@@ -229,18 +229,18 @@ class JsHintTask extends Task
             $warningsCount
         );
         if ($this->haltOnError && $errorsCount) {
-            throw new BuildException( $message );
+            throw new BuildException($message);
         } elseif ($this->haltOnWarning && $warningsCount) {
-            throw new BuildException( $message );
+            throw new BuildException($message);
         } else {
-            $this->log( '' );
-            $this->log( $message );
+            $this->log('');
+            $this->log($message);
         }
 
         if ($this->checkstyleReportPath) {
-            file_put_contents( $this->checkstyleReportPath, $output );
-            $this->log( '' );
-            $this->log( 'Checkstyle report saved to '.$this->checkstyleReportPath );
+            file_put_contents($this->checkstyleReportPath, $output);
+            $this->log('');
+            $this->log('Checkstyle report saved to '.$this->checkstyleReportPath);
         }
     }
 
@@ -250,9 +250,9 @@ class JsHintTask extends Task
     private function _checkJsHintIsInstalled()
     {
 
-        exec( 'jshint -v', $output, $return );
+        exec('jshint -v', $output, $return);
         if ($return !== 0) {
-            throw new BuildException( 'JSHint is not installed!' );
+            throw new BuildException('JSHint is not installed!');
         }
     }
 

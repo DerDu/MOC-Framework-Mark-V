@@ -65,22 +65,22 @@ class ContainsSelector extends BaseExtendSelector
      *
      * @return mixed|void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::CONTAINS_KEY:
-                        $this->setText( $parameters[$i]->getValue() );
+                        $this->setText($parameters[$i]->getValue());
                         break;
                     case self::CASE_KEY:
-                        $this->setCasesensitive( $parameters[$i]->getValue() );
+                        $this->setCasesensitive($parameters[$i]->getValue());
                         break;
                     default:
-                        $this->setError( "Invalid parameter ".$paramname );
+                        $this->setError("Invalid parameter ".$paramname);
                 }
             } // for each param
         } // if params
@@ -91,7 +91,7 @@ class ContainsSelector extends BaseExtendSelector
      *
      * @param string $contains the string that a file must contain to be selected.
      */
-    public function setText( $contains )
+    public function setText($contains)
     {
 
         $this->contains = $contains;
@@ -102,7 +102,7 @@ class ContainsSelector extends BaseExtendSelector
      *
      * @param boolean $casesensitive whether to pay attention to case sensitivity
      */
-    public function setCasesensitive( $casesensitive )
+    public function setCasesensitive($casesensitive)
     {
 
         $this->casesensitive = $casesensitive;
@@ -117,7 +117,7 @@ class ContainsSelector extends BaseExtendSelector
     {
 
         if ($this->contains === null) {
-            $this->setError( "The text attribute is required" );
+            $this->setError("The text attribute is required");
         }
     }
 
@@ -137,7 +137,7 @@ class ContainsSelector extends BaseExtendSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -148,18 +148,18 @@ class ContainsSelector extends BaseExtendSelector
 
         $userstr = $this->contains;
         if (!$this->casesensitive) {
-            $userstr = strtolower( $this->contains );
+            $userstr = strtolower($this->contains);
         }
 
         $in = null;
         try {
-            $in = new BufferedReader( new FileReader( $file ) );
+            $in = new BufferedReader(new FileReader($file));
             $teststr = $in->readLine();
             while ($teststr !== null) {
                 if (!$this->casesensitive) {
-                    $teststr = strtolower( $teststr );
+                    $teststr = strtolower($teststr);
                 }
-                if (strpos( $teststr, $userstr ) !== false) {
+                if (strpos($teststr, $userstr) !== false) {
                     return true;
                 }
                 $teststr = $in->readLine();
@@ -168,11 +168,11 @@ class ContainsSelector extends BaseExtendSelector
             $in->close();
 
             return false;
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             if ($in) {
                 $in->close();
             }
-            throw new BuildException( "Could not read file ".$filename );
+            throw new BuildException("Could not read file ".$filename);
         }
     }
 }

@@ -31,11 +31,11 @@ class AdapterFailureException extends \RuntimeException implements ExceptionInte
      * @param string|null      $message
      * @param \Exception|null  $previous
      */
-    public function __construct( AdapterInterface $adapter, $message = null, \Exception $previous = null )
+    public function __construct(AdapterInterface $adapter, $message = null, \Exception $previous = null)
     {
 
         $this->adapter = $adapter;
-        parent::__construct( $message ?: 'Search failed with "'.$adapter->getName().'" adapter.', $previous );
+        parent::__construct($message ?: 'Search failed with "'.$adapter->getName().'" adapter.', $previous);
     }
 
     /**

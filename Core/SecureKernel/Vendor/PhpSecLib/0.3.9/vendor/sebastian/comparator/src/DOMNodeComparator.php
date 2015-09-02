@@ -33,7 +33,7 @@ class DOMNodeComparator extends ObjectComparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
         return $expected instanceof DOMNode && $actual instanceof DOMNode;
@@ -55,11 +55,11 @@ class DOMNodeComparator extends ObjectComparator
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals( $expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false )
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
 
-        $expectedAsString = $this->nodeToText( $expected, true, $ignoreCase );
-        $actualAsString = $this->nodeToText( $actual, true, $ignoreCase );
+        $expectedAsString = $this->nodeToText($expected, true, $ignoreCase);
+        $actualAsString = $this->nodeToText($actual, true, $ignoreCase);
 
         if ($expectedAsString !== $actualAsString) {
             if ($expected instanceof DOMDocument) {
@@ -74,7 +74,7 @@ class DOMNodeComparator extends ObjectComparator
                 $expectedAsString,
                 $actualAsString,
                 false,
-                sprintf( "Failed asserting that two DOM %s are equal.\n", $type )
+                sprintf("Failed asserting that two DOM %s are equal.\n", $type)
             );
         }
     }
@@ -89,12 +89,12 @@ class DOMNodeComparator extends ObjectComparator
      *
      * @return string
      */
-    private function nodeToText( DOMNode $node, $canonicalize, $ignoreCase )
+    private function nodeToText(DOMNode $node, $canonicalize, $ignoreCase)
     {
 
         if ($canonicalize) {
             $document = new DOMDocument;
-            $document->loadXML( $node->C14N() );
+            $document->loadXML($node->C14N());
 
             $node = $document;
         }
@@ -111,11 +111,11 @@ class DOMNodeComparator extends ObjectComparator
         if ($node instanceof DOMDocument) {
             $text = $node->saveXML();
         } else {
-            $text = $document->saveXML( $node );
+            $text = $document->saveXML($node);
         }
 
         if ($ignoreCase) {
-            $text = strtolower( $text );
+            $text = strtolower($text);
         }
 
         return $text;

@@ -34,11 +34,11 @@ class EventObject
      *
      * @throws Exception
      */
-    public function __construct( $source )
+    public function __construct($source)
     {
 
         if ($source === null) {
-            throw new Exception( "Null source" );
+            throw new Exception("Null source");
         }
         $this->source = $source;
     }
@@ -54,10 +54,10 @@ class EventObject
     public function toString()
     {
 
-        if (method_exists( $this->source, "toString" )) {
-            return get_class( $this )."[source=".$this->source->toString()."]";
+        if (method_exists($this->source, "toString")) {
+            return get_class($this)."[source=".$this->source->toString()."]";
         } else {
-            return get_class( $this )."[source=".get_class( $this->source )."]";
+            return get_class($this)."[source=".get_class($this->source)."]";
         }
     }
 }

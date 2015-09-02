@@ -45,7 +45,7 @@ class BufferedWriter extends Writer
      * @param Writer $writer
      * @param int    $buffsize
      */
-    public function __construct( Writer $writer, $buffsize = 8192 )
+    public function __construct(Writer $writer, $buffsize = 8192)
     {
 
         $this->out = $writer;
@@ -55,7 +55,7 @@ class BufferedWriter extends Writer
     public function newLine()
     {
 
-        $this->write( PHP_EOL );
+        $this->write(PHP_EOL);
     }
 
     /**
@@ -65,10 +65,10 @@ class BufferedWriter extends Writer
      *
      * @return mixed
      */
-    public function write( $buf, $off = null, $len = null )
+    public function write($buf, $off = null, $len = null)
     {
 
-        return $this->out->write( $buf, $off, $len );
+        return $this->out->write($buf, $off, $len);
     }
 
     /**

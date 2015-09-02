@@ -60,7 +60,7 @@ class Ssh2MethodConnectionParam
     /**
      * @param string $comp
      */
-    public function setComp( $comp )
+    public function setComp($comp)
     {
 
         $this->comp = $comp;
@@ -78,7 +78,7 @@ class Ssh2MethodConnectionParam
     /**
      * @param string $crypt
      */
-    public function setCrypt( $crypt )
+    public function setCrypt($crypt)
     {
 
         $this->crypt = $crypt;
@@ -96,7 +96,7 @@ class Ssh2MethodConnectionParam
     /**
      * @param string $mac
      */
-    public function setMac( $mac )
+    public function setMac($mac)
     {
 
         $this->mac = $mac;
@@ -112,8 +112,8 @@ class Ssh2MethodConnectionParam
     {
 
         return array_filter(
-            get_object_vars( $this ),
-            array( $this, '_filterParam' )
+            get_object_vars($this),
+            array($this, '_filterParam')
         );
     }
 
@@ -122,9 +122,9 @@ class Ssh2MethodConnectionParam
      *
      * @return bool
      */
-    protected function _filterParam( $var )
+    protected function _filterParam($var)
     {
 
-        return !is_null( $var );
+        return !is_null($var);
     }
 }

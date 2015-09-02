@@ -49,7 +49,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
     public function register()
     {
 
-        return array( T_FOR );
+        return array(T_FOR);
 
     }//end register()
 
@@ -63,7 +63,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -89,7 +89,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
             if ($code === T_SEMICOLON) {
                 ++$index;
             } else {
-                if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+                if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                     ++$parts[$index];
                 }
             }
@@ -97,7 +97,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
 
         if ($parts[0] === 0 && $parts[2] === 0 && $parts[1] > 0) {
             $error = 'This FOR loop can be simplified to a WHILE loop';
-            $phpcsFile->addWarning( $error, $stackPtr, 'CanSimplify' );
+            $phpcsFile->addWarning($error, $stackPtr, 'CanSimplify');
         }
 
     }//end process()

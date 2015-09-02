@@ -62,14 +62,14 @@ class IconvFilter
      * @exception IOException if the underlying stream throws an IOException
      * during reading
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         $this->_initialize();
 
         // Process whole text at once.
         $text = null;
-        while (( $data = $this->in->read( $len ) ) !== -1) {
+        while (( $data = $this->in->read($len) ) !== -1) {
             $text .= $data;
         }
 
@@ -83,7 +83,7 @@ class IconvFilter
             Project::MSG_VERBOSE
         );
 
-        return iconv( $this->_inputEncoding, $this->_outputEncoding, $text );
+        return iconv($this->_inputEncoding, $this->_outputEncoding, $text);
     }
 
     /**
@@ -100,16 +100,16 @@ class IconvFilter
         if ($params !== null) {
             foreach ($params as $param) {
                 if ('in' == $param->getName()) {
-                    $this->setInputEncoding( $param->getValue() );
+                    $this->setInputEncoding($param->getValue());
                 } else {
                     if ('out' == $param->getName()) {
-                        $this->setOutputEncoding( $param->getValue() );
+                        $this->setOutputEncoding($param->getValue());
                     }
                 }
             }
         }
 
-        $this->setInitialized( true );
+        $this->setInitialized(true);
     }
 
     /**
@@ -126,7 +126,7 @@ class IconvFilter
      *
      * @param string $encoding Input encoding.
      */
-    public function setInputEncoding( $encoding )
+    public function setInputEncoding($encoding)
     {
 
         $this->_inputEncoding = $encoding;
@@ -146,7 +146,7 @@ class IconvFilter
      *
      * @param string $encoding Output encoding.
      */
-    public function setOutputEncoding( $encoding )
+    public function setOutputEncoding($encoding)
     {
 
         $this->_outputEncoding = $encoding;
@@ -161,16 +161,16 @@ class IconvFilter
      *
      * @return object A new filter based on this configuration, but filtering the specified reader.
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $filter = new self( $reader );
+        $filter = new self($reader);
 
-        $filter->setInputEncoding( $this->getInputEncoding() );
-        $filter->setOutputEncoding( $this->getOutputEncoding() );
+        $filter->setInputEncoding($this->getInputEncoding());
+        $filter->setOutputEncoding($this->getOutputEncoding());
 
-        $filter->setInitialized( true );
-        $filter->setProject( $this->getProject() );
+        $filter->setInitialized(true);
+        $filter->setProject($this->getProject());
 
         return $filter;
     }

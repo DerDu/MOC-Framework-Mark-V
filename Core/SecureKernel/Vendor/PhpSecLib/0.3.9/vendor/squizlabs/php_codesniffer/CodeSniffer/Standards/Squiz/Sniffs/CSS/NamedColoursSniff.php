@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -72,7 +72,7 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_STRING );
+        return array(T_STRING);
 
     }//end register()
 
@@ -86,7 +86,7 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -98,9 +98,9 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        if (in_array( strtolower( $tokens[$stackPtr]['content'] ), $this->colourNames ) === true) {
+        if (in_array(strtolower($tokens[$stackPtr]['content']), $this->colourNames) === true) {
             $error = 'Named colours are forbidden; use hex, rgb, or rgba values instead';
-            $phpcsFile->addError( $error, $stackPtr, 'Forbidden' );
+            $phpcsFile->addError($error, $stackPtr, 'Forbidden');
         }
 
     }//end process()

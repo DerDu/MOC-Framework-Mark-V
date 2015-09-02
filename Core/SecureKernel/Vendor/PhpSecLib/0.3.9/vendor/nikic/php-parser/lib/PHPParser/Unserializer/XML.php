@@ -11,20 +11,20 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
         $this->reader = new XMLReader;
     }
 
-    public function unserialize( $string )
+    public function unserialize($string)
     {
 
-        $this->reader->XML( $string );
+        $this->reader->XML($string);
 
         $this->reader->read();
         if ('AST' !== $this->reader->name) {
-            throw new DomainException( 'AST root element not found' );
+            throw new DomainException('AST root element not found');
         }
 
-        return $this->read( $this->reader->depth );
+        return $this->read($this->reader->depth);
     }
 
-    protected function read( $depthLimit, $throw = true, &$nodeFound = null )
+    protected function read($depthLimit, $throw = true, &$nodeFound = null)
     {
 
         $nodeFound = true;
@@ -40,13 +40,13 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
             } elseif ('comment' === $this->reader->name) {
                 return $this->readComment();
             } else {
-                throw new DomainException( sprintf( 'Unexpected node of type "%s"', $this->reader->name ) );
+                throw new DomainException(sprintf('Unexpected node of type "%s"', $this->reader->name));
             }
         }
 
         $nodeFound = false;
         if ($throw) {
-            throw new DomainException( 'Expected node or scalar' );
+            throw new DomainException('Expected node or scalar');
         }
     }
 
@@ -59,7 +59,7 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
         $node = unserialize(
             sprintf(
                 "O:%d:\"%s\":2:{s:11:\"\0*\0subNodes\";a:0:{}s:13:\"\0*\0attributes\";a:0:{}}",
-                strlen( $className ), $className
+                strlen($className), $className
             )
         );
 
@@ -72,17 +72,17 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
             $type = $this->reader->prefix;
             if ('subNode' !== $type && 'attribute' !== $type) {
                 throw new DomainException(
-                    sprintf( 'Expected sub node or attribute, got node of type "%s"', $this->reader->name )
+                    sprintf('Expected sub node or attribute, got node of type "%s"', $this->reader->name)
                 );
             }
 
             $name = $this->reader->localName;
-            $value = $this->read( $this->reader->depth );
+            $value = $this->read($this->reader->depth);
 
             if ('subNode' === $type) {
                 $node->$name = $value;
             } else {
-                $node->setAttribute( $name, $value );
+                $node->setAttribute($name, $value);
             }
         }
 
@@ -97,7 +97,7 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
                 $depth = $this->reader->depth;
                 $array = array();
                 while (true) {
-                    $node = $this->read( $depth, false, $nodeFound );
+                    $node = $this->read($depth, false, $nodeFound);
                     if (!$nodeFound) {
                         break;
                     }
@@ -108,37 +108,37 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
                 return $this->reader->readString();
             case 'int':
                 $text = $this->reader->readString();
-                if (false === $int = filter_var( $text, FILTER_VALIDATE_INT )) {
-                    throw new DomainException( sprintf( '"%s" is not a valid integer', $text ) );
+                if (false === $int = filter_var($text, FILTER_VALIDATE_INT)) {
+                    throw new DomainException(sprintf('"%s" is not a valid integer', $text));
                 }
                 return $int;
             case 'float':
                 $text = $this->reader->readString();
-                if (false === $float = filter_var( $text, FILTER_VALIDATE_FLOAT )) {
-                    throw new DomainException( sprintf( '"%s" is not a valid float', $text ) );
+                if (false === $float = filter_var($text, FILTER_VALIDATE_FLOAT)) {
+                    throw new DomainException(sprintf('"%s" is not a valid float', $text));
                 }
                 return $float;
             case 'true':
             case 'false':
             case 'null':
                 if (!$this->reader->isEmptyElement) {
-                    throw new DomainException( sprintf( '"%s" scalar must be empty', $name ) );
+                    throw new DomainException(sprintf('"%s" scalar must be empty', $name));
                 }
-                return constant( $name );
+                return constant($name);
             default:
-                throw new DomainException( sprintf( 'Unknown scalar type "%s"', $name ) );
+                throw new DomainException(sprintf('Unknown scalar type "%s"', $name));
         }
     }
 
     protected function readComment()
     {
 
-        $className = $this->reader->getAttribute( 'isDocComment' ) === 'true'
+        $className = $this->reader->getAttribute('isDocComment') === 'true'
             ? 'PHPParser_Comment_Doc'
             : 'PHPParser_Comment';
         return new $className(
             $this->reader->readString(),
-            $this->reader->getAttribute( 'line' )
+            $this->reader->getAttribute('line')
         );
     }
 }

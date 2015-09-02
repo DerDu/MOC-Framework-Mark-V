@@ -76,13 +76,13 @@ class TypedefTask extends Task
      *
      * @param Path $classpath A Path object containing the classpath.
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -91,11 +91,11 @@ class TypedefTask extends Task
      *
      * @param Reference $r
      */
-    public function setClasspathRef( Reference $r )
+    public function setClasspathRef(Reference $r)
     {
 
         $this->classpathId = $r->getRefId();
-        $this->createClasspath()->setRefid( $r );
+        $this->createClasspath()->setRefid($r);
     }
 
     /**
@@ -107,7 +107,7 @@ class TypedefTask extends Task
     {
 
         if ($this->classpath === null) {
-            $this->classpath = new Path( $this->project );
+            $this->classpath = new Path($this->project);
         }
 
         return $this->classpath->createPath();
@@ -118,9 +118,9 @@ class TypedefTask extends Task
     {
 
         if ($this->name === null || $this->classname === null) {
-            throw new BuildException( "You must specify name and class attributes for <typedef>." );
+            throw new BuildException("You must specify name and class attributes for <typedef>.");
         }
-        $this->project->addDataTypeDefinition( $this->name, $this->classname, $this->classpath );
+        $this->project->addDataTypeDefinition($this->name, $this->classname, $this->classpath);
     }
 
     /**
@@ -128,7 +128,7 @@ class TypedefTask extends Task
      *
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -139,7 +139,7 @@ class TypedefTask extends Task
      *
      * @param string $class
      */
-    public function setClassname( $class )
+    public function setClassname($class)
     {
 
         $this->classname = $class;

@@ -60,7 +60,7 @@ class TouchTask extends Task
      *
      * @return void
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -75,7 +75,7 @@ class TouchTask extends Task
      *
      * @return void
      */
-    public function setDatetime( $dateTime )
+    public function setDatetime($dateTime)
     {
 
         $this->dateTime = (string)$dateTime;
@@ -88,7 +88,7 @@ class TouchTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -104,24 +104,24 @@ class TouchTask extends Task
 
         $savedMillis = $this->millis;
 
-        if ($this->file === null && count( $this->filesets ) === 0) {
-            throw new BuildException( "Specify at least one source - a file or a fileset." );
+        if ($this->file === null && count($this->filesets) === 0) {
+            throw new BuildException("Specify at least one source - a file or a fileset.");
         }
 
         if ($this->file !== null && $this->file->exists() && $this->file->isDirectory()) {
-            throw new BuildException( "Use a fileset to touch directories." );
+            throw new BuildException("Use a fileset to touch directories.");
         }
 
         try { // try to touch file
             if ($this->dateTime !== null) {
-                $this->setMillis( strtotime( $this->dateTime ) );
+                $this->setMillis(strtotime($this->dateTime));
                 if ($this->millis < 0) {
-                    throw new BuildException( "Date of {$this->dateTime} results in negative milliseconds value relative to epoch (January 1, 1970, 00:00:00 GMT)." );
+                    throw new BuildException("Date of {$this->dateTime} results in negative milliseconds value relative to epoch (January 1, 1970, 00:00:00 GMT).");
                 }
             }
             $this->_touch();
-        } catch( Exception $ex ) {
-            throw new BuildException( "Error touch()ing file", $ex, $this->location );
+        } catch (Exception $ex) {
+            throw new BuildException("Error touch()ing file", $ex, $this->location);
         }
 
         $this->millis = $savedMillis;
@@ -137,7 +137,7 @@ class TouchTask extends Task
      *
      * @return void
      */
-    public function setMillis( $millis )
+    public function setMillis($millis)
     {
 
         $this->millis = (int)$millis;
@@ -151,12 +151,12 @@ class TouchTask extends Task
 
         if ($this->file !== null) {
             if (!$this->file->exists()) {
-                $this->log( "Creating ".$this->file->__toString(), Project::MSG_INFO );
+                $this->log("Creating ".$this->file->__toString(), Project::MSG_INFO);
                 try { // try to create file
                     $this->file->createNewFile();
-                } catch( IOException  $ioe ) {
-                    throw new BuildException( "Error creating new file ".$this->file->__toString(), $ioe,
-                        $this->location );
+                } catch (IOException  $ioe) {
+                    throw new BuildException("Error creating new file ".$this->file->__toString(), $ioe,
+                        $this->location);
                 }
             }
         }
@@ -168,24 +168,24 @@ class TouchTask extends Task
         }
 
         if ($this->file !== null) {
-            $this->touchFile( $this->file );
+            $this->touchFile($this->file);
         }
 
         // deal with the filesets
         foreach ($this->filesets as $fs) {
 
-            $ds = $fs->getDirectoryScanner( $this->getProject() );
-            $fromDir = $fs->getDir( $this->getProject() );
+            $ds = $fs->getDirectoryScanner($this->getProject());
+            $fromDir = $fs->getDir($this->getProject());
 
             $srcFiles = $ds->getIncludedFiles();
             $srcDirs = $ds->getIncludedDirectories();
 
-            for ($j = 0, $_j = count( $srcFiles ); $j < $_j; $j++) {
-                $this->touchFile( new PhingFile( $fromDir, (string)$srcFiles[$j] ) );
+            for ($j = 0, $_j = count($srcFiles); $j < $_j; $j++) {
+                $this->touchFile(new PhingFile($fromDir, (string)$srcFiles[$j]));
             }
 
-            for ($j = 0, $_j = count( $srcDirs ); $j < $_j; $j++) {
-                $this->touchFile( new PhingFile( $fromDir, (string)$srcDirs[$j] ) );
+            for ($j = 0, $_j = count($srcDirs); $j < $_j; $j++) {
+                $this->touchFile(new PhingFile($fromDir, (string)$srcDirs[$j]));
             }
         }
 
@@ -199,13 +199,13 @@ class TouchTask extends Task
      *
      * @throws BuildException
      */
-    private function touchFile( $file )
+    private function touchFile($file)
     {
 
         if (!$file->canWrite()) {
-            throw new BuildException( "Can not change modification date of read-only file ".$file->__toString() );
+            throw new BuildException("Can not change modification date of read-only file ".$file->__toString());
         }
-        $file->setLastModified( $this->millis );
+        $file->setLastModified($this->millis);
     }
 
 }

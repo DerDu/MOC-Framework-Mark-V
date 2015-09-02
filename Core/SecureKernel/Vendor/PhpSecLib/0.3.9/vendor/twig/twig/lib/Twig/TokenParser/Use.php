@@ -33,41 +33,41 @@ class Twig_TokenParser_Use extends Twig_TokenParser
      *
      * @return Twig_NodeInterface A Twig_NodeInterface instance
      */
-    public function parse( Twig_Token $token )
+    public function parse(Twig_Token $token)
     {
 
         $template = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
 
         if (!$template instanceof Twig_Node_Expression_Constant) {
-            throw new Twig_Error_Syntax( 'The template references in a "use" statement must be a string.',
-                $stream->getCurrent()->getLine(), $stream->getFilename() );
+            throw new Twig_Error_Syntax('The template references in a "use" statement must be a string.',
+                $stream->getCurrent()->getLine(), $stream->getFilename());
         }
 
         $targets = array();
-        if ($stream->nextIf( 'with' )) {
+        if ($stream->nextIf('with')) {
             do {
-                $name = $stream->expect( Twig_Token::NAME_TYPE )->getValue();
+                $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
 
                 $alias = $name;
-                if ($stream->nextIf( 'as' )) {
-                    $alias = $stream->expect( Twig_Token::NAME_TYPE )->getValue();
+                if ($stream->nextIf('as')) {
+                    $alias = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
                 }
 
-                $targets[$name] = new Twig_Node_Expression_Constant( $alias, -1 );
+                $targets[$name] = new Twig_Node_Expression_Constant($alias, -1);
 
-                if (!$stream->nextIf( Twig_Token::PUNCTUATION_TYPE, ',' )) {
+                if (!$stream->nextIf(Twig_Token::PUNCTUATION_TYPE, ',')) {
                     break;
                 }
             } while (true);
         }
 
-        $stream->expect( Twig_Token::BLOCK_END_TYPE );
+        $stream->expect(Twig_Token::BLOCK_END_TYPE);
 
-        $this->parser->addTrait( new Twig_Node( array(
+        $this->parser->addTrait(new Twig_Node(array(
             'template' => $template,
-            'targets'  => new Twig_Node( $targets )
-        ) ) );
+            'targets'  => new Twig_Node($targets)
+        )));
     }
 
     /**

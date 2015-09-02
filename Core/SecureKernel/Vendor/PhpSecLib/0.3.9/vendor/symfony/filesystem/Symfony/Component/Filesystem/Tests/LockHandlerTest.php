@@ -14,7 +14,7 @@ class LockHandlerTest extends \PHPUnit_Framework_TestCase
     public function testConstructWhenRepositoryDoesNotExist()
     {
 
-        new LockHandler( 'lock', '/a/b/c/d/e' );
+        new LockHandler('lock', '/a/b/c/d/e');
     }
 
     /**
@@ -24,22 +24,22 @@ class LockHandlerTest extends \PHPUnit_Framework_TestCase
     public function testConstructWhenRepositoryIsNotWriteable()
     {
 
-        new LockHandler( 'lock', '/' );
+        new LockHandler('lock', '/');
     }
 
     public function testConstructSanitizeName()
     {
 
-        $lock = new LockHandler( '<?php echo "% hello word ! %" ?>' );
+        $lock = new LockHandler('<?php echo "% hello word ! %" ?>');
 
-        $file = sprintf( '%s/sf.-php-echo-hello-word-.4b3d9d0d27ddef3a78a64685dda3a963e478659a9e5240feaf7b4173a8f28d5f.lock',
-            sys_get_temp_dir() );
+        $file = sprintf('%s/sf.-php-echo-hello-word-.4b3d9d0d27ddef3a78a64685dda3a963e478659a9e5240feaf7b4173a8f28d5f.lock',
+            sys_get_temp_dir());
         // ensure the file does not exist before the lock
-        @unlink( $file );
+        @unlink($file);
 
         $lock->lock();
 
-        $this->assertFileExists( $file );
+        $this->assertFileExists($file);
 
         $lock->release();
     }
@@ -49,15 +49,15 @@ class LockHandlerTest extends \PHPUnit_Framework_TestCase
 
         $name = 'symfony-test-filesystem.lock';
 
-        $l1 = new LockHandler( $name );
-        $l2 = new LockHandler( $name );
+        $l1 = new LockHandler($name);
+        $l2 = new LockHandler($name);
 
-        $this->assertTrue( $l1->lock() );
-        $this->assertFalse( $l2->lock() );
+        $this->assertTrue($l1->lock());
+        $this->assertFalse($l2->lock());
 
         $l1->release();
 
-        $this->assertTrue( $l2->lock() );
+        $this->assertTrue($l2->lock());
         $l2->release();
     }
 
@@ -66,10 +66,10 @@ class LockHandlerTest extends \PHPUnit_Framework_TestCase
 
         $name = 'symfony-test-filesystem.lock';
 
-        $lockHandler = new LockHandler( $name );
+        $lockHandler = new LockHandler($name);
 
-        $this->assertTrue( $lockHandler->lock() );
-        $this->assertTrue( $lockHandler->lock() );
+        $this->assertTrue($lockHandler->lock());
+        $this->assertTrue($lockHandler->lock());
 
         $lockHandler->release();
     }
@@ -79,15 +79,15 @@ class LockHandlerTest extends \PHPUnit_Framework_TestCase
 
         $name = 'symfony-test-filesystem.lock';
 
-        $l1 = new LockHandler( $name );
-        $l2 = new LockHandler( $name );
+        $l1 = new LockHandler($name);
+        $l2 = new LockHandler($name);
 
-        $this->assertTrue( $l1->lock() );
-        $this->assertFalse( $l2->lock() );
+        $this->assertTrue($l1->lock());
+        $this->assertFalse($l2->lock());
 
         $l1 = null;
 
-        $this->assertTrue( $l2->lock() );
+        $this->assertTrue($l2->lock());
         $l2->release();
     }
 }

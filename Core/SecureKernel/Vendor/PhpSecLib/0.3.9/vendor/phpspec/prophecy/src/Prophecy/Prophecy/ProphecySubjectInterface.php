@@ -24,7 +24,7 @@ interface ProphecySubjectInterface
      *
      * @param ProphecyInterface $prophecy
      */
-    public function setProphecy( ProphecyInterface $prophecy );
+    public function setProphecy(ProphecyInterface $prophecy);
 
     /**
      * Returns subject prophecy.

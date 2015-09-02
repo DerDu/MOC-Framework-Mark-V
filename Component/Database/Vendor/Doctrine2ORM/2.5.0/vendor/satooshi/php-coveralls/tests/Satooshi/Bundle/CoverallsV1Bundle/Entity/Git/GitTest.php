@@ -46,8 +46,8 @@ class GitTest extends \PHPUnit_Framework_TestCase
     {
 
         $expected = array(
-            'branch' => $this->branchName,
-            'head' => $this->commit->toArray(),
+            'branch'  => $this->branchName,
+            'head'    => $this->commit->toArray(),
             'remotes' => array($this->remote->toArray()),
         );
 

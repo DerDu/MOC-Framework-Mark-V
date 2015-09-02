@@ -32,18 +32,18 @@ class ErrorHandler
     static public function register()
     {
 
-        set_error_handler( array( new static(), 'handle' ) );
+        set_error_handler(array(new static(), 'handle'));
     }
 
     /**
      * @throws \ErrorException When error_reporting returns error
      */
-    public function handle( $level, $message, $file = 'unknown', $line = 0, $context = array() )
+    public function handle($level, $message, $file = 'unknown', $line = 0, $context = array())
     {
 
         if (error_reporting() & $level) {
-            throw new \ErrorException( sprintf( '%s: %s in %s line %d',
-                isset( $this->levels[$level] ) ? $this->levels[$level] : $level, $message, $file, $line ) );
+            throw new \ErrorException(sprintf('%s: %s in %s line %d',
+                isset( $this->levels[$level] ) ? $this->levels[$level] : $level, $message, $file, $line));
         }
 
         return false;

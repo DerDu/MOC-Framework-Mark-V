@@ -39,10 +39,10 @@ class Description implements \Reflector
      * @param string   $content  The description's conetnts.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
-    public function __construct( $content, DocBlock $docblock = null )
+    public function __construct($content, DocBlock $docblock = null)
     {
 
-        $this->setContent( $content )->setDocBlock( $docblock );
+        $this->setContent($content)->setDocBlock($docblock);
     }
 
     /**
@@ -52,10 +52,10 @@ class Description implements \Reflector
      *
      * @return $this
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        $this->contents = trim( $content );
+        $this->contents = trim($content);
 
         $this->parsedContents = null;
         return $this;
@@ -73,7 +73,7 @@ class Description implements \Reflector
     public static function export()
     {
 
-        throw new \Exception( 'Not yet implemented' );
+        throw new \Exception('Not yet implemented');
     }
 
     /**
@@ -122,7 +122,7 @@ class Description implements \Reflector
                 PREG_SPLIT_DELIM_CAPTURE
             );
 
-            $count = count( $this->parsedContents );
+            $count = count($this->parsedContents);
             for ($i = 1; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
                     $this->parsedContents[$i],
@@ -135,8 +135,8 @@ class Description implements \Reflector
             //See unit tests for examples.
             for ($i = 0; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = str_replace(
-                    array( '{@}', '{}' ),
-                    array( '@', '}' ),
+                    array('{@}', '{}'),
+                    array('@', '}'),
                     $this->parsedContents[$i]
                 );
             }
@@ -163,23 +163,23 @@ class Description implements \Reflector
         // if the long description contains a plain HTML <code> element, surround
         // it with a pre element. Please note that we explicitly used str_replace
         // and not preg_replace to gain performance
-        if (strpos( $result, '<code>' ) !== false) {
+        if (strpos($result, '<code>') !== false) {
             $result = str_replace(
-                array( '<code>', "<code>\r\n", "<code>\n", "<code>\r", '</code>' ),
-                array( '<pre><code>', '<code>', '<code>', '<code>', '</code></pre>' ),
+                array('<code>', "<code>\r\n", "<code>\n", "<code>\r", '</code>'),
+                array('<pre><code>', '<code>', '<code>', '<code>', '</code></pre>'),
                 $result
             );
         }
 
-        if (class_exists( 'Parsedown' )) {
+        if (class_exists('Parsedown')) {
             $markdown = \Parsedown::instance();
-            $result = $markdown->parse( $result );
-        } elseif (class_exists( 'dflydev\markdown\MarkdownExtraParser' )) {
+            $result = $markdown->parse($result);
+        } elseif (class_exists('dflydev\markdown\MarkdownExtraParser')) {
             $markdown = new \dflydev\markdown\MarkdownExtraParser();
-            $result = $markdown->transformMarkdown( $result );
+            $result = $markdown->transformMarkdown($result);
         }
 
-        return trim( $result );
+        return trim($result);
     }
 
     /**
@@ -201,7 +201,7 @@ class Description implements \Reflector
      *
      * @return $this
      */
-    public function setDocBlock( DocBlock $docblock = null )
+    public function setDocBlock(DocBlock $docblock = null)
     {
 
         $this->docblock = $docblock;

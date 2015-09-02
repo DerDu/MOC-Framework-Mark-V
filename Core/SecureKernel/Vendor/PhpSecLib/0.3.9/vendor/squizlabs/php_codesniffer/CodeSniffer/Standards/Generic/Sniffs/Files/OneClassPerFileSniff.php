@@ -36,13 +36,13 @@ class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $nextClass = $phpcsFile->findNext( $this->register(), ( $stackPtr + 1 ) );
+        $nextClass = $phpcsFile->findNext($this->register(), ( $stackPtr + 1 ));
         if ($nextClass !== false) {
             $error = 'Only one class is allowed in a file';
-            $phpcsFile->addError( $error, $nextClass, 'MultipleFound' );
+            $phpcsFile->addError($error, $nextClass, 'MultipleFound');
         }
 
     }//end register()
@@ -55,7 +55,7 @@ class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_CLASS );
+        return array(T_CLASS);
 
     }//end process()
 

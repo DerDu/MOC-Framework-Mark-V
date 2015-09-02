@@ -26,7 +26,7 @@ class AnyValuesToken implements TokenInterface
      *
      * @return int
      */
-    public function scoreArgument( $argument )
+    public function scoreArgument($argument)
     {
 
         return 2;

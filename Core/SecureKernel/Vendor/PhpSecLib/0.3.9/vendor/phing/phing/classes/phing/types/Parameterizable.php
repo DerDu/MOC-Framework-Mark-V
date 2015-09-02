@@ -35,5 +35,5 @@ interface Parameterizable
      *
      * @return mixed
      */
-    public function setParameters( $parameters );
+    public function setParameters($parameters);
 }

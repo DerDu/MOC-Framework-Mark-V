@@ -1,10 +1,13 @@
 <?php
+
 class TestIterator2 implements Iterator
 {
+
     protected $data;
 
     public function __construct(array $array)
     {
+
         $this->data = $array;
     }
 

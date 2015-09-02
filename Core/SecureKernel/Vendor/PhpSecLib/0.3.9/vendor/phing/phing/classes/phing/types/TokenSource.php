@@ -83,7 +83,7 @@ class TokenSource extends DataType
     public function getTokens()
     {
 
-        if (count( $this->tokens ) == 0) {
+        if (count($this->tokens) == 0) {
             $this->Load();
         }
 
@@ -99,24 +99,24 @@ class TokenSource extends DataType
 
         // Create new Reader
         if ($this->classname === null) {
-            throw new BuildException( "No Classname given to TokenSource." );
+            throw new BuildException("No Classname given to TokenSource.");
         }
 
-        $classname = Phing::import( $this->classname );
-        $this->reader = new $classname( $this->project );
+        $classname = Phing::import($this->classname);
+        $this->reader = new $classname($this->project);
 
         // Configure Reader
-        $this->configureTokenReader( $this->reader );
+        $this->configureTokenReader($this->reader);
 
         // Load Tokens
         try {
             while ($token = $this->reader->readToken()) {
                 $this->tokens[] = $token;
             }
-        } catch( BuildException $e ) {
-            $this->log( "Error reading TokenSource: ".$e->getMessage(), Project::MSG_WARN );
-        } catch( IOException $e ) {
-            $this->log( "Error reading TokenSource: ".$e->getMessage(), Project::MSG_WARN );
+        } catch (BuildException $e) {
+            $this->log("Error reading TokenSource: ".$e->getMessage(), Project::MSG_WARN);
+        } catch (IOException $e) {
+            $this->log("Error reading TokenSource: ".$e->getMessage(), Project::MSG_WARN);
         }
     }
 
@@ -126,14 +126,14 @@ class TokenSource extends DataType
      *
      * @param TokenReader $reader
      */
-    private function configureTokenReader( TokenReader $reader )
+    private function configureTokenReader(TokenReader $reader)
     {
 
-        $count = count( $this->parameters );
+        $count = count($this->parameters);
         for ($i = 0; $i < $count; $i++) {
             $method_name = "Set".$this->parameters[$i]->getName();
             $value = $this->parameters[$i]->getValue();
-            $reader->$method_name( $value );
+            $reader->$method_name($value);
         }
     }
 
@@ -153,7 +153,7 @@ class TokenSource extends DataType
      *
      * @param string $c
      */
-    public function setClassname( $c )
+    public function setClassname($c)
     {
 
         $this->classname = $c;
@@ -168,7 +168,7 @@ class TokenSource extends DataType
     public function createParam()
     {
 
-        $num = array_push( $this->parameters, new Parameter() );
+        $num = array_push($this->parameters, new Parameter());
 
         return $this->parameters[$num - 1];
     }

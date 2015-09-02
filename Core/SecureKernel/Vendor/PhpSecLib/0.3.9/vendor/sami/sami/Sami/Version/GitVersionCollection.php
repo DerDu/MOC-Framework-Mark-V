@@ -23,61 +23,61 @@ class GitVersionCollection extends VersionCollection
     protected $repo;
     protected $gitPath;
 
-    public function __construct( $repo )
+    public function __construct($repo)
     {
 
         $this->repo = $repo;
-        $this->filter = function ( $version ) {
+        $this->filter = function ($version) {
 
-            foreach (array( 'PR', 'RC', 'BETA', 'ALPHA' ) as $str) {
-                if (strpos( $version, $str )) {
+            foreach (array('PR', 'RC', 'BETA', 'ALPHA') as $str) {
+                if (strpos($version, $str)) {
                     return false;
                 }
             }
 
             return true;
         };
-        $this->sorter = function ( $a, $b ) {
+        $this->sorter = function ($a, $b) {
 
-            return version_compare( $a, $b, '>' );
+            return version_compare($a, $b, '>');
         };
         $this->gitPath = 'git';
     }
 
-    public function setGitPath( $path )
+    public function setGitPath($path)
     {
 
         $this->gitPath = $path;
     }
 
-    public function setFilter( \Closure $filter )
+    public function setFilter(\Closure $filter)
     {
 
         $this->filter = $filter;
     }
 
-    public function setSorter( \Closure $sorter )
+    public function setSorter(\Closure $sorter)
     {
 
         $this->sorter = $sorter;
     }
 
-    public function addFromTags( $filter = null )
+    public function addFromTags($filter = null)
     {
 
-        $tags = array_filter( explode( "\n", $this->execute( array( 'tag' ) ) ) );
+        $tags = array_filter(explode("\n", $this->execute(array('tag'))));
 
-        $versions = array_filter( $tags, $this->filter );
+        $versions = array_filter($tags, $this->filter);
         if (null !== $filter) {
             if (!$filter instanceof \Closure) {
                 $regexes = array();
                 foreach ((array)$filter as $f) {
-                    $regexes[] = Glob::toRegex( $f );
+                    $regexes[] = Glob::toRegex($f);
                 }
-                $filter = function ( $version ) use ( $regexes ) {
+                $filter = function ($version) use ($regexes) {
 
                     foreach ($regexes as $regex) {
-                        if (preg_match( $regex, $version )) {
+                        if (preg_match($regex, $version)) {
                             return true;
                         }
                     }
@@ -86,46 +86,46 @@ class GitVersionCollection extends VersionCollection
                 };
             }
 
-            $versions = array_filter( $versions, $filter );
+            $versions = array_filter($versions, $filter);
         }
-        usort( $versions, $this->sorter );
+        usort($versions, $this->sorter);
 
         foreach ($versions as $version) {
-            $version = new Version( $version );
-            $version->setFrozen( true );
-            $this->add( $version );
+            $version = new Version($version);
+            $version->setFrozen(true);
+            $this->add($version);
         }
 
         return $this;
     }
 
-    protected function switchVersion( Version $version )
+    protected function execute($arguments)
     {
 
-        $process = new Process( 'git status --porcelain | grep -v "??" | wc -l', $this->repo );
-        $process->run();
-        if (!$process->isSuccessful() || (int)$process->getOutput() > 0) {
-            throw new \RuntimeException( sprintf( 'Unable to switch to version "%s" as the repository is not clean.',
-                $version ) );
-        }
+        array_unshift($arguments, $this->gitPath);
 
-        $this->execute( array( 'checkout', '-qf', (string)$version ) );
-    }
-
-    protected function execute( $arguments )
-    {
-
-        array_unshift( $arguments, $this->gitPath );
-
-        $builder = new ProcessBuilder( $arguments );
-        $builder->setWorkingDirectory( $this->repo );
+        $builder = new ProcessBuilder($arguments);
+        $builder->setWorkingDirectory($this->repo);
         $process = $builder->getProcess();
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException( sprintf( 'Unable to run the command (%s).', $process->getErrorOutput() ) );
+            throw new \RuntimeException(sprintf('Unable to run the command (%s).', $process->getErrorOutput()));
         }
 
         return $process->getOutput();
+    }
+
+    protected function switchVersion(Version $version)
+    {
+
+        $process = new Process('git status --porcelain | grep -v "??" | wc -l', $this->repo);
+        $process->run();
+        if (!$process->isSuccessful() || (int)$process->getOutput() > 0) {
+            throw new \RuntimeException(sprintf('Unable to switch to version "%s" as the repository is not clean.',
+                $version));
+        }
+
+        $this->execute(array('checkout', '-qf', (string)$version));
     }
 }

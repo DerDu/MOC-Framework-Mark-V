@@ -30,12 +30,12 @@ class ConsoleTerminateEvent extends ConsoleEvent
      */
     private $exitCode;
 
-    public function __construct( Command $command, InputInterface $input, OutputInterface $output, $exitCode )
+    public function __construct(Command $command, InputInterface $input, OutputInterface $output, $exitCode)
     {
 
-        parent::__construct( $command, $input, $output );
+        parent::__construct($command, $input, $output);
 
-        $this->setExitCode( $exitCode );
+        $this->setExitCode($exitCode);
     }
 
     /**
@@ -54,7 +54,7 @@ class ConsoleTerminateEvent extends ConsoleEvent
      *
      * @param int $exitCode The command exit code
      */
-    public function setExitCode( $exitCode )
+    public function setExitCode($exitCode)
     {
 
         $this->exitCode = (int)$exitCode;

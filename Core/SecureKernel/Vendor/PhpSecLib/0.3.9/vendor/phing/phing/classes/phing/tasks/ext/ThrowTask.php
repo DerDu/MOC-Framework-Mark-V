@@ -44,7 +44,7 @@ class ThrowTask extends FailTask
     public function main()
     {
 
-        $reffed = $this->reference !== null ? $this->reference->getReferencedObject( $this->getProject() ) : null;
+        $reffed = $this->reference !== null ? $this->reference->getReferencedObject($this->getProject()) : null;
 
         if ($reffed !== null && $reffed instanceof BuildException) {
             throw $reffed;
@@ -58,7 +58,7 @@ class ThrowTask extends FailTask
      *
      * @return void
      */
-    public function setRefid( Reference $ref )
+    public function setRefid(Reference $ref)
     {
 
         $this->reference = $ref;

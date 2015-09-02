@@ -18,6 +18,7 @@
  */
 class File_Iterator_Facade
 {
+
     /**
      * @param  array|string $paths
      * @param  array|string $suffixes

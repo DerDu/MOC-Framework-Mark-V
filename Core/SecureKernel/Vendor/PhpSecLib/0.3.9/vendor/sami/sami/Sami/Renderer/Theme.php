@@ -19,7 +19,7 @@ class Theme
     protected $parent;
     protected $templates;
 
-    public function __construct( $name, $dir )
+    public function __construct($name, $dir)
     {
 
         $this->name = $name;
@@ -34,7 +34,7 @@ class Theme
             $dirs = $this->parent->getTemplateDirs();
         }
 
-        array_unshift( $dirs, $this->dir );
+        array_unshift($dirs, $this->dir);
 
         return $dirs;
     }
@@ -45,7 +45,7 @@ class Theme
         return $this->parent;
     }
 
-    public function setParent( Theme $parent )
+    public function setParent(Theme $parent)
     {
 
         $this->parent = $parent;
@@ -57,22 +57,22 @@ class Theme
         return $this->name;
     }
 
-    public function getTemplates( $type )
+    public function getTemplates($type)
     {
 
         $templates = array();
         if ($this->parent) {
-            $templates = $this->parent->getTemplates( $type );
+            $templates = $this->parent->getTemplates($type);
         }
 
         if (!isset( $this->templates[$type] )) {
             return $templates;
         }
 
-        return array_replace( $templates, $this->templates[$type] );
+        return array_replace($templates, $this->templates[$type]);
     }
 
-    public function setTemplates( $type, $templates )
+    public function setTemplates($type, $templates)
     {
 
         $this->templates[$type] = $templates;

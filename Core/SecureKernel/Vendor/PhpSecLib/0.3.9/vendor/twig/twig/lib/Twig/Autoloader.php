@@ -22,13 +22,13 @@ class Twig_Autoloader
      *
      * @param bool $prepend Whether to prepend the autoloader or not.
      */
-    public static function register( $prepend = false )
+    public static function register($prepend = false)
     {
 
         if (PHP_VERSION_ID < 50300) {
-            spl_autoload_register( array( __CLASS__, 'autoload' ) );
+            spl_autoload_register(array(__CLASS__, 'autoload'));
         } else {
-            spl_autoload_register( array( __CLASS__, 'autoload' ), true, $prepend );
+            spl_autoload_register(array(__CLASS__, 'autoload'), true, $prepend);
         }
     }
 
@@ -37,15 +37,15 @@ class Twig_Autoloader
      *
      * @param string $class A class name.
      */
-    public static function autoload( $class )
+    public static function autoload($class)
     {
 
-        if (0 !== strpos( $class, 'Twig' )) {
+        if (0 !== strpos($class, 'Twig')) {
             return;
         }
 
-        if (is_file( $file = dirname( __FILE__ ).'/../'.str_replace( array( '_', "\0" ), array( '/', '' ),
-                $class ).'.php' )) {
+        if (is_file($file = dirname(__FILE__).'/../'.str_replace(array('_', "\0"), array('/', ''),
+                $class).'.php')) {
             require $file;
         }
     }

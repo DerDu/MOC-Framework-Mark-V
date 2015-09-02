@@ -22,7 +22,7 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
     /**
      * @param int $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
 
         parent::__construct();
@@ -49,10 +49,10 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return $this->expectedCount === $this->getCountOf( $other );
+        return $this->expectedCount === $this->getCountOf($other);
     }
 
     /**
@@ -60,11 +60,11 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function getCountOf( $other )
+    protected function getCountOf($other)
     {
 
-        if ($other instanceof Countable || is_array( $other )) {
-            return count( $other );
+        if ($other instanceof Countable || is_array($other)) {
+            return count($other);
         } elseif ($other instanceof Traversable) {
             if ($other instanceof IteratorAggregate) {
                 $iterator = $other->getIterator();
@@ -73,7 +73,7 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
             }
 
             $key = $iterator->key();
-            $count = iterator_count( $iterator );
+            $count = iterator_count($iterator);
 
             // manually rewind $iterator to previous key, since iterator_count
             // moves pointer
@@ -98,12 +98,12 @@ class PHPUnit_Framework_Constraint_Count extends PHPUnit_Framework_Constraint
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return sprintf(
             'actual size %d matches expected size %d',
-            $this->getCountOf( $other ),
+            $this->getCountOf($other),
             $this->expectedCount
         );
     }

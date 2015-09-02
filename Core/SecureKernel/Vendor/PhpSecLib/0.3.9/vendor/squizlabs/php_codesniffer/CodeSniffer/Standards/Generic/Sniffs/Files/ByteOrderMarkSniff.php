@@ -52,7 +52,7 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_INLINE_HTML );
+        return array(T_INLINE_HTML);
 
     }//end register()
 
@@ -66,7 +66,7 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // The BOM will be the very first token in the file.
@@ -77,12 +77,12 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         foreach ($this->bomDefinitions as $bomName => $expectedBomHex) {
-            $bomByteLength = ( strlen( $expectedBomHex ) / 2 );
-            $htmlBomHex = bin2hex( substr( $tokens[$stackPtr]['content'], 0, $bomByteLength ) );
+            $bomByteLength = ( strlen($expectedBomHex) / 2 );
+            $htmlBomHex = bin2hex(substr($tokens[$stackPtr]['content'], 0, $bomByteLength));
             if ($htmlBomHex === $expectedBomHex) {
-                $errorData = array( $bomName );
+                $errorData = array($bomName);
                 $error = 'File contains %s byte order mark, which may corrupt your application';
-                $phpcsFile->addError( $error, $stackPtr, 'Found', $errorData );
+                $phpcsFile->addError($error, $stackPtr, 'Found', $errorData);
                 break;
             }
         }

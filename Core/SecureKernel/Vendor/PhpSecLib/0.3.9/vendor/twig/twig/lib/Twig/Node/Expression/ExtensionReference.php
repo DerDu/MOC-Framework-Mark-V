@@ -17,10 +17,10 @@
 class Twig_Node_Expression_ExtensionReference extends Twig_Node_Expression
 {
 
-    public function __construct( $name, $lineno, $tag = null )
+    public function __construct($name, $lineno, $tag = null)
     {
 
-        parent::__construct( array(), array( 'name' => $name ), $lineno, $tag );
+        parent::__construct(array(), array('name' => $name), $lineno, $tag);
     }
 
     /**
@@ -28,9 +28,9 @@ class Twig_Node_Expression_ExtensionReference extends Twig_Node_Expression
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $compiler->raw( sprintf( "\$this->env->getExtension('%s')", $this->getAttribute( 'name' ) ) );
+        $compiler->raw(sprintf("\$this->env->getExtension('%s')", $this->getAttribute('name')));
     }
 }

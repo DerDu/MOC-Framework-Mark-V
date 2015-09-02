@@ -57,7 +57,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -71,13 +71,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first open tag.
-        $previousOpenTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $previousOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($previousOpenTag !== false) {
             return;
         }
@@ -86,13 +86,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         $currentLineContent = '';
         $currentLine = 1;
 
-        $trim = ( strlen( $phpcsFile->eolChar ) * -1 );
+        $trim = ( strlen($phpcsFile->eolChar) * -1 );
         for (; $tokenCount < $phpcsFile->numTokens; $tokenCount++) {
             if ($tokens[$tokenCount]['line'] === $currentLine) {
                 $currentLineContent .= $tokens[$tokenCount]['content'];
             } else {
-                $currentLineContent = substr( $currentLineContent, 0, $trim );
-                $continue = $this->checkLineLength( $phpcsFile, ( $tokenCount - 1 ), $currentLineContent );
+                $currentLineContent = substr($currentLineContent, 0, $trim);
+                $continue = $this->checkLineLength($phpcsFile, ( $tokenCount - 1 ), $currentLineContent);
                 if ($continue === false) {
                     // Something went wrong and we should stop processing the file.
                     return;
@@ -103,8 +103,8 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        $currentLineContent = substr( $currentLineContent, 0, $trim );
-        $this->checkLineLength( $phpcsFile, ( $tokenCount - 1 ), $currentLineContent );
+        $currentLineContent = substr($currentLineContent, 0, $trim);
+        $this->checkLineLength($phpcsFile, ( $tokenCount - 1 ), $currentLineContent);
 
     }//end process()
 
@@ -118,7 +118,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      *
      * @return null|false
      */
-    protected function checkLineLength( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $lineContent )
+    protected function checkLineLength(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $lineContent)
     {
 
         // If the content is a CVS or SVN id in a version tag, or it is
@@ -126,25 +126,25 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         // is nothing the developer can do to shorten the line,
         // so don't throw errors.
         $regex = '~@license|@version[^\$]+\$Id|\$(Head)?URL[:\$]~';
-        if (preg_match( $regex, $lineContent ) !== 0) {
+        if (preg_match($regex, $lineContent) !== 0) {
             return;
         }
 
         if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
-            if (function_exists( 'iconv_strlen' ) === true) {
+            if (function_exists('iconv_strlen') === true) {
                 // Not using the default encoding, so take a bit more care.
-                $lineLength = iconv_strlen( $lineContent, PHP_CODESNIFFER_ENCODING );
+                $lineLength = iconv_strlen($lineContent, PHP_CODESNIFFER_ENCODING);
                 if ($lineLength === false) {
                     // String contained invalid characters, so revert to default.
-                    $lineLength = strlen( $lineContent );
+                    $lineLength = strlen($lineContent);
                 }
             } else {
                 $error = 'Line length could not be checked in this file as the iconv module has been disabled in PHP';
-                $phpcsFile->addWarning( $error, $stackPtr, 'MissingIconv' );
+                $phpcsFile->addWarning($error, $stackPtr, 'MissingIconv');
                 return false;
             }
         } else {
-            $lineLength = strlen( $lineContent );
+            $lineLength = strlen($lineContent);
         }
 
         if ($this->absoluteLineLimit > 0
@@ -156,7 +156,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             );
 
             $error = 'Line exceeds maximum limit of %s characters; contains %s characters';
-            $phpcsFile->addError( $error, $stackPtr, 'MaxExceeded', $data );
+            $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else {
             if ($lineLength > $this->lineLimit) {
                 $data = array(
@@ -165,7 +165,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
                 );
 
                 $warning = 'Line exceeds %s characters; contains %s characters';
-                $phpcsFile->addWarning( $warning, $stackPtr, 'TooLong', $data );
+                $phpcsFile->addWarning($warning, $stackPtr, 'TooLong', $data);
             }
         }
 

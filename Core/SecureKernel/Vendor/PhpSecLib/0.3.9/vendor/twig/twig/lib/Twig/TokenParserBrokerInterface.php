@@ -28,14 +28,14 @@ interface Twig_TokenParserBrokerInterface
      *
      * @return null|Twig_TokenParserInterface A Twig_TokenParserInterface or null if no suitable TokenParser was found
      */
-    public function getTokenParser( $tag );
+    public function getTokenParser($tag);
 
     /**
      * Calls Twig_TokenParserInterface::setParser on all parsers the implementation knows of.
      *
      * @param Twig_ParserInterface $parser A Twig_ParserInterface interface
      */
-    public function setParser( Twig_ParserInterface $parser );
+    public function setParser(Twig_ParserInterface $parser);
 
     /**
      * Gets the Twig_ParserInterface.

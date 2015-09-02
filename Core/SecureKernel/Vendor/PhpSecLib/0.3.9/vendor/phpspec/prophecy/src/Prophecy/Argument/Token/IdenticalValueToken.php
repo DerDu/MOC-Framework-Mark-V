@@ -31,7 +31,7 @@ class IdenticalValueToken implements TokenInterface
      * @param mixed      $value
      * @param StringUtil $util
      */
-    public function __construct( $value, StringUtil $util = null )
+    public function __construct($value, StringUtil $util = null)
     {
 
         $this->value = $value;
@@ -45,7 +45,7 @@ class IdenticalValueToken implements TokenInterface
      *
      * @return bool|int
      */
-    public function scoreArgument( $argument )
+    public function scoreArgument($argument)
     {
 
         return $argument === $this->value ? 11 : false;
@@ -71,7 +71,7 @@ class IdenticalValueToken implements TokenInterface
     {
 
         if (null === $this->string) {
-            $this->string = sprintf( 'identical(%s)', $this->util->stringify( $this->value ) );
+            $this->string = sprintf('identical(%s)', $this->util->stringify($this->value));
         }
 
         return $this->string;

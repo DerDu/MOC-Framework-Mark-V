@@ -164,7 +164,7 @@ class ExecTask extends Task
         $this->prepare();
         $this->buildCommand();
         list( $return, $output ) = $this->executeCommand();
-        $this->cleanup( $return, $output );
+        $this->cleanup($return, $output);
     }
 
     /**
@@ -179,10 +179,10 @@ class ExecTask extends Task
             return true;
         }
 
-        $myos = Phing::getProperty( 'os.name' );
-        $this->log( 'Myos = '.$myos, Project::MSG_VERBOSE );
+        $myos = Phing::getProperty('os.name');
+        $this->log('Myos = '.$myos, Project::MSG_VERBOSE);
 
-        if (strpos( $this->os, $myos ) !== false) {
+        if (strpos($this->os, $myos) !== false) {
             // this command will be executed only on the specified OS
             // OS matches
             return true;
@@ -221,7 +221,7 @@ class ExecTask extends Task
             );
         }
         $this->currdir = getcwd();
-        @chdir( $this->dir->getPath() );
+        @chdir($this->dir->getPath());
     }
 
     /**
@@ -240,7 +240,7 @@ class ExecTask extends Task
             );
         } else {
             if ($this->command === null) {
-                $this->realCommand = Commandline::toString( $this->commandline->getCommandline(), $this->escape );
+                $this->realCommand = Commandline::toString($this->commandline->getCommandline(), $this->escape);
             } else {
                 if ($this->commandline->getExecutable() === null) {
                     $this->realCommand = $this->command;
@@ -248,7 +248,7 @@ class ExecTask extends Task
                     //we need to escape the command only if it's specified directly
                     // commandline takes care of "executable" already
                     if ($this->escape == true) {
-                        $this->realCommand = escapeshellcmd( $this->realCommand );
+                        $this->realCommand = escapeshellcmd($this->realCommand);
                     }
                 } else {
                     throw new BuildException(
@@ -259,7 +259,7 @@ class ExecTask extends Task
         }
 
         if ($this->error !== null) {
-            $this->realCommand .= ' 2> '.escapeshellarg( $this->error->getPath() );
+            $this->realCommand .= ' 2> '.escapeshellarg($this->error->getPath());
             $this->log(
                 "Writing error output to: ".$this->error->getPath(),
                 $this->logLevel
@@ -267,14 +267,14 @@ class ExecTask extends Task
         }
 
         if ($this->output !== null) {
-            $this->realCommand .= ' 1> '.escapeshellarg( $this->output->getPath() );
+            $this->realCommand .= ' 1> '.escapeshellarg($this->output->getPath());
             $this->log(
                 "Writing standard output to: ".$this->output->getPath(),
                 $this->logLevel
             );
         } elseif ($this->spawn) {
             $this->realCommand .= ' 1>/dev/null';
-            $this->log( "Sending output to /dev/null", $this->logLevel );
+            $this->log("Sending output to /dev/null", $this->logLevel);
         }
 
         // If neither output nor error are being written to file
@@ -299,18 +299,18 @@ class ExecTask extends Task
     protected function executeCommand()
     {
 
-        $this->log( "Executing command: ".$this->realCommand, $this->logLevel );
+        $this->log("Executing command: ".$this->realCommand, $this->logLevel);
 
         $output = array();
         $return = null;
 
         if ($this->passthru) {
-            passthru( $this->realCommand, $return );
+            passthru($this->realCommand, $return);
         } else {
-            exec( $this->realCommand, $output, $return );
+            exec($this->realCommand, $output, $return);
         }
 
-        return array( $return, $output );
+        return array($return, $output);
     }
 
     /**
@@ -325,31 +325,31 @@ class ExecTask extends Task
      * @throws BuildException
      * @return void
      */
-    protected function cleanup( $return, $output )
+    protected function cleanup($return, $output)
     {
 
         if ($this->dir !== null) {
-            @chdir( $this->currdir );
+            @chdir($this->currdir);
         }
 
         $outloglevel = $this->logOutput ? Project::MSG_INFO : Project::MSG_VERBOSE;
         foreach ($output as $line) {
-            $this->log( $line, $outloglevel );
+            $this->log($line, $outloglevel);
         }
 
         if ($this->returnProperty) {
-            $this->project->setProperty( $this->returnProperty, $return );
+            $this->project->setProperty($this->returnProperty, $return);
         }
 
         if ($this->outputProperty) {
             $this->project->setProperty(
                 $this->outputProperty,
-                implode( "\n", $output )
+                implode("\n", $output)
             );
         }
 
         if ($return != 0 && $this->checkreturn) {
-            throw new BuildException( "Task exited with code $return" );
+            throw new BuildException("Task exited with code $return");
         }
     }
 
@@ -361,7 +361,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setCommand( $command )
+    public function setCommand($command)
     {
 
         $this->command = "".$command;
@@ -374,10 +374,10 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setExecutable( $executable )
+    public function setExecutable($executable)
     {
 
-        $this->commandline->setExecutable( (string)$executable );
+        $this->commandline->setExecutable((string)$executable);
     }
 
     /**
@@ -387,7 +387,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setEscape( $escape )
+    public function setEscape($escape)
     {
 
         $this->escape = (bool)$escape;
@@ -400,7 +400,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setDir( PhingFile $dir )
+    public function setDir(PhingFile $dir)
     {
 
         $this->dir = $dir;
@@ -413,7 +413,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setOs( $os )
+    public function setOs($os)
     {
 
         $this->os = (string)$os;
@@ -426,7 +426,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setOutput( PhingFile $f )
+    public function setOutput(PhingFile $f)
     {
 
         $this->output = $f;
@@ -439,7 +439,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setError( PhingFile $f )
+    public function setError(PhingFile $f)
     {
 
         $this->error = $f;
@@ -452,7 +452,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setPassthru( $passthru )
+    public function setPassthru($passthru)
     {
 
         $this->passthru = (bool)$passthru;
@@ -465,7 +465,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setLogoutput( $logOutput )
+    public function setLogoutput($logOutput)
     {
 
         $this->logOutput = (bool)$logOutput;
@@ -478,7 +478,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setSpawn( $spawn )
+    public function setSpawn($spawn)
     {
 
         $this->spawn = (bool)$spawn;
@@ -491,7 +491,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setCheckreturn( $checkreturn )
+    public function setCheckreturn($checkreturn)
     {
 
         $this->checkreturn = (bool)$checkreturn;
@@ -504,7 +504,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setReturnProperty( $prop )
+    public function setReturnProperty($prop)
     {
 
         $this->returnProperty = $prop;
@@ -517,7 +517,7 @@ class ExecTask extends Task
      *
      * @return void
      */
-    public function setOutputProperty( $prop )
+    public function setOutputProperty($prop)
     {
 
         $this->outputProperty = $prop;
@@ -531,7 +531,7 @@ class ExecTask extends Task
      * @throws BuildException
      * @return void
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         switch ($level) {
@@ -552,7 +552,7 @@ class ExecTask extends Task
                 break;
             default:
                 throw new BuildException(
-                    sprintf( 'Unknown log level "%s"', $level )
+                    sprintf('Unknown log level "%s"', $level)
                 );
         }
     }

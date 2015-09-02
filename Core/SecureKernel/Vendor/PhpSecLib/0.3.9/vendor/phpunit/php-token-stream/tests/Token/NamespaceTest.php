@@ -22,11 +22,13 @@
  */
 class PHP_Token_NamespaceTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @covers PHP_Token_NAMESPACE::getName
      */
     public function testGetName()
     {
+
         $tokenStream = new PHP_Token_Stream(
             TEST_FILES_PATH.'classInNamespace.php'
         );
@@ -59,6 +61,7 @@ class PHP_Token_NamespaceTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+
     public function testGetStartLineWithScopedNamespace()
     {
 

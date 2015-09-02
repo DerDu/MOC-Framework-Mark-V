@@ -34,6 +34,6 @@ class WarnTask extends EchoTask
     public function main()
     {
 
-        $this->log( $this->msg, Project::MSG_WARN );
+        $this->log($this->msg, Project::MSG_WARN);
     }
 }

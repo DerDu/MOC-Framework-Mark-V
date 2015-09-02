@@ -22,9 +22,9 @@ class PHPUnit_Framework_Constraint_SameSize extends PHPUnit_Framework_Constraint
     /**
      * @param int $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
 
-        parent::__construct( $this->getCountOf( $expected ) );
+        parent::__construct($this->getCountOf($expected));
     }
 }

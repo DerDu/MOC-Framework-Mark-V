@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_STYLE );
+        return array(T_STYLE);
 
     }//end register()
 
@@ -58,7 +58,7 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -67,13 +67,13 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $next = $phpcsFile->findNext( array( T_COLON, T_WHITESPACE ), ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(array(T_COLON, T_WHITESPACE), ( $stackPtr + 1 ), null, true);
         $numbers = array(
             T_DNUMBER,
             T_LNUMBER,
         );
 
-        if ($next === false || in_array( $tokens[$next]['code'], $numbers ) === false) {
+        if ($next === false || in_array($tokens[$next]['code'], $numbers) === false) {
             return;
         }
 
@@ -81,26 +81,26 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$next]['code'] === T_LNUMBER) {
             if ($value !== '0' && $value !== '1') {
                 $error = 'Opacity values must be between 0 and 1';
-                $phpcsFile->addError( $error, $next, 'Invalid' );
+                $phpcsFile->addError($error, $next, 'Invalid');
             }
         } else {
-            if (strlen( $value ) > 3) {
+            if (strlen($value) > 3) {
                 $error = 'Opacity values must have a single value after the decimal point';
-                $phpcsFile->addError( $error, $next, 'SpacingAfterPoint' );
+                $phpcsFile->addError($error, $next, 'SpacingAfterPoint');
             } else {
                 if ($value === '0.0' || $value === '1.0') {
                     $error = 'Opacity value does not require decimal point; use %s instead';
-                    $data = array( $value{0} );
-                    $phpcsFile->addError( $error, $next, 'PointNotRequired', $data );
+                    $data = array($value{0});
+                    $phpcsFile->addError($error, $next, 'PointNotRequired', $data);
                 } else {
                     if ($value{0} === '.') {
                         $error = 'Opacity values must not start with a decimal point; use 0%s instead';
-                        $data = array( $value );
-                        $phpcsFile->addError( $error, $next, 'StartWithPoint', $data );
+                        $data = array($value);
+                        $phpcsFile->addError($error, $next, 'StartWithPoint', $data);
                     } else {
                         if ($value{0} !== '0') {
                             $error = 'Opacity values must be between 0 and 1';
-                            $phpcsFile->addError( $error, $next, 'Invalid' );
+                            $phpcsFile->addError($error, $next, 'Invalid');
                         }
                     }
                 }

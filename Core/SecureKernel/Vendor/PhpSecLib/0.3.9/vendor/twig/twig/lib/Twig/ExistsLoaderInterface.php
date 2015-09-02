@@ -26,5 +26,5 @@ interface Twig_ExistsLoaderInterface
      *
      * @return bool If the template source code is handled by this loader or not
      */
-    public function exists( $name );
+    public function exists($name);
 }

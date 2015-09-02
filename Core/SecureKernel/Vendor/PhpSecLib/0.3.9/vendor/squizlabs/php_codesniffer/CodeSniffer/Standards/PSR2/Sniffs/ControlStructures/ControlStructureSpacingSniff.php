@@ -75,7 +75,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $this->requiredSpacesAfterOpen = (int)$this->requiredSpacesAfterOpen;
@@ -89,7 +89,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
             $spaceAfterOpen = 0;
             if ($tokens[( $parenOpener + 1 )]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen( rtrim( $tokens[( $parenOpener + 1 )]['content'], $phpcsFile->eolChar ) );
+                $spaceAfterOpen = strlen(rtrim($tokens[( $parenOpener + 1 )]['content'], $phpcsFile->eolChar));
             }
 
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
@@ -98,14 +98,14 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                     $this->requiredSpacesAfterOpen,
                     $spaceAfterOpen,
                 );
-                $phpcsFile->addError( $error, ( $parenOpener + 1 ), 'SpacingAfterOpenBrace', $data );
+                $phpcsFile->addError($error, ( $parenOpener + 1 ), 'SpacingAfterOpenBrace', $data);
             }
 
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']) {
                 $spaceBeforeClose = 0;
                 if ($tokens[( $parenCloser - 1 )]['code'] === T_WHITESPACE) {
-                    $spaceBeforeClose = strlen( ltrim( $tokens[( $parenCloser - 1 )]['content'],
-                        $phpcsFile->eolChar ) );
+                    $spaceBeforeClose = strlen(ltrim($tokens[( $parenCloser - 1 )]['content'],
+                        $phpcsFile->eolChar));
                 }
 
                 if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
@@ -114,7 +114,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                         $this->requiredSpacesBeforeClose,
                         $spaceBeforeClose,
                     );
-                    $phpcsFile->addError( $error, ( $parenCloser - 1 ), 'SpaceBeforeCloseBrace', $data );
+                    $phpcsFile->addError($error, ( $parenCloser - 1 ), 'SpaceBeforeCloseBrace', $data);
                 }
             }
         }//end if

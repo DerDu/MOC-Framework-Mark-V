@@ -44,7 +44,7 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
     public function register()
     {
 
-        return array( T_EQUAL );
+        return array(T_EQUAL);
 
     }//end register()
 
@@ -58,13 +58,13 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Equal sign can't be the last thing on the line.
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($next === false) {
             // Bad assignment.
             return;
@@ -72,12 +72,12 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
 
         if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             $error = 'Multi-line assignments must have the equal sign on the second line';
-            $phpcsFile->addError( $error, $stackPtr, 'EqualSignLine' );
+            $phpcsFile->addError($error, $stackPtr, 'EqualSignLine');
             return;
         }
 
         // Make sure it is the first thing on the line, otherwise we ignore it.
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), false, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), false, true);
         if ($prev === false) {
             // Bad assignment.
             return;
@@ -98,21 +98,21 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         }
 
         if ($tokens[$i]['code'] === T_WHITESPACE) {
-            $assignmentIndent = strlen( $tokens[$i]['content'] );
+            $assignmentIndent = strlen($tokens[$i]['content']);
         }
 
         // Find the actual indent.
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ) );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ));
 
         $expectedIndent = ( $assignmentIndent + $this->indent );
-        $foundIndent = strlen( $tokens[$prev]['content'] );
+        $foundIndent = strlen($tokens[$prev]['content']);
         if ($foundIndent !== $expectedIndent) {
             $error = 'Multi-line assignment not indented correctly; expected %s spaces but found %s';
             $data = array(
                 $expectedIndent,
                 $foundIndent,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'Indent', $data );
+            $phpcsFile->addError($error, $stackPtr, 'Indent', $data);
         }
 
     }//end process()

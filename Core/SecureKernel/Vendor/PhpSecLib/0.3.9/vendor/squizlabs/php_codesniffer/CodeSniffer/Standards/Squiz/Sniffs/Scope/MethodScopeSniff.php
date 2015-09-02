@@ -13,8 +13,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found' );
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
 /**
@@ -39,7 +39,7 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS, T_INTERFACE ), array( T_FUNCTION ) );
+        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION));
 
     }//end __construct()
 
@@ -53,22 +53,22 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
      *
      * @return void
      */
-    protected function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $methodName = $phpcsFile->getDeclarationName( $stackPtr );
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
             return;
         }
 
-        $modifier = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr );
+        $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
         if (( $modifier === false ) || ( $tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'] )) {
             $error = 'Visibility must be declared on method "%s"';
-            $data = array( $methodName );
-            $phpcsFile->addError( $error, $stackPtr, 'Missing', $data );
+            $data = array($methodName);
+            $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 
     }//end processTokenWithinScope()

@@ -48,12 +48,12 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct( PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false )
+    public function __construct(PHPUnit_Framework_Test $test, $timesRepeat = 1, $processIsolation = false)
     {
 
-        parent::__construct( $test );
+        parent::__construct($test);
 
-        if (is_integer( $timesRepeat ) &&
+        if (is_integer($timesRepeat) &&
             $timesRepeat >= 0
         ) {
             $this->timesRepeat = $timesRepeat;
@@ -76,7 +76,7 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
     public function count()
     {
 
-        return $this->timesRepeat * count( $this->test );
+        return $this->timesRepeat * count($this->test);
     }
 
     /**
@@ -88,7 +88,7 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
      * @return PHPUnit_Framework_TestResult
      * @throws PHPUnit_Framework_Exception
      */
-    public function run( PHPUnit_Framework_TestResult $result = null )
+    public function run(PHPUnit_Framework_TestResult $result = null)
     {
 
         if ($result === null) {
@@ -99,9 +99,9 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
         for ($i = 0; $i < $this->timesRepeat && !$result->shouldStop(); $i++) {
             //@codingStandardsIgnoreEnd
             if ($this->test instanceof PHPUnit_Framework_TestSuite) {
-                $this->test->setRunTestInSeparateProcess( $this->processIsolation );
+                $this->test->setRunTestInSeparateProcess($this->processIsolation);
             }
-            $this->test->run( $result );
+            $this->test->run($result);
         }
 
         return $result;

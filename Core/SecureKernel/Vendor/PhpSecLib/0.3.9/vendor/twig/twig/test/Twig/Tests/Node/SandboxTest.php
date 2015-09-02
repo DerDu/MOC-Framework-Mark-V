@@ -15,10 +15,10 @@ class Twig_Tests_Node_SandboxTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $node = new Twig_Node_Sandbox( $body, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $node = new Twig_Node_Sandbox($body, 1);
 
-        $this->assertEquals( $body, $node->getNode( 'body' ) );
+        $this->assertEquals($body, $node->getNode('body'));
     }
 
     public function getTests()
@@ -26,8 +26,8 @@ class Twig_Tests_Node_SandboxTest extends Twig_Test_NodeTestCase
 
         $tests = array();
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $node = new Twig_Node_Sandbox( $body, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $node = new Twig_Node_Sandbox($body, 1);
 
         $tests[] = array(
             $node,

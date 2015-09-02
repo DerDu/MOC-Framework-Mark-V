@@ -26,16 +26,16 @@ class Diff
 
     private $previous;
 
-    public function __construct( Project $project, $filename )
+    public function __construct(Project $project, $filename)
     {
 
         $this->project = $project;
-        $this->current = new Index( $project );
+        $this->current = new Index($project);
         $this->filename = $filename;
 
-        if (file_exists( $filename )) {
+        if (file_exists($filename)) {
             $this->alreadyRendered = true;
-            if (false === $this->previous = @unserialize( file_get_contents( $filename ) )) {
+            if (false === $this->previous = @unserialize(file_get_contents($filename))) {
                 $this->alreadyRendered = false;
                 $this->previous = new Index();
             }
@@ -51,7 +51,7 @@ class Diff
     public function isEmpty()
     {
 
-        return !$this->areVersionsModified() && ( 0 == count( $this->getModifiedClasses() ) + count( $this->getRemovedClasses() ) );
+        return !$this->areVersionsModified() && ( 0 == count($this->getModifiedClasses()) + count($this->getRemovedClasses()) );
     }
 
     public function areVersionsModified()
@@ -70,8 +70,8 @@ class Diff
 
         $classes = array();
         foreach ($this->current->getClasses() as $class => $hash) {
-            if ($hash !== $this->previous->getHash( $class )) {
-                $classes[] = $this->project->getClass( $class );
+            if ($hash !== $this->previous->getHash($class)) {
+                $classes[] = $this->project->getClass($class);
             }
         }
 
@@ -81,13 +81,13 @@ class Diff
     public function getRemovedClasses()
     {
 
-        return array_diff( array_keys( $this->previous->getClasses() ), array_keys( $this->current->getClasses() ) );
+        return array_diff(array_keys($this->previous->getClasses()), array_keys($this->current->getClasses()));
     }
 
     public function save()
     {
 
-        file_put_contents( $this->filename, serialize( $this->current ) );
+        file_put_contents($this->filename, serialize($this->current));
     }
 
     public function isAlreadyRendered()
@@ -99,12 +99,12 @@ class Diff
     public function getModifiedNamespaces()
     {
 
-        return array_diff( $this->currentNamespaces, $this->previousNamespaces );
+        return array_diff($this->currentNamespaces, $this->previousNamespaces);
     }
 
     public function getRemovedNamespaces()
     {
 
-        return array_diff( $this->previousNamespaces, $this->currentNamespaces );
+        return array_diff($this->previousNamespaces, $this->currentNamespaces);
     }
 }

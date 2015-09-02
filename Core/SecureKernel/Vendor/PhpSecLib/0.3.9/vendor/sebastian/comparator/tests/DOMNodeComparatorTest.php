@@ -34,10 +34,10 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
         $node = new DOMNode;
 
         return array(
-            array( $document, $document ),
-            array( $node, $node ),
-            array( $document, $node ),
-            array( $node, $document )
+            array($document, $document),
+            array($node, $node),
+            array($document, $node),
+            array($node, $document)
         );
     }
 
@@ -47,9 +47,9 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
         $document = new DOMDocument;
 
         return array(
-            array( $document, null ),
-            array( null, $document ),
-            array( null, null )
+            array($document, null),
+            array(null, $document),
+            array(null, null)
         );
     }
 
@@ -58,30 +58,30 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array(
-                $this->createDOMDocument( '<root></root>' ),
-                $this->createDOMDocument( '<root/>' )
+                $this->createDOMDocument('<root></root>'),
+                $this->createDOMDocument('<root/>')
             ),
             array(
-                $this->createDOMDocument( '<root attr="bar"></root>' ),
-                $this->createDOMDocument( '<root attr="bar"/>' )
+                $this->createDOMDocument('<root attr="bar"></root>'),
+                $this->createDOMDocument('<root attr="bar"/>')
             ),
             array(
-                $this->createDOMDocument( '<root><foo attr="bar"></foo></root>' ),
-                $this->createDOMDocument( '<root><foo attr="bar"/></root>' )
+                $this->createDOMDocument('<root><foo attr="bar"></foo></root>'),
+                $this->createDOMDocument('<root><foo attr="bar"/></root>')
             ),
             array(
-                $this->createDOMDocument( "<root>\n  <child/>\n</root>" ),
-                $this->createDOMDocument( '<root><child/></root>' )
+                $this->createDOMDocument("<root>\n  <child/>\n</root>"),
+                $this->createDOMDocument('<root><child/></root>')
             ),
         );
     }
 
-    private function createDOMDocument( $content )
+    private function createDOMDocument($content)
     {
 
         $document = new DOMDocument;
         $document->preserveWhiteSpace = false;
-        $document->loadXML( $content );
+        $document->loadXML($content);
 
         return $document;
     }
@@ -91,24 +91,24 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array(
-                $this->createDOMDocument( '<root></root>' ),
-                $this->createDOMDocument( '<bar/>' )
+                $this->createDOMDocument('<root></root>'),
+                $this->createDOMDocument('<bar/>')
             ),
             array(
-                $this->createDOMDocument( '<foo attr1="bar"/>' ),
-                $this->createDOMDocument( '<foo attr1="foobar"/>' )
+                $this->createDOMDocument('<foo attr1="bar"/>'),
+                $this->createDOMDocument('<foo attr1="foobar"/>')
             ),
             array(
-                $this->createDOMDocument( '<foo> bar </foo>' ),
-                $this->createDOMDocument( '<foo />' )
+                $this->createDOMDocument('<foo> bar </foo>'),
+                $this->createDOMDocument('<foo />')
             ),
             array(
-                $this->createDOMDocument( '<foo xmlns="urn:myns:bar"/>' ),
-                $this->createDOMDocument( '<foo xmlns="urn:notmyns:bar"/>' )
+                $this->createDOMDocument('<foo xmlns="urn:myns:bar"/>'),
+                $this->createDOMDocument('<foo xmlns="urn:notmyns:bar"/>')
             ),
             array(
-                $this->createDOMDocument( '<foo> bar </foo>' ),
-                $this->createDOMDocument( '<foo> bir </foo>' )
+                $this->createDOMDocument('<foo> bar </foo>'),
+                $this->createDOMDocument('<foo> bir </foo>')
             )
         );
     }
@@ -117,11 +117,11 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::accepts
      * @dataProvider acceptsSucceedsProvider
      */
-    public function testAcceptsSucceeds( $expected, $actual )
+    public function testAcceptsSucceeds($expected, $actual)
     {
 
         $this->assertTrue(
-            $this->comparator->accepts( $expected, $actual )
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -129,11 +129,11 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::accepts
      * @dataProvider acceptsFailsProvider
      */
-    public function testAcceptsFails( $expected, $actual )
+    public function testAcceptsFails($expected, $actual)
     {
 
         $this->assertFalse(
-            $this->comparator->accepts( $expected, $actual )
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -141,31 +141,31 @@ class DOMNodeComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::assertEquals
      * @dataProvider assertEqualsSucceedsProvider
      */
-    public function testAssertEqualsSucceeds( $expected, $actual )
+    public function testAssertEqualsSucceeds($expected, $actual)
     {
 
         $exception = null;
 
         try {
-            $this->comparator->assertEquals( $expected, $actual );
-        } catch( ComparisonFailure $exception ) {
+            $this->comparator->assertEquals($expected, $actual);
+        } catch (ComparisonFailure $exception) {
         }
 
-        $this->assertNull( $exception, 'Unexpected ComparisonFailure' );
+        $this->assertNull($exception, 'Unexpected ComparisonFailure');
     }
 
     /**
      * @covers       ::assertEquals
      * @dataProvider assertEqualsFailsProvider
      */
-    public function testAssertEqualsFails( $expected, $actual )
+    public function testAssertEqualsFails($expected, $actual)
     {
 
         $this->setExpectedException(
             'SebastianBergmann\\Comparator\\ComparisonFailure',
             'Failed asserting that two DOM'
         );
-        $this->comparator->assertEquals( $expected, $actual );
+        $this->comparator->assertEquals($expected, $actual);
     }
 
     protected function setUp()

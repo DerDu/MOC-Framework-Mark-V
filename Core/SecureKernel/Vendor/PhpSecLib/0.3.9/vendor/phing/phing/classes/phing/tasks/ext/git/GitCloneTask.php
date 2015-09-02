@@ -62,15 +62,15 @@ class GitCloneTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
         if (null === $this->getTargetPath()) {
-            throw new BuildException( '"targetPath" is required parameter' );
+            throw new BuildException('"targetPath" is required parameter');
         }
 
-        $files = @scandir( $this->getTargetPath() );
-        if (isset( $files ) && is_array( $files ) && ( count( $files ) > 2 )) {
+        $files = @scandir($this->getTargetPath());
+        if (isset( $files ) && is_array($files) && ( count($files) > 2 )) {
             throw new BuildException(
                 sprintf(
                     '"%s" target directory is not empty',
@@ -79,11 +79,11 @@ class GitCloneTask extends GitBaseTask
             );
         }
 
-        $client = $this->getGitClient( false, getcwd() );
+        $client = $this->getGitClient(false, getcwd());
 
         try {
             if ($this->hasDepth()) {
-                $this->doShallowClone( $client );
+                $this->doShallowClone($client);
             } else {
                 $client->createClone(
                     $this->getRepository(),
@@ -91,8 +91,8 @@ class GitCloneTask extends GitBaseTask
                     $this->getTargetPath()
                 );
             }
-        } catch( Exception $e ) {
-            throw new BuildException( 'The remote end hung up unexpectedly', $e );
+        } catch (Exception $e) {
+            throw new BuildException('The remote end hung up unexpectedly', $e);
         }
 
         $msg = 'git-clone: cloning '
@@ -100,7 +100,7 @@ class GitCloneTask extends GitBaseTask
             .( $this->hasDepth() ? ' (depth="'.$this->getDepth().'") ' : '' )
             .'"'.$this->getRepository().'" repository'
             .' to "'.$this->getTargetPath().'" directory';
-        $this->log( $msg, Project::MSG_INFO );
+        $this->log($msg, Project::MSG_INFO);
     }
 
     /**
@@ -121,7 +121,7 @@ class GitCloneTask extends GitBaseTask
      *
      * @return void
      */
-    public function setTargetPath( $targetPath )
+    public function setTargetPath($targetPath)
     {
 
         $this->targetPath = $targetPath;
@@ -143,18 +143,18 @@ class GitCloneTask extends GitBaseTask
      *
      * @throws VersionControl_Git_Exception
      */
-    protected function doShallowClone( VersionControl_Git $client )
+    protected function doShallowClone(VersionControl_Git $client)
     {
 
-        $command = $client->getCommand( 'clone' )
-            ->setOption( 'depth', $this->getDepth() )
-            ->setOption( 'q' )
-            ->addArgument( $this->getRepository() )
-            ->addArgument( $this->getTargetPath() );
+        $command = $client->getCommand('clone')
+            ->setOption('depth', $this->getDepth())
+            ->setOption('q')
+            ->addArgument($this->getRepository())
+            ->addArgument($this->getTargetPath());
 
-        if (is_dir( $this->getTargetPath() ) && version_compare( '1.6.1.4', $client->getGitVersion(), '>=' )) {
+        if (is_dir($this->getTargetPath()) && version_compare('1.6.1.4', $client->getGitVersion(), '>=')) {
             $isEmptyDir = true;
-            $entries = scandir( $this->getTargetPath() );
+            $entries = scandir($this->getTargetPath());
             foreach ($entries as $entry) {
                 if ('.' !== $entry && '..' !== $entry) {
                     $isEmptyDir = false;
@@ -164,7 +164,7 @@ class GitCloneTask extends GitBaseTask
             }
 
             if ($isEmptyDir) {
-                @rmdir( $this->getTargetPath() );
+                @rmdir($this->getTargetPath());
             }
         }
 
@@ -183,7 +183,7 @@ class GitCloneTask extends GitBaseTask
     /**
      * @param int $depth
      */
-    public function setDepth( $depth )
+    public function setDepth($depth)
     {
 
         $this->depth = $depth;
@@ -212,7 +212,7 @@ class GitCloneTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setBare( $flag )
+    public function setBare($flag)
     {
 
         $this->isBare = (bool)$flag;

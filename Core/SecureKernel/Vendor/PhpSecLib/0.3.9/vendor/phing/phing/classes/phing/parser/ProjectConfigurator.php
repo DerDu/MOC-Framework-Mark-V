@@ -67,12 +67,12 @@ class ProjectConfigurator
      * @param  Project   $project   the Project instance this configurator should use
      * @param  PhingFile $buildFile the buildfile object the parser should use
      */
-    public function __construct( Project $project, PhingFile $buildFile )
+    public function __construct(Project $project, PhingFile $buildFile)
     {
 
         $this->project = $project;
-        $this->buildFile = new PhingFile( $buildFile->getAbsolutePath() );
-        $this->buildFileParent = new PhingFile( $this->buildFile->getParent() );
+        $this->buildFile = new PhingFile($buildFile->getAbsolutePath());
+        $this->buildFileParent = new PhingFile($this->buildFile->getParent());
         $this->parseEndTarget = new Target();
     }
 
@@ -83,10 +83,10 @@ class ProjectConfigurator
      * @param  Project   $project   the Project instance this configurator should use
      * @param  PhingFile $buildFile the buildfile object the parser should use
      */
-    public static function configureProject( Project $project, PhingFile $buildFile )
+    public static function configureProject(Project $project, PhingFile $buildFile)
     {
 
-        $pc = new ProjectConfigurator( $project, $buildFile );
+        $pc = new ProjectConfigurator($project, $buildFile);
         $pc->parse();
     }
 
@@ -102,41 +102,41 @@ class ProjectConfigurator
 
         try {
             // get parse context
-            $ctx = $this->project->getReference( "phing.parsing.context" );
+            $ctx = $this->project->getReference("phing.parsing.context");
             if (null == $ctx) {
                 // make a new context and register it with project
-                $ctx = new PhingXMLContext( $this->project );
-                $this->project->addReference( "phing.parsing.context", $ctx );
+                $ctx = new PhingXMLContext($this->project);
+                $this->project->addReference("phing.parsing.context", $ctx);
             }
 
             //record this parse with context
-            $ctx->addImport( $this->buildFile );
+            $ctx->addImport($this->buildFile);
 
-            if (count( $ctx->getImportStack() ) > 1) {
+            if (count($ctx->getImportStack()) > 1) {
                 $currentImplicit = $ctx->getImplicitTarget();
                 $currentTargets = $ctx->getCurrentTargets();
 
                 $newCurrent = new Target();
-                $newCurrent->setProject( $this->project );
-                $newCurrent->setName( '' );
-                $ctx->setCurrentTargets( array() );
-                $ctx->setImplicitTarget( $newCurrent );
+                $newCurrent->setProject($this->project);
+                $newCurrent->setName('');
+                $ctx->setCurrentTargets(array());
+                $ctx->setImplicitTarget($newCurrent);
 
                 // this is an imported file
                 // modify project tag parse behavior
-                $this->setIgnoreProjectTag( true );
-                $this->_parse( $ctx );
+                $this->setIgnoreProjectTag(true);
+                $this->_parse($ctx);
                 $newCurrent->main();
 
-                $ctx->setImplicitTarget( $currentImplicit );
-                $ctx->setCurrentTargets( $currentTargets );
+                $ctx->setImplicitTarget($currentImplicit);
+                $ctx->setCurrentTargets($currentTargets);
             } else {
-                $ctx->setCurrentTargets( array() );
-                $this->_parse( $ctx );
+                $ctx->setCurrentTargets(array());
+                $this->_parse($ctx);
                 $ctx->getImplicitTarget()->main();
             }
 
-        } catch( Exception $exc ) {
+        } catch (Exception $exc) {
             //throw new BuildException("Error reading project file", $exc);
             throw $exc;
         }
@@ -147,7 +147,7 @@ class ProjectConfigurator
      *
      * @param bool $flag flag to ignore the project tag
      */
-    public function setIgnoreProjectTag( $flag )
+    public function setIgnoreProjectTag($flag)
     {
 
         $this->ignoreProjectTag = $flag;
@@ -158,17 +158,17 @@ class ProjectConfigurator
      *
      * @throws ExpatParseException
      */
-    protected function _parse( PhingXMLContext $ctx )
+    protected function _parse(PhingXMLContext $ctx)
     {
 
         // push action onto global stack
-        $ctx->startConfigure( $this );
+        $ctx->startConfigure($this);
 
-        $reader = new BufferedReader( new FileReader( $this->buildFile ) );
-        $parser = new ExpatParser( $reader );
-        $parser->parserSetOption( XML_OPTION_CASE_FOLDING, 0 );
-        $parser->setHandler( new RootHandler( $parser, $this, $ctx ) );
-        $this->project->log( "parsing buildfile ".$this->buildFile->getName(), Project::MSG_VERBOSE );
+        $reader = new BufferedReader(new FileReader($this->buildFile));
+        $parser = new ExpatParser($reader);
+        $parser->parserSetOption(XML_OPTION_CASE_FOLDING, 0);
+        $parser->setHandler(new RootHandler($parser, $this, $ctx));
+        $this->project->log("parsing buildfile ".$this->buildFile->getName(), Project::MSG_VERBOSE);
         $parser->parse();
         $reader->close();
 
@@ -193,7 +193,7 @@ class ProjectConfigurator
      * @internal param the $array element's attributes
      * @internal param the $object project this element belongs to
      */
-    public static function configure( $target, $attrs, Project $project )
+    public static function configure($target, $attrs, Project $project)
     {
 
         if ($target instanceof TaskAdapter) {
@@ -205,24 +205,24 @@ class ProjectConfigurator
         // that the tag was registered (e.g. using <taskdef>) after the original configuration.
         // ... so, try to load it again:
         if ($target instanceof UnknownElement) {
-            $tryTarget = $project->createTask( $target->getTaskType() );
+            $tryTarget = $project->createTask($target->getTaskType());
             if ($tryTarget) {
                 $target = $tryTarget;
             }
         }
 
-        $bean = get_class( $target );
-        $ih = IntrospectionHelper::getHelper( $bean );
+        $bean = get_class($target);
+        $ih = IntrospectionHelper::getHelper($bean);
 
         foreach ($attrs as $key => $value) {
             if ($key == 'id') {
                 continue;
                 // throw new BuildException("Id must be set Extermnally");
             }
-            $value = self::replaceProperties( $project, $value, $project->getProperties() );
+            $value = self::replaceProperties($project, $value, $project->getProperties());
             try { // try to set the attribute
-                $ih->setAttribute( $project, $target, strtolower( $key ), $value );
-            } catch( BuildException $be ) {
+                $ih->setAttribute($project, $target, strtolower($key), $value);
+            } catch (BuildException $be) {
                 // id attribute must be set externally
                 if ($key !== "id") {
                     throw $be;
@@ -244,7 +244,7 @@ class ProjectConfigurator
      * @return string  the replaced string or <code>null</code> if the string
      *                          itself was null
      */
-    public static function replaceProperties( Project $project, $value, $keys, $logLevel = Project::MSG_VERBOSE )
+    public static function replaceProperties(Project $project, $value, $keys, $logLevel = Project::MSG_VERBOSE)
     {
 
         if ($value === null) {
@@ -267,10 +267,10 @@ class ProjectConfigurator
         $iteration = 0;
 
         // loop to recursively replace tokens
-        while (strpos( $sb, '${' ) !== false) {
+        while (strpos($sb, '${') !== false) {
             $sb = preg_replace_callback(
                 '/\$\{([^\$}]+)\}/',
-                array( 'ProjectConfigurator', 'replacePropertyCallback' ),
+                array('ProjectConfigurator', 'replacePropertyCallback'),
                 $sb
             );
 
@@ -291,15 +291,15 @@ class ProjectConfigurator
      * @param  object  the element to configure
      * @param  string  the element's #CDATA
      */
-    public static function addText( $project, $target, $text = null )
+    public static function addText($project, $target, $text = null)
     {
 
-        if ($text === null || strlen( trim( $text ) ) === 0) {
+        if ($text === null || strlen(trim($text)) === 0) {
             return;
         }
-        $ih = IntrospectionHelper::getHelper( get_class( $target ) );
-        $text = self::replaceProperties( $project, $text, $project->getProperties() );
-        $ih->addText( $project, $target, $text );
+        $ih = IntrospectionHelper::getHelper(get_class($target));
+        $text = self::replaceProperties($project, $text, $project->getProperties());
+        $ih->addText($project, $target, $text);
     }
 
     /**
@@ -310,11 +310,11 @@ class ProjectConfigurator
      * @param  object  the child element
      * @param  string  the XML tagname
      */
-    public static function storeChild( $project, $parent, $child, $tag )
+    public static function storeChild($project, $parent, $child, $tag)
     {
 
-        $ih = IntrospectionHelper::getHelper( get_class( $parent ) );
-        $ih->storeElement( $project, $parent, $child, $tag );
+        $ih = IntrospectionHelper::getHelper(get_class($parent));
+        $ih->storeElement($project, $parent, $child, $tag);
     }
 
     /**
@@ -325,7 +325,7 @@ class ProjectConfigurator
      *
      * @return string
      */
-    private static function replacePropertyCallback( $matches )
+    private static function replacePropertyCallback($matches)
     {
 
         $propertyName = $matches[1];
@@ -345,7 +345,7 @@ class ProjectConfigurator
 
         $propertyValue = self::$propReplaceProperties[$propertyName];
 
-        if (is_bool( $propertyValue )) {
+        if (is_bool($propertyValue)) {
             if ($propertyValue === true) {
                 $propertyValue = "true";
             } else {
@@ -400,7 +400,7 @@ class ProjectConfigurator
      *
      * @param string $name name of the current project
      */
-    public function setCurrentProjectName( $name )
+    public function setCurrentProjectName($name)
     {
 
         $this->currentProjectName = $name;
@@ -432,10 +432,10 @@ class ProjectConfigurator
      *
      * @param Task $task Task to execute after parse
      */
-    public function delayTaskUntilParseEnd( $task )
+    public function delayTaskUntilParseEnd($task)
     {
 
-        $this->parseEndTarget->addTask( $task );
+        $this->parseEndTarget->addTask($task);
     }
 
     /**
@@ -445,11 +445,11 @@ class ProjectConfigurator
      * @param object the element's object
      * @param array  the element's attributes
      */
-    public function configureId( $target, $attr )
+    public function configureId($target, $attr)
     {
 
         if (isset( $attr['id'] ) && $attr['id'] !== null) {
-            $this->project->addReference( $attr['id'], $target );
+            $this->project->addReference($attr['id'], $target);
         }
     }
 }

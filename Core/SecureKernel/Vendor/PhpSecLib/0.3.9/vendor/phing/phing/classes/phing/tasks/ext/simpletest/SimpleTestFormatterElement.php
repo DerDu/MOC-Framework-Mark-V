@@ -36,14 +36,14 @@ class SimpleTestFormatterElement extends FormatterElement
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
 
         if ($this->type == "xml") {
             require_once 'phing/tasks/ext/simpletest/SimpleTestXmlResultFormatter.php';
-            $destFile = new PhingFile( $this->toDir, 'testsuites.xml' );
+            $destFile = new PhingFile($this->toDir, 'testsuites.xml');
             $this->formatter = new SimpleTestXmlResultFormatter();
         } else {
             if ($this->type == "plain") {
@@ -58,7 +58,7 @@ class SimpleTestFormatterElement extends FormatterElement
                         require_once 'phing/tasks/ext/simpletest/SimpleTestDebugResultFormatter.php';
                         $this->formatter = new SimpleTestDebugResultFormatter();
                     } else {
-                        throw new BuildException( "Formatter '".$this->type."' not implemented" );
+                        throw new BuildException("Formatter '".$this->type."' not implemented");
                     }
                 }
             }

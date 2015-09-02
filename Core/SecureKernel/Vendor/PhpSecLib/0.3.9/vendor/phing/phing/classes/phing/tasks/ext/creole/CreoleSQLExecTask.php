@@ -141,7 +141,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param PhingFile $srcFile
      */
-    public function setSrc( PhingFile $srcFile )
+    public function setSrc(PhingFile $srcFile)
     {
 
         $this->srcFile = $srcFile;
@@ -153,7 +153,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param $sql
      */
-    public function addText( $sql )
+    public function addText($sql)
     {
 
         $this->sqlCommand .= $sql;
@@ -164,7 +164,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param FileSet $set
      */
-    public function addFileset( FileSet $set )
+    public function addFileset(FileSet $set)
     {
 
         $this->filesets[] = $set;
@@ -178,7 +178,7 @@ class CreoleSQLExecTask extends CreoleTask
     public function createFilterChain()
     {
 
-        $num = array_push( $this->filterChains, new FilterChain( $this->project ) );
+        $num = array_push($this->filterChains, new FilterChain($this->project));
 
         return $this->filterChains[$num - 1];
     }
@@ -190,7 +190,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @internal param the $encoding encoding to use on the files
      */
-    public function setEncoding( $encoding )
+    public function setEncoding($encoding)
     {
 
         $this->encoding = $encoding;
@@ -204,7 +204,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param delimiter
      */
-    public function setDelimiter( $delimiter )
+    public function setDelimiter($delimiter)
     {
 
         $this->delimiter = $delimiter;
@@ -218,7 +218,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param string $delimiterType
      */
-    public function setDelimiterType( $delimiterType )
+    public function setDelimiterType($delimiterType)
     {
 
         $this->delimiterType = $delimiterType;
@@ -229,7 +229,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param boolean $print
      */
-    public function setPrint( $print )
+    public function setPrint($print)
     {
 
         $this->print = (boolean)$print;
@@ -241,7 +241,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param boolean $showheaders
      */
-    public function setShowheaders( $showheaders )
+    public function setShowheaders($showheaders)
     {
 
         $this->showheaders = (boolean)$showheaders;
@@ -253,7 +253,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param PhingFile $output
      */
-    public function setOutput( PhingFile $output )
+    public function setOutput(PhingFile $output)
     {
 
         $this->output = $output;
@@ -265,7 +265,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param $append
      */
-    public function setAppend( $append )
+    public function setAppend($append)
     {
 
         $this->append = (boolean)$append;
@@ -277,7 +277,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param $action
      */
-    public function setOnerror( $action )
+    public function setOnerror($action)
     {
 
         $this->onError = $action;
@@ -292,50 +292,50 @@ class CreoleSQLExecTask extends CreoleTask
     {
 
         $savedTransaction = array();
-        for ($i = 0, $size = count( $this->transactions ); $i < $size; $i++) {
+        for ($i = 0, $size = count($this->transactions); $i < $size; $i++) {
             $savedTransaction[] = clone $this->transactions[$i];
         }
 
         $savedSqlCommand = $this->sqlCommand;
 
-        $this->sqlCommand = trim( $this->sqlCommand );
+        $this->sqlCommand = trim($this->sqlCommand);
 
         try {
             if ($this->srcFile === null && $this->sqlCommand === ""
                 && empty( $this->filesets )
             ) {
-                if (count( $this->transactions ) === 0) {
-                    throw new BuildException( "Source file or fileset, "
+                if (count($this->transactions) === 0) {
+                    throw new BuildException("Source file or fileset, "
                         ."transactions or sql statement "
-                        ."must be set!", $this->location );
+                        ."must be set!", $this->location);
                 }
             }
 
             if ($this->srcFile !== null && !$this->srcFile->exists()) {
-                throw new BuildException( "Source file does not exist!", $this->location );
+                throw new BuildException("Source file does not exist!", $this->location);
             }
 
             // deal with the filesets
-            for ($i = 0, $size = count( $this->filesets ); $i < $size; $i++) {
+            for ($i = 0, $size = count($this->filesets); $i < $size; $i++) {
                 $fs = $this->filesets[$i];
-                $ds = $fs->getDirectoryScanner( $this->project );
-                $srcDir = $fs->getDir( $this->project );
+                $ds = $fs->getDirectoryScanner($this->project);
+                $srcDir = $fs->getDir($this->project);
 
                 $srcFiles = $ds->getIncludedFiles();
 
                 // Make a transaction for each file
-                for ($j = 0, $size = count( $srcFiles ); $j < $size; $j++) {
+                for ($j = 0, $size = count($srcFiles); $j < $size; $j++) {
                     $t = $this->createTransaction();
-                    $t->setSrc( new PhingFile( $srcDir, $srcFiles[$j] ) );
+                    $t->setSrc(new PhingFile($srcDir, $srcFiles[$j]));
                 }
             }
 
             // Make a transaction group for the outer command
             $t = $this->createTransaction();
             if ($this->srcFile) {
-                $t->setSrc( $this->srcFile );
+                $t->setSrc($this->srcFile);
             }
-            $t->addText( $this->sqlCommand );
+            $t->addText($this->sqlCommand);
             $this->conn = $this->getConnection();
 
             try {
@@ -347,50 +347,50 @@ class CreoleSQLExecTask extends CreoleTask
                 try {
 
                     if ($this->output !== null) {
-                        $this->log( "Opening output file ".$this->output, Project::MSG_VERBOSE );
-                        $out = new BufferedWriter( new FileWriter( $this->output->getAbsolutePath(), $this->append ) );
+                        $this->log("Opening output file ".$this->output, Project::MSG_VERBOSE);
+                        $out = new BufferedWriter(new FileWriter($this->output->getAbsolutePath(), $this->append));
                     }
 
                     // Process all transactions
-                    for ($i = 0, $size = count( $this->transactions ); $i < $size; $i++) {
-                        $this->transactions[$i]->runTransaction( $out );
+                    for ($i = 0, $size = count($this->transactions); $i < $size; $i++) {
+                        $this->transactions[$i]->runTransaction($out);
                         if (!$this->isAutocommit()) {
-                            $this->log( "Commiting transaction", Project::MSG_VERBOSE );
+                            $this->log("Commiting transaction", Project::MSG_VERBOSE);
                             $this->conn->commit();
                         }
                     }
                     if ($out) {
                         $out->close();
                     }
-                } catch( Exception $e ) {
+                } catch (Exception $e) {
                     if ($out) {
                         $out->close();
                     }
                     throw $e;
                 }
-            } catch( IOException $e ) {
+            } catch (IOException $e) {
                 if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
                     try {
                         $this->conn->rollback();
-                    } catch( SQLException $ex ) {
+                    } catch (SQLException $ex) {
                     }
                 }
-                throw new BuildException( $e->getMessage(), $this->location );
-            } catch( SQLException $e ) {
+                throw new BuildException($e->getMessage(), $this->location);
+            } catch (SQLException $e) {
                 if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
                     try {
                         $this->conn->rollback();
-                    } catch( SQLException $ex ) {
+                    } catch (SQLException $ex) {
                     }
                 }
-                throw new BuildException( $e->getMessage(), $this->location );
+                throw new BuildException($e->getMessage(), $this->location);
             }
 
             $this->log(
                 $this->goodSql." of ".$this->totalSql.
                 " SQL statements executed successfully"
             );
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             $this->transactions = $savedTransaction;
             $this->sqlCommand = $savedSqlCommand;
             throw $e;
@@ -407,7 +407,7 @@ class CreoleSQLExecTask extends CreoleTask
     public function createTransaction()
     {
 
-        $t = new SQLExecTransaction( $this );
+        $t = new SQLExecTransaction($this);
         $this->transactions[] = $t;
 
         return $t;
@@ -421,7 +421,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @throws BuildException
      */
-    public function runStatements( Reader $reader, $out = null )
+    public function runStatements(Reader $reader, $out = null)
     {
 
         $sql = "";
@@ -429,15 +429,15 @@ class CreoleSQLExecTask extends CreoleTask
 
         $buffer = '';
 
-        if (( is_array( $this->filterChains ) ) && ( !empty( $this->filterChains ) )) {
-            $in = FileUtils::getChainedReader( new BufferedReader( $reader ), $this->filterChains,
-                $this->getProject() );
+        if (( is_array($this->filterChains) ) && ( !empty( $this->filterChains ) )) {
+            $in = FileUtils::getChainedReader(new BufferedReader($reader), $this->filterChains,
+                $this->getProject());
             while (-1 !== ( $read = $in->read() )) { // -1 indicates EOF
                 $buffer .= $read;
             }
-            $lines = explode( "\n", $buffer );
+            $lines = explode("\n", $buffer);
         } else {
-            $in = new BufferedReader( $reader );
+            $in = new BufferedReader($reader);
 
             while (( $line = $in->readLine() ) !== null) {
                 $lines[] = $line;
@@ -446,54 +446,54 @@ class CreoleSQLExecTask extends CreoleTask
 
         try {
             foreach ($lines as $line) {
-                $line = trim( $line );
+                $line = trim($line);
                 $line = ProjectConfigurator::replaceProperties(
                     $this->project,
                     $line,
                     $this->project->getProperties()
                 );
 
-                if (StringHelper::startsWith( "//", $line ) ||
-                    StringHelper::startsWith( "--", $line ) ||
-                    StringHelper::startsWith( "#", $line )
+                if (StringHelper::startsWith("//", $line) ||
+                    StringHelper::startsWith("--", $line) ||
+                    StringHelper::startsWith("#", $line)
                 ) {
                     continue;
                 }
 
-                if (strlen( $line ) > 4
-                    && strtoupper( substr( $line, 0, 4 ) ) == "REM "
+                if (strlen($line) > 4
+                    && strtoupper(substr($line, 0, 4)) == "REM "
                 ) {
                     continue;
                 }
 
                 $sql .= " ".$line;
-                $sql = trim( $sql );
+                $sql = trim($sql);
 
                 // SQL defines "--" as a comment to EOL
                 // and in Oracle it may contain a hint
                 // so we cannot just remove it, instead we must end it
-                if (strpos( $line, "--" ) !== false) {
+                if (strpos($line, "--") !== false) {
                     $sql .= "\n";
                 }
 
                 if ($this->delimiterType == self::DELIM_NORMAL
-                    && StringHelper::endsWith( $this->delimiter, $sql )
+                    && StringHelper::endsWith($this->delimiter, $sql)
                     || $this->delimiterType == self::DELIM_ROW
                     && $line == $this->delimiter
                 ) {
-                    $this->log( "SQL: ".$sql, Project::MSG_VERBOSE );
-                    $this->execSQL( StringHelper::substring( $sql, 0, strlen( $sql ) - strlen( $this->delimiter ) ),
-                        $out );
+                    $this->log("SQL: ".$sql, Project::MSG_VERBOSE);
+                    $this->execSQL(StringHelper::substring($sql, 0, strlen($sql) - strlen($this->delimiter)),
+                        $out);
                     $sql = "";
                 }
             }
 
             // Catch any statements not followed by ;
             if ($sql !== "") {
-                $this->execSQL( $sql, $out );
+                $this->execSQL($sql, $out);
             }
-        } catch( SQLException $e ) {
-            throw new BuildException( "Error running statements", $e );
+        } catch (SQLException $e) {
+            throw new BuildException("Error running statements", $e);
         }
     }
 
@@ -505,32 +505,32 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @throws BuildException
      */
-    protected function execSQL( $sql, $out = null )
+    protected function execSQL($sql, $out = null)
     {
 
         // Check and ignore empty statements
-        if (trim( $sql ) == "") {
+        if (trim($sql) == "") {
             return;
         }
 
         try {
             $this->totalSql++;
-            if (!$this->statement->execute( $sql )) {
-                $this->log( $this->statement->getUpdateCount()." rows affected", Project::MSG_VERBOSE );
+            if (!$this->statement->execute($sql)) {
+                $this->log($this->statement->getUpdateCount()." rows affected", Project::MSG_VERBOSE);
             } else {
                 if ($this->print) {
-                    $this->printResults( $out );
+                    $this->printResults($out);
                 }
             }
 
             $this->goodSql++;
 
-        } catch( SQLException $e ) {
-            $this->log( "Failed to execute: ".$sql, Project::MSG_ERR );
+        } catch (SQLException $e) {
+            $this->log("Failed to execute: ".$sql, Project::MSG_ERR);
             if ($this->onError != "continue") {
-                throw new BuildException( "Failed to execute SQL", $e );
+                throw new BuildException("Failed to execute SQL", $e);
             }
-            $this->log( $e->getMessage(), Project::MSG_ERR );
+            $this->log($e->getMessage(), Project::MSG_ERR);
         }
     }
 
@@ -539,7 +539,7 @@ class CreoleSQLExecTask extends CreoleTask
      *
      * @param null $out
      */
-    protected function printResults( $out = null )
+    protected function printResults($out = null)
     {
 
         $rs = null;
@@ -548,7 +548,7 @@ class CreoleSQLExecTask extends CreoleTask
 
             if ($rs !== null) {
 
-                $this->log( "Processing new result set.", Project::MSG_VERBOSE );
+                $this->log("Processing new result set.", Project::MSG_VERBOSE);
 
                 $line = "";
 
@@ -568,7 +568,7 @@ class CreoleSQLExecTask extends CreoleTask
                             $line .= $fieldName;
                         }
                         if ($out !== null) {
-                            $out->write( $line );
+                            $out->write($line);
                             $out->newLine();
                         } else {
                             print( $line.PHP_EOL );
@@ -581,7 +581,7 @@ class CreoleSQLExecTask extends CreoleTask
                     foreach ($fields as $columnValue) {
 
                         if ($columnValue != null) {
-                            $columnValue = trim( $columnValue );
+                            $columnValue = trim($columnValue);
                         }
 
                         if ($first) {
@@ -593,7 +593,7 @@ class CreoleSQLExecTask extends CreoleTask
                     }
 
                     if ($out !== null) {
-                        $out->write( $line );
+                        $out->write($line);
                         $out->newLine();
                     } else {
                         print( $line.PHP_EOL );
@@ -628,7 +628,7 @@ class SQLExecTransaction
     /**
      * @param $parent
      */
-    public function __construct( $parent )
+    public function __construct($parent)
     {
 
         // Parent is required so that we can log things ...
@@ -638,7 +638,7 @@ class SQLExecTransaction
     /**
      * @param PhingFile $src
      */
-    public function setSrc( PhingFile $src )
+    public function setSrc(PhingFile $src)
     {
 
         $this->tSrcFile = $src;
@@ -647,7 +647,7 @@ class SQLExecTransaction
     /**
      * @param $sql
      */
-    public function addText( $sql )
+    public function addText($sql)
     {
 
         $this->tSqlCommand .= $sql;
@@ -656,12 +656,12 @@ class SQLExecTransaction
     /**
      * @param null $out
      */
-    public function runTransaction( $out = null )
+    public function runTransaction($out = null)
     {
 
         if (!empty( $this->tSqlCommand )) {
-            $this->parent->log( "Executing commands", Project::MSG_INFO );
-            $this->parent->runStatements( new StringReader( $this->tSqlCommand ), $out );
+            $this->parent->log("Executing commands", Project::MSG_INFO);
+            $this->parent->runStatements(new StringReader($this->tSqlCommand), $out);
         }
 
         if ($this->tSrcFile !== null) {
@@ -670,9 +670,9 @@ class SQLExecTransaction
                 Project::MSG_INFO
             );
 
-            $reader = new FileReader( $this->tSrcFile );
+            $reader = new FileReader($this->tSrcFile);
 
-            $this->parent->runStatements( $reader, $out );
+            $this->parent->runStatements($reader, $out);
             $reader->close();
         }
     }

@@ -58,7 +58,7 @@
  *
  * Base cipher class
  */
-if (!class_exists( 'Crypt_Base' )) {
+if (!class_exists('Crypt_Base')) {
     include_once 'Base.php';
 }
 
@@ -74,31 +74,31 @@ if (!class_exists( 'Crypt_Base' )) {
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Counter_.28CTR.29
  */
-define( 'CRYPT_TWOFISH_MODE_CTR', CRYPT_MODE_CTR );
+define('CRYPT_TWOFISH_MODE_CTR', CRYPT_MODE_CTR);
 /**
  * Encrypt / decrypt using the Electronic Code Book mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29
  */
-define( 'CRYPT_TWOFISH_MODE_ECB', CRYPT_MODE_ECB );
+define('CRYPT_TWOFISH_MODE_ECB', CRYPT_MODE_ECB);
 /**
  * Encrypt / decrypt using the Code Book Chaining mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29
  */
-define( 'CRYPT_TWOFISH_MODE_CBC', CRYPT_MODE_CBC );
+define('CRYPT_TWOFISH_MODE_CBC', CRYPT_MODE_CBC);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher_feedback_.28CFB.29
  */
-define( 'CRYPT_TWOFISH_MODE_CFB', CRYPT_MODE_CFB );
+define('CRYPT_TWOFISH_MODE_CFB', CRYPT_MODE_CFB);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Output_feedback_.28OFB.29
  */
-define( 'CRYPT_TWOFISH_MODE_OFB', CRYPT_MODE_OFB );
+define('CRYPT_TWOFISH_MODE_OFB', CRYPT_MODE_OFB);
 /**#@-*/
 
 /**#@+
@@ -108,11 +108,11 @@ define( 'CRYPT_TWOFISH_MODE_OFB', CRYPT_MODE_OFB );
 /**
  * Toggles the internal implementation
  */
-define( 'CRYPT_TWOFISH_MODE_INTERNAL', CRYPT_MODE_INTERNAL );
+define('CRYPT_TWOFISH_MODE_INTERNAL', CRYPT_MODE_INTERNAL);
 /**
  * Toggles the mcrypt implementation
  */
-define( 'CRYPT_TWOFISH_MODE_MCRYPT', CRYPT_MODE_MCRYPT );
+define('CRYPT_TWOFISH_MODE_MCRYPT', CRYPT_MODE_MCRYPT);
 /**#@-*/
 
 /**
@@ -1805,24 +1805,24 @@ class Crypt_Twofish extends Crypt_Base
      *
      * @param String $key
      */
-    function setKey( $key )
+    function setKey($key)
     {
 
-        $keylength = strlen( $key );
+        $keylength = strlen($key);
         switch (true) {
             case $keylength <= 16:
-                $key = str_pad( $key, 16, "\0" );
+                $key = str_pad($key, 16, "\0");
                 break;
             case $keylength <= 24:
-                $key = str_pad( $key, 24, "\0" );
+                $key = str_pad($key, 24, "\0");
                 break;
             case $keylength < 32:
-                $key = str_pad( $key, 32, "\0" );
+                $key = str_pad($key, 32, "\0");
                 break;
             case $keylength > 32:
-                $key = substr( $key, 0, 32 );
+                $key = substr($key, 0, 32);
         }
-        parent::setKey( $key );
+        parent::setKey($key);
     }
 
     /**
@@ -1838,11 +1838,11 @@ class Crypt_Twofish extends Crypt_Base
             // already expanded
             return;
         }
-        $this->kl = array( 'key' => $this->key );
+        $this->kl = array('key' => $this->key);
 
         /* Key expanding and generating the key-depended s-boxes */
-        $le_longs = unpack( 'V*', $this->key );
-        $key = unpack( 'C*', $this->key );
+        $le_longs = unpack('V*', $this->key);
+        $key = unpack('C*', $this->key);
         $m0 = $this->m0;
         $m1 = $this->m1;
         $m2 = $this->m2;
@@ -1852,10 +1852,10 @@ class Crypt_Twofish extends Crypt_Base
 
         $K = $S0 = $S1 = $S2 = $S3 = array();
 
-        switch (strlen( $this->key )) {
+        switch (strlen($this->key)) {
             case 16:
-                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem( $le_longs[1], $le_longs[2] );
-                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem( $le_longs[3], $le_longs[4] );
+                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem($le_longs[1], $le_longs[2]);
+                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem($le_longs[3], $le_longs[4]);
                 for ($i = 0, $j = 1; $i < 40; $i += 2, $j += 2) {
                     $A = $m0[$q0[$q0[$i] ^ $key[9]] ^ $key[1]] ^
                         $m1[$q0[$q1[$i] ^ $key[10]] ^ $key[2]] ^
@@ -1877,9 +1877,9 @@ class Crypt_Twofish extends Crypt_Base
                 }
                 break;
             case 24:
-                list ( $sb, $sa, $s9, $s8 ) = $this->_mdsrem( $le_longs[1], $le_longs[2] );
-                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem( $le_longs[3], $le_longs[4] );
-                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem( $le_longs[5], $le_longs[6] );
+                list ( $sb, $sa, $s9, $s8 ) = $this->_mdsrem($le_longs[1], $le_longs[2]);
+                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem($le_longs[3], $le_longs[4]);
+                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem($le_longs[5], $le_longs[6]);
                 for ($i = 0, $j = 1; $i < 40; $i += 2, $j += 2) {
                     $A = $m0[$q0[$q0[$q1[$i] ^ $key[17]] ^ $key[9]] ^ $key[1]] ^
                         $m1[$q0[$q1[$q1[$i] ^ $key[18]] ^ $key[10]] ^ $key[2]] ^
@@ -1901,10 +1901,10 @@ class Crypt_Twofish extends Crypt_Base
                 }
                 break;
             default: // 32
-                list ( $sf, $se, $sd, $sc ) = $this->_mdsrem( $le_longs[1], $le_longs[2] );
-                list ( $sb, $sa, $s9, $s8 ) = $this->_mdsrem( $le_longs[3], $le_longs[4] );
-                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem( $le_longs[5], $le_longs[6] );
-                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem( $le_longs[7], $le_longs[8] );
+                list ( $sf, $se, $sd, $sc ) = $this->_mdsrem($le_longs[1], $le_longs[2]);
+                list ( $sb, $sa, $s9, $s8 ) = $this->_mdsrem($le_longs[3], $le_longs[4]);
+                list ( $s7, $s6, $s5, $s4 ) = $this->_mdsrem($le_longs[5], $le_longs[6]);
+                list ( $s3, $s2, $s1, $s0 ) = $this->_mdsrem($le_longs[7], $le_longs[8]);
                 for ($i = 0, $j = 1; $i < 40; $i += 2, $j += 2) {
                     $A = $m0[$q0[$q0[$q1[$q1[$i] ^ $key[25]] ^ $key[17]] ^ $key[9]] ^ $key[1]] ^
                         $m1[$q0[$q1[$q1[$q0[$i] ^ $key[26]] ^ $key[18]] ^ $key[10]] ^ $key[2]] ^
@@ -1943,7 +1943,7 @@ class Crypt_Twofish extends Crypt_Base
      *
      * @return Array
      */
-    function _mdsrem( $A, $B )
+    function _mdsrem($A, $B)
     {
 
         // No gain by unrolling this loop.
@@ -1994,7 +1994,7 @@ class Crypt_Twofish extends Crypt_Base
      *
      * @return String
      */
-    function _encryptBlock( $in )
+    function _encryptBlock($in)
     {
 
         $S0 = $this->S0;
@@ -2003,7 +2003,7 @@ class Crypt_Twofish extends Crypt_Base
         $S3 = $this->S3;
         $K = $this->K;
 
-        $in = unpack( "V4", $in );
+        $in = unpack("V4", $in);
         $R0 = $K[0] ^ $in[1];
         $R1 = $K[1] ^ $in[2];
         $R2 = $K[2] ^ $in[3];
@@ -2037,10 +2037,10 @@ class Crypt_Twofish extends Crypt_Base
         }
 
         // @codingStandardsIgnoreStart
-        return pack( "V4", $K[4] ^ $R2,
+        return pack("V4", $K[4] ^ $R2,
             $K[5] ^ $R3,
             $K[6] ^ $R0,
-            $K[7] ^ $R1 );
+            $K[7] ^ $R1);
         // @codingStandardsIgnoreEnd
     }
 
@@ -2053,7 +2053,7 @@ class Crypt_Twofish extends Crypt_Base
      *
      * @return String
      */
-    function _decryptBlock( $in )
+    function _decryptBlock($in)
     {
 
         $S0 = $this->S0;
@@ -2062,7 +2062,7 @@ class Crypt_Twofish extends Crypt_Base
         $S3 = $this->S3;
         $K = $this->K;
 
-        $in = unpack( "V4", $in );
+        $in = unpack("V4", $in);
         $R0 = $K[4] ^ $in[1];
         $R1 = $K[5] ^ $in[2];
         $R2 = $K[6] ^ $in[3];
@@ -2096,10 +2096,10 @@ class Crypt_Twofish extends Crypt_Base
         }
 
         // @codingStandardsIgnoreStart
-        return pack( "V4", $K[0] ^ $R2,
+        return pack("V4", $K[0] ^ $R2,
             $K[1] ^ $R3,
             $K[2] ^ $R0,
-            $K[3] ^ $R1 );
+            $K[3] ^ $R1);
         // @codingStandardsIgnoreEnd
     }
 
@@ -2115,11 +2115,11 @@ class Crypt_Twofish extends Crypt_Base
         $lambda_functions =& Crypt_Twofish::_getLambdaFunctions();
 
         // Max. 10 Ultra-Hi-optimized inline-crypt functions. After that, we'll (still) create very fast code, but not the ultimate fast one.
-        $gen_hi_opt_code = (bool)( count( $lambda_functions ) < 10 );
+        $gen_hi_opt_code = (bool)( count($lambda_functions) < 10 );
 
         switch (true) {
             case $gen_hi_opt_code:
-                $code_hash = md5( str_pad( "Crypt_Twofish, {$this->mode}, ", 32, "\0" ).$this->key );
+                $code_hash = md5(str_pad("Crypt_Twofish, {$this->mode}, ", 32, "\0").$this->key);
                 break;
             default:
                 $code_hash = "Crypt_Twofish, {$this->mode}";
@@ -2153,7 +2153,7 @@ class Crypt_Twofish extends Crypt_Base
                         $S1 = $self->S1;
                         $S2 = $self->S2;
                         $S3 = $self->S3;
-                        list('.implode( ',', $K ).') = $self->K;
+                        list('.implode(',', $K).') = $self->K;
                     ';
             }
 

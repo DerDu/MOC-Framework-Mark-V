@@ -10,7 +10,7 @@ abstract class PHPParser_BuilderAbstract implements PHPParser_Builder
      *
      * @return PHPParser_Node The normalized node
      */
-    protected function normalizeNode( $node )
+    protected function normalizeNode($node)
     {
 
         if ($node instanceof PHPParser_Builder) {
@@ -19,7 +19,7 @@ abstract class PHPParser_BuilderAbstract implements PHPParser_Builder
             return $node;
         }
 
-        throw new LogicException( 'Expected node or builder object' );
+        throw new LogicException('Expected node or builder object');
     }
 
     /**
@@ -29,13 +29,13 @@ abstract class PHPParser_BuilderAbstract implements PHPParser_Builder
      *
      * @return PHPParser_Node_Name The normalized name
      */
-    protected function normalizeName( $name )
+    protected function normalizeName($name)
     {
 
         if ($name instanceof PHPParser_Node_Name) {
             return $name;
         } else {
-            return new PHPParser_Node_Name( $name );
+            return new PHPParser_Node_Name($name);
         }
     }
 
@@ -47,46 +47,46 @@ abstract class PHPParser_BuilderAbstract implements PHPParser_Builder
      *
      * @return PHPParser_Node_Expr The normalized value
      */
-    protected function normalizeValue( $value )
+    protected function normalizeValue($value)
     {
 
         if ($value instanceof PHPParser_Node) {
             return $value;
-        } elseif (is_null( $value )) {
+        } elseif (is_null($value)) {
             return new PHPParser_Node_Expr_ConstFetch(
-                new PHPParser_Node_Name( 'null' )
+                new PHPParser_Node_Name('null')
             );
-        } elseif (is_bool( $value )) {
+        } elseif (is_bool($value)) {
             return new PHPParser_Node_Expr_ConstFetch(
-                new PHPParser_Node_Name( $value ? 'true' : 'false' )
+                new PHPParser_Node_Name($value ? 'true' : 'false')
             );
-        } elseif (is_int( $value )) {
-            return new PHPParser_Node_Scalar_LNumber( $value );
-        } elseif (is_float( $value )) {
-            return new PHPParser_Node_Scalar_DNumber( $value );
-        } elseif (is_string( $value )) {
-            return new PHPParser_Node_Scalar_String( $value );
-        } elseif (is_array( $value )) {
+        } elseif (is_int($value)) {
+            return new PHPParser_Node_Scalar_LNumber($value);
+        } elseif (is_float($value)) {
+            return new PHPParser_Node_Scalar_DNumber($value);
+        } elseif (is_string($value)) {
+            return new PHPParser_Node_Scalar_String($value);
+        } elseif (is_array($value)) {
             $items = array();
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
                 // for consecutive, numeric keys don't generate keys
                 if (null !== $lastKey && ++$lastKey === $itemKey) {
                     $items[] = new PHPParser_Node_Expr_ArrayItem(
-                        $this->normalizeValue( $itemValue )
+                        $this->normalizeValue($itemValue)
                     );
                 } else {
                     $lastKey = null;
                     $items[] = new PHPParser_Node_Expr_ArrayItem(
-                        $this->normalizeValue( $itemValue ),
-                        $this->normalizeValue( $itemKey )
+                        $this->normalizeValue($itemValue),
+                        $this->normalizeValue($itemKey)
                     );
                 }
             }
 
-            return new PHPParser_Node_Expr_Array( $items );
+            return new PHPParser_Node_Expr_Array($items);
         } else {
-            throw new LogicException( 'Invalid value' );
+            throw new LogicException('Invalid value');
         }
     }
 
@@ -95,10 +95,10 @@ abstract class PHPParser_BuilderAbstract implements PHPParser_Builder
      *
      * @param int $modifier Modifier to set
      */
-    protected function setModifier( $modifier )
+    protected function setModifier($modifier)
     {
 
-        PHPParser_Node_Stmt_Class::verifyModifier( $this->type, $modifier );
+        PHPParser_Node_Stmt_Class::verifyModifier($this->type, $modifier);
         $this->type |= $modifier;
     }
 }

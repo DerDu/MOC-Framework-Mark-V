@@ -28,14 +28,14 @@ class HhvmExceptionPatch implements ClassPatchInterface
      *
      * @return bool
      */
-    public function supports( ClassNode $node )
+    public function supports(ClassNode $node)
     {
 
-        if (!defined( 'HHVM_VERSION' )) {
+        if (!defined('HHVM_VERSION')) {
             return false;
         }
 
-        return 'Exception' === $node->getParentClass() || is_subclass_of( $node->getParentClass(), 'Exception' );
+        return 'Exception' === $node->getParentClass() || is_subclass_of($node->getParentClass(), 'Exception');
     }
 
     /**
@@ -45,14 +45,14 @@ class HhvmExceptionPatch implements ClassPatchInterface
      *
      * @return void
      */
-    public function apply( ClassNode $node )
+    public function apply(ClassNode $node)
     {
 
-        if ($node->hasMethod( 'setTraceOptions' )) {
-            $node->getMethod( 'setTraceOptions' )->useParentCode();
+        if ($node->hasMethod('setTraceOptions')) {
+            $node->getMethod('setTraceOptions')->useParentCode();
         }
-        if ($node->hasMethod( 'getTraceOptions' )) {
-            $node->getMethod( 'getTraceOptions' )->useParentCode();
+        if ($node->hasMethod('getTraceOptions')) {
+            $node->getMethod('getTraceOptions')->useParentCode();
         }
     }
 

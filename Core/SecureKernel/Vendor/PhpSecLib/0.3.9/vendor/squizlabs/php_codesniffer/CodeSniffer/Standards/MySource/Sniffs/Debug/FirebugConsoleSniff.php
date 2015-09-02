@@ -31,7 +31,7 @@ class MySource_Sniffs_Debug_FirebugConsoleSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -61,14 +61,14 @@ class MySource_Sniffs_Debug_FirebugConsoleSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        if (strtolower( $tokens[$stackPtr]['content'] ) === 'console') {
+        if (strtolower($tokens[$stackPtr]['content']) === 'console') {
             $error = 'Variables, functions and labels must not be named "console"; name may conflict with Firebug internal variable';
-            $phpcsFile->addError( $error, $stackPtr, 'ConflictFound' );
+            $phpcsFile->addError($error, $stackPtr, 'ConflictFound');
         }
 
     }//end process()

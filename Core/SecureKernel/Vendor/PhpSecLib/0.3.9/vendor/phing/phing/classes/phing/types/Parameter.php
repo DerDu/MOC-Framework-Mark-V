@@ -50,7 +50,7 @@ class Parameter extends DataType
      *
      * @param RegisterSlot $value
      */
-    public function setListeningValue( RegisterSlot $value )
+    public function setListeningValue(RegisterSlot $value)
     {
 
         $this->value = $value;
@@ -65,7 +65,7 @@ class Parameter extends DataType
     /**
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = (string)$name;
@@ -80,7 +80,7 @@ class Parameter extends DataType
     /**
      * @param $type
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = (string)$type;
@@ -102,7 +102,7 @@ class Parameter extends DataType
     /**
      * @param $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = (string)$value;
@@ -114,7 +114,7 @@ class Parameter extends DataType
     public function createParam()
     {
 
-        $num = array_push( $this->parameters, new Parameter() );
+        $num = array_push($this->parameters, new Parameter());
 
         return $this->parameters[$num - 1];
     }

@@ -23,15 +23,15 @@ use Sami\Reflection\ParameterReflection;
 class MethodClassVisitor implements ClassVisitorInterface
 {
 
-    public function visit( ClassReflection $class )
+    public function visit(ClassReflection $class)
     {
 
         $modified = false;
 
-        $methods = $class->getTags( 'method' );
+        $methods = $class->getTags('method');
         if (!empty( $methods )) {
             foreach ($methods as $methodTag) {
-                if ($this->injectMethod( $class, implode( ' ', $methodTag ) )) {
+                if ($this->injectMethod($class, implode(' ', $methodTag))) {
                     $modified = true;
                 }
             }
@@ -48,37 +48,37 @@ class MethodClassVisitor implements ClassVisitorInterface
      *
      * @return bool
      */
-    protected function injectMethod( ClassReflection $class, $methodTag )
+    protected function injectMethod(ClassReflection $class, $methodTag)
     {
 
-        $data = $this->parseMethod( $methodTag );
+        $data = $this->parseMethod($methodTag);
 
         // Bail if the method format is invalid
         if (!$data) {
             return false;
         }
 
-        $method = new MethodReflection( $data['name'], $class->getLine() );
-        $method->setDocComment( $data['description'] );
-        $method->setShortDesc( $data['description'] );
+        $method = new MethodReflection($data['name'], $class->getLine());
+        $method->setDocComment($data['description']);
+        $method->setShortDesc($data['description']);
 
         if ($data['hint']) {
-            $method->setHint( array( array( $data['hint'], null ) ) );
+            $method->setHint(array(array($data['hint'], null)));
         }
 
         // Add arguments to the method
         foreach ($data['args'] as $name => $arg) {
-            $param = new ParameterReflection( $name, $class->getLine() );
+            $param = new ParameterReflection($name, $class->getLine());
             if (!empty( $arg['hint'] )) {
-                $param->setHint( array( array( $arg['hint'], null ) ) );
+                $param->setHint(array(array($arg['hint'], null)));
             }
             if (!empty( $arg['default'] )) {
-                $param->setDefault( $arg['default'] );
+                $param->setDefault($arg['default']);
             }
-            $method->addParameter( $param );
+            $method->addParameter($param);
         }
 
-        $class->addMethod( $method );
+        $class->addMethod($method);
 
         return true;
     }
@@ -92,11 +92,11 @@ class MethodClassVisitor implements ClassVisitorInterface
      *
      * @return array
      */
-    protected function parseMethod( $tag )
+    protected function parseMethod($tag)
     {
 
         // Account for default array syntax
-        $tag = str_replace( 'array()', 'array', $tag );
+        $tag = str_replace('array()', 'array', $tag);
 
         $matches = array();
         // 1. none or more whitespace
@@ -108,17 +108,17 @@ class MethodClassVisitor implements ClassVisitorInterface
         //    until a ) and whitespace : as method name with signature
         // 5. any remaining text : as description
         $pattern = '/^[\s]*(?P<hint>([\w\|_\\\\]+)[\s]+)?(?:[\w_]+\(\)[\s]+)?(?P<method>[\w\|_\\\\]+)\((?P<args>[^\)]*)\)[\s]*(?P<description>.*)/u';
-        if (!preg_match( $pattern, $tag, $matches )) {
+        if (!preg_match($pattern, $tag, $matches)) {
             return false;
         }
 
         // Parse arguments
         $args = array();
         if (isset( $matches['args'] )) {
-            foreach (explode( ',', $matches['args'] ) as $arg) {
+            foreach (explode(',', $matches['args']) as $arg) {
                 $parts = array();
-                if (preg_match( '/^[\s]*(?P<hint>([\w\|_\\\\]+)[\s]+)*[\s]*\$(?P<name>[\w\|_\\\\]+)?(?:[\s]*=[\s]*)?(?P<default>.*)/',
-                    $arg, $parts )) {
+                if (preg_match('/^[\s]*(?P<hint>([\w\|_\\\\]+)[\s]+)*[\s]*\$(?P<name>[\w\|_\\\\]+)?(?:[\s]*=[\s]*)?(?P<default>.*)/',
+                    $arg, $parts)) {
                     // Fix array default values
                     if ($parts['default'] == 'array') {
                         $parts['default'] = 'array()';
@@ -133,7 +133,7 @@ class MethodClassVisitor implements ClassVisitorInterface
         }
 
         return array(
-            'hint'        => trim( $matches['hint'] ),
+            'hint'        => trim($matches['hint']),
             'name'        => $matches['method'],
             'args'        => $args,
             'description' => $matches['description']

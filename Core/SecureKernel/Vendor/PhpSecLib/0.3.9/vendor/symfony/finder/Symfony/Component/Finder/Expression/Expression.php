@@ -28,13 +28,13 @@ class Expression implements ValueInterface
     /**
      * @param string $expr
      */
-    public function __construct( $expr )
+    public function __construct($expr)
     {
 
         try {
-            $this->value = Regex::create( $expr );
-        } catch( \InvalidArgumentException $e ) {
-            $this->value = new Glob( $expr );
+            $this->value = Regex::create($expr);
+        } catch (\InvalidArgumentException $e) {
+            $this->value = new Glob($expr);
         }
     }
 
@@ -43,10 +43,10 @@ class Expression implements ValueInterface
      *
      * @return Expression
      */
-    public static function create( $expr )
+    public static function create($expr)
     {
 
-        return new self( $expr );
+        return new self($expr);
     }
 
     /**
@@ -97,10 +97,10 @@ class Expression implements ValueInterface
     /**
      * {@inheritdoc}
      */
-    public function prepend( $expr )
+    public function prepend($expr)
     {
 
-        $this->value->prepend( $expr );
+        $this->value->prepend($expr);
 
         return $this;
     }
@@ -108,10 +108,10 @@ class Expression implements ValueInterface
     /**
      * {@inheritdoc}
      */
-    public function append( $expr )
+    public function append($expr)
     {
 
-        $this->value->append( $expr );
+        $this->value->append($expr);
 
         return $this;
     }
@@ -143,7 +143,7 @@ class Expression implements ValueInterface
     {
 
         if (self::TYPE_GLOB !== $this->value->getType()) {
-            throw new \LogicException( 'Regex can\'t be transformed to glob.' );
+            throw new \LogicException('Regex can\'t be transformed to glob.');
         }
 
         return $this->value;

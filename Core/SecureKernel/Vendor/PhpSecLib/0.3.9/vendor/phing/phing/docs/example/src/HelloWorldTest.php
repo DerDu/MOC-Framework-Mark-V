@@ -17,6 +17,6 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
     {
 
         $hello = new HelloWorld();
-        $this->assertEquals( "Hello World!", $hello->sayHello() );
+        $this->assertEquals("Hello World!", $hello->sayHello());
     }
 }

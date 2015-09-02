@@ -23,6 +23,7 @@
  */
 class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
 {
+
     protected $class;
     protected $interfaces;
 
@@ -31,6 +32,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
+
         $this->assertEquals(
             'iTemplate', $this->interfaces[0]->getName()
         );
@@ -41,6 +43,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetParentNotExists()
     {
+
         $this->assertFalse(
             $this->interfaces[0]->getParent()
         );
@@ -51,6 +54,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testHasParentNotExists()
     {
+
         $this->assertFalse(
             $this->interfaces[0]->hasParent()
         );
@@ -61,6 +65,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetParentExists()
     {
+
         $this->assertEquals(
             'a', $this->interfaces[2]->getParent()
         );
@@ -71,6 +76,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testHasParentExists()
     {
+
         $this->assertTrue(
             $this->interfaces[2]->hasParent()
         );
@@ -81,6 +87,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetInterfacesExists()
     {
+
         $this->assertEquals(
             array('b'),
             $this->class->getInterfaces()
@@ -92,6 +99,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testHasInterfacesExists()
     {
+
         $this->assertTrue(
             $this->class->hasInterfaces()
         );
@@ -114,6 +122,7 @@ class PHP_Token_InterfaceTest extends PHPUnit_Framework_TestCase
 
     public function provideFilesWithClassesWithinMultipleNamespaces()
     {
+
         return array(
             array(TEST_FILES_PATH.'multipleNamespacesWithOneClassUsingBraces.php'),
             array(TEST_FILES_PATH.'multipleNamespacesWithOneClassUsingNonBraceSyntax.php'),

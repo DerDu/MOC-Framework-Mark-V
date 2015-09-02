@@ -40,7 +40,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -54,7 +54,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -75,7 +75,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
 
         if ($lineDifference > 0) {
             $error = 'Opening brace should be on the same line as the declaration';
-            $phpcsFile->addError( $error, $openingBrace, 'BraceOnNewLine' );
+            $phpcsFile->addError($error, $openingBrace, 'BraceOnNewLine');
             return;
         }
 
@@ -86,14 +86,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             if ($tokens[( $closeBracket + 1 )]['content'] === "\t") {
                 $length = '\t';
             } else {
-                $length = strlen( $tokens[( $closeBracket + 1 )]['content'] );
+                $length = strlen($tokens[( $closeBracket + 1 )]['content']);
             }
         }
 
         if ($length !== 1) {
             $error = 'Expected 1 space after closing parenthesis; found %s';
-            $data = array( $length );
-            $phpcsFile->addError( $error, $closeBracket, 'SpaceAfterBracket', $data );
+            $data = array($length);
+            $phpcsFile->addError($error, $closeBracket, 'SpaceAfterBracket', $data);
             return;
         }
 
@@ -104,14 +104,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             if ($tokens[( $closeBrace - 1 )]['content'] === "\t") {
                 $length = '\t';
             } else {
-                $length = strlen( $tokens[( $closeBrace - 1 )]['content'] );
+                $length = strlen($tokens[( $closeBrace - 1 )]['content']);
             }
         }
 
         if ($length !== 1) {
             $error = 'Expected 1 space before opening brace; found %s';
-            $data = array( $length );
-            $phpcsFile->addError( $error, $openingBrace, 'SpaceBeforeBrace', $data );
+            $data = array($length);
+            $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
             return;
         }
 

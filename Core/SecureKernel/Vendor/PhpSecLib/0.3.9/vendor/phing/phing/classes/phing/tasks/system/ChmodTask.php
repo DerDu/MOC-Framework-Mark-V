@@ -52,7 +52,7 @@ class ChmodTask extends Task
      *
      * @param $bool
      */
-    public function setFailonerror( $bool )
+    public function setFailonerror($bool)
     {
 
         $this->failonerror = $bool;
@@ -65,7 +65,7 @@ class ChmodTask extends Task
      *
      * @param $bool
      */
-    public function setQuiet( $bool )
+    public function setQuiet($bool)
     {
 
         $this->quiet = $bool;
@@ -80,7 +80,7 @@ class ChmodTask extends Task
      *
      * @param $bool
      */
-    public function setVerbose( $bool )
+    public function setVerbose($bool)
     {
 
         $this->verbose = (bool)$bool;
@@ -92,7 +92,7 @@ class ChmodTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -101,7 +101,7 @@ class ChmodTask extends Task
     /**
      * @param $str
      */
-    public function setMode( $str )
+    public function setMode($str)
     {
 
         $this->mode = $str;
@@ -114,7 +114,7 @@ class ChmodTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -143,16 +143,16 @@ class ChmodTask extends Task
     {
 
         if ($this->file === null && empty( $this->filesets )) {
-            throw new BuildException( "Specify at least one source - a file or a fileset." );
+            throw new BuildException("Specify at least one source - a file or a fileset.");
         }
 
         if ($this->mode === null) {
-            throw new BuildException( "You have to specify an octal mode for chmod." );
+            throw new BuildException("You have to specify an octal mode for chmod.");
         }
 
         // check for mode to be in the correct format
-        if (!preg_match( '/^([0-7]){3,4}$/', $this->mode )) {
-            throw new BuildException( "You have specified an invalid mode." );
+        if (!preg_match('/^([0-7]){3,4}$/', $this->mode)) {
+            throw new BuildException("You have specified an invalid mode.");
         }
 
     }
@@ -165,11 +165,11 @@ class ChmodTask extends Task
     private function chmod()
     {
 
-        if (strlen( $this->mode ) === 4) {
-            $mode = octdec( $this->mode );
+        if (strlen($this->mode) === 4) {
+            $mode = octdec($this->mode);
         } else {
             // we need to prepend the 0 before converting
-            $mode = octdec( "0".$this->mode );
+            $mode = octdec("0".$this->mode);
         }
 
         // counters for non-verbose output
@@ -179,34 +179,34 @@ class ChmodTask extends Task
         // one file
         if ($this->file !== null) {
             $total_files = 1;
-            $this->chmodFile( $this->file, $mode );
+            $this->chmodFile($this->file, $mode);
         }
 
         // filesets
         foreach ($this->filesets as $fs) {
 
-            $ds = $fs->getDirectoryScanner( $this->project );
-            $fromDir = $fs->getDir( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
+            $fromDir = $fs->getDir($this->project);
 
             $srcFiles = $ds->getIncludedFiles();
             $srcDirs = $ds->getIncludedDirectories();
 
-            $filecount = count( $srcFiles );
+            $filecount = count($srcFiles);
             $total_files = $total_files + $filecount;
             for ($j = 0; $j < $filecount; $j++) {
-                $this->chmodFile( new PhingFile( $fromDir, $srcFiles[$j] ), $mode );
+                $this->chmodFile(new PhingFile($fromDir, $srcFiles[$j]), $mode);
             }
 
-            $dircount = count( $srcDirs );
+            $dircount = count($srcDirs);
             $total_dirs = $total_dirs + $dircount;
             for ($j = 0; $j < $dircount; $j++) {
-                $this->chmodFile( new PhingFile( $fromDir, $srcDirs[$j] ), $mode );
+                $this->chmodFile(new PhingFile($fromDir, $srcDirs[$j]), $mode);
             }
         }
 
         if (!$this->verbose) {
-            $this->log( 'Total files changed to '.vsprintf( '%o', $mode ).': '.$total_files );
-            $this->log( 'Total directories changed to '.vsprintf( '%o', $mode ).': '.$total_dirs );
+            $this->log('Total files changed to '.vsprintf('%o', $mode).': '.$total_files);
+            $this->log('Total directories changed to '.vsprintf('%o', $mode).': '.$total_dirs);
         }
 
     }
@@ -220,23 +220,23 @@ class ChmodTask extends Task
      * @throws BuildException
      * @throws Exception
      */
-    private function chmodFile( PhingFile $file, $mode )
+    private function chmodFile(PhingFile $file, $mode)
     {
 
         if (!$file->exists()) {
-            throw new BuildException( "The file ".$file->__toString()." does not exist" );
+            throw new BuildException("The file ".$file->__toString()." does not exist");
         }
 
         try {
-            $file->setMode( $mode );
+            $file->setMode($mode);
             if ($this->verbose) {
-                $this->log( "Changed file mode on '".$file->__toString()."' to ".vsprintf( "%o", $mode ) );
+                $this->log("Changed file mode on '".$file->__toString()."' to ".vsprintf("%o", $mode));
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             if ($this->failonerror) {
                 throw $e;
             } else {
-                $this->log( $e->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN );
+                $this->log($e->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN);
             }
         }
     }

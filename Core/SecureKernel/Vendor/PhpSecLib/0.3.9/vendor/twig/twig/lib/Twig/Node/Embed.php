@@ -28,25 +28,25 @@ class Twig_Node_Embed extends Twig_Node_Include
         $tag = null
     ) {
 
-        parent::__construct( new Twig_Node_Expression_Constant( 'not_used', $lineno ), $variables, $only,
-            $ignoreMissing, $lineno, $tag );
+        parent::__construct(new Twig_Node_Expression_Constant('not_used', $lineno), $variables, $only,
+            $ignoreMissing, $lineno, $tag);
 
-        $this->setAttribute( 'filename', $filename );
-        $this->setAttribute( 'index', $index );
+        $this->setAttribute('filename', $filename);
+        $this->setAttribute('index', $index);
     }
 
-    protected function addGetTemplate( Twig_Compiler $compiler )
+    protected function addGetTemplate(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->write( "\$this->loadTemplate(" )
-            ->string( $this->getAttribute( 'filename' ) )
-            ->raw( ', ' )
-            ->repr( $compiler->getFilename() )
-            ->raw( ', ' )
-            ->repr( $this->getLine() )
-            ->raw( ', ' )
-            ->string( $this->getAttribute( 'index' ) )
-            ->raw( ")" );
+            ->write("\$this->loadTemplate(")
+            ->string($this->getAttribute('filename'))
+            ->raw(', ')
+            ->repr($compiler->getFilename())
+            ->raw(', ')
+            ->repr($this->getLine())
+            ->raw(', ')
+            ->string($this->getAttribute('index'))
+            ->raw(")");
     }
 }

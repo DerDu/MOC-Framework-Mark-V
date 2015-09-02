@@ -29,5 +29,5 @@ interface Twig_LexerInterface
      *
      * @throws Twig_Error_Syntax When the code is syntactically wrong
      */
-    public function tokenize( $code, $filename = null );
+    public function tokenize($code, $filename = null);
 }

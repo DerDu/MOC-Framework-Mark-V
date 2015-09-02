@@ -35,7 +35,7 @@ class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_DOUBLE_COLON );
+        return array(T_DOUBLE_COLON);
 
     }//end register()
 
@@ -49,17 +49,17 @@ class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $className = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
-        if (strtolower( $tokens[$className]['content'] ) === 'debug') {
-            $method = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $className = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
+        if (strtolower($tokens[$className]['content']) === 'debug') {
+            $method = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
             $error = 'Call to debug function Debug::%s() must be removed';
-            $data = array( $tokens[$method]['content'] );
-            $phpcsFile->addError( $error, $stackPtr, 'Found', $data );
+            $data = array($tokens[$method]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

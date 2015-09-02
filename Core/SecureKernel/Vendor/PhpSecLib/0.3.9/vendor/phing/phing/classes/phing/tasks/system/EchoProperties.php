@@ -111,11 +111,11 @@ class EchoProperties extends Task
      *
      * @param string|PhingFile $file the input file
      */
-    public function setSrcfile( $file )
+    public function setSrcfile($file)
     {
 
-        if (is_string( $file )) {
-            $this->inFile = new PhingFile( $file );
+        if (is_string($file)) {
+            $this->inFile = new PhingFile($file);
         } else {
             $this->inFile = $file;
         }
@@ -127,11 +127,11 @@ class EchoProperties extends Task
      *
      * @param string|PhingFile $destfile file to store the property output
      */
-    public function setDestfile( $destfile )
+    public function setDestfile($destfile)
     {
 
-        if (is_string( $destfile )) {
-            $this->destfile = new PhingFile( $destfile );
+        if (is_string($destfile)) {
+            $this->destfile = new PhingFile($destfile);
         } else {
             $this->destfile = $destfile;
         }
@@ -145,7 +145,7 @@ class EchoProperties extends Task
      * @param  failonerror <tt>true</tt> if IO exceptions are reported as build
      *                     exceptions, or <tt>false</tt> if IO exceptions are ignored.
      */
-    public function setFailOnError( $failonerror )
+    public function setFailOnError($failonerror)
     {
 
         $this->failonerror = $failonerror;
@@ -165,10 +165,10 @@ class EchoProperties extends Task
      *
      * @param string $prefix The new prefix value
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
-        if ($prefix != null && strlen( $prefix ) != 0) {
+        if ($prefix != null && strlen($prefix) != 0) {
             $this->prefix = $prefix;
         }
     }
@@ -186,10 +186,10 @@ class EchoProperties extends Task
      *
      * @param string $regex The new regex value
      */
-    public function setRegex( $regex )
+    public function setRegex($regex)
     {
 
-        if ($regex != null && strlen( $regex ) != 0) {
+        if ($regex != null && strlen($regex) != 0) {
             $this->regex = $regex;
         }
     }
@@ -199,7 +199,7 @@ class EchoProperties extends Task
      *
      * @param string $ea an enumerated <code>FormatAttribute</code> value
      */
-    public function setFormat( $ea )
+    public function setFormat($ea)
     {
 
         $this->format = $ea;
@@ -214,7 +214,7 @@ class EchoProperties extends Task
     {
 
         if ($this->prefix != null && $this->regex != null) {
-            throw new BuildException( "Please specify either prefix or regex, but not both", $this->getLocation() );
+            throw new BuildException("Please specify either prefix or regex, but not both", $this->getLocation());
         }
 
         //copy the properties file
@@ -227,23 +227,23 @@ class EchoProperties extends Task
         } elseif ($this->inFile != null) {
             if ($this->inFile->exists() && $this->inFile->isDirectory()) {
                 $message = "srcfile is a directory!";
-                $this->failOnErrorAction( null, $message, Project::MSG_ERR );
+                $this->failOnErrorAction(null, $message, Project::MSG_ERR);
                 return;
             }
 
             if ($this->inFile->exists() && !$this->inFile->canRead()) {
                 $message = "Can not read from the specified srcfile!";
-                $this->failOnErrorAction( null, $message, Project::MSG_ERR );
+                $this->failOnErrorAction(null, $message, Project::MSG_ERR);
                 return;
             }
 
             try {
                 $props = new Properties();
-                $props->load( new PhingFile( $this->inFile ) );
+                $props->load(new PhingFile($this->inFile));
                 $allProps = $props->getProperties();
-            } catch( IOException $ioe ) {
+            } catch (IOException $ioe) {
                 $message = "Could not read file ".$this->inFile->getAbsolutePath();
-                $this->failOnErrorAction( $ioe, $message, Project::MSG_WARN );
+                $this->failOnErrorAction($ioe, $message, Project::MSG_WARN);
                 return;
             }
         }
@@ -252,25 +252,25 @@ class EchoProperties extends Task
         try {
             if ($this->destfile == null) {
                 $os = Phing::getOutputStream();
-                $this->saveProperties( $allProps, $os );
-                $this->log( $os, Project::MSG_INFO );
+                $this->saveProperties($allProps, $os);
+                $this->log($os, Project::MSG_INFO);
             } else {
                 if ($this->destfile->exists() && $this->destfile->isDirectory()) {
                     $message = "destfile is a directory!";
-                    $this->failOnErrorAction( null, $message, Project::MSG_ERR );
+                    $this->failOnErrorAction(null, $message, Project::MSG_ERR);
                     return;
                 }
 
                 if ($this->destfile->exists() && !$this->destfile->canWrite()) {
                     $message = "Can not write to the specified destfile!";
-                    $this->failOnErrorAction( null, $message, Project::MSG_ERR );
+                    $this->failOnErrorAction(null, $message, Project::MSG_ERR);
                     return;
                 }
-                $os = new FileOutputStream( $this->destfile );
-                $this->saveProperties( $allProps, $os );
+                $os = new FileOutputStream($this->destfile);
+                $this->saveProperties($allProps, $os);
             }
-        } catch( IOException $ioe ) {
-            $this->failOnErrorAction( $ioe );
+        } catch (IOException $ioe) {
+            $this->failOnErrorAction($ioe);
         }
     }
 
@@ -281,7 +281,7 @@ class EchoProperties extends Task
      *
      * @throws BuildException
      */
-    private function failOnErrorAction( Exception $exception = null, $message = '', $level = Project::MSG_INFO )
+    private function failOnErrorAction(Exception $exception = null, $message = '', $level = Project::MSG_INFO)
     {
 
         if ($this->failonerror) {
@@ -311,36 +311,36 @@ class EchoProperties extends Task
      * @throws IOException      on output errors
      * @throws BuildException   on other errors
      */
-    protected function saveProperties( $allProps, $os )
+    protected function saveProperties($allProps, $os)
     {
 
-        ksort( $allProps );
+        ksort($allProps);
         $props = new Properties();
 
         if ($this->regex !== '') {
-            $a = new ArrayIterator( $allProps );
-            $i = new RegexIterator( $a, $this->regex, RegexIterator::MATCH, RegexIterator::USE_KEY );
-            $allProps = iterator_to_array( $i );
+            $a = new ArrayIterator($allProps);
+            $i = new RegexIterator($a, $this->regex, RegexIterator::MATCH, RegexIterator::USE_KEY);
+            $allProps = iterator_to_array($i);
         }
         if ($this->prefix !== '') {
-            $a = new ArrayIterator( $allProps );
+            $a = new ArrayIterator($allProps);
             $i = new RegexIterator(
                 $a,
-                '~^'.preg_quote( $this->prefix, '~' ).'.*~',
+                '~^'.preg_quote($this->prefix, '~').'.*~',
                 RegexIterator::MATCH,
                 RegexIterator::USE_KEY
             );
-            $allProps = iterator_to_array( $i );
+            $allProps = iterator_to_array($i);
         }
 
         foreach ($allProps as $name => $value) {
-            $props->setProperty( $name, $value );
+            $props->setProperty($name, $value);
         }
 
         if ($this->format === "text") {
-            $this->textSaveProperties( $props, $os, "Phing properties" );
+            $this->textSaveProperties($props, $os, "Phing properties");
         } elseif ($this->format === "xml") {
-            $this->xmlSaveProperties( $props, $os );
+            $this->xmlSaveProperties($props, $os);
         }
     }
 
@@ -351,13 +351,13 @@ class EchoProperties extends Task
      *
      * @throws BuildException on an I/O error during a write.
      */
-    protected function textSaveProperties( Properties $props, OutputStream $os, $header )
+    protected function textSaveProperties(Properties $props, OutputStream $os, $header)
     {
 
         try {
-            $props->storeOutputStream( $os, $header );
-        } catch( IOException $ioe ) {
-            throw new BuildException( $ioe, $this->getLocation() );
+            $props->storeOutputStream($os, $header);
+        } catch (IOException $ioe) {
+            throw new BuildException($ioe, $this->getLocation());
         }
     }
 
@@ -369,27 +369,27 @@ class EchoProperties extends Task
      *
      * @throws BuildException
      */
-    protected function xmlSaveProperties( Properties $props, OutputStream $os )
+    protected function xmlSaveProperties(Properties $props, OutputStream $os)
     {
 
-        $doc = new DOMDocument( '1.0', 'UTF-8' );
+        $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->formatOutput = true;
-        $rootElement = $doc->createElement( self::$PROPERTIES );
+        $rootElement = $doc->createElement(self::$PROPERTIES);
 
         $properties = $props->getProperties();
-        ksort( $properties );
+        ksort($properties);
         foreach ($properties as $key => $value) {
-            $propElement = $doc->createElement( self::$PROPERTY );
-            $propElement->setAttribute( self::$ATTR_NAME, $key );
-            $propElement->setAttribute( self::$ATTR_VALUE, $value );
-            $rootElement->appendChild( $propElement );
+            $propElement = $doc->createElement(self::$PROPERTY);
+            $propElement->setAttribute(self::$ATTR_NAME, $key);
+            $propElement->setAttribute(self::$ATTR_VALUE, $value);
+            $rootElement->appendChild($propElement);
         }
 
         try {
-            $doc->appendChild( $rootElement );
-            $os->write( $doc->saveXML() );
-        } catch( IOException $ioe ) {
-            throw new BuildException( "Unable to write XML file", $ioe );
+            $doc->appendChild($rootElement);
+            $os->write($doc->saveXML());
+        } catch (IOException $ioe) {
+            throw new BuildException("Unable to write XML file", $ioe);
         }
     }
 }

@@ -30,10 +30,10 @@ class Twig_FileExtensionEscapingStrategy
      *
      * @return string The escaping strategy name to use
      */
-    public static function guess( $filename )
+    public static function guess($filename)
     {
 
-        if (!preg_match( '{\.(js|css|txt)(?:\.[^/\\\\]+)?$}', $filename, $match )) {
+        if (!preg_match('{\.(js|css|txt)(?:\.[^/\\\\]+)?$}', $filename, $match)) {
             return 'html';
         }
 

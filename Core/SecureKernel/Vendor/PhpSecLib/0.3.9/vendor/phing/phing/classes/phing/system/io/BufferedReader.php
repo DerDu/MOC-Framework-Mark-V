@@ -48,7 +48,7 @@ class BufferedReader extends Reader
      * @param integer $buffsize The size of the buffer we should use for reading files.
      *                          A large buffer ensures that most files (all scripts?) are parsed in 1 buffer.
      */
-    public function __construct( Reader $reader, $buffsize = 65536 )
+    public function __construct(Reader $reader, $buffsize = 65536)
     {
 
         $this->in = $reader;
@@ -62,7 +62,7 @@ class BufferedReader extends Reader
      *
      * @return mixed buffer or -1 if EOF.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         // if $len is specified, we'll use that; otherwise, use the configured buffer size.
@@ -70,24 +70,24 @@ class BufferedReader extends Reader
             $len = $this->bufferSize;
         }
 
-        if (( $data = $this->in->read( $len ) ) !== -1) {
+        if (( $data = $this->in->read($len) ) !== -1) {
 
             // not all files end with a newline character, so we also need to check EOF
             if (!$this->in->eof()) {
 
-                $notValidPart = strrchr( $data, "\n" );
-                $notValidPartSize = strlen( $notValidPart );
+                $notValidPart = strrchr($data, "\n");
+                $notValidPartSize = strlen($notValidPart);
 
                 if ($notValidPartSize > 1) {
                     // Block doesn't finish on a EOL
                     // Find the last EOL and forget all following stuff
-                    $dataSize = strlen( $data );
+                    $dataSize = strlen($data);
                     $validSize = $dataSize - $notValidPartSize + 1;
 
-                    $data = substr( $data, 0, $validSize );
+                    $data = substr($data, 0, $validSize);
 
                     // Rewind to the begining of the forgotten stuff.
-                    $this->in->skip( -$notValidPartSize + 1 );
+                    $this->in->skip(-$notValidPartSize + 1);
                 }
 
             } // if !EOF
@@ -99,10 +99,10 @@ class BufferedReader extends Reader
     /**
      * @param int $n
      */
-    public function skip( $n )
+    public function skip($n)
     {
 
-        return $this->in->skip( $n );
+        return $this->in->skip($n);
     }
 
     public function reset()
@@ -161,7 +161,7 @@ class BufferedReader extends Reader
 
         if ($this->buffer === null) {
             // Buffer is empty, fill it ...
-            $read = $this->in->read( $this->bufferSize );
+            $read = $this->in->read($this->bufferSize);
             if ($read === -1) {
                 $ch = -1;
             } else {
@@ -175,7 +175,7 @@ class BufferedReader extends Reader
             // so we just return empty string (char) at this point.  (Probably could also return -1 ...?)
             $ch = ( $this->buffer !== "" ) ? $this->buffer{$this->bufferPos} : '';
             $this->bufferPos++;
-            if ($this->bufferPos >= strlen( $this->buffer )) {
+            if ($this->bufferPos >= strlen($this->buffer)) {
                 $this->buffer = null;
                 $this->bufferPos = 0;
             }

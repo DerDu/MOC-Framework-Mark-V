@@ -32,7 +32,7 @@ abstract class Reflection
     protected $tags;
     protected $docComment;
 
-    public function __construct( $name, $line )
+    public function __construct($name, $line)
     {
 
         $this->name = $name;
@@ -46,7 +46,7 @@ abstract class Reflection
         return $this->name;
     }
 
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -58,7 +58,7 @@ abstract class Reflection
         return $this->line;
     }
 
-    public function setLine( $line )
+    public function setLine($line)
     {
 
         $this->line = $line;
@@ -70,7 +70,7 @@ abstract class Reflection
         return $this->shortDesc;
     }
 
-    public function setShortDesc( $shortDesc )
+    public function setShortDesc($shortDesc)
     {
 
         $this->shortDesc = $shortDesc;
@@ -82,7 +82,7 @@ abstract class Reflection
         return $this->longDesc;
     }
 
-    public function setLongDesc( $longDesc )
+    public function setLongDesc($longDesc)
     {
 
         $this->longDesc = $longDesc;
@@ -96,7 +96,7 @@ abstract class Reflection
             $str[] = ( $hint->isClass() ? $hint->getName()->getShortName() : $hint->getName() ).( $hint->isArray() ? '[]' : '' );
         }
 
-        return implode( '|', $str );
+        return implode('|', $str);
     }
 
     public function getHint()
@@ -109,14 +109,14 @@ abstract class Reflection
         $hints = array();
         $project = $this->getClass()->getProject();
         foreach ($this->hint as $hint) {
-            $hints[] = new HintReflection( Project::isPhpTypeHint( $hint[0] ) ? $hint[0] : $project->getClass( $hint[0] ),
-                $hint[1] );
+            $hints[] = new HintReflection(Project::isPhpTypeHint($hint[0]) ? $hint[0] : $project->getClass($hint[0]),
+                $hint[1]);
         }
 
         return $hints;
     }
 
-    public function setHint( $hint )
+    public function setHint($hint)
     {
 
         $this->hint = $hint;
@@ -142,19 +142,19 @@ abstract class Reflection
         return $this->hintDesc;
     }
 
-    public function setHintDesc( $desc )
+    public function setHintDesc($desc)
     {
 
         $this->hintDesc = $desc;
     }
 
-    public function getTags( $name )
+    public function getTags($name)
     {
 
         return isset( $this->tags[$name] ) ? $this->tags[$name] : array();
     }
 
-    public function setTags( $tags )
+    public function setTags($tags)
     {
 
         $this->tags = $tags;
@@ -168,7 +168,7 @@ abstract class Reflection
         return $this->docComment;
     }
 
-    public function setDocComment( $comment )
+    public function setDocComment($comment)
     {
 
         $this->docComment = $comment;

@@ -35,13 +35,13 @@ class PHPUnit_Framework_TestFailure
      * @param PHPUnit_Framework_Test $failedTest
      * @param Exception              $thrownException
      */
-    public function __construct( PHPUnit_Framework_Test $failedTest, Exception $thrownException )
+    public function __construct(PHPUnit_Framework_Test $failedTest, Exception $thrownException)
     {
 
         if ($failedTest instanceof PHPUnit_Framework_SelfDescribing) {
             $this->testName = $failedTest->toString();
         } else {
-            $this->testName = get_class( $failedTest );
+            $this->testName = get_class($failedTest);
         }
         if (!$failedTest instanceof PHPUnit_Framework_TestCase || !$failedTest->isInIsolation()) {
             $this->failedTest = $failedTest;
@@ -73,7 +73,7 @@ class PHPUnit_Framework_TestFailure
     public function getExceptionAsString()
     {
 
-        return self::exceptionToString( $this->thrownException );
+        return self::exceptionToString($this->thrownException);
     }
 
     /**
@@ -84,7 +84,7 @@ class PHPUnit_Framework_TestFailure
      * @return string
      * @since  Method available since Release 3.2.0
      */
-    public static function exceptionToString( Exception $e )
+    public static function exceptionToString(Exception $e)
     {
 
         if ($e instanceof PHPUnit_Framework_SelfDescribing) {
@@ -95,14 +95,14 @@ class PHPUnit_Framework_TestFailure
             }
 
             if (!empty( $buffer )) {
-                $buffer = trim( $buffer )."\n";
+                $buffer = trim($buffer)."\n";
             }
         } elseif ($e instanceof PHPUnit_Framework_Error) {
             $buffer = $e->getMessage()."\n";
         } elseif ($e instanceof PHPUnit_Framework_ExceptionWrapper) {
             $buffer = $e->getClassname().': '.$e->getMessage()."\n";
         } else {
-            $buffer = get_class( $e ).': '.$e->getMessage()."\n";
+            $buffer = get_class($e).': '.$e->getMessage()."\n";
         }
 
         return $buffer;

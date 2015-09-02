@@ -24,7 +24,7 @@ class PHPUnit_Framework_Constraint_Xor extends PHPUnit_Framework_Constraint
     /**
      * @param PHPUnit_Framework_Constraint[] $constraints
      */
-    public function setConstraints( array $constraints )
+    public function setConstraints(array $constraints)
     {
 
         $this->constraints = array();
@@ -57,7 +57,7 @@ class PHPUnit_Framework_Constraint_Xor extends PHPUnit_Framework_Constraint
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
         $success = true;
@@ -65,7 +65,7 @@ class PHPUnit_Framework_Constraint_Xor extends PHPUnit_Framework_Constraint
         $constraint = null;
 
         foreach ($this->constraints as $constraint) {
-            $result = $constraint->evaluate( $other, $description, true );
+            $result = $constraint->evaluate($other, $description, true);
 
             if ($result === $lastResult) {
                 $success = false;
@@ -80,7 +80,7 @@ class PHPUnit_Framework_Constraint_Xor extends PHPUnit_Framework_Constraint
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 
@@ -117,7 +117,7 @@ class PHPUnit_Framework_Constraint_Xor extends PHPUnit_Framework_Constraint
         $count = 0;
 
         foreach ($this->constraints as $constraint) {
-            $count += count( $constraint );
+            $count += count($constraint);
         }
 
         return $count;

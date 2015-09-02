@@ -59,7 +59,7 @@ class OrSelector extends BaseSelectorContainer
      *
      * @return boolean Whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -68,8 +68,8 @@ class OrSelector extends BaseSelectorContainer
 
         // First, check that all elements are correctly configured
 
-        for ($i = 0, $size = count( $selectors ); $i < $size; $i++) {
-            $result = $selectors[$i]->isSelected( $basedir, $filename, $file );
+        for ($i = 0, $size = count($selectors); $i < $size; $i++) {
+            $result = $selectors[$i]->isSelected($basedir, $filename, $file);
             if ($result) {
                 return true;
             }

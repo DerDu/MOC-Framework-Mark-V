@@ -53,20 +53,20 @@ class Generic_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[( $stackPtr + 1 )]['code'] !== T_WHITESPACE) {
             $error = 'A cast statement must be followed by a single space';
-            $phpcsFile->addError( $error, $stackPtr, 'NoSpace' );
+            $phpcsFile->addError($error, $stackPtr, 'NoSpace');
             return;
         }
 
         if ($tokens[( $stackPtr + 1 )]['content'] !== ' ') {
             $error = 'A cast statement must be followed by a single space';
-            $phpcsFile->addError( $error, $stackPtr, 'TooMuchSpace' );
+            $phpcsFile->addError($error, $stackPtr, 'TooMuchSpace');
         }
 
     }//end process()

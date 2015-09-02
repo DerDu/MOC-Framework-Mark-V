@@ -65,21 +65,21 @@ class PrefixLines extends BaseParamFilterReader implements ChainableReader
      *
      * @return mixed buffer, -1 on EOF
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
 
-        $lines = explode( "\n", $buffer );
+        $lines = explode("\n", $buffer);
         $filtered = array();
 
         foreach ($lines as $line) {
@@ -87,7 +87,7 @@ class PrefixLines extends BaseParamFilterReader implements ChainableReader
             $filtered[] = $line;
         }
 
-        $filtered_buffer = implode( "\n", $filtered );
+        $filtered_buffer = implode("\n", $filtered);
 
         return $filtered_buffer;
     }
@@ -100,7 +100,7 @@ class PrefixLines extends BaseParamFilterReader implements ChainableReader
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0, $_i = count( $params ); $i < $_i; $i++) {
+            for ($i = 0, $_i = count($params); $i < $_i; $i++) {
                 if (self::PREFIX_KEY == $params[$i]->getName()) {
                     $this->_prefix = (string)$params[$i]->getValue();
                     break;
@@ -121,13 +121,13 @@ class PrefixLines extends BaseParamFilterReader implements ChainableReader
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new PrefixLines( $reader );
-        $newFilter->setPrefix( $this->getPrefix() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new PrefixLines($reader);
+        $newFilter->setPrefix($this->getPrefix());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -150,7 +150,7 @@ class PrefixLines extends BaseParamFilterReader implements ChainableReader
      *                       May be <code>null</code>, in which case no prefix
      *                       is added.
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->_prefix = (string)$prefix;

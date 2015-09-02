@@ -33,7 +33,7 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
     public function register()
     {
 
-        return array( T_OBJECT );
+        return array(T_OBJECT);
 
     }//end register()
 
@@ -58,7 +58,7 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -71,7 +71,7 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
             T_OPEN_CURLY_BRACKET,
         );
 
-        $next = $phpcsFile->findNext( $wantedTokens, ( $start + 1 ), $end );
+        $next = $phpcsFile->findNext($wantedTokens, ( $start + 1 ), $end);
         while ($next !== false && $next < $end) {
             // Skip nested objects.
             if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET) {
@@ -84,18 +84,17 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
                         $propName,
                         $tokens[$properties[$propName]]['line'],
                     );
-                    $phpcsFile->addError( $error, $next, 'Found', $data );
+                    $phpcsFile->addError($error, $next, 'Found', $data);
                 }
 
                 $properties[$propName] = $next;
             }//end if
 
-            $next = $phpcsFile->findNext( $wantedTokens, ( $next + 1 ), $end );
+            $next = $phpcsFile->findNext($wantedTokens, ( $next + 1 ), $end);
         }//end while
 
     }//end process()
 
 }//end class
-
 
 ?>

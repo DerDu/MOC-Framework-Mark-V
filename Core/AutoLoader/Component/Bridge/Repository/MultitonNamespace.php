@@ -43,10 +43,10 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
      * @return bool
      * @throws AutoLoaderException
      */
-    public function loadSourceFile( $ClassName )
+    public function loadSourceFile($ClassName)
     {
 
-        return $this->Instance->loadClass( $ClassName );
+        return $this->Instance->loadClass($ClassName);
     }
 
     /**
@@ -56,10 +56,10 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
      * @return IBridgeInterface
      * @throws AutoLoaderException
      */
-    public function addNamespaceDirectoryMapping( NamespaceParameter $Namespace, DirectoryParameter $Directory )
+    public function addNamespaceDirectoryMapping(NamespaceParameter $Namespace, DirectoryParameter $Directory)
     {
 
-        throw new AutoLoaderException( __METHOD__.' MUST NOT be used!' );
+        throw new AutoLoaderException(__METHOD__.' MUST NOT be used!');
     }
 
     /**

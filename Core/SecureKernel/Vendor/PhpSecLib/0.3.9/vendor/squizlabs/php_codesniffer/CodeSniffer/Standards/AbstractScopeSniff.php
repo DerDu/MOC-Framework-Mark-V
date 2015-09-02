@@ -91,19 +91,19 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
         if (empty( $scopeTokens ) === true) {
             $error = 'The scope tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Exception( $error );
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         if (empty( $tokens ) === true) {
             $error = 'The tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Exception( $error );
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
-        $invalidScopeTokens = array_intersect( $scopeTokens, $tokens );
+        $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty( $invalidScopeTokens ) === false) {
-            $invalid = implode( ', ', $invalidScopeTokens );
+            $invalid = implode(', ', $invalidScopeTokens);
             $error = "Scope tokens [$invalid] cant be in the tokens array";
-            throw new PHP_CodeSniffer_Exception( $error );
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         $this->_listenOutside = $listenOutside;
@@ -141,21 +141,21 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @return void
      * @see processTokenWithinScope()
      */
-    public final function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $foundScope = false;
         foreach ($tokens[$stackPtr]['conditions'] as $scope => $code) {
-            if (in_array( $code, $this->_scopeTokens ) === true) {
-                $this->processTokenWithinScope( $phpcsFile, $stackPtr, $scope );
+            if (in_array($code, $this->_scopeTokens) === true) {
+                $this->processTokenWithinScope($phpcsFile, $stackPtr, $scope);
                 $foundScope = true;
             }
         }
 
         if ($this->_listenOutside === true && $foundScope === false) {
-            $this->processTokenOutsideScope( $phpcsFile, $stackPtr );
+            $this->processTokenOutsideScope($phpcsFile, $stackPtr);
         }
 
     }//end process()

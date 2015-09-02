@@ -31,11 +31,11 @@ class PHPUnit_Util_Filesystem
      * @return string
      * @since  Method available since Release 3.4.0
      */
-    public static function classNameToFilename( $className )
+    public static function classNameToFilename($className)
     {
 
         return str_replace(
-            array( '_', '\\' ),
+            array('_', '\\'),
             DIRECTORY_SEPARATOR,
             $className
         ).'.php';

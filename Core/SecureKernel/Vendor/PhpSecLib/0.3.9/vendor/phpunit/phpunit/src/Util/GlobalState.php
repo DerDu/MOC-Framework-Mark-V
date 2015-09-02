@@ -42,33 +42,33 @@ class PHPUnit_Util_GlobalState
     public static function getIncludedFilesAsString()
     {
 
-        return static::processIncludedFilesAsString( get_included_files() );
+        return static::processIncludedFilesAsString(get_included_files());
     }
 
-    public static function processIncludedFilesAsString( array $files )
+    public static function processIncludedFilesAsString(array $files)
     {
 
         $blacklist = new PHPUnit_Util_Blacklist;
         $prefix = false;
         $result = '';
 
-        if (defined( '__PHPUNIT_PHAR__' )) {
+        if (defined('__PHPUNIT_PHAR__')) {
             $prefix = 'phar://'.__PHPUNIT_PHAR__.'/';
         }
 
-        for ($i = count( $files ) - 1; $i > 0; $i--) {
+        for ($i = count($files) - 1; $i > 0; $i--) {
             $file = $files[$i];
 
-            if ($prefix !== false && strpos( $file, $prefix ) === 0) {
+            if ($prefix !== false && strpos($file, $prefix) === 0) {
                 continue;
             }
 
             // Skip virtual file system protocols
-            if (preg_match( '/^(vfs|phpvfs[a-z0-9]+):/', $file )) {
+            if (preg_match('/^(vfs|phpvfs[a-z0-9]+):/', $file)) {
                 continue;
             }
 
-            if (!$blacklist->isBlacklisted( $file ) && is_file( $file )) {
+            if (!$blacklist->isBlacklisted($file) && is_file($file)) {
                 $result = 'require_once \''.$file."';\n".$result;
             }
         }
@@ -80,42 +80,42 @@ class PHPUnit_Util_GlobalState
     {
 
         $result = '';
-        $iniSettings = ini_get_all( null, false );
+        $iniSettings = ini_get_all(null, false);
 
         foreach ($iniSettings as $key => $value) {
             $result .= sprintf(
                 '@ini_set(%s, %s);'."\n",
-                self::exportVariable( $key ),
-                self::exportVariable( $value )
+                self::exportVariable($key),
+                self::exportVariable($value)
             );
         }
 
         return $result;
     }
 
-    protected static function exportVariable( $variable )
+    protected static function exportVariable($variable)
     {
 
-        if (is_scalar( $variable ) || is_null( $variable ) ||
-            ( is_array( $variable ) && self::arrayOnlyContainsScalars( $variable ) )
+        if (is_scalar($variable) || is_null($variable) ||
+            ( is_array($variable) && self::arrayOnlyContainsScalars($variable) )
         ) {
-            return var_export( $variable, true );
+            return var_export($variable, true);
         }
 
         return 'unserialize('.
-        var_export( serialize( $variable ), true ).
+        var_export(serialize($variable), true).
         ')';
     }
 
-    protected static function arrayOnlyContainsScalars( array $array )
+    protected static function arrayOnlyContainsScalars(array $array)
     {
 
         $result = true;
 
         foreach ($array as $element) {
-            if (is_array( $element )) {
-                $result = self::arrayOnlyContainsScalars( $element );
-            } elseif (!is_scalar( $element ) && !is_null( $element )) {
+            if (is_array($element)) {
+                $result = self::arrayOnlyContainsScalars($element);
+            } elseif (!is_scalar($element) && !is_null($element)) {
                 $result = false;
             }
 
@@ -130,7 +130,7 @@ class PHPUnit_Util_GlobalState
     public static function getConstantsAsString()
     {
 
-        $constants = get_defined_constants( true );
+        $constants = get_defined_constants(true);
         $result = '';
 
         if (isset( $constants['user'] )) {
@@ -139,7 +139,7 @@ class PHPUnit_Util_GlobalState
                     'if (!defined(\'%s\')) define(\'%s\', %s);'."\n",
                     $name,
                     $name,
-                    self::exportVariable( $value )
+                    self::exportVariable($value)
                 );
             }
         }
@@ -155,9 +155,9 @@ class PHPUnit_Util_GlobalState
 
         foreach ($superGlobalArrays as $superGlobalArray) {
             if (isset( $GLOBALS[$superGlobalArray] ) &&
-                is_array( $GLOBALS[$superGlobalArray] )
+                is_array($GLOBALS[$superGlobalArray])
             ) {
-                foreach (array_keys( $GLOBALS[$superGlobalArray] ) as $key) {
+                foreach (array_keys($GLOBALS[$superGlobalArray]) as $key) {
                     if ($GLOBALS[$superGlobalArray][$key] instanceof Closure) {
                         continue;
                     }
@@ -166,7 +166,7 @@ class PHPUnit_Util_GlobalState
                         '$GLOBALS[\'%s\'][\'%s\'] = %s;'."\n",
                         $superGlobalArray,
                         $key,
-                        self::exportVariable( $GLOBALS[$superGlobalArray][$key] )
+                        self::exportVariable($GLOBALS[$superGlobalArray][$key])
                     );
                 }
             }
@@ -175,12 +175,12 @@ class PHPUnit_Util_GlobalState
         $blacklist = $superGlobalArrays;
         $blacklist[] = 'GLOBALS';
 
-        foreach (array_keys( $GLOBALS ) as $key) {
-            if (!in_array( $key, $blacklist ) && !$GLOBALS[$key] instanceof Closure) {
+        foreach (array_keys($GLOBALS) as $key) {
+            if (!in_array($key, $blacklist) && !$GLOBALS[$key] instanceof Closure) {
                 $result .= sprintf(
                     '$GLOBALS[\'%s\'] = %s;'."\n",
                     $key,
-                    self::exportVariable( $GLOBALS[$key] )
+                    self::exportVariable($GLOBALS[$key])
                 );
             }
         }
@@ -191,7 +191,7 @@ class PHPUnit_Util_GlobalState
     protected static function getSuperGlobalArrays()
     {
 
-        if (ini_get( 'register_long_arrays' ) == '1') {
+        if (ini_get('register_long_arrays') == '1') {
             return array_merge(
                 self::$superGlobalArrays,
                 self::$superGlobalArraysLong

@@ -1170,7 +1170,7 @@ class ComparatorTest extends \PHPUnit_Framework_TestCase
     {
 
         $column1 = new Column('foo', Type::getType('string'), array(
-            'platformOptions' => array('foo' => 'foo'),
+            'platformOptions'     => array('foo' => 'foo'),
             'customSchemaOptions' => array('foo' => 'bar'),
         ));
 

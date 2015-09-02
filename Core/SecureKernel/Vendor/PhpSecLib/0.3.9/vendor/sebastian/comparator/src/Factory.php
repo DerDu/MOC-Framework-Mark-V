@@ -37,18 +37,18 @@ class Factory
     public function __construct()
     {
 
-        $this->register( new TypeComparator );
-        $this->register( new ScalarComparator );
-        $this->register( new NumericComparator );
-        $this->register( new DoubleComparator );
-        $this->register( new ArrayComparator );
-        $this->register( new ResourceComparator );
-        $this->register( new ObjectComparator );
-        $this->register( new ExceptionComparator );
-        $this->register( new SplObjectStorageComparator );
-        $this->register( new DOMNodeComparator );
-        $this->register( new MockObjectComparator );
-        $this->register( new DateTimeComparator );
+        $this->register(new TypeComparator);
+        $this->register(new ScalarComparator);
+        $this->register(new NumericComparator);
+        $this->register(new DoubleComparator);
+        $this->register(new ArrayComparator);
+        $this->register(new ResourceComparator);
+        $this->register(new ObjectComparator);
+        $this->register(new ExceptionComparator);
+        $this->register(new SplObjectStorageComparator);
+        $this->register(new DOMNodeComparator);
+        $this->register(new MockObjectComparator);
+        $this->register(new DateTimeComparator);
     }
 
     /**
@@ -61,12 +61,12 @@ class Factory
      *
      * @param Comparator $comparator The registered comparator
      */
-    public function register( Comparator $comparator )
+    public function register(Comparator $comparator)
     {
 
-        array_unshift( $this->comparators, $comparator );
+        array_unshift($this->comparators, $comparator);
 
-        $comparator->setFactory( $this );
+        $comparator->setFactory($this);
     }
 
     /**
@@ -90,11 +90,11 @@ class Factory
      *
      * @return Comparator
      */
-    public function getComparatorFor( $expected, $actual )
+    public function getComparatorFor($expected, $actual)
     {
 
         foreach ($this->comparators as $comparator) {
-            if ($comparator->accepts( $expected, $actual )) {
+            if ($comparator->accepts($expected, $actual)) {
                 return $comparator;
             }
         }
@@ -107,7 +107,7 @@ class Factory
      *
      * @param Comparator $comparator The unregistered comparator
      */
-    public function unregister( Comparator $comparator )
+    public function unregister(Comparator $comparator)
     {
 
         foreach ($this->comparators as $key => $_comparator) {

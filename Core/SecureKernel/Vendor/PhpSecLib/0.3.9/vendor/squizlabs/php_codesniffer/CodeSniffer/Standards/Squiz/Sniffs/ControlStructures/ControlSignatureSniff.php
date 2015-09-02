@@ -13,8 +13,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractPatternSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_Standards_AbstractPatternSniff not found' );
+if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractPatternSniff not found');
 }
 
 /**

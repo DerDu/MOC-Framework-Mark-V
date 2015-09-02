@@ -38,8 +38,8 @@ class ConsoleReader extends Reader
     public function readLine()
     {
 
-        $out = fgets( STDIN ); // note: default maxlen is 1kb
-        $out = rtrim( $out );
+        $out = fgets(STDIN); // note: default maxlen is 1kb
+        $out = rtrim($out);
 
         return $out;
     }
@@ -50,10 +50,10 @@ class ConsoleReader extends Reader
      *
      * @return string chars read or -1 if eof.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        $out = fread( STDIN, $len );
+        $out = fread(STDIN, $len);
 
         return $out;
         // FIXME
@@ -81,7 +81,7 @@ class ConsoleReader extends Reader
     public function eof()
     {
 
-        return feof( STDIN );
+        return feof(STDIN);
     }
 
     /**

@@ -51,7 +51,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
     ) {
 
         ob_start();
-        $tag = new MethodTag( 'method', $signature );
+        $tag = new MethodTag('method', $signature);
         $stdout = ob_get_clean();
 
         $this->assertSame(
@@ -64,11 +64,11 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
             return;
         }
 
-        $this->assertEquals( $expected_name, $tag->getMethodName() );
-        $this->assertEquals( $expected_return, $tag->getType() );
-        $this->assertEquals( $description, $tag->getDescription() );
-        $this->assertEquals( $expected_isStatic, $tag->isStatic() );
-        $this->assertCount( $paramCount, $tag->getArguments() );
+        $this->assertEquals($expected_name, $tag->getMethodName());
+        $this->assertEquals($expected_return, $tag->getType());
+        $this->assertEquals($description, $tag->getDescription());
+        $this->assertEquals($expected_isStatic, $tag->isStatic());
+        $this->assertCount($paramCount, $tag->getArguments());
     }
 
     public function getTestSignatures()

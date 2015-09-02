@@ -76,20 +76,20 @@ class StripLineBreaks extends BaseParamFilterReader implements ChainableReader
      * @exception IOException if the underlying stream throws an IOException
      *            during reading
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
         if ($buffer === -1) {
             return -1;
         }
 
-        $buffer = preg_replace( "/[".$this->_lineBreaks."]/", '', $buffer );
+        $buffer = preg_replace("/[".$this->_lineBreaks."]/", '', $buffer);
 
         return $buffer;
     }
@@ -103,7 +103,7 @@ class StripLineBreaks extends BaseParamFilterReader implements ChainableReader
         $userDefinedLineBreaks = null;
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0; $i < count( $params ); $i++) {
+            for ($i = 0; $i < count($params); $i++) {
                 if (self::LINES_BREAKS_KEY === $params[$i]->getName()) {
                     $userDefinedLineBreaks = $params[$i]->getValue();
                     break;
@@ -128,13 +128,13 @@ class StripLineBreaks extends BaseParamFilterReader implements ChainableReader
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new StripLineBreaks( $reader );
-        $newFilter->setLineBreaks( $this->getLineBreaks() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new StripLineBreaks($reader);
+        $newFilter->setLineBreaks($this->getLineBreaks());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -156,7 +156,7 @@ class StripLineBreaks extends BaseParamFilterReader implements ChainableReader
      * @param string $lineBreaks A String containing all the characters to be
      *                           considered as line-breaking.
      */
-    public function setLineBreaks( $lineBreaks )
+    public function setLineBreaks($lineBreaks)
     {
 
         $this->_lineBreaks = (string)$lineBreaks;

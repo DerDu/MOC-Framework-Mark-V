@@ -55,7 +55,7 @@ class ReplaceRegexp extends BaseFilterReader implements ChainableReader
     public function createRegexp()
     {
 
-        $num = array_push( $this->regexps, new RegularExpression() );
+        $num = array_push($this->regexps, new RegularExpression());
 
         return $this->regexps[$num - 1];
     }
@@ -71,10 +71,10 @@ class ReplaceRegexp extends BaseFilterReader implements ChainableReader
      * @exception IOException if the underlying stream throws an IOException
      * during reading
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
@@ -82,16 +82,16 @@ class ReplaceRegexp extends BaseFilterReader implements ChainableReader
 
         // perform regex replace here ...
         foreach ($this->regexps as $exptype) {
-            $regexp = $exptype->getRegexp( $this->project );
+            $regexp = $exptype->getRegexp($this->project);
             try {
-                $buffer = $regexp->replace( $buffer );
+                $buffer = $regexp->replace($buffer);
                 $this->log(
                     "Performing regexp replace: /".$regexp->getPattern()."/".$regexp->getReplace()."/g".$regexp->getModifiers(),
                     Project::MSG_VERBOSE
                 );
-            } catch( Exception $e ) {
+            } catch (Exception $e) {
                 // perhaps mismatch in params (e.g. no replace or pattern specified)
-                $this->log( "Error performing regexp replace: ".$e->getMessage(), Project::MSG_WARN );
+                $this->log("Error performing regexp replace: ".$e->getMessage(), Project::MSG_WARN);
             }
         }
 
@@ -108,12 +108,12 @@ class ReplaceRegexp extends BaseFilterReader implements ChainableReader
      * @return ReplaceRegExp A new filter based on this configuration, but filtering
      *                       the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new ReplaceRegExp( $reader );
-        $newFilter->setProject( $this->getProject() );
-        $newFilter->setRegexps( $this->getRegexps() );
+        $newFilter = new ReplaceRegExp($reader);
+        $newFilter->setProject($this->getProject());
+        $newFilter->setRegexps($this->getRegexps());
 
         return $newFilter;
     }
@@ -136,7 +136,7 @@ class ReplaceRegexp extends BaseFilterReader implements ChainableReader
      *
      * @param array RegularExpression[]
      */
-    public function setRegexps( $regexps )
+    public function setRegexps($regexps)
     {
 
         $this->regexps = $regexps;

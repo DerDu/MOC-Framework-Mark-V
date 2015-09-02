@@ -42,7 +42,7 @@ class ContainsCondition implements Condition
      *
      * @param string $a1
      */
-    public function setString( $a1 )
+    public function setString($a1)
     {
 
         $this->string = $a1;
@@ -53,7 +53,7 @@ class ContainsCondition implements Condition
      *
      * @param string $a2
      */
-    public function setSubstring( $a2 )
+    public function setSubstring($a2)
     {
 
         $this->subString = $a2;
@@ -64,7 +64,7 @@ class ContainsCondition implements Condition
      *
      * @param $b
      */
-    public function setCaseSensitive( $b )
+    public function setCaseSensitive($b)
     {
 
         $this->caseSensitive = (boolean)$b;
@@ -79,12 +79,12 @@ class ContainsCondition implements Condition
     {
 
         if ($this->string === null || $this->subString === null) {
-            throw new BuildException( "both string and substring are required "
-                ."in contains" );
+            throw new BuildException("both string and substring are required "
+                ."in contains");
         }
 
         return $this->caseSensitive
-            ? strpos( $this->string, $this->subString ) !== false
-            : strpos( strtolower( $this->string ), strtolower( $this->subString ) ) !== false;
+            ? strpos($this->string, $this->subString) !== false
+            : strpos(strtolower($this->string), strtolower($this->subString)) !== false;
     }
 }

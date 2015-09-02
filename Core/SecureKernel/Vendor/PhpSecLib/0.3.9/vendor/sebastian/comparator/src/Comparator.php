@@ -44,7 +44,7 @@ abstract class Comparator
     /**
      * @param Factory $factory
      */
-    public function setFactory( Factory $factory )
+    public function setFactory(Factory $factory)
     {
 
         $this->factory = $factory;
@@ -58,7 +58,7 @@ abstract class Comparator
      *
      * @return boolean
      */
-    abstract public function accepts( $expected, $actual );
+    abstract public function accepts($expected, $actual);
 
     /**
      * Asserts that two values are equal.

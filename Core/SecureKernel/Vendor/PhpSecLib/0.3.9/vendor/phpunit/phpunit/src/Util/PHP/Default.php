@@ -27,40 +27,40 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      * @return array
      * @throws PHPUnit_Framework_Exception
      */
-    public function runJob( $job, array $settings = array() )
+    public function runJob($job, array $settings = array())
     {
 
         $runtime = new Runtime;
 
         $process = proc_open(
-            $runtime->getBinary().$this->settingsToParameters( $settings ),
+            $runtime->getBinary().$this->settingsToParameters($settings),
             array(
-                0 => array( 'pipe', 'r' ),
-                1 => array( 'pipe', 'w' ),
-                2 => array( 'pipe', 'w' )
+                0 => array('pipe', 'r'),
+                1 => array('pipe', 'w'),
+                2 => array('pipe', 'w')
             ),
             $pipes
         );
 
-        if (!is_resource( $process )) {
+        if (!is_resource($process)) {
             throw new PHPUnit_Framework_Exception(
                 'Unable to spawn worker process'
             );
         }
 
-        $this->process( $pipes[0], $job );
-        fclose( $pipes[0] );
+        $this->process($pipes[0], $job);
+        fclose($pipes[0]);
 
-        $stdout = stream_get_contents( $pipes[1] );
-        fclose( $pipes[1] );
+        $stdout = stream_get_contents($pipes[1]);
+        fclose($pipes[1]);
 
-        $stderr = stream_get_contents( $pipes[2] );
-        fclose( $pipes[2] );
+        $stderr = stream_get_contents($pipes[2]);
+        fclose($pipes[2]);
 
-        proc_close( $process );
+        proc_close($process);
         $this->cleanup();
 
-        return array( 'stdout' => $stdout, 'stderr' => $stderr );
+        return array('stdout' => $stdout, 'stderr' => $stderr);
     }
 
     /**
@@ -70,10 +70,10 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      * @throws PHPUnit_Framework_Exception
      * @since Method available since Release 3.5.12
      */
-    protected function process( $pipe, $job )
+    protected function process($pipe, $job)
     {
 
-        fwrite( $pipe, $job );
+        fwrite($pipe, $job);
     }
 
     /**

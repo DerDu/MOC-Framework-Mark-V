@@ -55,11 +55,11 @@ class GitCommitTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
         if ($this->allFiles !== true && empty( $this->filesets )) {
-            throw new BuildException( '"allFiles" cannot be false if no filesets are specified.' );
+            throw new BuildException('"allFiles" cannot be false if no filesets are specified.');
         }
 
         $options = array();
@@ -70,7 +70,7 @@ class GitCommitTask extends GitBaseTask
         $arguments = array();
         if ($this->allFiles !== true) {
             foreach ($this->filesets as $fs) {
-                $ds = $fs->getDirectoryScanner( $this->project );
+                $ds = $fs->getDirectoryScanner($this->project);
                 $srcFiles = $ds->getIncludedFiles();
 
                 foreach ($srcFiles as $file) {
@@ -86,24 +86,24 @@ class GitCommitTask extends GitBaseTask
         }
 
         try {
-            $client = $this->getGitClient( false, $this->getRepository() );
+            $client = $this->getGitClient(false, $this->getRepository());
 
-            $command = $client->getCommand( 'commit' );
-            $command->setArguments( $arguments );
-            $command->setOptions( $options );
+            $command = $client->getCommand('commit');
+            $command->setArguments($arguments);
+            $command->setOptions($options);
             $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'The remote end hung up unexpectedly', $e );
+        } catch (Exception $e) {
+            throw new BuildException('The remote end hung up unexpectedly', $e);
         }
 
-        $this->logCommand( $options, $arguments );
+        $this->logCommand($options, $arguments);
     }
 
     /**
      * @param array $options
      * @param array $arguments
      */
-    protected function logCommand( array $options, array $arguments )
+    protected function logCommand(array $options, array $arguments)
     {
 
         $msg = 'git-commit: Executed git commit ';
@@ -115,7 +115,7 @@ class GitCommitTask extends GitBaseTask
             $msg .= ' '.$argument;
         }
 
-        $this->log( $msg, Project::MSG_INFO );
+        $this->log($msg, Project::MSG_INFO);
     }
 
     /**
@@ -130,7 +130,7 @@ class GitCommitTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAllFiles( $flag )
+    public function setAllFiles($flag)
     {
 
         $this->allFiles = (bool)$flag;
@@ -148,7 +148,7 @@ class GitCommitTask extends GitBaseTask
     /**
      * @param $message
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
 
         $this->message = $message;
@@ -161,7 +161,7 @@ class GitCommitTask extends GitBaseTask
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;

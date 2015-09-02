@@ -4,7 +4,6 @@ namespace Guzzle\Http;
 
 use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Version;
-use Guzzle\Http\Mimetypes;
 use Guzzle\Stream\Stream;
 
 /**

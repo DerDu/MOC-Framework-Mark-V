@@ -37,10 +37,10 @@ class PHPUnit_Framework_Constraint_FileExists extends PHPUnit_Framework_Constrai
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return file_exists( $other );
+        return file_exists($other);
     }
 
     /**
@@ -53,7 +53,7 @@ class PHPUnit_Framework_Constraint_FileExists extends PHPUnit_Framework_Constrai
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return sprintf(

@@ -15,20 +15,20 @@ class Twig_Tests_Node_IncludeTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $expr = new Twig_Node_Expression_Constant( 'foo.twig', 1 );
-        $node = new Twig_Node_Include( $expr, null, false, false, 1 );
+        $expr = new Twig_Node_Expression_Constant('foo.twig', 1);
+        $node = new Twig_Node_Include($expr, null, false, false, 1);
 
-        $this->assertNull( $node->getNode( 'variables' ) );
-        $this->assertEquals( $expr, $node->getNode( 'expr' ) );
-        $this->assertFalse( $node->getAttribute( 'only' ) );
+        $this->assertNull($node->getNode('variables'));
+        $this->assertEquals($expr, $node->getNode('expr'));
+        $this->assertFalse($node->getAttribute('only'));
 
-        $vars = new Twig_Node_Expression_Array( array(
-            new Twig_Node_Expression_Constant( 'foo', 1 ),
-            new Twig_Node_Expression_Constant( true, 1 )
-        ), 1 );
-        $node = new Twig_Node_Include( $expr, $vars, true, false, 1 );
-        $this->assertEquals( $vars, $node->getNode( 'variables' ) );
-        $this->assertTrue( $node->getAttribute( 'only' ) );
+        $vars = new Twig_Node_Expression_Array(array(
+            new Twig_Node_Expression_Constant('foo', 1),
+            new Twig_Node_Expression_Constant(true, 1)
+        ), 1);
+        $node = new Twig_Node_Include($expr, $vars, true, false, 1);
+        $this->assertEquals($vars, $node->getNode('variables'));
+        $this->assertTrue($node->getAttribute('only'));
     }
 
     public function getTests()
@@ -36,8 +36,8 @@ class Twig_Tests_Node_IncludeTest extends Twig_Test_NodeTestCase
 
         $tests = array();
 
-        $expr = new Twig_Node_Expression_Constant( 'foo.twig', 1 );
-        $node = new Twig_Node_Include( $expr, null, false, false, 1 );
+        $expr = new Twig_Node_Expression_Constant('foo.twig', 1);
+        $node = new Twig_Node_Include($expr, null, false, false, 1);
         $tests[] = array(
             $node,
             <<<EOF
@@ -47,12 +47,12 @@ EOF
         );
 
         $expr = new Twig_Node_Expression_Conditional(
-            new Twig_Node_Expression_Constant( true, 1 ),
-            new Twig_Node_Expression_Constant( 'foo', 1 ),
-            new Twig_Node_Expression_Constant( 'foo', 1 ),
+            new Twig_Node_Expression_Constant(true, 1),
+            new Twig_Node_Expression_Constant('foo', 1),
+            new Twig_Node_Expression_Constant('foo', 1),
             0
         );
-        $node = new Twig_Node_Include( $expr, null, false, false, 1 );
+        $node = new Twig_Node_Include($expr, null, false, false, 1);
         $tests[] = array(
             $node,
             <<<EOF
@@ -61,12 +61,12 @@ EOF
 EOF
         );
 
-        $expr = new Twig_Node_Expression_Constant( 'foo.twig', 1 );
-        $vars = new Twig_Node_Expression_Array( array(
-            new Twig_Node_Expression_Constant( 'foo', 1 ),
-            new Twig_Node_Expression_Constant( true, 1 )
-        ), 1 );
-        $node = new Twig_Node_Include( $expr, $vars, false, false, 1 );
+        $expr = new Twig_Node_Expression_Constant('foo.twig', 1);
+        $vars = new Twig_Node_Expression_Array(array(
+            new Twig_Node_Expression_Constant('foo', 1),
+            new Twig_Node_Expression_Constant(true, 1)
+        ), 1);
+        $node = new Twig_Node_Include($expr, $vars, false, false, 1);
         $tests[] = array(
             $node,
             <<<EOF
@@ -75,7 +75,7 @@ EOF
 EOF
         );
 
-        $node = new Twig_Node_Include( $expr, $vars, true, false, 1 );
+        $node = new Twig_Node_Include($expr, $vars, true, false, 1);
         $tests[] = array(
             $node,
             <<<EOF
@@ -84,7 +84,7 @@ EOF
 EOF
         );
 
-        $node = new Twig_Node_Include( $expr, $vars, true, true, 1 );
+        $node = new Twig_Node_Include($expr, $vars, true, true, 1);
         $tests[] = array(
             $node,
             <<<EOF

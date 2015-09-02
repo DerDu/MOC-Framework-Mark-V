@@ -60,15 +60,15 @@ class NoneSelector extends BaseSelectorContainer
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
 
         $selectors = $this->selectorElements();
 
-        for ($i = 0, $size = count( $selectors ); $i < $size; $i++) {
-            $result = $selectors[$i]->isSelected( $basedir, $filename, $file );
+        for ($i = 0, $size = count($selectors); $i < $size; $i++) {
+            $result = $selectors[$i]->isSelected($basedir, $filename, $file);
             if ($result) {
                 return false;
             }

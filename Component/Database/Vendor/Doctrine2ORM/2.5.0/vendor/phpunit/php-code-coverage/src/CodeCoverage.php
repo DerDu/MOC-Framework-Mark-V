@@ -735,7 +735,7 @@ class PHP_CodeCoverage
     /**
      * Stop collection of code coverage information.
      *
-     * @param  bool $append
+     * @param  bool  $append
      * @param  mixed $linesToBeCovered
      * @param  array $linesToBeUsed
      *

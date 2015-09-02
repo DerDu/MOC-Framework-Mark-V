@@ -43,14 +43,14 @@ class PhingFilterReader extends DataType
      *
      * @throws BuildException
      */
-    public function setClasspathRef( Reference $r )
+    public function setClasspathRef(Reference $r)
     {
 
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
         }
         $o = $this->createClasspath();
-        $o->setRefid( $r );
+        $o->setRefid($r);
     }
 
     /**
@@ -64,7 +64,7 @@ class PhingFilterReader extends DataType
             throw $this->noChildrenAllowed();
         }
         if ($this->classPath === null) {
-            $this->classPath = new Path( $this->project );
+            $this->classPath = new Path($this->project);
         }
 
         return $this->classPath->createPath();
@@ -73,7 +73,7 @@ class PhingFilterReader extends DataType
     public function createParam()
     {
 
-        $num = array_push( $this->parameters, new Parameter() );
+        $num = array_push($this->parameters, new Parameter());
 
         return $this->parameters[$num - 1];
     }
@@ -87,25 +87,25 @@ class PhingFilterReader extends DataType
      *
      * @throws BuildException
      */
-    public function setRefid( Reference $r )
+    public function setRefid(Reference $r)
     {
 
-        if (( count( $this->parameters ) !== 0 ) || ( $this->className !== null )) {
+        if (( count($this->parameters) !== 0 ) || ( $this->className !== null )) {
             throw $this->tooManyAttributes();
         }
-        $o = $r->getReferencedObject( $this->getProject() );
+        $o = $r->getReferencedObject($this->getProject());
         if ($o instanceof PhingFilterReader) {
-            $this->setClassName( $o->getClassName() );
-            $this->setClasspath( $o->getClassPath() );
+            $this->setClassName($o->getClassName());
+            $this->setClasspath($o->getClassPath());
             foreach ($o->getParams() as $p) {
-                $this->addParam( $p );
+                $this->addParam($p);
             }
         } else {
             $msg = $r->getRefId()." doesn\'t refer to a PhingFilterReader";
-            throw new BuildException( $msg );
+            throw new BuildException($msg);
         }
 
-        parent::setRefid( $r );
+        parent::setRefid($r);
     }
 
     public function getClassName()
@@ -117,7 +117,7 @@ class PhingFilterReader extends DataType
     /**
      * @param $className
      */
-    public function setClassName( $className )
+    public function setClassName($className)
     {
 
         $this->className = $className;
@@ -136,7 +136,7 @@ class PhingFilterReader extends DataType
      *
      * @throws BuildException
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->isReference()) {
@@ -145,7 +145,7 @@ class PhingFilterReader extends DataType
         if ($this->classPath === null) {
             $this->classPath = $classpath;
         } else {
-            $this->classPath->append( $classpath );
+            $this->classPath->append($classpath);
         }
     }
 
@@ -157,7 +157,7 @@ class PhingFilterReader extends DataType
 
         // We return a COPY
         $ret = array();
-        for ($i = 0, $size = count( $this->parameters ); $i < $size; $i++) {
+        for ($i = 0, $size = count($this->parameters); $i < $size; $i++) {
             $ret[] = clone $this->parameters[$i];
         }
 
@@ -178,7 +178,7 @@ class PhingFilterReader extends DataType
     /**
      * @param Parameter $param
      */
-    public function addParam( Parameter $param )
+    public function addParam(Parameter $param)
     {
 
         $this->parameters[] = $param;

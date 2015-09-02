@@ -75,7 +75,7 @@
  *
  * Base cipher class
  */
-if (!class_exists( 'Crypt_Base' )) {
+if (!class_exists('Crypt_Base')) {
     include_once 'Base.php';
 }
 
@@ -91,31 +91,31 @@ if (!class_exists( 'Crypt_Base' )) {
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Counter_.28CTR.29
  */
-define( 'CRYPT_RIJNDAEL_MODE_CTR', CRYPT_MODE_CTR );
+define('CRYPT_RIJNDAEL_MODE_CTR', CRYPT_MODE_CTR);
 /**
  * Encrypt / decrypt using the Electronic Code Book mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29
  */
-define( 'CRYPT_RIJNDAEL_MODE_ECB', CRYPT_MODE_ECB );
+define('CRYPT_RIJNDAEL_MODE_ECB', CRYPT_MODE_ECB);
 /**
  * Encrypt / decrypt using the Code Book Chaining mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29
  */
-define( 'CRYPT_RIJNDAEL_MODE_CBC', CRYPT_MODE_CBC );
+define('CRYPT_RIJNDAEL_MODE_CBC', CRYPT_MODE_CBC);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher_feedback_.28CFB.29
  */
-define( 'CRYPT_RIJNDAEL_MODE_CFB', CRYPT_MODE_CFB );
+define('CRYPT_RIJNDAEL_MODE_CFB', CRYPT_MODE_CFB);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Output_feedback_.28OFB.29
  */
-define( 'CRYPT_RIJNDAEL_MODE_OFB', CRYPT_MODE_OFB );
+define('CRYPT_RIJNDAEL_MODE_OFB', CRYPT_MODE_OFB);
 /**#@-*/
 
 /**#@+
@@ -125,11 +125,11 @@ define( 'CRYPT_RIJNDAEL_MODE_OFB', CRYPT_MODE_OFB );
 /**
  * Toggles the internal implementation
  */
-define( 'CRYPT_RIJNDAEL_MODE_INTERNAL', CRYPT_MODE_INTERNAL );
+define('CRYPT_RIJNDAEL_MODE_INTERNAL', CRYPT_MODE_INTERNAL);
 /**
  * Toggles the mcrypt implementation
  */
-define( 'CRYPT_RIJNDAEL_MODE_MCRYPT', CRYPT_MODE_MCRYPT );
+define('CRYPT_RIJNDAEL_MODE_MCRYPT', CRYPT_MODE_MCRYPT);
 /**#@-*/
 
 /**
@@ -2966,13 +2966,13 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @param String $key
      */
-    function setKey( $key )
+    function setKey($key)
     {
 
-        parent::setKey( $key );
+        parent::setKey($key);
 
         if (!$this->explicit_key_length) {
-            $length = strlen( $key );
+            $length = strlen($key);
             switch (true) {
                 case $length <= 16:
                     $this->key_size = 16;
@@ -3009,7 +3009,7 @@ class Crypt_Rijndael extends Crypt_Base
     function _setupEngine()
     {
 
-        if (constant( 'CRYPT_'.$this->const_namespace.'_MODE' ) == CRYPT_MODE_INTERNAL) {
+        if (constant('CRYPT_'.$this->const_namespace.'_MODE') == CRYPT_MODE_INTERNAL) {
             // No mcrypt support at all for rijndael
             return;
         }
@@ -3020,8 +3020,8 @@ class Crypt_Rijndael extends Crypt_Base
         // Determining the availibility/usability of $cipher_name_mcrypt
         switch (true) {
             case $this->key_size % 8: // mcrypt is not usable for 160/224-bit keys, only for 128/192/256-bit keys
-            case !in_array( $cipher_name_mcrypt,
-                mcrypt_list_algorithms() ): // $cipher_name_mcrypt is not available for the current $block_size
+            case !in_array($cipher_name_mcrypt,
+                mcrypt_list_algorithms()): // $cipher_name_mcrypt is not available for the current $block_size
                 $engine = CRYPT_MODE_INTERNAL;
                 break;
             default:
@@ -3040,13 +3040,13 @@ class Crypt_Rijndael extends Crypt_Base
         if ($this->enmcrypt) {
             // Closing the current mcrypt resource(s). _mcryptSetup() will, if needed,
             // (re)open them with the module named in $this->cipher_name_mcrypt
-            mcrypt_module_close( $this->enmcrypt );
-            mcrypt_module_close( $this->demcrypt );
+            mcrypt_module_close($this->enmcrypt);
+            mcrypt_module_close($this->demcrypt);
             $this->enmcrypt = null;
             $this->demcrypt = null;
 
             if ($this->ecb) {
-                mcrypt_module_close( $this->ecb );
+                mcrypt_module_close($this->ecb);
                 $this->ecb = null;
             }
         }
@@ -3073,7 +3073,7 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @param Integer $length
      */
-    function setKeyLength( $length )
+    function setKeyLength($length)
     {
 
         switch (true) {
@@ -3108,7 +3108,7 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @param Integer $length
      */
-    function setBlockLength( $length )
+    function setBlockLength($length)
     {
 
         $length >>= 5;
@@ -3134,7 +3134,7 @@ class Crypt_Rijndael extends Crypt_Base
     function _setupMcrypt()
     {
 
-        $this->key = str_pad( substr( $this->key, 0, $this->key_size ), $this->key_size, "\0" );
+        $this->key = str_pad(substr($this->key, 0, $this->key_size), $this->key_size, "\0");
         parent::_setupMcrypt();
     }
 
@@ -3147,7 +3147,7 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @return String
      */
-    function _encryptBlock( $in )
+    function _encryptBlock($in)
     {
 
         static $t0, $t1, $t2, $t3, $sbox;
@@ -3162,7 +3162,7 @@ class Crypt_Rijndael extends Crypt_Base
         }
 
         $state = array();
-        $words = unpack( 'N*', $in );
+        $words = unpack('N*', $in);
 
         $c = $this->c;
         $w = $this->w;
@@ -3231,15 +3231,15 @@ class Crypt_Rijndael extends Crypt_Base
 
         switch ($Nb) {
             case 8:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
             case 7:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
             case 6:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
             default:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
         }
     }
 
@@ -3252,7 +3252,7 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @return String
      */
-    function _decryptBlock( $in )
+    function _decryptBlock($in)
     {
 
         static $dt0, $dt1, $dt2, $dt3, $isbox;
@@ -3267,7 +3267,7 @@ class Crypt_Rijndael extends Crypt_Base
         }
 
         $state = array();
-        $words = unpack( 'N*', $in );
+        $words = unpack('N*', $in);
 
         $c = $this->c;
         $dw = $this->dw;
@@ -3325,15 +3325,15 @@ class Crypt_Rijndael extends Crypt_Base
 
         switch ($Nb) {
             case 8:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
             case 7:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
             case 6:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
             case 5:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
             default:
-                return pack( 'N*', $temp[0], $temp[1], $temp[2], $temp[3] );
+                return pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
         }
     }
 
@@ -3382,17 +3382,17 @@ class Crypt_Rijndael extends Crypt_Base
             0x91000000
         );
 
-        $this->key = str_pad( substr( $this->key, 0, $this->key_size ), $this->key_size, "\0" );
+        $this->key = str_pad(substr($this->key, 0, $this->key_size), $this->key_size, "\0");
 
         if (isset( $this->kl['key'] ) && $this->key === $this->kl['key'] && $this->key_size === $this->kl['key_size'] && $this->block_size === $this->kl['block_size']) {
             // already expanded
             return;
         }
-        $this->kl = array( 'key' => $this->key, 'key_size' => $this->key_size, 'block_size' => $this->block_size );
+        $this->kl = array('key' => $this->key, 'key_size' => $this->key_size, 'block_size' => $this->block_size);
 
         $this->Nk = $this->key_size >> 2;
         // see Rijndael-ammended.pdf#page=44
-        $this->Nr = max( $this->Nk, $this->Nb ) + 6;
+        $this->Nr = max($this->Nk, $this->Nb) + 6;
 
         // shift offsets for Nb = 5, 7 are defined in Rijndael-ammended.pdf#page=44,
         //     "Table 8: Shift offsets in Shiftrow for the alternative block lengths"
@@ -3402,16 +3402,16 @@ class Crypt_Rijndael extends Crypt_Base
             case 4:
             case 5:
             case 6:
-                $this->c = array( 0, 1, 2, 3 );
+                $this->c = array(0, 1, 2, 3);
                 break;
             case 7:
-                $this->c = array( 0, 1, 2, 4 );
+                $this->c = array(0, 1, 2, 4);
                 break;
             case 8:
-                $this->c = array( 0, 1, 3, 4 );
+                $this->c = array(0, 1, 3, 4);
         }
 
-        $w = array_values( unpack( 'N*words', $this->key ) );
+        $w = array_values(unpack('N*words', $this->key));
 
         $length = $this->Nb * ( $this->Nr + 1 );
         for ($i = $this->Nk; $i < $length; $i++) {
@@ -3422,10 +3422,10 @@ class Crypt_Rijndael extends Crypt_Base
                 // 0xFFFFFFFF << 8 == 0xFFFFFF00, but on a 64-bit machine, it equals 0xFFFFFFFF00. as such, doing 'and'
                 // with 0xFFFFFFFF (or 0xFFFFFF00) on a 32-bit machine is unnecessary, but on a 64-bit machine, it is.
                 $temp = ( ( $temp << 8 ) & 0xFFFFFF00 ) | ( ( $temp >> 24 ) & 0x000000FF ); // rotWord
-                $temp = $this->_subWord( $temp ) ^ $rcon[$i / $this->Nk];
+                $temp = $this->_subWord($temp) ^ $rcon[$i / $this->Nk];
             } else {
                 if ($this->Nk > 6 && $i % $this->Nk == 4) {
-                    $temp = $this->_subWord( $temp );
+                    $temp = $this->_subWord($temp);
                 }
             }
             $w[$i] = $w[$i - $this->Nk] ^ $temp;
@@ -3447,7 +3447,7 @@ class Crypt_Rijndael extends Crypt_Base
                     // subWord + invMixColumn + invSubWord = invMixColumn
                     $j = 0;
                     while ($j < $this->Nb) {
-                        $dw = $this->_subWord( $this->w[$row][$j] );
+                        $dw = $this->_subWord($this->w[$row][$j]);
                         $temp[$j] = $this->dt0[$dw >> 24 & 0x000000FF] ^
                             $this->dt1[$dw >> 16 & 0x000000FF] ^
                             $this->dt2[$dw >> 8 & 0x000000FF] ^
@@ -3467,9 +3467,9 @@ class Crypt_Rijndael extends Crypt_Base
 
         // In case of $this->use_inline_crypt === true we have to use 1-dim key arrays (both ascending)
         if ($this->use_inline_crypt) {
-            $this->dw = array_reverse( $this->dw );
-            $w = array_pop( $this->w );
-            $dw = array_pop( $this->dw );
+            $this->dw = array_reverse($this->dw);
+            $w = array_pop($this->w);
+            $dw = array_pop($this->dw);
             foreach ($this->w as $r => $wr) {
                 foreach ($wr as $c => $wc) {
                     $w[] = $wc;
@@ -3488,7 +3488,7 @@ class Crypt_Rijndael extends Crypt_Base
      *
      * @param Integer $word
      */
-    function _subWord( $word )
+    function _subWord($word)
     {
 
         $sbox = $this->sbox;
@@ -3517,13 +3517,13 @@ class Crypt_Rijndael extends Crypt_Base
         // The first 10 generated $lambda_functions will use the key-words hardcoded for better performance.
         // For memory reason we limit those ultra-optimized functions.
         // After that, we use pure (extracted) integer vars for the key-words which is faster than accessing them via array.
-        if (count( $lambda_functions ) < 10) {
+        if (count($lambda_functions) < 10) {
             $w = $this->w;
             $dw = $this->dw;
             $init_encrypt = '';
             $init_decrypt = '';
         } else {
-            for ($i = 0, $cw = count( $this->w ); $i < $cw; ++$i) {
+            for ($i = 0, $cw = count($this->w); $i < $cw; ++$i) {
                 $w[] = '$w['.$i.']';
                 $dw[] = '$dw['.$i.']';
             }
@@ -3531,8 +3531,8 @@ class Crypt_Rijndael extends Crypt_Base
             $init_decrypt = '$dw = $self->dw;';
         }
 
-        $code_hash = md5( str_pad( "Crypt_Rijndael, {$this->mode}, {$this->block_size}, ", 32, "\0" ).implode( ',',
-                $w ) );
+        $code_hash = md5(str_pad("Crypt_Rijndael, {$this->mode}, {$this->block_size}, ", 32, "\0").implode(',',
+                $w));
 
         if (!isset( $lambda_functions[$code_hash] )) {
             $Nr = $this->Nr;
@@ -3565,7 +3565,7 @@ class Crypt_Rijndael extends Crypt_Base
 
             // Mainrounds: shiftRows + subWord + mixColumns + addRoundKey
             for ($round = 1; $round < $Nr; ++$round) {
-                list( $s, $e ) = array( $e, $s );
+                list( $s, $e ) = array($e, $s);
                 for ($i = 0; $i < $Nb; ++$i) {
                     $encrypt_block .=
                         '$'.$e.$i.' =
@@ -3623,7 +3623,7 @@ class Crypt_Rijndael extends Crypt_Base
 
             // Mainrounds: shiftRows + subWord + mixColumns + addRoundKey
             for ($round = 1; $round < $Nr; ++$round) {
-                list( $s, $e ) = array( $e, $s );
+                list( $s, $e ) = array($e, $s);
                 for ($i = 0; $i < $Nb; ++$i) {
                     $decrypt_block .=
                         '$'.$e.$i.' =

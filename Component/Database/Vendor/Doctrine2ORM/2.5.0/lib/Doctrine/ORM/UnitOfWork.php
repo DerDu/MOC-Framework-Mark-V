@@ -26,7 +26,6 @@ use Doctrine\Common\Persistence\Mapping\RuntimeReflectionService;
 use Doctrine\Common\Persistence\ObjectManagerAware;
 use Doctrine\Common\PropertyChangedListener;
 use Doctrine\DBAL\LockMode;
-use Doctrine\ORM\Cache\AssociationCacheEntry;
 use Doctrine\ORM\Cache\Persister\CachedPersister;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\ListenersInvoker;

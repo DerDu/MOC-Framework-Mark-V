@@ -37,7 +37,7 @@ interface FileNameMapper
      *
      * @return array The data after the mapper has been applied; must be in array format (for some reason).
      */
-    public function main( $sourceFileName );
+    public function main($sourceFileName);
 
     /**
      * Accessor. Sets the to property. The actual implementation
@@ -47,7 +47,7 @@ interface FileNameMapper
      *
      * @return void
      */
-    public function setTo( $to );
+    public function setTo($to);
 
     /**
      * Accessor. Sets the from property. What this mapper should
@@ -58,6 +58,6 @@ interface FileNameMapper
      *
      * @return void
      */
-    public function setFrom( $from );
+    public function setFrom($from);
 
 }

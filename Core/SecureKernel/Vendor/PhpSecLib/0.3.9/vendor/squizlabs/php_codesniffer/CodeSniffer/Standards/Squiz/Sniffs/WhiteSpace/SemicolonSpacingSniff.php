@@ -48,7 +48,7 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
     public function register()
     {
 
-        return array( T_SEMICOLON );
+        return array(T_SEMICOLON);
 
     }//end register()
 
@@ -62,22 +62,22 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $prevType = $tokens[( $stackPtr - 1 )]['code'];
-        if (in_array( $prevType, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
-            $nonSpace = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 2 ), null, true );
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 2 ), null, true);
             $expected = $tokens[$nonSpace]['content'].';';
-            $found = $phpcsFile->getTokensAsString( $nonSpace, ( $stackPtr - $nonSpace ) ).';';
+            $found = $phpcsFile->getTokensAsString($nonSpace, ( $stackPtr - $nonSpace )).';';
             $error = 'Space found before semicolon; expected "%s" but found "%s"';
             $data = array(
                 $expected,
                 $found,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'Incorrect', $data );
+            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 
     }//end process()

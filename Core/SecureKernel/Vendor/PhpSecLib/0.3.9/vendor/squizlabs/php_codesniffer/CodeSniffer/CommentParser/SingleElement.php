@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_AbstractDocElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractDocElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -76,7 +76,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
         PHP_CodeSniffer_File $phpcsFile
     ) {
 
-        parent::__construct( $previousElement, $tokens, $tag, $phpcsFile );
+        parent::__construct($previousElement, $tokens, $tag, $phpcsFile);
 
     }//end __construct()
 
@@ -128,7 +128,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
                 $this->tag,
                 $docBlock,
             );
-            $phpcsFile->addError( $error, $errorPos, 'EmptyTagContent', $data );
+            $phpcsFile->addError($error, $errorPos, 'EmptyTagContent', $data);
         }
 
     }//end getContent()
@@ -143,7 +143,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
     protected function getSubElements()
     {
 
-        return array( 'content' );
+        return array('content');
 
     }//end getWhitespaceBeforeContent()
 
@@ -158,7 +158,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      * @return void
      * @see getSubElements()
      */
-    protected function processSubElement( $name, $content, $whitespaceBefore )
+    protected function processSubElement($name, $content, $whitespaceBefore)
     {
 
         $this->content = $content;

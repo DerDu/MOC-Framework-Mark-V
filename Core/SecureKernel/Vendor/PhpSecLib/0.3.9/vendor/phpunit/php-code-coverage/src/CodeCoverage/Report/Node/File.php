@@ -115,14 +115,14 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
         $cacheTokens
     ) {
 
-        if (!is_bool( $cacheTokens )) {
+        if (!is_bool($cacheTokens)) {
             throw PHP_CodeCoverage_Util_InvalidArgumentHelper::factory(
                 1,
                 'boolean'
             );
         }
 
-        parent::__construct( $name, $parent );
+        parent::__construct($name, $parent);
 
         $this->coverageData = $coverageData;
         $this->testData = $testData;
@@ -138,14 +138,14 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     {
 
         if ($this->cacheTokens) {
-            $tokens = PHP_Token_Stream_CachingFactory::get( $this->getPath() );
+            $tokens = PHP_Token_Stream_CachingFactory::get($this->getPath());
         } else {
-            $tokens = new PHP_Token_Stream( $this->getPath() );
+            $tokens = new PHP_Token_Stream($this->getPath());
         }
 
-        $this->processClasses( $tokens );
-        $this->processTraits( $tokens );
-        $this->processFunctions( $tokens );
+        $this->processClasses($tokens);
+        $this->processTraits($tokens);
+        $this->processFunctions($tokens);
         $this->linesOfCode = $tokens->getLinesOfCode();
         unset( $tokens );
 
@@ -187,7 +187,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
 
                 $this->numExecutableLines++;
 
-                if (count( $this->coverageData[$lineNumber] ) > 0) {
+                if (count($this->coverageData[$lineNumber]) > 0) {
                     if (isset( $currentClass )) {
                         $currentClass['executedLines']++;
                     }
@@ -297,7 +297,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processClasses( PHP_Token_Stream $tokens )
+    protected function processClasses(PHP_Token_Stream $tokens)
     {
 
         $classes = $tokens->getClasses();
@@ -345,7 +345,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processTraits( PHP_Token_Stream $tokens )
+    protected function processTraits(PHP_Token_Stream $tokens)
     {
 
         $traits = $tokens->getTraits();
@@ -393,7 +393,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processFunctions( PHP_Token_Stream $tokens )
+    protected function processFunctions(PHP_Token_Stream $tokens)
     {
 
         $functions = $tokens->getFunctions();
@@ -429,11 +429,11 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      * @return string
      * @since  Method available since Release 1.2.0
      */
-    protected function crap( $ccn, $coverage )
+    protected function crap($ccn, $coverage)
     {
 
         if ($coverage == 0) {
-            return (string)( pow( $ccn, 2 ) + $ccn );
+            return (string)( pow($ccn, 2) + $ccn );
         }
 
         if ($coverage >= 95) {
@@ -442,7 +442,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
 
         return sprintf(
             '%01.2F',
-            pow( $ccn, 2 ) * pow( 1 - $coverage / 100, 3 ) + $ccn
+            pow($ccn, 2) * pow(1 - $coverage / 100, 3) + $ccn
         );
     }
 
@@ -553,7 +553,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     public function getNumClasses()
     {
 
-        return count( $this->classes );
+        return count($this->classes);
     }
 
     /**
@@ -575,7 +575,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     public function getNumTraits()
     {
 
-        return count( $this->traits );
+        return count($this->traits);
     }
 
     /**
@@ -663,7 +663,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     public function getNumFunctions()
     {
 
-        return count( $this->functions );
+        return count($this->functions);
     }
 
     /**

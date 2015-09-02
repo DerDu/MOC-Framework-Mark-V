@@ -46,13 +46,13 @@
 // laravel is a PHP framework that utilizes phpseclib. laravel workbenches may, independently,
 // have phpseclib as a requirement as well. if you're developing such a program you may encounter
 // a "Cannot redeclare crypt_random_string()" error.
-if (!function_exists( 'crypt_random_string' )) {
+if (!function_exists('crypt_random_string')) {
     /**
      * "Is Windows" test
      *
      * @access private
      */
-    define( 'CRYPT_RANDOM_IS_WINDOWS', strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' );
+    define('CRYPT_RANDOM_IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
 
     /**
      * Generate a random string.
@@ -66,14 +66,14 @@ if (!function_exists( 'crypt_random_string' )) {
      * @return String
      * @access public
      */
-    function crypt_random_string( $length )
+    function crypt_random_string($length)
     {
 
         if (CRYPT_RANDOM_IS_WINDOWS) {
             // method 1. prior to PHP 5.3 this would call rand() on windows hence the function_exists('class_alias') call.
             // ie. class_alias is a function that was introduced in PHP 5.3
-            if (function_exists( 'mcrypt_create_iv' ) && function_exists( 'class_alias' )) {
-                return mcrypt_create_iv( $length );
+            if (function_exists('mcrypt_create_iv') && function_exists('class_alias')) {
+                return mcrypt_create_iv($length);
             }
             // method 2. openssl_random_pseudo_bytes was introduced in PHP 5.3.0 but prior to PHP 5.3.4 there was,
             // to quote <http://php.net/ChangeLog-5.php#5.3.4>, "possible blocking behavior". as of 5.3.4
@@ -88,31 +88,31 @@ if (!function_exists( 'crypt_random_string' )) {
             // https://github.com/php/php-src/blob/7014a0eb6d1611151a286c0ff4f2238f92c120d6/win32/winutil.c#L80
             //
             // we're calling it, all the same, in the off chance that the mcrypt extension is not available
-            if (function_exists( 'openssl_random_pseudo_bytes' ) && version_compare( PHP_VERSION, '5.3.4', '>=' )) {
-                return openssl_random_pseudo_bytes( $length );
+            if (function_exists('openssl_random_pseudo_bytes') && version_compare(PHP_VERSION, '5.3.4', '>=')) {
+                return openssl_random_pseudo_bytes($length);
             }
         } else {
             // method 1. the fastest
-            if (function_exists( 'openssl_random_pseudo_bytes' )) {
-                return openssl_random_pseudo_bytes( $length );
+            if (function_exists('openssl_random_pseudo_bytes')) {
+                return openssl_random_pseudo_bytes($length);
             }
             // method 2
             static $fp = true;
             if ($fp === true) {
                 // warning's will be output unles the error suppression operator is used. errors such as
                 // "open_basedir restriction in effect", "Permission denied", "No such file or directory", etc.
-                $fp = @fopen( '/dev/urandom', 'rb' );
+                $fp = @fopen('/dev/urandom', 'rb');
             }
             if ($fp !== true && $fp !== false) { // surprisingly faster than !is_bool() or is_resource()
-                return fread( $fp, $length );
+                return fread($fp, $length);
             }
             // method 3. pretty much does the same thing as method 2 per the following url:
             // https://github.com/php/php-src/blob/7014a0eb6d1611151a286c0ff4f2238f92c120d6/ext/mcrypt/mcrypt.c#L1391
             // surprisingly slower than method 2. maybe that's because mcrypt_create_iv does a bunch of error checking that we're
             // not doing. regardless, this'll only be called if this PHP script couldn't open /dev/urandom due to open_basedir
             // restrictions or some such
-            if (function_exists( 'mcrypt_create_iv' )) {
-                return mcrypt_create_iv( $length, MCRYPT_DEV_URANDOM );
+            if (function_exists('mcrypt_create_iv')) {
+                return mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
             }
         }
         // at this point we have no choice but to use a pure-PHP CSPRNG
@@ -138,27 +138,27 @@ if (!function_exists( 'crypt_random_string' )) {
         if ($crypto === false) {
             // save old session data
             $old_session_id = session_id();
-            $old_use_cookies = ini_get( 'session.use_cookies' );
+            $old_use_cookies = ini_get('session.use_cookies');
             $old_session_cache_limiter = session_cache_limiter();
             $_OLD_SESSION = isset( $_SESSION ) ? $_SESSION : false;
             if ($old_session_id != '') {
                 session_write_close();
             }
 
-            session_id( 1 );
-            ini_set( 'session.use_cookies', 0 );
-            session_cache_limiter( '' );
+            session_id(1);
+            ini_set('session.use_cookies', 0);
+            session_cache_limiter('');
             session_start();
 
-            $v = $seed = $_SESSION['seed'] = pack( 'H*', sha1(
-                serialize( $_SERVER ).
-                serialize( $_POST ).
-                serialize( $_GET ).
-                serialize( $_COOKIE ).
-                serialize( $GLOBALS ).
-                serialize( $_SESSION ).
-                serialize( $_OLD_SESSION )
-            ) );
+            $v = $seed = $_SESSION['seed'] = pack('H*', sha1(
+                serialize($_SERVER).
+                serialize($_POST).
+                serialize($_GET).
+                serialize($_COOKIE).
+                serialize($GLOBALS).
+                serialize($_SESSION).
+                serialize($_OLD_SESSION)
+            ));
             if (!isset( $_SESSION['count'] )) {
                 $_SESSION['count'] = 0;
             }
@@ -168,10 +168,10 @@ if (!function_exists( 'crypt_random_string' )) {
 
             // restore old session data
             if ($old_session_id != '') {
-                session_id( $old_session_id );
+                session_id($old_session_id);
                 session_start();
-                ini_set( 'session.use_cookies', $old_use_cookies );
-                session_cache_limiter( $old_session_cache_limiter );
+                ini_set('session.use_cookies', $old_use_cookies);
+                session_cache_limiter($old_session_cache_limiter);
             } else {
                 if ($_OLD_SESSION !== false) {
                     $_SESSION = $_OLD_SESSION;
@@ -189,56 +189,56 @@ if (!function_exists( 'crypt_random_string' )) {
             // http://tools.ietf.org/html/rfc4253#section-7.2
             //
             // see the is_string($crypto) part for an example of how to expand the keys
-            $key = pack( 'H*', sha1( $seed.'A' ) );
-            $iv = pack( 'H*', sha1( $seed.'C' ) );
+            $key = pack('H*', sha1($seed.'A'));
+            $iv = pack('H*', sha1($seed.'C'));
 
             // ciphers are used as per the nist.gov link below. also, see this link:
             //
             // http://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator#Designs_based_on_cryptographic_primitives
             switch (true) {
-                case phpseclib_resolve_include_path( 'Crypt/AES.php' ):
-                    if (!class_exists( 'Crypt_AES' )) {
+                case phpseclib_resolve_include_path('Crypt/AES.php'):
+                    if (!class_exists('Crypt_AES')) {
                         include_once 'AES.php';
                     }
-                    $crypto = new Crypt_AES( CRYPT_AES_MODE_CTR );
+                    $crypto = new Crypt_AES(CRYPT_AES_MODE_CTR);
                     break;
-                case phpseclib_resolve_include_path( 'Crypt/Twofish.php' ):
-                    if (!class_exists( 'Crypt_Twofish' )) {
+                case phpseclib_resolve_include_path('Crypt/Twofish.php'):
+                    if (!class_exists('Crypt_Twofish')) {
                         include_once 'Twofish.php';
                     }
-                    $crypto = new Crypt_Twofish( CRYPT_TWOFISH_MODE_CTR );
+                    $crypto = new Crypt_Twofish(CRYPT_TWOFISH_MODE_CTR);
                     break;
-                case phpseclib_resolve_include_path( 'Crypt/Blowfish.php' ):
-                    if (!class_exists( 'Crypt_Blowfish' )) {
+                case phpseclib_resolve_include_path('Crypt/Blowfish.php'):
+                    if (!class_exists('Crypt_Blowfish')) {
                         include_once 'Blowfish.php';
                     }
-                    $crypto = new Crypt_Blowfish( CRYPT_BLOWFISH_MODE_CTR );
+                    $crypto = new Crypt_Blowfish(CRYPT_BLOWFISH_MODE_CTR);
                     break;
-                case phpseclib_resolve_include_path( 'Crypt/TripleDES.php' ):
-                    if (!class_exists( 'Crypt_TripleDES' )) {
+                case phpseclib_resolve_include_path('Crypt/TripleDES.php'):
+                    if (!class_exists('Crypt_TripleDES')) {
                         include_once 'TripleDES.php';
                     }
-                    $crypto = new Crypt_TripleDES( CRYPT_DES_MODE_CTR );
+                    $crypto = new Crypt_TripleDES(CRYPT_DES_MODE_CTR);
                     break;
-                case phpseclib_resolve_include_path( 'Crypt/DES.php' ):
-                    if (!class_exists( 'Crypt_DES' )) {
+                case phpseclib_resolve_include_path('Crypt/DES.php'):
+                    if (!class_exists('Crypt_DES')) {
                         include_once 'DES.php';
                     }
-                    $crypto = new Crypt_DES( CRYPT_DES_MODE_CTR );
+                    $crypto = new Crypt_DES(CRYPT_DES_MODE_CTR);
                     break;
-                case phpseclib_resolve_include_path( 'Crypt/RC4.php' ):
-                    if (!class_exists( 'Crypt_RC4' )) {
+                case phpseclib_resolve_include_path('Crypt/RC4.php'):
+                    if (!class_exists('Crypt_RC4')) {
                         include_once 'RC4.php';
                     }
                     $crypto = new Crypt_RC4();
                     break;
                 default:
-                    user_error( 'crypt_random_string requires at least one symmetric cipher be loaded' );
+                    user_error('crypt_random_string requires at least one symmetric cipher be loaded');
                     return false;
             }
 
-            $crypto->setKey( $key );
-            $crypto->setIV( $iv );
+            $crypto->setKey($key);
+            $crypto->setIV($iv);
             $crypto->enableContinuousBuffer();
         }
 
@@ -253,17 +253,17 @@ if (!function_exists( 'crypt_random_string' )) {
         // http://www.opensource.apple.com/source/OpenSSL/OpenSSL-38/openssl/fips-1.0/rand/fips_rand.c
         // (do a search for "ANS X9.31 A.2.4")
         $result = '';
-        while (strlen( $result ) < $length) {
-            $i = $crypto->encrypt( microtime() ); // strlen(microtime()) == 21
-            $r = $crypto->encrypt( $i ^ $v ); // strlen($v) == 20
-            $v = $crypto->encrypt( $r ^ $i ); // strlen($r) == 20
+        while (strlen($result) < $length) {
+            $i = $crypto->encrypt(microtime()); // strlen(microtime()) == 21
+            $r = $crypto->encrypt($i ^ $v); // strlen($v) == 20
+            $v = $crypto->encrypt($r ^ $i); // strlen($r) == 20
             $result .= $r;
         }
-        return substr( $result, 0, $length );
+        return substr($result, 0, $length);
     }
 }
 
-if (!function_exists( 'phpseclib_resolve_include_path' )) {
+if (!function_exists('phpseclib_resolve_include_path')) {
     /**
      * Resolve filename against the include path.
      *
@@ -275,27 +275,27 @@ if (!function_exists( 'phpseclib_resolve_include_path' )) {
      * @return mixed Filename (string) on success, false otherwise.
      * @access public
      */
-    function phpseclib_resolve_include_path( $filename )
+    function phpseclib_resolve_include_path($filename)
     {
 
-        if (function_exists( 'stream_resolve_include_path' )) {
-            return stream_resolve_include_path( $filename );
+        if (function_exists('stream_resolve_include_path')) {
+            return stream_resolve_include_path($filename);
         }
 
         // handle non-relative paths
-        if (file_exists( $filename )) {
-            return realpath( $filename );
+        if (file_exists($filename)) {
+            return realpath($filename);
         }
 
         $paths = PATH_SEPARATOR == ':' ?
-            preg_split( '#(?<!phar):#', get_include_path() ) :
-            explode( PATH_SEPARATOR, get_include_path() );
+            preg_split('#(?<!phar):#', get_include_path()) :
+            explode(PATH_SEPARATOR, get_include_path());
         foreach ($paths as $prefix) {
             // path's specified in include_path don't always end in /
-            $ds = substr( $prefix, -1 ) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR;
+            $ds = substr($prefix, -1) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR;
             $file = $prefix.$ds.$filename;
-            if (file_exists( $file )) {
-                return realpath( $file );
+            if (file_exists($file)) {
+                return realpath($file);
             }
         }
 

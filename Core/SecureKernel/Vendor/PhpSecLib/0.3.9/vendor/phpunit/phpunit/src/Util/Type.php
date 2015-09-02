@@ -16,7 +16,7 @@
 class PHPUnit_Util_Type
 {
 
-    public static function isType( $type )
+    public static function isType($type)
     {
 
         return in_array(

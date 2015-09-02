@@ -77,7 +77,7 @@ class XMLPDOResultFormatter extends PDOResultFormatter
      *
      * @param string $v
      */
-    public function setEncoding( $v )
+    public function setEncoding($v)
     {
 
         $this->encoding = $v;
@@ -86,7 +86,7 @@ class XMLPDOResultFormatter extends PDOResultFormatter
     /**
      * @param boolean $v
      */
-    public function setFormatOutput( $v )
+    public function setFormatOutput($v)
     {
 
         $this->formatOutput = (boolean)$v;
@@ -95,9 +95,9 @@ class XMLPDOResultFormatter extends PDOResultFormatter
     public function initialize()
     {
 
-        $this->doc = new DOMDocument( "1.0", $this->encoding );
-        $this->rootNode = $this->doc->createElement( 'results' );
-        $this->doc->appendChild( $this->rootNode );
+        $this->doc = new DOMDocument("1.0", $this->encoding);
+        $this->rootNode = $this->doc->createElement('results');
+        $this->doc->appendChild($this->rootNode);
         $this->doc->formatOutput = $this->formatOutput;
     }
 
@@ -106,22 +106,22 @@ class XMLPDOResultFormatter extends PDOResultFormatter
      *
      * @param array $row Row of PDO result set.
      */
-    public function processRow( $row )
+    public function processRow($row)
     {
 
-        $rowNode = $this->doc->createElement( 'row' );
-        $this->rootNode->appendChild( $rowNode );
+        $rowNode = $this->doc->createElement('row');
+        $this->rootNode->appendChild($rowNode);
 
         foreach ($row as $columnName => $columnValue) {
 
-            $colNode = $this->doc->createElement( 'column' );
-            $colNode->setAttribute( 'name', $columnName );
+            $colNode = $this->doc->createElement('column');
+            $colNode->setAttribute('name', $columnName);
 
             if ($columnValue != null) {
-                $columnValue = trim( $columnValue );
+                $columnValue = trim($columnValue);
                 $colNode->nodeValue = $columnValue;
             }
-            $rowNode->appendChild( $colNode );
+            $rowNode->appendChild($colNode);
         }
 
     }
@@ -137,7 +137,7 @@ class XMLPDOResultFormatter extends PDOResultFormatter
     public function getPreferredOutfile()
     {
 
-        return new PhingFile( 'results.xml' );
+        return new PhingFile('results.xml');
     }
 
     /**
@@ -146,7 +146,7 @@ class XMLPDOResultFormatter extends PDOResultFormatter
     public function close()
     {
 
-        $this->out->write( $this->doc->saveXML() );
+        $this->out->write($this->doc->saveXML());
         $this->rootNode = null;
         $this->doc = null;
         parent::close();

@@ -39,10 +39,10 @@ class IdentityMapper implements FileNameMapper
      *
      * @return array  The data after the mapper has been applied
      */
-    public function main( $sourceFileName )
+    public function main($sourceFileName)
     {
 
-        return array( $sourceFileName );
+        return array($sourceFileName);
     }
 
     /**
@@ -53,7 +53,7 @@ class IdentityMapper implements FileNameMapper
      *
      * @return void
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
     }
 
@@ -65,7 +65,7 @@ class IdentityMapper implements FileNameMapper
      *
      * @return void
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
     }
 }

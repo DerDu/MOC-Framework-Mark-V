@@ -51,7 +51,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -65,20 +65,20 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first PHP open tag so we don't process the
         // same file twice.
-        $prevOpenTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($prevOpenTag !== false) {
             return;
         }
 
         $path = $phpcsFile->getFileName();
-        $properties = $this->getProperties( $path );
+        $properties = $this->getProperties($path);
         if ($properties === null) {
             // Not under version control.
             return;
@@ -94,7 +94,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                     $key,
                     $properties[$key],
                 );
-                $phpcsFile->addError( $error, $stackPtr, 'Unexpected', $data );
+                $phpcsFile->addError($error, $stackPtr, 'Unexpected', $data);
                 continue;
             }
 
@@ -106,7 +106,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                     $key,
                     $this->properties[$key],
                 );
-                $phpcsFile->addError( $error, $stackPtr, 'Missing', $data );
+                $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
                 continue;
             }
 
@@ -119,7 +119,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                     $properties[$key],
                     $this->properties[$key],
                 );
-                $phpcsFile->addError( $error, $stackPtr, 'NoMatch', $data );
+                $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
             }
         }//end foreach
 
@@ -137,29 +137,29 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      * @throws PHP_CodeSniffer_Exception If Subversion properties file could
      *                                   not be opened.
      */
-    protected function getProperties( $path )
+    protected function getProperties($path)
     {
 
         $properties = array();
 
         $paths = array();
-        $paths[] = dirname( $path ).'/.svn/props/'.basename( $path ).'.svn-work';
-        $paths[] = dirname( $path ).'/.svn/prop-base/'.basename( $path ).'.svn-base';
+        $paths[] = dirname($path).'/.svn/props/'.basename($path).'.svn-work';
+        $paths[] = dirname($path).'/.svn/prop-base/'.basename($path).'.svn-base';
 
         $foundPath = false;
         foreach ($paths as $path) {
-            if (file_exists( $path ) === true) {
+            if (file_exists($path) === true) {
                 $foundPath = true;
 
-                $handle = fopen( $path, 'r' );
+                $handle = fopen($path, 'r');
                 if ($handle === false) {
                     $error = 'Error opening file; could not get Subversion properties';
-                    throw new PHP_CodeSniffer_Exception( $error );
+                    throw new PHP_CodeSniffer_Exception($error);
                 }
 
-                while (feof( $handle ) === false) {
+                while (feof($handle) === false) {
                     // Read a key length line. Might be END, though.
-                    $buffer = trim( fgets( $handle ) );
+                    $buffer = trim(fgets($handle));
 
                     // Check for the end of the hash.
                     if ($buffer === 'END') {
@@ -167,31 +167,31 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                     }
 
                     // Now read that much into a buffer.
-                    $key = fread( $handle, substr( $buffer, 2 ) );
+                    $key = fread($handle, substr($buffer, 2));
 
                     // Suck up extra newline after key data.
-                    fgetc( $handle );
+                    fgetc($handle);
 
                     // Read a value length line.
-                    $buffer = trim( fgets( $handle ) );
+                    $buffer = trim(fgets($handle));
 
                     // Now read that much into a buffer.
-                    $length = substr( $buffer, 2 );
+                    $length = substr($buffer, 2);
                     if ($length === '0') {
                         // Length of value is ZERO characters, so
                         // value is actually empty.
                         $value = '';
                     } else {
-                        $value = fread( $handle, $length );
+                        $value = fread($handle, $length);
                     }
 
                     // Suck up extra newline after value data.
-                    fgetc( $handle );
+                    fgetc($handle);
 
                     $properties[$key] = $value;
                 }//end while
 
-                fclose( $handle );
+                fclose($handle);
             }//end if
         }//end foreach
 

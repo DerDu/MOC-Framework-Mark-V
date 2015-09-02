@@ -41,11 +41,11 @@ class InputRequest
      *
      * @throws BuildException
      */
-    public function __construct( $prompt )
+    public function __construct($prompt)
     {
 
         if ($prompt === null) {
-            throw new BuildException( "prompt must not be null" );
+            throw new BuildException("prompt must not be null");
         }
         $this->prompt = $prompt;
     }
@@ -82,7 +82,7 @@ class InputRequest
      *
      * @param $input
      */
-    public function setInput( $input )
+    public function setInput($input)
     {
 
         $this->input = $input;
@@ -104,7 +104,7 @@ class InputRequest
      *
      * @param mixed $v
      */
-    public function setDefaultValue( $v )
+    public function setDefaultValue($v)
     {
 
         $this->defaultValue = $v;
@@ -126,7 +126,7 @@ class InputRequest
      *
      * @param string $c
      */
-    public function setPromptChar( $c )
+    public function setPromptChar($c)
     {
 
         $this->promptChar = $c;

@@ -30,11 +30,11 @@ class TypeComparatorTest extends \PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( true, 1 ),
-            array( false, array( 1 ) ),
-            array( null, new stdClass ),
-            array( 1.0, 5 ),
-            array( "", "" )
+            array(true, 1),
+            array(false, array(1)),
+            array(null, new stdClass),
+            array(1.0, 5),
+            array("", "")
         );
     }
 
@@ -42,16 +42,16 @@ class TypeComparatorTest extends \PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( true, true ),
-            array( true, false ),
-            array( false, false ),
-            array( null, null ),
-            array( new stdClass, new stdClass ),
-            array( 0, 0 ),
-            array( 1.0, 2.0 ),
-            array( "hello", "world" ),
-            array( "", "" ),
-            array( array(), array( 1, 2, 3 ) )
+            array(true, true),
+            array(true, false),
+            array(false, false),
+            array(null, null),
+            array(new stdClass, new stdClass),
+            array(0, 0),
+            array(1.0, 2.0),
+            array("hello", "world"),
+            array("", ""),
+            array(array(), array(1, 2, 3))
         );
     }
 
@@ -59,11 +59,11 @@ class TypeComparatorTest extends \PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( true, null ),
-            array( null, false ),
-            array( 1.0, 0 ),
-            array( new stdClass, array() ),
-            array( "1", 1 )
+            array(true, null),
+            array(null, false),
+            array(1.0, 0),
+            array(new stdClass, array()),
+            array("1", 1)
         );
     }
 
@@ -71,11 +71,11 @@ class TypeComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::accepts
      * @dataProvider acceptsSucceedsProvider
      */
-    public function testAcceptsSucceeds( $expected, $actual )
+    public function testAcceptsSucceeds($expected, $actual)
     {
 
         $this->assertTrue(
-            $this->comparator->accepts( $expected, $actual )
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -83,29 +83,29 @@ class TypeComparatorTest extends \PHPUnit_Framework_TestCase
      * @covers       ::assertEquals
      * @dataProvider assertEqualsSucceedsProvider
      */
-    public function testAssertEqualsSucceeds( $expected, $actual )
+    public function testAssertEqualsSucceeds($expected, $actual)
     {
 
         $exception = null;
 
         try {
-            $this->comparator->assertEquals( $expected, $actual );
-        } catch( ComparisonFailure $exception ) {
+            $this->comparator->assertEquals($expected, $actual);
+        } catch (ComparisonFailure $exception) {
         }
 
-        $this->assertNull( $exception, 'Unexpected ComparisonFailure' );
+        $this->assertNull($exception, 'Unexpected ComparisonFailure');
     }
 
     /**
      * @covers       ::assertEquals
      * @dataProvider assertEqualsFailsProvider
      */
-    public function testAssertEqualsFails( $expected, $actual )
+    public function testAssertEqualsFails($expected, $actual)
     {
 
-        $this->setExpectedException( 'SebastianBergmann\\Comparator\\ComparisonFailure',
-            'does not match expected type' );
-        $this->comparator->assertEquals( $expected, $actual );
+        $this->setExpectedException('SebastianBergmann\\Comparator\\ComparisonFailure',
+            'does not match expected type');
+        $this->comparator->assertEquals($expected, $actual);
     }
 
     protected function setUp()

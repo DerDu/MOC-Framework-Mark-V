@@ -49,7 +49,7 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
     public function register()
     {
 
-        return array( T_COMMENT );
+        return array(T_COMMENT);
 
     }//end register()
 
@@ -63,17 +63,17 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        if (substr( $tokens[$stackPtr]['content'], 0, 2 ) !== '//') {
+        if (substr($tokens[$stackPtr]['content'], 0, 2) !== '//') {
             return;
         }
 
         $commentLine = $tokens[$stackPtr]['line'];
-        $lastContent = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
 
         if ($tokens[$lastContent]['line'] !== $commentLine) {
             return;
@@ -87,18 +87,17 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
         if ($tokens[$lastContent]['code'] === T_COMMA
             || $tokens[$lastContent]['code'] === T_SEMICOLON
         ) {
-            $lastContent = $phpcsFile->findPrevious( T_WHITESPACE, ( $lastContent - 1 ), null, true );
+            $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ( $lastContent - 1 ), null, true);
             if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                 return;
             }
         }
 
         $error = 'Comments may not appear after statements.';
-        $phpcsFile->addError( $error, $stackPtr, 'Found' );
+        $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()
 
 }//end class
-
 
 ?>

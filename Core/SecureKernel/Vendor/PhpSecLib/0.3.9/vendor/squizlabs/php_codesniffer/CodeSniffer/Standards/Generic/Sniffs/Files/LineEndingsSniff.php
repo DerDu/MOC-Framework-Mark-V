@@ -57,7 +57,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -71,19 +71,19 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // We are only interested if this is the first open tag.
         if ($stackPtr !== 0) {
-            if ($phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) ) !== false) {
+            if ($phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 )) !== false) {
                 return;
             }
         }
 
         $found = $phpcsFile->eolChar;
-        $found = str_replace( "\n", '\n', $found );
-        $found = str_replace( "\r", '\r', $found );
+        $found = str_replace("\n", '\n', $found);
+        $found = str_replace("\r", '\r', $found);
 
         if ($found !== $this->eolChar) {
             // Check for single line files without an EOL. This is a very special
@@ -100,13 +100,13 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
 
             $error = 'End of line character is invalid; expected "%s" but found "%s"';
             $expected = $this->eolChar;
-            $expected = str_replace( "\n", '\n', $expected );
-            $expected = str_replace( "\r", '\r', $expected );
+            $expected = str_replace("\n", '\n', $expected);
+            $expected = str_replace("\r", '\r', $expected);
             $data = array(
                 $expected,
                 $found,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'InvalidEOLChar', $data );
+            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
         }
 
     }//end process()

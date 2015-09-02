@@ -18,10 +18,10 @@
 class Twig_Node_If extends Twig_Node
 {
 
-    public function __construct( Twig_NodeInterface $tests, Twig_NodeInterface $else = null, $lineno, $tag = null )
+    public function __construct(Twig_NodeInterface $tests, Twig_NodeInterface $else = null, $lineno, $tag = null)
     {
 
-        parent::__construct( array( 'tests' => $tests, 'else' => $else ), array(), $lineno, $tag );
+        parent::__construct(array('tests' => $tests, 'else' => $else), array(), $lineno, $tag);
     }
 
     /**
@@ -29,37 +29,37 @@ class Twig_Node_If extends Twig_Node
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $compiler->addDebugInfo( $this );
-        for ($i = 0, $count = count( $this->getNode( 'tests' ) ); $i < $count; $i += 2) {
+        $compiler->addDebugInfo($this);
+        for ($i = 0, $count = count($this->getNode('tests')); $i < $count; $i += 2) {
             if ($i > 0) {
                 $compiler
                     ->outdent()
-                    ->write( "} elseif (" );
+                    ->write("} elseif (");
             } else {
                 $compiler
-                    ->write( 'if (' );
+                    ->write('if (');
             }
 
             $compiler
-                ->subcompile( $this->getNode( 'tests' )->getNode( $i ) )
-                ->raw( ") {\n" )
+                ->subcompile($this->getNode('tests')->getNode($i))
+                ->raw(") {\n")
                 ->indent()
-                ->subcompile( $this->getNode( 'tests' )->getNode( $i + 1 ) );
+                ->subcompile($this->getNode('tests')->getNode($i + 1));
         }
 
-        if ($this->hasNode( 'else' ) && null !== $this->getNode( 'else' )) {
+        if ($this->hasNode('else') && null !== $this->getNode('else')) {
             $compiler
                 ->outdent()
-                ->write( "} else {\n" )
+                ->write("} else {\n")
                 ->indent()
-                ->subcompile( $this->getNode( 'else' ) );
+                ->subcompile($this->getNode('else'));
         }
 
         $compiler
             ->outdent()
-            ->write( "}\n" );
+            ->write("}\n");
     }
 }

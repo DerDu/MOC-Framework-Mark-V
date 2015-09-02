@@ -117,13 +117,13 @@ class CoverageThresholdTask extends Task
      *
      * @param Path $classpath The classpath
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->_classpath === null) {
             $this->_classpath = $classpath;
         } else {
-            $this->_classpath->append( $classpath );
+            $this->_classpath->append($classpath);
         }
     }
 
@@ -132,7 +132,7 @@ class CoverageThresholdTask extends Task
      *
      * @param PhingFile The database file
      */
-    public function setDatabase( PhingFile $database )
+    public function setDatabase(PhingFile $database)
     {
 
         $this->_database = $database;
@@ -156,7 +156,7 @@ class CoverageThresholdTask extends Task
      *
      * @param integer $threshold Coverage threshold for entire project
      */
-    public function setPerProject( $threshold )
+    public function setPerProject($threshold)
     {
 
         $this->_perProject = $threshold;
@@ -167,7 +167,7 @@ class CoverageThresholdTask extends Task
      *
      * @param integer $threshold Coverage threshold for any class
      */
-    public function setPerClass( $threshold )
+    public function setPerClass($threshold)
     {
 
         $this->_perClass = $threshold;
@@ -178,7 +178,7 @@ class CoverageThresholdTask extends Task
      *
      * @param integer $threshold Coverage threshold for any method
      */
-    public function setPerMethod( $threshold )
+    public function setPerMethod($threshold)
     {
 
         $this->_perMethod = $threshold;
@@ -189,10 +189,10 @@ class CoverageThresholdTask extends Task
      *
      * @param boolean $verbose
      */
-    public function setVerbose( $verbose )
+    public function setVerbose($verbose)
     {
 
-        $this->_verbose = StringHelper::booleanValue( $verbose );
+        $this->_verbose = StringHelper::booleanValue($verbose);
     }
 
     /**
@@ -203,7 +203,7 @@ class CoverageThresholdTask extends Task
     public function createExcludes()
     {
 
-        $this->_excludes = new Excludes( $this->project );
+        $this->_excludes = new Excludes($this->project);
 
         return $this->_excludes;
     }
@@ -213,7 +213,7 @@ class CoverageThresholdTask extends Task
 
         if ($this->_database === null) {
             $coverageDatabase = $this->project
-                ->getProperty( 'coverage.database' );
+                ->getProperty('coverage.database');
 
             if (!$coverageDatabase) {
                 throw new BuildException(
@@ -222,7 +222,7 @@ class CoverageThresholdTask extends Task
                 );
             }
 
-            $database = new PhingFile( $coverageDatabase );
+            $database = new PhingFile($coverageDatabase);
         } else {
             $database = $this->_database;
         }
@@ -235,14 +235,14 @@ class CoverageThresholdTask extends Task
         );
 
         $props = new Properties();
-        $props->load( $database );
+        $props->load($database);
 
         foreach ($props->keys() as $filename) {
-            $file = unserialize( $props->getProperty( $filename ) );
+            $file = unserialize($props->getProperty($filename));
 
             // Skip file if excluded from coverage threshold validation
             if ($this->_excludes !== null) {
-                if (in_array( $file['fullname'], $this->_excludes->getExcludedFiles() )) {
+                if (in_array($file['fullname'], $this->_excludes->getExcludedFiles())) {
                     continue;
                 }
             }
@@ -262,7 +262,7 @@ class CoverageThresholdTask extends Task
 
         if ($coverage < $this->_perProject) {
             throw new BuildException(
-                'The coverage ('.round( $coverage, 2 ).'%) for the entire project '
+                'The coverage ('.round($coverage, 2).'%) for the entire project '
                 .'is lower than the specified threshold ('
                 .$this->_perProject.'%)'
             );
@@ -270,9 +270,9 @@ class CoverageThresholdTask extends Task
 
         $this->log(
             'Passed coverage threshold. Minimum found coverage values are: '
-            .round( $coverage, 2 ).'% per project, '
-            .round( $this->_minClassCoverageFound, 2 ).'% per class and '
-            .round( $this->_minMethodCoverageFound, 2 ).'% per method'
+            .round($coverage, 2).'% per project, '
+            .round($this->_minClassCoverageFound, 2).'% per class and '
+            .round($this->_minMethodCoverageFound, 2).'% per method'
         );
     }
 
@@ -284,34 +284,34 @@ class CoverageThresholdTask extends Task
      *
      * @throws BuildException
      */
-    protected function calculateCoverageThreshold( $filename, $coverageInformation )
+    protected function calculateCoverageThreshold($filename, $coverageInformation)
     {
 
-        $classes = PHPUnitUtil::getDefinedClasses( $filename, $this->_classpath );
+        $classes = PHPUnitUtil::getDefinedClasses($filename, $this->_classpath);
 
-        if (is_array( $classes )) {
+        if (is_array($classes)) {
             foreach ($classes as $className) {
                 // Skip class if excluded from coverage threshold validation
                 if ($this->_excludes !== null) {
-                    if (in_array( $className, $this->_excludes->getExcludedClasses() )) {
+                    if (in_array($className, $this->_excludes->getExcludedClasses())) {
                         continue;
                     }
                 }
 
-                $reflection = new ReflectionClass( $className );
+                $reflection = new ReflectionClass($className);
                 $classStartLine = $reflection->getStartLine();
 
                 // Strange PHP5 reflection bug, classes without parent class
                 // or implemented interfaces seem to start one line off
                 if ($reflection->getParentClass() === null
-                    && count( $reflection->getInterfaces() ) === 0
+                    && count($reflection->getInterfaces()) === 0
                 ) {
                     unset( $coverageInformation[$classStartLine + 1] );
                 } else {
                     unset( $coverageInformation[$classStartLine] );
                 }
 
-                reset( $coverageInformation );
+                reset($coverageInformation);
 
                 $methods = $reflection->getMethods();
 
@@ -327,8 +327,8 @@ class CoverageThresholdTask extends Task
                         $excludedMethods = $this->_excludes->getExcludedMethods();
 
                         if (isset( $excludedMethods[$className] )) {
-                            if (in_array( $method->getName(), $excludedMethods[$className] )
-                                || in_array( $method->getName().'()', $excludedMethods[$className] )
+                            if (in_array($method->getName(), $excludedMethods[$className])
+                                || in_array($method->getName().'()', $excludedMethods[$className])
                             ) {
                                 continue;
                             }
@@ -351,11 +351,11 @@ class CoverageThresholdTask extends Task
                         continue;
                     }
 
-                    $lineNr = key( $coverageInformation );
+                    $lineNr = key($coverageInformation);
 
                     while ($lineNr !== null && $lineNr < $methodStartLine) {
-                        next( $coverageInformation );
-                        $lineNr = key( $coverageInformation );
+                        next($coverageInformation);
+                        $lineNr = key($coverageInformation);
                     }
 
                     $methodStatementsCovered = 0;
@@ -370,8 +370,8 @@ class CoverageThresholdTask extends Task
                             $methodStatementsCovered++;
                         }
 
-                        next( $coverageInformation );
-                        $lineNr = key( $coverageInformation );
+                        next($coverageInformation);
+                        $lineNr = key($coverageInformation);
                     }
 
                     if ($methodStatementCount > 0) {
@@ -385,7 +385,7 @@ class CoverageThresholdTask extends Task
                         && !$method->isAbstract()
                     ) {
                         throw new BuildException(
-                            'The coverage ('.round( $methodCoverage, 2 ).'%) '
+                            'The coverage ('.round($methodCoverage, 2).'%) '
                             .'for method "'.$method->getName().'" is lower'
                             .' than the specified threshold ('
                             .$this->_perMethod.'%), see file: "'
@@ -411,11 +411,11 @@ class CoverageThresholdTask extends Task
                     }
                 }
 
-                $classStatementCount = count( $coverageInformation );
+                $classStatementCount = count($coverageInformation);
                 $classStatementsCovered = count(
                     array_filter(
                         $coverageInformation,
-                        array( $this, 'filterCovered' )
+                        array($this, 'filterCovered')
                     )
                 );
 
@@ -430,7 +430,7 @@ class CoverageThresholdTask extends Task
                     && !$reflection->isAbstract()
                 ) {
                     throw new BuildException(
-                        'The coverage ('.round( $classCoverage, 2 ).'%) for class "'
+                        'The coverage ('.round($classCoverage, 2).'%) for class "'
                         .$reflection->getName().'" is lower than the '
                         .'specified threshold ('.$this->_perClass.'%), '
                         .'see file: "'.$filename.'"'
@@ -467,7 +467,7 @@ class CoverageThresholdTask extends Task
      *
      * @return boolean
      */
-    protected function filterCovered( $var )
+    protected function filterCovered($var)
     {
 
         return ( $var >= 0 || $var === -2 );

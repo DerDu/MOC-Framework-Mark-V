@@ -233,7 +233,7 @@ class SFTP extends Bridge implements IBridgeInterface
         return $this;
     }
 
-    public function uploadFile( $File )
+    public function uploadFile($File)
     {
 
         $this->persistConnection();
@@ -244,12 +244,12 @@ class SFTP extends Bridge implements IBridgeInterface
         return $this;
     }
 
-    public function downloadFile( $File )
+    public function downloadFile($File)
     {
 
         $this->persistConnection();
 
-        if (!$this->Connection->get( $File, $File )) {
+        if (!$this->Connection->get($File, $File)) {
             throw new ComponentException(__METHOD__.': Failed');
         }
         return $this;

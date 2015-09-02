@@ -31,14 +31,14 @@ class ChoiceQuestion extends Question
      * @param array  $choices  The list of available choices
      * @param mixed  $default  The default answer to return
      */
-    public function __construct( $question, array $choices, $default = null )
+    public function __construct($question, array $choices, $default = null)
     {
 
-        parent::__construct( $question, $default );
+        parent::__construct($question, $default);
 
         $this->choices = $choices;
-        $this->setValidator( $this->getDefaultValidator() );
-        $this->setAutocompleterValues( array_keys( $choices ) );
+        $this->setValidator($this->getDefaultValidator());
+        $this->setAutocompleterValues(array_keys($choices));
     }
 
     /**
@@ -53,27 +53,27 @@ class ChoiceQuestion extends Question
         $errorMessage = $this->errorMessage;
         $multiselect = $this->multiselect;
 
-        return function ( $selected ) use ( $choices, $errorMessage, $multiselect ) {
+        return function ($selected) use ($choices, $errorMessage, $multiselect) {
 
             // Collapse all spaces.
-            $selectedChoices = str_replace( ' ', '', $selected );
+            $selectedChoices = str_replace(' ', '', $selected);
 
             if ($multiselect) {
                 // Check for a separated comma values
-                if (!preg_match( '/^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/', $selectedChoices, $matches )) {
-                    throw new \InvalidArgumentException( sprintf( $errorMessage, $selected ) );
+                if (!preg_match('/^[a-zA-Z0-9_-]+(?:,[a-zA-Z0-9_-]+)*$/', $selectedChoices, $matches)) {
+                    throw new \InvalidArgumentException(sprintf($errorMessage, $selected));
                 }
-                $selectedChoices = explode( ',', $selectedChoices );
+                $selectedChoices = explode(',', $selectedChoices);
             } else {
-                $selectedChoices = array( $selected );
+                $selectedChoices = array($selected);
             }
 
             $multiselectChoices = array();
             foreach ($selectedChoices as $value) {
                 if (empty( $choices[$value] )) {
-                    throw new \InvalidArgumentException( sprintf( $errorMessage, $value ) );
+                    throw new \InvalidArgumentException(sprintf($errorMessage, $value));
                 }
-                array_push( $multiselectChoices, $choices[$value] );
+                array_push($multiselectChoices, $choices[$value]);
             }
 
             if ($multiselect) {
@@ -104,11 +104,11 @@ class ChoiceQuestion extends Question
      *
      * @return ChoiceQuestion The current instance
      */
-    public function setMultiselect( $multiselect )
+    public function setMultiselect($multiselect)
     {
 
         $this->multiselect = $multiselect;
-        $this->setValidator( $this->getDefaultValidator() );
+        $this->setValidator($this->getDefaultValidator());
 
         return $this;
     }
@@ -131,7 +131,7 @@ class ChoiceQuestion extends Question
      *
      * @return ChoiceQuestion The current instance
      */
-    public function setPrompt( $prompt )
+    public function setPrompt($prompt)
     {
 
         $this->prompt = $prompt;
@@ -148,11 +148,11 @@ class ChoiceQuestion extends Question
      *
      * @return ChoiceQuestion The current instance
      */
-    public function setErrorMessage( $errorMessage )
+    public function setErrorMessage($errorMessage)
     {
 
         $this->errorMessage = $errorMessage;
-        $this->setValidator( $this->getDefaultValidator() );
+        $this->setValidator($this->getDefaultValidator());
 
         return $this;
     }

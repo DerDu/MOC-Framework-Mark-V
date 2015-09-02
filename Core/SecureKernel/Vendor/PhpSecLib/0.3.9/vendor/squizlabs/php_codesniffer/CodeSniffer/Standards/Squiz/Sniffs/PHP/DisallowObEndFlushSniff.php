@@ -39,7 +39,7 @@ class Squiz_Sniffs_PHP_DisallowObEndFlushSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_STRING );
+        return array(T_STRING);
 
     }//end register()
 
@@ -53,14 +53,14 @@ class Squiz_Sniffs_PHP_DisallowObEndFlushSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content'] === 'ob_end_flush') {
-            $phpcsFile->addError( 'Use of ob_end_flush() is not allowed; use ob_get_contents() and ob_end_clean() instead',
-                $stackPtr, 'Found' );
+            $phpcsFile->addError('Use of ob_end_flush() is not allowed; use ob_get_contents() and ob_end_clean() instead',
+                $stackPtr, 'Found');
         }
 
     }//end process()

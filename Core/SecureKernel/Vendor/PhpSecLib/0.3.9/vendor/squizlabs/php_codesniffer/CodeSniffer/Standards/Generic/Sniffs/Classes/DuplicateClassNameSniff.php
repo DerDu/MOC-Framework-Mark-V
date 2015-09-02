@@ -42,7 +42,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -56,7 +56,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -69,7 +69,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
             T_CLOSE_TAG,
         );
 
-        $stackPtr = $phpcsFile->findNext( $findTokens, ( $stackPtr + 1 ) );
+        $stackPtr = $phpcsFile->findNext($findTokens, ( $stackPtr + 1 ));
         while ($stackPtr !== false) {
             if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
                 // We can stop here. The sniff will continue from the next open
@@ -90,18 +90,18 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                     true
                 );
 
-                $namespace = trim( $phpcsFile->getTokensAsString( ( $stackPtr + 1 ), ( $nsEnd - $stackPtr - 1 ) ) );
+                $namespace = trim($phpcsFile->getTokensAsString(( $stackPtr + 1 ), ( $nsEnd - $stackPtr - 1 )));
                 $stackPtr = $nsEnd;
             } else {
-                $nameToken = $phpcsFile->findNext( T_STRING, $stackPtr );
+                $nameToken = $phpcsFile->findNext(T_STRING, $stackPtr);
                 $name = $tokens[$nameToken]['content'];
                 if ($namespace !== '') {
                     $name = $namespace.'\\'.$name;
                 }
 
-                $compareName = strtolower( $name );
+                $compareName = strtolower($name);
                 if (isset( $this->foundClasses[$compareName] ) === true) {
-                    $type = strtolower( $tokens[$stackPtr]['content'] );
+                    $type = strtolower($tokens[$stackPtr]['content']);
                     $file = $this->foundClasses[$compareName]['file'];
                     $line = $this->foundClasses[$compareName]['line'];
                     $error = 'Duplicate %s name "%s" found; first defined in %s on line %s';
@@ -111,7 +111,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                         $file,
                         $line,
                     );
-                    $phpcsFile->addWarning( $error, $stackPtr, 'Found', $data );
+                    $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
                 } else {
                     $this->foundClasses[$compareName] = array(
                         'file' => $phpcsFile->getFilename(),
@@ -120,7 +120,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                 }
             }
 
-            $stackPtr = $phpcsFile->findNext( $findTokens, ( $stackPtr + 1 ) );
+            $stackPtr = $phpcsFile->findNext($findTokens, ( $stackPtr + 1 ));
         }//end while
 
     }//end process()

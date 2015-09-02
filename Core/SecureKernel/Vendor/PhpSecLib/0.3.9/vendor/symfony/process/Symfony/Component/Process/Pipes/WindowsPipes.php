@@ -39,7 +39,7 @@ class WindowsPipes extends AbstractPipes
     /** @var bool */
     private $disableOutput;
 
-    public function __construct( $disableOutput, $input )
+    public function __construct($disableOutput, $input)
     {
 
         $this->disableOutput = (bool)$disableOutput;
@@ -50,18 +50,18 @@ class WindowsPipes extends AbstractPipes
             //
             // @see https://bugs.php.net/bug.php?id=51800
             $this->files = array(
-                Process::STDOUT => tempnam( sys_get_temp_dir(), 'sf_proc_stdout' ),
-                Process::STDERR => tempnam( sys_get_temp_dir(), 'sf_proc_stderr' ),
+                Process::STDOUT => tempnam(sys_get_temp_dir(), 'sf_proc_stdout'),
+                Process::STDERR => tempnam(sys_get_temp_dir(), 'sf_proc_stderr'),
             );
             foreach ($this->files as $offset => $file) {
-                $this->fileHandles[$offset] = fopen( $this->files[$offset], 'rb' );
+                $this->fileHandles[$offset] = fopen($this->files[$offset], 'rb');
                 if (false === $this->fileHandles[$offset]) {
-                    throw new RuntimeException( 'A temporary file could not be opened to write the process output to, verify that your TEMP environment variable is writable' );
+                    throw new RuntimeException('A temporary file could not be opened to write the process output to, verify that your TEMP environment variable is writable');
                 }
             }
         }
 
-        if (is_resource( $input )) {
+        if (is_resource($input)) {
             $this->input = $input;
         } else {
             $this->inputBuffer = $input;
@@ -76,10 +76,10 @@ class WindowsPipes extends AbstractPipes
      *
      * @return WindowsPipes
      */
-    public static function create( Process $process, $input )
+    public static function create(Process $process, $input)
     {
 
-        return new static( $process->isOutputDisabled(), $input );
+        return new static($process->isOutputDisabled(), $input);
     }
 
     public function __destruct()
@@ -97,7 +97,7 @@ class WindowsPipes extends AbstractPipes
 
         parent::close();
         foreach ($this->fileHandles as $handle) {
-            fclose( $handle );
+            fclose($handle);
         }
         $this->fileHandles = array();
     }
@@ -109,8 +109,8 @@ class WindowsPipes extends AbstractPipes
     {
 
         foreach ($this->files as $filename) {
-            if (file_exists( $filename )) {
-                @unlink( $filename );
+            if (file_exists($filename)) {
+                @unlink($filename);
             }
         }
         $this->files = array();
@@ -123,10 +123,10 @@ class WindowsPipes extends AbstractPipes
     {
 
         if ($this->disableOutput) {
-            $nullstream = fopen( 'NUL', 'c' );
+            $nullstream = fopen('NUL', 'c');
 
             return array(
-                array( 'pipe', 'r' ),
+                array('pipe', 'r'),
                 $nullstream,
                 $nullstream,
             );
@@ -136,9 +136,9 @@ class WindowsPipes extends AbstractPipes
         // We're not using file handles as it can produce corrupted output https://bugs.php.net/bug.php?id=65650
         // So we redirect output within the commandline and pass the nul device to the process
         return array(
-            array( 'pipe', 'r' ),
-            array( 'file', 'NUL', 'w' ),
-            array( 'file', 'NUL', 'w' ),
+            array('pipe', 'r'),
+            array('file', 'NUL', 'w'),
+            array('file', 'NUL', 'w'),
         );
     }
 
@@ -154,31 +154,31 @@ class WindowsPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function readAndWrite( $blocking, $close = false )
+    public function readAndWrite($blocking, $close = false)
     {
 
-        $this->write( $blocking, $close );
+        $this->write($blocking, $close);
 
         $read = array();
         $fh = $this->fileHandles;
         foreach ($fh as $type => $fileHandle) {
-            if (0 !== fseek( $fileHandle, $this->readBytes[$type] )) {
+            if (0 !== fseek($fileHandle, $this->readBytes[$type])) {
                 continue;
             }
             $data = '';
             $dataread = null;
-            while (!feof( $fileHandle )) {
-                if (false !== $dataread = fread( $fileHandle, self::CHUNK_SIZE )) {
+            while (!feof($fileHandle)) {
+                if (false !== $dataread = fread($fileHandle, self::CHUNK_SIZE)) {
                     $data .= $dataread;
                 }
             }
-            if (0 < $length = strlen( $data )) {
+            if (0 < $length = strlen($data)) {
                 $this->readBytes[$type] += $length;
                 $read[$type] = $data;
             }
 
-            if (false === $dataread || ( true === $close && feof( $fileHandle ) && '' === $data )) {
-                fclose( $this->fileHandles[$type] );
+            if (false === $dataread || ( true === $close && feof($fileHandle) && '' === $data )) {
+                fclose($this->fileHandles[$type]);
                 unset( $this->fileHandles[$type] );
             }
         }
@@ -192,7 +192,7 @@ class WindowsPipes extends AbstractPipes
      * @param bool $blocking
      * @param bool $close
      */
-    private function write( $blocking, $close )
+    private function write($blocking, $close)
     {
 
         if (empty( $this->pipes )) {
@@ -201,12 +201,12 @@ class WindowsPipes extends AbstractPipes
 
         $this->unblock();
 
-        $r = null !== $this->input ? array( 'input' => $this->input ) : null;
-        $w = isset( $this->pipes[0] ) ? array( $this->pipes[0] ) : null;
+        $r = null !== $this->input ? array('input' => $this->input) : null;
+        $w = isset( $this->pipes[0] ) ? array($this->pipes[0]) : null;
         $e = null;
 
         // let's have a look if something changed in streams
-        if (false === $n = @stream_select( $r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0 )) {
+        if (false === $n = @stream_select($r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0)) {
             // if a system call has been interrupted, forget about it, let's try again
             // otherwise, an error occurred, let's reset pipes
             if (!$this->hasSystemCallBeenInterrupted()) {
@@ -221,26 +221,26 @@ class WindowsPipes extends AbstractPipes
             return;
         }
 
-        if (null !== $w && 0 < count( $r )) {
+        if (null !== $w && 0 < count($r)) {
             $data = '';
-            while ($dataread = fread( $r['input'], self::CHUNK_SIZE )) {
+            while ($dataread = fread($r['input'], self::CHUNK_SIZE)) {
                 $data .= $dataread;
             }
 
             $this->inputBuffer .= $data;
 
-            if (false === $data || ( true === $close && feof( $r['input'] ) && '' === $data )) {
+            if (false === $data || ( true === $close && feof($r['input']) && '' === $data )) {
                 // no more data to read on input resource
                 // use an empty buffer in the next reads
                 $this->input = null;
             }
         }
 
-        if (null !== $w && 0 < count( $w )) {
-            while (strlen( $this->inputBuffer )) {
-                $written = fwrite( $w[0], $this->inputBuffer, 2 << 18 );
+        if (null !== $w && 0 < count($w)) {
+            while (strlen($this->inputBuffer)) {
+                $written = fwrite($w[0], $this->inputBuffer, 2 << 18);
                 if ($written > 0) {
-                    $this->inputBuffer = (string)substr( $this->inputBuffer, $written );
+                    $this->inputBuffer = (string)substr($this->inputBuffer, $written);
                 } else {
                     break;
                 }
@@ -249,7 +249,7 @@ class WindowsPipes extends AbstractPipes
 
         // no input to read on resource, buffer is empty and stdin still open
         if ('' === $this->inputBuffer && null === $this->input && isset( $this->pipes[0] )) {
-            fclose( $this->pipes[0] );
+            fclose($this->pipes[0]);
             unset( $this->pipes[0] );
         }
     }

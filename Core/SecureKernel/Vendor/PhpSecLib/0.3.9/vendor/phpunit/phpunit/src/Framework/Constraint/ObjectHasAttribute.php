@@ -27,11 +27,11 @@ class PHPUnit_Framework_Constraint_ObjectHasAttribute extends PHPUnit_Framework_
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $object = new ReflectionObject( $other );
+        $object = new ReflectionObject($other);
 
-        return $object->hasProperty( $this->attributeName );
+        return $object->hasProperty($this->attributeName);
     }
 }

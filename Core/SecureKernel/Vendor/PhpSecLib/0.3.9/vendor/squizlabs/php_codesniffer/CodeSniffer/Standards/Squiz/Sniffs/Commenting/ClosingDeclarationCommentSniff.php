@@ -57,14 +57,14 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_FUNCTION) {
 
-            $methodProps = $phpcsFile->getMethodProperties( $stackPtr );
+            $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
             // Abstract methods do not require a closing comment.
             if ($methodProps['is_abstract'] === true) {
@@ -78,17 +78,17 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
 
             // If this function is in an interface then we don't require
             // a closing comment.
-            if ($phpcsFile->hasCondition( $stackPtr, T_INTERFACE ) === true) {
+            if ($phpcsFile->hasCondition($stackPtr, T_INTERFACE) === true) {
                 return;
             }
 
             if (isset( $tokens[$stackPtr]['scope_closer'] ) === false) {
                 $error = 'Possible parse error: non-abstract method defined as abstract';
-                $phpcsFile->addWarning( $error, $stackPtr, 'Abstract' );
+                $phpcsFile->addWarning($error, $stackPtr, 'Abstract');
                 return;
             }
 
-            $decName = $phpcsFile->getDeclarationName( $stackPtr );
+            $decName = $phpcsFile->getDeclarationName($stackPtr);
             $comment = '//end '.$decName.'()';
         } else {
             if ($tokens[$stackPtr]['code'] === T_CLASS) {
@@ -100,8 +100,8 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
 
         if (isset( $tokens[$stackPtr]['scope_closer'] ) === false) {
             $error = 'Possible parse error: %s missing opening or closing brace';
-            $data = array( $tokens[$stackPtr]['content'] );
-            $phpcsFile->addWarning( $error, $stackPtr, 'MissingBrace', $data );
+            $data = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
             return;
         }
 
@@ -114,12 +114,12 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
 
         $error = 'Expected '.$comment;
         if (isset( $tokens[( $closingBracket + 1 )] ) === false || $tokens[( $closingBracket + 1 )]['code'] !== T_COMMENT) {
-            $phpcsFile->addError( $error, $closingBracket, 'Missing' );
+            $phpcsFile->addError($error, $closingBracket, 'Missing');
             return;
         }
 
-        if (rtrim( $tokens[( $closingBracket + 1 )]['content'] ) !== $comment) {
-            $phpcsFile->addError( $error, $closingBracket, 'Incorrect' );
+        if (rtrim($tokens[( $closingBracket + 1 )]['content']) !== $comment) {
+            $phpcsFile->addError($error, $closingBracket, 'Incorrect');
             return;
         }
 

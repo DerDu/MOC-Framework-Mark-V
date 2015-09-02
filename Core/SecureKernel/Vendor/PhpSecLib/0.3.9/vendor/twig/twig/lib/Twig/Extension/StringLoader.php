@@ -19,8 +19,8 @@ class Twig_Extension_StringLoader extends Twig_Extension
     {
 
         return array(
-            new Twig_SimpleFunction( 'template_from_string', 'twig_template_from_string',
-                array( 'needs_environment' => true ) ),
+            new Twig_SimpleFunction('template_from_string', 'twig_template_from_string',
+                array('needs_environment' => true)),
         );
     }
 
@@ -46,8 +46,8 @@ class Twig_Extension_StringLoader extends Twig_Extension
  *
  * @return Twig_Template A Twig_Template instance
  */
-function twig_template_from_string( Twig_Environment $env, $template )
+function twig_template_from_string(Twig_Environment $env, $template)
 {
 
-    return $env->createTemplate( $template );
+    return $env->createTemplate($template);
 }

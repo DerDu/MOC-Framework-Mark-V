@@ -39,7 +39,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
     public function register()
     {
 
-        return array( T_NEW );
+        return array(T_NEW);
 
     }//end register()
 
@@ -53,7 +53,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -61,7 +61,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
         $allowedTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
         $allowedTokens[] = T_BITWISE_AND;
 
-        $prev = $phpcsFile->findPrevious( $allowedTokens, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious($allowedTokens, ( $stackPtr - 1 ), null, true);
 
         $allowedTokens = array(
             T_EQUAL,
@@ -72,9 +72,9 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
             T_INLINE_ELSE,
         );
 
-        if (in_array( $tokens[$prev]['code'], $allowedTokens ) === false) {
+        if (in_array($tokens[$prev]['code'], $allowedTokens) === false) {
             $error = 'New objects must be assigned to a variable';
-            $phpcsFile->addError( $error, $stackPtr, 'NotAssigned' );
+            $phpcsFile->addError($error, $stackPtr, 'NotAssigned');
         }
 
     }//end process()

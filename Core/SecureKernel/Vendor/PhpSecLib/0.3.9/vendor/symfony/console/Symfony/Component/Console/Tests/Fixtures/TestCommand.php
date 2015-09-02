@@ -11,21 +11,21 @@ class TestCommand extends Command
     {
 
         $this
-            ->setName( 'namespace:name' )
-            ->setAliases( array( 'name' ) )
-            ->setDescription( 'description' )
-            ->setHelp( 'help' );
+            ->setName('namespace:name')
+            ->setAliases(array('name'))
+            ->setDescription('description')
+            ->setHelp('help');
     }
 
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( 'execute called' );
+        $output->writeln('execute called');
     }
 
-    protected function interact( InputInterface $input, OutputInterface $output )
+    protected function interact(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( 'interact called' );
+        $output->writeln('interact called');
     }
 }

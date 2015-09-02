@@ -39,7 +39,7 @@ class LiquibaseDiffTask extends AbstractLiquibaseTask
      *
      * @param string the username
      */
-    public function setReferenceUsername( $username )
+    public function setReferenceUsername($username)
     {
 
         $this->referenceUsername = $username;
@@ -50,7 +50,7 @@ class LiquibaseDiffTask extends AbstractLiquibaseTask
      *
      * @param string the password
      */
-    public function setReferencePassword( $password )
+    public function setReferencePassword($password)
     {
 
         $this->referencePassword = $password;
@@ -64,7 +64,7 @@ class LiquibaseDiffTask extends AbstractLiquibaseTask
      *
      * @param string jdbc connection string
      */
-    public function setReferenceUrl( $url )
+    public function setReferenceUrl($url)
     {
 
         $this->referenceUrl = $url;
@@ -80,35 +80,35 @@ class LiquibaseDiffTask extends AbstractLiquibaseTask
 
         $refparams = sprintf(
             '--referenceUsername=%s --referencePassword=%s --referenceUrl=%s',
-            escapeshellarg( $this->referenceUsername ),
-            escapeshellarg( $this->referencePassword ),
-            escapeshellarg( $this->referenceUrl )
+            escapeshellarg($this->referenceUsername),
+            escapeshellarg($this->referencePassword),
+            escapeshellarg($this->referenceUrl)
         );
 
         // save main changelog file
         $changelogFile = $this->changeLogFile;
 
         // set the name of the new generated changelog file
-        $this->setChangeLogFile( dirname( $changelogFile ).'/diffs/'.date( 'YmdHis' ).'.xml' );
-        if (!is_dir( dirname( $changelogFile ).'/diffs/' )) {
-            mkdir( dirname( $changelogFile ).'/diffs/', 0777, true );
+        $this->setChangeLogFile(dirname($changelogFile).'/diffs/'.date('YmdHis').'.xml');
+        if (!is_dir(dirname($changelogFile).'/diffs/')) {
+            mkdir(dirname($changelogFile).'/diffs/', 0777, true);
         }
-        $this->execute( 'diffChangeLog', $refparams );
+        $this->execute('diffChangeLog', $refparams);
 
         $xmlFile = new DOMDocument();
-        $xmlFile->load( $changelogFile );
+        $xmlFile->load($changelogFile);
 
         // create the new node
-        $rootNode = $xmlFile->getElementsByTagName( 'databaseChangeLog' )->item( 0 );
-        $includeNode = $rootNode->appendChild( $xmlFile->createElement( 'include' ) );
+        $rootNode = $xmlFile->getElementsByTagName('databaseChangeLog')->item(0);
+        $includeNode = $rootNode->appendChild($xmlFile->createElement('include'));
 
         // set the attributes for the new node
-        $includeNode->setAttribute( 'file', str_replace( dirname( $changelogFile ).'/', '', $this->changeLogFile ) );
-        $includeNode->setAttribute( 'relativeToChangelogFile', 'true' );
-        file_put_contents( $changelogFile, $xmlFile->saveXML() );
+        $includeNode->setAttribute('file', str_replace(dirname($changelogFile).'/', '', $this->changeLogFile));
+        $includeNode->setAttribute('relativeToChangelogFile', 'true');
+        file_put_contents($changelogFile, $xmlFile->saveXML());
 
-        $this->setChangeLogFile( $changelogFile );
-        $this->execute( 'markNextChangeSetRan' );
+        $this->setChangeLogFile($changelogFile);
+        $this->execute('markNextChangeSetRan');
     }
 
     /**
@@ -120,15 +120,15 @@ class LiquibaseDiffTask extends AbstractLiquibaseTask
         parent::checkParams();
 
         if (null === $this->referenceUsername) {
-            throw new BuildException( 'Please provide a username for the reference database acccess!' );
+            throw new BuildException('Please provide a username for the reference database acccess!');
         }
 
         if (null === $this->referencePassword) {
-            throw new BuildException( 'Please provide a password for the reference database acccess!' );
+            throw new BuildException('Please provide a password for the reference database acccess!');
         }
 
         if (null === $this->referenceUrl) {
-            throw new BuildException( 'Please provide a url for the reference database acccess!' );
+            throw new BuildException('Please provide a url for the reference database acccess!');
         }
     }
 }

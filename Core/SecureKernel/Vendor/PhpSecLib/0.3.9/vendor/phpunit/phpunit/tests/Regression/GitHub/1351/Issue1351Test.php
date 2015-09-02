@@ -1,6 +1,8 @@
 <?php
+
 class Issue1351Test extends PHPUnit_Framework_TestCase
 {
+
     protected $instance;
 
     /**
@@ -8,6 +10,7 @@ class Issue1351Test extends PHPUnit_Framework_TestCase
      */
     public function testFailurePre()
     {
+
         $this->instance = new ChildProcessClass1351();
         $this->assertFalse(true, 'Expected failure.');
     }
@@ -24,6 +27,7 @@ class Issue1351Test extends PHPUnit_Framework_TestCase
      */
     public function testExceptionPre()
     {
+
         $this->instance = new ChildProcessClass1351();
         try {
             throw new LogicException('Expected exception.');
@@ -41,6 +45,7 @@ class Issue1351Test extends PHPUnit_Framework_TestCase
 
     public function testPhpCoreLanguageException()
     {
+
         // User-space code cannot instantiate a PDOException with a string code,
         // so trigger a real one.
         $connection = new PDO('sqlite::memory:');

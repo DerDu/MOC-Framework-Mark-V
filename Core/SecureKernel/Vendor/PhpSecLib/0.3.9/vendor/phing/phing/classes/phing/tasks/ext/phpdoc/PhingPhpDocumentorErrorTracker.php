@@ -52,18 +52,18 @@ class PhingPhpDocumentorErrorTracker extends ErrorTracker
      *
      * @return nothing
      */
-    public function addWarning( $num )
+    public function addWarning($num)
     {
 
-        $a = array( '', '', '', '' );
+        $a = array('', '', '', '');
         if (func_num_args() > 1) {
             for ($i = 1; $i < func_num_args(); $i++) {
-                $a[$i - 1] = func_get_arg( $i );
+                $a[$i - 1] = func_get_arg($i);
             }
         }
 
-        $message = sprintf( $GLOBALS['phpDocumentor_warning_descrip'][$num], $a[0], $a[1], $a[2], $a[3] );
-        $this->task->log( $message, Project::MSG_WARN );
+        $message = sprintf($GLOBALS['phpDocumentor_warning_descrip'][$num], $a[0], $a[1], $a[2], $a[3]);
+        $this->task->log($message, Project::MSG_WARN);
 
     }
 
@@ -76,18 +76,18 @@ class PhingPhpDocumentorErrorTracker extends ErrorTracker
      * @return nothing
      */
 
-    public function addError( $num )
+    public function addError($num)
     {
 
-        $a = array( '', '', '', '' );
+        $a = array('', '', '', '');
         if (func_num_args() > 1) {
             for ($i = 1; $i < func_num_args(); $i++) {
-                $a[$i - 1] = func_get_arg( $i );
+                $a[$i - 1] = func_get_arg($i);
             }
         }
 
-        $message = sprintf( $GLOBALS['phpDocumentor_error_descrip'][$num], $a[0], $a[1], $a[2], $a[3] );
-        $this->task->log( $message, Project::MSG_ERR );
+        $message = sprintf($GLOBALS['phpDocumentor_error_descrip'][$num], $a[0], $a[1], $a[2], $a[3]);
+        $this->task->log($message, Project::MSG_ERR);
 
     }
 
@@ -99,7 +99,7 @@ class PhingPhpDocumentorErrorTracker extends ErrorTracker
      *
      * @return nothing
      */
-    public function setTask( $task )
+    public function setTask($task)
     {
 
         $this->task = $task;

@@ -43,16 +43,16 @@ class PhingVersion extends Task implements Condition
     {
 
         if ($this->propertyname == null) {
-            throw new BuildException( "'property' must be set." );
+            throw new BuildException("'property' must be set.");
         }
         if ($this->atLeast != null || $this->exactly != null) {
             // If condition values are set, evaluate the condition
             if ($this->evaluate()) {
-                $this->getProject()->setNewProperty( $this->propertyname, $this->getVersion() );
+                $this->getProject()->setNewProperty($this->propertyname, $this->getVersion());
             }
         } else {
             // Raw task
-            $this->getProject()->setNewProperty( $this->propertyname, $this->getVersion() );
+            $this->getProject()->setNewProperty($this->propertyname, $this->getVersion());
         }
     }
 
@@ -68,11 +68,11 @@ class PhingVersion extends Task implements Condition
         $this->validate();
         $actual = $this->getVersion();
         if (null != $this->atLeast) {
-            return version_compare( $actual, $this->atLeast, '>=' );
+            return version_compare($actual, $this->atLeast, '>=');
         }
 
         if (null != $this->exactly) {
-            return version_compare( $actual, $this->exactly, '=' );
+            return version_compare($actual, $this->exactly, '=');
         }
 
         return false;
@@ -82,10 +82,10 @@ class PhingVersion extends Task implements Condition
     {
 
         if ($this->atLeast != null && $this->exactly != null) {
-            throw new BuildException( "Only one of atleast or exactly may be set." );
+            throw new BuildException("Only one of atleast or exactly may be set.");
         }
         if (null == $this->atLeast && null == $this->exactly) {
-            throw new BuildException( "One of atleast or exactly must be set." );
+            throw new BuildException("One of atleast or exactly must be set.");
         }
     }
 
@@ -115,7 +115,7 @@ class PhingVersion extends Task implements Condition
      *
      * @param string $atLeast the version to check against.
      */
-    public function setAtLeast( $atLeast )
+    public function setAtLeast($atLeast)
     {
 
         $this->atLeast = $atLeast;
@@ -139,7 +139,7 @@ class PhingVersion extends Task implements Condition
      *
      * @param string $exactly the version to check against.
      */
-    public function setExactly( $exactly )
+    public function setExactly($exactly)
     {
 
         $this->exactly = $exactly;
@@ -161,7 +161,7 @@ class PhingVersion extends Task implements Condition
      *
      * @param string $propertyname the name of the property.
      */
-    public function setProperty( $propertyname )
+    public function setProperty($propertyname)
     {
 
         $this->propertyname = $propertyname;

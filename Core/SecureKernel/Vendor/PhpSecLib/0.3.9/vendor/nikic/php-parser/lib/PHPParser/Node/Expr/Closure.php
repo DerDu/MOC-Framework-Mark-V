@@ -21,7 +21,7 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr
      *                          'static' => false  : Whether the closure is static
      * @param array $attributes Additional attributes
      */
-    public function __construct( array $subNodes = array(), array $attributes = array() )
+    public function __construct(array $subNodes = array(), array $attributes = array())
     {
 
         parent::__construct(

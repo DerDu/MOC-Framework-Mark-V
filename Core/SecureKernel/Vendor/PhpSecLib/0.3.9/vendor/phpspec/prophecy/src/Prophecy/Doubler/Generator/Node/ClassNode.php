@@ -39,7 +39,7 @@ class ClassNode
     /**
      * @param string $class
      */
-    public function setParentClass( $class )
+    public function setParentClass($class)
     {
 
         $this->parentClass = $class ?: 'stdClass';
@@ -57,14 +57,14 @@ class ClassNode
     /**
      * @param string $interface
      */
-    public function addInterface( $interface )
+    public function addInterface($interface)
     {
 
-        if ($this->hasInterface( $interface )) {
+        if ($this->hasInterface($interface)) {
             return;
         }
 
-        array_unshift( $this->interfaces, $interface );
+        array_unshift($this->interfaces, $interface);
     }
 
     /**
@@ -72,10 +72,10 @@ class ClassNode
      *
      * @return bool
      */
-    public function hasInterface( $interface )
+    public function hasInterface($interface)
     {
 
-        return in_array( $interface, $this->interfaces );
+        return in_array($interface, $this->interfaces);
     }
 
     public function getProperties()
@@ -84,15 +84,15 @@ class ClassNode
         return $this->properties;
     }
 
-    public function addProperty( $name, $visibility = 'public' )
+    public function addProperty($name, $visibility = 'public')
     {
 
-        $visibility = strtolower( $visibility );
+        $visibility = strtolower($visibility);
 
-        if (!in_array( $visibility, array( 'public', 'private', 'protected' ) )) {
-            throw new InvalidArgumentException( sprintf(
+        if (!in_array($visibility, array('public', 'private', 'protected'))) {
+            throw new InvalidArgumentException(sprintf(
                 '`%s` property visibility is not supported.', $visibility
-            ) );
+            ));
         }
 
         $this->properties[$name] = $visibility;
@@ -107,13 +107,13 @@ class ClassNode
         return $this->methods;
     }
 
-    public function addMethod( MethodNode $method )
+    public function addMethod(MethodNode $method)
     {
 
         $this->methods[$method->getName()] = $method;
     }
 
-    public function removeMethod( $name )
+    public function removeMethod($name)
     {
 
         unset( $this->methods[$name] );
@@ -124,10 +124,10 @@ class ClassNode
      *
      * @return MethodNode|null
      */
-    public function getMethod( $name )
+    public function getMethod($name)
     {
 
-        return $this->hasMethod( $name ) ? $this->methods[$name] : null;
+        return $this->hasMethod($name) ? $this->methods[$name] : null;
     }
 
     /**
@@ -135,7 +135,7 @@ class ClassNode
      *
      * @return bool
      */
-    public function hasMethod( $name )
+    public function hasMethod($name)
     {
 
         return isset( $this->methods[$name] );

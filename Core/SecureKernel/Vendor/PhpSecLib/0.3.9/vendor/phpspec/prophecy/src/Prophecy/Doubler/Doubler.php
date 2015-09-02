@@ -75,15 +75,15 @@ class Doubler
      *
      * @param ClassPatchInterface $patch
      */
-    public function registerClassPatch( ClassPatchInterface $patch )
+    public function registerClassPatch(ClassPatchInterface $patch)
     {
 
         $this->patches[] = $patch;
 
-        @usort( $this->patches, function ( ClassPatchInterface $patch1, ClassPatchInterface $patch2 ) {
+        @usort($this->patches, function (ClassPatchInterface $patch1, ClassPatchInterface $patch2) {
 
             return $patch2->getPriority() - $patch1->getPriority();
-        } );
+        });
     }
 
     /**
@@ -97,24 +97,24 @@ class Doubler
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
-    public function double( ReflectionClass $class = null, array $interfaces, array $args = null )
+    public function double(ReflectionClass $class = null, array $interfaces, array $args = null)
     {
 
         foreach ($interfaces as $interface) {
             if (!$interface instanceof ReflectionClass) {
-                throw new InvalidArgumentException( sprintf(
+                throw new InvalidArgumentException(sprintf(
                     "[ReflectionClass \$interface1 [, ReflectionClass \$interface2]] array expected as\n".
                     "a second argument to `Doubler::double(...)`, but got %s.",
-                    is_object( $interface ) ? get_class( $interface ).' class' : gettype( $interface )
-                ) );
+                    is_object($interface) ? get_class($interface).' class' : gettype($interface)
+                ));
             }
         }
 
-        $classname = $this->createDoubleClass( $class, $interfaces );
-        $reflection = new ReflectionClass( $classname );
+        $classname = $this->createDoubleClass($class, $interfaces);
+        $reflection = new ReflectionClass($classname);
 
         if (null !== $args) {
-            return $reflection->newInstanceArgs( $args );
+            return $reflection->newInstanceArgs($args);
         }
         if (( null === $constructor = $reflection->getConstructor() )
             || ( $constructor->isPublic() && !$constructor->isFinal() )
@@ -126,7 +126,7 @@ class Doubler
             $this->instantiator = new Instantiator();
         }
 
-        return $this->instantiator->instantiate( $classname );
+        return $this->instantiator->instantiate($classname);
     }
 
     /**
@@ -137,19 +137,19 @@ class Doubler
      *
      * @return string
      */
-    protected function createDoubleClass( ReflectionClass $class = null, array $interfaces )
+    protected function createDoubleClass(ReflectionClass $class = null, array $interfaces)
     {
 
-        $name = $this->namer->name( $class, $interfaces );
-        $node = $this->mirror->reflect( $class, $interfaces );
+        $name = $this->namer->name($class, $interfaces);
+        $node = $this->mirror->reflect($class, $interfaces);
 
         foreach ($this->patches as $patch) {
-            if ($patch->supports( $node )) {
-                $patch->apply( $node );
+            if ($patch->supports($node)) {
+                $patch->apply($node);
             }
         }
 
-        $this->creator->create( $name, $node );
+        $this->creator->create($name, $node);
 
         return $name;
     }

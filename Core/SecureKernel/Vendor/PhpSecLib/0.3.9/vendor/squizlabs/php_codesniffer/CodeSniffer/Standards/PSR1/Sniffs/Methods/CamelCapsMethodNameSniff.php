@@ -12,8 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff not found' );
+if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff not found');
 }
 
 /**
@@ -38,7 +38,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS, T_INTERFACE, T_TRAIT ), array( T_FUNCTION ), true );
+        parent::__construct(array(T_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION), true);
 
     }//end __construct()
 
@@ -53,27 +53,27 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
      *
      * @return void
      */
-    protected function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
-        $methodName = $phpcsFile->getDeclarationName( $stackPtr );
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
             return;
         }
 
         // Ignore magic methods.
-        $magicPart = strtolower( substr( $methodName, 2 ) );
-        if (in_array( $magicPart, array_merge( $this->magicMethods, $this->methodsDoubleUnderscore ) ) !== false) {
+        $magicPart = strtolower(substr($methodName, 2));
+        if (in_array($magicPart, array_merge($this->magicMethods, $this->methodsDoubleUnderscore)) !== false) {
             return;
         }
 
-        $testName = ltrim( $methodName, '_' );
-        if (PHP_CodeSniffer::isCamelCaps( $testName, false, true, false ) === false) {
+        $testName = ltrim($methodName, '_');
+        if (PHP_CodeSniffer::isCamelCaps($testName, false, true, false) === false) {
             $error = 'Method name "%s" is not in camel caps format';
-            $className = $phpcsFile->getDeclarationName( $currScope );
-            $errorData = array( $className.'::'.$methodName );
-            $phpcsFile->addError( $error, $stackPtr, 'NotCamelCaps', $errorData );
+            $className = $phpcsFile->getDeclarationName($currScope);
+            $errorData = array($className.'::'.$methodName);
+            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
         }
 
     }//end processTokenWithinScope()
@@ -88,7 +88,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
      *
      * @return void
      */
-    protected function processTokenOutsideScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
     }//end processTokenOutsideScope()

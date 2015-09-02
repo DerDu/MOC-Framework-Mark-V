@@ -39,7 +39,7 @@ class Squiz_Sniffs_Functions_GlobalFunctionSniff implements PHP_CodeSniffer_Snif
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -53,13 +53,13 @@ class Squiz_Sniffs_Functions_GlobalFunctionSniff implements PHP_CodeSniffer_Snif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if (empty( $tokens[$stackPtr]['conditions'] ) === true) {
-            $functionName = $phpcsFile->getDeclarationName( $stackPtr );
+            $functionName = $phpcsFile->getDeclarationName($stackPtr);
             if ($functionName === null) {
                 return;
             }
@@ -67,8 +67,8 @@ class Squiz_Sniffs_Functions_GlobalFunctionSniff implements PHP_CodeSniffer_Snif
             // Special exception for __autoload as it needs to be global.
             if ($functionName !== '__autoload') {
                 $error = 'Consider putting global function "%s" in a static class';
-                $data = array( $functionName );
-                $phpcsFile->addWarning( $error, $stackPtr, 'Found', $data );
+                $data = array($functionName);
+                $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }
 

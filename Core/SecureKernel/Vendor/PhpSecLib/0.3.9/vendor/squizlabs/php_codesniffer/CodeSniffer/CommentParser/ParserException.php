@@ -46,10 +46,10 @@ class PHP_CodeSniffer_CommentParser_ParserException extends Exception
      *                        A position of 0 indicates that the error occurred
      *                        at the opening line of the doc comment.
      */
-    public function __construct( $message, $line )
+    public function __construct($message, $line)
     {
 
-        parent::__construct( $message );
+        parent::__construct($message);
         $this->_line = $line;
 
     }//end __construct()

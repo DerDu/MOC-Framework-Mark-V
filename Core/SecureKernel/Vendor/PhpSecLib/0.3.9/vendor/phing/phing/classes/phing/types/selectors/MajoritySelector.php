@@ -57,7 +57,7 @@ class MajoritySelector extends BaseSelectorContainer
     /**
      * @param $tiebreaker
      */
-    public function setAllowtie( $tiebreaker )
+    public function setAllowtie($tiebreaker)
     {
 
         $this->allowtie = $tiebreaker;
@@ -75,7 +75,7 @@ class MajoritySelector extends BaseSelectorContainer
      *
      * @return whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -84,8 +84,8 @@ class MajoritySelector extends BaseSelectorContainer
         $novotes = 0;
 
         $selectors = $this->selectorElements();
-        for ($i = 0, $size = count( $selectors ); $i < $size; $i++) {
-            $result = $selectors[$i]->isSelected( $basedir, $filename, $file );
+        for ($i = 0, $size = count($selectors); $i < $size; $i++) {
+            $result = $selectors[$i]->isSelected($basedir, $filename, $file);
             if ($result) {
                 $yesvotes = $yesvotes + 1;
             } else {

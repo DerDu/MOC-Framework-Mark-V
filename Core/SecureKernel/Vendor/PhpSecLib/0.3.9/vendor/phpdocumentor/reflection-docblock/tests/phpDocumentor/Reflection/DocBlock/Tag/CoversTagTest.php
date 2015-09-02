@@ -45,12 +45,12 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
         $exReference
     ) {
 
-        $tag = new CoversTag( $type, $content );
+        $tag = new CoversTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exReference, $tag->getReference() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**

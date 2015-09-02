@@ -44,14 +44,14 @@ class Description extends DataType
      *
      * @return void
      */
-    public function addText( $text )
+    public function addText($text)
     {
 
         $currentDescription = $this->project->getDescription();
         if ($currentDescription === null) {
-            $this->project->setDescription( $text );
+            $this->project->setDescription($text);
         } else {
-            $this->project->setDescription( $currentDescription.$text );
+            $this->project->setDescription($currentDescription.$text);
         }
     }
 

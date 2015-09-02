@@ -43,7 +43,7 @@ interface SubBuildListener extends BuildListener
      * @param BuildEvent $event An event with any relevant extra information.
      *                          Must not be <code>null</code>.
      */
-    public function subBuildStarted( BuildEvent $event );
+    public function subBuildStarted(BuildEvent $event);
 
     /**
      * Signals that the last target has finished. This event
@@ -54,5 +54,5 @@ interface SubBuildListener extends BuildListener
      *
      * @see BuildEvent::getException()
      */
-    public function subBuildFinished( BuildEvent $event );
+    public function subBuildFinished(BuildEvent $event);
 }

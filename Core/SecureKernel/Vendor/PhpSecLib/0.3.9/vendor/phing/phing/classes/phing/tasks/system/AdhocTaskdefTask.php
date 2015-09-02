@@ -62,7 +62,7 @@ class AdhocTaskdefTask extends AdhocTask
      *
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -73,7 +73,7 @@ class AdhocTaskdefTask extends AdhocTask
     {
 
         if ($this->name === null) {
-            throw new BuildException( "The name attribute is required for adhoc task definition.", $this->location );
+            throw new BuildException("The name attribute is required for adhoc task definition.", $this->location);
         }
 
         $taskdefs = $this->getProject()->getTaskDefinitions();
@@ -83,21 +83,21 @@ class AdhocTaskdefTask extends AdhocTask
 
             $classes = $this->getNewClasses();
 
-            if (count( $classes ) < 1) {
-                throw new BuildException( "You must define at least one class for AdhocTaskdefTask." );
+            if (count($classes) < 1) {
+                throw new BuildException("You must define at least one class for AdhocTaskdefTask.");
             }
 
-            $classname = array_pop( $classes );
+            $classname = array_pop($classes);
 
             // instantiate it to make sure it is an instance of Task
             $t = new $classname();
             if (!( $t instanceof Task )) {
-                throw new BuildException( "The adhoc class you defined must be an instance of phing.Task",
-                    $this->location );
+                throw new BuildException("The adhoc class you defined must be an instance of phing.Task",
+                    $this->location);
             }
 
-            $this->log( "Task ".$this->name." will be handled by class ".$classname, Project::MSG_VERBOSE );
-            $this->project->addTaskDefinition( $this->name, $classname );
+            $this->log("Task ".$this->name." will be handled by class ".$classname, Project::MSG_VERBOSE);
+            $this->project->addTaskDefinition($this->name, $classname);
         }
     }
 }

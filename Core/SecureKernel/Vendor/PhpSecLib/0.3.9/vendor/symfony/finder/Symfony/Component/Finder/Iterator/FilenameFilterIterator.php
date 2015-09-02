@@ -33,7 +33,7 @@ class FilenameFilterIterator extends MultiplePcreFilterIterator
 
         // should at least not match one rule to exclude
         foreach ($this->noMatchRegexps as $regex) {
-            if (preg_match( $regex, $filename )) {
+            if (preg_match($regex, $filename)) {
                 return false;
             }
         }
@@ -43,7 +43,7 @@ class FilenameFilterIterator extends MultiplePcreFilterIterator
         if ($this->matchRegexps) {
             $match = false;
             foreach ($this->matchRegexps as $regex) {
-                if (preg_match( $regex, $filename )) {
+                if (preg_match($regex, $filename)) {
                     return true;
                 }
             }
@@ -62,9 +62,9 @@ class FilenameFilterIterator extends MultiplePcreFilterIterator
      *
      * @return string regexp corresponding to a given glob or regexp
      */
-    protected function toRegex( $str )
+    protected function toRegex($str)
     {
 
-        return Expression::create( $str )->getRegex()->render();
+        return Expression::create($str)->getRegex()->render();
     }
 }

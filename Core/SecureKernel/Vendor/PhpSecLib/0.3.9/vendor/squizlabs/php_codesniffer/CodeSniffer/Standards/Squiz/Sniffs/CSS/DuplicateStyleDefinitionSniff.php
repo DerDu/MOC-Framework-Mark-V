@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,14 +58,14 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Find the content of each style definition name.
         $end = $tokens[$stackPtr]['bracket_closer'];
-        $next = $phpcsFile->findNext( T_STYLE, ( $stackPtr + 1 ), $end );
+        $next = $phpcsFile->findNext(T_STYLE, ( $stackPtr + 1 ), $end);
         if ($next === false) {
             // Class definition is empty.
             return;
@@ -78,13 +78,13 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
             if (isset( $styleNames[$name] ) === true) {
                 $first = $styleNames[$name];
                 $error = 'Duplicate style definition found; first defined on line %s';
-                $data = array( $tokens[$first]['line'] );
-                $phpcsFile->addError( $error, $next, 'Found', $data );
+                $data = array($tokens[$first]['line']);
+                $phpcsFile->addError($error, $next, 'Found', $data);
             } else {
                 $styleNames[$name] = $next;
             }
 
-            $next = $phpcsFile->findNext( T_STYLE, ( $next + 1 ), $end );
+            $next = $phpcsFile->findNext(T_STYLE, ( $next + 1 ), $end);
         }//end while
 
     }//end process()

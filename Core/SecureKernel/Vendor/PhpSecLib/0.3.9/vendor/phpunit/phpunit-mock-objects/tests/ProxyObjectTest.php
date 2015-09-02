@@ -13,6 +13,7 @@
  */
 class Framework_ProxyObjectTest extends PHPUnit_Framework_TestCase
 {
+
     public function testMockedMethodIsProxiedToOriginalMethod()
     {
 

@@ -2,7 +2,6 @@
 
 namespace Guzzle\Tests\Http\Message;
 
-use Guzzle\Common\Collection;
 use Guzzle\Http\Message\Header;
 use Guzzle\Http\Message\Request;
 

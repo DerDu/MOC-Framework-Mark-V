@@ -18,19 +18,19 @@ use Sami\Reflection\PropertyReflection;
 class TrueFilter implements FilterInterface
 {
 
-    public function acceptClass( ClassReflection $class )
+    public function acceptClass(ClassReflection $class)
     {
 
         return true;
     }
 
-    public function acceptMethod( MethodReflection $method )
+    public function acceptMethod(MethodReflection $method)
     {
 
         return true;
     }
 
-    public function acceptProperty( PropertyReflection $property )
+    public function acceptProperty(PropertyReflection $property)
     {
 
         return true;

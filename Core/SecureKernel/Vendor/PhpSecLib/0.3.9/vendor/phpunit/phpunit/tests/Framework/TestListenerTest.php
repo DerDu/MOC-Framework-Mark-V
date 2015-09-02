@@ -24,51 +24,51 @@ class Framework_TestListenerTest extends PHPUnit_Framework_TestCase implements P
     protected $result;
     protected $startCount;
 
-    public function addError( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
         $this->errorCount++;
     }
 
-    public function addFailure( PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time )
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
 
         $this->failureCount++;
     }
 
-    public function addIncompleteTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
         $this->notImplementedCount++;
     }
 
-    public function addRiskyTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
         $this->riskyCount++;
     }
 
-    public function addSkippedTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
         $this->skippedCount++;
     }
 
-    public function startTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
     }
 
-    public function endTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
     }
 
-    public function startTest( PHPUnit_Framework_Test $test )
+    public function startTest(PHPUnit_Framework_Test $test)
     {
 
         $this->startCount++;
     }
 
-    public function endTest( PHPUnit_Framework_Test $test, $time )
+    public function endTest(PHPUnit_Framework_Test $test, $time)
     {
 
         $this->endCount++;
@@ -78,37 +78,37 @@ class Framework_TestListenerTest extends PHPUnit_Framework_TestCase implements P
     {
 
         $test = new TestError;
-        $test->run( $this->result );
+        $test->run($this->result);
 
-        $this->assertEquals( 1, $this->errorCount );
-        $this->assertEquals( 1, $this->endCount );
+        $this->assertEquals(1, $this->errorCount);
+        $this->assertEquals(1, $this->endCount);
     }
 
     public function testFailure()
     {
 
         $test = new Failure;
-        $test->run( $this->result );
+        $test->run($this->result);
 
-        $this->assertEquals( 1, $this->failureCount );
-        $this->assertEquals( 1, $this->endCount );
+        $this->assertEquals(1, $this->failureCount);
+        $this->assertEquals(1, $this->endCount);
     }
 
     public function testStartStop()
     {
 
         $test = new Success;
-        $test->run( $this->result );
+        $test->run($this->result);
 
-        $this->assertEquals( 1, $this->startCount );
-        $this->assertEquals( 1, $this->endCount );
+        $this->assertEquals(1, $this->startCount);
+        $this->assertEquals(1, $this->endCount);
     }
 
     protected function setUp()
     {
 
         $this->result = new PHPUnit_Framework_TestResult;
-        $this->result->addListener( $this );
+        $this->result->addListener($this);
 
         $this->endCount = 0;
         $this->failureCount = 0;

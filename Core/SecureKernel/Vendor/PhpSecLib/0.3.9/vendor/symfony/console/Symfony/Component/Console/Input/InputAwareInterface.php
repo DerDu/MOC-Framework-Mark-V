@@ -25,5 +25,5 @@ interface InputAwareInterface
      *
      * @param InputInterface
      */
-    public function setInput( InputInterface $input );
+    public function setInput(InputInterface $input);
 }

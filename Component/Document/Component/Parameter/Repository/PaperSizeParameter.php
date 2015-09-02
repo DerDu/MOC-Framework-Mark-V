@@ -20,10 +20,10 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Size
      */
-    function __construct( $Size = 'A4' )
+    function __construct($Size = 'A4')
     {
 
-        $this->setSize( $Size );
+        $this->setSize($Size);
     }
 
     /**
@@ -50,7 +50,7 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
      * @return IBridgeInterface
      * @throws ComponentException
      */
-    public function setSize( $Size )
+    public function setSize($Size)
     {
 
         switch ($Size) {
@@ -59,7 +59,7 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
                 return $this;
             }
             default:
-                throw new ComponentException( 'Size '.$Size.' not supported' );
+                throw new ComponentException('Size '.$Size.' not supported');
         }
 
     }

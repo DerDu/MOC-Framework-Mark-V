@@ -27,11 +27,11 @@ class ArrayEveryEntryToken implements TokenInterface
     /**
      * @param mixed $value exact value or token
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
 
         if (!$value instanceof TokenInterface) {
-            $value = new ExactValueToken( $value );
+            $value = new ExactValueToken($value);
         }
 
         $this->value = $value;
@@ -40,23 +40,23 @@ class ArrayEveryEntryToken implements TokenInterface
     /**
      * {@inheritdoc}
      */
-    public function scoreArgument( $argument )
+    public function scoreArgument($argument)
     {
 
-        if (!$argument instanceof \Traversable && !is_array( $argument )) {
+        if (!$argument instanceof \Traversable && !is_array($argument)) {
             return false;
         }
 
         $scores = array();
         foreach ($argument as $key => $argumentEntry) {
-            $scores[] = $this->value->scoreArgument( $argumentEntry );
+            $scores[] = $this->value->scoreArgument($argumentEntry);
         }
 
-        if (empty( $scores ) || in_array( false, $scores, true )) {
+        if (empty( $scores ) || in_array(false, $scores, true)) {
             return false;
         }
 
-        return array_sum( $scores ) / count( $scores );
+        return array_sum($scores) / count($scores);
     }
 
     /**
@@ -74,7 +74,7 @@ class ArrayEveryEntryToken implements TokenInterface
     public function __toString()
     {
 
-        return sprintf( '[%s, ..., %s]', $this->value, $this->value );
+        return sprintf('[%s, ..., %s]', $this->value, $this->value);
     }
 
     /**

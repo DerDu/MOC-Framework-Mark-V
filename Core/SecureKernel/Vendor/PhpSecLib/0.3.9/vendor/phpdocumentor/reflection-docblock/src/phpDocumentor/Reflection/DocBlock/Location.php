@@ -33,7 +33,7 @@ class Location
         $columnNumber = 0
     ) {
 
-        $this->setLineNumber( $lineNumber )->setColumnNumber( $columnNumber );
+        $this->setLineNumber($lineNumber)->setColumnNumber($columnNumber);
     }
 
     /**
@@ -51,7 +51,7 @@ class Location
      *
      * @return $this
      */
-    public function setLineNumber( $lineNumber )
+    public function setLineNumber($lineNumber)
     {
 
         $this->lineNumber = (int)$lineNumber;
@@ -74,7 +74,7 @@ class Location
      *
      * @return $this
      */
-    public function setColumnNumber( $columnNumber )
+    public function setColumnNumber($columnNumber)
     {
 
         $this->columnNumber = (int)$columnNumber;

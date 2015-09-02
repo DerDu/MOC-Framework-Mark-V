@@ -12,9 +12,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractVariableSniff', true ) === false) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -43,17 +43,17 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processMemberVar( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $memberProps = $phpcsFile->getMemberProperties( $stackPtr );
+        $memberProps = $phpcsFile->getMemberProperties($stackPtr);
         if (empty( $memberProps ) === true) {
             return;
         }
 
-        $memberName = ltrim( $tokens[$stackPtr]['content'], '$' );
+        $memberName = ltrim($tokens[$stackPtr]['content'], '$');
         $isPublic = ( $memberProps['scope'] === 'private' ) ? false : true;
         $scope = $memberProps['scope'];
         $scopeSpecified = $memberProps['scope_specified'];
@@ -61,8 +61,8 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
         // If it's a private member, it must have an underscore on the front.
         if ($isPublic === false && $memberName{0} !== '_') {
             $error = 'Private member variable "%s" must be prefixed with an underscore';
-            $data = array( $memberName );
-            $phpcsFile->addError( $error, $stackPtr, 'PrivateNoUnderscore', $data );
+            $data = array($memberName);
+            $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $data);
             return;
         }
 
@@ -70,10 +70,10 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
         if ($isPublic === true && $scopeSpecified === true && $memberName{0} === '_') {
             $error = '%s member variable "%s" must not be prefixed with an underscore';
             $data = array(
-                ucfirst( $scope ),
+                ucfirst($scope),
                 $memberName,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'PublicUnderscore', $data );
+            $phpcsFile->addError($error, $stackPtr, 'PublicUnderscore', $data);
             return;
         }
 
@@ -88,7 +88,7 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariable( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
 
@@ -103,7 +103,7 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariableInString( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
 

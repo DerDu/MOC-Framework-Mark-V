@@ -55,20 +55,20 @@ class Command
      *
      * @api
      */
-    public function __construct( $name = null )
+    public function __construct($name = null)
     {
 
         $this->definition = new InputDefinition();
 
         if (null !== $name) {
-            $this->setName( $name );
+            $this->setName($name);
         }
 
         $this->configure();
 
         if (!$this->name) {
-            throw new \LogicException( sprintf( 'The command defined in "%s" cannot have an empty name.',
-                get_class( $this ) ) );
+            throw new \LogicException(sprintf('The command defined in "%s" cannot have an empty name.',
+                get_class($this)));
         }
     }
 
@@ -106,7 +106,7 @@ class Command
      *
      * @param HelperSet $helperSet A HelperSet instance
      */
-    public function setHelperSet( HelperSet $helperSet )
+    public function setHelperSet(HelperSet $helperSet)
     {
 
         $this->helperSet = $helperSet;
@@ -132,12 +132,12 @@ class Command
      *
      * @api
      */
-    public function setApplication( Application $application = null )
+    public function setApplication(Application $application = null)
     {
 
         $this->application = $application;
         if ($application) {
-            $this->setHelperSet( $application->getHelperSet() );
+            $this->setHelperSet($application->getHelperSet());
         } else {
             $this->helperSet = null;
         }
@@ -176,7 +176,7 @@ class Command
      *
      * @api
      */
-    public function run( InputInterface $input, OutputInterface $output )
+    public function run(InputInterface $input, OutputInterface $output)
     {
 
         // force the creation of the synopsis before the merge with the app definition
@@ -187,38 +187,38 @@ class Command
 
         // bind the input against the command specific arguments/options
         try {
-            $input->bind( $this->definition );
-        } catch( \Exception $e ) {
+            $input->bind($this->definition);
+        } catch (\Exception $e) {
             if (!$this->ignoreValidationErrors) {
                 throw $e;
             }
         }
 
-        $this->initialize( $input, $output );
+        $this->initialize($input, $output);
 
         if (null !== $this->processTitle) {
-            if (function_exists( 'cli_set_process_title' )) {
-                cli_set_process_title( $this->processTitle );
-            } elseif (function_exists( 'setproctitle' )) {
-                setproctitle( $this->processTitle );
+            if (function_exists('cli_set_process_title')) {
+                cli_set_process_title($this->processTitle);
+            } elseif (function_exists('setproctitle')) {
+                setproctitle($this->processTitle);
             } elseif (OutputInterface::VERBOSITY_VERY_VERBOSE === $output->getVerbosity()) {
-                $output->writeln( '<comment>Install the proctitle PECL to be able to change the process title.</comment>' );
+                $output->writeln('<comment>Install the proctitle PECL to be able to change the process title.</comment>');
             }
         }
 
         if ($input->isInteractive()) {
-            $this->interact( $input, $output );
+            $this->interact($input, $output);
         }
 
         $input->validate();
 
         if ($this->code) {
-            $statusCode = call_user_func( $this->code, $input, $output );
+            $statusCode = call_user_func($this->code, $input, $output);
         } else {
-            $statusCode = $this->execute( $input, $output );
+            $statusCode = $this->execute($input, $output);
         }
 
-        return is_numeric( $statusCode ) ? (int)$statusCode : 0;
+        return is_numeric($statusCode) ? (int)$statusCode : 0;
     }
 
     /**
@@ -230,7 +230,7 @@ class Command
     {
 
         if (null === $this->synopsis) {
-            $this->synopsis = trim( sprintf( '%s %s', $this->name, $this->definition->getSynopsis() ) );
+            $this->synopsis = trim(sprintf('%s %s', $this->name, $this->definition->getSynopsis()));
         }
 
         return $this->synopsis;
@@ -243,7 +243,7 @@ class Command
      *
      * @param bool $mergeArgs Whether to merge or not the Application definition arguments to Command definition arguments
      */
-    public function mergeApplicationDefinition( $mergeArgs = true )
+    public function mergeApplicationDefinition($mergeArgs = true)
     {
 
         if (null === $this->application || ( true === $this->applicationDefinitionMerged && ( $this->applicationDefinitionMergedWithArgs || !$mergeArgs ) )) {
@@ -252,11 +252,11 @@ class Command
 
         if ($mergeArgs) {
             $currentArguments = $this->definition->getArguments();
-            $this->definition->setArguments( $this->application->getDefinition()->getArguments() );
-            $this->definition->addArguments( $currentArguments );
+            $this->definition->setArguments($this->application->getDefinition()->getArguments());
+            $this->definition->addArguments($currentArguments);
         }
 
-        $this->definition->addOptions( $this->application->getDefinition()->getOptions() );
+        $this->definition->addOptions($this->application->getDefinition()->getOptions());
 
         $this->applicationDefinitionMerged = true;
         if ($mergeArgs) {
@@ -273,7 +273,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function initialize( InputInterface $input, OutputInterface $output )
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
     }
 
@@ -287,7 +287,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function interact( InputInterface $input, OutputInterface $output )
+    protected function interact(InputInterface $input, OutputInterface $output)
     {
     }
 
@@ -308,10 +308,10 @@ class Command
      *
      * @see setCode()
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        throw new \LogicException( 'You must override the execute() method in the concrete command class.' );
+        throw new \LogicException('You must override the execute() method in the concrete command class.');
     }
 
     /**
@@ -330,11 +330,11 @@ class Command
      *
      * @api
      */
-    public function setCode( $code )
+    public function setCode($code)
     {
 
-        if (!is_callable( $code )) {
-            throw new \InvalidArgumentException( 'Invalid callable provided to Command::setCode.' );
+        if (!is_callable($code)) {
+            throw new \InvalidArgumentException('Invalid callable provided to Command::setCode.');
         }
 
         $this->code = $code;
@@ -380,13 +380,13 @@ class Command
      *
      * @api
      */
-    public function setDefinition( $definition )
+    public function setDefinition($definition)
     {
 
         if ($definition instanceof InputDefinition) {
             $this->definition = $definition;
         } else {
-            $this->definition->setDefinition( $definition );
+            $this->definition->setDefinition($definition);
         }
 
         $this->applicationDefinitionMerged = false;
@@ -406,10 +406,10 @@ class Command
      *
      * @api
      */
-    public function addArgument( $name, $mode = null, $description = '', $default = null )
+    public function addArgument($name, $mode = null, $description = '', $default = null)
     {
 
-        $this->definition->addArgument( new InputArgument( $name, $mode, $description, $default ) );
+        $this->definition->addArgument(new InputArgument($name, $mode, $description, $default));
 
         return $this;
     }
@@ -427,10 +427,10 @@ class Command
      *
      * @api
      */
-    public function addOption( $name, $shortcut = null, $mode = null, $description = '', $default = null )
+    public function addOption($name, $shortcut = null, $mode = null, $description = '', $default = null)
     {
 
-        $this->definition->addOption( new InputOption( $name, $shortcut, $mode, $description, $default ) );
+        $this->definition->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
 
         return $this;
     }
@@ -447,7 +447,7 @@ class Command
      *
      * @return Command The current instance
      */
-    public function setProcessTitle( $title )
+    public function setProcessTitle($title)
     {
 
         $this->processTitle = $title;
@@ -484,10 +484,10 @@ class Command
      *
      * @api
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
-        $this->validateName( $name );
+        $this->validateName($name);
 
         $this->name = $name;
 
@@ -516,7 +516,7 @@ class Command
      *
      * @api
      */
-    public function setDescription( $description )
+    public function setDescription($description)
     {
 
         $this->description = $description;
@@ -544,7 +544,7 @@ class Command
             $_SERVER['PHP_SELF'].' '.$name,
         );
 
-        return str_replace( $placeholders, $replacements, $this->getHelp() );
+        return str_replace($placeholders, $replacements, $this->getHelp());
     }
 
     /**
@@ -569,7 +569,7 @@ class Command
      *
      * @api
      */
-    public function setHelp( $help )
+    public function setHelp($help)
     {
 
         $this->help = $help;
@@ -601,15 +601,15 @@ class Command
      *
      * @api
      */
-    public function setAliases( $aliases )
+    public function setAliases($aliases)
     {
 
-        if (!is_array( $aliases ) && !$aliases instanceof \Traversable) {
-            throw new \InvalidArgumentException( '$aliases must be an array or an instance of \Traversable' );
+        if (!is_array($aliases) && !$aliases instanceof \Traversable) {
+            throw new \InvalidArgumentException('$aliases must be an array or an instance of \Traversable');
         }
 
         foreach ($aliases as $alias) {
-            $this->validateName( $alias );
+            $this->validateName($alias);
         }
 
         $this->aliases = $aliases;
@@ -626,11 +626,11 @@ class Command
      *
      * @throws \InvalidArgumentException When the name is invalid
      */
-    private function validateName( $name )
+    private function validateName($name)
     {
 
-        if (!preg_match( '/^[^\:]++(\:[^\:]++)*$/', $name )) {
-            throw new \InvalidArgumentException( sprintf( 'Command name "%s" is invalid.', $name ) );
+        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
+            throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
     }
 
@@ -645,10 +645,10 @@ class Command
      *
      * @api
      */
-    public function getHelper( $name )
+    public function getHelper($name)
     {
 
-        return $this->helperSet->get( $name );
+        return $this->helperSet->get($name);
     }
 
     /**
@@ -662,8 +662,8 @@ class Command
     {
 
         $descriptor = new TextDescriptor();
-        $output = new BufferedOutput( BufferedOutput::VERBOSITY_NORMAL, true );
-        $descriptor->describe( $output, $this, array( 'raw_output' => true ) );
+        $output = new BufferedOutput(BufferedOutput::VERBOSITY_NORMAL, true);
+        $descriptor->describe($output, $this, array('raw_output' => true));
 
         return $output->fetch();
     }
@@ -677,17 +677,17 @@ class Command
      *
      * @deprecated Deprecated since version 2.3, to be removed in 3.0.
      */
-    public function asXml( $asDom = false )
+    public function asXml($asDom = false)
     {
 
         $descriptor = new XmlDescriptor();
 
         if ($asDom) {
-            return $descriptor->getCommandDocument( $this );
+            return $descriptor->getCommandDocument($this);
         }
 
         $output = new BufferedOutput();
-        $descriptor->describe( $output, $this );
+        $descriptor->describe($output, $this);
 
         return $output->fetch();
     }

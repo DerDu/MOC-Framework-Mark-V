@@ -32,9 +32,9 @@ class TwigExtension extends \Twig_Extension
     {
 
         return array(
-            'desc'    => new \Twig_Filter_Method( $this, 'parseDesc',
-                array( 'needs_context' => true, 'is_safe' => array( 'html' ) ) ),
-            'snippet' => new \Twig_Filter_Method( $this, 'getSnippet' ),
+            'desc'    => new \Twig_Filter_Method($this, 'parseDesc',
+                array('needs_context' => true, 'is_safe' => array('html'))),
+            'snippet' => new \Twig_Filter_Method($this, 'getSnippet'),
         );
     }
 
@@ -47,85 +47,85 @@ class TwigExtension extends \Twig_Extension
     {
 
         return array(
-            'namespace_path' => new \Twig_Function_Method( $this, 'pathForNamespace',
-                array( 'needs_context' => true ) ),
-            'class_path'     => new \Twig_Function_Method( $this, 'pathForClass', array( 'needs_context' => true ) ),
-            'method_path'    => new \Twig_Function_Method( $this, 'pathForMethod', array( 'needs_context' => true ) ),
-            'property_path'  => new \Twig_Function_Method( $this, 'pathForProperty', array( 'needs_context' => true ) ),
-            'path'           => new \Twig_Function_Method( $this, 'pathForStaticFile',
-                array( 'needs_context' => true ) ),
-            'abbr_class'     => new \Twig_Function_Method( $this, 'abbrClass', array( 'is_safe' => array( 'html' ) ) ),
+            'namespace_path' => new \Twig_Function_Method($this, 'pathForNamespace',
+                array('needs_context' => true)),
+            'class_path'     => new \Twig_Function_Method($this, 'pathForClass', array('needs_context' => true)),
+            'method_path'    => new \Twig_Function_Method($this, 'pathForMethod', array('needs_context' => true)),
+            'property_path'  => new \Twig_Function_Method($this, 'pathForProperty', array('needs_context' => true)),
+            'path'           => new \Twig_Function_Method($this, 'pathForStaticFile',
+                array('needs_context' => true)),
+            'abbr_class'     => new \Twig_Function_Method($this, 'abbrClass', array('is_safe' => array('html'))),
         );
     }
 
-    public function setCurrentDepth( $depth )
+    public function setCurrentDepth($depth)
     {
 
         $this->currentDepth = $depth;
     }
 
-    public function pathForClass( array $context, ClassReflection $class )
+    public function pathForClass(array $context, ClassReflection $class)
     {
 
-        return $this->relativeUri( $this->currentDepth ).str_replace( '\\', '/', $class ).'.html';
+        return $this->relativeUri($this->currentDepth).str_replace('\\', '/', $class).'.html';
     }
 
-    protected function relativeUri( $value )
+    protected function relativeUri($value)
     {
 
         if (!$value) {
             return '';
         }
 
-        return rtrim( str_repeat( '../', $value ), '/' ).'/';
+        return rtrim(str_repeat('../', $value), '/').'/';
     }
 
-    public function pathForNamespace( array $context, $namespace )
+    public function pathForNamespace(array $context, $namespace)
     {
 
-        return $this->relativeUri( $this->currentDepth ).str_replace( '\\', '/', $namespace ).'.html';
+        return $this->relativeUri($this->currentDepth).str_replace('\\', '/', $namespace).'.html';
     }
 
-    public function pathForMethod( array $context, MethodReflection $method )
+    public function pathForMethod(array $context, MethodReflection $method)
     {
 
-        return $this->relativeUri( $this->currentDepth ).str_replace( '\\', '/',
-            $method->getClass()->getName() ).'.html#method_'.$method->getName();
+        return $this->relativeUri($this->currentDepth).str_replace('\\', '/',
+            $method->getClass()->getName()).'.html#method_'.$method->getName();
     }
 
-    public function pathForProperty( array $context, PropertyReflection $property )
+    public function pathForProperty(array $context, PropertyReflection $property)
     {
 
-        return $this->relativeUri( $this->currentDepth ).str_replace( '\\', '/',
-            $property->getClass()->getName() ).'.html#property_'.$property->getName();
+        return $this->relativeUri($this->currentDepth).str_replace('\\', '/',
+            $property->getClass()->getName()).'.html#property_'.$property->getName();
     }
 
-    public function pathForStaticFile( array $context, $file )
+    public function pathForStaticFile(array $context, $file)
     {
 
-        return $this->relativeUri( $this->currentDepth ).$file;
+        return $this->relativeUri($this->currentDepth).$file;
     }
 
-    public function abbrClass( $class )
+    public function abbrClass($class)
     {
 
         if ($class instanceof ClassReflection) {
             $short = $class->getShortName();
             $class = $class->getName();
         } else {
-            $parts = explode( '\\', $class );
+            $parts = explode('\\', $class);
 
-            if (1 == count( $parts )) {
+            if (1 == count($parts)) {
                 return $class;
             }
 
-            $short = array_pop( $parts );
+            $short = array_pop($parts);
         }
 
-        return sprintf( "<abbr title=\"%s\">%s</abbr>", $class, $short );
+        return sprintf("<abbr title=\"%s\">%s</abbr>", $class, $short);
     }
 
-    public function parseDesc( array $context, $desc, ClassReflection $class )
+    public function parseDesc(array $context, $desc, ClassReflection $class)
     {
 
         if (null === $this->markdown) {
@@ -134,22 +134,22 @@ class TwigExtension extends \Twig_Extension
 
         // FIXME: the @see argument is more complex than just a class (Class::Method, local method directly, ...)
         $that = $this;
-        $desc = preg_replace_callback( '/@see ([^ ]+)/', function ( $match ) use ( $that, $context, $class ) {
+        $desc = preg_replace_callback('/@see ([^ ]+)/', function ($match) use ($that, $context, $class) {
 
             return 'see '.$match[1];
-        }, $desc );
+        }, $desc);
 
-        return preg_replace( array( '#^<p>\s*#s', '#\s*</p>\s*$#s' ), '', $this->markdown->transform( $desc ) );
+        return preg_replace(array('#^<p>\s*#s', '#\s*</p>\s*$#s'), '', $this->markdown->transform($desc));
     }
 
-    public function getSnippet( $string )
+    public function getSnippet($string)
     {
 
-        if (preg_match( '/^(.{50,}?)\s.*/m', $string, $matches )) {
+        if (preg_match('/^(.{50,}?)\s.*/m', $string, $matches)) {
             $string = $matches[1];
         }
 
-        return str_replace( array( "\n", "\r" ), '', strip_tags( $string ) );
+        return str_replace(array("\n", "\r"), '', strip_tags($string));
     }
 
     /**

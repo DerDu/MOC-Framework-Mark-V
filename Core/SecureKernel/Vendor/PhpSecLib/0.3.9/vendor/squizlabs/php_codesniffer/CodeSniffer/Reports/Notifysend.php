@@ -83,17 +83,17 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     public function __construct()
     {
 
-        $path = PHP_CodeSniffer::getConfigData( 'notifysend_path' );
+        $path = PHP_CodeSniffer::getConfigData('notifysend_path');
         if ($path !== null) {
             $this->path = $path;
         }
 
-        $timeout = PHP_CodeSniffer::getConfigData( 'notifysend_timeout' );
+        $timeout = PHP_CodeSniffer::getConfigData('notifysend_timeout');
         if ($timeout !== null) {
             $this->timeout = (int)$timeout;
         }
 
-        $showOk = PHP_CodeSniffer::getConfigData( 'notifysend_showok' );
+        $showOk = PHP_CodeSniffer::getConfigData('notifysend_showok');
         if ($showOk !== null) {
             $this->showOk = (boolean)$showOk;
         }
@@ -101,7 +101,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $this->version = str_replace(
             'notify-send ',
             '',
-            exec( $this->path.' --version' )
+            exec($this->path.' --version')
         );
 
     }//end __construct()
@@ -158,13 +158,13 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $toScreen = true
     ) {
 
-        $msg = $this->generateMessage( $totalFiles, $totalErrors, $totalWarnings );
+        $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);
         if ($msg === null) {
             if ($this->showOk === true) {
                 $this->notifyAllFine();
             }
         } else {
-            $this->notifyErrors( $msg );
+            $this->notifyErrors($msg);
         }
 
     }//end generate()
@@ -179,7 +179,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      *
      * @return string Error message or NULL if no error/warning found.
      */
-    protected function generateMessage( $totalFiles, $totalErrors, $totalWarnings )
+    protected function generateMessage($totalFiles, $totalErrors, $totalWarnings)
     {
 
         if ($totalErrors === 0 && $totalWarnings === 0) {
@@ -219,7 +219,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $cmd .= ' -i info';
         $cmd .= ' "PHP CodeSniffer: Ok"';
         $cmd .= ' "All fine"';
-        exec( $cmd );
+        exec($cmd);
 
     }//end notifyAllFine()
 
@@ -231,11 +231,11 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     protected function getBasicCommand()
     {
 
-        $cmd = escapeshellcmd( $this->path );
+        $cmd = escapeshellcmd($this->path);
         $cmd .= ' --category dev.validate';
         $cmd .= ' -h int:transient:1';
         $cmd .= ' -t '.(int)$this->timeout;
-        if (version_compare( $this->version, '0.7.3', '>=' ) === true) {
+        if (version_compare($this->version, '0.7.3', '>=') === true) {
             $cmd .= ' -a phpcs';
         }
 
@@ -250,14 +250,14 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      *
      * @return void
      */
-    protected function notifyErrors( $msg )
+    protected function notifyErrors($msg)
     {
 
         $cmd = $this->getBasicCommand();
         $cmd .= ' -i error';
         $cmd .= ' "PHP CodeSniffer: Error"';
-        $cmd .= ' '.escapeshellarg( trim( $msg ) );
-        exec( $cmd );
+        $cmd .= ' '.escapeshellarg(trim($msg));
+        exec($cmd);
 
     }//end getBasicCommand()
 

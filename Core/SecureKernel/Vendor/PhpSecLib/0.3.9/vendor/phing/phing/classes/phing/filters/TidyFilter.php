@@ -55,7 +55,7 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
     public function createConfig()
     {
 
-        $num = array_push( $this->configParameters, new Parameter() );
+        $num = array_push($this->configParameters, new Parameter());
 
         return $this->configParameters[$num - 1];
     }
@@ -69,19 +69,19 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
      * @return the resulting stream, or -1 if the end of the resulting stream has been reached
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        if (!class_exists( 'Tidy' )) {
-            throw new BuildException( "You must enable the 'tidy' extension in your PHP configuration in order to use the Tidy filter." );
+        if (!class_exists('Tidy')) {
+            throw new BuildException("You must enable the 'tidy' extension in your PHP configuration in order to use the Tidy filter.");
         }
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
         if ($buffer === -1) {
             return -1;
         }
@@ -89,10 +89,10 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
         $config = $this->getDistilledConfig();
 
         $tidy = new Tidy();
-        $tidy->parseString( $buffer, $config, $this->encoding );
+        $tidy->parseString($buffer, $config, $this->encoding);
         $tidy->cleanRepair();
 
-        return tidy_get_output( $tidy );
+        return tidy_get_output($tidy);
 
     }
 
@@ -111,7 +111,7 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
                 } else {
 
                     if ($param->getName() == "encoding") {
-                        $this->setEncoding( $param->getValue() );
+                        $this->setEncoding($param->getValue());
                     }
 
                 }
@@ -125,7 +125,7 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
      *
      * @param string $v
      */
-    public function setEncoding( $v )
+    public function setEncoding($v)
     {
 
         $this->encoding = $v;
@@ -158,13 +158,13 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
      * @return a new filter based on this configuration, but filtering
      *           the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new TidyFilter( $reader );
-        $newFilter->setConfigParameters( $this->configParameters );
-        $newFilter->setEncoding( $this->encoding );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new TidyFilter($reader);
+        $newFilter->setConfigParameters($this->configParameters);
+        $newFilter->setEncoding($this->encoding);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -176,7 +176,7 @@ class TidyFilter extends BaseParamFilterReader implements ChainableReader
      *
      * @see chain()
      */
-    public function setConfigParameters( $params )
+    public function setConfigParameters($params)
     {
 
         $this->configParameters = $params;

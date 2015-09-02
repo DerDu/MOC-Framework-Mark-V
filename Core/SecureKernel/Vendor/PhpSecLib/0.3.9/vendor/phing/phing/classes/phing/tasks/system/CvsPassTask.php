@@ -310,9 +310,9 @@ class CvsPassTask extends Task
         $this->passFile = new PhingFile(
             Phing::getProperty(
                 "cygwin.user.home",
-                Phing::getProperty( "user.home" )
+                Phing::getProperty("user.home")
             )
-            .DIRECTORY_SEPARATOR.".cvspass" );
+            .DIRECTORY_SEPARATOR.".cvspass");
     }
 
     /**
@@ -324,15 +324,15 @@ class CvsPassTask extends Task
     {
 
         if ($this->cvsRoot === null) {
-            throw new BuildException( "cvsroot is required" );
+            throw new BuildException("cvsroot is required");
         }
         if ($this->password === null) {
-            throw new BuildException( "password is required" );
+            throw new BuildException("password is required");
         }
 
-        $this->log( "cvsRoot: ".$this->cvsRoot, Project::MSG_DEBUG );
-        $this->log( "password: ".$this->password, Project::MSG_DEBUG );
-        $this->log( "passFile: ".$this->passFile->__toString(), Project::MSG_DEBUG );
+        $this->log("cvsRoot: ".$this->cvsRoot, Project::MSG_DEBUG);
+        $this->log("password: ".$this->password, Project::MSG_DEBUG);
+        $this->log("passFile: ".$this->passFile->__toString(), Project::MSG_DEBUG);
 
         $reader = null;
         $writer = null;
@@ -341,22 +341,22 @@ class CvsPassTask extends Task
             $buf = "";
 
             if ($this->passFile->exists()) {
-                $reader = new BufferedReader( new FileReader( $this->passFile ) );
+                $reader = new BufferedReader(new FileReader($this->passFile));
 
                 $line = null;
                 while (( $line = $reader->readLine() ) !== null) {
-                    if (!StringHelper::startsWith( $this->cvsRoot, $line )) {
+                    if (!StringHelper::startsWith($this->cvsRoot, $line)) {
                         $buf .= $line.PHP_EOL;
                     }
                 }
             }
 
-            $pwdfile = $buf.$this->cvsRoot." A".$this->mangle( $this->password );
+            $pwdfile = $buf.$this->cvsRoot." A".$this->mangle($this->password);
 
-            $this->log( "Writing -> ".$pwdfile, Project::MSG_DEBUG );
+            $this->log("Writing -> ".$pwdfile, Project::MSG_DEBUG);
 
-            $writer = new BufferedWriter( new FileWriter( $this->passFile ) );
-            $writer->write( $pwdfile );
+            $writer = new BufferedWriter(new FileWriter($this->passFile));
+            $writer->write($pwdfile);
             $writer->newLine();
 
             $writer->close();
@@ -364,22 +364,22 @@ class CvsPassTask extends Task
                 $reader->close();
             }
 
-        } catch( IOException $e ) {
+        } catch (IOException $e) {
             if ($reader) {
                 try {
                     $reader->close();
-                } catch( Exception $e ) {
+                } catch (Exception $e) {
                 }
             }
 
             if ($writer) {
                 try {
                     $writer->close();
-                } catch( Exception $e ) {
+                } catch (Exception $e) {
                 }
             }
 
-            throw new BuildException( $e );
+            throw new BuildException($e);
         }
     }
 
@@ -390,12 +390,12 @@ class CvsPassTask extends Task
      *
      * @return string
      */
-    final private function mangle( $password )
+    final private function mangle($password)
     {
 
         $buf = "";
-        for ($i = 0, $plen = strlen( $password ); $i < $plen; $i++) {
-            $buf .= chr( self::$shifts[ord( $password{$i} )] );
+        for ($i = 0, $plen = strlen($password); $i < $plen; $i++) {
+            $buf .= chr(self::$shifts[ord($password{$i})]);
         }
 
         return $buf;
@@ -406,7 +406,7 @@ class CvsPassTask extends Task
      *
      * @param string $cvsRoot
      */
-    public function setCvsroot( $cvsRoot )
+    public function setCvsroot($cvsRoot)
     {
 
         $this->cvsRoot = $cvsRoot;
@@ -417,7 +417,7 @@ class CvsPassTask extends Task
      *
      * @param PhingFile $passFile
      */
-    public function setPassfile( PhingFile $passFile )
+    public function setPassfile(PhingFile $passFile)
     {
 
         $this->passFile = $passFile;
@@ -428,7 +428,7 @@ class CvsPassTask extends Task
      *
      * @param string $password
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;

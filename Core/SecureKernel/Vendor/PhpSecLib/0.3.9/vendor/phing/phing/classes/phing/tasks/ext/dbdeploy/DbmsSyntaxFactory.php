@@ -37,7 +37,7 @@ class DbmsSyntaxFactory
     /**
      * @param $dbms
      */
-    public function __construct( $dbms )
+    public function __construct($dbms)
     {
 
         $this->dbms = $dbms;
@@ -70,7 +70,7 @@ class DbmsSyntaxFactory
 
                 return new DbmsSyntaxOracle();
             default:
-                throw new Exception( $this->dbms.' is not supported by dbdeploy task.' );
+                throw new Exception($this->dbms.' is not supported by dbdeploy task.');
         }
     }
 }

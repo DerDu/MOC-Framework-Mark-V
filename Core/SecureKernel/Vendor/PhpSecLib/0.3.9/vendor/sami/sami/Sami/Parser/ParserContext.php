@@ -28,7 +28,7 @@ class ParserContext
     protected $hash;
     protected $classes;
 
-    public function __construct( FilterInterface $filter, DocBlockParser $docBlockParser, $prettyPrinter )
+    public function __construct(FilterInterface $filter, DocBlockParser $docBlockParser, $prettyPrinter)
     {
 
         $this->filter = $filter;
@@ -54,7 +54,7 @@ class ParserContext
         return $this->prettyPrinter;
     }
 
-    public function addAlias( $alias, $name )
+    public function addAlias($alias, $name)
     {
 
         $this->aliases[$alias] = $name;
@@ -66,7 +66,7 @@ class ParserContext
         return $this->aliases;
     }
 
-    public function enterFile( $file, $hash )
+    public function enterFile($file, $hash)
     {
 
         $this->file = $file;
@@ -97,18 +97,18 @@ class ParserContext
         return $this->file;
     }
 
-    public function addErrors( $name, $line, array $errors )
+    public function addErrors($name, $line, array $errors)
     {
 
         foreach ($errors as $error) {
-            $this->addError( $name, $line, $error );
+            $this->addError($name, $line, $error);
         }
     }
 
-    public function addError( $name, $line, $error )
+    public function addError($name, $line, $error)
     {
 
-        $this->errors[] = sprintf( 'An error occurred while parsing "%s" line "%d": %s', $name, $line, $error );
+        $this->errors[] = sprintf('An error occurred while parsing "%s" line "%d": %s', $name, $line, $error);
     }
 
     public function getErrors()
@@ -117,7 +117,7 @@ class ParserContext
         return $this->errors;
     }
 
-    public function enterClass( ClassReflection $class )
+    public function enterClass(ClassReflection $class)
     {
 
         $this->class = $class;
@@ -136,7 +136,7 @@ class ParserContext
         return $this->class;
     }
 
-    public function enterNamespace( $namespace )
+    public function enterNamespace($namespace)
     {
 
         $this->namespace = $namespace;

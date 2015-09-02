@@ -36,13 +36,13 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
 
     /** @var array cURL multi error values and codes */
     protected $multiErrors = array(
-        CURLM_BAD_HANDLE => array('CURLM_BAD_HANDLE', 'The passed-in handle is not a valid CURLM handle.'),
+        CURLM_BAD_HANDLE      => array('CURLM_BAD_HANDLE', 'The passed-in handle is not a valid CURLM handle.'),
         CURLM_BAD_EASY_HANDLE => array(
             'CURLM_BAD_EASY_HANDLE',
             "An easy handle was not good/valid. It could mean that it isn't an easy handle at all, or possibly that the handle already is in used by this or another multi handle."
         ),
-        CURLM_OUT_OF_MEMORY => array('CURLM_OUT_OF_MEMORY', 'You are doomed.'),
-        CURLM_INTERNAL_ERROR => array(
+        CURLM_OUT_OF_MEMORY   => array('CURLM_OUT_OF_MEMORY', 'You are doomed.'),
+        CURLM_INTERNAL_ERROR  => array(
             'CURLM_INTERNAL_ERROR',
             'This can only be returned if libcurl bugs. Please report it to us!'
         )

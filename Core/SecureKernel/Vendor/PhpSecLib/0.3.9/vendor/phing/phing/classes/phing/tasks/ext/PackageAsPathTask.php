@@ -45,13 +45,13 @@ class PackageAsPathTask extends Task
     public function main()
     {
 
-        $this->project->setUserProperty( $this->name, strtr( $this->pckg, '.', '/' ) );
+        $this->project->setUserProperty($this->name, strtr($this->pckg, '.', '/'));
     }
 
     /**
      * @param string $pckg the package to convert
      */
-    public function setPackage( $pckg )
+    public function setPackage($pckg)
     {
 
         $this->pckg = $pckg;
@@ -60,7 +60,7 @@ class PackageAsPathTask extends Task
     /**
      * @param string $name the Ant variable to store the path in
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;

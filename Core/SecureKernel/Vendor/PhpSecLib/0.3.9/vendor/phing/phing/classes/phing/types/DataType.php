@@ -80,7 +80,7 @@ class DataType extends ProjectComponent
      *
      * @return void
      */
-    public function setDescription( $desc )
+    public function setDescription($desc)
     {
 
         $this->description = (string)$desc;
@@ -97,7 +97,7 @@ class DataType extends ProjectComponent
      *
      * @return void
      */
-    public function setRefid( Reference $r )
+    public function setRefid(Reference $r)
     {
 
         $this->ref = $r;
@@ -114,19 +114,19 @@ class DataType extends ProjectComponent
      *
      * @return mixed
      */
-    public function getCheckedRef( $requiredClass, $dataTypeName )
+    public function getCheckedRef($requiredClass, $dataTypeName)
     {
 
         if (!$this->checked) {
             // should be in stack
             $stk = array();
             $stk[] = $this;
-            $this->dieOnCircularReference( $stk, $this->getProject() );
+            $this->dieOnCircularReference($stk, $this->getProject());
         }
 
-        $o = $this->ref->getReferencedObject( $this->getProject() );
+        $o = $this->ref->getReferencedObject($this->getProject());
         if (!( $o instanceof $requiredClass )) {
-            throw new BuildException( $this->ref->getRefId()." doesn't denote a ".$dataTypeName );
+            throw new BuildException($this->ref->getRefId()." doesn't denote a ".$dataTypeName);
         } else {
             return $o;
         }
@@ -153,14 +153,14 @@ class DataType extends ProjectComponent
      *
      * @throws BuildException
      */
-    public function dieOnCircularReference( &$stk, Project $p )
+    public function dieOnCircularReference(&$stk, Project $p)
     {
 
         if ($this->checked || !$this->isReference()) {
             return;
         }
 
-        $o = $this->ref->getReferencedObject( $p );
+        $o = $this->ref->getReferencedObject($p);
 
         if ($o instanceof DataType) {
 
@@ -175,13 +175,13 @@ class DataType extends ProjectComponent
             //    }
             //}
 
-            if (in_array( $o, $stk, true )) {
+            if (in_array($o, $stk, true)) {
                 // throw build exception
                 throw $this->circularReference();
             } else {
-                array_push( $stk, $o );
-                $o->dieOnCircularReference( $stk, $p );
-                array_pop( $stk );
+                array_push($stk, $o);
+                $o->dieOnCircularReference($stk, $p);
+                array_pop($stk);
             }
         }
         $this->checked = true;
@@ -207,7 +207,7 @@ class DataType extends ProjectComponent
     public function circularReference()
     {
 
-        return new BuildException( "This data type contains a circular reference." );
+        return new BuildException("This data type contains a circular reference.");
     }
 
     /**
@@ -219,7 +219,7 @@ class DataType extends ProjectComponent
     public function tooManyAttributes()
     {
 
-        return new BuildException( "You must not specify more than one attribute when using refid" );
+        return new BuildException("You must not specify more than one attribute when using refid");
     }
 
     /**
@@ -231,7 +231,7 @@ class DataType extends ProjectComponent
     public function noChildrenAllowed()
     {
 
-        return new BuildException( "You must not specify nested elements when using refid" );
+        return new BuildException("You must not specify nested elements when using refid");
     }
 
     /**

@@ -13,8 +13,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractVariableSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found' );
+if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
 }
 
 /**
@@ -41,16 +41,16 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
      *
      * @return void
      */
-    protected function processMemberVar( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
-        $modifier = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr );
+        $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
         if (( $modifier === false ) || ( $tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'] )) {
             $error = 'Scope modifier not specified for member variable "%s"';
-            $data = array( $tokens[$stackPtr]['content'] );
-            $phpcsFile->addError( $error, $stackPtr, 'Missing', $data );
+            $data = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 
     }//end processMemberVar()
@@ -64,7 +64,7 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
      *
      * @return void
      */
-    protected function processVariable( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
 
@@ -79,7 +79,7 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
      *
      * @return void
      */
-    protected function processVariableInString( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
 

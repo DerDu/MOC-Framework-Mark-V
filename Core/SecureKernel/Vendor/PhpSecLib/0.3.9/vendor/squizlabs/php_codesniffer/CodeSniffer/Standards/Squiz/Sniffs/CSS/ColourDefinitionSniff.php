@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_COLOUR );
+        return array(T_COLOUR);
 
     }//end register()
 
@@ -58,24 +58,24 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
         $colour = $tokens[$stackPtr]['content'];
 
-        $expected = strtoupper( $colour );
+        $expected = strtoupper($colour);
         if ($colour !== $expected) {
             $error = 'CSS colours must be defined in uppercase; expected %s but found %s';
             $data = array(
                 $expected,
                 $colour,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'NotUpper', $data );
+            $phpcsFile->addError($error, $stackPtr, 'NotUpper', $data);
         }
 
         // Now check if shorthand can be used.
-        if (strlen( $colour ) !== 7) {
+        if (strlen($colour) !== 7) {
             return;
         }
 
@@ -86,7 +86,7 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
                 $expected,
                 $colour,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'Shorthand', $data );
+            $phpcsFile->addError($error, $stackPtr, 'Shorthand', $data);
         }
 
     }//end process()

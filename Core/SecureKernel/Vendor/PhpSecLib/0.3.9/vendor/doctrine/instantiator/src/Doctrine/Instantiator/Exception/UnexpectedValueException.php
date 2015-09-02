@@ -37,7 +37,7 @@ class UnexpectedValueException extends BaseUnexpectedValueException implements E
      *
      * @return self
      */
-    public static function fromSerializationTriggeredException( ReflectionClass $reflectionClass, Exception $exception )
+    public static function fromSerializationTriggeredException(ReflectionClass $reflectionClass, Exception $exception)
     {
 
         return new self(
@@ -76,7 +76,7 @@ class UnexpectedValueException extends BaseUnexpectedValueException implements E
                 $errorLine
             ),
             0,
-            new Exception( $errorString, $errorCode )
+            new Exception($errorString, $errorCode)
         );
     }
 }

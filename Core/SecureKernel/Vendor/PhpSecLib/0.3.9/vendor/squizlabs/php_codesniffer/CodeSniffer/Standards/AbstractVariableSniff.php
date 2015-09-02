@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -77,7 +77,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
             T_HEREDOC,
         );
 
-        parent::__construct( $scopes, $listen, true );
+        parent::__construct($scopes, $listen, true);
 
     }//end __construct()
 
@@ -115,7 +115,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
         ) {
             $this->_functionOpen = true;
 
-            $methodProps = $phpcsFile->getMethodProperties( $stackPtr );
+            $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
             // If the function is abstract, or is in an interface,
             // then set the end of the function to it's closing semicolon.
@@ -123,11 +123,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
                 || $tokens[$currScope]['code'] === T_INTERFACE
             ) {
                 $this->_endFunction
-                    = $phpcsFile->findNext( array( T_SEMICOLON ), $stackPtr );
+                    = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
             } else {
                 if (isset( $tokens[$stackPtr]['scope_closer'] ) === false) {
                     $error = 'Possible parse error: non-abstract method defined as abstract';
-                    $phpcsFile->addWarning( $error, $stackPtr );
+                    $phpcsFile->addWarning($error, $stackPtr);
                     return;
                 }
 
@@ -140,8 +140,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
         ) {
             // Check to see if this string has a variable in it.
             $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
-            if (preg_match( $pattern, $tokens[$stackPtr]['content'] ) !== 0) {
-                $this->processVariableInString( $phpcsFile, $stackPtr );
+            if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
+                $this->processVariableInString($phpcsFile, $stackPtr);
             }
 
             return;
@@ -149,12 +149,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
         if ($this->_functionOpen === true) {
             if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-                $this->processVariable( $phpcsFile, $stackPtr );
+                $this->processVariable($phpcsFile, $stackPtr);
             }
         } else {
             // What if we assign a member variable to another?
             // ie. private $_count = $this->_otherCount + 1;.
-            $this->processMemberVar( $phpcsFile, $stackPtr );
+            $this->processMemberVar($phpcsFile, $stackPtr);
         }
 
     }//end processTokenWithinScope()
@@ -222,15 +222,15 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
         $tokens = $phpcsFile->getTokens();
         // These variables are not member vars.
         if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-            $this->processVariable( $phpcsFile, $stackPtr );
+            $this->processVariable($phpcsFile, $stackPtr);
         } else {
             if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
                 || $tokens[$stackPtr]['code'] === T_HEREDOC
             ) {
                 // Check to see if this string has a variable in it.
                 $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
-                if (preg_match( $pattern, $tokens[$stackPtr]['content'] ) !== 0) {
-                    $this->processVariableInString( $phpcsFile, $stackPtr );
+                if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
+                    $this->processVariableInString($phpcsFile, $stackPtr);
                 }
             }
         }

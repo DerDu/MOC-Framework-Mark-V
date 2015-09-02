@@ -26,13 +26,13 @@ class ParseCommand extends Command
 
         parent::configure();
 
-        $this->getDefinition()->addOption( new InputOption( 'force', '', InputOption::VALUE_NONE,
-            'Forces to rebuild from scratch', null ) );
+        $this->getDefinition()->addOption(new InputOption('force', '', InputOption::VALUE_NONE,
+            'Forces to rebuild from scratch', null));
 
         $this
-            ->setName( 'parse' )
-            ->setDescription( 'Parses a project' )
-            ->setHelp( <<<EOF
+            ->setName('parse')
+            ->setDescription('Parses a project')
+            ->setHelp(<<<EOF
 The <info>%command.name%</info> command parses a project and generates a database
 with API information:
 
@@ -56,11 +56,11 @@ EOF
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( '<bg=cyan;fg=white> Parsing project </>' );
+        $output->writeln('<bg=cyan;fg=white> Parsing project </>');
 
-        $this->parse( $this->sami['project'] );
+        $this->parse($this->sami['project']);
     }
 }

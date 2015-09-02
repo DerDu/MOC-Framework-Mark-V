@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true ) === false) {
+if (class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true) === false) {
     $error = 'Class Generic_Sniffs_WhiteSpace_ScopeIndentSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -41,7 +41,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace_
      *
      * @var array(int)
      */
-    protected $nonIndentingScopes = array( T_SWITCH );
+    protected $nonIndentingScopes = array(T_SWITCH);
 
 }//end class
 

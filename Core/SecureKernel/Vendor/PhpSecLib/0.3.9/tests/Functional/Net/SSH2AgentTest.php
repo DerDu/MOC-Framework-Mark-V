@@ -22,11 +22,11 @@ class Functional_Net_SSH2AgentTest extends PhpseclibFunctionalTestCase
     public function testAgentLogin()
     {
 
-        $ssh = new Net_SSH2( $this->getEnv( 'SSH_HOSTNAME' ) );
+        $ssh = new Net_SSH2($this->getEnv('SSH_HOSTNAME'));
         $agent = new System_SSH_Agent;
 
         $this->assertTrue(
-            $ssh->login( $this->getEnv( 'SSH_USERNAME' ), $agent ),
+            $ssh->login($this->getEnv('SSH_USERNAME'), $agent),
             'SSH2 login using Agent failed.'
         );
     }

@@ -70,7 +70,7 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
      * @param array   $parameters
      * @param boolean $cloneObjects
      */
-    public function __construct( $className, $methodName, array $parameters, $cloneObjects = false )
+    public function __construct($className, $methodName, array $parameters, $cloneObjects = false)
     {
 
         $this->className = $className;
@@ -82,8 +82,8 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
         }
 
         foreach ($this->parameters as $key => $value) {
-            if (is_object( $value )) {
-                $this->parameters[$key] = $this->cloneObject( $value );
+            if (is_object($value)) {
+                $this->parameters[$key] = $this->cloneObject($value);
             }
         }
     }
@@ -93,11 +93,11 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
      *
      * @return object
      */
-    protected function cloneObject( $original )
+    protected function cloneObject($original)
     {
 
         $cloneable = null;
-        $object = new ReflectionObject( $original );
+        $object = new ReflectionObject($original);
 
         // Check the blacklist before asking PHP reflection to work around
         // https://bugs.php.net/bug.php?id=53967
@@ -116,12 +116,12 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
             }
         }
 
-        if ($cloneable === null && method_exists( $object, 'isCloneable' )) {
+        if ($cloneable === null && method_exists($object, 'isCloneable')) {
             $cloneable = $object->isCloneable();
         }
 
-        if ($cloneable === null && $object->hasMethod( '__clone' )) {
-            $method = $object->getMethod( '__clone' );
+        if ($cloneable === null && $object->hasMethod('__clone')) {
+            $method = $object->getMethod('__clone');
             $cloneable = $method->isPublic();
         }
 
@@ -132,7 +132,7 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
         if ($cloneable) {
             try {
                 return clone $original;
-            } catch( Exception $e ) {
+            } catch (Exception $e) {
                 return $original;
             }
         } else {
@@ -155,7 +155,7 @@ class PHPUnit_Framework_MockObject_Invocation_Static implements PHPUnit_Framewor
             join(
                 ', ',
                 array_map(
-                    array( $exporter, 'shortenedExport' ),
+                    array($exporter, 'shortenedExport'),
                     $this->parameters
                 )
             )

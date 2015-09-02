@@ -47,13 +47,13 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
         $exLineCount
     ) {
 
-        $tag = new SourceTag( $type, $content );
+        $tag = new SourceTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exStartingLine, $tag->getStartingLine() );
-        $this->assertEquals( $exLineCount, $tag->getLineCount() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exStartingLine, $tag->getStartingLine());
+        $this->assertEquals($exLineCount, $tag->getLineCount());
     }
 
     /**

@@ -16,6 +16,7 @@
  */
 class PHPUnit_Framework_MockObject_Matcher_InvokedAtMostCount extends PHPUnit_Framework_MockObject_Matcher_InvokedRecorder
 {
+
     /**
      * @var int
      */
@@ -26,6 +27,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtMostCount extends PHPUnit_Fr
      */
     public function __construct($allowedInvocations)
     {
+
         $this->allowedInvocations = $allowedInvocations;
     }
 
@@ -46,6 +48,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtMostCount extends PHPUnit_Fr
      */
     public function verify()
     {
+
         $count = $this->getInvocationCount();
 
         if ($count > $this->allowedInvocations) {

@@ -92,16 +92,16 @@ class PearPackageFileSet extends FileSet
      *
      * @return PearPackageScanner
      */
-    public function getDirectoryScanner( Project $p )
+    public function getDirectoryScanner(Project $p)
     {
 
         if ($this->isReference()) {
-            $obj = $this->getRef( $p );
+            $obj = $this->getRef($p);
 
-            return $obj->getDirectoryScanner( $p );
+            return $obj->getDirectoryScanner($p);
         }
 
-        $this->loadPearPackageScanner( $p );
+        $this->loadPearPackageScanner($p);
 
         return $this->pps;
     }
@@ -113,17 +113,17 @@ class PearPackageFileSet extends FileSet
      *
      * @return void
      */
-    protected function loadPearPackageScanner( Project $p )
+    protected function loadPearPackageScanner(Project $p)
     {
 
         $this->pps = new PearPackageScanner();
-        $this->pps->setDescFile( $this->packageFile );
-        $this->pps->setPackage( $this->package );
-        $this->pps->setChannel( $this->channel );
-        $this->pps->setRole( $this->role );
-        $this->pps->setConfig( $this->config );
-        $this->pps->setIncludes( $this->defaultPatterns->getIncludePatterns( $p ) );
-        $this->pps->setExcludes( $this->defaultPatterns->getExcludePatterns( $p ) );
+        $this->pps->setDescFile($this->packageFile);
+        $this->pps->setPackage($this->package);
+        $this->pps->setChannel($this->channel);
+        $this->pps->setRole($this->role);
+        $this->pps->setConfig($this->config);
+        $this->pps->setIncludes($this->defaultPatterns->getIncludePatterns($p));
+        $this->pps->setExcludes($this->defaultPatterns->getExcludePatterns($p));
         $this->pps->scan();
     }
 
@@ -134,14 +134,14 @@ class PearPackageFileSet extends FileSet
      *
      * @return PhingFile Base directory
      */
-    public function getDir( Project $p )
+    public function getDir(Project $p)
     {
 
         if ($this->pps === null) {
-            $this->loadPearPackageScanner( $p );
+            $this->loadPearPackageScanner($p);
         }
 
-        return new PhingFile( (string)$this->pps->getBaseDir() );
+        return new PhingFile((string)$this->pps->getBaseDir());
     }
 
     /**
@@ -152,7 +152,7 @@ class PearPackageFileSet extends FileSet
      *
      * @return void
      */
-    public function setDescFile( $descFile )
+    public function setDescFile($descFile)
     {
 
         $this->packageFile = $descFile;
@@ -167,15 +167,15 @@ class PearPackageFileSet extends FileSet
      * @throws BuildException
      * @return void
      */
-    public function setPackage( $package )
+    public function setPackage($package)
     {
 
-        $parts = explode( '/', $package );
-        if (count( $parts ) > 2) {
-            throw new BuildException( 'Invalid package name: '.$package );
+        $parts = explode('/', $package);
+        if (count($parts) > 2) {
+            throw new BuildException('Invalid package name: '.$package);
         }
 
-        if (count( $parts ) == 1) {
+        if (count($parts) == 1) {
             $this->channel = 'pear.php.net';
             $this->package = $parts[0];
         } else {
@@ -192,7 +192,7 @@ class PearPackageFileSet extends FileSet
      *
      * @return void
      */
-    public function setRole( $role )
+    public function setRole($role)
     {
 
         $this->role = $role;
@@ -205,7 +205,7 @@ class PearPackageFileSet extends FileSet
      *
      * @return void
      */
-    public function setConfig( $config )
+    public function setConfig($config)
     {
 
         $this->config = $config;

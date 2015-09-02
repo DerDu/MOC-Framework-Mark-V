@@ -27,7 +27,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
         $obj2 = new \stdClass;
         $obj2->foo = 'bar';
 
-        $obj3 = (object)array( 1, 2, "Test\r\n", 4, 5, 6, 7, 8 );
+        $obj3 = (object)array(1, 2, "Test\r\n", 4, 5, 6, 7, 8);
 
         $obj = new \stdClass;
         //@codingStandardsIgnoreStart
@@ -40,24 +40,24 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
         $obj->text = "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext";
         $obj->object = $obj2;
         $obj->objectagain = $obj2;
-        $obj->array = array( 'foo' => 'bar' );
+        $obj->array = array('foo' => 'bar');
         $obj->self = $obj;
 
         $storage = new \SplObjectStorage;
-        $storage->attach( $obj2 );
+        $storage->attach($obj2);
         $storage->foo = $obj2;
 
         return array(
-            array( null, 'null' ),
-            array( true, 'true' ),
-            array( false, 'false' ),
-            array( 1, '1' ),
-            array( 1.0, '1.0' ),
-            array( 1.2, '1.2' ),
-            array( fopen( 'php://memory', 'r' ), 'resource(%d) of type (stream)' ),
-            array( '1', "'1'" ),
+            array(null, 'null'),
+            array(true, 'true'),
+            array(false, 'false'),
+            array(1, '1'),
+            array(1.0, '1.0'),
+            array(1.2, '1.2'),
+            array(fopen('php://memory', 'r'), 'resource(%d) of type (stream)'),
+            array('1', "'1'"),
             array(
-                array( array( 1, 2, 3 ), array( 3, 4, 5 ) ),
+                array(array(1, 2, 3), array(3, 4, 5)),
                 <<<EOF
         Array &0 (
     0 => Array &1 (
@@ -90,7 +90,7 @@ long
 text'
 EOF
             ),
-            array( new \stdClass, 'stdClass Object &%x ()' ),
+            array(new \stdClass, 'stdClass Object &%x ()'),
             array(
                 $obj,
                 <<<EOF
@@ -122,7 +122,7 @@ text'
 )
 EOF
             ),
-            array( array(), 'Array &%d ()' ),
+            array(array(), 'Array &%d ()'),
             array(
                 $storage,
                 <<<EOF
@@ -153,15 +153,15 @@ EOF
 EOF
             ),
             array(
-                chr( 0 ).chr( 1 ).chr( 2 ).chr( 3 ).chr( 4 ).chr( 5 ),
+                chr(0).chr(1).chr(2).chr(3).chr(4).chr(5),
                 'Binary String: 0x000102030405'
             ),
             array(
-                implode( '', array_map( 'chr', range( 0x0e, 0x1f ) ) ),
+                implode('', array_map('chr', range(0x0e, 0x1f))),
                 'Binary String: 0x0e0f101112131415161718191a1b1c1d1e1f'
             ),
             array(
-                chr( 0x00 ).chr( 0x09 ),
+                chr(0x00).chr(0x09),
                 'Binary String: 0x0009'
             ),
             array(
@@ -174,26 +174,26 @@ EOF
     /**
      * @dataProvider exportProvider
      */
-    public function testExport( $value, $expected )
+    public function testExport($value, $expected)
     {
 
         $this->assertStringMatchesFormat(
             $expected,
-            $this->trimNewline( $this->exporter->export( $value ) )
+            $this->trimNewline($this->exporter->export($value))
         );
     }
 
-    private function trimNewline( $string )
+    private function trimNewline($string)
     {
 
-        return preg_replace( '/[ ]*\n/', "\n", $string );
+        return preg_replace('/[ ]*\n/', "\n", $string);
     }
 
     public function testExport2()
     {
 
         if (PHP_VERSION === '5.3.3') {
-            $this->markTestSkipped( 'Skipped due to "Nesting level too deep - recursive dependency?" fatal error' );
+            $this->markTestSkipped('Skipped due to "Nesting level too deep - recursive dependency?" fatal error');
         }
 
         $obj = new \stdClass;
@@ -209,7 +209,7 @@ EOF
             'text'        => "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
             'object'      => $obj,
             'objectagain' => $obj,
-            'array'       => array( 'foo' => 'bar' ),
+            'array'       => array('foo' => 'bar'),
         );
 
         $array['self'] = &$array;
@@ -270,7 +270,7 @@ EOF;
 
         $this->assertStringMatchesFormat(
             $expected,
-            $this->trimNewline( $this->exporter->export( $array ) )
+            $this->trimNewline($this->exporter->export($array))
         );
     }
 
@@ -285,33 +285,33 @@ EOF;
         );
 
         return array(
-            array( null, 'null' ),
-            array( true, 'true' ),
-            array( 1, '1' ),
-            array( 1.0, '1.0' ),
-            array( 1.2, '1.2' ),
-            array( '1', "'1'" ),
+            array(null, 'null'),
+            array(true, 'true'),
+            array(1, '1'),
+            array(1.0, '1.0'),
+            array(1.2, '1.2'),
+            array('1', "'1'"),
             // \n\r and \r is converted to \n
             array(
                 "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
                 "'this\\nis\\na\\nvery\\nvery\\nvery\\nvery...g\\ntext'"
             ),
-            array( new \stdClass, 'stdClass Object ()' ),
-            array( $obj, 'stdClass Object (...)' ),
-            array( array(), 'Array ()' ),
-            array( $array, 'Array (...)' ),
+            array(new \stdClass, 'stdClass Object ()'),
+            array($obj, 'stdClass Object (...)'),
+            array(array(), 'Array ()'),
+            array($array, 'Array (...)'),
         );
     }
 
     /**
      * @dataProvider shortenedExportProvider
      */
-    public function testShortenedExport( $value, $expected )
+    public function testShortenedExport($value, $expected)
     {
 
         $this->assertSame(
             $expected,
-            $this->trimNewline( $this->exporter->shortenedExport( $value ) )
+            $this->trimNewline($this->exporter->shortenedExport($value))
         );
     }
 
@@ -319,9 +319,9 @@ EOF;
     {
 
         return array(
-            array( implode( '', array_map( 'chr', range( 0x09, 0x0d ) ) ), 5 ),
-            array( implode( '', array_map( 'chr', range( 0x20, 0x7f ) ) ), 96 ),
-            array( implode( '', array_map( 'chr', range( 0x80, 0xff ) ) ), 128 ),
+            array(implode('', array_map('chr', range(0x09, 0x0d))), 5),
+            array(implode('', array_map('chr', range(0x20, 0x7f))), 96),
+            array(implode('', array_map('chr', range(0x80, 0xff))), 128),
         );
     }
 
@@ -329,19 +329,19 @@ EOF;
     /**
      * @dataProvider provideNonBinaryMultibyteStrings
      */
-    public function testNonBinaryStringExport( $value, $expectedLength )
+    public function testNonBinaryStringExport($value, $expectedLength)
     {
 
         $this->assertRegExp(
             "~'.{{$expectedLength}}'\$~s",
-            $this->exporter->export( $value )
+            $this->exporter->export($value)
         );
     }
 
     public function testNonObjectCanBeReturnedAsArray()
     {
 
-        $this->assertEquals( array( true ), $this->exporter->toArray( true ) );
+        $this->assertEquals(array(true), $this->exporter->toArray(true));
     }
 
     protected function setUp()

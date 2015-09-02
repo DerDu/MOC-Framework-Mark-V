@@ -31,7 +31,7 @@ class PHP_CodeCoverage_Report_Node_Iterator implements RecursiveIterator
      *
      * @param PHP_CodeCoverage_Report_Node_Directory $node
      */
-    public function __construct( PHP_CodeCoverage_Report_Node_Directory $node )
+    public function __construct(PHP_CodeCoverage_Report_Node_Directory $node)
     {
 
         $this->nodes = $node->getChildNodes();
@@ -77,7 +77,7 @@ class PHP_CodeCoverage_Report_Node_Iterator implements RecursiveIterator
     public function valid()
     {
 
-        return $this->position < count( $this->nodes );
+        return $this->position < count($this->nodes);
     }
 
     /**

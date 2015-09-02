@@ -41,7 +41,7 @@ class DataStore
      *
      * @param PhingFile $file object pointing to the data store on disk
      */
-    public function __construct( PhingFile $file )
+    public function __construct(PhingFile $file)
     {
 
         $this->file = $file;
@@ -61,12 +61,12 @@ class DataStore
     {
 
         if (!$this->file->canRead()) {
-            throw new BuildException( "Can't read data store from '".
-                $this->file->getPath()."'" );
+            throw new BuildException("Can't read data store from '".
+                $this->file->getPath()."'");
         } else {
             $serializedData = $this->file->contents();
 
-            $this->data = unserialize( $serializedData );
+            $this->data = unserialize($serializedData);
         }
     }
 
@@ -100,13 +100,13 @@ class DataStore
     {
 
         if (!$this->file->canWrite()) {
-            throw new BuildException( "Can't write data store to '".
-                $this->file->getPath()."'" );
+            throw new BuildException("Can't write data store to '".
+                $this->file->getPath()."'");
         } else {
-            $serializedData = serialize( $this->data );
+            $serializedData = serialize($this->data);
 
-            $writer = new FileWriter( $this->file );
-            $writer->write( $serializedData );
+            $writer = new FileWriter($this->file);
+            $writer->write($serializedData);
             $writer->close();
         }
     }
@@ -118,7 +118,7 @@ class DataStore
      *
      * @return mixed the value
      */
-    public function get( $key )
+    public function get($key)
     {
 
         if (!isset( $this->data[$key] )) {
@@ -138,7 +138,7 @@ class DataStore
      *
      * @return none
      */
-    public function put( $key, $value, $autocommit = false )
+    public function put($key, $value, $autocommit = false)
     {
 
         $this->data[$key] = $value;

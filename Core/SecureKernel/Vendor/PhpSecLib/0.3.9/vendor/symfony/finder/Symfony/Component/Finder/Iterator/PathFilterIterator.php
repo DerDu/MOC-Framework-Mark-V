@@ -31,12 +31,12 @@ class PathFilterIterator extends MultiplePcreFilterIterator
         $filename = $this->current()->getRelativePathname();
 
         if ('\\' === DIRECTORY_SEPARATOR) {
-            $filename = strtr( $filename, '\\', '/' );
+            $filename = strtr($filename, '\\', '/');
         }
 
         // should at least not match one rule to exclude
         foreach ($this->noMatchRegexps as $regex) {
-            if (preg_match( $regex, $filename )) {
+            if (preg_match($regex, $filename)) {
                 return false;
             }
         }
@@ -46,7 +46,7 @@ class PathFilterIterator extends MultiplePcreFilterIterator
         if ($this->matchRegexps) {
             $match = false;
             foreach ($this->matchRegexps as $regex) {
-                if (preg_match( $regex, $filename )) {
+                if (preg_match($regex, $filename)) {
                     return true;
                 }
             }
@@ -69,9 +69,9 @@ class PathFilterIterator extends MultiplePcreFilterIterator
      *
      * @return string regexp corresponding to a given string or regexp
      */
-    protected function toRegex( $str )
+    protected function toRegex($str)
     {
 
-        return $this->isRegex( $str ) ? $str : '/'.preg_quote( $str, '/' ).'/';
+        return $this->isRegex($str) ? $str : '/'.preg_quote($str, '/').'/';
     }
 }

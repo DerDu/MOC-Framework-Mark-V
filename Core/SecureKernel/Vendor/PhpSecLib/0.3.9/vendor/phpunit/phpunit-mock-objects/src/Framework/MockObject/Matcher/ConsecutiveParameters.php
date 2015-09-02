@@ -41,13 +41,13 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit
     /**
      * @param array $parameterGroups
      */
-    public function __construct( array $parameterGroups )
+    public function __construct(array $parameterGroups)
     {
 
         foreach ($parameterGroups as $index => $parameters) {
             foreach ($parameters as $parameter) {
                 if (!( $parameter instanceof \PHPUnit_Framework_Constraint )) {
-                    $parameter = new \PHPUnit_Framework_Constraint_IsEqual( $parameter );
+                    $parameter = new \PHPUnit_Framework_Constraint_IsEqual($parameter);
                 }
                 $this->_parameterGroups[$index][] = $parameter;
             }
@@ -70,12 +70,12 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit
      *
      * @return bool
      */
-    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
         $this->_invocations[] = $invocation;
-        $callIndex = count( $this->_invocations ) - 1;
-        $this->verifyInvocation( $invocation, $callIndex );
+        $callIndex = count($this->_invocations) - 1;
+        $this->verifyInvocation($invocation, $callIndex);
         return false;
     }
 
@@ -87,7 +87,7 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit
      *
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    private function verifyInvocation( PHPUnit_Framework_MockObject_Invocation $invocation, $callIndex )
+    private function verifyInvocation(PHPUnit_Framework_MockObject_Invocation $invocation, $callIndex)
     {
 
         if (isset( $this->_parameterGroups[$callIndex] )) {
@@ -103,7 +103,7 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit
             );
         }
 
-        if (count( $invocation->parameters ) < count( $parameters )) {
+        if (count($invocation->parameters) < count($parameters)) {
             throw new PHPUnit_Framework_ExpectationFailedException(
                 sprintf(
                     'Parameter count for invocation %s is too low.',
@@ -130,7 +130,7 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit
     {
 
         foreach ($this->_invocations as $callIndex => $invocation) {
-            $this->verifyInvocation( $invocation, $callIndex );
+            $this->verifyInvocation($invocation, $callIndex);
         }
     }
 }

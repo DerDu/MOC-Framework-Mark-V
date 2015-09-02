@@ -14,7 +14,7 @@ class PHPParser_Node_Stmt_Property extends PHPParser_Node_Stmt
      * @param PHPParser_Node_Stmt_PropertyProperty[] $props      Properties
      * @param array                                  $attributes Additional attributes
      */
-    public function __construct( $type, array $props, array $attributes = array() )
+    public function __construct($type, array $props, array $attributes = array())
     {
 
         parent::__construct(

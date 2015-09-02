@@ -53,7 +53,7 @@ class CoverageSetupTask extends Task
      *
      * @param FileSet the new fileset containing .php files
      */
-    public function addFileSet( FileSet $fileset )
+    public function addFileSet(FileSet $fileset)
     {
 
         $this->filesets[] = $fileset;
@@ -67,7 +67,7 @@ class CoverageSetupTask extends Task
     public function createFileList()
     {
 
-        $num = array_push( $this->filelists, new FileList() );
+        $num = array_push($this->filelists, new FileList());
 
         return $this->filelists[$num - 1];
     }
@@ -77,7 +77,7 @@ class CoverageSetupTask extends Task
      *
      * @param string the filename of the database
      */
-    public function setDatabase( $database )
+    public function setDatabase($database)
     {
 
         $this->database = $database;
@@ -86,13 +86,13 @@ class CoverageSetupTask extends Task
     /**
      * @param Path $classpath
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -116,7 +116,7 @@ class CoverageSetupTask extends Task
 
         $files = $this->getFilenames();
 
-        $this->log( "Setting up coverage database for ".count( $files )." files" );
+        $this->log("Setting up coverage database for ".count($files)." files");
 
         $props = new Properties();
 
@@ -124,14 +124,14 @@ class CoverageSetupTask extends Task
             $fullname = $file['fullname'];
             $filename = $file['key'];
 
-            $props->setProperty( $filename, serialize( array( 'fullname' => $fullname, 'coverage' => array() ) ) );
+            $props->setProperty($filename, serialize(array('fullname' => $fullname, 'coverage' => array())));
         }
 
-        $dbfile = new PhingFile( $this->database );
+        $dbfile = new PhingFile($this->database);
 
-        $props->store( $dbfile );
+        $props->store($dbfile);
 
-        $this->project->setProperty( 'coverage.database', $dbfile->getAbsolutePath() );
+        $this->project->setProperty('coverage.database', $dbfile->getAbsolutePath());
     }
 
     /**
@@ -146,28 +146,29 @@ class CoverageSetupTask extends Task
 
         foreach ($this->filelists as $fl) {
             try {
-                $list = $fl->getFiles( $this->project );
+                $list = $fl->getFiles($this->project);
                 foreach ($list as $file) {
-                    $fs = new PhingFile( strval( $fl->getDir( $this->project ) ), $file );
-                    $files[] = array( 'key'      => strtolower( $fs->getAbsolutePath() ),
-                                      'fullname' => $fs->getAbsolutePath()
+                    $fs = new PhingFile(strval($fl->getDir($this->project)), $file);
+                    $files[] = array(
+                        'key'      => strtolower($fs->getAbsolutePath()),
+                        'fullname' => $fs->getAbsolutePath()
                     );
                 }
-            } catch( BuildException $be ) {
-                $this->log( $be->getMessage(), Project::MSG_WARN );
+            } catch (BuildException $be) {
+                $this->log($be->getMessage(), Project::MSG_WARN);
             }
         }
 
         foreach ($this->filesets as $fileset) {
-            $ds = $fileset->getDirectoryScanner( $this->project );
+            $ds = $fileset->getDirectoryScanner($this->project);
             $ds->scan();
 
             $includedFiles = $ds->getIncludedFiles();
 
             foreach ($includedFiles as $file) {
-                $fs = new PhingFile( realpath( $ds->getBaseDir() ), $file );
+                $fs = new PhingFile(realpath($ds->getBaseDir()), $file);
 
-                $files[] = array( 'key' => strtolower( $fs->getAbsolutePath() ), 'fullname' => $fs->getAbsolutePath() );
+                $files[] = array('key' => strtolower($fs->getAbsolutePath()), 'fullname' => $fs->getAbsolutePath());
             }
         }
 

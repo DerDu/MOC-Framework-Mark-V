@@ -7,12 +7,12 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
      * @dataProvider provideTestDump
      * @covers       PHPParser_NodeDumper::dump
      */
-    public function testDump( $node, $dump )
+    public function testDump($node, $dump)
     {
 
         $dumper = new PHPParser_NodeDumper;
 
-        $this->assertEquals( $dump, $dumper->dump( $node ) );
+        $this->assertEquals($dump, $dumper->dump($node));
     }
 
     public function provideTestDump()
@@ -25,7 +25,7 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
 )'
             ),
             array(
-                array( 'Foo', 'Bar', 'Key' => 'FooBar' ),
+                array('Foo', 'Bar', 'Key' => 'FooBar'),
                 'array(
     0: Foo
     1: Bar
@@ -33,7 +33,7 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
 )'
             ),
             array(
-                new PHPParser_Node_Name( array( 'Hallo', 'World' ) ),
+                new PHPParser_Node_Name(array('Hallo', 'World')),
                 'Name(
     parts: array(
         0: Hallo
@@ -42,9 +42,9 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
 )'
             ),
             array(
-                new PHPParser_Node_Expr_Array( array(
-                    new PHPParser_Node_Expr_ArrayItem( new PHPParser_Node_Scalar_String( 'Foo' ) )
-                ) ),
+                new PHPParser_Node_Expr_Array(array(
+                    new PHPParser_Node_Expr_ArrayItem(new PHPParser_Node_Scalar_String('Foo'))
+                )),
                 'Expr_Array(
     items: array(
         0: Expr_ArrayItem(
@@ -68,6 +68,6 @@ class PHPParser_Tests_NodeDumperTest extends PHPUnit_Framework_TestCase
     {
 
         $dumper = new PHPParser_NodeDumper;
-        $dumper->dump( new stdClass );
+        $dumper->dump(new stdClass);
     }
 }

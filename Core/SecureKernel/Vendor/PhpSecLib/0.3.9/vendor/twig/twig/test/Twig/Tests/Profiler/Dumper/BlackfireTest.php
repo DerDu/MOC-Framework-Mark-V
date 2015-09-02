@@ -17,7 +17,7 @@ class Twig_Tests_Profiler_Dumper_BlackfireTest extends Twig_Tests_Profiler_Dumpe
 
         $dumper = new Twig_Profiler_Dumper_Blackfire();
 
-        $this->assertStringMatchesFormat( <<<EOF
+        $this->assertStringMatchesFormat(<<<EOF
 file-format: BlackfireProbe
 cost-dimensions: wt mu pmu
 request-start: %d.%d
@@ -29,6 +29,6 @@ index.twig==>embedded.twig//2 %d %d %d
 embedded.twig==>included.twig//2 %d %d %d
 index.twig==>index.twig::macro(foo)//1 %d %d %d
 EOF
-            , $dumper->dump( $this->getProfile() ) );
+            , $dumper->dump($this->getProfile()));
     }
 }

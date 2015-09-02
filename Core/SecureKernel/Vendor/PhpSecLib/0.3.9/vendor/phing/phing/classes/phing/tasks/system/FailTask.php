@@ -43,10 +43,10 @@ class FailTask extends Task
      *
      * @return void
      */
-    public function setMsg( $value )
+    public function setMsg($value)
     {
 
-        $this->setMessage( $value );
+        $this->setMessage($value);
     }
 
     /**
@@ -56,7 +56,7 @@ class FailTask extends Task
      *
      * @return void
      */
-    public function setMessage( $value )
+    public function setMessage($value)
     {
 
         $this->message = $value;
@@ -69,7 +69,7 @@ class FailTask extends Task
      *
      * @return void
      */
-    public function setIf( $c )
+    public function setIf($c)
     {
 
         $this->ifCondition = $c;
@@ -83,7 +83,7 @@ class FailTask extends Task
      *
      * @return void
      */
-    public function setUnless( $c )
+    public function setUnless($c)
     {
 
         $this->unlessCondition = $c;
@@ -101,9 +101,9 @@ class FailTask extends Task
 
         if ($this->testIfCondition() && $this->testUnlessCondition()) {
             if ($this->message !== null) {
-                throw new BuildException( $this->message );
+                throw new BuildException($this->message);
             } else {
-                throw new BuildException( "No message" );
+                throw new BuildException("No message");
             }
         }
     }
@@ -118,7 +118,7 @@ class FailTask extends Task
             return true;
         }
 
-        return $this->project->getProperty( $this->ifCondition ) !== null;
+        return $this->project->getProperty($this->ifCondition) !== null;
     }
 
     /**
@@ -131,7 +131,7 @@ class FailTask extends Task
             return true;
         }
 
-        return $this->project->getProperty( $this->unlessCondition ) === null;
+        return $this->project->getProperty($this->unlessCondition) === null;
     }
 
     /**
@@ -141,12 +141,12 @@ class FailTask extends Task
      *
      * @return void
      */
-    public function addText( $msg )
+    public function addText($msg)
     {
 
         if ($this->message === null) {
             $this->message = "";
         }
-        $this->message .= $this->project->replaceProperties( $msg );
+        $this->message .= $this->project->replaceProperties($msg);
     }
 }

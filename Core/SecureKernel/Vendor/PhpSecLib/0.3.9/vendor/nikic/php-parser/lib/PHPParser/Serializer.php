@@ -10,5 +10,5 @@ interface PHPParser_Serializer
      *
      * @return string Serialized string
      */
-    public function serialize( array $nodes );
+    public function serialize(array $nodes);
 }

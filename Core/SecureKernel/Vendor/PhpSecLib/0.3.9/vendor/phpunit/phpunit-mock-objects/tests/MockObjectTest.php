@@ -15,6 +15,7 @@
  */
 class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
 {
+
     public function testMockedMethodIsNeverCalled()
     {
 
@@ -200,6 +201,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
 
     public function testStubbedReturnValueMap()
     {
+
         $map = array(
             array('a', 'b', 'c', 'd'),
             array('e', 'f', 'g', 'h')
@@ -411,6 +413,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
 
     public function traversableProvider()
     {
+
         return array(
             array('Traversable'),
             array('\Traversable'),
@@ -502,6 +505,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
 
     public function testObjectMethodCallWithArgumentCloningEnabled()
     {
+
         $expectedObject = new StdClass;
 
         $mock = $this->getMockBuilder('SomeClass')
@@ -527,6 +531,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
 
     public function testObjectMethodCallWithArgumentCloningDisabled()
     {
+
         $expectedObject = new StdClass;
 
         $mock = $this->getMockBuilder('SomeClass')
@@ -767,6 +772,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
             ->method('bar')
             ->will($this->returnCallback(
                 function (&$a, &$b, $c) {
+
                     $b = 1;
                 }
             ));
@@ -866,6 +872,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testInterfaceWithStaticMethodCanBeStubbed()
     {
+
         $this->assertInstanceOf(
             'InterfaceWithStaticMethod',
             $this->getMock('InterfaceWithStaticMethod')
@@ -888,6 +895,7 @@ class Framework_MockObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testStubForClassThatImplementsSerializableCanBeCreatedWithoutInvokingTheConstructor()
     {
+
         $this->assertInstanceOf(
             'ClassThatImplementsSerializable',
             $this->getMockBuilder('ClassThatImplementsSerializable')

@@ -47,10 +47,10 @@ class CloverPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnitTask $parentTask
      */
-    public function __construct( PHPUnitTask $parentTask )
+    public function __construct(PHPUnitTask $parentTask)
     {
 
-        parent::__construct( $parentTask );
+        parent::__construct($parentTask);
 
         $this->version = PHPUnit_Runner_Version::id();
     }
@@ -76,7 +76,7 @@ class CloverPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnit_Framework_TestResult $result
      */
-    public function processResult( PHPUnit_Framework_TestResult $result )
+    public function processResult(PHPUnit_Framework_TestResult $result)
     {
 
         $this->result = $result;
@@ -90,10 +90,10 @@ class CloverPHPUnitResultFormatter extends PHPUnitResultFormatter
         if (!empty( $coverage )) {
             $clover = new PHP_CodeCoverage_Report_Clover();
 
-            $contents = $clover->process( $coverage );
+            $contents = $clover->process($coverage);
 
             if ($this->out) {
-                $this->out->write( $contents );
+                $this->out->write($contents);
                 $this->out->close();
             }
         }

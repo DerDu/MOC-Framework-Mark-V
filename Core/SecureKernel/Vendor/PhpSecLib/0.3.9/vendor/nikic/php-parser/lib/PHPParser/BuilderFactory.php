@@ -19,10 +19,10 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Method The created method builder
      */
-    public function method( $name )
+    public function method($name)
     {
 
-        return new PHPParser_Builder_Method( $name );
+        return new PHPParser_Builder_Method($name);
     }
 
     /**
@@ -32,10 +32,10 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Param The created parameter builder
      */
-    public function param( $name )
+    public function param($name)
     {
 
-        return new PHPParser_Builder_Param( $name );
+        return new PHPParser_Builder_Param($name);
     }
 
     /**
@@ -45,20 +45,20 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Property The created property builder
      */
-    public function property( $name )
+    public function property($name)
     {
 
-        return new PHPParser_Builder_Property( $name );
+        return new PHPParser_Builder_Property($name);
     }
 
-    public function __call( $name, array $args )
+    public function __call($name, array $args)
     {
 
-        if (method_exists( $this, '_'.$name )) {
-            return call_user_func_array( array( $this, '_'.$name ), $args );
+        if (method_exists($this, '_'.$name)) {
+            return call_user_func_array(array($this, '_'.$name), $args);
         }
 
-        throw new LogicException( sprintf( 'Method "%s" does not exist', $name ) );
+        throw new LogicException(sprintf('Method "%s" does not exist', $name));
     }
 
     /**
@@ -68,10 +68,10 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Class The created class builder
      */
-    protected function _class( $name )
+    protected function _class($name)
     {
 
-        return new PHPParser_Builder_Class( $name );
+        return new PHPParser_Builder_Class($name);
     }
 
     /**
@@ -81,10 +81,10 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Class The created interface builder
      */
-    protected function _interface( $name )
+    protected function _interface($name)
     {
 
-        return new PHPParser_Builder_Interface( $name );
+        return new PHPParser_Builder_Interface($name);
     }
 
     /**
@@ -94,9 +94,9 @@ class PHPParser_BuilderFactory
      *
      * @return PHPParser_Builder_Property The created function builder
      */
-    protected function _function( $name )
+    protected function _function($name)
     {
 
-        return new PHPParser_Builder_Function( $name );
+        return new PHPParser_Builder_Function($name);
     }
 }

@@ -20,10 +20,10 @@ class Twig_Test_Node extends Twig_Test
 
     protected $class;
 
-    public function __construct( $class, array $options = array() )
+    public function __construct($class, array $options = array())
     {
 
-        parent::__construct( $options );
+        parent::__construct($options);
 
         $this->class = $class;
     }

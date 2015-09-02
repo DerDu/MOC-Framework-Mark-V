@@ -15,13 +15,13 @@ abstract class Twig_Tests_Profiler_Dumper_AbstractTest extends PHPUnit_Framework
     protected function getProfile()
     {
 
-        $profile = $this->getMockBuilder( 'Twig_Profiler_Profile' )->disableOriginalConstructor()->getMock();
+        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();
 
-        $profile->expects( $this->any() )->method( 'isRoot' )->will( $this->returnValue( true ) );
-        $profile->expects( $this->any() )->method( 'getName' )->will( $this->returnValue( 'main' ) );
-        $profile->expects( $this->any() )->method( 'getDuration' )->will( $this->returnValue( 1 ) );
-        $profile->expects( $this->any() )->method( 'getMemoryUsage' )->will( $this->returnValue( 0 ) );
-        $profile->expects( $this->any() )->method( 'getPeakMemoryUsage' )->will( $this->returnValue( 0 ) );
+        $profile->expects($this->any())->method('isRoot')->will($this->returnValue(true));
+        $profile->expects($this->any())->method('getName')->will($this->returnValue('main'));
+        $profile->expects($this->any())->method('getDuration')->will($this->returnValue(1));
+        $profile->expects($this->any())->method('getMemoryUsage')->will($this->returnValue(0));
+        $profile->expects($this->any())->method('getPeakMemoryUsage')->will($this->returnValue(0));
 
         $subProfiles = array(
             $this->getIndexProfile(
@@ -42,16 +42,16 @@ abstract class Twig_Tests_Profiler_Dumper_AbstractTest extends PHPUnit_Framework
             ),
         );
 
-        $profile->expects( $this->any() )->method( 'getProfiles' )->will( $this->returnValue( $subProfiles ) );
-        $profile->expects( $this->any() )->method( 'getIterator' )->will( $this->returnValue( new ArrayIterator( $subProfiles ) ) );
+        $profile->expects($this->any())->method('getProfiles')->will($this->returnValue($subProfiles));
+        $profile->expects($this->any())->method('getIterator')->will($this->returnValue(new ArrayIterator($subProfiles)));
 
         return $profile;
     }
 
-    private function getIndexProfile( array $subProfiles = array() )
+    private function getIndexProfile(array $subProfiles = array())
     {
 
-        return $this->generateProfile( 'main', 1, true, 'template', 'index.twig', $subProfiles );
+        return $this->generateProfile('main', 1, true, 'template', 'index.twig', $subProfiles);
     }
 
     /**
@@ -73,43 +73,43 @@ abstract class Twig_Tests_Profiler_Dumper_AbstractTest extends PHPUnit_Framework
         array $subProfiles = array()
     ) {
 
-        $profile = $this->getMockBuilder( 'Twig_Profiler_Profile' )->disableOriginalConstructor()->getMock();
+        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();
 
-        $profile->expects( $this->any() )->method( 'isRoot' )->will( $this->returnValue( false ) );
-        $profile->expects( $this->any() )->method( 'getName' )->will( $this->returnValue( $name ) );
-        $profile->expects( $this->any() )->method( 'getDuration' )->will( $this->returnValue( $duration ) );
-        $profile->expects( $this->any() )->method( 'getMemoryUsage' )->will( $this->returnValue( 0 ) );
-        $profile->expects( $this->any() )->method( 'getPeakMemoryUsage' )->will( $this->returnValue( 0 ) );
-        $profile->expects( $this->any() )->method( 'isTemplate' )->will( $this->returnValue( $isTemplate ) );
-        $profile->expects( $this->any() )->method( 'getType' )->will( $this->returnValue( $type ) );
-        $profile->expects( $this->any() )->method( 'getTemplate' )->will( $this->returnValue( $templateName ) );
-        $profile->expects( $this->any() )->method( 'getProfiles' )->will( $this->returnValue( $subProfiles ) );
-        $profile->expects( $this->any() )->method( 'getIterator' )->will( $this->returnValue( new ArrayIterator( $subProfiles ) ) );
+        $profile->expects($this->any())->method('isRoot')->will($this->returnValue(false));
+        $profile->expects($this->any())->method('getName')->will($this->returnValue($name));
+        $profile->expects($this->any())->method('getDuration')->will($this->returnValue($duration));
+        $profile->expects($this->any())->method('getMemoryUsage')->will($this->returnValue(0));
+        $profile->expects($this->any())->method('getPeakMemoryUsage')->will($this->returnValue(0));
+        $profile->expects($this->any())->method('isTemplate')->will($this->returnValue($isTemplate));
+        $profile->expects($this->any())->method('getType')->will($this->returnValue($type));
+        $profile->expects($this->any())->method('getTemplate')->will($this->returnValue($templateName));
+        $profile->expects($this->any())->method('getProfiles')->will($this->returnValue($subProfiles));
+        $profile->expects($this->any())->method('getIterator')->will($this->returnValue(new ArrayIterator($subProfiles)));
 
         return $profile;
     }
 
-    private function getEmbeddedBlockProfile( array $subProfiles = array() )
+    private function getEmbeddedBlockProfile(array $subProfiles = array())
     {
 
-        return $this->generateProfile( 'body', 0.0001, false, 'block', 'embedded.twig', $subProfiles );
+        return $this->generateProfile('body', 0.0001, false, 'block', 'embedded.twig', $subProfiles);
     }
 
-    private function getEmbeddedTemplateProfile( array $subProfiles = array() )
+    private function getEmbeddedTemplateProfile(array $subProfiles = array())
     {
 
-        return $this->generateProfile( 'main', 0.0001, true, 'template', 'embedded.twig', $subProfiles );
+        return $this->generateProfile('main', 0.0001, true, 'template', 'embedded.twig', $subProfiles);
     }
 
-    private function getIncludedTemplateProfile( array $subProfiles = array() )
+    private function getIncludedTemplateProfile(array $subProfiles = array())
     {
 
-        return $this->generateProfile( 'main', 0.0001, true, 'template', 'included.twig', $subProfiles );
+        return $this->generateProfile('main', 0.0001, true, 'template', 'included.twig', $subProfiles);
     }
 
-    private function getMacroProfile( array $subProfiles = array() )
+    private function getMacroProfile(array $subProfiles = array())
     {
 
-        return $this->generateProfile( 'foo', 0.0001, false, 'macro', 'index.twig', $subProfiles );
+        return $this->generateProfile('foo', 0.0001, false, 'macro', 'index.twig', $subProfiles);
     }
 }

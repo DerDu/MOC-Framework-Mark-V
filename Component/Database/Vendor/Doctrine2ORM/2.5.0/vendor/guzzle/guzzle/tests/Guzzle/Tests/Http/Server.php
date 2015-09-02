@@ -5,9 +5,7 @@ namespace Guzzle\Tests\Http;
 use Guzzle\Common\Exception\RuntimeException;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\RequestFactory;
-use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 
 /**

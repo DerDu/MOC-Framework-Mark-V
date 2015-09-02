@@ -68,7 +68,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $crcCheck
      */
-    public function setCrcCheck( $crcCheck )
+    public function setCrcCheck($crcCheck)
     {
 
         $this->options['crc_check'] = ( 'true' == $crcCheck ? true : false );
@@ -77,7 +77,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $webRunScript
      */
-    public function setWebRunScript( $webRunScript )
+    public function setWebRunScript($webRunScript)
     {
 
         $this->options['web_run_script'] = $webRunScript;
@@ -86,7 +86,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $cliRunScript
      */
-    public function setCliRunScript( $cliRunScript )
+    public function setCliRunScript($cliRunScript)
     {
 
         $this->options['cli_run_script'] = $cliRunScript;
@@ -95,7 +95,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $libRunScript
      */
-    public function setLibRunScript( $libRunScript )
+    public function setLibRunScript($libRunScript)
     {
 
         $this->options['lib_run_script'] = $libRunScript;
@@ -104,7 +104,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->options['name'] = $name;
@@ -113,7 +113,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $webMainRedirect
      */
-    public function setWebMainRedirect( $webMainRedirect )
+    public function setWebMainRedirect($webMainRedirect)
     {
 
         $this->options['web_main_redirect'] = ( 'true' == $webMainRedirect ? true : false );
@@ -122,7 +122,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $pluginClass
      */
-    public function setPluginClass( $pluginClass )
+    public function setPluginClass($pluginClass)
     {
 
         $this->options['plugin_class'] = $pluginClass;
@@ -131,7 +131,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $version
      */
-    public function setVersion( $version )
+    public function setVersion($version)
     {
 
         $this->options['version'] = $version;
@@ -140,7 +140,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $summary
      */
-    public function setSummary( $summary )
+    public function setSummary($summary)
     {
 
         $this->options['summary'] = $summary;
@@ -149,7 +149,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $inputDirectory
      */
-    public function setInputDirectory( $inputDirectory )
+    public function setInputDirectory($inputDirectory)
     {
 
         $this->inputDirectory = $inputDirectory;
@@ -158,7 +158,7 @@ class PhkPackageTask extends Task
     /**
      * @param string $outputFile
      */
-    public function setOutputFile( $outputFile )
+    public function setOutputFile($outputFile)
     {
 
         $this->outputFile = $outputFile;
@@ -169,7 +169,7 @@ class PhkPackageTask extends Task
      *
      * @param string $compress
      */
-    public function setCompress( $compress )
+    public function setCompress($compress)
     {
 
         $this->modifiers['compress'] = $compress;
@@ -180,7 +180,7 @@ class PhkPackageTask extends Task
      *
      * @param srting $strip
      */
-    public function setStrip( $strip )
+    public function setStrip($strip)
     {
 
         $this->modifiers['strip'] = $strip;
@@ -191,7 +191,7 @@ class PhkPackageTask extends Task
      *
      * @param srting $path
      */
-    public function setPhkCreatorPath( $path )
+    public function setPhkCreatorPath($path)
     {
 
         $this->phkCreatorPath = $path;
@@ -214,37 +214,37 @@ class PhkPackageTask extends Task
         /*
          * Check for empty first - speed ;)
          */
-        if (!is_file( $this->phkCreatorPath )) {
-            throw new BuildException( 'You must specify the "phkcreatorpath" attribute for PHK task.' );
+        if (!is_file($this->phkCreatorPath)) {
+            throw new BuildException('You must specify the "phkcreatorpath" attribute for PHK task.');
         }
         if (empty( $this->inputDirectory )) {
-            throw new BuildException( 'You must specify the "inputdirectory" attribute for PHK task.' );
+            throw new BuildException('You must specify the "inputdirectory" attribute for PHK task.');
         }
         if (empty( $this->outputFile )) {
-            throw new BuildException( 'You must specify the "outputfile" attribute for PHK task.' );
+            throw new BuildException('You must specify the "outputfile" attribute for PHK task.');
         }
 
         require_once $this->phkCreatorPath;
 
-        $mountPoint = PHK_Mgr::mount( $this->outputFile, PHK::F_CREATOR );
-        $phkManager = PHK_Mgr::instance( $mountPoint );
+        $mountPoint = PHK_Mgr::mount($this->outputFile, PHK::F_CREATOR);
+        $phkManager = PHK_Mgr::instance($mountPoint);
 
         /*
          * Add files.
          */
-        $phkManager->ftree()->merge_file_tree( '/', $this->inputDirectory, $this->modifiers );
+        $phkManager->ftree()->merge_file_tree('/', $this->inputDirectory, $this->modifiers);
 
         /*
          * Add web_access to options, if present.
          */
-        if (!is_null( $this->webAccess )) {
+        if (!is_null($this->webAccess)) {
             $webAccessPaths = $this->webAccess->getPaths();
             if (!empty( $webAccessPaths )) {
                 $this->options['web_access'] = $webAccessPaths;
             }
         }
 
-        $phkManager->set_options( $this->options );
+        $phkManager->set_options($this->options);
 
         /*
          * Intercept output (in PHP we can't intercept stream).
@@ -257,8 +257,8 @@ class PhkPackageTask extends Task
         /*
          * Print with Phing log...
          */
-        $output = trim( ob_get_clean() );
-        $output = explode( "\n", $output );
+        $output = trim(ob_get_clean());
+        $output = explode("\n", $output);
         foreach ($output as $line) {
             /*
              * Delete all '--- *' lines. Bluh!
@@ -266,17 +266,17 @@ class PhkPackageTask extends Task
             /*
              * TODO Change preg_math to more faster alternative.
              */
-            if (preg_match( '/^---/', $line )) {
+            if (preg_match('/^---/', $line)) {
                 continue;
             }
 
-            $this->log( $line );
+            $this->log($line);
         }
 
         /*
          * Set rights for generated file... Don't use umask() - see
          * notes in official documentation for this function.
          */
-        chmod( $this->outputFile, 0644 );
+        chmod($this->outputFile, 0644);
     }
 }

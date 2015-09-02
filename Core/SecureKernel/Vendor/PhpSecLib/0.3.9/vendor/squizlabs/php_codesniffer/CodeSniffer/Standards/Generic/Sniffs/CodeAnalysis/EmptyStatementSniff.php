@@ -74,7 +74,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
     public function register()
     {
 
-        return array_keys( $this->checkedTokens );
+        return array_keys($this->checkedTokens);
 
     }//end register()
 
@@ -88,7 +88,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -104,7 +104,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
 
         $emptyBody = true;
         for (; $next <= $end; ++$next) {
-            if (in_array( $tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+            if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 $emptyBody = false;
                 break;
             }
@@ -112,13 +112,13 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
 
         if ($emptyBody === true) {
             // Get token identifier.
-            $name = $phpcsFile->getTokensAsString( $stackPtr, 1 );
+            $name = $phpcsFile->getTokensAsString($stackPtr, 1);
             $error = 'Empty %s statement detected';
-            $data = array( strtoupper( $name ) );
+            $data = array(strtoupper($name));
             if ($this->checkedTokens[$token['code']] === true) {
-                $phpcsFile->addError( $error, $stackPtr, 'NotAllowed', $data );
+                $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
             } else {
-                $phpcsFile->addWarning( $error, $stackPtr, 'NotAllowedWarning', $data );
+                $phpcsFile->addWarning($error, $stackPtr, 'NotAllowedWarning', $data);
             }
         }
 

@@ -35,7 +35,7 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -46,7 +46,7 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -61,32 +61,32 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jshint.js could not be run
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $fileName = $phpcsFile->getFilename();
 
-        $rhinoPath = PHP_CodeSniffer::getConfigData( 'rhino_path' );
-        $jshintPath = PHP_CodeSniffer::getConfigData( 'jshint_path' );
+        $rhinoPath = PHP_CodeSniffer::getConfigData('rhino_path');
+        $jshintPath = PHP_CodeSniffer::getConfigData('jshint_path');
         if ($rhinoPath === null || $jshintPath === null) {
             return;
         }
 
         $cmd = "$rhinoPath \"$jshintPath\" \"$fileName\"";
-        $msg = exec( $cmd, $output, $retval );
+        $msg = exec($cmd, $output, $retval);
 
-        if (is_array( $output ) === true) {
+        if (is_array($output) === true) {
             $tokens = $phpcsFile->getTokens();
 
             foreach ($output as $finding) {
                 $matches = array();
-                $numMatches = preg_match( '/^(.+)\(.+:([0-9]+).*:[0-9]+\)$/', $finding, $matches );
+                $numMatches = preg_match('/^(.+)\(.+:([0-9]+).*:[0-9]+\)$/', $finding, $matches);
                 if ($numMatches === 0) {
                     continue;
                 }
 
                 $line = (int)$matches[2];
-                $message = 'jshint says: '.trim( $matches[1] );
+                $message = 'jshint says: '.trim($matches[1]);
 
                 // Find the token at the start of the line.
                 $lineToken = null;
@@ -98,7 +98,7 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($lineToken !== null) {
-                    $phpcsFile->addWarning( $message, $lineToken, 'ExternalTool' );
+                    $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
                 }
             }//end foreach
         }//end if

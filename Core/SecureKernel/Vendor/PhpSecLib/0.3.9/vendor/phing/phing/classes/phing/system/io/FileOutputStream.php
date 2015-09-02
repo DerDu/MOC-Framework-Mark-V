@@ -44,26 +44,26 @@ class FileOutputStream extends OutputStream
      * @throws Exception   - if invalid argument specified.
      * @throws IOException - if unable to open file.
      */
-    public function __construct( $file, $append = false )
+    public function __construct($file, $append = false)
     {
 
         global $php_errormsg;
         if ($file instanceof PhingFile) {
             $this->file = $file;
-        } elseif (is_string( $file )) {
-            $this->file = new PhingFile( $file );
+        } elseif (is_string($file)) {
+            $this->file = new PhingFile($file);
         } else {
-            throw new Exception( "Invalid argument type for \$file." );
+            throw new Exception("Invalid argument type for \$file.");
         }
         if ($append) {
-            $stream = @fopen( $this->file->getAbsolutePath(), "ab" );
+            $stream = @fopen($this->file->getAbsolutePath(), "ab");
         } else {
-            $stream = @fopen( $this->file->getAbsolutePath(), "wb" );
+            $stream = @fopen($this->file->getAbsolutePath(), "wb");
         }
         if ($stream === false) {
-            throw new IOException( "Unable to open ".$this->file->__toString()." for writing: ".$php_errormsg );
+            throw new IOException("Unable to open ".$this->file->__toString()." for writing: ".$php_errormsg);
         }
-        parent::__construct( $stream );
+        parent::__construct($stream);
     }
 
     /**

@@ -51,7 +51,7 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -65,7 +65,7 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -98,7 +98,7 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
                 $nestingLevel,
                 $this->absoluteNestingLevel,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'MaxExceeded', $data );
+            $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else {
             if ($nestingLevel > $this->nestingLevel) {
                 $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';
@@ -106,7 +106,7 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
                     $nestingLevel,
                     $this->nestingLevel,
                 );
-                $phpcsFile->addWarning( $warning, $stackPtr, 'TooHigh', $data );
+                $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
             }
         }
 

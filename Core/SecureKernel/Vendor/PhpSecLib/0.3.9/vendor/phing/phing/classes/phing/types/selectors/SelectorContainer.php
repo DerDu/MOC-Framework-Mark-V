@@ -48,7 +48,7 @@ interface SelectorContainer
      *
      * @return array an array of selectors in this container
      */
-    public function getSelectors( Project $p );
+    public function getSelectors(Project $p);
 
     /**
      * Returns an array for accessing the set of selectors.
@@ -64,7 +64,7 @@ interface SelectorContainer
      *
      * @return FileSelector the selector that was added
      */
-    public function appendSelector( FileSelector $selector );
+    public function appendSelector(FileSelector $selector);
 
     /* Methods below all add specific selectors */
 

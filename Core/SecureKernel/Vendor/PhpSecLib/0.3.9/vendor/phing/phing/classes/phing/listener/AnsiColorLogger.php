@@ -161,7 +161,7 @@ class AnsiColorLogger extends DefaultLogger
      * @param OutputStream $stream
      * @param int          $priority
      */
-    final protected function printMessage( $message, OutputStream $stream, $priority )
+    final protected function printMessage($message, OutputStream $stream, $priority)
     {
 
         if ($message !== null) {
@@ -189,7 +189,7 @@ class AnsiColorLogger extends DefaultLogger
                     break;
             }
 
-            $stream->write( $message.PHP_EOL );
+            $stream->write($message.PHP_EOL);
         }
     }
 
@@ -200,8 +200,8 @@ class AnsiColorLogger extends DefaultLogger
     final private function setColors()
     {
 
-        $userColorFile = Phing::getProperty( "phing.logger.defaults" );
-        $systemColorFile = new PhingFile( Phing::getResourcePath( "phing/listener/defaults.properties" ) );
+        $userColorFile = Phing::getProperty("phing.logger.defaults");
+        $systemColorFile = new PhingFile(Phing::getResourcePath("phing/listener/defaults.properties"));
 
         $in = null;
 
@@ -209,16 +209,16 @@ class AnsiColorLogger extends DefaultLogger
             $prop = new Properties();
 
             if ($userColorFile !== null) {
-                $prop->load( $userColorFile );
+                $prop->load($userColorFile);
             } else {
-                $prop->load( $systemColorFile );
+                $prop->load($systemColorFile);
             }
 
-            $err = $prop->getProperty( "AnsiColorLogger.ERROR_COLOR" );
-            $warn = $prop->getProperty( "AnsiColorLogger.WARNING_COLOR" );
-            $info = $prop->getProperty( "AnsiColorLogger.INFO_COLOR" );
-            $verbose = $prop->getProperty( "AnsiColorLogger.VERBOSE_COLOR" );
-            $debug = $prop->getProperty( "AnsiColorLogger.DEBUG_COLOR" );
+            $err = $prop->getProperty("AnsiColorLogger.ERROR_COLOR");
+            $warn = $prop->getProperty("AnsiColorLogger.WARNING_COLOR");
+            $info = $prop->getProperty("AnsiColorLogger.INFO_COLOR");
+            $verbose = $prop->getProperty("AnsiColorLogger.VERBOSE_COLOR");
+            $debug = $prop->getProperty("AnsiColorLogger.DEBUG_COLOR");
             if ($err !== null) {
                 $this->errColor = self::PREFIX.$err.self::SUFFIX;
             }
@@ -234,7 +234,7 @@ class AnsiColorLogger extends DefaultLogger
             if ($debug !== null) {
                 $this->debugColor = self::PREFIX.$debug.self::SUFFIX;
             }
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             //Ignore exception - we will use the defaults.
         }
     }

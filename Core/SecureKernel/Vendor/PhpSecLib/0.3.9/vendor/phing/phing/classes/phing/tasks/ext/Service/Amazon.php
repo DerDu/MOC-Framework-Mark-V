@@ -59,11 +59,11 @@ abstract class Service_Amazon extends Task
      *
      * @return mixed
      */
-    public function __get( $var )
+    public function __get($var)
     {
 
         if (!isset( $this->$var )) {
-            if (!( $val = $this->getProject()->getProperty( 'amazon.'.strtolower( $var ) ) )) {
+            if (!( $val = $this->getProject()->getProperty('amazon.'.strtolower($var)) )) {
                 return false;
             } else {
                 return $val;
@@ -77,7 +77,7 @@ abstract class Service_Amazon extends Task
      * @param $var
      * @param $val
      */
-    public function __set( $var, $val )
+    public function __set($var, $val)
     {
 
         $this->_options[$var] = $val;
@@ -88,10 +88,10 @@ abstract class Service_Amazon extends Task
      *
      * @return bool
      */
-    public function __isset( $var )
+    public function __isset($var)
     {
 
-        return array_key_exists( $var, $this->_options );
+        return array_key_exists($var, $this->_options);
     }
 
     /**
@@ -99,11 +99,11 @@ abstract class Service_Amazon extends Task
      *
      * @throws BuildException
      */
-    public function setKey( $key )
+    public function setKey($key)
     {
 
-        if (empty( $key ) || !is_string( $key )) {
-            throw new BuildException( 'Key must be a non empty string' );
+        if (empty( $key ) || !is_string($key)) {
+            throw new BuildException('Key must be a non empty string');
         }
 
         $this->key = $key;
@@ -113,7 +113,7 @@ abstract class Service_Amazon extends Task
     {
 
         if (!( $key = $this->key )) {
-            throw new BuildException( 'Key is not set' );
+            throw new BuildException('Key is not set');
         }
 
         return $key;
@@ -124,11 +124,11 @@ abstract class Service_Amazon extends Task
      *
      * @throws BuildException
      */
-    public function setSecret( $secret )
+    public function setSecret($secret)
     {
 
-        if (empty( $secret ) || !is_string( $secret )) {
-            throw new BuildException( 'Secret must be a non empty string' );
+        if (empty( $secret ) || !is_string($secret)) {
+            throw new BuildException('Secret must be a non empty string');
         }
 
         $this->secret = $secret;
@@ -138,7 +138,7 @@ abstract class Service_Amazon extends Task
     {
 
         if (!( $secret = $this->secret )) {
-            throw new BuildException( 'Secret is not set' );
+            throw new BuildException('Secret is not set');
         }
 
         return $this->secret;

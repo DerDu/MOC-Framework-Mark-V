@@ -67,10 +67,10 @@ class PlainPDOResultFormatter extends PDOResultFormatter
      *
      * @param boolean $v
      */
-    public function setShowheaders( $v )
+    public function setShowheaders($v)
     {
 
-        $this->showheaders = StringHelper::booleanValue( $v );
+        $this->showheaders = StringHelper::booleanValue($v);
     }
 
     /**
@@ -78,7 +78,7 @@ class PlainPDOResultFormatter extends PDOResultFormatter
      *
      * @param string $v
      */
-    public function setColdelim( $v )
+    public function setColdelim($v)
     {
 
         $this->coldelimiter = $v;
@@ -89,7 +89,7 @@ class PlainPDOResultFormatter extends PDOResultFormatter
      *
      * @param string $v
      */
-    public function setRowdelim( $v )
+    public function setRowdelim($v)
     {
 
         $this->rowdelimiter = $v;
@@ -100,7 +100,7 @@ class PlainPDOResultFormatter extends PDOResultFormatter
      *
      * @param array $row Row of PDO result set.
      */
-    public function processRow( $row )
+    public function processRow($row)
     {
 
         if (!$this->colsprinted && $this->showheaders) {
@@ -114,8 +114,8 @@ class PlainPDOResultFormatter extends PDOResultFormatter
                 $line .= $fieldName;
             }
 
-            $this->out->write( $line );
-            $this->out->write( PHP_EOL );
+            $this->out->write($line);
+            $this->out->write(PHP_EOL);
 
             $line = "";
             $colsprinted = true;
@@ -125,7 +125,7 @@ class PlainPDOResultFormatter extends PDOResultFormatter
         foreach ($row as $columnValue) {
 
             if ($columnValue != null) {
-                $columnValue = trim( $columnValue );
+                $columnValue = trim($columnValue);
             }
 
             if ($first) {
@@ -136,8 +136,8 @@ class PlainPDOResultFormatter extends PDOResultFormatter
             $line .= $columnValue;
         }
 
-        $this->out->write( $line );
-        $this->out->write( $this->rowdelimiter );
+        $this->out->write($line);
+        $this->out->write($this->rowdelimiter);
 
     }
 
@@ -147,7 +147,7 @@ class PlainPDOResultFormatter extends PDOResultFormatter
     public function getPreferredOutfile()
     {
 
-        return new PhingFile( 'results.txt' );
+        return new PhingFile('results.txt');
     }
 
 }

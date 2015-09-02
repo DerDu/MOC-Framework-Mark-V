@@ -32,7 +32,7 @@ class Sami extends Container
 
     const VERSION = '2.0.0';
 
-    public function __construct( $iterator = null, array $config = array() )
+    public function __construct($iterator = null, array $config = array())
     {
 
         $sc = $this;
@@ -41,24 +41,24 @@ class Sami extends Container
             $this['files'] = $iterator;
         }
 
-        $this['_versions'] = function () use ( $sc ) {
+        $this['_versions'] = function () use ($sc) {
 
             $versions = isset( $sc['versions'] ) ? $sc['versions'] : $sc['version'];
 
-            if (is_string( $versions )) {
-                $versions = new Version( $versions );
+            if (is_string($versions)) {
+                $versions = new Version($versions);
             }
 
             if ($versions instanceof Version) {
-                $versions = new SingleVersionCollection( $versions );
+                $versions = new SingleVersionCollection($versions);
             }
 
             return $versions;
         };
 
-        $this['project'] = function () use ( $sc ) {
+        $this['project'] = function () use ($sc) {
 
-            $project = new Project( $sc['store'], $sc['_versions'], array(
+            $project = new Project($sc['store'], $sc['_versions'], array(
                 'build_dir'            => $sc['build_dir'],
                 'cache_dir'            => $sc['cache_dir'],
                 'simulate_namespaces'  => $sc['simulate_namespaces'],
@@ -66,78 +66,78 @@ class Sami extends Container
                 'default_opened_level' => $sc['default_opened_level'],
                 'theme'                => $sc['theme'],
                 'title'                => $sc['title'],
-            ) );
-            $project->setRenderer( $sc['renderer'] );
-            $project->setParser( $sc['parser'] );
+            ));
+            $project->setRenderer($sc['renderer']);
+            $project->setParser($sc['parser']);
 
             return $project;
         };
 
-        $this['parser'] = function () use ( $sc ) {
+        $this['parser'] = function () use ($sc) {
 
-            return new Parser( $sc['files'], $sc['store'], $sc['code_parser'], $sc['traverser'] );
+            return new Parser($sc['files'], $sc['store'], $sc['code_parser'], $sc['traverser']);
         };
 
-        $this['indexer'] = function () use ( $sc ) {
+        $this['indexer'] = function () use ($sc) {
 
             return new Indexer();
         };
 
-        $this['tree'] = function () use ( $sc ) {
+        $this['tree'] = function () use ($sc) {
 
             return new Tree();
         };
 
-        $this['parser_context'] = function () use ( $sc ) {
+        $this['parser_context'] = function () use ($sc) {
 
-            return new ParserContext( $sc['filter'], $sc['docblock_parser'], $sc['pretty_printer'] );
+            return new ParserContext($sc['filter'], $sc['docblock_parser'], $sc['pretty_printer']);
         };
 
-        $this['docblock_parser'] = function () use ( $sc ) {
+        $this['docblock_parser'] = function () use ($sc) {
 
             return new DocBlockParser();
         };
 
         $this['php_parser'] = function () {
 
-            return new \PHPParser_Parser( new \PHPParser_Lexer() );
+            return new \PHPParser_Parser(new \PHPParser_Lexer());
         };
 
-        $this['php_traverser'] = function () use ( $sc ) {
+        $this['php_traverser'] = function () use ($sc) {
 
             $traverser = new \PHPParser_NodeTraverser();
-            $traverser->addVisitor( new \PHPParser_NodeVisitor_NameResolver() );
-            $traverser->addVisitor( new NodeVisitor( $sc['parser_context'] ) );
+            $traverser->addVisitor(new \PHPParser_NodeVisitor_NameResolver());
+            $traverser->addVisitor(new NodeVisitor($sc['parser_context']));
 
             return $traverser;
         };
 
-        $this['code_parser'] = function () use ( $sc ) {
+        $this['code_parser'] = function () use ($sc) {
 
-            return new CodeParser( $sc['parser_context'], $sc['php_parser'], $sc['php_traverser'] );
+            return new CodeParser($sc['parser_context'], $sc['php_parser'], $sc['php_traverser']);
         };
 
-        $this['pretty_printer'] = function () use ( $sc ) {
+        $this['pretty_printer'] = function () use ($sc) {
 
             return new \PHPParser_PrettyPrinter_Zend();
         };
 
-        $this['filter'] = function () use ( $sc ) {
+        $this['filter'] = function () use ($sc) {
 
             return new DefaultFilter();
         };
 
-        $this['store'] = function () use ( $sc ) {
+        $this['store'] = function () use ($sc) {
 
             return new JsonStore();
         };
 
-        $this['renderer'] = function () use ( $sc ) {
+        $this['renderer'] = function () use ($sc) {
 
-            return new Renderer( $sc['twig'], $sc['themes'], $sc['tree'], $sc['indexer'] );
+            return new Renderer($sc['twig'], $sc['themes'], $sc['tree'], $sc['indexer']);
         };
 
-        $this['traverser'] = function () use ( $sc ) {
+        $this['traverser'] = function () use ($sc) {
 
             $visitors = array(
                 new ClassVisitor\InheritdocClassVisitor(),
@@ -145,26 +145,26 @@ class Sami extends Container
                 new ClassVisitor\PropertyClassVisitor(),
             );
 
-            return new ClassTraverser( $visitors );
+            return new ClassTraverser($visitors);
         };
 
-        $this['themes'] = function () use ( $sc ) {
+        $this['themes'] = function () use ($sc) {
 
             $templates = $sc['template_dirs'];
             $templates[] = __DIR__.'/Resources/themes';
 
-            return new ThemeSet( $templates );
+            return new ThemeSet($templates);
         };
 
-        $this['twig'] = function () use ( $sc ) {
+        $this['twig'] = function () use ($sc) {
 
-            $twig = new \Twig_Environment( new \Twig_Loader_Filesystem( array( '/' ) ), array(
+            $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array('/')), array(
                 'strict_variables' => true,
                 'debug'            => true,
                 'auto_reload'      => true,
                 'cache'            => false,
-            ) );
-            $twig->addExtension( new TwigExtension() );
+            ));
+            $twig->addExtension(new TwigExtension());
 
             return $twig;
         };

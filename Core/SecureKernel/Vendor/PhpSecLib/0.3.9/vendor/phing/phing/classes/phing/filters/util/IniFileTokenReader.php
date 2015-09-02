@@ -62,15 +62,15 @@ class IniFileTokenReader extends TokenReader
     {
 
         if ($this->file === null) {
-            throw new BuildException( "No File set for IniFileTokenReader" );
+            throw new BuildException("No File set for IniFileTokenReader");
         }
 
         if ($this->tokens === null) {
             $this->processFile();
         }
 
-        if (count( $this->tokens ) > 0) {
-            return array_pop( $this->tokens );
+        if (count($this->tokens) > 0) {
+            return array_pop($this->tokens);
         } else {
             return null;
         }
@@ -82,26 +82,26 @@ class IniFileTokenReader extends TokenReader
     protected function processFile()
     {
 
-        $arr = parse_ini_file( $this->file->getAbsolutePath(), true );
+        $arr = parse_ini_file($this->file->getAbsolutePath(), true);
 
         if ($this->section !== null) {
             if (isset( $arr[$this->section] )) {
-                $this->processSection( $arr[$this->section] );
+                $this->processSection($arr[$this->section]);
             }
 
             return;
         }
 
-        $values = array_values( $arr );
+        $values = array_values($arr);
 
-        if (!is_array( $values[0] )) {
-            $this->processSection( $arr );
+        if (!is_array($values[0])) {
+            $this->processSection($arr);
 
             return;
         }
 
         foreach ($values as $subArr) {
-            $this->processSection( $subArr );
+            $this->processSection($subArr);
         }
     }
 
@@ -110,13 +110,13 @@ class IniFileTokenReader extends TokenReader
      *
      * @param array $section
      */
-    protected function processSection( array $section )
+    protected function processSection(array $section)
     {
 
         foreach ($section as $key => $value) {
             $tok = new Token();
-            $tok->setKey( $key );
-            $tok->setValue( $value );
+            $tok->setKey($key);
+            $tok->setValue($value);
             $this->tokens[] = $tok;
         }
     }
@@ -126,28 +126,28 @@ class IniFileTokenReader extends TokenReader
      *
      * @throws BuildException
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
-        if (is_string( $file )) {
-            $this->file = new PhingFile( $file );
+        if (is_string($file)) {
+            $this->file = new PhingFile($file);
 
             return;
         }
 
-        if (is_object( $file ) && $file instanceof PhingFile) {
+        if (is_object($file) && $file instanceof PhingFile) {
             $this->file = $file;
 
             return;
         }
 
-        throw new BuildException( "Unsupported value ".(string)$file );
+        throw new BuildException("Unsupported value ".(string)$file);
     }
 
     /**
      * @param $str
      */
-    public function setSection( $str )
+    public function setSection($str)
     {
 
         $this->section = (string)$str;

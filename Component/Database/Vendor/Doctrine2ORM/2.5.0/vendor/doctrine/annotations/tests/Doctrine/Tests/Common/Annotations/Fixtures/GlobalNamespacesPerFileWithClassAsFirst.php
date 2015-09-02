@@ -2,8 +2,6 @@
 
 namespace {
 
-    use Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Template;
-
     class GlobalNamespacesPerFileWithClassAsFirst
     {
 
@@ -12,5 +10,4 @@ namespace {
 
 namespace {
 
-    use Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Template;
 }

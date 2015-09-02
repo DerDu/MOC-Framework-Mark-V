@@ -53,7 +53,7 @@ class ApiGenTask extends Task
      *
      * @param string $executable
      */
-    public function setExecutable( $executable )
+    public function setExecutable($executable)
     {
 
         $this->executable = (string)$executable;
@@ -64,7 +64,7 @@ class ApiGenTask extends Task
      *
      * @param string $config
      */
-    public function setConfig( $config )
+    public function setConfig($config)
     {
 
         $this->options['config'] = (string)$config;
@@ -75,10 +75,10 @@ class ApiGenTask extends Task
      *
      * @param string $source
      */
-    public function setSource( $source )
+    public function setSource($source)
     {
 
-        $this->options['source'] = explode( ',', $source );
+        $this->options['source'] = explode(',', $source);
     }
 
     /**
@@ -86,7 +86,7 @@ class ApiGenTask extends Task
      *
      * @param string $destination
      */
-    public function setDestination( $destination )
+    public function setDestination($destination)
     {
 
         $this->options['destination'] = (string)$destination;
@@ -97,10 +97,10 @@ class ApiGenTask extends Task
      *
      * @param string $extensions
      */
-    public function setExtensions( $extensions )
+    public function setExtensions($extensions)
     {
 
-        $this->options['extensions'] = explode( ',', $extensions );
+        $this->options['extensions'] = explode(',', $extensions);
     }
 
     /**
@@ -108,10 +108,10 @@ class ApiGenTask extends Task
      *
      * @param string $exclude
      */
-    public function setExclude( $exclude )
+    public function setExclude($exclude)
     {
 
-        $this->options['exclude'] = explode( ',', $exclude );
+        $this->options['exclude'] = explode(',', $exclude);
     }
 
     /**
@@ -119,10 +119,10 @@ class ApiGenTask extends Task
      *
      * @param string $skipDocPath
      */
-    public function setSkipDocPath( $skipDocPath )
+    public function setSkipDocPath($skipDocPath)
     {
 
-        $this->options['skip-doc-path'] = explode( ',', $skipDocPath );
+        $this->options['skip-doc-path'] = explode(',', $skipDocPath);
     }
 
     /**
@@ -130,10 +130,10 @@ class ApiGenTask extends Task
      *
      * @param string $skipDocPrefix
      */
-    public function setSkipDocPrefix( $skipDocPrefix )
+    public function setSkipDocPrefix($skipDocPrefix)
     {
 
-        $this->options['skip-doc-prefix'] = explode( ',', $skipDocPrefix );
+        $this->options['skip-doc-prefix'] = explode(',', $skipDocPrefix);
     }
 
     /**
@@ -141,10 +141,10 @@ class ApiGenTask extends Task
      *
      * @param string $charset
      */
-    public function setCharset( $charset )
+    public function setCharset($charset)
     {
 
-        $this->options['charset'] = explode( ',', $charset );
+        $this->options['charset'] = explode(',', $charset);
     }
 
     /**
@@ -152,7 +152,7 @@ class ApiGenTask extends Task
      *
      * @param string $main
      */
-    public function setMain( $main )
+    public function setMain($main)
     {
 
         $this->options['main'] = (string)$main;
@@ -163,7 +163,7 @@ class ApiGenTask extends Task
      *
      * @param string $title
      */
-    public function setTitle( $title )
+    public function setTitle($title)
     {
 
         $this->options['title'] = (string)$title;
@@ -174,7 +174,7 @@ class ApiGenTask extends Task
      *
      * @param string $baseUrl
      */
-    public function setBaseUrl( $baseUrl )
+    public function setBaseUrl($baseUrl)
     {
 
         $this->options['base-url'] = (string)$baseUrl;
@@ -185,7 +185,7 @@ class ApiGenTask extends Task
      *
      * @param string $googleCseId
      */
-    public function setGoogleCseId( $googleCseId )
+    public function setGoogleCseId($googleCseId)
     {
 
         $this->options['google-cse-id'] = (string)$googleCseId;
@@ -196,7 +196,7 @@ class ApiGenTask extends Task
      *
      * @param string $googleCseLabel
      */
-    public function setGoogleCseLabel( $googleCseLabel )
+    public function setGoogleCseLabel($googleCseLabel)
     {
 
         $this->options['google-cse-label'] = (string)$googleCseLabel;
@@ -207,7 +207,7 @@ class ApiGenTask extends Task
      *
      * @param string $googleAnalytics
      */
-    public function setGoogleAnalytics( $googleAnalytics )
+    public function setGoogleAnalytics($googleAnalytics)
     {
 
         $this->options['google-analytics'] = (string)$googleAnalytics;
@@ -218,7 +218,7 @@ class ApiGenTask extends Task
      *
      * @param string $templateConfig
      */
-    public function setTemplateConfig( $templateConfig )
+    public function setTemplateConfig($templateConfig)
     {
 
         $this->options['template-config'] = (string)$templateConfig;
@@ -229,7 +229,7 @@ class ApiGenTask extends Task
      *
      * @param string $allowedHtml
      */
-    public function setAllowedHtml( $allowedHtml )
+    public function setAllowedHtml($allowedHtml)
     {
 
         $this->options['allowed-html'] = (string)$allowedHtml;
@@ -240,7 +240,7 @@ class ApiGenTask extends Task
      *
      * @param string $groups
      */
-    public function setGroups( $groups )
+    public function setGroups($groups)
     {
 
         $this->options['groups'] = (string)$groups;
@@ -251,7 +251,7 @@ class ApiGenTask extends Task
      *
      * @param string $autocomplete
      */
-    public function setAutocomplete( $autocomplete )
+    public function setAutocomplete($autocomplete)
     {
 
         $this->options['autocomplete'] = (string)$autocomplete;
@@ -264,7 +264,7 @@ class ApiGenTask extends Task
      *
      * @param string $accessLevels
      */
-    public function setAccessLevels( $accessLevels )
+    public function setAccessLevels($accessLevels)
     {
 
         $this->options['access-levels'] = (string)$accessLevels;
@@ -275,7 +275,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $internal
      */
-    public function setInternal( $internal )
+    public function setInternal($internal)
     {
 
         $this->options['internal'] = (bool)$internal;
@@ -286,7 +286,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $php
      */
-    public function setPhp( $php )
+    public function setPhp($php)
     {
 
         $this->options['php'] = (bool)$php;
@@ -297,7 +297,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $tree
      */
-    public function setTree( $tree )
+    public function setTree($tree)
     {
 
         $this->options['tree'] = (bool)$tree;
@@ -308,7 +308,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $deprecated
      */
-    public function setDeprecated( $deprecated )
+    public function setDeprecated($deprecated)
     {
 
         $this->options['deprecated'] = (bool)$deprecated;
@@ -319,7 +319,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $todo
      */
-    public function setTodo( $todo )
+    public function setTodo($todo)
     {
 
         $this->options['todo'] = (bool)$todo;
@@ -330,7 +330,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $sourceCode
      */
-    public function setSourceCode( $sourceCode )
+    public function setSourceCode($sourceCode)
     {
 
         $this->options['source-code'] = (bool)$sourceCode;
@@ -341,7 +341,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $download
      */
-    public function setDownload( $download )
+    public function setDownload($download)
     {
 
         $this->options['download'] = (bool)$download;
@@ -352,7 +352,7 @@ class ApiGenTask extends Task
      *
      * @param string $report
      */
-    public function setReport( $report )
+    public function setReport($report)
     {
 
         $this->options['report'] = (string)$report;
@@ -363,7 +363,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $wipeout
      */
-    public function setWipeout( $wipeout )
+    public function setWipeout($wipeout)
     {
 
         $this->options['wipeout'] = (bool)$wipeout;
@@ -374,7 +374,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $quiet
      */
-    public function setQuiet( $quiet )
+    public function setQuiet($quiet)
     {
 
         $this->options['quiet'] = (bool)$quiet;
@@ -385,7 +385,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $updateCheck
      */
-    public function setUpdateCheck( $updateCheck )
+    public function setUpdateCheck($updateCheck)
     {
 
         $this->options['update-check'] = (bool)$updateCheck;
@@ -396,7 +396,7 @@ class ApiGenTask extends Task
      *
      * @param boolean $debug
      */
-    public function setDebug( $debug )
+    public function setDebug($debug)
     {
 
         $this->options['debug'] = (bool)$debug;
@@ -411,44 +411,44 @@ class ApiGenTask extends Task
     public function main()
     {
 
-        if ('apigen' !== $this->executable && !is_file( $this->executable )) {
-            throw new BuildException( sprintf( 'Executable %s not found', $this->executable ), $this->getLocation() );
+        if ('apigen' !== $this->executable && !is_file($this->executable)) {
+            throw new BuildException(sprintf('Executable %s not found', $this->executable), $this->getLocation());
         }
 
         if (!empty( $this->options['config'] )) {
             // Config check
-            if (!is_file( $this->options['config'] )) {
-                throw new BuildException( sprintf(
+            if (!is_file($this->options['config'])) {
+                throw new BuildException(sprintf(
                     'Config file %s doesn\'t exist',
                     $this->options['config']
-                ), $this->getLocation() );
+                ), $this->getLocation());
             }
         } else {
             // Source check
             if (empty( $this->options['source'] )) {
-                throw new BuildException( 'Source is not set', $this->getLocation() );
+                throw new BuildException('Source is not set', $this->getLocation());
             }
             // Destination check
             if (empty( $this->options['destination'] )) {
-                throw new BuildException( 'Destination is not set', $this->getLocation() );
+                throw new BuildException('Destination is not set', $this->getLocation());
             }
         }
 
         // Source check
         if (!empty( $this->options['source'] )) {
             foreach ($this->options['source'] as $source) {
-                if (!file_exists( $source )) {
-                    throw new BuildException( sprintf( 'Source %s doesn\'t exist', $source ), $this->getLocation() );
+                if (!file_exists($source)) {
+                    throw new BuildException(sprintf('Source %s doesn\'t exist', $source), $this->getLocation());
                 }
             }
         }
 
         // Execute ApiGen
-        exec( escapeshellcmd( $this->executable ).' '.$this->constructArguments(), $output, $return );
+        exec(escapeshellcmd($this->executable).' '.$this->constructArguments(), $output, $return);
 
         $logType = 0 === $return ? Project::MSG_INFO : Project::MSG_ERR;
         foreach ($output as $line) {
-            $this->log( $line, $logType );
+            $this->log($line, $logType);
         }
     }
 
@@ -462,17 +462,17 @@ class ApiGenTask extends Task
 
         $args = array();
         foreach ($this->options as $option => $value) {
-            if (is_bool( $value )) {
+            if (is_bool($value)) {
                 $args[] = '--'.$option.'='.( $value ? 'yes' : 'no' );
-            } elseif (is_array( $value )) {
+            } elseif (is_array($value)) {
                 foreach ($value as $v) {
-                    $args[] = '--'.$option.'='.escapeshellarg( $v );
+                    $args[] = '--'.$option.'='.escapeshellarg($v);
                 }
             } else {
-                $args[] = '--'.$option.'='.escapeshellarg( $value );
+                $args[] = '--'.$option.'='.escapeshellarg($value);
             }
         }
 
-        return implode( ' ', $args );
+        return implode(' ', $args);
     }
 }

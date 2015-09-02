@@ -43,7 +43,7 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     public function testInstantiateSelf()
     {
 
-        $this->instantiator->instantiate( __CLASS__ );
+        $this->instantiator->instantiate(__CLASS__);
     }
 
     /**
@@ -53,7 +53,7 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     public function testInstantiateInternalClass()
     {
 
-        $this->instantiator->instantiate( 'ArrayObject' );
+        $this->instantiator->instantiate('ArrayObject');
     }
 
     /**
@@ -63,7 +63,7 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     public function testInstantiateSimpleSerializableAssetClass()
     {
 
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset' );
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
     }
 
     /**
@@ -73,7 +73,7 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     public function testInstantiateSerializableArrayObjectAsset()
     {
 
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset' );
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
     }
 
     /**
@@ -83,7 +83,7 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     public function testInstantiateUnCloneableAsset()
     {
 
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset' );
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
     }
 
     /**
@@ -94,10 +94,10 @@ class InstantiatorPerformanceEvent extends AthleticEvent
 
         $this->instantiator = new Instantiator();
 
-        $this->instantiator->instantiate( __CLASS__ );
-        $this->instantiator->instantiate( 'ArrayObject' );
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset' );
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset' );
-        $this->instantiator->instantiate( 'DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset' );
+        $this->instantiator->instantiate(__CLASS__);
+        $this->instantiator->instantiate('ArrayObject');
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
     }
 }

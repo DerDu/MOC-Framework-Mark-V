@@ -49,11 +49,11 @@ class PHPUnit_Framework_SkippedTestCase extends PHPUnit_Framework_TestCase
     /**
      * @param string $message
      */
-    public function __construct( $className, $methodName, $message = '' )
+    public function __construct($className, $methodName, $message = '')
     {
 
         $this->message = $message;
-        parent::__construct( $className.'::'.$methodName );
+        parent::__construct($className.'::'.$methodName);
     }
 
     /**
@@ -82,6 +82,6 @@ class PHPUnit_Framework_SkippedTestCase extends PHPUnit_Framework_TestCase
     protected function runTest()
     {
 
-        $this->markTestSkipped( $this->message );
+        $this->markTestSkipped($this->message);
     }
 }

@@ -24,11 +24,11 @@ class PHPUnit_Framework_Constraint_IsEmpty extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         if ($other instanceof Countable) {
-            return count( $other ) === 0;
+            return count($other) === 0;
         }
 
         return empty( $other );
@@ -44,10 +44,10 @@ class PHPUnit_Framework_Constraint_IsEmpty extends PHPUnit_Framework_Constraint
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        $type = gettype( $other );
+        $type = gettype($other);
 
         return sprintf(
             '%s %s %s',

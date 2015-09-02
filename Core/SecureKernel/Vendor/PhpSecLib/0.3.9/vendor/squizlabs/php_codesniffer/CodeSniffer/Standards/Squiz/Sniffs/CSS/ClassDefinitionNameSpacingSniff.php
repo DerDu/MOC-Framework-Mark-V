@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,13 +58,13 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Do not check nested style definitions as, for example, in @media style rules.
-        $nested = $phpcsFile->findNext( T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ), $tokens[$stackPtr]['bracket_closer'] );
+        $nested = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ), $tokens[$stackPtr]['bracket_closer']);
         if ($nested !== false) {
             return;
         }
@@ -82,7 +82,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
         $foundContent = false;
         $currentLine = $tokens[$stackPtr]['line'];
         for ($i = ( $stackPtr - 1 ); $i >= 0; $i--) {
-            if (in_array( $tokens[$i]['code'], $endTokens ) === true) {
+            if (in_array($tokens[$i]['code'], $endTokens) === true) {
                 break;
             }
 
@@ -98,12 +98,12 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
             if ($foundContent === false) {
                 // Before we throw an error, make sure we are not looking
                 // at a gap before the style definition.
-                $prev = $phpcsFile->findPrevious( T_WHITESPACE, $i, null, true );
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, $i, null, true);
                 if ($prev !== false
-                    && in_array( $tokens[$prev]['code'], $endTokens ) === false
+                    && in_array($tokens[$prev]['code'], $endTokens) === false
                 ) {
                     $error = 'Blank lines are not allowed between class names';
-                    $phpcsFile->addError( $error, ( $i + 1 ), 'BlankLinesFound' );
+                    $phpcsFile->addError($error, ( $i + 1 ), 'BlankLinesFound');
                 }
                 break;
             }

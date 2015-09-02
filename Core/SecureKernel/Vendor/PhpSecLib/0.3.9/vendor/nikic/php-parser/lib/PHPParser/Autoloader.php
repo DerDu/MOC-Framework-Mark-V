@@ -12,8 +12,8 @@ class PHPParser_Autoloader
     static public function register()
     {
 
-        ini_set( 'unserialize_callback_func', 'spl_autoload_call' );
-        spl_autoload_register( array( __CLASS__, 'autoload' ) );
+        ini_set('unserialize_callback_func', 'spl_autoload_call');
+        spl_autoload_register(array(__CLASS__, 'autoload'));
     }
 
     /**
@@ -21,15 +21,15 @@ class PHPParser_Autoloader
      *
      * @param string $class A class name.
      */
-    static public function autoload( $class )
+    static public function autoload($class)
     {
 
-        if (0 !== strpos( $class, 'PHPParser' )) {
+        if (0 !== strpos($class, 'PHPParser')) {
             return;
         }
 
-        $file = dirname( dirname( __FILE__ ) ).'/'.strtr( $class, '_', '/' ).'.php';
-        if (is_file( $file )) {
+        $file = dirname(dirname(__FILE__)).'/'.strtr($class, '_', '/').'.php';
+        if (is_file($file)) {
             require $file;
         }
     }

@@ -35,10 +35,10 @@ class ReturnArgumentPromise implements PromiseInterface
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
-    public function __construct( $index = 0 )
+    public function __construct($index = 0)
     {
 
-        if (!is_int( $index ) || $index < 0) {
+        if (!is_int($index) || $index < 0) {
             throw new InvalidArgumentException(
                 'Zero-based index expected as argument to ReturnArgumentPromise, but got %s.',
                 $index
@@ -56,9 +56,9 @@ class ReturnArgumentPromise implements PromiseInterface
      *
      * @return null|mixed
      */
-    public function execute( array $args, ObjectProphecy $object, MethodProphecy $method )
+    public function execute(array $args, ObjectProphecy $object, MethodProphecy $method)
     {
 
-        return count( $args ) > $this->index ? $args[$this->index] : null;
+        return count($args) > $this->index ? $args[$this->index] : null;
     }
 }

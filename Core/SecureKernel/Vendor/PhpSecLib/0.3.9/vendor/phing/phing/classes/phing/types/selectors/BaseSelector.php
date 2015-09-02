@@ -45,7 +45,7 @@ abstract class BaseSelector extends DataType implements FileSelector
      *
      * @return void
      */
-    public function setError( $msg )
+    public function setError($msg)
     {
 
         if ($this->errmsg === null) {
@@ -66,7 +66,7 @@ abstract class BaseSelector extends DataType implements FileSelector
             $this->verifySettings();
         }
         if ($this->getError() !== null) {
-            throw new BuildException( $this->errmsg );
+            throw new BuildException($this->errmsg);
         }
     }
 

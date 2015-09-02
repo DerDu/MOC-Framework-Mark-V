@@ -54,21 +54,21 @@ interface BuildLogger extends BuildListener
      *
      * @param int $level The log level integer (e.g. Project::MSG_VERBOSE, etc.).
      */
-    public function setMessageOutputLevel( $level );
+    public function setMessageOutputLevel($level);
 
     /**
      * Sets the standard output stream to use.
      *
      * @param OutputStream $output Configured output stream (e.g. STDOUT) for standard output.
      */
-    public function setOutputStream( OutputStream $output );
+    public function setOutputStream(OutputStream $output);
 
     /**
      * Sets the output stream to use for errors.
      *
      * @param OutputStream $err Configured output stream (e.g. STDERR) for errors.
      */
-    public function setErrorStream( OutputStream $err );
+    public function setErrorStream(OutputStream $err);
 
     /**
      * Sets this logger to produce emacs (and other editor) friendly output.
@@ -76,5 +76,5 @@ interface BuildLogger extends BuildListener
      * @param bool $emacsMode      true if output is to be unadorned so that emacs and other editors
      *                             can parse files names, etc.
      */
-    public function setEmacsMode( $emacsMode );
+    public function setEmacsMode($emacsMode);
 }

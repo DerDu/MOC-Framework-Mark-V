@@ -83,7 +83,7 @@ abstract class Task extends ProjectComponent
      *
      * @param Target Reference to owning target
      */
-    public function setOwningTarget( Target $target )
+    public function setOwningTarget(Target $target)
     {
 
         $this->target = $target;
@@ -117,7 +117,7 @@ abstract class Task extends ProjectComponent
      *
      * @param string The type of this task (XML Tag)
      */
-    public function setTaskType( $name )
+    public function setTaskType($name)
     {
 
         $this->taskType = (string)$name;
@@ -132,10 +132,10 @@ abstract class Task extends ProjectComponent
      * @see BuildEvent
      * @see BuildListener
      */
-    public function log( $msg, $level = Project::MSG_INFO )
+    public function log($msg, $level = Project::MSG_INFO)
     {
 
-        $this->project->logObject( $this, $msg, $level );
+        $this->project->logObject($this, $msg, $level);
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class Task extends ProjectComponent
      *
      * @param string $desc The text describing the task
      */
-    public function setDescription( $desc )
+    public function setDescription($desc)
     {
 
         $this->description = $desc;
@@ -181,10 +181,43 @@ abstract class Task extends ProjectComponent
     {
 
         if ($this->wrapper === null) {
-            $this->wrapper = new RuntimeConfigurable( $this, $this->getTaskName() );
+            $this->wrapper = new RuntimeConfigurable($this, $this->getTaskName());
         }
 
         return $this->wrapper;
+    }
+
+    /**
+     * Returns the name of task, used only for log messages
+     *
+     * @return string Name of this task
+     */
+    public function getTaskName()
+    {
+
+        if ($this->taskName === null) {
+            // if no task name is set, then it's possible
+            // this task was created from within another task.  We don't
+            // therefore know the XML tag name for this task, so we'll just
+            // use the class name stripped of "task" suffix.  This is only
+            // for log messages, so we don't have to worry much about accuracy.
+            return preg_replace('/task$/i', '', get_class($this));
+        }
+
+        return $this->taskName;
+    }
+
+    /**
+     * Sets the name of this task for log messages
+     *
+     * @param  string $name
+     *
+     * @return string A string representing the name of this task for log
+     */
+    public function setTaskName($name)
+    {
+
+        $this->taskName = (string)$name;
     }
 
     /**
@@ -193,7 +226,7 @@ abstract class Task extends ProjectComponent
      *
      * @param RuntimeConfigurable $wrapper The wrapper object this task should use
      */
-    public function setRuntimeConfigurableWrapper( RuntimeConfigurable $wrapper )
+    public function setRuntimeConfigurableWrapper(RuntimeConfigurable $wrapper)
     {
 
         $this->wrapper = $wrapper;
@@ -208,17 +241,17 @@ abstract class Task extends ProjectComponent
     {
 
         try { // try executing task
-            $this->project->fireTaskStarted( $this );
+            $this->project->fireTaskStarted($this);
             $this->maybeConfigure();
             $this->main();
-            $this->project->fireTaskFinished( $this, $null = null );
-        } catch( Exception $exc ) {
+            $this->project->fireTaskFinished($this, $null = null);
+        } catch (Exception $exc) {
             if ($exc instanceof BuildException) {
                 if ($this->getLocation() !== null) {
-                    $exc->setLocation( $this->getLocation() );
+                    $exc->setLocation($this->getLocation());
                 }
             }
-            $this->project->fireTaskFinished( $this, $exc );
+            $this->project->fireTaskFinished($this, $exc);
             throw $exc;
         }
     }
@@ -230,7 +263,7 @@ abstract class Task extends ProjectComponent
     {
 
         if ($this->wrapper !== null) {
-            $this->wrapper->maybeConfigure( $this->project );
+            $this->wrapper->maybeConfigure($this->project);
         }
     }
 
@@ -266,7 +299,7 @@ abstract class Task extends ProjectComponent
      * @param Location $location The location object describing the position of this
      *                           task within the buildfile.
      */
-    public function setLocation( Location $location )
+    public function setLocation(Location $location)
     {
 
         $this->location = $location;
@@ -279,42 +312,9 @@ abstract class Task extends ProjectComponent
      *
      * @return \RegisterSlot
      */
-    protected function getRegisterSlot( $slotName )
+    protected function getRegisterSlot($slotName)
     {
 
-        return Register::getSlot( 'task.'.$this->getTaskName().'.'.$slotName );
-    }
-
-    /**
-     * Returns the name of task, used only for log messages
-     *
-     * @return string Name of this task
-     */
-    public function getTaskName()
-    {
-
-        if ($this->taskName === null) {
-            // if no task name is set, then it's possible
-            // this task was created from within another task.  We don't
-            // therefore know the XML tag name for this task, so we'll just
-            // use the class name stripped of "task" suffix.  This is only
-            // for log messages, so we don't have to worry much about accuracy.
-            return preg_replace( '/task$/i', '', get_class( $this ) );
-        }
-
-        return $this->taskName;
-    }
-
-    /**
-     * Sets the name of this task for log messages
-     *
-     * @param  string $name
-     *
-     * @return string A string representing the name of this task for log
-     */
-    public function setTaskName( $name )
-    {
-
-        $this->taskName = (string)$name;
+        return Register::getSlot('task.'.$this->getTaskName().'.'.$slotName);
     }
 }

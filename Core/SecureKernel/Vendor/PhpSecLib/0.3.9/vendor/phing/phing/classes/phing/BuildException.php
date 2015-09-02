@@ -57,7 +57,7 @@ class BuildException extends Exception
      * @param Location|Exception|null $p2
      * @param Location|null           $p3
      */
-    public function __construct( $p1, $p2 = null, $p3 = null )
+    public function __construct($p1, $p2 = null, $p3 = null)
     {
 
         $cause = null;
@@ -86,7 +86,7 @@ class BuildException extends Exception
             $msg = $p1;
         }
 
-        parent::__construct( $msg );
+        parent::__construct($msg);
 
         if ($cause !== null) {
             $this->cause = $cause;
@@ -95,7 +95,7 @@ class BuildException extends Exception
         }
 
         if ($loc !== null) {
-            $this->setLocation( $loc );
+            $this->setLocation($loc);
         }
     }
 
@@ -126,7 +126,7 @@ class BuildException extends Exception
      *
      * @param Location $loc
      */
-    public function setLocation( Location $loc )
+    public function setLocation(Location $loc)
     {
 
         $this->location = $loc;

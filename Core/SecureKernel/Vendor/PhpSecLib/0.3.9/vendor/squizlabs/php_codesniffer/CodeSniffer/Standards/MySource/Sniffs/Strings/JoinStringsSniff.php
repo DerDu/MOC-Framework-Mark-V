@@ -31,7 +31,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -42,7 +42,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_STRING );
+        return array(T_STRING);
 
     }//end register()
 
@@ -56,7 +56,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -65,12 +65,12 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true);
         if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
             return;
         }
 
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $prev - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $prev - 1 ), null, true);
         if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
             $opener = $tokens[$prev]['bracket_opener'];
             if ($tokens[( $opener - 1 )]['code'] !== T_STRING) {
@@ -78,7 +78,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
                 // and not elsewhere, like x = y[a].join()
                 // The first is not allowed while the second is.
                 $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
-                $phpcsFile->addError( $error, $stackPtr, 'ArrayNotAllowed' );
+                $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
             }
         }
 

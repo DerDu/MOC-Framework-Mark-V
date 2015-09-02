@@ -39,7 +39,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -53,22 +53,22 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // If the close php tag is on the same line as the opening
         // then we have an inline embedded PHP block.
-        $closeTag = $phpcsFile->findNext( array( T_CLOSE_TAG ), $stackPtr );
+        $closeTag = $phpcsFile->findNext(array(T_CLOSE_TAG), $stackPtr);
         if ($closeTag === false) {
             return;
         }
 
         if ($tokens[$stackPtr]['line'] !== $tokens[$closeTag]['line']) {
-            $this->_validateMultilineEmbeddedPhp( $phpcsFile, $stackPtr );
+            $this->_validateMultilineEmbeddedPhp($phpcsFile, $stackPtr);
         } else {
-            $this->_validateInlineEmbeddedPhp( $phpcsFile, $stackPtr );
+            $this->_validateInlineEmbeddedPhp($phpcsFile, $stackPtr);
         }
 
     }//end process()
@@ -83,25 +83,25 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _validateMultilineEmbeddedPhp( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    private function _validateMultilineEmbeddedPhp(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $prevTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $prevTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($prevTag === false) {
             // This is the first open tag.
             return;
         }
 
         // This isn't the first opening tag.
-        $closingTag = $phpcsFile->findNext( T_CLOSE_TAG, $stackPtr );
+        $closingTag = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
         if ($closingTag === false) {
             // No closing tag? Problem.
             return;
         }
 
-        $nextContent = $phpcsFile->findNext( T_WHITESPACE, ( $closingTag + 1 ), $phpcsFile->numTokens, true );
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ( $closingTag + 1 ), $phpcsFile->numTokens, true);
         if ($nextContent === false) {
             // Final closing tag. It will be handled elsewhere.
             return;
@@ -114,10 +114,10 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
         // We have an opening and a closing tag, that lie within other content.
         // They are also on different lines.
-        $firstContent = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), $closingTag, true );
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), $closingTag, true);
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
-            $phpcsFile->addError( $error, $stackPtr, 'Empty' );
+            $phpcsFile->addError($error, $stackPtr, 'Empty');
             return;
         }
 
@@ -130,11 +130,11 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             } while ($tokens[$i]['line'] !== ( $tokens[$stackPtr]['line'] + 1 ));
 
             $error = 'Blank line found at start of embedded PHP content';
-            $phpcsFile->addError( $error, $i, 'SpacingBefore' );
+            $phpcsFile->addError($error, $i, 'SpacingBefore');
         } else {
             if ($tokens[$firstContent]['line'] === $tokens[$stackPtr]['line']) {
                 $error = 'Opening PHP tag must be on a line by itself';
-                $phpcsFile->addError( $error, $stackPtr, 'ContentAfterOpen' );
+                $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpen');
             }
         }
 
@@ -147,11 +147,11 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
                 $startColumn,
                 $contentColumn,
             );
-            $phpcsFile->addError( $error, $firstContent, 'Indent', $data );
+            $phpcsFile->addError($error, $firstContent, 'Indent', $data);
         }
 
         // Check for a blank line at the bottom.
-        $lastContent = $phpcsFile->findPrevious( T_WHITESPACE, ( $closingTag - 1 ), ( $stackPtr + 1 ), true );
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ( $closingTag - 1 ), ( $stackPtr + 1 ), true);
         if ($tokens[$lastContent]['line'] < ( $tokens[$closingTag]['line'] - 1 )) {
             // Find a token on the blank line to throw the error on.
             $i = $closingTag;
@@ -160,11 +160,11 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             } while ($tokens[$i]['line'] !== ( $tokens[$closingTag]['line'] - 1 ));
 
             $error = 'Blank line found at end of embedded PHP content';
-            $phpcsFile->addError( $error, $i, 'SpacingAfter' );
+            $phpcsFile->addError($error, $i, 'SpacingAfter');
         } else {
             if ($tokens[$lastContent]['line'] === $tokens[$closingTag]['line']) {
                 $error = 'Closing PHP tag must be on a line by itself';
-                $phpcsFile->addError( $error, $closingTag, 'ContentAfterEnd' );
+                $phpcsFile->addError($error, $closingTag, 'ContentAfterEnd');
             }
         }
 
@@ -180,24 +180,24 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _validateInlineEmbeddedPhp( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    private function _validateInlineEmbeddedPhp(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // We only want one line PHP sections, so return if the closing tag is
         // on the next line.
-        $closeTag = $phpcsFile->findNext( array( T_CLOSE_TAG ), $stackPtr, null, false );
+        $closeTag = $phpcsFile->findNext(array(T_CLOSE_TAG), $stackPtr, null, false);
         if ($tokens[$stackPtr]['line'] !== $tokens[$closeTag]['line']) {
             return;
         }
 
         // Check that there is one, and only one space at the start of the statement.
-        $firstContent = $phpcsFile->findNext( array( T_WHITESPACE ), ( $stackPtr + 1 ), null, true );
+        $firstContent = $phpcsFile->findNext(array(T_WHITESPACE), ( $stackPtr + 1 ), null, true);
 
         if ($firstContent === false || $tokens[$firstContent]['code'] === T_CLOSE_TAG) {
             $error = 'Empty embedded PHP tag found';
-            $phpcsFile->addError( $error, $stackPtr, 'Empty' );
+            $phpcsFile->addError($error, $stackPtr, 'Empty');
             return;
         }
 
@@ -206,17 +206,17 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             $leadingSpace .= $tokens[$i]['content'];
         }
 
-        if (strlen( $leadingSpace ) >= 1) {
+        if (strlen($leadingSpace) >= 1) {
             $error = 'Expected 1 space after opening PHP tag; %s found';
-            $data = array( ( strlen( $leadingSpace ) + 1 ) );
-            $phpcsFile->addError( $error, $stackPtr, 'SpacingAfterOpen', $data );
+            $data = array(( strlen($leadingSpace) + 1 ));
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
         }
 
         $semiColonCount = 0;
         $semiColon = $stackPtr;
         $lastSemiColon = $semiColon;
 
-        while (( $semiColon = $phpcsFile->findNext( array( T_SEMICOLON ), ( $semiColon + 1 ), $closeTag ) ) !== false) {
+        while (( $semiColon = $phpcsFile->findNext(array(T_SEMICOLON), ( $semiColon + 1 ), $closeTag) ) !== false) {
             $lastSemiColon = $semiColon;
             $semiColonCount++;
         }
@@ -227,15 +227,15 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         // Make sure there is atleast 1 semicolon.
         if ($semiColonCount === 0) {
             $error = 'Inline PHP statement must end with a semicolon';
-            $phpcsFile->addError( $error, $stackPtr, 'NoSemicolon' );
+            $phpcsFile->addError($error, $stackPtr, 'NoSemicolon');
             return;
         }
 
         // Make sure that there aren't more semicolons than are allowed.
         if ($semiColonCount > 1) {
             $error = 'Inline PHP statement must contain one statement per line; %s found';
-            $data = array( $semiColonCount );
-            $phpcsFile->addError( $error, $stackPtr, 'MultipleStatements', $data );
+            $data = array($semiColonCount);
+            $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
         }
 
         // The statement contains only 1 semicolon, now it must be spaced properly.
@@ -243,24 +243,24 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         for ($i = ( $semiColon + 1 ); $i < $closeTag; $i++) {
             if ($tokens[$i]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space before closing PHP tag; 0 found';
-                $phpcsFile->addError( $error, $stackPtr, 'NoSpaceBeforeClose' );
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeClose');
                 return;
             }
 
             $whitespace .= $tokens[$i]['content'];
         }
 
-        if (strlen( $whitespace ) === 1) {
+        if (strlen($whitespace) === 1) {
             return;
         }
 
-        if (strlen( $whitespace ) === 0) {
+        if (strlen($whitespace) === 0) {
             $error = 'Expected 1 space before closing PHP tag; 0 found';
-            $phpcsFile->addError( $error, $stackPtr, 'NoSpaceBeforeClose' );
+            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeClose');
         } else {
             $error = 'Expected 1 space before closing PHP tag; %s found';
-            $data = array( strlen( $whitespace ) );
-            $phpcsFile->addError( $error, $stackPtr, 'SpacingBeforeClose', $data );
+            $data = array(strlen($whitespace));
+            $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose', $data);
         }
 
     }//end _validateInlineEmbeddedPhp()

@@ -37,7 +37,7 @@ interface RegexpEngine
      *
      * @return void
      */
-    public function setIgnoreCase( $bit );
+    public function setIgnoreCase($bit);
 
     /**
      * Returns status of ignore case flag.
@@ -55,7 +55,7 @@ interface RegexpEngine
      *
      * @return boolean Success of matching operation.
      */
-    public function match( $pattern, $source, &$matches );
+    public function match($pattern, $source, &$matches);
 
     /**
      * Matches all patterns in source string and sets the matches array.
@@ -66,7 +66,7 @@ interface RegexpEngine
      *
      * @return boolean Success of matching operation.
      */
-    public function matchAll( $pattern, $source, &$matches );
+    public function matchAll($pattern, $source, &$matches);
 
     /**
      * Replaces $pattern with $replace in $source string.
@@ -77,6 +77,6 @@ interface RegexpEngine
      *
      * @return string The replaced source string.
      */
-    public function replace( $pattern, $replace, $source );
+    public function replace($pattern, $replace, $source);
 
 }

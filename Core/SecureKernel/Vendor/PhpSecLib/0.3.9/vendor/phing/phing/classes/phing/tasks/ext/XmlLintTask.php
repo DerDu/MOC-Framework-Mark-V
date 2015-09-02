@@ -43,7 +43,7 @@ class XmlLintTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -54,7 +54,7 @@ class XmlLintTask extends Task
      *
      * @param PhingFile $schema
      */
-    public function setSchema( PhingFile $schema )
+    public function setSchema(PhingFile $schema)
     {
 
         $this->schema = $schema;
@@ -65,7 +65,7 @@ class XmlLintTask extends Task
      *
      * @param bool $bool
      */
-    public function setUseRNG( $bool )
+    public function setUseRNG($bool)
     {
 
         $this->useRNG = (boolean)$bool;
@@ -78,7 +78,7 @@ class XmlLintTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -91,7 +91,7 @@ class XmlLintTask extends Task
      *
      * @return void
      */
-    public function setHaltonfailure( $haltonfailure )
+    public function setHaltonfailure($haltonfailure)
     {
 
         $this->haltonfailure = (bool)$haltonfailure;
@@ -109,24 +109,24 @@ class XmlLintTask extends Task
     public function main()
     {
 
-        if (isset( $this->schema ) && !file_exists( $this->schema->getPath() )) {
-            throw new BuildException( "Schema file not found: ".$this->schema->getPath() );
+        if (isset( $this->schema ) && !file_exists($this->schema->getPath())) {
+            throw new BuildException("Schema file not found: ".$this->schema->getPath());
         }
-        if (!isset( $this->file ) and count( $this->filesets ) == 0) {
-            throw new BuildException( "Missing either a nested fileset or attribute 'file' set" );
+        if (!isset( $this->file ) and count($this->filesets) == 0) {
+            throw new BuildException("Missing either a nested fileset or attribute 'file' set");
         }
 
-        set_error_handler( array( $this, 'errorHandler' ) );
+        set_error_handler(array($this, 'errorHandler'));
         if ($this->file instanceof PhingFile) {
-            $this->lint( $this->file->getPath() );
+            $this->lint($this->file->getPath());
         } else { // process filesets
             $project = $this->getProject();
             foreach ($this->filesets as $fs) {
-                $ds = $fs->getDirectoryScanner( $project );
+                $ds = $fs->getDirectoryScanner($project);
                 $files = $ds->getIncludedFiles();
-                $dir = $fs->getDir( $this->project )->getPath();
+                $dir = $fs->getDir($this->project)->getPath();
                 foreach ($files as $file) {
-                    $this->lint( $dir.DIRECTORY_SEPARATOR.$file );
+                    $this->lint($dir.DIRECTORY_SEPARATOR.$file);
                 }
             }
         }
@@ -140,28 +140,28 @@ class XmlLintTask extends Task
      *
      * @return void
      */
-    protected function lint( $file )
+    protected function lint($file)
     {
 
-        if (file_exists( $file )) {
-            if (is_readable( $file )) {
+        if (file_exists($file)) {
+            if (is_readable($file)) {
                 $dom = new DOMDocument();
-                if ($dom->load( $file ) === false) {
+                if ($dom->load($file) === false) {
                     $error = libxml_get_last_error();
-                    $this->logError( $file.' is not well-formed (See messages above)' );
+                    $this->logError($file.' is not well-formed (See messages above)');
                 } else {
                     if (isset( $this->schema )) {
                         if ($this->useRNG) {
-                            if ($dom->relaxNGValidate( $this->schema->getPath() )) {
-                                $this->log( $file.' validated with RNG grammar', Project::MSG_INFO );
+                            if ($dom->relaxNGValidate($this->schema->getPath())) {
+                                $this->log($file.' validated with RNG grammar', Project::MSG_INFO);
                             } else {
-                                $this->logError( $file.' fails to validate (See messages above)' );
+                                $this->logError($file.' fails to validate (See messages above)');
                             }
                         } else {
-                            if ($dom->schemaValidate( $this->schema->getPath() )) {
-                                $this->log( $file.' validated with schema', Project::MSG_INFO );
+                            if ($dom->schemaValidate($this->schema->getPath())) {
+                                $this->log($file.' validated with schema', Project::MSG_INFO);
                             } else {
-                                $this->logError( $file.' fails to validate (See messages above)' );
+                                $this->logError($file.' fails to validate (See messages above)');
                             }
                         }
                     } else {
@@ -172,10 +172,10 @@ class XmlLintTask extends Task
                     }
                 }
             } else {
-                $this->logError( 'Permission denied to read file: '.$file );
+                $this->logError('Permission denied to read file: '.$file);
             }
         } else {
-            $this->logError( 'File not found: '.$file );
+            $this->logError('File not found: '.$file);
         }
     }
 
@@ -186,13 +186,13 @@ class XmlLintTask extends Task
      *
      * @throws BuildException
      */
-    protected function logError( $message )
+    protected function logError($message)
     {
 
         if ($this->haltonfailure) {
-            throw new BuildException( $message );
+            throw new BuildException($message);
         } else {
-            $this->log( $message, Project::MSG_ERR );
+            $this->log($message, Project::MSG_ERR);
         }
     }
 
@@ -207,11 +207,11 @@ class XmlLintTask extends Task
      *
      * @return void
      */
-    public function errorHandler( $level, $message, $file, $line, $context )
+    public function errorHandler($level, $message, $file, $line, $context)
     {
 
         $matches = array();
-        preg_match( '/^.*\(\): (.*)$/', $message, $matches );
-        $this->log( $matches[1], Project::MSG_ERR );
+        preg_match('/^.*\(\): (.*)$/', $message, $matches);
+        $this->log($matches[1], Project::MSG_ERR);
     }
 }

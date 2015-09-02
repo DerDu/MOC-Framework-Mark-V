@@ -45,7 +45,7 @@ class PHP_Timer
     public static function start()
     {
 
-        array_push( self::$startTimes, microtime( true ) );
+        array_push(self::$startTimes, microtime(true));
     }
 
     /**
@@ -56,7 +56,7 @@ class PHP_Timer
     public static function stop()
     {
 
-        return microtime( true ) - array_pop( self::$startTimes );
+        return microtime(true) - array_pop(self::$startTimes);
     }
 
     /**
@@ -70,7 +70,7 @@ class PHP_Timer
         return sprintf(
             'Time: %s, Memory: %4.2fMb',
             self::timeSinceStartOfRequest(),
-            memory_get_peak_usage( true ) / 1048576
+            memory_get_peak_usage(true) / 1048576
         );
     }
 
@@ -82,7 +82,7 @@ class PHP_Timer
     public static function timeSinceStartOfRequest()
     {
 
-        return self::secondsToTimeString( microtime( true ) - self::$requestTime );
+        return self::secondsToTimeString(microtime(true) - self::$requestTime);
     }
 
     /**
@@ -92,14 +92,14 @@ class PHP_Timer
      *
      * @return string
      */
-    public static function secondsToTimeString( $time )
+    public static function secondsToTimeString($time)
     {
 
-        $ms = round( $time * 1000 );
+        $ms = round($time * 1000);
 
         foreach (self::$times as $unit => $value) {
             if ($ms >= $value) {
-                $time = floor( $ms / $value * 100.0 ) / 100.0;
+                $time = floor($ms / $value * 100.0) / 100.0;
                 return $time.' '.( $time == 1 ? $unit : $unit.'s' );
             }
         }
@@ -113,5 +113,5 @@ if (isset( $_SERVER['REQUEST_TIME_FLOAT'] )) {
 } elseif (isset( $_SERVER['REQUEST_TIME'] )) {
     PHP_Timer::$requestTime = $_SERVER['REQUEST_TIME'];
 } else {
-    PHP_Timer::$requestTime = microtime( true );
+    PHP_Timer::$requestTime = microtime(true);
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:date="http://exslt.org/dates-and-times"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:date="http://exslt.org/dates-and-times"
+                version="1.0"
                 extension-element-prefixes="exsl str date">
     <xsl:include href="str.replace.function.xsl"/>
     <xsl:output method="html" indent="yes" encoding="US-ASCII"

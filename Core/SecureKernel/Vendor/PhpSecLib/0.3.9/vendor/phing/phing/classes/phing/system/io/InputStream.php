@@ -49,11 +49,11 @@ class InputStream
      *
      * @throws IOException
      */
-    public function __construct( $stream )
+    public function __construct($stream)
     {
 
-        if (!is_resource( $stream )) {
-            throw new IOException( "Passed argument is not a valid stream." );
+        if (!is_resource($stream)) {
+            throw new IOException("Passed argument is not a valid stream.");
         }
         $this->stream = $stream;
     }
@@ -65,17 +65,17 @@ class InputStream
      *
      * @return int
      */
-    public function skip( $n )
+    public function skip($n)
     {
 
         $start = $this->currentPosition;
 
-        $ret = @fseek( $this->stream, $n, SEEK_CUR );
+        $ret = @fseek($this->stream, $n, SEEK_CUR);
         if ($ret === -1) {
             return -1;
         }
 
-        $this->currentPosition = ftell( $this->stream );
+        $this->currentPosition = ftell($this->stream);
 
         if ($start > $this->currentPosition) {
             $skipped = $start - $this->currentPosition;
@@ -95,7 +95,7 @@ class InputStream
     {
 
         if (!$this->markSupported()) {
-            throw new IOException( get_class( $this )." does not support mark() and reset() methods." );
+            throw new IOException(get_class($this)." does not support mark() and reset() methods.");
         }
         $this->mark = $this->currentPosition;
     }
@@ -120,10 +120,10 @@ class InputStream
     {
 
         if (!$this->markSupported()) {
-            throw new IOException( get_class( $this )." does not support mark() and reset() methods." );
+            throw new IOException(get_class($this)." does not support mark() and reset() methods.");
         }
         // goes back to last mark, by default this would be 0 (i.e. rewind file).
-        fseek( $this->stream, SEEK_SET, $this->mark );
+        fseek($this->stream, SEEK_SET, $this->mark);
         $this->mark = 0;
     }
 
@@ -137,7 +137,7 @@ class InputStream
      * @throws IOException - if there is an error reading from stream.
      * @deprecated - Instead, use the read() method or a BufferedReader.
      */
-    public function readInto( &$rBuffer )
+    public function readInto(&$rBuffer)
     {
 
         $rBuffer = $this->read();
@@ -151,7 +151,7 @@ class InputStream
      *
      * @return string chars read or -1 if eof.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if ($this->eof()) {
@@ -161,13 +161,13 @@ class InputStream
         if ($len === null) { // we want to keep reading until we get an eof
             $out = "";
             while (!$this->eof()) {
-                $out .= fread( $this->stream, 8192 );
-                $this->currentPosition = ftell( $this->stream );
+                $out .= fread($this->stream, 8192);
+                $this->currentPosition = ftell($this->stream);
             }
         } else {
-            $out = fread( $this->stream,
-                $len ); // adding 1 seems to ensure that next call to read() will return EOF (-1)
-            $this->currentPosition = ftell( $this->stream );
+            $out = fread($this->stream,
+                $len); // adding 1 seems to ensure that next call to read() will return EOF (-1)
+            $this->currentPosition = ftell($this->stream);
         }
 
         return $out;
@@ -181,7 +181,7 @@ class InputStream
     public function eof()
     {
 
-        return feof( $this->stream );
+        return feof($this->stream);
     }
 
     /**
@@ -195,10 +195,10 @@ class InputStream
         if ($this->stream === null) {
             return;
         }
-        if (false === @fclose( $this->stream )) {
+        if (false === @fclose($this->stream)) {
             // FAILED.
             $msg = "Cannot fclose ".$this->file->__toString()." $php_errormsg";
-            throw new IOException( $msg );
+            throw new IOException($msg);
         }
         $this->stream = null;
     }

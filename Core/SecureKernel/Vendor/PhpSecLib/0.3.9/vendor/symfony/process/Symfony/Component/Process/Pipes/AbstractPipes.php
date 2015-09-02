@@ -37,7 +37,7 @@ abstract class AbstractPipes implements PipesInterface
     {
 
         foreach ($this->pipes as $pipe) {
-            fclose( $pipe );
+            fclose($pipe);
         }
         $this->pipes = array();
     }
@@ -53,7 +53,7 @@ abstract class AbstractPipes implements PipesInterface
         $lastError = error_get_last();
 
         // stream_select returns false when the `select` system call is interrupted by an incoming signal
-        return isset( $lastError['message'] ) && false !== stripos( $lastError['message'], 'interrupted system call' );
+        return isset( $lastError['message'] ) && false !== stripos($lastError['message'], 'interrupted system call');
     }
 
     /**
@@ -67,10 +67,10 @@ abstract class AbstractPipes implements PipesInterface
         }
 
         foreach ($this->pipes as $pipe) {
-            stream_set_blocking( $pipe, 0 );
+            stream_set_blocking($pipe, 0);
         }
         if (null !== $this->input) {
-            stream_set_blocking( $this->input, 0 );
+            stream_set_blocking($this->input, 0);
         }
 
         $this->blocked = false;

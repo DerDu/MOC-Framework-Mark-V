@@ -150,7 +150,7 @@ class PgsqlPDOQuerySplitter extends PDOQuerySplitter
                                 break;
                             }
                             $hasQuery = true;
-                            for ($i = 1; $i < strlen( $delimiter ); $i++) {
+                            for ($i = 1; $i < strlen($delimiter); $i++) {
                                 if ($delimiter[$i] != $this->getc()) {
                                     $hasQuery = false;
                                 }
@@ -242,7 +242,7 @@ class PgsqlPDOQuerySplitter extends PDOQuerySplitter
     public function getc()
     {
 
-        if (!strlen( $this->line ) || $this->inputIndex >= strlen( $this->line )) {
+        if (!strlen($this->line) || $this->inputIndex >= strlen($this->line)) {
             if (null === ( $line = $this->sqlReader->readLine() )) {
                 return false;
             }
@@ -283,7 +283,7 @@ class PgsqlPDOQuerySplitter extends PDOQuerySplitter
             // empty tag
             return '';
 
-        } elseif (!ctype_alpha( $ch ) && '_' != $ch) {
+        } elseif (!ctype_alpha($ch) && '_' != $ch) {
             // not a delimiter
             $this->ungetc();
 
@@ -295,11 +295,11 @@ class PgsqlPDOQuerySplitter extends PDOQuerySplitter
                 if ('$' == $ch) {
                     return $tag;
 
-                } elseif (ctype_alnum( $ch ) || '_' == $ch) {
+                } elseif (ctype_alnum($ch) || '_' == $ch) {
                     $tag .= $ch;
 
                 } else {
-                    for ($i = 0; $i < strlen( $tag ); $i++) {
+                    for ($i = 0; $i < strlen($tag); $i++) {
                         $this->ungetc();
                     }
 

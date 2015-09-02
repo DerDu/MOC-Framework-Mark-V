@@ -69,32 +69,32 @@ class GitGcTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'gc' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('gc');
         $command
-            ->setOption( 'aggressive', $this->isAggressive() )
-            ->setOption( 'auto', $this->isAuto() )
-            ->setOption( 'no-prune', $this->isNoPrune() );
+            ->setOption('aggressive', $this->isAggressive())
+            ->setOption('auto', $this->isAuto())
+            ->setOption('no-prune', $this->isNoPrune());
         if ($this->isNoPrune() == false) {
-            $command->setOption( 'prune', $this->getPrune() );
+            $command->setOption('prune', $this->getPrune());
         }
 
         // suppress output
-        $command->setOption( 'q' );
+        $command->setOption('q');
 
-        $this->log( 'git-gc command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-gc command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed', $e);
         }
 
         $this->log(
-            sprintf( 'git-gc: cleaning up "%s" repository', $this->getRepository() ),
+            sprintf('git-gc: cleaning up "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
     }
@@ -156,7 +156,7 @@ class GitGcTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoPrune( $flag )
+    public function setNoPrune($flag)
     {
 
         $this->noPrune = (bool)$flag;
@@ -174,7 +174,7 @@ class GitGcTask extends GitBaseTask
     /**
      * @param $date
      */
-    public function setPrune( $date )
+    public function setPrune($date)
     {
 
         $this->prune = $date;
@@ -183,7 +183,7 @@ class GitGcTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAggressive( $flag )
+    public function setAggressive($flag)
     {
 
         $this->isAggressive = (bool)$flag;
@@ -192,7 +192,7 @@ class GitGcTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAuto( $flag )
+    public function setAuto($flag)
     {
 
         $this->isAuto = (bool)$flag;

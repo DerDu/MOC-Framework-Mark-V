@@ -13,7 +13,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
      *
      * @param string $name Name of the property
      */
-    public function __construct( $name )
+    public function __construct($name)
     {
 
         $this->name = $name;
@@ -30,7 +30,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
     public function makePublic()
     {
 
-        $this->setModifier( PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC );
+        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC);
 
         return $this;
     }
@@ -43,7 +43,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
     public function makeProtected()
     {
 
-        $this->setModifier( PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED );
+        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED);
 
         return $this;
     }
@@ -56,7 +56,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
     public function makePrivate()
     {
 
-        $this->setModifier( PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE );
+        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE);
 
         return $this;
     }
@@ -69,7 +69,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
     public function makeStatic()
     {
 
-        $this->setModifier( PHPParser_Node_Stmt_Class::MODIFIER_STATIC );
+        $this->setModifier(PHPParser_Node_Stmt_Class::MODIFIER_STATIC);
 
         return $this;
     }
@@ -81,10 +81,10 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Property The builder instance (for fluid interface)
      */
-    public function setDefault( $value )
+    public function setDefault($value)
     {
 
-        $this->default = $this->normalizeValue( $value );
+        $this->default = $this->normalizeValue($value);
 
         return $this;
     }
@@ -100,7 +100,7 @@ class PHPParser_Builder_Property extends PHPParser_BuilderAbstract
         return new PHPParser_Node_Stmt_Property(
             $this->type !== 0 ? $this->type : PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC,
             array(
-                new PHPParser_Node_Stmt_PropertyProperty( $this->name, $this->default )
+                new PHPParser_Node_Stmt_PropertyProperty($this->name, $this->default)
             )
         );
     }

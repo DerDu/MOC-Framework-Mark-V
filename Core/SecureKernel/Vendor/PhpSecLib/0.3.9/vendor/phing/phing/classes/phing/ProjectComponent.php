@@ -55,7 +55,7 @@ abstract class ProjectComponent
      *
      * @return void
      */
-    public function setProject( $project )
+    public function setProject($project)
     {
 
         $this->project = $project;
@@ -69,11 +69,11 @@ abstract class ProjectComponent
      *
      * @return void
      */
-    public function log( $msg, $level = Project::MSG_INFO )
+    public function log($msg, $level = Project::MSG_INFO)
     {
 
         if ($this->project !== null) {
-            $this->project->log( $msg, $level );
+            $this->project->log($msg, $level);
         }
     }
 }

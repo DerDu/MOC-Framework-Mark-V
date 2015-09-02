@@ -40,36 +40,36 @@ class PrintStream
      * @param OutputStream $out
      * @param bool         $autoFlush
      */
-    public function __construct( OutputStream $out, $autoFlush = false )
+    public function __construct(OutputStream $out, $autoFlush = false)
     {
 
         $this->out = $out;
         $this->autoFlush = $autoFlush;
 
-        $this->textOut = new BufferedWriter( new OutputStreamWriter( $out ) );
+        $this->textOut = new BufferedWriter(new OutputStreamWriter($out));
     }
 
     /**
      * @param mixed $value
      */
-    public function println( $value )
+    public function println($value)
     {
 
-        $this->prints( $value );
+        $this->prints($value);
         $this->newLine();
     }
 
     /**
      * @param mixed $value
      */
-    public function prints( $value )
+    public function prints($value)
     {
 
-        if (is_bool( $value )) {
+        if (is_bool($value)) {
             $value = $value === true ? 'true' : 'false';
         }
 
-        $this->write( (string)$value );
+        $this->write((string)$value);
     }
 
     /**
@@ -77,10 +77,10 @@ class PrintStream
      * @param int    $off
      * @param int    $len
      */
-    private function write( $buf, $off = null, $len = null )
+    private function write($buf, $off = null, $len = null)
     {
 
-        $this->textOut->write( $buf, $off, $len );
+        $this->textOut->write($buf, $off, $len);
 
         if ($this->autoFlush || $buff = '\n' && $this->autoFlush) {
             $this->textOut->flush();

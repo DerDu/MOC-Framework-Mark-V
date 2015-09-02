@@ -45,11 +45,11 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
      *
      * @return mixed string or false if impossible to recover.
      */
-    protected function getAuthor( $line )
+    protected function getAuthor($line)
     {
 
         $blameParts = array();
-        $line = preg_replace( '|\s+|', ' ', $line );
+        $line = preg_replace('|\s+|', ' ', $line);
 
         preg_match(
             '|(.+[0-9]{2}:[0-9]{2}:[0-9]{2}\s[0-9]{4}\s.[0-9]{4}:)|',
@@ -61,15 +61,15 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
             return false;
         }
 
-        $parts = explode( ' ', $blameParts[0] );
+        $parts = explode(' ', $blameParts[0]);
 
-        if (count( $parts ) < 6) {
+        if (count($parts) < 6) {
             return false;
         }
 
-        $parts = array_slice( $parts, 0, ( count( $parts ) - 6 ) );
+        $parts = array_slice($parts, 0, ( count($parts) - 6 ));
 
-        return trim( preg_replace( '|<.+>|', '', implode( $parts, ' ' ) ) );
+        return trim(preg_replace('|<.+>|', '', implode($parts, ' ')));
 
     }//end getAuthor()
 
@@ -81,50 +81,50 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
      *
      * @return array
      */
-    protected function getBlameContent( $filename )
+    protected function getBlameContent($filename)
     {
 
         $cwd = getcwd();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting MERCURIAL blame info for '.basename( $filename ).'... ';
+            echo 'Getting MERCURIAL blame info for '.basename($filename).'... ';
         }
 
-        $fileParts = explode( DIRECTORY_SEPARATOR, $filename );
+        $fileParts = explode(DIRECTORY_SEPARATOR, $filename);
         $found = false;
         $location = '';
         while (empty( $fileParts ) === false) {
-            array_pop( $fileParts );
-            $location = implode( $fileParts, DIRECTORY_SEPARATOR );
-            if (is_dir( $location.DIRECTORY_SEPARATOR.'.hg' ) === true) {
+            array_pop($fileParts);
+            $location = implode($fileParts, DIRECTORY_SEPARATOR);
+            if (is_dir($location.DIRECTORY_SEPARATOR.'.hg') === true) {
                 $found = true;
                 break;
             }
         }
 
         if ($found === true) {
-            chdir( $location );
+            chdir($location);
         } else {
             echo 'ERROR: Could not locate .hg directory '.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
         $command = 'hg blame -u -d -v "'.$filename.'"';
-        $handle = popen( $command, 'r' );
+        $handle = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
-        $rawContent = stream_get_contents( $handle );
-        fclose( $handle );
+        $rawContent = stream_get_contents($handle);
+        fclose($handle);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'DONE'.PHP_EOL;
         }
 
-        $blames = explode( "\n", $rawContent );
-        chdir( $cwd );
+        $blames = explode("\n", $rawContent);
+        chdir($cwd);
 
         return $blames;
 

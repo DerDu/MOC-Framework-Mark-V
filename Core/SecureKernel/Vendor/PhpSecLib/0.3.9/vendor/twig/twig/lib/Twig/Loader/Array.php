@@ -33,7 +33,7 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
      *
      * @see Twig_Loader
      */
-    public function __construct( array $templates )
+    public function __construct(array $templates)
     {
 
         $this->templates = $templates;
@@ -45,7 +45,7 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
      * @param string $name     The template name
      * @param string $template The template source
      */
-    public function setTemplate( $name, $template )
+    public function setTemplate($name, $template)
     {
 
         $this->templates[(string)$name] = $template;
@@ -54,12 +54,12 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
     /**
      * {@inheritdoc}
      */
-    public function getSource( $name )
+    public function getSource($name)
     {
 
         $name = (string)$name;
         if (!isset( $this->templates[$name] )) {
-            throw new Twig_Error_Loader( sprintf( 'Template "%s" is not defined.', $name ) );
+            throw new Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
         }
 
         return $this->templates[$name];
@@ -68,7 +68,7 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
     /**
      * {@inheritdoc}
      */
-    public function exists( $name )
+    public function exists($name)
     {
 
         return isset( $this->templates[(string)$name] );
@@ -77,12 +77,12 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
     /**
      * {@inheritdoc}
      */
-    public function getCacheKey( $name )
+    public function getCacheKey($name)
     {
 
         $name = (string)$name;
         if (!isset( $this->templates[$name] )) {
-            throw new Twig_Error_Loader( sprintf( 'Template "%s" is not defined.', $name ) );
+            throw new Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
         }
 
         return $this->templates[$name];
@@ -91,12 +91,12 @@ class Twig_Loader_Array implements Twig_LoaderInterface, Twig_ExistsLoaderInterf
     /**
      * {@inheritdoc}
      */
-    public function isFresh( $name, $time )
+    public function isFresh($name, $time)
     {
 
         $name = (string)$name;
         if (!isset( $this->templates[$name] )) {
-            throw new Twig_Error_Loader( sprintf( 'Template "%s" is not defined.', $name ) );
+            throw new Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
         }
 
         return true;

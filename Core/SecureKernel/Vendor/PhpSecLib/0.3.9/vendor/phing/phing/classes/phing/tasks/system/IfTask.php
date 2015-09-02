@@ -119,7 +119,7 @@ class IfTask extends ConditionBase
      *
      * @param ElseIfTask $ei
      */
-    public function addElseIf( ElseIfTask $ei )
+    public function addElseIf(ElseIfTask $ei)
     {
 
         $this->elseIfTasks[] = $ei;
@@ -135,11 +135,11 @@ class IfTask extends ConditionBase
      *
      * @throws BuildException
      */
-    public function addThen( SequentialTask $t )
+    public function addThen(SequentialTask $t)
     {
 
         if ($this->thenTasks != null) {
-            throw new BuildException( "You must not nest more than one <then> into <if>" );
+            throw new BuildException("You must not nest more than one <then> into <if>");
         }
         $this->thenTasks = $t;
     }
@@ -154,11 +154,11 @@ class IfTask extends ConditionBase
      *
      * @throws BuildException
      */
-    public function addElse( SequentialTask $e )
+    public function addElse(SequentialTask $e)
     {
 
         if ($this->elseTasks != null) {
-            throw new BuildException( "You must not nest more than one <else> into <if>" );
+            throw new BuildException("You must not nest more than one <else> into <if>");
         }
         $this->elseTasks = $e;
     }
@@ -167,10 +167,10 @@ class IfTask extends ConditionBase
     {
 
         if ($this->countConditions() > 1) {
-            throw new BuildException( "You must not nest more than one condition into <if>" );
+            throw new BuildException("You must not nest more than one condition into <if>");
         }
         if ($this->countConditions() < 1) {
-            throw new BuildException( "You must nest a condition into <if>" );
+            throw new BuildException("You must nest a condition into <if>");
         }
         $conditions = $this->getConditions();
         $c = $conditions[0];
@@ -181,7 +181,7 @@ class IfTask extends ConditionBase
             }
         } else {
             $done = false;
-            $sz = count( $this->elseIfTasks );
+            $sz = count($this->elseIfTasks);
             for ($i = 0; $i < $sz && !$done; $i++) {
                 $ei = $this->elseIfTasks[$i];
                 if ($ei->evaluate()) {
@@ -213,11 +213,11 @@ class ElseIfTask extends ConditionBase
      *
      * @throws BuildException
      */
-    public function addThen( SequentialTask $t )
+    public function addThen(SequentialTask $t)
     {
 
         if ($this->thenTasks != null) {
-            throw new BuildException( "You must not nest more than one <then> into <elseif>" );
+            throw new BuildException("You must not nest more than one <then> into <elseif>");
         }
         $this->thenTasks = $t;
     }
@@ -230,10 +230,10 @@ class ElseIfTask extends ConditionBase
     {
 
         if ($this->countConditions() > 1) {
-            throw new BuildException( "You must not nest more than one condition into <elseif>" );
+            throw new BuildException("You must not nest more than one condition into <elseif>");
         }
         if ($this->countConditions() < 1) {
-            throw new BuildException( "You must nest a condition into <elseif>" );
+            throw new BuildException("You must nest a condition into <elseif>");
         }
 
         $conditions = $this->getConditions();

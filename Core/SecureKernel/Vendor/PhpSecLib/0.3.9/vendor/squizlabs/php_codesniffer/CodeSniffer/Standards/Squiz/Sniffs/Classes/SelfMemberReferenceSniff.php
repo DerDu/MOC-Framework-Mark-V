@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -47,7 +47,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS ), array( T_DOUBLE_COLON ) );
+        parent::__construct(array(T_CLASS), array(T_DOUBLE_COLON));
 
     }//end __construct()
 
@@ -61,17 +61,17 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
      *
      * @return void
      */
-    protected function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $calledClassName = ( $stackPtr - 1 );
         if ($tokens[$calledClassName]['code'] === T_SELF) {
-            if (strtolower( $tokens[$calledClassName]['content'] ) !== $tokens[$calledClassName]['content']) {
+            if (strtolower($tokens[$calledClassName]['content']) !== $tokens[$calledClassName]['content']) {
                 $error = 'Must use "self::" for local static member reference; found "%s::"';
-                $data = array( $tokens[$calledClassName]['content'] );
-                $phpcsFile->addError( $error, $calledClassName, 'IncorrectCase', $data );
+                $data = array($tokens[$calledClassName]['content']);
+                $phpcsFile->addError($error, $calledClassName, 'IncorrectCase', $data);
                 return;
             }
         } else {
@@ -79,21 +79,21 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
                 // If the class is called with a namespace prefix, build fully qualified
                 // namespace calls for both current scope class and requested class.
                 if ($tokens[( $calledClassName - 1 )]['code'] === T_NS_SEPARATOR) {
-                    $declarationName = $this->getDeclarationNameWithNamespace( $tokens, $calledClassName );
-                    $declarationName = substr( $declarationName, 1 );
-                    $fullQualifiedClassName = $this->getNamespaceOfScope( $phpcsFile, $currScope );
-                    $fullQualifiedClassName .= '\\'.$phpcsFile->getDeclarationName( $currScope );
+                    $declarationName = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
+                    $declarationName = substr($declarationName, 1);
+                    $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
+                    $fullQualifiedClassName .= '\\'.$phpcsFile->getDeclarationName($currScope);
                 } else {
-                    $declarationName = $phpcsFile->getDeclarationName( $currScope );
+                    $declarationName = $phpcsFile->getDeclarationName($currScope);
                     $fullQualifiedClassName = $tokens[$calledClassName]['content'];
                 }
 
                 if ($declarationName === $fullQualifiedClassName) {
                     // Class name is the same as the current class, which is not allowed
                     // except if being used inside a closure.
-                    if ($phpcsFile->hasCondition( $stackPtr, T_CLOSURE ) === false) {
+                    if ($phpcsFile->hasCondition($stackPtr, T_CLOSURE) === false) {
                         $error = 'Must use "self::" for local static member reference';
-                        $phpcsFile->addError( $error, $calledClassName, 'NotUsed' );
+                        $phpcsFile->addError($error, $calledClassName, 'NotUsed');
                         return;
                     }
                 }
@@ -101,17 +101,17 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
         }//end if
 
         if ($tokens[( $stackPtr - 1 )]['code'] === T_WHITESPACE) {
-            $found = strlen( $tokens[( $stackPtr - 1 )]['content'] );
+            $found = strlen($tokens[( $stackPtr - 1 )]['content']);
             $error = 'Expected 0 spaces before double colon; %s found';
-            $data = array( $found );
-            $phpcsFile->addError( $error, $calledClassName, 'SpaceBefore', $data );
+            $data = array($found);
+            $phpcsFile->addError($error, $calledClassName, 'SpaceBefore', $data);
         }
 
         if ($tokens[( $stackPtr + 1 )]['code'] === T_WHITESPACE) {
-            $found = strlen( $tokens[( $stackPtr + 1 )]['content'] );
+            $found = strlen($tokens[( $stackPtr + 1 )]['content']);
             $error = 'Expected 0 spaces after double colon; %s found';
-            $data = array( $found );
-            $phpcsFile->addError( $error, $calledClassName, 'SpaceAfter', $data );
+            $data = array($found);
+            $phpcsFile->addError($error, $calledClassName, 'SpaceAfter', $data);
         }
 
     }//end processTokenWithinScope()
@@ -125,7 +125,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
      *
      * @return string
      */
-    protected function getDeclarationNameWithNamespace( array $tokens, $stackPtr )
+    protected function getDeclarationNameWithNamespace(array $tokens, $stackPtr)
     {
 
         $nameParts = array();
@@ -137,8 +137,8 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             $currentPointer--;
         }
 
-        $nameParts = array_reverse( $nameParts );
-        return implode( '', $nameParts );
+        $nameParts = array_reverse($nameParts);
+        return implode('', $nameParts);
 
     }//end getDeclarationNameWithNamespace()
 
@@ -152,14 +152,14 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
      *
      * @return string
      */
-    protected function getNamespaceOfScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function getNamespaceOfScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $namespace = '\\';
-        $namespaceDeclaration = $phpcsFile->findPrevious( T_NAMESPACE, $stackPtr );
+        $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
 
         if ($namespaceDeclaration !== false) {
-            $endOfNamespaceDeclaration = $phpcsFile->findNext( T_SEMICOLON, $namespaceDeclaration );
+            $endOfNamespaceDeclaration = $phpcsFile->findNext(T_SEMICOLON, $namespaceDeclaration);
             $namespace = $this->getDeclarationNameWithNamespace(
                 $phpcsFile->getTokens(),
                 ( $endOfNamespaceDeclaration - 1 )

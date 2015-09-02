@@ -30,7 +30,7 @@ interface Twig_TemplateInterface
      *
      * @return string The rendered template
      */
-    public function render( array $context );
+    public function render(array $context);
 
     /**
      * Displays the template with the given context.
@@ -38,7 +38,7 @@ interface Twig_TemplateInterface
      * @param array $context An array of parameters to pass to the template
      * @param array $blocks  An array of blocks to pass to the template
      */
-    public function display( array $context, array $blocks = array() );
+    public function display(array $context, array $blocks = array());
 
     /**
      * Returns the bound environment for this template.

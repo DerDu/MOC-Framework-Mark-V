@@ -49,27 +49,27 @@ class Yaml
      *
      * @api
      */
-    public static function parse( $input, $exceptionOnInvalidType = false, $objectSupport = false )
+    public static function parse($input, $exceptionOnInvalidType = false, $objectSupport = false)
     {
 
         // if input is a file, process it
         $file = '';
-        if (strpos( $input, "\n" ) === false && is_file( $input )) {
-            if (false === is_readable( $input )) {
-                throw new ParseException( sprintf( 'Unable to parse "%s" as the file is not readable.', $input ) );
+        if (strpos($input, "\n") === false && is_file($input)) {
+            if (false === is_readable($input)) {
+                throw new ParseException(sprintf('Unable to parse "%s" as the file is not readable.', $input));
             }
 
             $file = $input;
-            $input = file_get_contents( $file );
+            $input = file_get_contents($file);
         }
 
         $yaml = new Parser();
 
         try {
-            return $yaml->parse( $input, $exceptionOnInvalidType, $objectSupport );
-        } catch( ParseException $e ) {
+            return $yaml->parse($input, $exceptionOnInvalidType, $objectSupport);
+        } catch (ParseException $e) {
             if ($file) {
-                $e->setParsedFile( $file );
+                $e->setParsedFile($file);
             }
 
             throw $e;
@@ -101,8 +101,8 @@ class Yaml
     ) {
 
         $yaml = new Dumper();
-        $yaml->setIndentation( $indent );
+        $yaml->setIndentation($indent);
 
-        return $yaml->dump( $array, $inline, 0, $exceptionOnInvalidType, $objectSupport );
+        return $yaml->dump($array, $inline, 0, $exceptionOnInvalidType, $objectSupport);
     }
 }

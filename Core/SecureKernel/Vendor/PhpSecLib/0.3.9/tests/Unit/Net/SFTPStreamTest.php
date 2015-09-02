@@ -16,8 +16,8 @@ class Unit_Net_SFTPStreamTest extends PhpseclibTestCase
     {
 
         parent::setUp();
-        if (in_array( $this->protocol, stream_get_wrappers() )) {
-            stream_wrapper_unregister( $this->protocol );
+        if (in_array($this->protocol, stream_get_wrappers())) {
+            stream_wrapper_unregister($this->protocol);
         }
     }
 
@@ -25,13 +25,13 @@ class Unit_Net_SFTPStreamTest extends PhpseclibTestCase
     {
 
         // Including the file registers 'sftp' as a stream.
-        $this->assertContains( 'sftp', stream_get_wrappers() );
+        $this->assertContains('sftp', stream_get_wrappers());
     }
 
     public function testRegisterWithArgument()
     {
 
-        Net_SFTP_Stream::register( $this->protocol );
-        $this->assertContains( $this->protocol, stream_get_wrappers() );
+        Net_SFTP_Stream::register($this->protocol);
+        $this->assertContains($this->protocol, stream_get_wrappers());
     }
 }

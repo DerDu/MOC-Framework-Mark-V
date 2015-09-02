@@ -32,7 +32,7 @@ class SizeSelector extends BaseExtendSelector
     const UNITS_KEY = "units";
     const WHEN_KEY = "when";
     /** @var array $sizeComparisons */
-    private static $sizeComparisons = array( "less", "more", "equal" );
+    private static $sizeComparisons = array("less", "more", "equal");
     /** @var array $byteUnits */
     private static $byteUnits = array(
         "K",
@@ -115,18 +115,18 @@ class SizeSelector extends BaseExtendSelector
      *
      * @throws BuildException
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::SIZE_KEY:
                         try {
-                            $this->setValue( $parameters[$i]->getValue() );
-                        } catch( Exception $nfe ) {
+                            $this->setValue($parameters[$i]->getValue());
+                        } catch (Exception $nfe) {
                             $this->setError(
                                 "Invalid size setting "
                                 .$parameters[$i]->getValue()
@@ -134,13 +134,13 @@ class SizeSelector extends BaseExtendSelector
                         }
                         break;
                     case self::UNITS_KEY:
-                        $this->setUnits( $parameters[$i]->getValue() );
+                        $this->setUnits($parameters[$i]->getValue());
                         break;
                     case self::WHEN_KEY:
-                        $this->setWhen( $parameters[$i]->getValue() );
+                        $this->setWhen($parameters[$i]->getValue());
                         break;
                     default:
-                        $this->setError( "Invalid parameter ".$paramname );
+                        $this->setError("Invalid parameter ".$paramname);
                 }
             }
         }
@@ -155,7 +155,7 @@ class SizeSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setValue( $size )
+    public function setValue($size)
     {
 
         $this->size = $size;
@@ -191,10 +191,10 @@ class SizeSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setUnits( $units )
+    public function setUnits($units)
     {
 
-        $i = array_search( $units, self::$byteUnits, true );
+        $i = array_search($units, self::$byteUnits, true);
         if ($i === false) {
             $i = -1;
         } // make it java-like
@@ -231,10 +231,10 @@ class SizeSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setWhen( $cmp )
+    public function setWhen($cmp)
     {
 
-        $c = array_search( $cmp, self::$sizeComparisons, true );
+        $c = array_search($cmp, self::$sizeComparisons, true);
         if ($c !== false) {
             $this->cmp = $c;
         }
@@ -258,11 +258,11 @@ class SizeSelector extends BaseExtendSelector
     {
 
         if ($this->size < 0) {
-            $this->setError( "The value attribute is required, and must be positive" );
+            $this->setError("The value attribute is required, and must be positive");
         } elseif ($this->multiplier < 1) {
-            $this->setError( "Invalid Units supplied, must be K,Ki,M,Mi,G,Gi,T,or Ti" );
+            $this->setError("Invalid Units supplied, must be K,Ki,M,Mi,G,Gi,T,or Ti");
         } elseif ($this->sizelimit < 0) {
-            $this->setError( "Internal error: Code is not setting sizelimit correctly" );
+            $this->setError("Internal error: Code is not setting sizelimit correctly");
         }
     }
 
@@ -278,7 +278,7 @@ class SizeSelector extends BaseExtendSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();

@@ -24,12 +24,12 @@ class MockSplFileInfo extends \SplFileInfo
     private $relativePath = null;
     private $relativePathname = null;
 
-    public function __construct( $param )
+    public function __construct($param)
     {
 
-        if (is_string( $param )) {
-            parent::__construct( $param );
-        } elseif (is_array( $param )) {
+        if (is_string($param)) {
+            parent::__construct($param);
+        } elseif (is_array($param)) {
             $defaults = array(
                 'name'             => 'file.txt',
                 'contents'         => null,
@@ -38,28 +38,28 @@ class MockSplFileInfo extends \SplFileInfo
                 'relativePath'     => null,
                 'relativePathname' => null,
             );
-            $defaults = array_merge( $defaults, $param );
-            parent::__construct( $defaults['name'] );
-            $this->setContents( $defaults['contents'] );
-            $this->setMode( $defaults['mode'] );
-            $this->setType( $defaults['type'] );
-            $this->setRelativePath( $defaults['relativePath'] );
-            $this->setRelativePathname( $defaults['relativePathname'] );
+            $defaults = array_merge($defaults, $param);
+            parent::__construct($defaults['name']);
+            $this->setContents($defaults['contents']);
+            $this->setMode($defaults['mode']);
+            $this->setType($defaults['type']);
+            $this->setRelativePath($defaults['relativePath']);
+            $this->setRelativePathname($defaults['relativePathname']);
         } else {
-            throw new \RuntimeException( sprintf( 'Incorrect parameter "%s"', $param ) );
+            throw new \RuntimeException(sprintf('Incorrect parameter "%s"', $param));
         }
     }
 
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
         $this->mode = $mode;
     }
 
-    public function setType( $type )
+    public function setType($type)
     {
 
-        if (is_string( $type )) {
+        if (is_string($type)) {
             switch ($type) {
                 case 'directory':
                     $this->type = self::TYPE_DIRECTORY;
@@ -83,7 +83,7 @@ class MockSplFileInfo extends \SplFileInfo
     {
 
         if (null === $this->type) {
-            return preg_match( '/file/', $this->getFilename() );
+            return preg_match('/file/', $this->getFilename());
         };
 
         return self::TYPE_FILE === $this->type;
@@ -93,7 +93,7 @@ class MockSplFileInfo extends \SplFileInfo
     {
 
         if (null === $this->type) {
-            return preg_match( '/directory/', $this->getFilename() );
+            return preg_match('/directory/', $this->getFilename());
         }
 
         return self::TYPE_DIRECTORY === $this->type;
@@ -103,10 +103,10 @@ class MockSplFileInfo extends \SplFileInfo
     {
 
         if (null === $this->mode) {
-            return preg_match( '/r\+/', $this->getFilename() );
+            return preg_match('/r\+/', $this->getFilename());
         }
 
-        return preg_match( '/r\+/', $this->mode );
+        return preg_match('/r\+/', $this->mode);
     }
 
     public function getContents()
@@ -115,7 +115,7 @@ class MockSplFileInfo extends \SplFileInfo
         return $this->contents;
     }
 
-    public function setContents( $contents )
+    public function setContents($contents)
     {
 
         $this->contents = $contents;
@@ -127,7 +127,7 @@ class MockSplFileInfo extends \SplFileInfo
         return $this->relativePath;
     }
 
-    public function setRelativePath( $relativePath )
+    public function setRelativePath($relativePath)
     {
 
         $this->relativePath = $relativePath;
@@ -139,7 +139,7 @@ class MockSplFileInfo extends \SplFileInfo
         return $this->relativePathname;
     }
 
-    public function setRelativePathname( $relativePathname )
+    public function setRelativePathname($relativePathname)
     {
 
         $this->relativePathname = $relativePathname;

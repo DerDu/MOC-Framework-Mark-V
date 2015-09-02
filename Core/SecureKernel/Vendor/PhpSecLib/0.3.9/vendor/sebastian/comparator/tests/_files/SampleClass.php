@@ -26,7 +26,7 @@ class SampleClass
     protected $b;
     protected $c;
 
-    public function __construct( $a, $b, $c )
+    public function __construct($a, $b, $c)
     {
 
         $this->a = $a;

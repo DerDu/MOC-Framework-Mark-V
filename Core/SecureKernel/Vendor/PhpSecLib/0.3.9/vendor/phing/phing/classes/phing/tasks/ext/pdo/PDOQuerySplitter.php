@@ -51,11 +51,11 @@ abstract class PDOQuerySplitter
      * @param PDOSQLExecTask $parent
      * @param Reader         $reader
      */
-    public function __construct( PDOSQLExecTask $parent, Reader $reader )
+    public function __construct(PDOSQLExecTask $parent, Reader $reader)
     {
 
         $this->parent = $parent;
-        $this->sqlReader = new BufferedReader( $reader );
+        $this->sqlReader = new BufferedReader($reader);
     }
 
     /**

@@ -29,7 +29,7 @@ class SimpleProcessTest extends AbstractProcessTest
     {
 
         if ($this->enabledSigchild) {
-            $this->markTestSkipped( 'Your PHP has been compiled with --enable-sigchild, this test can not be executed' );
+            $this->markTestSkipped('Your PHP has been compiled with --enable-sigchild, this test can not be executed');
         }
     }
 
@@ -43,40 +43,40 @@ class SimpleProcessTest extends AbstractProcessTest
     public function testProcessIsSignaledIfStopped()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessIsSignaledIfStopped();
     }
 
-    private function expectExceptionIfPHPSigchild( $classname, $message )
+    private function expectExceptionIfPHPSigchild($classname, $message)
     {
 
         if ($this->enabledSigchild) {
-            $this->setExpectedException( $classname, $message );
+            $this->setExpectedException($classname, $message);
         }
     }
 
     public function testProcessWithTermSignal()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessWithTermSignal();
     }
 
     public function testProcessIsNotSignaled()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessIsNotSignaled();
     }
 
     public function testProcessWithoutTermSignal()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessWithoutTermSignal();
     }
 
@@ -125,16 +125,16 @@ class SimpleProcessTest extends AbstractProcessTest
     public function testSignal()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
         parent::testSignal();
     }
 
     public function testProcessWithoutTermSignalIsNotSignaled()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessWithoutTermSignalIsNotSignaled();
     }
 
@@ -148,16 +148,16 @@ class SimpleProcessTest extends AbstractProcessTest
     public function testExitCodeIsAvailableAfterSignal()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
         parent::testExitCodeIsAvailableAfterSignal();
     }
 
     public function testSignalProcessNotRunning()
     {
 
-        $this->setExpectedException( 'Symfony\Component\Process\Exception\LogicException',
-            'Can not send signal on a non running process.' );
+        $this->setExpectedException('Symfony\Component\Process\Exception\LogicException',
+            'Can not send signal on a non running process.');
         parent::testSignalProcessNotRunning();
     }
 
@@ -165,11 +165,11 @@ class SimpleProcessTest extends AbstractProcessTest
     {
 
         if ($this->enabledSigchild) {
-            $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-                'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+            $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+                'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
         } else {
-            $this->setExpectedException( 'Symfony\Component\Process\Exception\RuntimeException',
-                'Error while sending signal `-4`.' );
+            $this->setExpectedException('Symfony\Component\Process\Exception\RuntimeException',
+                'Error while sending signal `-4`.');
         }
         parent::testSignalWithWrongIntSignal();
     }
@@ -178,11 +178,11 @@ class SimpleProcessTest extends AbstractProcessTest
     {
 
         if ($this->enabledSigchild) {
-            $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-                'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+            $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+                'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
         } else {
-            $this->setExpectedException( 'Symfony\Component\Process\Exception\RuntimeException',
-                'Error while sending signal `Céphalopodes`.' );
+            $this->setExpectedException('Symfony\Component\Process\Exception\RuntimeException',
+                'Error while sending signal `Céphalopodes`.');
         }
         parent::testSignalWithWrongNonIntSignal();
     }
@@ -191,13 +191,13 @@ class SimpleProcessTest extends AbstractProcessTest
     {
 
         try {
-            $process = $this->getProcess( 'php -r "echo \'foo\'; sleep(1); echo \'bar\';"' );
-            $process->run( function () use ( $process ) {
+            $process = $this->getProcess('php -r "echo \'foo\'; sleep(1); echo \'bar\';"');
+            $process->run(function () use ($process) {
 
                 $process->stop();
-            } );
-        } catch( \RuntimeException $e ) {
-            $this->fail( 'A call to stop() is not expected to cause wait() to throw a RuntimeException' );
+            });
+        } catch (\RuntimeException $e) {
+            $this->fail('A call to stop() is not expected to cause wait() to throw a RuntimeException');
         }
     }
 
@@ -213,44 +213,44 @@ class SimpleProcessTest extends AbstractProcessTest
         array $options = array()
     ) {
 
-        return new Process( $commandline, $cwd, $env, $input, $timeout, $options );
+        return new Process($commandline, $cwd, $env, $input, $timeout, $options);
     }
 
     public function testKillSignalTerminatesProcessCleanly()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
 
         try {
-            $process = $this->getProcess( 'php -r "echo \'foo\'; sleep(1); echo \'bar\';"' );
-            $process->run( function () use ( $process ) {
+            $process = $this->getProcess('php -r "echo \'foo\'; sleep(1); echo \'bar\';"');
+            $process->run(function () use ($process) {
 
                 if ($process->isRunning()) {
-                    $process->signal( defined( 'SIGKILL' ) ? SIGKILL : 9 );
+                    $process->signal(defined('SIGKILL') ? SIGKILL : 9);
                 }
-            } );
-        } catch( \RuntimeException $e ) {
-            $this->fail( 'A call to signal() is not expected to cause wait() to throw a RuntimeException' );
+            });
+        } catch (\RuntimeException $e) {
+            $this->fail('A call to signal() is not expected to cause wait() to throw a RuntimeException');
         }
     }
 
     public function testTermSignalTerminatesProcessCleanly()
     {
 
-        $this->expectExceptionIfPHPSigchild( 'Symfony\Component\Process\Exception\RuntimeException',
-            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.' );
+        $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException',
+            'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
 
         try {
-            $process = $this->getProcess( 'php -r "echo \'foo\'; sleep(1); echo \'bar\';"' );
-            $process->run( function () use ( $process ) {
+            $process = $this->getProcess('php -r "echo \'foo\'; sleep(1); echo \'bar\';"');
+            $process->run(function () use ($process) {
 
                 if ($process->isRunning()) {
-                    $process->signal( defined( 'SIGTERM' ) ? SIGTERM : 15 );
+                    $process->signal(defined('SIGTERM') ? SIGTERM : 15);
                 }
-            } );
-        } catch( \RuntimeException $e ) {
-            $this->fail( 'A call to signal() is not expected to cause wait() to throw a RuntimeException' );
+            });
+        } catch (\RuntimeException $e) {
+            $this->fail('A call to signal() is not expected to cause wait() to throw a RuntimeException');
         }
     }
 
@@ -266,8 +266,8 @@ class SimpleProcessTest extends AbstractProcessTest
     {
 
         ob_start();
-        phpinfo( INFO_GENERAL );
+        phpinfo(INFO_GENERAL);
 
-        $this->enabledSigchild = false !== strpos( ob_get_clean(), '--enable-sigchild' );
+        $this->enabledSigchild = false !== strpos(ob_get_clean(), '--enable-sigchild');
     }
 }

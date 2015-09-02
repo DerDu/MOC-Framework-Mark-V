@@ -43,7 +43,7 @@ abstract class TokenReader
      *
      * @param Project $project Reference to the project the TokenReader is used in.
      */
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->project = $project;
@@ -57,10 +57,10 @@ abstract class TokenReader
      *
      * @return void
      */
-    public function log( $level, $msg )
+    public function log($level, $msg)
     {
 
-        $this->project->log( $level, $msg );
+        $this->project->log($level, $msg);
     }
 
     /**

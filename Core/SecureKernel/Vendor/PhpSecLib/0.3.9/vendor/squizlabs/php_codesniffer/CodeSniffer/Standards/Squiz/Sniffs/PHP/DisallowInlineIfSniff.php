@@ -49,7 +49,7 @@ class Squiz_Sniffs_PHP_DisallowInlineIfSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_INLINE_THEN );
+        return array(T_INLINE_THEN);
 
     }//end register()
 
@@ -63,10 +63,10 @@ class Squiz_Sniffs_PHP_DisallowInlineIfSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $phpcsFile->addError( 'Inline IF statements are not allowed', $stackPtr, 'Found' );
+        $phpcsFile->addError('Inline IF statements are not allowed', $stackPtr, 'Found');
 
     }//end process()
 

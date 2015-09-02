@@ -37,7 +37,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_NAMESPACE );
+        return array(T_NAMESPACE);
 
     }//end register()
 
@@ -51,7 +51,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -66,15 +66,14 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
 
         // The $i var now points to the first token on the line after the
         // namespace declaration, which must be a blank line.
-        $next = $phpcsFile->findNext( T_WHITESPACE, $i, $phpcsFile->numTokens, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, $i, $phpcsFile->numTokens, true);
         if ($tokens[$next]['line'] === $tokens[$i]['line']) {
             $error = 'There must be one blank line after the namespace declaration';
-            $phpcsFile->addError( $error, $stackPtr, 'BlankLineAfter' );
+            $phpcsFile->addError($error, $stackPtr, 'BlankLineAfter');
         }
 
     }//end process()
 
 }//end class
-
 
 ?>

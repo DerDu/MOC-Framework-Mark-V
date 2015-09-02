@@ -43,7 +43,7 @@ class IsFalseCondition extends ProjectComponent implements Condition
      *
      * @param boolean $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = $value;
@@ -58,7 +58,7 @@ class IsFalseCondition extends ProjectComponent implements Condition
     {
 
         if ($this->value === null) {
-            throw new BuildException( "Nothing to test for falsehood" );
+            throw new BuildException("Nothing to test for falsehood");
         }
 
         return !$this->value;

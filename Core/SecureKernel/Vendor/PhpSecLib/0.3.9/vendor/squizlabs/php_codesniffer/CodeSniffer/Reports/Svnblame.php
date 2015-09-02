@@ -47,11 +47,11 @@ class PHP_CodeSniffer_Reports_Svnblame extends PHP_CodeSniffer_Reports_VersionCo
      *
      * @return mixed string or false if impossible to recover.
      */
-    protected function getAuthor( $line )
+    protected function getAuthor($line)
     {
 
         $blameParts = array();
-        preg_match( '|\s*([^\s]+)\s+([^\s]+)|', $line, $blameParts );
+        preg_match('|\s*([^\s]+)\s+([^\s]+)|', $line, $blameParts);
 
         if (isset( $blameParts[2] ) === false) {
             return false;
@@ -69,28 +69,28 @@ class PHP_CodeSniffer_Reports_Svnblame extends PHP_CodeSniffer_Reports_VersionCo
      *
      * @return array
      */
-    protected function getBlameContent( $filename )
+    protected function getBlameContent($filename)
     {
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting SVN blame info for '.basename( $filename ).'... ';
+            echo 'Getting SVN blame info for '.basename($filename).'... ';
         }
 
         $command = 'svn blame "'.$filename.'"';
-        $handle = popen( $command, 'r' );
+        $handle = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
-        $rawContent = stream_get_contents( $handle );
-        fclose( $handle );
+        $rawContent = stream_get_contents($handle);
+        fclose($handle);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'DONE'.PHP_EOL;
         }
 
-        $blames = explode( "\n", $rawContent );
+        $blames = explode("\n", $rawContent);
 
         return $blames;
 

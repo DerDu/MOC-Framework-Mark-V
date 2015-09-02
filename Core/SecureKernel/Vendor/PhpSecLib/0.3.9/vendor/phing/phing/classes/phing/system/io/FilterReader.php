@@ -37,7 +37,7 @@ class FilterReader extends Reader
     /**
      * @param Reader $in
      */
-    public function __construct( Reader $in = null )
+    public function __construct(Reader $in = null)
     {
 
         $this->in = $in;
@@ -46,7 +46,7 @@ class FilterReader extends Reader
     /**
      * @param Reader $in
      */
-    public function setReader( Reader $in )
+    public function setReader(Reader $in)
     {
 
         $this->in = $in;
@@ -55,10 +55,10 @@ class FilterReader extends Reader
     /**
      * @param int $n
      */
-    public function skip( $n )
+    public function skip($n)
     {
 
-        return $this->in->skip( $n );
+        return $this->in->skip($n);
     }
 
     /**
@@ -70,10 +70,10 @@ class FilterReader extends Reader
      *
      * @return
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        return $this->in->read( $len );
+        return $this->in->read($len);
     }
 
     public function reset()

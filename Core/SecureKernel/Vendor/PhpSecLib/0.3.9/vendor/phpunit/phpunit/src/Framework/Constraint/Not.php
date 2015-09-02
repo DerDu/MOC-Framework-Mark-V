@@ -24,13 +24,13 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     /**
      * @param PHPUnit_Framework_Constraint $constraint
      */
-    public function __construct( $constraint )
+    public function __construct($constraint)
     {
 
         parent::__construct();
 
         if (!( $constraint instanceof PHPUnit_Framework_Constraint )) {
-            $constraint = new PHPUnit_Framework_Constraint_IsEqual( $constraint );
+            $constraint = new PHPUnit_Framework_Constraint_IsEqual($constraint);
         }
 
         $this->constraint = $constraint;
@@ -53,17 +53,17 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
-        $success = !$this->constraint->evaluate( $other, $description, true );
+        $success = !$this->constraint->evaluate($other, $description, true);
 
         if ($returnResult) {
             return $success;
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 
@@ -75,7 +75,7 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     public function toString()
     {
 
-        switch (get_class( $this->constraint )) {
+        switch (get_class($this->constraint)) {
             case 'PHPUnit_Framework_Constraint_And':
             case 'PHPUnit_Framework_Constraint_Not':
             case 'PHPUnit_Framework_Constraint_Or':
@@ -89,49 +89,11 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     }
 
     /**
-     * Counts the number of constraint elements.
-     *
-     * @return int
-     * @since  Method available since Release 3.4.0
-     */
-    public function count()
-    {
-
-        return count( $this->constraint );
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed $other Evaluated value or object.
-     *
-     * @return string
-     */
-    protected function failureDescription( $other )
-    {
-
-        switch (get_class( $this->constraint )) {
-            case 'PHPUnit_Framework_Constraint_And':
-            case 'PHPUnit_Framework_Constraint_Not':
-            case 'PHPUnit_Framework_Constraint_Or':
-                return 'not( '.$this->constraint->failureDescription( $other ).' )';
-
-            default:
-                return self::negate(
-                    $this->constraint->failureDescription( $other )
-                );
-        }
-    }
-
-    /**
      * @param  string $string
      *
      * @return string
      */
-    public static function negate( $string )
+    public static function negate($string)
     {
 
         return str_replace(
@@ -161,5 +123,43 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
             ),
             $string
         );
+    }
+
+    /**
+     * Counts the number of constraint elements.
+     *
+     * @return int
+     * @since  Method available since Release 3.4.0
+     */
+    public function count()
+    {
+
+        return count($this->constraint);
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed $other Evaluated value or object.
+     *
+     * @return string
+     */
+    protected function failureDescription($other)
+    {
+
+        switch (get_class($this->constraint)) {
+            case 'PHPUnit_Framework_Constraint_And':
+            case 'PHPUnit_Framework_Constraint_Not':
+            case 'PHPUnit_Framework_Constraint_Or':
+                return 'not( '.$this->constraint->failureDescription($other).' )';
+
+            default:
+                return self::negate(
+                    $this->constraint->failureDescription($other)
+                );
+        }
     }
 }

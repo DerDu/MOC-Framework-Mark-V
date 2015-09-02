@@ -43,10 +43,10 @@ class Text_Template
      *
      * @throws InvalidArgumentException
      */
-    public function __construct( $file = '', $openDelimiter = '{', $closeDelimiter = '}' )
+    public function __construct($file = '', $openDelimiter = '{', $closeDelimiter = '}')
     {
 
-        $this->setFile( $file );
+        $this->setFile($file);
         $this->openDelimiter = $openDelimiter;
         $this->closeDelimiter = $closeDelimiter;
     }
@@ -58,16 +58,16 @@ class Text_Template
      *
      * @throws InvalidArgumentException
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $distFile = $file.'.dist';
 
-        if (file_exists( $file )) {
-            $this->template = file_get_contents( $file );
+        if (file_exists($file)) {
+            $this->template = file_get_contents($file);
         } else {
-            if (file_exists( $distFile )) {
-                $this->template = file_get_contents( $distFile );
+            if (file_exists($distFile)) {
+                $this->template = file_get_contents($distFile);
             } else {
                 throw new InvalidArgumentException(
                     'Template file could not be loaded.'
@@ -82,13 +82,13 @@ class Text_Template
      * @param array $values
      * @param bool  $merge
      */
-    public function setVar( array $values, $merge = true )
+    public function setVar(array $values, $merge = true)
     {
 
         if (!$merge || empty( $this->values )) {
             $this->values = $values;
         } else {
-            $this->values = array_merge( $this->values, $values );
+            $this->values = array_merge($this->values, $values);
         }
     }
 
@@ -97,14 +97,14 @@ class Text_Template
      *
      * @param string $target
      */
-    public function renderTo( $target )
+    public function renderTo($target)
     {
 
-        $fp = @fopen( $target, 'wt' );
+        $fp = @fopen($target, 'wt');
 
         if ($fp) {
-            fwrite( $fp, $this->render() );
-            fclose( $fp );
+            fwrite($fp, $this->render());
+            fclose($fp);
         } else {
             $error = error_get_last();
 
@@ -114,7 +114,7 @@ class Text_Template
                     $target,
                     substr(
                         $error['message'],
-                        strpos( $error['message'], ':' ) + 2
+                        strpos($error['message'], ':') + 2
                     )
                 )
             );
@@ -135,7 +135,7 @@ class Text_Template
             $keys[] = $this->openDelimiter.$key.$this->closeDelimiter;
         }
 
-        return str_replace( $keys, $this->values, $this->template );
+        return str_replace($keys, $this->values, $this->template);
     }
 }
 

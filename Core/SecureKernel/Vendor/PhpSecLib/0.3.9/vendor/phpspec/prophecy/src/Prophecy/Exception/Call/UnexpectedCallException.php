@@ -27,7 +27,7 @@ class UnexpectedCallException extends ObjectProphecyException
         array $arguments
     ) {
 
-        parent::__construct( $message, $objectProphecy );
+        parent::__construct($message, $objectProphecy);
 
         $this->methodName = $methodName;
         $this->arguments = $arguments;

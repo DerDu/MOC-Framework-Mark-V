@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff implements PHP_CodeSniffer_Snif
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff implements PHP_CodeSniffer_Snif
     public function register()
     {
 
-        return array( T_STYLE );
+        return array(T_STYLE);
 
     }//end register()
 
@@ -58,15 +58,15 @@ class Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff implements PHP_CodeSniffer_Snif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
-        $next = $phpcsFile->findNext( array( T_WHITESPACE, T_COLON ), ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(array(T_WHITESPACE, T_COLON), ( $stackPtr + 1 ), null, true);
 
         if ($next === false || $tokens[$next]['code'] === T_SEMICOLON || $tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             $error = 'Style definition is empty';
-            $phpcsFile->addError( $error, $stackPtr, 'Found' );
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

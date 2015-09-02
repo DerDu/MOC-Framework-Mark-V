@@ -55,13 +55,13 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $prevToken = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
-        $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
+        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
 
         if ($tokens[$stackPtr]['code'] === T_STATIC
             && ( $tokens[$nextToken]['code'] === T_DOUBLE_COLON
@@ -78,12 +78,12 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
 
         $nextToken = $tokens[( $stackPtr + 1 )];
         if ($nextToken['code'] !== T_WHITESPACE
-            || strlen( $nextToken['content'] ) !== 1
+            || strlen($nextToken['content']) !== 1
             || $nextToken['content'] === $phpcsFile->eolChar
         ) {
             $error = 'Scope keyword "%s" must be followed by a single space';
-            $data = array( $tokens[$stackPtr]['content'] );
-            $phpcsFile->addError( $error, $stackPtr, 'Incorrect', $data );
+            $data = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 
     }//end process()

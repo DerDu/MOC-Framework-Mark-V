@@ -12,11 +12,11 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      * @param string|array $parts      Parts of the name (or name as string)
      * @param array        $attributes Additional attributes
      */
-    public function __construct( $parts, array $attributes = array() )
+    public function __construct($parts, array $attributes = array())
     {
 
-        if (!is_array( $parts )) {
-            $parts = explode( '\\', $parts );
+        if (!is_array($parts)) {
+            $parts = explode('\\', $parts);
         }
 
         parent::__construct(
@@ -46,7 +46,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
     public function getLast()
     {
 
-        return $this->parts[count( $this->parts ) - 1];
+        return $this->parts[count($this->parts) - 1];
     }
 
     /**
@@ -57,7 +57,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
     public function isUnqualified()
     {
 
-        return 1 == count( $this->parts );
+        return 1 == count($this->parts);
     }
 
     /**
@@ -68,7 +68,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
     public function isQualified()
     {
 
-        return 1 < count( $this->parts );
+        return 1 < count($this->parts);
     }
 
     /**
@@ -100,10 +100,10 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @return string String representation
      */
-    public function toString( $separator = '\\' )
+    public function toString($separator = '\\')
     {
 
-        return implode( $separator, $this->parts );
+        return implode($separator, $this->parts);
     }
 
     /**
@@ -115,7 +115,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
     public function __toString()
     {
 
-        return implode( '\\', $this->parts );
+        return implode('\\', $this->parts);
     }
 
     /**
@@ -123,10 +123,10 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @param string|array|self $name The name to set the whole name to
      */
-    public function set( $name )
+    public function set($name)
     {
 
-        $this->parts = $this->prepareName( $name );
+        $this->parts = $this->prepareName($name);
     }
 
     /**
@@ -137,12 +137,12 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @return array Prepared name
      */
-    protected function prepareName( $name )
+    protected function prepareName($name)
     {
 
-        if (is_string( $name )) {
-            return explode( '\\', $name );
-        } elseif (is_array( $name )) {
+        if (is_string($name)) {
+            return explode('\\', $name);
+        } elseif (is_array($name)) {
             return $name;
         } elseif ($name instanceof self) {
             return $name->parts;
@@ -158,10 +158,10 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @param string|array|self $name Name to prepend
      */
-    public function prepend( $name )
+    public function prepend($name)
     {
 
-        $this->parts = array_merge( $this->prepareName( $name ), $this->parts );
+        $this->parts = array_merge($this->prepareName($name), $this->parts);
     }
 
     /**
@@ -169,10 +169,10 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @param string|array|self $name Name to append
      */
-    public function append( $name )
+    public function append($name)
     {
 
-        $this->parts = array_merge( $this->parts, $this->prepareName( $name ) );
+        $this->parts = array_merge($this->parts, $this->prepareName($name));
     }
 
     /**
@@ -180,10 +180,10 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @param string|array|self $name The name to set the first part to
      */
-    public function setFirst( $name )
+    public function setFirst($name)
     {
 
-        array_splice( $this->parts, 0, 1, $this->prepareName( $name ) );
+        array_splice($this->parts, 0, 1, $this->prepareName($name));
     }
 
     /**
@@ -191,9 +191,9 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      *
      * @param string|array|self $name The name to set the last part to
      */
-    public function setLast( $name )
+    public function setLast($name)
     {
 
-        array_splice( $this->parts, -1, 1, $this->prepareName( $name ) );
+        array_splice($this->parts, -1, 1, $this->prepareName($name));
     }
 }

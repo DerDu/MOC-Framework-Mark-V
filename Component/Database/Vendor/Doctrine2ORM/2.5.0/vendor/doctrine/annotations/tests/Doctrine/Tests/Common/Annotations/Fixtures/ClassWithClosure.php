@@ -2,9 +2,6 @@
 
 namespace Doctrine\Tests\Common\Annotations\Fixtures;
 
-use Doctrine\Tests\Common\Annotations\Fixtures\AnnotationTargetAll;
-use Doctrine\Tests\Common\Annotations\Fixtures\AnnotationTargetAnnotation;
-
 /**
  * @AnnotationTargetAll("Foo")
  */

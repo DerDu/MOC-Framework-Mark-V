@@ -47,10 +47,10 @@ class DocBlox_Parallel_Worker
      * @param callback $task      The task to invoke upon execution.
      * @param mixed[]  $arguments The arguments to provide to the task.
      */
-    public function __construct( $task, array $arguments = array() )
+    public function __construct($task, array $arguments = array())
     {
 
-        $this->setTask( $task );
+        $this->setTask($task);
         $this->arguments = $arguments;
     }
 
@@ -83,10 +83,10 @@ class DocBlox_Parallel_Worker
      *
      * @return void
      */
-    public function setReturnCode( $return_code )
+    public function setReturnCode($return_code)
     {
 
-        if (!is_numeric( $return_code ) || ( $return_code < 0 )) {
+        if (!is_numeric($return_code) || ( $return_code < 0 )) {
             throw new InvalidArgumentException(
                 'Expected the return code to be a positive number'
             );
@@ -113,7 +113,7 @@ class DocBlox_Parallel_Worker
      *
      * @return void
      */
-    public function setError( $error )
+    public function setError($error)
     {
 
         $this->error = $error;
@@ -137,7 +137,7 @@ class DocBlox_Parallel_Worker
      *
      * @return void
      */
-    public function setResult( $result )
+    public function setResult($result)
     {
 
         $this->result = $result;
@@ -151,14 +151,14 @@ class DocBlox_Parallel_Worker
     public function execute()
     {
 
-        $this->setReturnCode( 0 );
+        $this->setReturnCode(0);
         try {
             $this->setResult(
-                call_user_func_array( $this->getTask(), $this->getArguments() )
+                call_user_func_array($this->getTask(), $this->getArguments())
             );
-        } catch( Exception $e ) {
-            $this->setError( $e->getMessage() );
-            $this->setReturnCode( $e->getCode() );
+        } catch (Exception $e) {
+            $this->setError($e->getMessage());
+            $this->setReturnCode($e->getCode());
         }
     }
 
@@ -188,10 +188,10 @@ class DocBlox_Parallel_Worker
      *
      * @return void
      */
-    protected function setTask( $task )
+    protected function setTask($task)
     {
 
-        if (!is_callable( $task )) {
+        if (!is_callable($task)) {
             throw new InvalidArgumentException(
                 'Worker task is not a callable object'
             );

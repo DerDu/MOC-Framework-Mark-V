@@ -12,7 +12,7 @@ class PHPParser_Comment
      * @param string $text Comment text (including comment delimiters like /*)
      * @param int    $line Line number the comment started on
      */
-    public function __construct( $text, $line = -1 )
+    public function __construct($text, $line = -1)
     {
 
         $this->text = $text;
@@ -35,7 +35,7 @@ class PHPParser_Comment
      *
      * @param string $text The comment text (including comment delimiters like /*)
      */
-    public function setText( $text )
+    public function setText($text)
     {
 
         $this->text = $text;
@@ -57,7 +57,7 @@ class PHPParser_Comment
      *
      * @param int $line Line number
      */
-    public function setLine( $line )
+    public function setLine($line)
     {
 
         $this->line = $line;
@@ -87,11 +87,11 @@ class PHPParser_Comment
     public function getReformattedText()
     {
 
-        $text = trim( $this->text );
-        if (false === strpos( $text, "\n" )) {
+        $text = trim($this->text);
+        if (false === strpos($text, "\n")) {
             // Single line comments don't need further processing
             return $text;
-        } elseif (preg_match( '((*BSR_ANYCRLF)(*ANYCRLF)^.*(?:\R\s+\*.*)+$)', $text )) {
+        } elseif (preg_match('((*BSR_ANYCRLF)(*ANYCRLF)^.*(?:\R\s+\*.*)+$)', $text)) {
             // Multi line comment of the type
             //
             //     /*
@@ -100,8 +100,8 @@ class PHPParser_Comment
             //      */
             //
             // is handled by replacing the whitespace sequences before the * by a single space
-            return preg_replace( '(^\s+\*)m', ' *', $this->text );
-        } elseif (preg_match( '(^/\*\*?\s*[\r\n])', $text ) && preg_match( '(\n(\s*)\*/$)', $text, $matches )) {
+            return preg_replace('(^\s+\*)m', ' *', $this->text);
+        } elseif (preg_match('(^/\*\*?\s*[\r\n])', $text) && preg_match('(\n(\s*)\*/$)', $text, $matches)) {
             // Multi line comment of the type
             //
             //    /*
@@ -112,8 +112,8 @@ class PHPParser_Comment
             // is handled by removing the whitespace sequence on the line before the closing
             // */ on all lines. So if the last line is "    */", then "    " is removed at the
             // start of all lines.
-            return preg_replace( '(^'.preg_quote( $matches[1] ).')m', '', $text );
-        } elseif (preg_match( '(^/\*\*?\s*(?!\s))', $text, $matches )) {
+            return preg_replace('(^'.preg_quote($matches[1]).')m', '', $text);
+        } elseif (preg_match('(^/\*\*?\s*(?!\s))', $text, $matches)) {
             // Multi line comment of the type
             //
             //     /* Some text.
@@ -123,7 +123,7 @@ class PHPParser_Comment
             // is handled by taking the length of the "/* " segment and leaving only that
             // many space characters before the lines. Thus in the above example only three
             // space characters are left at the start of every line.
-            return preg_replace( '(^\s*(?= {'.strlen( $matches[0] ).'}(?!\s)))m', '', $text );
+            return preg_replace('(^\s*(?= {'.strlen($matches[0]).'}(?!\s)))m', '', $text);
         }
 
         // No idea how to format this comment, so simply return as is

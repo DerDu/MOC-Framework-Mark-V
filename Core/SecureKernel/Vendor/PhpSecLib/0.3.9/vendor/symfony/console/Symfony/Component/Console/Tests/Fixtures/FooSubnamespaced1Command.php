@@ -14,12 +14,12 @@ class FooSubnamespaced1Command extends Command
     {
 
         $this
-            ->setName( 'foo:bar:baz' )
-            ->setDescription( 'The foo:bar:baz command' )
-            ->setAliases( array( 'foobarbaz' ) );
+            ->setName('foo:bar:baz')
+            ->setDescription('The foo:bar:baz command')
+            ->setAliases(array('foobarbaz'));
     }
 
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $this->input = $input;

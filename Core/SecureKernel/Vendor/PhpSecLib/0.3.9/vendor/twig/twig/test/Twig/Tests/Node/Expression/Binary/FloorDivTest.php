@@ -15,23 +15,23 @@ class Twig_Tests_Node_Expression_Binary_FloorDivTest extends Twig_Test_NodeTestC
     public function testConstructor()
     {
 
-        $left = new Twig_Node_Expression_Constant( 1, 1 );
-        $right = new Twig_Node_Expression_Constant( 2, 1 );
-        $node = new Twig_Node_Expression_Binary_FloorDiv( $left, $right, 1 );
+        $left = new Twig_Node_Expression_Constant(1, 1);
+        $right = new Twig_Node_Expression_Constant(2, 1);
+        $node = new Twig_Node_Expression_Binary_FloorDiv($left, $right, 1);
 
-        $this->assertEquals( $left, $node->getNode( 'left' ) );
-        $this->assertEquals( $right, $node->getNode( 'right' ) );
+        $this->assertEquals($left, $node->getNode('left'));
+        $this->assertEquals($right, $node->getNode('right'));
     }
 
     public function getTests()
     {
 
-        $left = new Twig_Node_Expression_Constant( 1, 1 );
-        $right = new Twig_Node_Expression_Constant( 2, 1 );
-        $node = new Twig_Node_Expression_Binary_FloorDiv( $left, $right, 1 );
+        $left = new Twig_Node_Expression_Constant(1, 1);
+        $right = new Twig_Node_Expression_Constant(2, 1);
+        $node = new Twig_Node_Expression_Binary_FloorDiv($left, $right, 1);
 
         return array(
-            array( $node, 'intval(floor((1 / 2)))' ),
+            array($node, 'intval(floor((1 / 2)))'),
         );
     }
 }

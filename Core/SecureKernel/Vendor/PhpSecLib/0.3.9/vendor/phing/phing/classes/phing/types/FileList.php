@@ -63,7 +63,7 @@ class FileList extends DataType
      *
      * @param FileList $filelist
      */
-    public function __construct( $filelist = null )
+    public function __construct($filelist = null)
     {
 
         if ($filelist !== null) {
@@ -81,13 +81,13 @@ class FileList extends DataType
      *
      * @throws BuildException
      */
-    public function setRefid( Reference $r )
+    public function setRefid(Reference $r)
     {
 
-        if ($this->dir !== null || count( $this->filenames ) !== 0) {
+        if ($this->dir !== null || count($this->filenames) !== 0) {
             throw $this->tooManyAttributes();
         }
-        parent::setRefid( $r );
+        parent::setRefid($r);
     }
 
     /**
@@ -98,13 +98,13 @@ class FileList extends DataType
      * @throws BuildException
      * @return PhingFile
      */
-    public function getDir( Project $p )
+    public function getDir(Project $p)
     {
 
         if ($this->isReference()) {
-            $ref = $this->getRef( $p );
+            $ref = $this->getRef($p);
 
-            return $ref->getDir( $p );
+            return $ref->getDir($p);
         }
 
         return $this->dir;
@@ -117,14 +117,14 @@ class FileList extends DataType
      *
      * @throws BuildException
      */
-    public function setDir( PhingFile $dir )
+    public function setDir(PhingFile $dir)
     {
 
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
         }
         if (!( $dir instanceof PhingFile )) {
-            $dir = new PhingFile( $dir );
+            $dir = new PhingFile($dir);
         }
         $this->dir = $dir;
     }
@@ -139,18 +139,18 @@ class FileList extends DataType
      *
      * @return FileList
      */
-    public function getRef( Project $p )
+    public function getRef(Project $p)
     {
 
         if (!$this->checked) {
             $stk = array();
-            array_push( $stk, $this );
-            $this->dieOnCircularReference( $stk, $p );
+            array_push($stk, $this);
+            $this->dieOnCircularReference($stk, $p);
         }
 
-        $o = $this->ref->getReferencedObject( $p );
+        $o = $this->ref->getReferencedObject($p);
         if (!( $o instanceof FileList )) {
-            throw new BuildException( $this->ref->getRefId()." doesn't denote a filelist" );
+            throw new BuildException($this->ref->getRefId()." doesn't denote a filelist");
         } else {
             return $o;
         }
@@ -163,20 +163,20 @@ class FileList extends DataType
      *
      * @throws BuildException
      */
-    public function setFiles( $filenames )
+    public function setFiles($filenames)
     {
 
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
         }
         if (!empty( $filenames )) {
-            $tok = strtok( $filenames, ", \t\n\r" );
+            $tok = strtok($filenames, ", \t\n\r");
             while ($tok !== false) {
-                $fname = trim( $tok );
+                $fname = trim($tok);
                 if ($fname !== "") {
                     $this->filenames[] = $tok;
                 }
-                $tok = strtok( ", \t\n\r" );
+                $tok = strtok(", \t\n\r");
             }
         }
     }
@@ -188,13 +188,13 @@ class FileList extends DataType
      *
      * @return PhingFile
      */
-    public function getListFile( Project $p )
+    public function getListFile(Project $p)
     {
 
         if ($this->isReference()) {
-            $ref = $this->getRef( $p );
+            $ref = $this->getRef($p);
 
-            return $ref->getListFile( $p );
+            return $ref->getListFile($p);
         }
 
         return $this->listfile;
@@ -207,14 +207,14 @@ class FileList extends DataType
      *
      * @throws BuildException
      */
-    public function setListFile( $file )
+    public function setListFile($file)
     {
 
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
         }
         if (!( $file instanceof PhingFile )) {
-            $file = new PhingFile( $file );
+            $file = new PhingFile($file);
         }
         $this->listfile = $file;
     }
@@ -226,18 +226,18 @@ class FileList extends DataType
      *
      * @return array
      */
-    public function getFiles( Project $p )
+    public function getFiles(Project $p)
     {
 
         if ($this->isReference()) {
-            $ret = $this->getRef( $p );
-            $ret = $ret->getFiles( $p );
+            $ret = $this->getRef($p);
+            $ret = $ret->getFiles($p);
 
             return $ret;
         }
 
         if ($this->listfile !== null) {
-            $this->readListFile( $p );
+            $this->readListFile($p);
         }
 
         return $this->filenames;
@@ -250,27 +250,27 @@ class FileList extends DataType
      *
      * @throws BuildException
      */
-    private function readListFile( Project $p )
+    private function readListFile(Project $p)
     {
 
         $listReader = null;
         try {
             // Get a FileReader
-            $listReader = new BufferedReader( new FileReader( $this->listfile ) );
+            $listReader = new BufferedReader(new FileReader($this->listfile));
 
             $line = $listReader->readLine();
             while ($line !== null) {
                 if (!empty( $line )) {
-                    $line = $p->replaceProperties( $line );
-                    $this->filenames[] = trim( $line );
+                    $line = $p->replaceProperties($line);
+                    $this->filenames[] = trim($line);
                 }
                 $line = $listReader->readLine();
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             if ($listReader) {
                 $listReader->close();
             }
-            throw new BuildException( "An error occured while reading from list file ".$this->listfile->__toString().": ".$e->getMessage() );
+            throw new BuildException("An error occured while reading from list file ".$this->listfile->__toString().": ".$e->getMessage());
         }
 
         $listReader->close();

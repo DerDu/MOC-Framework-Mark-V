@@ -25,7 +25,7 @@ class PHPUnit_Framework_Constraint_GreaterThan extends PHPUnit_Framework_Constra
     /**
      * @param numeric $value
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
 
         parent::__construct();
@@ -40,7 +40,7 @@ class PHPUnit_Framework_Constraint_GreaterThan extends PHPUnit_Framework_Constra
     public function toString()
     {
 
-        return 'is greater than '.$this->exporter->export( $this->value );
+        return 'is greater than '.$this->exporter->export($this->value);
     }
 
     /**
@@ -51,7 +51,7 @@ class PHPUnit_Framework_Constraint_GreaterThan extends PHPUnit_Framework_Constra
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         return $this->value < $other;

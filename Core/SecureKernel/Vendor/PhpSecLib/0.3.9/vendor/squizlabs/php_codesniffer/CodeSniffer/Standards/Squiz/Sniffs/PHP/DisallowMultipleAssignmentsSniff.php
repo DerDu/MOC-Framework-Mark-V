@@ -40,7 +40,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
     public function register()
     {
 
-        return array( T_EQUAL );
+        return array(T_EQUAL);
 
     }//end register()
 
@@ -54,13 +54,13 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious( array( T_FUNCTION, T_CLOSURE ), ( $stackPtr - 1 ) );
+        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ( $stackPtr - 1 ));
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];
@@ -125,8 +125,8 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
         }
 
         // Ignore member var definitions.
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $varToken - 1 ), null, true );
-        if (in_array( $tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers ) === true) {
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $varToken - 1 ), null, true);
+        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers) === true) {
             return;
         }
 
@@ -153,7 +153,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 return;
             }
 
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
             }
@@ -171,7 +171,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         if ($prevLine === $varLine) {
             $error = 'Assignments must be the first block of code on a line';
-            $phpcsFile->addError( $error, $stackPtr, 'Found' );
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

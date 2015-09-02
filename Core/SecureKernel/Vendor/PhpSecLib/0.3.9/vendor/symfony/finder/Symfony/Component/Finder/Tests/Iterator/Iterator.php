@@ -16,16 +16,16 @@ class Iterator implements \Iterator
 
     protected $values = array();
 
-    public function __construct( array $values = array() )
+    public function __construct(array $values = array())
     {
 
         foreach ($values as $value) {
-            $this->attach( new \SplFileInfo( $value ) );
+            $this->attach(new \SplFileInfo($value));
         }
         $this->rewind();
     }
 
-    public function attach( \SplFileInfo $fileinfo )
+    public function attach(\SplFileInfo $fileinfo)
     {
 
         $this->values[] = $fileinfo;
@@ -34,7 +34,7 @@ class Iterator implements \Iterator
     public function rewind()
     {
 
-        reset( $this->values );
+        reset($this->values);
     }
 
     public function valid()
@@ -46,18 +46,18 @@ class Iterator implements \Iterator
     public function current()
     {
 
-        return current( $this->values );
+        return current($this->values);
     }
 
     public function next()
     {
 
-        next( $this->values );
+        next($this->values);
     }
 
     public function key()
     {
 
-        return key( $this->values );
+        return key($this->values);
     }
 }

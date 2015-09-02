@@ -43,7 +43,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -57,7 +57,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -69,7 +69,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
         }
 
         $params = array();
-        foreach ($phpcsFile->getMethodParameters( $stackPtr ) as $param) {
+        foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
             $params[$param['name']] = $stackPtr;
         }
 
@@ -83,7 +83,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
             $code = $token['code'];
 
             // Ignorable tokens.
-            if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
+            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 continue;
             }
 
@@ -95,7 +95,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
                 // A return statement as the first content indicates an interface method.
                 if ($code === T_RETURN) {
-                    $tmp = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
                     if ($tmp === false) {
                         return;
                     }
@@ -105,7 +105,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                         return;
                     }
 
-                    $tmp = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $tmp + 1 ), null, true );
+                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $tmp + 1 ), null, true);
                     if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
                         // There is a return <token>.
                         return;
@@ -119,9 +119,9 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                 unset( $params[$token['content']] );
             } else {
                 if ($code === T_DOLLAR) {
-                    $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $next + 1 ), null, true );
+                    $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $next + 1 ), null, true);
                     if ($tokens[$nextToken]['code'] === T_OPEN_CURLY_BRACKET) {
-                        $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $nextToken + 1 ), null, true );
+                        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $nextToken + 1 ), null, true);
                         if ($tokens[$nextToken]['code'] === T_STRING) {
                             $varContent = '$'.$tokens[$nextToken]['content'];
                             if (isset( $params[$varContent] ) === true) {
@@ -143,11 +143,11 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                             T_END_NOWDOC,
                             T_DOUBLE_QUOTED_STRING,
                         );
-                        $validTokens = array_merge( $validTokens, PHP_CodeSniffer_Tokens::$emptyTokens );
+                        $validTokens = array_merge($validTokens, PHP_CodeSniffer_Tokens::$emptyTokens);
 
                         $content = $token['content'];
                         for ($i = ( $next + 1 ); $i <= $end; $i++) {
-                            if (in_array( $tokens[$i]['code'], $validTokens ) === true) {
+                            if (in_array($tokens[$i]['code'], $validTokens) === true) {
                                 $content .= $tokens[$i]['content'];
                                 $next++;
                             } else {
@@ -155,9 +155,9 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                             }
                         }
 
-                        $stringTokens = token_get_all( sprintf( '<?php %s;?>', $content ) );
+                        $stringTokens = token_get_all(sprintf('<?php %s;?>', $content));
                         foreach ($stringTokens as $stringPtr => $stringToken) {
-                            if (is_array( $stringToken ) === false) {
+                            if (is_array($stringToken) === false) {
                                 continue;
                             }
 
@@ -179,11 +179,11 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
             }//end if
         }//end for
 
-        if ($foundContent === true && count( $params ) > 0) {
+        if ($foundContent === true && count($params) > 0) {
             foreach ($params as $paramName => $position) {
                 $error = 'The method parameter %s is never used';
-                $data = array( $paramName );
-                $phpcsFile->addWarning( $error, $position, 'Found', $data );
+                $data = array($paramName);
+                $phpcsFile->addWarning($error, $position, 'Found', $data);
             }
         }
 

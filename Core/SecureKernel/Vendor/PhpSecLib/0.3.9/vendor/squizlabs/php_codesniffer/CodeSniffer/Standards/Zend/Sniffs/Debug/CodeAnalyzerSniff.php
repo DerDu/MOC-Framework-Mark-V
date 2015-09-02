@@ -39,7 +39,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -53,20 +53,20 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // Because we are analyzing the whole file in one step, execute this method
         // only on first occurrence of a T_OPEN_TAG.
-        $prevOpenTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($prevOpenTag !== false) {
             return;
         }
 
         $fileName = $phpcsFile->getFilename();
 
-        $analyzerPath = PHP_CodeSniffer::getConfigData( 'zend_ca_path' );
-        if (is_null( $analyzerPath ) === true) {
+        $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
+        if (is_null($analyzerPath) === true) {
             return;
         }
 
@@ -79,20 +79,20 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         // This would result in an output format which would be easier to parse.
         // The problem here is that no cleartext error messages are returnwd; only
         // error-code-labels. So for a start we go for cleartext output.
-        $exitCode = exec( $cmd, $output, $retval );
+        $exitCode = exec($cmd, $output, $retval);
 
         // $exitCode is the last line of $output if no error occures, on error it
         // is numeric. Try to handle various error conditions and provide useful
         // error reporting.
-        if (is_numeric( $exitCode ) === true && $exitCode > 0) {
-            if (is_array( $output ) === true) {
-                $msg = join( '\n', $output );
+        if (is_numeric($exitCode) === true && $exitCode > 0) {
+            if (is_array($output) === true) {
+                $msg = join('\n', $output);
             }
 
-            throw new PHP_CodeSniffer_Exception( "Failed invoking ZendCodeAnalyzer, exitcode was [$exitCode], retval was [$retval], output was [$msg]" );
+            throw new PHP_CodeSniffer_Exception("Failed invoking ZendCodeAnalyzer, exitcode was [$exitCode], retval was [$retval], output was [$msg]");
         }
 
-        if (is_array( $output ) === true) {
+        if (is_array($output) === true) {
             $tokens = $phpcsFile->getTokens();
 
             foreach ($output as $finding) {
@@ -101,7 +101,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 // > Zend Code Analyzer 1.2.2
                 // > Analyzing <filename>...
                 // So skip these...
-                $res = preg_match( "/^.+\(line ([0-9]+)\):(.+)$/", $finding, $regs );
+                $res = preg_match("/^.+\(line ([0-9]+)\):(.+)$/", $finding, $regs);
                 if (empty( $regs ) === true || $res === false) {
                     continue;
                 }
@@ -116,7 +116,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($lineToken !== null) {
-                    $phpcsFile->addWarning( trim( $regs[2] ), $ptr, 'ExternalTool' );
+                    $phpcsFile->addWarning(trim($regs[2]), $ptr, 'ExternalTool');
                 }
             }//end foreach
         }//end if

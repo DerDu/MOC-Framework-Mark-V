@@ -48,10 +48,10 @@ class Context
     ) {
 
         if (!empty( $namespace )) {
-            $this->setNamespace( $namespace );
+            $this->setNamespace($namespace);
         }
-        $this->setNamespaceAliases( $namespace_aliases );
-        $this->setLSEN( $lsen );
+        $this->setNamespaceAliases($namespace_aliases);
+        $this->setLSEN($lsen);
     }
 
     /**
@@ -74,14 +74,14 @@ class Context
      *
      * @return $this
      */
-    public function setNamespace( $namespace )
+    public function setNamespace($namespace)
     {
 
         if ('global' !== $namespace
             && 'default' !== $namespace
         ) {
             // Srip leading and trailing slash
-            $this->namespace = trim( (string)$namespace, '\\' );
+            $this->namespace = trim((string)$namespace, '\\');
         } else {
             $this->namespace = '';
         }
@@ -105,12 +105,12 @@ class Context
      *
      * @return $this
      */
-    public function setNamespaceAliases( array $namespace_aliases )
+    public function setNamespaceAliases(array $namespace_aliases)
     {
 
         $this->namespace_aliases = array();
         foreach ($namespace_aliases as $alias => $fqnn) {
-            $this->setNamespaceAlias( $alias, $fqnn );
+            $this->setNamespaceAlias($alias, $fqnn);
         }
         return $this;
     }
@@ -137,7 +137,7 @@ class Context
      *
      * @return $this
      */
-    public function setLSEN( $lsen )
+    public function setLSEN($lsen)
     {
 
         $this->lsen = (string)$lsen;
@@ -155,10 +155,10 @@ class Context
      *
      * @return $this
      */
-    public function setNamespaceAlias( $alias, $fqnn )
+    public function setNamespaceAlias($alias, $fqnn)
     {
 
-        $this->namespace_aliases[$alias] = '\\'.trim( (string)$fqnn, '\\' );
+        $this->namespace_aliases[$alias] = '\\'.trim((string)$fqnn, '\\');
         return $this;
     }
 }

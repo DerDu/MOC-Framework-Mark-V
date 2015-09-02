@@ -15,9 +15,9 @@ class Twig_Tests_Loader_ArrayTest extends PHPUnit_Framework_TestCase
     public function testGetSource()
     {
 
-        $loader = new Twig_Loader_Array( array( 'foo' => 'bar' ) );
+        $loader = new Twig_Loader_Array(array('foo' => 'bar'));
 
-        $this->assertEquals( 'bar', $loader->getSource( 'foo' ) );
+        $this->assertEquals('bar', $loader->getSource('foo'));
     }
 
     /**
@@ -26,17 +26,17 @@ class Twig_Tests_Loader_ArrayTest extends PHPUnit_Framework_TestCase
     public function testGetSourceWhenTemplateDoesNotExist()
     {
 
-        $loader = new Twig_Loader_Array( array() );
+        $loader = new Twig_Loader_Array(array());
 
-        $loader->getSource( 'foo' );
+        $loader->getSource('foo');
     }
 
     public function testGetCacheKey()
     {
 
-        $loader = new Twig_Loader_Array( array( 'foo' => 'bar' ) );
+        $loader = new Twig_Loader_Array(array('foo' => 'bar'));
 
-        $this->assertEquals( 'bar', $loader->getCacheKey( 'foo' ) );
+        $this->assertEquals('bar', $loader->getCacheKey('foo'));
     }
 
     /**
@@ -45,25 +45,25 @@ class Twig_Tests_Loader_ArrayTest extends PHPUnit_Framework_TestCase
     public function testGetCacheKeyWhenTemplateDoesNotExist()
     {
 
-        $loader = new Twig_Loader_Array( array() );
+        $loader = new Twig_Loader_Array(array());
 
-        $loader->getCacheKey( 'foo' );
+        $loader->getCacheKey('foo');
     }
 
     public function testSetTemplate()
     {
 
-        $loader = new Twig_Loader_Array( array() );
-        $loader->setTemplate( 'foo', 'bar' );
+        $loader = new Twig_Loader_Array(array());
+        $loader->setTemplate('foo', 'bar');
 
-        $this->assertEquals( 'bar', $loader->getSource( 'foo' ) );
+        $this->assertEquals('bar', $loader->getSource('foo'));
     }
 
     public function testIsFresh()
     {
 
-        $loader = new Twig_Loader_Array( array( 'foo' => 'bar' ) );
-        $this->assertTrue( $loader->isFresh( 'foo', time() ) );
+        $loader = new Twig_Loader_Array(array('foo' => 'bar'));
+        $this->assertTrue($loader->isFresh('foo', time()));
     }
 
     /**
@@ -72,21 +72,21 @@ class Twig_Tests_Loader_ArrayTest extends PHPUnit_Framework_TestCase
     public function testIsFreshWhenTemplateDoesNotExist()
     {
 
-        $loader = new Twig_Loader_Array( array() );
+        $loader = new Twig_Loader_Array(array());
 
-        $loader->isFresh( 'foo', time() );
+        $loader->isFresh('foo', time());
     }
 
     public function testTemplateReference()
     {
 
-        $name = new Twig_Test_Loader_TemplateReference( 'foo' );
-        $loader = new Twig_Loader_Array( array( 'foo' => 'bar' ) );
+        $name = new Twig_Test_Loader_TemplateReference('foo');
+        $loader = new Twig_Loader_Array(array('foo' => 'bar'));
 
-        $loader->getCacheKey( $name );
-        $loader->getSource( $name );
-        $loader->isFresh( $name, time() );
-        $loader->setTemplate( $name, 'foobar' );
+        $loader->getCacheKey($name);
+        $loader->getSource($name);
+        $loader->isFresh($name, time());
+        $loader->setTemplate($name, 'foobar');
     }
 }
 
@@ -95,7 +95,7 @@ class Twig_Test_Loader_TemplateReference
 
     private $name;
 
-    public function __construct( $name )
+    public function __construct($name)
     {
 
         $this->name = $name;

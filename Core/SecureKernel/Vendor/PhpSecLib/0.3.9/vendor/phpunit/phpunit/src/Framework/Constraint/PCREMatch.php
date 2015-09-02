@@ -30,7 +30,7 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
     /**
      * @param string $pattern
      */
-    public function __construct( $pattern )
+    public function __construct($pattern)
     {
 
         parent::__construct();
@@ -59,9 +59,9 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return preg_match( $this->pattern, $other ) > 0;
+        return preg_match($this->pattern, $other) > 0;
     }
 }

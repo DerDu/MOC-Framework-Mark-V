@@ -13,10 +13,10 @@
 abstract class Twig_Node_Expression_Binary extends Twig_Node_Expression
 {
 
-    public function __construct( Twig_NodeInterface $left, Twig_NodeInterface $right, $lineno )
+    public function __construct(Twig_NodeInterface $left, Twig_NodeInterface $right, $lineno)
     {
 
-        parent::__construct( array( 'left' => $left, 'right' => $right ), array(), $lineno );
+        parent::__construct(array('left' => $left, 'right' => $right), array(), $lineno);
     }
 
     /**
@@ -24,19 +24,19 @@ abstract class Twig_Node_Expression_Binary extends Twig_Node_Expression
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->raw( '(' )
-            ->subcompile( $this->getNode( 'left' ) )
-            ->raw( ' ' );
-        $this->operator( $compiler );
+            ->raw('(')
+            ->subcompile($this->getNode('left'))
+            ->raw(' ');
+        $this->operator($compiler);
         $compiler
-            ->raw( ' ' )
-            ->subcompile( $this->getNode( 'right' ) )
-            ->raw( ')' );
+            ->raw(' ')
+            ->subcompile($this->getNode('right'))
+            ->raw(')');
     }
 
-    abstract public function operator( Twig_Compiler $compiler );
+    abstract public function operator(Twig_Compiler $compiler);
 }

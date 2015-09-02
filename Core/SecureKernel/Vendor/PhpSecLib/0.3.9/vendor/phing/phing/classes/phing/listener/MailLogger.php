@@ -49,13 +49,13 @@ class MailLogger extends DefaultLogger
 
         @require_once 'Mail.php';
 
-        if (!class_exists( 'Mail' )) {
-            throw new BuildException( 'Need the PEAR Mail package to send logs' );
+        if (!class_exists('Mail')) {
+            throw new BuildException('Need the PEAR Mail package to send logs');
         }
 
-        $from = Phing::getDefinedProperty( 'phing.log.mail.from' );
-        $subject = Phing::getDefinedProperty( 'phing.log.mail.subject' );
-        $tolist = Phing::getDefinedProperty( 'phing.log.mail.recipients' );
+        $from = Phing::getDefinedProperty('phing.log.mail.from');
+        $subject = Phing::getDefinedProperty('phing.log.mail.subject');
+        $tolist = Phing::getDefinedProperty('phing.log.mail.recipients');
 
         if (!empty( $from )) {
             $this->_from = $from;
@@ -77,10 +77,10 @@ class MailLogger extends DefaultLogger
      *
      * @param BuildEvent $event
      */
-    public function buildFinished( BuildEvent $event )
+    public function buildFinished(BuildEvent $event)
     {
 
-        parent::buildFinished( $event );
+        parent::buildFinished($event);
 
         if (empty( $this->_tolist )) {
             return;
@@ -91,8 +91,8 @@ class MailLogger extends DefaultLogger
             'Subject' => $this->_subject.( empty( $event ) ? " (build succesful)" : " (build failed)" )
         );
 
-        $mail = Mail::factory( 'mail' );
-        $mail->send( $this->_tolist, $hdrs, $this->_mailMessage );
+        $mail = Mail::factory('mail');
+        $mail->send($this->_tolist, $hdrs, $this->_mailMessage);
     }
 
     /**
@@ -102,7 +102,7 @@ class MailLogger extends DefaultLogger
      * @param OutputStream $stream
      * @param int          $priority
      */
-    final protected function printMessage( $message, OutputStream $stream, $priority )
+    final protected function printMessage($message, OutputStream $stream, $priority)
     {
 
         if ($message !== null) {

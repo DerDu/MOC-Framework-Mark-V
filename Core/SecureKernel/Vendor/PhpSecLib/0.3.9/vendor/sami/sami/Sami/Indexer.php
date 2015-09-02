@@ -18,7 +18,7 @@ class Indexer
     const TYPE_METHOD = 2;
     const TYPE_NAMESPACE = 3;
 
-    public function getIndex( Project $project )
+    public function getIndex(Project $project)
     {
 
         $index = array(
@@ -27,28 +27,28 @@ class Indexer
         );
 
         foreach ($project->getNamespaces() as $namespace) {
-            $index['searchIndex'][] = $this->getSearchString( $namespace );
-            $index['info'][] = array( self::TYPE_NAMESPACE, $namespace );
+            $index['searchIndex'][] = $this->getSearchString($namespace);
+            $index['info'][] = array(self::TYPE_NAMESPACE, $namespace);
         }
 
         foreach ($project->getProjectClasses() as $class) {
-            $index['searchIndex'][] = $this->getSearchString( (string)$class );
-            $index['info'][] = array( self::TYPE_CLASS, $class );
+            $index['searchIndex'][] = $this->getSearchString((string)$class);
+            $index['info'][] = array(self::TYPE_CLASS, $class);
         }
 
         foreach ($project->getProjectClasses() as $class) {
             foreach ($class->getMethods() as $method) {
-                $index['searchIndex'][] = $this->getSearchString( (string)$method );
-                $index['info'][] = array( self::TYPE_METHOD, $method );
+                $index['searchIndex'][] = $this->getSearchString((string)$method);
+                $index['info'][] = array(self::TYPE_METHOD, $method);
             }
         }
 
         return $index;
     }
 
-    protected function getSearchString( $string )
+    protected function getSearchString($string)
     {
 
-        return strtolower( preg_replace( "/\s+/", '', $string ) );
+        return strtolower(preg_replace("/\s+/", '', $string));
     }
 }

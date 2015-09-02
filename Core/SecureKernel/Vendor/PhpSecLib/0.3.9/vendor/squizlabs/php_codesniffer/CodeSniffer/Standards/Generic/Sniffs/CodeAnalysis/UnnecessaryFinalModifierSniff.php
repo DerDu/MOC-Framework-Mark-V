@@ -49,7 +49,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
     public function register()
     {
 
-        return array( T_CLASS );
+        return array(T_CLASS);
 
     }//end register()
 
@@ -63,7 +63,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -75,7 +75,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
         }
 
         // Fetch previous token.
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true);
 
         // Skip for non final class.
         if ($prev === false || $tokens[$prev]['code'] !== T_FINAL) {
@@ -88,7 +88,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             if ($tokens[$next]['code'] === T_FINAL) {
                 $error = 'Unnecessary FINAL modifier in FINAL class';
-                $phpcsFile->addWarning( $error, $next, 'Found' );
+                $phpcsFile->addWarning($error, $next, 'Found');
             }
         }
 

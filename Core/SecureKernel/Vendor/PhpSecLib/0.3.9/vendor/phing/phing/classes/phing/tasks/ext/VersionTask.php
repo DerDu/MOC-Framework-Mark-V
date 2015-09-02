@@ -65,10 +65,10 @@ class VersionTask extends Task
      *
      * @param string $releasetype
      */
-    public function setReleasetype( $releasetype )
+    public function setReleasetype($releasetype)
     {
 
-        $this->releasetype = strtoupper( $releasetype );
+        $this->releasetype = strtoupper($releasetype);
     }
 
     /**
@@ -76,7 +76,7 @@ class VersionTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -89,7 +89,7 @@ class VersionTask extends Task
      *
      * @return void
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -110,16 +110,16 @@ class VersionTask extends Task
         $this->checkProperty();
 
         // read file
-        $filecontent = trim( file_get_contents( $this->file ) );
+        $filecontent = trim(file_get_contents($this->file));
 
         // get new version
-        $newVersion = $this->getVersion( $filecontent );
+        $newVersion = $this->getVersion($filecontent);
 
         // write new Version to file
-        file_put_contents( $this->file, $newVersion."\n" );
+        file_put_contents($this->file, $newVersion."\n");
 
         // publish new version number as property
-        $this->project->setProperty( $this->property, $newVersion );
+        $this->project->setProperty($this->property, $newVersion);
 
     }
 
@@ -133,8 +133,8 @@ class VersionTask extends Task
     {
 
         // check Releasetype
-        if (is_null( $this->releasetype )) {
-            throw new BuildException( 'releasetype attribute is required', $this->location );
+        if (is_null($this->releasetype)) {
+            throw new BuildException('releasetype attribute is required', $this->location);
         }
         // known releasetypes
         $releaseTypes = array(
@@ -143,11 +143,11 @@ class VersionTask extends Task
             self::RELEASETYPE_BUGFIX
         );
 
-        if (!in_array( $this->releasetype, $releaseTypes )) {
-            throw new BuildException( sprintf(
+        if (!in_array($this->releasetype, $releaseTypes)) {
+            throw new BuildException(sprintf(
                 'Unknown Releasetype %s..Must be one of Major, Minor or Bugfix',
                 $this->releasetype
-            ), $this->location );
+            ), $this->location);
         }
     }
 
@@ -162,20 +162,20 @@ class VersionTask extends Task
 
         // check File
         if ($this->file === null ||
-            strlen( $this->file ) == 0
+            strlen($this->file) == 0
         ) {
-            throw new BuildException( 'You must specify a file containing the version number', $this->location );
+            throw new BuildException('You must specify a file containing the version number', $this->location);
         }
 
-        $content = file_get_contents( $this->file );
-        if (strlen( $content ) == 0) {
-            throw new BuildException( sprintf( 'Supplied file %s is empty', $this->file ), $this->location );
+        $content = file_get_contents($this->file);
+        if (strlen($content) == 0) {
+            throw new BuildException(sprintf('Supplied file %s is empty', $this->file), $this->location);
         }
 
         // check for three-part number
-        $split = explode( '.', $content );
-        if (count( $split ) !== 3) {
-            throw new BuildException( 'Unknown version number format', $this->location );
+        $split = explode('.', $content);
+        if (count($split) !== 3) {
+            throw new BuildException('Unknown version number format', $this->location);
         }
 
     }
@@ -189,10 +189,10 @@ class VersionTask extends Task
     private function checkProperty()
     {
 
-        if (is_null( $this->property ) ||
-            strlen( $this->property ) === 0
+        if (is_null($this->property) ||
+            strlen($this->property) === 0
         ) {
-            throw new BuildException( 'Property for publishing version number is not set', $this->location );
+            throw new BuildException('Property for publishing version number is not set', $this->location);
         }
     }
 
@@ -203,14 +203,14 @@ class VersionTask extends Task
      *
      * @return string
      */
-    private function getVersion( $filecontent )
+    private function getVersion($filecontent)
     {
 
         // init
         $newVersion = '';
 
         // Extract version
-        list( $major, $minor, $bugfix ) = explode( ".", $filecontent );
+        list( $major, $minor, $bugfix ) = explode(".", $filecontent);
 
         // Return new version number
         switch ($this->releasetype) {

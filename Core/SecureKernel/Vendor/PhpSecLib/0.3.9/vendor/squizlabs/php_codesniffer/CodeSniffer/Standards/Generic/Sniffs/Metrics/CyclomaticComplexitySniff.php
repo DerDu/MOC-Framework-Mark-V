@@ -55,7 +55,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -69,7 +69,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $this->currentFile = $phpcsFile;
@@ -102,7 +102,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
 
         // Iterate from start to end and count predicate nodes.
         for ($i = ( $start + 1 ); $i < $end; $i++) {
-            if (in_array( $tokens[$i]['type'], $find ) === true) {
+            if (in_array($tokens[$i]['type'], $find) === true) {
                 $complexity++;
             }
         }
@@ -113,7 +113,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
                 $complexity,
                 $this->absoluteComplexity,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'MaxExceeded', $data );
+            $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else {
             if ($complexity > $this->complexity) {
                 $warning = 'Function\'s cyclomatic complexity (%s) exceeds %s; consider refactoring the function';
@@ -121,7 +121,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
                     $complexity,
                     $this->complexity,
                 );
-                $phpcsFile->addWarning( $warning, $stackPtr, 'TooHigh', $data );
+                $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
             }
         }
 

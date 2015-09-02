@@ -18,10 +18,10 @@
 class Twig_Node_Text extends Twig_Node implements Twig_NodeOutputInterface
 {
 
-    public function __construct( $data, $lineno )
+    public function __construct($data, $lineno)
     {
 
-        parent::__construct( array(), array( 'data' => $data ), $lineno );
+        parent::__construct(array(), array('data' => $data), $lineno);
     }
 
     /**
@@ -29,13 +29,13 @@ class Twig_Node_Text extends Twig_Node implements Twig_NodeOutputInterface
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->addDebugInfo( $this )
-            ->write( 'echo ' )
-            ->string( $this->getAttribute( 'data' ) )
-            ->raw( ";\n" );
+            ->addDebugInfo($this)
+            ->write('echo ')
+            ->string($this->getAttribute('data'))
+            ->raw(";\n");
     }
 }

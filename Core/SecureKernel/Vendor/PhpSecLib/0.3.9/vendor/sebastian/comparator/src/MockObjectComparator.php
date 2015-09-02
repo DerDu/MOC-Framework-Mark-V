@@ -30,7 +30,7 @@ class MockObjectComparator extends ObjectComparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
         return $expected instanceof \PHPUnit_Framework_MockObject_MockObject && $actual instanceof \PHPUnit_Framework_MockObject_MockObject;
@@ -44,10 +44,10 @@ class MockObjectComparator extends ObjectComparator
      *
      * @return array
      */
-    protected function toArray( $object )
+    protected function toArray($object)
     {
 
-        $array = parent::toArray( $object );
+        $array = parent::toArray($object);
 
         unset( $array['__phpunit_invocationMocker'] );
 

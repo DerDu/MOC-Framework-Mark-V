@@ -41,6 +41,6 @@ class DiagnosticsTask extends Task
     public function main()
     {
 
-        Diagnostics::doReport( new PrintStream( Phing::getOutputStream() ) );
+        Diagnostics::doReport(new PrintStream(Phing::getOutputStream()));
     }
 }

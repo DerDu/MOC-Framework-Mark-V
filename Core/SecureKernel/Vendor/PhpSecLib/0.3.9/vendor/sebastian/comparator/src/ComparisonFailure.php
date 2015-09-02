@@ -148,8 +148,8 @@ class ComparisonFailure extends \RuntimeException
             return '';
         }
 
-        $differ = new Differ( "\n--- Expected\n+++ Actual\n" );
+        $differ = new Differ("\n--- Expected\n+++ Actual\n");
 
-        return $differ->diff( $this->expectedAsString, $this->actualAsString );
+        return $differ->diff($this->expectedAsString, $this->actualAsString);
     }
 }

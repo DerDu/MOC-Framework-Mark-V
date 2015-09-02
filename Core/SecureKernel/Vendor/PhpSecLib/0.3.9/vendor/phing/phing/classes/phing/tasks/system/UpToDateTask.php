@@ -56,7 +56,7 @@ class UpToDateTask extends Task implements Condition
      *
      * @internal param the $value value to set the property to if Target is up-to-date
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->_value = $value;
@@ -70,11 +70,11 @@ class UpToDateTask extends Task implements Condition
      *
      * @internal param the $file file we are checking against.
      */
-    public function setTargetFile( $file )
+    public function setTargetFile($file)
     {
 
-        if (is_string( $file )) {
-            $file = new PhingFile( $file );
+        if (is_string($file)) {
+            $file = new PhingFile($file);
         }
         $this->_targetFile = $file;
     }
@@ -87,11 +87,11 @@ class UpToDateTask extends Task implements Condition
      *
      * @internal param the $file file we are checking against the target file.
      */
-    public function setSrcfile( $file )
+    public function setSrcfile($file)
     {
 
-        if (is_string( $file )) {
-            $file = new PhingFile( $file );
+        if (is_string($file)) {
+            $file = new PhingFile($file);
         }
         $this->_sourceFile = $file;
     }
@@ -115,7 +115,7 @@ class UpToDateTask extends Task implements Condition
      *
      * @param FileSet $fs
      */
-    public function addFileset( FileSet $fs )
+    public function addFileset(FileSet $fs)
     {
 
         $this->sourceFileSets[] = $fs;
@@ -129,7 +129,7 @@ class UpToDateTask extends Task implements Condition
     public function createFileList()
     {
 
-        $num = array_push( $this->_filelists, new FileList() );
+        $num = array_push($this->_filelists, new FileList());
 
         return $this->_filelists[$num - 1];
     }
@@ -141,10 +141,10 @@ class UpToDateTask extends Task implements Condition
     {
 
         if ($this->mapperElement !== null) {
-            throw new BuildException( "Cannot define more than one mapper",
-                $this->location );
+            throw new BuildException("Cannot define more than one mapper",
+                $this->location);
         }
-        $this->mapperElement = new Mapper( $this->getProject() );
+        $this->mapperElement = new Mapper($this->getProject());
 
         return $this->mapperElement;
     }
@@ -159,15 +159,15 @@ class UpToDateTask extends Task implements Condition
     {
 
         if ($this->_property === null) {
-            throw new BuildException( "property attribute is required.",
-                $this->location );
+            throw new BuildException("property attribute is required.",
+                $this->location);
         }
         $upToDate = $this->evaluate();
         if ($upToDate) {
-            $property = $this->project->createTask( 'property' );
-            $property->setName( $this->getProperty() );
-            $property->setValue( $this->getValue() );
-            $property->setOverride( true );
+            $property = $this->project->createTask('property');
+            $property->setName($this->getProperty());
+            $property->setValue($this->getValue());
+            $property->setOverride(true);
             $property->main(); // execute
 
             if ($this->mapperElement === null) {
@@ -195,20 +195,20 @@ class UpToDateTask extends Task implements Condition
     public function evaluate()
     {
 
-        if (count( $this->sourceFileSets ) == 0 && count( $this->_filelists ) == 0 && $this->_sourceFile === null) {
-            throw new BuildException( "At least one srcfile or a nested "
-                ."<fileset> or <filelist> element must be set." );
+        if (count($this->sourceFileSets) == 0 && count($this->_filelists) == 0 && $this->_sourceFile === null) {
+            throw new BuildException("At least one srcfile or a nested "
+                ."<fileset> or <filelist> element must be set.");
         }
 
-        if (( count( $this->sourceFileSets ) > 0 || count( $this->_filelists ) > 0 ) && $this->_sourceFile !== null) {
-            throw new BuildException( "Cannot specify both the srcfile "
+        if (( count($this->sourceFileSets) > 0 || count($this->_filelists) > 0 ) && $this->_sourceFile !== null) {
+            throw new BuildException("Cannot specify both the srcfile "
                 ."attribute and a nested <fileset> "
-                ."or <filelist> element." );
+                ."or <filelist> element.");
         }
 
         if ($this->_targetFile === null && $this->mapperElement === null) {
-            throw new BuildException( "The targetfile attribute or a nested "
-                ."mapper element must be set." );
+            throw new BuildException("The targetfile attribute or a nested "
+                ."mapper element must be set.");
         }
 
         // if the target file is not there, then it can't be up-to-date
@@ -218,25 +218,25 @@ class UpToDateTask extends Task implements Condition
 
         // if the source file isn't there, throw an exception
         if ($this->_sourceFile !== null && !$this->_sourceFile->exists()) {
-            throw new BuildException( $this->_sourceFile->getAbsolutePath()
-                ." not found." );
+            throw new BuildException($this->_sourceFile->getAbsolutePath()
+                ." not found.");
         }
 
         $upToDate = true;
-        for ($i = 0, $size = count( $this->sourceFileSets ); $i < $size && $upToDate; $i++) {
+        for ($i = 0, $size = count($this->sourceFileSets); $i < $size && $upToDate; $i++) {
             $fs = $this->sourceFileSets[$i];
-            $ds = $fs->getDirectoryScanner( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
             $upToDate = $upToDate && $this->scanDir(
-                    $fs->getDir( $this->project ),
+                    $fs->getDir($this->project),
                     $ds->getIncludedFiles()
                 );
         }
 
-        for ($i = 0, $size = count( $this->_filelists ); $i < $size && $upToDate; $i++) {
+        for ($i = 0, $size = count($this->_filelists); $i < $size && $upToDate; $i++) {
             $fl = $this->_filelists[$i];
-            $srcFiles = $fl->getFiles( $this->project );
+            $srcFiles = $fl->getFiles($this->project);
             $upToDate = $upToDate && $this->scanDir(
-                    $fs->getDir( $this->project ),
+                    $fs->getDir($this->project),
                     $srcFiles
                 );
         }
@@ -246,7 +246,7 @@ class UpToDateTask extends Task implements Condition
                 $upToDate = $upToDate &&
                     ( $this->_targetFile->lastModified() >= $this->_sourceFile->lastModified() );
             } else {
-                $sfs = new SourceFileScanner( $this );
+                $sfs = new SourceFileScanner($this);
                 $upToDate = $upToDate &&
                     count(
                         $sfs->restrict(
@@ -268,22 +268,22 @@ class UpToDateTask extends Task implements Condition
      *
      * @return bool
      */
-    protected function scanDir( PhingFile $srcDir, $files )
+    protected function scanDir(PhingFile $srcDir, $files)
     {
 
-        $sfs = new SourceFileScanner( $this );
+        $sfs = new SourceFileScanner($this);
         $mapper = null;
         $dir = $srcDir;
         if ($this->mapperElement === null) {
             $mm = new MergeMapper();
-            $mm->setTo( $this->_targetFile->getAbsolutePath() );
+            $mm->setTo($this->_targetFile->getAbsolutePath());
             $mapper = $mm;
             $dir = null;
         } else {
             $mapper = $this->mapperElement->getImplementation();
         }
 
-        return ( count( $sfs->restrict( $files, $srcDir, $dir, $mapper ) ) === 0 );
+        return ( count($sfs->restrict($files, $srcDir, $dir, $mapper)) === 0 );
     }
 
     /**
@@ -303,7 +303,7 @@ class UpToDateTask extends Task implements Condition
      *
      * @param string $property the name of the property to set if Target is up-to-date.
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->_property = $property;

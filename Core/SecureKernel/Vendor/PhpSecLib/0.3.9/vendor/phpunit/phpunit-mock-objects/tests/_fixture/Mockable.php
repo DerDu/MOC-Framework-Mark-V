@@ -1,6 +1,8 @@
 <?php
+
 class Mockable
 {
+
     public $constructorArgs;
     public $cloned;
 
@@ -12,18 +14,21 @@ class Mockable
 
     public function mockableMethod()
     {
+
         // something different from NULL
         return true;
     }
 
     public function anotherMockableMethod()
     {
+
         // something different from NULL
         return true;
     }
 
     public function __clone()
     {
+
         $this->cloned = true;
     }
 }

@@ -45,14 +45,14 @@ class Glob
      *
      * @return string regex The regexp
      */
-    public static function toRegex( $glob, $strictLeadingDot = true, $strictWildcardSlash = true )
+    public static function toRegex($glob, $strictLeadingDot = true, $strictWildcardSlash = true)
     {
 
         $firstByte = true;
         $escaping = false;
         $inCurlies = 0;
         $regex = '';
-        $sizeGlob = strlen( $glob );
+        $sizeGlob = strlen($glob);
         for ($i = 0; $i < $sizeGlob; ++$i) {
             $car = $glob[$i];
             if ($firstByte) {

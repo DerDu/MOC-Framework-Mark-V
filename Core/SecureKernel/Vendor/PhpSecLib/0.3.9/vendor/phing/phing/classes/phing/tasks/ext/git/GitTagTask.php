@@ -155,83 +155,83 @@ class GitTagTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'tag' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('tag');
         $command
-            ->setOption( 'a', $this->isAnnotate() )
-            ->setOption( 's', $this->isSign() )
-            ->setOption( 'f', $this->isReplace() )
-            ->setOption( 'd', $this->isDelete() )
-            ->setOption( 'v', $this->isVerify() )
-            ->setOption( 'l', $this->isList() );
+            ->setOption('a', $this->isAnnotate())
+            ->setOption('s', $this->isSign())
+            ->setOption('f', $this->isReplace())
+            ->setOption('d', $this->isDelete())
+            ->setOption('v', $this->isVerify())
+            ->setOption('l', $this->isList());
 
         if (null !== $this->getKeySign()) {
-            $command->setOption( 'u', $this->getKeySign() );
+            $command->setOption('u', $this->getKeySign());
         }
 
         if (null !== $this->getMessage()) {
-            $command->setOption( 'm', $this->getMessage() );
+            $command->setOption('m', $this->getMessage());
         }
 
         if (null !== $this->getFile()) {
-            $command->setOption( 'F', $this->getFile() );
+            $command->setOption('F', $this->getFile());
         }
 
         // Use 'name' arg, if relevant
         if (null != $this->getName() && false == $this->isList()) {
-            $command->addArgument( $this->getName() );
+            $command->addArgument($this->getName());
         }
 
         if (null !== $this->getKeySign() || $this->isAnnotate() || $this->isSign()) {
             // Require a tag message or file
             if (null === $this->getMessage() && null === $this->getFile()) {
-                throw new BuildException( '"message" or "file" required to make a tag' );
+                throw new BuildException('"message" or "file" required to make a tag');
             }
         }
 
         // Use 'commit' or 'object' args, if relevant
         if (null !== $this->getCommit()) {
-            $command->addArgument( $this->getCommit() );
+            $command->addArgument($this->getCommit());
         } else {
             if (null !== $this->getObject()) {
-                $command->addArgument( $this->getObject() );
+                $command->addArgument($this->getObject());
             }
         }
 
         // Customize list (-l) options
         if ($this->isList()) {
             if (null !== $this->getContains()) {
-                $command->setOption( 'contains', $this->getContains() );
+                $command->setOption('contains', $this->getContains());
             }
             if (null !== $this->getPattern()) {
-                $command->addArgument( $this->getPattern() );
+                $command->addArgument($this->getPattern());
             }
             if (null != $this->getNum()) {
-                $command->setOption( 'n', $this->getNum() );
+                $command->setOption('n', $this->getNum());
             }
         }
 
-        $this->log( 'git-tag command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-tag command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            $this->log( $e->getMessage(), Project::MSG_ERR );
-            throw new BuildException( 'Task execution failed. '.$e->getMessage() );
+        } catch (Exception $e) {
+            $this->log($e->getMessage(), Project::MSG_ERR);
+            throw new BuildException('Task execution failed. '.$e->getMessage());
         }
 
         if (null !== $this->outputProperty) {
-            $this->project->setProperty( $this->outputProperty, $output );
+            $this->project->setProperty($this->outputProperty, $output);
         }
 
         $this->log(
-            sprintf( 'git-tag: tags for "%s" repository', $this->getRepository() ),
+            sprintf('git-tag: tags for "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
-        $this->log( 'git-tag output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-tag output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -246,7 +246,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $keyId
      */
-    public function setKeySign( $keyId )
+    public function setKeySign($keyId)
     {
 
         $this->keySign = $keyId;
@@ -264,7 +264,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $msg
      */
-    public function setMessage( $msg )
+    public function setMessage($msg)
     {
 
         $this->message = $msg;
@@ -282,7 +282,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -300,7 +300,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -318,7 +318,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $commit
      */
-    public function setCommit( $commit )
+    public function setCommit($commit)
     {
 
         $this->commit = $commit;
@@ -336,7 +336,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $object
      */
-    public function setObject( $object )
+    public function setObject($object)
     {
 
         $this->object = $object;
@@ -354,7 +354,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $commit
      */
-    public function setContains( $commit )
+    public function setContains($commit)
     {
 
         $this->contains = $commit;
@@ -372,7 +372,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $pattern
      */
-    public function setPattern( $pattern )
+    public function setPattern($pattern)
     {
 
         $this->pattern = $pattern;
@@ -390,7 +390,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $num
      */
-    public function setNum( $num )
+    public function setNum($num)
     {
 
         $this->num = (int)$num;
@@ -417,7 +417,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAnnotate( $flag )
+    public function setAnnotate($flag)
     {
 
         $this->annotate = (bool)$flag;
@@ -444,7 +444,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setSign( $flag )
+    public function setSign($flag)
     {
 
         $this->sign = (bool)$flag;
@@ -471,7 +471,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setReplace( $flag )
+    public function setReplace($flag)
     {
 
         $this->replace = (bool)$flag;
@@ -480,10 +480,10 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForce( $flag )
+    public function setForce($flag)
     {
 
-        return $this->setReplace( $flag );
+        return $this->setReplace($flag);
     }
 
     /**
@@ -507,7 +507,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setDelete( $flag )
+    public function setDelete($flag)
     {
 
         $this->delete = (bool)$flag;
@@ -534,7 +534,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setVerify( $flag )
+    public function setVerify($flag)
     {
 
         $this->verify = (bool)$flag;
@@ -561,7 +561,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setList( $flag )
+    public function setList($flag)
     {
 
         $this->list = (bool)$flag;
@@ -570,7 +570,7 @@ class GitTagTask extends GitBaseTask
     /**
      * @param $prop
      */
-    public function setOutputProperty( $prop )
+    public function setOutputProperty($prop)
     {
 
         $this->outputProperty = $prop;

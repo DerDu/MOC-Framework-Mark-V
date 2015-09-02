@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_EmptyClassDefinitionSniff implements PHP_CodeSniffer_Snif
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_EmptyClassDefinitionSniff implements PHP_CodeSniffer_Snif
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,15 +58,15 @@ class Squiz_Sniffs_CSS_EmptyClassDefinitionSniff implements PHP_CodeSniffer_Snif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true);
 
         if ($next === false || $tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET) {
             $error = 'Class definition is empty';
-            $phpcsFile->addError( $error, $stackPtr, 'Found' );
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

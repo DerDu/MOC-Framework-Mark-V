@@ -51,13 +51,13 @@ class Dirname extends Task
      *
      * @param string|PhingFile file a <code>File</code> value
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         if ($file instanceof PhingFile) {
             $this->file = $file;
         } else {
-            $this->file = new PhingFile( $file );
+            $this->file = new PhingFile($file);
         }
     }
 
@@ -66,7 +66,7 @@ class Dirname extends Task
      *
      * @param string $property the name of the property
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -81,13 +81,13 @@ class Dirname extends Task
     {
 
         if ($this->property == null) {
-            throw new BuildException( "property attribute required", $this->getLocation() );
+            throw new BuildException("property attribute required", $this->getLocation());
         }
         if ($this->file == null) {
-            throw new BuildException( "file attribute required", $this->getLocation() );
+            throw new BuildException("file attribute required", $this->getLocation());
         } else {
             $value = $this->file->getAbsoluteFile()->getParent();
-            $this->getProject()->setNewProperty( $this->property, $value );
+            $this->getProject()->setNewProperty($this->property, $value);
         }
     }
 }

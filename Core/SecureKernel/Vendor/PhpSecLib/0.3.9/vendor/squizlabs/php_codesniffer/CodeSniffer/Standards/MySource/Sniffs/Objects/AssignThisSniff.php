@@ -31,7 +31,7 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -42,7 +42,7 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_THIS );
+        return array(T_THIS);
 
     }//end register()
 
@@ -56,14 +56,14 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Ignore this.something and other uses of "this" that are not
         // direct assignments.
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($tokens[$next]['code'] !== T_SEMICOLON) {
             if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
                 return;
@@ -71,13 +71,13 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Something must be assigned to "this".
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
         if ($tokens[$prev]['code'] !== T_EQUAL) {
             return;
         }
 
         // A variable needs to be assigned to "this".
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $prev - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $prev - 1 ), null, true);
         if ($tokens[$prev]['code'] !== T_STRING) {
             return;
         }
@@ -85,7 +85,7 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
         // We can only assign "this" to a var called "self".
         if ($tokens[$prev]['content'] !== 'self' && $tokens[$prev]['content'] !== '_self') {
             $error = 'Keyword "this" can only be assigned to a variable called "self" or "_self"';
-            $phpcsFile->addError( $error, $prev, 'NotSelf' );
+            $phpcsFile->addError($error, $prev, 'NotSelf');
         }
 
     }//end process()

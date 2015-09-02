@@ -45,11 +45,11 @@ class ExampleTag extends SourceTag
         if (null === $this->content) {
             $filePath = '';
             if ($this->isURI) {
-                if (false === strpos( $this->filePath, ':' )) {
+                if (false === strpos($this->filePath, ':')) {
                     $filePath = str_replace(
                         '%2F',
                         '/',
-                        rawurlencode( $this->filePath )
+                        rawurlencode($this->filePath)
                     );
                 } else {
                     $filePath = $this->filePath;
@@ -67,10 +67,10 @@ class ExampleTag extends SourceTag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        Tag::setContent( $content );
+        Tag::setContent($content);
         if (preg_match(
             '/^
                 # File component
@@ -88,15 +88,15 @@ class ExampleTag extends SourceTag
             $matches
         )) {
             if ('' !== $matches[1]) {
-                $this->setFilePath( $matches[1] );
+                $this->setFilePath($matches[1]);
             } else {
-                $this->setFileURI( $matches[2] );
+                $this->setFileURI($matches[2]);
             }
 
             if (isset( $matches[3] )) {
-                parent::setContent( $matches[3] );
+                parent::setContent($matches[3]);
             } else {
-                $this->setDescription( '' );
+                $this->setDescription('');
             }
             $this->content = $content;
         }
@@ -114,14 +114,14 @@ class ExampleTag extends SourceTag
      *
      * @param type $uri The new file URI to use as an example.
      */
-    public function setFileURI( $uri )
+    public function setFileURI($uri)
     {
 
         $this->isURI = true;
-        if (false === strpos( $uri, ':' )) {
+        if (false === strpos($uri, ':')) {
             //Relative URL
             $this->filePath = rawurldecode(
-                str_replace( array( '/', '\\' ), '%2F', $uri )
+                str_replace(array('/', '\\'), '%2F', $uri)
             );
         } else {
             //Absolute URL or URI.
@@ -151,11 +151,11 @@ class ExampleTag extends SourceTag
      *
      * @return $this
      */
-    public function setFilePath( $filePath )
+    public function setFilePath($filePath)
     {
 
         $this->isURI = false;
-        $this->filePath = trim( $filePath );
+        $this->filePath = trim($filePath);
 
         $this->content = null;
         return $this;

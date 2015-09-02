@@ -23,7 +23,7 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testExceptionIsThrownForNotExistingConfigurationFile()
     {
 
-        PHPUnit_Util_Configuration::getInstance( 'not_existing_file.xml' );
+        PHPUnit_Util_Configuration::getInstance('not_existing_file.xml');
     }
 
     /**
@@ -32,11 +32,11 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testShouldReadColorsWhenTrueInConfigurationfile()
     {
 
-        $configurationFilename = dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.true.xml';
-        $configurationInstance = PHPUnit_Util_Configuration::getInstance( $configurationFilename );
+        $configurationFilename = dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.true.xml';
+        $configurationInstance = PHPUnit_Util_Configuration::getInstance($configurationFilename);
         $configurationValues = $configurationInstance->getPHPUnitConfiguration();
 
-        $this->assertEquals( PHPUnit_TextUI_ResultPrinter::COLOR_AUTO, $configurationValues['colors'] );
+        $this->assertEquals(PHPUnit_TextUI_ResultPrinter::COLOR_AUTO, $configurationValues['colors']);
     }
 
     /**
@@ -45,11 +45,11 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testShouldReadColorsWhenFalseInConfigurationfile()
     {
 
-        $configurationFilename = dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.false.xml';
-        $configurationInstance = PHPUnit_Util_Configuration::getInstance( $configurationFilename );
+        $configurationFilename = dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.false.xml';
+        $configurationInstance = PHPUnit_Util_Configuration::getInstance($configurationFilename);
         $configurationValues = $configurationInstance->getPHPUnitConfiguration();
 
-        $this->assertEquals( PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors'] );
+        $this->assertEquals(PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors']);
     }
 
     /**
@@ -58,11 +58,11 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testShouldReadColorsWhenEmptyInConfigurationfile()
     {
 
-        $configurationFilename = dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.empty.xml';
-        $configurationInstance = PHPUnit_Util_Configuration::getInstance( $configurationFilename );
+        $configurationFilename = dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.empty.xml';
+        $configurationInstance = PHPUnit_Util_Configuration::getInstance($configurationFilename);
         $configurationValues = $configurationInstance->getPHPUnitConfiguration();
 
-        $this->assertEquals( PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors'] );
+        $this->assertEquals(PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors']);
     }
 
     /**
@@ -71,11 +71,11 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testShouldReadColorsWhenInvalidInConfigurationfile()
     {
 
-        $configurationFilename = dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.invalid.xml';
-        $configurationInstance = PHPUnit_Util_Configuration::getInstance( $configurationFilename );
+        $configurationFilename = dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.colors.invalid.xml';
+        $configurationInstance = PHPUnit_Util_Configuration::getInstance($configurationFilename);
         $configurationValues = $configurationInstance->getPHPUnitConfiguration();
 
-        $this->assertEquals( PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors'] );
+        $this->assertEquals(PHPUnit_TextUI_ResultPrinter::COLOR_NEVER, $configurationValues['colors']);
     }
 
     /**
@@ -195,9 +195,9 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     {
 
         $dir = __DIR__;
-        $includePath = ini_get( 'include_path' );
+        $includePath = ini_get('include_path');
 
-        ini_set( 'include_path', $dir.PATH_SEPARATOR.$includePath );
+        ini_set('include_path', $dir.PATH_SEPARATOR.$includePath);
 
         $this->assertEquals(
             array(
@@ -216,8 +216,8 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
                                 3 => 19.78,
                                 4 => null,
                                 5 => new stdClass,
-                                6 => dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'MyTestFile.php',
-                                7 => dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'MyRelativePath',
+                                6 => dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'MyTestFile.php',
+                                7 => dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'MyRelativePath',
                             ),
                     ),
                 array(
@@ -237,7 +237,7 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
             $this->configuration->getListenerConfiguration()
         );
 
-        ini_set( 'include_path', $includePath );
+        ini_set('include_path', $includePath);
     }
 
     /**
@@ -274,19 +274,19 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
             array(
                 'include_path' =>
                     array(
-                        dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'.',
+                        dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'.',
                         '/path/to/lib'
                     ),
-                'ini'          => array( 'foo' => 'bar' ),
-                'const'        => array( 'FOO' => false, 'BAR' => true ),
-                'var'          => array( 'foo' => false ),
-                'env'          => array( 'foo' => true ),
-                'post'         => array( 'foo' => 'bar' ),
-                'get'          => array( 'foo' => 'bar' ),
-                'cookie'       => array( 'foo' => 'bar' ),
-                'server'       => array( 'foo' => 'bar' ),
-                'files'        => array( 'foo' => 'bar' ),
-                'request'      => array( 'foo' => 'bar' ),
+                'ini'          => array('foo' => 'bar'),
+                'const'        => array('FOO' => false, 'BAR' => true),
+                'var'          => array('foo' => false),
+                'env'          => array('foo' => true),
+                'post'         => array('foo' => 'bar'),
+                'get'          => array('foo' => 'bar'),
+                'cookie'       => array('foo' => 'bar'),
+                'server'       => array('foo' => 'bar'),
+                'files'        => array('foo' => 'bar'),
+                'request'      => array('foo' => 'bar'),
             ),
             $this->configuration->getPHPConfiguration()
         );
@@ -301,19 +301,19 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
 
         $this->configuration->handlePHPConfiguration();
 
-        $path = dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'.'.PATH_SEPARATOR.'/path/to/lib';
-        $this->assertStringStartsWith( $path, ini_get( 'include_path' ) );
-        $this->assertEquals( false, FOO );
-        $this->assertEquals( true, BAR );
-        $this->assertEquals( false, $GLOBALS['foo'] );
-        $this->assertEquals( true, $_ENV['foo'] );
-        $this->assertEquals( true, getenv( 'foo' ) );
-        $this->assertEquals( 'bar', $_POST['foo'] );
-        $this->assertEquals( 'bar', $_GET['foo'] );
-        $this->assertEquals( 'bar', $_COOKIE['foo'] );
-        $this->assertEquals( 'bar', $_SERVER['foo'] );
-        $this->assertEquals( 'bar', $_FILES['foo'] );
-        $this->assertEquals( 'bar', $_REQUEST['foo'] );
+        $path = dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'.'.PATH_SEPARATOR.'/path/to/lib';
+        $this->assertStringStartsWith($path, ini_get('include_path'));
+        $this->assertEquals(false, FOO);
+        $this->assertEquals(true, BAR);
+        $this->assertEquals(false, $GLOBALS['foo']);
+        $this->assertEquals(true, $_ENV['foo']);
+        $this->assertEquals(true, getenv('foo'));
+        $this->assertEquals('bar', $_POST['foo']);
+        $this->assertEquals('bar', $_GET['foo']);
+        $this->assertEquals('bar', $_COOKIE['foo']);
+        $this->assertEquals('bar', $_SERVER['foo']);
+        $this->assertEquals('bar', $_FILES['foo']);
+        $this->assertEquals('bar', $_REQUEST['foo']);
     }
 
     /**
@@ -326,8 +326,8 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
         $_ENV['foo'] = false;
         $this->configuration->handlePHPConfiguration();
 
-        $this->assertEquals( false, $_ENV['foo'] );
-        $this->assertEquals( true, getenv( 'foo' ) );
+        $this->assertEquals(false, $_ENV['foo']);
+        $this->assertEquals(true, getenv('foo'));
     }
 
     /**
@@ -337,11 +337,11 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testHandlePHPConfigurationDoesNotOverriteVariablesFromPutEnv()
     {
 
-        putenv( 'foo=putenv' );
+        putenv('foo=putenv');
         $this->configuration->handlePHPConfiguration();
 
-        $this->assertEquals( true, $_ENV['foo'] );
-        $this->assertEquals( 'putenv', getenv( 'foo' ) );
+        $this->assertEquals(true, $_ENV['foo']);
+        $this->assertEquals('putenv', getenv('foo'));
     }
 
     /**
@@ -410,7 +410,7 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     {
 
         $configurationWithXinclude = PHPUnit_Util_Configuration::getInstance(
-            dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration_xinclude.xml'
+            dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration_xinclude.xml'
         );
 
         $this->assertConfigurationEquals(
@@ -484,39 +484,39 @@ class Util_ConfigurationTest extends PHPUnit_Framework_TestCase
     {
 
         $emptyConfiguration = PHPUnit_Util_Configuration::getInstance(
-            dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration_empty.xml'
+            dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration_empty.xml'
         );
 
         $logging = $emptyConfiguration->getLoggingConfiguration();
-        $this->assertEmpty( $logging );
+        $this->assertEmpty($logging);
 
         $php = $emptyConfiguration->getPHPConfiguration();
-        $this->assertEmpty( $php['include_path'] );
+        $this->assertEmpty($php['include_path']);
 
         $phpunit = $emptyConfiguration->getPHPUnitConfiguration();
-        $this->assertArrayNotHasKey( 'bootstrap', $phpunit );
-        $this->assertArrayNotHasKey( 'testSuiteLoaderFile', $phpunit );
-        $this->assertArrayNotHasKey( 'printerFile', $phpunit );
+        $this->assertArrayNotHasKey('bootstrap', $phpunit);
+        $this->assertArrayNotHasKey('testSuiteLoaderFile', $phpunit);
+        $this->assertArrayNotHasKey('printerFile', $phpunit);
 
         $suite = $emptyConfiguration->getTestSuiteConfiguration();
-        $this->assertEmpty( $suite->getGroups() );
+        $this->assertEmpty($suite->getGroups());
 
         $filter = $emptyConfiguration->getFilterConfiguration();
-        $this->assertEmpty( $filter['blacklist']['include']['directory'] );
-        $this->assertEmpty( $filter['blacklist']['include']['file'] );
-        $this->assertEmpty( $filter['blacklist']['exclude']['directory'] );
-        $this->assertEmpty( $filter['blacklist']['exclude']['file'] );
-        $this->assertEmpty( $filter['whitelist']['include']['directory'] );
-        $this->assertEmpty( $filter['whitelist']['include']['file'] );
-        $this->assertEmpty( $filter['whitelist']['exclude']['directory'] );
-        $this->assertEmpty( $filter['whitelist']['exclude']['file'] );
+        $this->assertEmpty($filter['blacklist']['include']['directory']);
+        $this->assertEmpty($filter['blacklist']['include']['file']);
+        $this->assertEmpty($filter['blacklist']['exclude']['directory']);
+        $this->assertEmpty($filter['blacklist']['exclude']['file']);
+        $this->assertEmpty($filter['whitelist']['include']['directory']);
+        $this->assertEmpty($filter['whitelist']['include']['file']);
+        $this->assertEmpty($filter['whitelist']['exclude']['directory']);
+        $this->assertEmpty($filter['whitelist']['exclude']['file']);
     }
 
     protected function setUp()
     {
 
         $this->configuration = PHPUnit_Util_Configuration::getInstance(
-            dirname( __DIR__ ).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.xml'
+            dirname(__DIR__).DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'configuration.xml'
         );
     }
 }

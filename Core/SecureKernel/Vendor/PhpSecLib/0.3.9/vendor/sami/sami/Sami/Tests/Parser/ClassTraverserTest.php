@@ -22,23 +22,23 @@ class ClassTraverserTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getTraverseOrderClasses
      */
-    public function testTraverseOrder( $interfaceName, $parentName, $className, $class, $parent, $interface )
+    public function testTraverseOrder($interfaceName, $parentName, $className, $class, $parent, $interface)
     {
 
         $store = new ArrayStore();
-        $store->setClasses( array( $class, $parent, $interface ) );
+        $store->setClasses(array($class, $parent, $interface));
 
-        $project = new Project( $store );
+        $project = new Project($store);
 
-        $visitor = $this->getMock( 'Sami\Parser\ClassVisitorInterface' );
-        $visitor->expects( $this->at( 0 ) )->method( 'visit' )->with( $project->loadClass( $interfaceName ) );
-        $visitor->expects( $this->at( 1 ) )->method( 'visit' )->with( $project->loadClass( $parentName ) );
-        $visitor->expects( $this->at( 2 ) )->method( 'visit' )->with( $project->loadClass( $className ) );
+        $visitor = $this->getMock('Sami\Parser\ClassVisitorInterface');
+        $visitor->expects($this->at(0))->method('visit')->with($project->loadClass($interfaceName));
+        $visitor->expects($this->at(1))->method('visit')->with($project->loadClass($parentName));
+        $visitor->expects($this->at(2))->method('visit')->with($project->loadClass($className));
 
         $traverser = new ClassTraverser();
-        $traverser->addVisitor( $visitor );
+        $traverser->addVisitor($visitor);
 
-        $traverser->traverse( $project );
+        $traverser->traverse($project);
     }
 
     public function getTraverseOrderClasses()
@@ -47,26 +47,26 @@ class ClassTraverserTest extends \PHPUnit_Framework_TestCase
         // as classes are sorted by name in Project, we try all combinaison
         // by giving different names to the classes
         return array(
-            $this->createClasses( 'C1', 'C2', 'C3' ),
-            $this->createClasses( 'C1', 'C3', 'C2' ),
-            $this->createClasses( 'C2', 'C1', 'C3' ),
-            $this->createClasses( 'C2', 'C3', 'C1' ),
-            $this->createClasses( 'C3', 'C1', 'C2' ),
-            $this->createClasses( 'C3', 'C2', 'C1' ),
+            $this->createClasses('C1', 'C2', 'C3'),
+            $this->createClasses('C1', 'C3', 'C2'),
+            $this->createClasses('C2', 'C1', 'C3'),
+            $this->createClasses('C2', 'C3', 'C1'),
+            $this->createClasses('C3', 'C1', 'C2'),
+            $this->createClasses('C3', 'C2', 'C1'),
         );
     }
 
-    protected function createClasses( $interfaceName, $parentName, $className )
+    protected function createClasses($interfaceName, $parentName, $className)
     {
 
-        $interface = new ClassReflection( $interfaceName, 1 );
+        $interface = new ClassReflection($interfaceName, 1);
 
-        $parent = new ClassReflection( $parentName, 1 );
-        $parent->addInterface( $interfaceName );
+        $parent = new ClassReflection($parentName, 1);
+        $parent->addInterface($interfaceName);
 
-        $class = new ClassReflection( $className, 1 );
-        $class->setParent( $parentName );
+        $class = new ClassReflection($className, 1);
+        $class->setParent($parentName);
 
-        return array( $interfaceName, $parentName, $className, $class, $parent, $interface );
+        return array($interfaceName, $parentName, $className, $class, $parent, $interface);
     }
 }

@@ -14,26 +14,26 @@ class Twig_Extension_Profiler extends Twig_Extension
 
     private $actives;
 
-    public function __construct( Twig_Profiler_Profile $profile )
+    public function __construct(Twig_Profiler_Profile $profile)
     {
 
-        $this->actives = array( $profile );
+        $this->actives = array($profile);
     }
 
-    public function enter( Twig_Profiler_Profile $profile )
+    public function enter(Twig_Profiler_Profile $profile)
     {
 
-        $this->actives[0]->addProfile( $profile );
-        array_unshift( $this->actives, $profile );
+        $this->actives[0]->addProfile($profile);
+        array_unshift($this->actives, $profile);
     }
 
-    public function leave( Twig_Profiler_Profile $profile )
+    public function leave(Twig_Profiler_Profile $profile)
     {
 
         $profile->leave();
-        array_shift( $this->actives );
+        array_shift($this->actives);
 
-        if (1 === count( $this->actives )) {
+        if (1 === count($this->actives)) {
             $this->actives[0]->leave();
         }
     }
@@ -44,7 +44,7 @@ class Twig_Extension_Profiler extends Twig_Extension
     public function getNodeVisitors()
     {
 
-        return array( new Twig_Profiler_NodeVisitor_Profiler( $this->getName() ) );
+        return array(new Twig_Profiler_NodeVisitor_Profiler($this->getName()));
     }
 
     /**

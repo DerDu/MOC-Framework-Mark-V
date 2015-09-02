@@ -53,14 +53,14 @@ class Squiz_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $content = $tokens[$stackPtr]['content'];
-        $expected = str_replace( ' ', '', $content );
-        $expected = str_replace( "\t", '', $expected );
+        $expected = str_replace(' ', '', $content);
+        $expected = str_replace("\t", '', $expected);
 
         if ($content !== $expected) {
             $error = 'Cast statements must not contain whitespace; expected "%s" but found "%s"';
@@ -68,7 +68,7 @@ class Squiz_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
                 $expected,
                 $content,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'ContainsWhiteSpace', $data );
+            $phpcsFile->addError($error, $stackPtr, 'ContainsWhiteSpace', $data);
         }
 
     }//end process()

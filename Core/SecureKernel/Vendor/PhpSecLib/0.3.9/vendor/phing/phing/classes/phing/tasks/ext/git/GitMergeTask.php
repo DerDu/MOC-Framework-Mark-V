@@ -113,40 +113,40 @@ class GitMergeTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
-        $remotes = trim( $this->getRemote() );
+        $remotes = trim($this->getRemote());
         if (null === $remotes || '' === $remotes) {
-            throw new BuildException( '"remote" is required parameter' );
+            throw new BuildException('"remote" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'merge' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('merge');
         $command
-            ->setOption( 'commit', $this->isCommit() )
-            ->setOption( 'q', $this->isQuiet() );
+            ->setOption('commit', $this->isCommit())
+            ->setOption('q', $this->isQuiet());
 
         if ($this->getMessage()) {
-            $command->setOption( 'message', $this->getMessage() );
+            $command->setOption('message', $this->getMessage());
         }
 
         if (!$this->isCommit()) {
-            $command->setOption( 'no-commit', $this->isNoCommit() );
+            $command->setOption('no-commit', $this->isNoCommit());
         }
 
         if ($this->isFastForwardCommit()) {
-            $command->setOption( 'no-ff', true );
+            $command->setOption('no-ff', true);
         }
 
         $strategy = $this->getStrategy();
         if ($strategy) {
             // check if strategy is valid
-            if (false === in_array( $strategy, $this->validStrategies )) {
+            if (false === in_array($strategy, $this->validStrategies)) {
                 throw new BuildException(
                     "Could not find merge strategy '".$strategy."'\n".
-                    "Available strategies are: ".implode( ', ', $this->validStrategies ) );
+                    "Available strategies are: ".implode(', ', $this->validStrategies));
             }
-            $command->setOption( 'strategy', $strategy );
+            $command->setOption('strategy', $strategy);
             if ($this->getStrategyOption()) {
                 $command->setOption(
                     'strategy-option',
@@ -155,24 +155,24 @@ class GitMergeTask extends GitBaseTask
             }
         }
 
-        $remotes = explode( ' ', $this->getRemote() );
+        $remotes = explode(' ', $this->getRemote());
         foreach ($remotes as $remote) {
-            $command->addArgument( $remote );
+            $command->addArgument($remote);
         }
 
-        $this->log( 'git-merge command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-merge command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed.', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed.', $e);
         }
 
         $this->log(
-            sprintf( 'git-merge: replaying "%s" commits', $this->getRemote() ),
+            sprintf('git-merge: replaying "%s" commits', $this->getRemote()),
             Project::MSG_INFO
         );
-        $this->log( 'git-merge output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-merge output: '.trim($output), Project::MSG_INFO);
 
     }
 
@@ -188,7 +188,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $remote
      */
-    public function setRemote( $remote )
+    public function setRemote($remote)
     {
 
         $this->remote = $remote;
@@ -206,7 +206,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $message
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
 
         $this->message = $message;
@@ -224,7 +224,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $strategy
      */
-    public function setStrategy( $strategy )
+    public function setStrategy($strategy)
     {
 
         $this->strategy = $strategy;
@@ -242,7 +242,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $strategyOption
      */
-    public function setStrategyOption( $strategyOption )
+    public function setStrategyOption($strategyOption)
     {
 
         $this->strategyOption = $strategyOption;
@@ -269,7 +269,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setQuiet( $flag )
+    public function setQuiet($flag)
     {
 
         $this->quiet = $flag;
@@ -296,7 +296,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setCommit( $flag )
+    public function setCommit($flag)
     {
 
         $this->commit = (boolean)$flag;
@@ -323,7 +323,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoCommit( $flag )
+    public function setNoCommit($flag)
     {
 
         $this->noCommit = (boolean)$flag;
@@ -350,7 +350,7 @@ class GitMergeTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setFastForwardCommit( $flag )
+    public function setFastForwardCommit($flag)
     {
 
         $this->fastForwardCommit = $flag;

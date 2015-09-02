@@ -14,7 +14,7 @@ interface PHPParser_NodeVisitor
      *
      * @return null|PHPParser_Node[] Array of nodes
      */
-    public function beforeTraverse( array $nodes );
+    public function beforeTraverse(array $nodes);
 
     /**
      * Called when entering a node.
@@ -27,7 +27,7 @@ interface PHPParser_NodeVisitor
      *
      * @return null|PHPParser_Node Node
      */
-    public function enterNode( PHPParser_Node $node );
+    public function enterNode(PHPParser_Node $node);
 
     /**
      * Called when leaving a node.
@@ -42,7 +42,7 @@ interface PHPParser_NodeVisitor
      *
      * @return null|PHPParser_Node|false|PHPParser_Node[] Node
      */
-    public function leaveNode( PHPParser_Node $node );
+    public function leaveNode(PHPParser_Node $node);
 
     /**
      * Called once after traversal.
@@ -55,5 +55,5 @@ interface PHPParser_NodeVisitor
      *
      * @return null|PHPParser_Node[] Array of nodes
      */
-    public function afterTraverse( array $nodes );
+    public function afterTraverse(array $nodes);
 }

@@ -62,10 +62,10 @@ class StripPhpComments extends BaseFilterReader implements ChainableReader
      *             if the end of the resulting stream has been reached
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
         if ($buffer === -1) {
             return -1;
         }
@@ -193,11 +193,11 @@ class StripPhpComments extends BaseFilterReader implements ChainableReader
      * @return a new filter based on this configuration, but filtering
      *           the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new StripPhpComments( $reader );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new StripPhpComments($reader);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }

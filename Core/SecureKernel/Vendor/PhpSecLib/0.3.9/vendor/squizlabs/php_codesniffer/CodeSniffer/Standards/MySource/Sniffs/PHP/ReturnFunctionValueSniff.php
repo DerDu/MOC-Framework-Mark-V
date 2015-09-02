@@ -35,7 +35,7 @@ class MySource_Sniffs_PHP_ReturnFunctionValueSniff implements PHP_CodeSniffer_Sn
     public function register()
     {
 
-        return array( T_RETURN );
+        return array(T_RETURN);
 
     }//end register()
 
@@ -49,24 +49,24 @@ class MySource_Sniffs_PHP_ReturnFunctionValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $functionName = $phpcsFile->findNext( T_STRING, ( $stackPtr + 1 ), null, false, null, true );
+        $functionName = $phpcsFile->findNext(T_STRING, ( $stackPtr + 1 ), null, false, null, true);
 
         while ($functionName !== false) {
             // Check if this is really a function.
-            $bracket = $phpcsFile->findNext( T_WHITESPACE, ( $functionName + 1 ), null, true );
+            $bracket = $phpcsFile->findNext(T_WHITESPACE, ( $functionName + 1 ), null, true);
             if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                 // Not a function call.
-                $functionName = $phpcsFile->findNext( T_STRING, ( $functionName + 1 ), null, false, null, true );
+                $functionName = $phpcsFile->findNext(T_STRING, ( $functionName + 1 ), null, false, null, true);
                 continue;
             }
 
             $error = 'The result of a function call should be assigned to a variable before being returned';
-            $phpcsFile->addWarning( $error, $stackPtr, 'NotAssigned' );
+            $phpcsFile->addWarning($error, $stackPtr, 'NotAssigned');
             break;
         }
 

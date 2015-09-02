@@ -50,14 +50,14 @@ class BaseFilterReader extends FilterReader
      *
      * @param Reader $in
      */
-    public function __construct( $in = null )
+    public function __construct($in = null)
     {
 
         if ($in === null) {
             $dummy = "";
-            $in = new StringReader( $dummy );
+            $in = new StringReader($dummy);
         }
-        parent::__construct( $in );
+        parent::__construct($in);
     }
 
     /**
@@ -76,7 +76,7 @@ class BaseFilterReader extends FilterReader
      *
      * @param boolean $initialized Whether or not the filter is initialized.
      */
-    public function setInitialized( $initialized )
+    public function setInitialized($initialized)
     {
 
         $this->initialized = (boolean)$initialized;
@@ -99,7 +99,7 @@ class BaseFilterReader extends FilterReader
      * @param object|Project $project The project this filter is part of.
      *                                Should not be <code>null</code>.
      */
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         // type check, error must never occur, bad code of it does
@@ -116,10 +116,10 @@ class BaseFilterReader extends FilterReader
      *
      * @throws IOException If an I/O error occurs
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        return $this->in->read( $len );
+        return $this->in->read($len);
     }
 
     /**
@@ -137,7 +137,7 @@ class BaseFilterReader extends FilterReader
 
         $line = null;
 
-        while (( $ch = $this->in->read( 1 ) ) !== -1) {
+        while (( $ch = $this->in->read(1) ) !== -1) {
             $line .= $ch;
             if ($ch === "\n") {
                 break;
@@ -166,11 +166,11 @@ class BaseFilterReader extends FilterReader
      *
      * @return void
      */
-    public function log( $msg, $level = Project::MSG_INFO )
+    public function log($msg, $level = Project::MSG_INFO)
     {
 
         if ($this->project !== null) {
-            $this->project->log( "[filter:".get_class( $this )."] ".$msg, $level );
+            $this->project->log("[filter:".get_class($this)."] ".$msg, $level);
         }
     }
 }

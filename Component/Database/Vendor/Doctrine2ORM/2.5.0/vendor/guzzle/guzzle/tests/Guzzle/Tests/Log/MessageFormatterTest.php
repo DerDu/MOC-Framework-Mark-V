@@ -3,7 +3,6 @@
 namespace Guzzle\Tests\Log;
 
 use Guzzle\Http\Client;
-use Guzzle\Http\Curl\CurlHandle;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;

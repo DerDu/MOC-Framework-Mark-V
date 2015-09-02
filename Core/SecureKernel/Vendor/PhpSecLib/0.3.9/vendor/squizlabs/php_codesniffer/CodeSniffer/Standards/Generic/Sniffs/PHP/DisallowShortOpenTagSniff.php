@@ -56,7 +56,7 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -64,20 +64,20 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
 
         if ($openTag['content'] === '<?') {
             $error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
-            $data = array( $openTag['content'] );
-            $phpcsFile->addError( $error, $stackPtr, 'Found', $data );
+            $data = array($openTag['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
         if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {
-            $nextVar = $tokens[$phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null,
-                true )];
+            $nextVar = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null,
+                true)];
             $error = 'Short PHP opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $data = array(
                 $nextVar['content'],
                 $openTag['content'],
                 $nextVar['content'],
             );
-            $phpcsFile->addError( $error, $stackPtr, 'EchoFound', $data );
+            $phpcsFile->addError($error, $stackPtr, 'EchoFound', $data);
         }
 
     }//end process()

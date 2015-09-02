@@ -138,34 +138,34 @@ class CvsTask extends Task
 
         if ($this->getCommand() === null && empty( $this->commandlines )) {
             // re-implement legacy behaviour:
-            $this->setCommand( self::$default_command );
+            $this->setCommand(self::$default_command);
         }
 
         $c = $this->getCommand();
         $cloned = null;
         if ($c !== null) {
             $cloned = $this->cmd->__copy();
-            $cloned->createArgument( true )->setLine( $c );
-            $this->addConfiguredCommandline( $cloned, true );
+            $cloned->createArgument(true)->setLine($c);
+            $this->addConfiguredCommandline($cloned, true);
         }
 
         try {
-            for ($i = 0, $vecsize = count( $this->commandlines ); $i < $vecsize; $i++) {
-                $this->runCommand( $this->commandlines[$i] );
+            for ($i = 0, $vecsize = count($this->commandlines); $i < $vecsize; $i++) {
+                $this->runCommand($this->commandlines[$i]);
             }
 
             // finally    {
             if ($cloned !== null) {
-                $this->removeCommandline( $cloned );
+                $this->removeCommandline($cloned);
             }
-            $this->setCommand( $savedCommand );
+            $this->setCommand($savedCommand);
 
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             // finally {
             if ($cloned !== null) {
-                $this->removeCommandline( $cloned );
+                $this->removeCommandline($cloned);
             }
-            $this->setCommand( $savedCommand );
+            $this->setCommand($savedCommand);
             throw $e;
         }
     }
@@ -184,7 +184,7 @@ class CvsTask extends Task
      *
      * @param string $c
      */
-    public function setCommand( $c )
+    public function setCommand($c)
     {
 
         $this->command = $c;
@@ -198,17 +198,17 @@ class CvsTask extends Task
      *
      * @internal param If $insertAtStart true, c is
      */
-    public function addConfiguredCommandline( Commandline $c, $insertAtStart = false )
+    public function addConfiguredCommandline(Commandline $c, $insertAtStart = false)
     {
 
         if ($c === null) {
             return;
         }
-        $this->configureCommandline( $c );
+        $this->configureCommandline($c);
         if ($insertAtStart) {
-            array_unshift( $this->commandlines, $c );
+            array_unshift($this->commandlines, $c);
         } else {
-            array_push( $this->commandlines, $c );
+            array_push($this->commandlines, $c);
         }
     }
 
@@ -219,28 +219,28 @@ class CvsTask extends Task
      *
      * @return string
      */
-    protected function configureCommandline( $c )
+    protected function configureCommandline($c)
     {
 
         if ($c === null) {
             return;
         }
-        $c->setExecutable( "cvs" );
+        $c->setExecutable("cvs");
 
         if ($this->cvsModule !== null) {
-            $c->createArgument()->setLine( $this->cvsModule );
+            $c->createArgument()->setLine($this->cvsModule);
         }
         if ($this->compression > 0 && $this->compression < 10) {
-            $c->createArgument( true )->setValue( "-z".$this->compression );
+            $c->createArgument(true)->setValue("-z".$this->compression);
         }
         if ($this->quiet) {
-            $c->createArgument( true )->setValue( "-q" );
+            $c->createArgument(true)->setValue("-q");
         }
         if ($this->noexec) {
-            $c->createArgument( true )->setValue( "-n" );
+            $c->createArgument(true)->setValue("-n");
         }
         if ($this->cvsRoot !== null) {
-            $c->createArgument( true )->setLine( "-d".$this->cvsRoot );
+            $c->createArgument(true)->setLine("-d".$this->cvsRoot);
         }
     }
 
@@ -251,7 +251,7 @@ class CvsTask extends Task
      *
      * @throws BuildException
      */
-    protected function runCommand( Commandline $toExecute )
+    protected function runCommand(Commandline $toExecute)
     {
 
         // We are putting variables into the script's environment
@@ -259,25 +259,25 @@ class CvsTask extends Task
         // worth remembering and testing.
 
         if ($this->port > 0) {
-            putenv( "CVS_CLIENT_PORT=".$this->port );
+            putenv("CVS_CLIENT_PORT=".$this->port);
         }
 
         // Need a better cross platform integration with <cvspass>, so
         // use the same filename.
 
         if ($this->passFile === null) {
-            $defaultPassFile = new PhingFile( Phing::getProperty( "cygwin.user.home",
-                    Phing::getProperty( "user.home" ) )
-                .DIRECTORY_SEPARATOR.".cvspass" );
+            $defaultPassFile = new PhingFile(Phing::getProperty("cygwin.user.home",
+                    Phing::getProperty("user.home"))
+                .DIRECTORY_SEPARATOR.".cvspass");
             if ($defaultPassFile->exists()) {
-                $this->setPassfile( $defaultPassFile );
+                $this->setPassfile($defaultPassFile);
             }
         }
 
         if ($this->passFile !== null) {
             if ($this->passFile->isFile() && $this->passFile->canRead()) {
-                putenv( "CVS_PASSFILE=".$this->passFile->__toString() );
-                $this->log( "Using cvs passfile: ".$this->passFile->__toString(), Project::MSG_INFO );
+                putenv("CVS_PASSFILE=".$this->passFile->__toString());
+                $this->log("Using cvs passfile: ".$this->passFile->__toString(), Project::MSG_INFO);
             } elseif (!$this->passFile->canRead()) {
                 $this->log(
                     "cvs passfile: ".$this->passFile->__toString()
@@ -294,12 +294,12 @@ class CvsTask extends Task
         }
 
         if ($this->cvsRsh !== null) {
-            putenv( "CVS_RSH=".$this->cvsRsh );
+            putenv("CVS_RSH=".$this->cvsRsh);
         }
 
         // Use the ExecTask to handle execution of the command
-        $exe = new ExecTask( $this->project );
-        $exe->setProject( $this->project );
+        $exe = new ExecTask($this->project);
+        $exe->setProject($this->project);
 
         //exe.setAntRun(project);
         if ($this->dest === null) {
@@ -311,41 +311,41 @@ class CvsTask extends Task
         }
 
         if ($this->output !== null) {
-            $exe->setOutput( $this->output );
+            $exe->setOutput($this->output);
         }
 
         if ($this->error !== null) {
-            $exe->setError( $this->error );
+            $exe->setError($this->error);
         }
 
-        $exe->setDir( $this->dest );
+        $exe->setDir($this->dest);
 
-        if (is_object( $toExecute )) {
+        if (is_object($toExecute)) {
             $toExecuteStr = $toExecute->__toString(); // unfortunately no more automagic for initial 5.0.0 release :(
         }
 
-        $exe->setCommand( $toExecuteStr );
+        $exe->setCommand($toExecuteStr);
 
         try {
             $actualCommandLine = $toExecuteStr; // we converted to string above
-            $this->log( $actualCommandLine, Project::MSG_INFO );
+            $this->log($actualCommandLine, Project::MSG_INFO);
             $retCode = $exe->main();
-            $this->log( "retCode=".$retCode, Project::MSG_DEBUG );
+            $this->log("retCode=".$retCode, Project::MSG_DEBUG);
             /*Throw an exception if cvs exited with error. (Iulian)*/
             if ($this->failOnError && $retCode !== 0) {
-                throw new BuildException( "cvs exited with error code "
+                throw new BuildException("cvs exited with error code "
                     .$retCode
                     .PHP_EOL
                     ."Command line was ["
-                    .$toExecute->describeCommand()."]", $this->getLocation() );
+                    .$toExecute->describeCommand()."]", $this->getLocation());
             }
-        } catch( IOException $e ) {
+        } catch (IOException $e) {
             if ($this->failOnError) {
-                throw new BuildException( $e, $this->getLocation() );
+                throw new BuildException($e, $this->getLocation());
             } else {
-                $this->log( "Caught exception: ".$e, Project::MSG_WARN );
+                $this->log("Caught exception: ".$e, Project::MSG_WARN);
             }
-        } catch( BuildException $e ) {
+        } catch (BuildException $e) {
             if ($this->failOnError) {
                 throw $e;
             } else {
@@ -353,13 +353,13 @@ class CvsTask extends Task
                 if ($t === null) {
                     $t = $e;
                 }
-                $this->log( "Caught exception: ".$t, Project::MSG_WARN );
+                $this->log("Caught exception: ".$t, Project::MSG_WARN);
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             if ($this->failOnError) {
-                throw new BuildException( $e, $this->getLocation() );
+                throw new BuildException($e, $this->getLocation());
             } else {
-                $this->log( "Caught exception: ".$e, Project::MSG_WARN );
+                $this->log("Caught exception: ".$e, Project::MSG_WARN);
             }
         }
     }
@@ -369,14 +369,14 @@ class CvsTask extends Task
      *
      * @return bool
      */
-    protected function removeCommandline( Commandline $c )
+    protected function removeCommandline(Commandline $c)
     {
 
-        $idx = array_search( $c, $this->commandlines, true );
+        $idx = array_search($c, $this->commandlines, true);
         if ($idx === false) {
             return false;
         }
-        $this->commandlines = array_splice( $this->commandlines, $idx, 1 );
+        $this->commandlines = array_splice($this->commandlines, $idx, 1);
 
         return true;
     }
@@ -392,12 +392,12 @@ class CvsTask extends Task
      *
      * @param string $root
      */
-    public function setCvsRoot( $root )
+    public function setCvsRoot($root)
     {
 
         // Check if not real cvsroot => set it to null
         if ($root !== null) {
-            if (trim( $root ) == "") {
+            if (trim($root) == "") {
                 $root = null;
             }
         }
@@ -416,12 +416,12 @@ class CvsTask extends Task
      *
      * @param rsh
      */
-    public function setCvsRsh( $rsh )
+    public function setCvsRsh($rsh)
     {
 
         // Check if not real cvsrsh => set it to null
         if ($rsh !== null) {
-            if (trim( $rsh ) == "") {
+            if (trim($rsh) == "") {
                 $rsh = null;
             }
         }
@@ -443,7 +443,7 @@ class CvsTask extends Task
      *
      * @param int $port
      */
-    public function setPort( $port )
+    public function setPort($port)
     {
 
         $this->port = $port;
@@ -465,7 +465,7 @@ class CvsTask extends Task
      *
      * @internal param $passFile
      */
-    public function setPassfile( PhingFile $passFile )
+    public function setPassfile(PhingFile $passFile)
     {
 
         $this->passFile = $passFile;
@@ -485,7 +485,7 @@ class CvsTask extends Task
      *
      * @param PhingFile $dest
      */
-    public function setDest( PhingFile $dest )
+    public function setDest(PhingFile $dest)
     {
 
         $this->dest = $dest;
@@ -498,7 +498,7 @@ class CvsTask extends Task
      *
      * @internal param string $p
      */
-    public function setModule( $m )
+    public function setModule($m)
     {
 
         $this->cvsModule = $m;
@@ -515,13 +515,13 @@ class CvsTask extends Task
      *
      * @param string $p
      */
-    public function setTag( $p )
+    public function setTag($p)
     {
 
         // Check if not real tag => set it to null
-        if ($p !== null && trim( $p ) !== "") {
-            $this->appendCommandArgument( "-r" );
-            $this->appendCommandArgument( $p );
+        if ($p !== null && trim($p) !== "") {
+            $this->appendCommandArgument("-r");
+            $this->appendCommandArgument($p);
         }
     }
 
@@ -531,10 +531,10 @@ class CvsTask extends Task
      *
      * @param $arg
      */
-    public function appendCommandArgument( $arg )
+    public function appendCommandArgument($arg)
     {
 
-        $this->cmd->createArgument()->setValue( $arg );
+        $this->cmd->createArgument()->setValue($arg);
     }
 
     /**
@@ -542,12 +542,12 @@ class CvsTask extends Task
      *
      * @param p
      */
-    public function setDate( $p )
+    public function setDate($p)
     {
 
-        if ($p !== null && trim( $p ) !== "") {
-            $this->appendCommandArgument( "-D" );
-            $this->appendCommandArgument( $p );
+        if ($p !== null && trim($p) !== "") {
+            $this->appendCommandArgument("-D");
+            $this->appendCommandArgument($p);
         }
     }
 
@@ -556,7 +556,7 @@ class CvsTask extends Task
      *
      * @param boolean $q
      */
-    public function setQuiet( $q )
+    public function setQuiet($q)
     {
 
         $this->quiet = $q;
@@ -567,7 +567,7 @@ class CvsTask extends Task
      *
      * @param boolean $ne
      */
-    public function setNoexec( $ne )
+    public function setNoexec($ne)
     {
 
         $this->noexec = (boolean)$ne;
@@ -580,7 +580,7 @@ class CvsTask extends Task
      *
      * @param boolean $failOnError
      */
-    public function setFailOnError( $failOnError )
+    public function setFailOnError($failOnError)
     {
 
         $this->failOnError = (boolean)$failOnError;
@@ -592,7 +592,7 @@ class CvsTask extends Task
      * @param boolean $usecomp If true, turns on compression using default
      *                         level, AbstractCvsTask.DEFAULT_COMPRESSION_LEVEL.
      */
-    public function setCompression( $usecomp )
+    public function setCompression($usecomp)
     {
 
         $this->setCompressionLevel(
@@ -607,7 +607,7 @@ class CvsTask extends Task
      *
      * @param int $level
      */
-    public function setCompressionLevel( $level )
+    public function setCompressionLevel($level)
     {
 
         $this->compression = $level;
@@ -620,7 +620,7 @@ class CvsTask extends Task
      *
      * @internal param PhingFile $output
      */
-    public function setOutput( PhingFile $f )
+    public function setOutput(PhingFile $f)
     {
 
         $this->output = $f;
@@ -633,7 +633,7 @@ class CvsTask extends Task
      *
      * @internal param PhingFile $output
      */
-    public function setError( PhingFile $f )
+    public function setError(PhingFile $f)
     {
 
         $this->error = $f;

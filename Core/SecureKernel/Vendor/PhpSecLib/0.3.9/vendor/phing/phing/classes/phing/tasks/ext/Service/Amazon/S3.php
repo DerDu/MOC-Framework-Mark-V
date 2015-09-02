@@ -20,7 +20,7 @@
  * <http://phing.info>.
  */
 
-require_once dirname( dirname( __FILE__ ) )."/Amazon.php";
+require_once dirname(dirname(__FILE__))."/Amazon.php";
 
 /**
  * Abstract Service_Amazon_S3 class.
@@ -49,11 +49,11 @@ abstract class Service_Amazon_S3 extends Service_Amazon
      *
      * @throws BuildException
      */
-    public function setBucket( $bucket )
+    public function setBucket($bucket)
     {
 
-        if (empty( $bucket ) || !is_string( $bucket )) {
-            throw new BuildException( 'Bucket must be a non-empty string' );
+        if (empty( $bucket ) || !is_string($bucket)) {
+            throw new BuildException('Bucket must be a non-empty string');
         }
 
         $this->bucket = (string)$bucket;
@@ -67,19 +67,19 @@ abstract class Service_Amazon_S3 extends Service_Amazon
      * @throws BuildException
      * @return mixed
      */
-    public function getObjectContents( $object )
+    public function getObjectContents($object)
     {
 
-        if (!$this->isBucketAvailable( $this->getBucket() )) {
-            throw new BuildException( 'Bucket doesn\'t exist or wrong permissions' );
+        if (!$this->isBucketAvailable($this->getBucket())) {
+            throw new BuildException('Bucket doesn\'t exist or wrong permissions');
         }
 
-        $bucket = $this->getClient()->getBucket( $this->getBucket() );
-        if (!$this->isObjectAvailable( $object )) {
-            throw new BuildException( 'Object not available: '.$object );
+        $bucket = $this->getClient()->getBucket($this->getBucket());
+        if (!$this->isObjectAvailable($object)) {
+            throw new BuildException('Object not available: '.$object);
         }
 
-        $object = $this->getObjectInstance( $object );
+        $object = $this->getObjectInstance($object);
         $object->load();
 
         return $object->data;
@@ -93,7 +93,7 @@ abstract class Service_Amazon_S3 extends Service_Amazon
     public function isBucketAvailable()
     {
 
-        return (bool)$this->getBucketInstance( $this->getBucket() )->load();
+        return (bool)$this->getBucketInstance($this->getBucket())->load();
     }
 
     /**
@@ -104,7 +104,7 @@ abstract class Service_Amazon_S3 extends Service_Amazon
     public function getBucketInstance()
     {
 
-        return $this->getClient()->getBucket( $this->getBucket() );
+        return $this->getClient()->getBucket($this->getBucket());
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class Service_Amazon_S3 extends Service_Amazon
         require_once "Services/Amazon/S3.php";
 
         if ($this->_client === null) {
-            $this->_client = Services_Amazon_S3::getAccount( $this->getKey(), $this->getSecret() );
+            $this->_client = Services_Amazon_S3::getAccount($this->getKey(), $this->getSecret());
         }
 
         return $this->_client;
@@ -131,7 +131,7 @@ abstract class Service_Amazon_S3 extends Service_Amazon
     {
 
         if (!( $bucket = $this->bucket )) {
-            throw new BuildException( 'Bucket is not set' );
+            throw new BuildException('Bucket is not set');
         }
 
         return $this->bucket;
@@ -144,10 +144,10 @@ abstract class Service_Amazon_S3 extends Service_Amazon
      *
      * @return bool
      */
-    public function isObjectAvailable( $object )
+    public function isObjectAvailable($object)
     {
 
-        return (bool)$this->getObjectInstance( $object )->load( Services_Amazon_S3_Resource_Object::LOAD_METADATA_ONLY );
+        return (bool)$this->getObjectInstance($object)->load(Services_Amazon_S3_Resource_Object::LOAD_METADATA_ONLY);
     }
 
     /**
@@ -157,10 +157,10 @@ abstract class Service_Amazon_S3 extends Service_Amazon
      *
      * @return Services_Amazon_S3_Resource_Object
      */
-    public function getObjectInstance( $object )
+    public function getObjectInstance($object)
     {
 
-        return $this->getBucketInstance()->getObject( $object );
+        return $this->getBucketInstance()->getObject($object);
     }
 
     /**

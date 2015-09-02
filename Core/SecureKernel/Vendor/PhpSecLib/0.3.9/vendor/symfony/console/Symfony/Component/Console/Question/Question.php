@@ -34,7 +34,7 @@ class Question
      * @param string $question The question to ask to the user
      * @param mixed  $default  The default answer to return if the user enters nothing
      */
-    public function __construct( $question, $default = null )
+    public function __construct($question, $default = null)
     {
 
         $this->question = $question;
@@ -83,11 +83,11 @@ class Question
      *
      * @throws \LogicException In case the autocompleter is also used
      */
-    public function setHidden( $hidden )
+    public function setHidden($hidden)
     {
 
         if ($this->autocompleterValues) {
-            throw new \LogicException( 'A hidden question cannot use the autocompleter.' );
+            throw new \LogicException('A hidden question cannot use the autocompleter.');
         }
 
         $this->hidden = (bool)$hidden;
@@ -113,7 +113,7 @@ class Question
      *
      * @return Question The current instance
      */
-    public function setHiddenFallback( $fallback )
+    public function setHiddenFallback($fallback)
     {
 
         $this->hiddenFallback = (bool)$fallback;
@@ -142,17 +142,17 @@ class Question
      * @throws \InvalidArgumentException
      * @throws \LogicException
      */
-    public function setAutocompleterValues( $values )
+    public function setAutocompleterValues($values)
     {
 
-        if (null !== $values && !is_array( $values )) {
+        if (null !== $values && !is_array($values)) {
             if (!$values instanceof \Traversable || $values instanceof \Countable) {
-                throw new \InvalidArgumentException( 'Autocompleter values can be either an array, `null` or an object implementing both `Countable` and `Traversable` interfaces.' );
+                throw new \InvalidArgumentException('Autocompleter values can be either an array, `null` or an object implementing both `Countable` and `Traversable` interfaces.');
             }
         }
 
         if ($this->hidden) {
-            throw new \LogicException( 'A hidden question cannot use the autocompleter.' );
+            throw new \LogicException('A hidden question cannot use the autocompleter.');
         }
 
         $this->autocompleterValues = $values;
@@ -178,7 +178,7 @@ class Question
      *
      * @return Question The current instance
      */
-    public function setValidator( $validator )
+    public function setValidator($validator)
     {
 
         $this->validator = $validator;
@@ -197,11 +197,11 @@ class Question
      *
      * @throws \InvalidArgumentException In case the number of attempts is invalid.
      */
-    public function setMaxAttempts( $attempts )
+    public function setMaxAttempts($attempts)
     {
 
         if (null !== $attempts && $attempts < 1) {
-            throw new \InvalidArgumentException( 'Maximum number of attempts must be a positive value.' );
+            throw new \InvalidArgumentException('Maximum number of attempts must be a positive value.');
         }
 
         $this->attempts = $attempts;
@@ -244,7 +244,7 @@ class Question
      *
      * @return Question The current instance
      */
-    public function setNormalizer( $normalizer )
+    public function setNormalizer($normalizer)
     {
 
         $this->normalizer = $normalizer;

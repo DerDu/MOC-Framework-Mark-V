@@ -137,11 +137,11 @@ CODE;
 </AST>
 XML;
 
-        $parser = new PHPParser_Parser( new PHPParser_Lexer );
+        $parser = new PHPParser_Parser(new PHPParser_Lexer);
         $serializer = new PHPParser_Serializer_XML;
 
-        $stmts = $parser->parse( $code );
-        $this->assertXmlStringEqualsXmlString( $xml, $serializer->serialize( $stmts ) );
+        $stmts = $parser->parse($code);
+        $this->assertXmlStringEqualsXmlString($xml, $serializer->serialize($stmts));
     }
 
     /**
@@ -152,6 +152,6 @@ XML;
     {
 
         $serializer = new PHPParser_Serializer_XML;
-        $serializer->serialize( array( new stdClass ) );
+        $serializer->serialize(array(new stdClass));
     }
 }

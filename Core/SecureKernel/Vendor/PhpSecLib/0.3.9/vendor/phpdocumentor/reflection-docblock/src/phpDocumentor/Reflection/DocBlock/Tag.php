@@ -108,10 +108,10 @@ class Tag implements \Reflector
     ) {
 
         $this
-            ->setName( $name )
-            ->setContent( $content )
-            ->setDocBlock( $docblock )
-            ->setLocation( $location );
+            ->setName($name)
+            ->setContent($content)
+            ->setDocBlock($docblock)
+            ->setLocation($location);
     }
 
     /**
@@ -122,10 +122,10 @@ class Tag implements \Reflector
      * @return $this
      * @throws \InvalidArgumentException When an invalid tag name is provided.
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
-        if (!preg_match( '/^'.self::REGEX_TAGNAME.'$/u', $name )) {
+        if (!preg_match('/^'.self::REGEX_TAGNAME.'$/u', $name)) {
             throw new \InvalidArgumentException(
                 'Invalid tag name supplied: '.$name
             );
@@ -169,7 +169,7 @@ class Tag implements \Reflector
             $handler = self::$tagHandlerMappings[$matches[1]];
         } elseif (isset( $docblock )) {
             $tagName = (string)new Type\Collection(
-                array( $matches[1] ),
+                array($matches[1]),
                 $docblock->getContext()
             );
 
@@ -200,10 +200,10 @@ class Tag implements \Reflector
      *
      * @return bool TRUE on success, FALSE on failure.
      */
-    final public static function registerTagHandler( $tag, $handler )
+    final public static function registerTagHandler($tag, $handler)
     {
 
-        $tag = trim( (string)$tag );
+        $tag = trim((string)$tag);
 
         if (null === $handler) {
             unset( self::$tagHandlerMappings[$tag] );
@@ -211,9 +211,9 @@ class Tag implements \Reflector
         }
 
         if ('' !== $tag
-            && class_exists( $handler, true )
-            && is_subclass_of( $handler, __CLASS__ )
-            && !strpos( $tag, '\\' ) //Accept no slash, and 1st slash at offset 0.
+            && class_exists($handler, true)
+            && is_subclass_of($handler, __CLASS__)
+            && !strpos($tag, '\\') //Accept no slash, and 1st slash at offset 0.
         ) {
             self::$tagHandlerMappings[$tag] = $handler;
             return true;
@@ -233,7 +233,7 @@ class Tag implements \Reflector
     public static function export()
     {
 
-        throw new \Exception( 'Not yet implemented' );
+        throw new \Exception('Not yet implemented');
     }
 
     /**
@@ -254,12 +254,12 @@ class Tag implements \Reflector
      *
      * @return $this
      */
-    public function setDescription( $description )
+    public function setDescription($description)
     {
 
         $this->content = null;
         $this->parsedDescription = null;
-        $this->description = trim( $description );
+        $this->description = trim($description);
 
         return $this;
     }
@@ -274,7 +274,7 @@ class Tag implements \Reflector
     {
 
         if (null === $this->parsedDescription) {
-            $description = new Description( $this->description, $this->docblock );
+            $description = new Description($this->description, $this->docblock);
             $this->parsedDescription = $description->getParsedContents();
         }
         return $this->parsedDescription;
@@ -299,7 +299,7 @@ class Tag implements \Reflector
      *
      * @return $this
      */
-    public function setDocBlock( DocBlock $docblock = null )
+    public function setDocBlock(DocBlock $docblock = null)
     {
 
         $this->docblock = $docblock;
@@ -325,7 +325,7 @@ class Tag implements \Reflector
      *
      * @return $this
      */
-    public function setLocation( Location $location = null )
+    public function setLocation(Location $location = null)
     {
 
         $this->location = $location;
@@ -377,10 +377,10 @@ class Tag implements \Reflector
      *
      * @return $this
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        $this->setDescription( $content );
+        $this->setDescription($content);
         $this->content = $content;
 
         return $this;

@@ -27,10 +27,10 @@ class Framework_BaseTestListenerTest extends PHPUnit_Framework_TestCase
 
         $this->result = new PHPUnit_Framework_TestResult;
         $listener = new BaseTestListenerSample();
-        $this->result->addListener( $listener );
+        $this->result->addListener($listener);
         $test = new Success;
-        $test->run( $this->result );
+        $test->run($this->result);
 
-        $this->assertEquals( 1, $listener->endCount );
+        $this->assertEquals(1, $listener->endCount);
     }
 }

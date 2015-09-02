@@ -40,15 +40,15 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnitTask $parentTask
      */
-    public function __construct( PHPUnitTask $parentTask )
+    public function __construct(PHPUnitTask $parentTask)
     {
 
-        parent::__construct( $parentTask );
+        parent::__construct($parentTask);
 
         $logIncompleteSkipped = $parentTask->getHaltonincomplete() || $parentTask->getHaltonskipped();
 
-        $this->logger = new PHPUnit_Util_Log_JUnit( null, $logIncompleteSkipped );
-        $this->logger->setWriteDocument( false );
+        $this->logger = new PHPUnit_Util_Log_JUnit(null, $logIncompleteSkipped);
+        $this->logger->setWriteDocument(false);
     }
 
     /**
@@ -72,46 +72,46 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    public function startTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
 
-        parent::startTestSuite( $suite );
+        parent::startTestSuite($suite);
 
-        $this->logger->startTestSuite( $suite );
+        $this->logger->startTestSuite($suite);
     }
 
     /**
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    public function endTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
 
-        parent::endTestSuite( $suite );
+        parent::endTestSuite($suite);
 
-        $this->logger->endTestSuite( $suite );
+        $this->logger->endTestSuite($suite);
     }
 
     /**
      * @param PHPUnit_Framework_Test $test
      */
-    public function startTest( PHPUnit_Framework_Test $test )
+    public function startTest(PHPUnit_Framework_Test $test)
     {
 
-        parent::startTest( $test );
+        parent::startTest($test);
 
-        $this->logger->startTest( $test );
+        $this->logger->startTest($test);
     }
 
     /**
      * @param PHPUnit_Framework_Test $test
      * @param float                  $time
      */
-    public function endTest( PHPUnit_Framework_Test $test, $time )
+    public function endTest(PHPUnit_Framework_Test $test, $time)
     {
 
-        parent::endTest( $test, $time );
+        parent::endTest($test, $time);
 
-        $this->logger->endTest( $test, $time );
+        $this->logger->endTest($test, $time);
     }
 
     /**
@@ -119,12 +119,12 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param Exception              $e
      * @param float                  $time
      */
-    public function addError( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
-        parent::addError( $test, $e, $time );
+        parent::addError($test, $e, $time);
 
-        $this->logger->addError( $test, $e, $time );
+        $this->logger->addError($test, $e, $time);
     }
 
     /**
@@ -132,12 +132,12 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param PHPUnit_Framework_AssertionFailedError $e
      * @param float                                  $time
      */
-    public function addFailure( PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time )
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
 
-        parent::addFailure( $test, $e, $time );
+        parent::addFailure($test, $e, $time);
 
-        $this->logger->addFailure( $test, $e, $time );
+        $this->logger->addFailure($test, $e, $time);
     }
 
     /**
@@ -145,12 +145,12 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param Exception              $e
      * @param float                  $time
      */
-    public function addIncompleteTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
-        parent::addIncompleteTest( $test, $e, $time );
+        parent::addIncompleteTest($test, $e, $time);
 
-        $this->logger->addIncompleteTest( $test, $e, $time );
+        $this->logger->addIncompleteTest($test, $e, $time);
     }
 
     public function endTestRun()
@@ -159,7 +159,7 @@ class XMLPHPUnitResultFormatter extends PHPUnitResultFormatter
         parent::endTestRun();
 
         if ($this->out) {
-            $this->out->write( $this->logger->getXML() );
+            $this->out->write($this->logger->getXML());
             $this->out->close();
         }
     }

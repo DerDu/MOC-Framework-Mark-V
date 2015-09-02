@@ -22,10 +22,10 @@
 class Twig_Node_SandboxedPrint extends Twig_Node_Print
 {
 
-    public function __construct( Twig_Node_Expression $expr, $lineno, $tag = null )
+    public function __construct(Twig_Node_Expression $expr, $lineno, $tag = null)
     {
 
-        parent::__construct( $expr, $lineno, $tag );
+        parent::__construct($expr, $lineno, $tag);
     }
 
     /**
@@ -33,14 +33,14 @@ class Twig_Node_SandboxedPrint extends Twig_Node_Print
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->addDebugInfo( $this )
-            ->write( 'echo $this->env->getExtension(\'sandbox\')->ensureToStringAllowed(' )
-            ->subcompile( $this->getNode( 'expr' ) )
-            ->raw( ");\n" );
+            ->addDebugInfo($this)
+            ->write('echo $this->env->getExtension(\'sandbox\')->ensureToStringAllowed(')
+            ->subcompile($this->getNode('expr'))
+            ->raw(");\n");
     }
 
     /**
@@ -52,11 +52,11 @@ class Twig_Node_SandboxedPrint extends Twig_Node_Print
      *
      * @return Twig_Node
      */
-    protected function removeNodeFilter( $node )
+    protected function removeNodeFilter($node)
     {
 
         if ($node instanceof Twig_Node_Expression_Filter) {
-            return $this->removeNodeFilter( $node->getNode( 'node' ) );
+            return $this->removeNodeFilter($node->getNode('node'));
         }
 
         return $node;

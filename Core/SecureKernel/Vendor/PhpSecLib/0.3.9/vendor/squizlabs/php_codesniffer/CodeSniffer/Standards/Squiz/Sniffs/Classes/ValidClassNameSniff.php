@@ -56,15 +56,15 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if (isset( $tokens[$stackPtr]['scope_opener'] ) === false) {
             $error = 'Possible parse error: %s missing opening or closing brace';
-            $data = array( $tokens[$stackPtr]['content'] );
-            $phpcsFile->addWarning( $error, $stackPtr, 'MissingBrace', $data );
+            $data = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
             return;
         }
 
@@ -72,25 +72,24 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         // simply look for the first T_STRING because a class name
         // starting with the number will be multiple tokens.
         $opener = $tokens[$stackPtr]['scope_opener'];
-        $nameStart = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), $opener, true );
-        $nameEnd = $phpcsFile->findNext( T_WHITESPACE, $nameStart, $opener );
-        $name = trim( $phpcsFile->getTokensAsString( $nameStart, ( $nameEnd - $nameStart ) ) );
+        $nameStart = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), $opener, true);
+        $nameEnd = $phpcsFile->findNext(T_WHITESPACE, $nameStart, $opener);
+        $name = trim($phpcsFile->getTokensAsString($nameStart, ( $nameEnd - $nameStart )));
 
         // Check for camel caps format.
-        $valid = PHP_CodeSniffer::isCamelCaps( $name, true, true, false );
+        $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false);
         if ($valid === false) {
-            $type = ucfirst( $tokens[$stackPtr]['content'] );
+            $type = ucfirst($tokens[$stackPtr]['content']);
             $error = '%s name "%s" is not in camel caps format';
             $data = array(
                 $type,
                 $name,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'NotCamelCaps', $data );
+            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 
     }//end process()
 
 }//end class
-
 
 ?>

@@ -39,7 +39,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
     public function register()
     {
 
-        return array( T_STRING );
+        return array(T_STRING);
 
     }//end register()
 
@@ -53,7 +53,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -66,14 +66,14 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
         $functionName = $stackPtr;
         $ignoreTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
         $ignoreTokens[] = T_BITWISE_AND;
-        $functionKeyword = $phpcsFile->findPrevious( $ignoreTokens, ( $stackPtr - 1 ), null, true );
+        $functionKeyword = $phpcsFile->findPrevious($ignoreTokens, ( $stackPtr - 1 ), null, true);
         if ($tokens[$functionKeyword]['code'] === T_FUNCTION || $tokens[$functionKeyword]['code'] === T_CLASS) {
             return;
         }
 
         // If the next non-whitespace token after the function or method call
         // is not an opening parenthesis then it cant really be a *call*.
-        $openBracket = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $functionName + 1 ), null, true );
+        $openBracket = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $functionName + 1 ), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             return;
         }
@@ -92,7 +92,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
             T_OPEN_SHORT_ARRAY,
         );
 
-        while (( $nextSeparator = $phpcsFile->findNext( $find, ( $nextSeparator + 1 ), $closeBracket ) ) !== false) {
+        while (( $nextSeparator = $phpcsFile->findNext($find, ( $nextSeparator + 1 ), $closeBracket) ) !== false) {
             if ($tokens[$nextSeparator]['code'] === T_CLOSURE) {
                 // Skip closures.
                 $nextSeparator = $tokens[$nextSeparator]['scope_closer'];
@@ -108,50 +108,50 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
             // Make sure the comma or variable belongs directly to this function call,
             // and is not inside a nested function call or array.
             $brackets = $tokens[$nextSeparator]['nested_parenthesis'];
-            $lastBracket = array_pop( $brackets );
+            $lastBracket = array_pop($brackets);
             if ($lastBracket !== $closeBracket) {
                 continue;
             }
 
             if ($tokens[$nextSeparator]['code'] === T_COMMA) {
                 if ($tokens[( $nextSeparator - 1 )]['code'] === T_WHITESPACE) {
-                    if (in_array( $tokens[( $nextSeparator - 2 )]['code'],
-                            PHP_CodeSniffer_Tokens::$heredocTokens ) === false
+                    if (in_array($tokens[( $nextSeparator - 2 )]['code'],
+                            PHP_CodeSniffer_Tokens::$heredocTokens) === false
                     ) {
                         $error = 'Space found before comma in function call';
-                        $phpcsFile->addError( $error, $nextSeparator, 'SpaceBeforeComma' );
+                        $phpcsFile->addError($error, $nextSeparator, 'SpaceBeforeComma');
                     }
                 }
 
                 if ($tokens[( $nextSeparator + 1 )]['code'] !== T_WHITESPACE) {
                     $error = 'No space found after comma in function call';
-                    $phpcsFile->addError( $error, $nextSeparator, 'NoSpaceAfterComma' );
+                    $phpcsFile->addError($error, $nextSeparator, 'NoSpaceAfterComma');
                 } else {
                     // If there is a newline in the space, then the must be formatting
                     // each argument on a newline, which is valid, so ignore it.
-                    if (strpos( $tokens[( $nextSeparator + 1 )]['content'], $phpcsFile->eolChar ) === false) {
-                        $space = strlen( $tokens[( $nextSeparator + 1 )]['content'] );
+                    if (strpos($tokens[( $nextSeparator + 1 )]['content'], $phpcsFile->eolChar) === false) {
+                        $space = strlen($tokens[( $nextSeparator + 1 )]['content']);
                         if ($space > 1) {
                             $error = 'Expected 1 space after comma in function call; %s found';
-                            $data = array( $space );
-                            $phpcsFile->addError( $error, $nextSeparator, 'TooMuchSpaceAfterComma', $data );
+                            $data = array($space);
+                            $phpcsFile->addError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
                         }
                     }
                 }
             } else {
                 // Token is a variable.
-                $nextToken = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $nextSeparator + 1 ),
-                    $closeBracket, true );
+                $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $nextSeparator + 1 ),
+                    $closeBracket, true);
                 if ($nextToken !== false) {
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
                         if (( $tokens[( $nextToken - 1 )]['code'] ) !== T_WHITESPACE) {
                             $error = 'Expected 1 space before = sign of default value';
-                            $phpcsFile->addError( $error, $nextToken, 'NoSpaceBeforeEquals' );
+                            $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeEquals');
                         }
 
                         if ($tokens[( $nextToken + 1 )]['code'] !== T_WHITESPACE) {
                             $error = 'Expected 1 space after = sign of default value';
-                            $phpcsFile->addError( $error, $nextToken, 'NoSpaceAfterEquals' );
+                            $phpcsFile->addError($error, $nextToken, 'NoSpaceAfterEquals');
                         }
                     }
                 }

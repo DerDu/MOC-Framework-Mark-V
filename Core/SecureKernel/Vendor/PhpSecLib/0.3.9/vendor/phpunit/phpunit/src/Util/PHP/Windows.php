@@ -31,7 +31,7 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
      *
      * @see https://bugs.php.net/bug.php?id=51800
      */
-    public function runJob( $job, array $settings = array() )
+    public function runJob($job, array $settings = array())
     {
 
         $runtime = new Runtime;
@@ -43,36 +43,36 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
         }
 
         $process = proc_open(
-            $runtime->getBinary().$this->settingsToParameters( $settings ),
+            $runtime->getBinary().$this->settingsToParameters($settings),
             array(
-                0 => array( 'pipe', 'r' ),
+                0 => array('pipe', 'r'),
                 1 => $stdout_handle,
-                2 => array( 'pipe', 'w' )
+                2 => array('pipe', 'w')
             ),
             $pipes
         );
 
-        if (!is_resource( $process )) {
+        if (!is_resource($process)) {
             throw new PHPUnit_Framework_Exception(
                 'Unable to spawn worker process'
             );
         }
 
-        $this->process( $pipes[0], $job );
-        fclose( $pipes[0] );
+        $this->process($pipes[0], $job);
+        fclose($pipes[0]);
 
-        $stderr = stream_get_contents( $pipes[2] );
-        fclose( $pipes[2] );
+        $stderr = stream_get_contents($pipes[2]);
+        fclose($pipes[2]);
 
-        proc_close( $process );
+        proc_close($process);
 
-        rewind( $stdout_handle );
-        $stdout = stream_get_contents( $stdout_handle );
-        fclose( $stdout_handle );
+        rewind($stdout_handle);
+        $stdout = stream_get_contents($stdout_handle);
+        fclose($stdout_handle);
 
         $this->cleanup();
 
-        return array( 'stdout' => $stdout, 'stderr' => $stderr );
+        return array('stdout' => $stdout, 'stderr' => $stderr);
     }
 
     /**
@@ -82,11 +82,11 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.5.12
      */
-    protected function process( $pipe, $job )
+    protected function process($pipe, $job)
     {
 
-        if (!( $this->tempFile = tempnam( sys_get_temp_dir(), 'PHPUnit' ) ) ||
-            file_put_contents( $this->tempFile, $job ) === false
+        if (!( $this->tempFile = tempnam(sys_get_temp_dir(), 'PHPUnit') ) ||
+            file_put_contents($this->tempFile, $job) === false
         ) {
             throw new PHPUnit_Framework_Exception(
                 'Unable to write temporary file'
@@ -95,7 +95,7 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
 
         fwrite(
             $pipe,
-            '<?php require_once '.var_export( $this->tempFile, true ).'; ?>'
+            '<?php require_once '.var_export($this->tempFile, true).'; ?>'
         );
     }
 
@@ -105,6 +105,6 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
     protected function cleanup()
     {
 
-        unlink( $this->tempFile );
+        unlink($this->tempFile);
     }
 }

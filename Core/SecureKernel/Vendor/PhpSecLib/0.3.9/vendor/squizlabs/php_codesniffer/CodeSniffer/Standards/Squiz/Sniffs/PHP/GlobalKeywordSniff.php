@@ -39,7 +39,7 @@ class Squiz_Sniffs_PHP_GlobalKeywordSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_GLOBAL );
+        return array(T_GLOBAL);
 
     }//end register()
 
@@ -53,16 +53,16 @@ class Squiz_Sniffs_PHP_GlobalKeywordSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $nextVar = $tokens[$phpcsFile->findNext( array( T_VARIABLE ), $stackPtr )];
-        $varName = str_replace( '$', '', $nextVar['content'] );
+        $nextVar = $tokens[$phpcsFile->findNext(array(T_VARIABLE), $stackPtr)];
+        $varName = str_replace('$', '', $nextVar['content']);
         $error = 'Use of the "global" keyword is forbidden; use "$GLOBALS[\'%s\']" instead';
-        $data = array( $varName );
-        $phpcsFile->addError( $error, $stackPtr, 'NotAllowed', $data );
+        $data = array($varName);
+        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
 
     }//end process()
 

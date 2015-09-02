@@ -44,12 +44,12 @@ abstract class AbstractHandler
      * @param   object  the parser object
      * @param   object  the parent handler of this handler
      */
-    protected function __construct( $parser, $parentHandler )
+    protected function __construct($parser, $parentHandler)
     {
 
         $this->parentHandler = $parentHandler;
         $this->parser = $parser;
-        $this->parser->setHandler( $this );
+        $this->parser->setHandler($this);
     }
 
     /**
@@ -65,10 +65,10 @@ abstract class AbstractHandler
      * @internal param the $string name of the XML element
      * @internal param the $array attributes of the XML element
      */
-    public function startElement( $name, $attribs )
+    public function startElement($name, $attribs)
     {
 
-        throw new ExpatParseException( "Unexpected element $name" );
+        throw new ExpatParseException("Unexpected element $name");
     }
 
     /**
@@ -79,11 +79,11 @@ abstract class AbstractHandler
      *
      * @param  string  the name of the XML element
      */
-    public function endElement( $name )
+    public function endElement($name)
     {
 
         $this->finished();
-        $this->parser->setHandler( $this->parentHandler );
+        $this->parser->setHandler($this->parentHandler);
     }
 
     /**
@@ -103,12 +103,12 @@ abstract class AbstractHandler
      * @exception ExpatParserException if there is no CDATA but method
      *            was called
      */
-    public function characters( $data )
+    public function characters($data)
     {
 
-        $s = trim( $data );
-        if (strlen( $s ) > 0) {
-            throw new ExpatParseException( "Unexpected text '$s'", $this->parser->getLocation() );
+        $s = trim($data);
+        if (strlen($s) > 0) {
+            throw new ExpatParseException("Unexpected text '$s'", $this->parser->getLocation());
         }
     }
 }

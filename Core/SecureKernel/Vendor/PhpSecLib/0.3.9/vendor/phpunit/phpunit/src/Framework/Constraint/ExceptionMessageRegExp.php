@@ -22,7 +22,7 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
     /**
      * @param string $expected
      */
-    public function __construct( $expected )
+    public function __construct($expected)
     {
 
         parent::__construct();
@@ -46,10 +46,10 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $match = PHPUnit_Util_Regex::pregMatchSafe( $this->expectedMessageRegExp, $other->getMessage() );
+        $match = PHPUnit_Util_Regex::pregMatchSafe($this->expectedMessageRegExp, $other->getMessage());
 
         if (false === $match) {
             throw new PHPUnit_Framework_Exception(
@@ -70,7 +70,7 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return sprintf(

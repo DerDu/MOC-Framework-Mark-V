@@ -21,12 +21,12 @@ class Twig_Test_Method extends Twig_Test
     protected $extension;
     protected $method;
 
-    public function __construct( Twig_ExtensionInterface $extension, $method, array $options = array() )
+    public function __construct(Twig_ExtensionInterface $extension, $method, array $options = array())
     {
 
-        $options['callable'] = array( $extension, $method );
+        $options['callable'] = array($extension, $method);
 
-        parent::__construct( $options );
+        parent::__construct($options);
 
         $this->extension = $extension;
         $this->method = $method;
@@ -35,6 +35,6 @@ class Twig_Test_Method extends Twig_Test
     public function compile()
     {
 
-        return sprintf( '$this->env->getExtension(\'%s\')->%s', $this->extension->getName(), $this->method );
+        return sprintf('$this->env->getExtension(\'%s\')->%s', $this->extension->getName(), $this->method);
     }
 }

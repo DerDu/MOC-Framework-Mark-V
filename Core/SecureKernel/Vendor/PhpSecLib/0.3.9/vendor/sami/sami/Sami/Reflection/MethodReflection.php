@@ -23,10 +23,10 @@ class MethodReflection extends Reflection
     protected $exceptions = array();
     protected $errors = array();
 
-    static public function fromArray( Project $project, $array )
+    static public function fromArray(Project $project, $array)
     {
 
-        $method = new self( $array['name'], $array['line'] );
+        $method = new self($array['name'], $array['line']);
         $method->shortDesc = $array['short_desc'];
         $method->longDesc = $array['long_desc'];
         $method->hint = $array['hint'];
@@ -38,18 +38,18 @@ class MethodReflection extends Reflection
         $method->errors = $array['errors'];
 
         foreach ($array['parameters'] as $parameter) {
-            $parameter = ParameterReflection::fromArray( $project, $parameter );
-            $method->addParameter( $parameter );
+            $parameter = ParameterReflection::fromArray($project, $parameter);
+            $method->addParameter($parameter);
         }
 
         return $method;
     }
 
-    public function addParameter( ParameterReflection $parameter )
+    public function addParameter(ParameterReflection $parameter)
     {
 
         $this->parameters[$parameter->getName()] = $parameter;
-        $parameter->setMethod( $this );
+        $parameter->setMethod($this);
     }
 
     public function __toString()
@@ -58,7 +58,7 @@ class MethodReflection extends Reflection
         return $this->class.'::'.$this->name;
     }
 
-    public function setByRef( $boolean )
+    public function setByRef($boolean)
     {
 
         $this->byRef = $boolean;
@@ -70,7 +70,7 @@ class MethodReflection extends Reflection
         return $this->byRef;
     }
 
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
         $this->modifiers = $modifiers;
@@ -118,7 +118,7 @@ class MethodReflection extends Reflection
         return $this->class;
     }
 
-    public function setClass( ClassReflection $class )
+    public function setClass(ClassReflection $class)
     {
 
         $this->class = $class;
@@ -134,17 +134,17 @@ class MethodReflection extends Reflection
      * Can be any iterator (so that we can lazy-load the parameters)
      */
 
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
         $this->parameters = $parameters;
     }
 
-    public function getParameter( $name )
+    public function getParameter($name)
     {
 
-        if (ctype_digit( (string)$name )) {
-            $tmp = array_values( $this->parameters );
+        if (ctype_digit((string)$name)) {
+            $tmp = array_values($this->parameters);
 
             return isset( $tmp[$name] ) ? $tmp[$name] : null;
         }
@@ -157,14 +157,14 @@ class MethodReflection extends Reflection
 
         $exceptions = array();
         foreach ($this->exceptions as $exception) {
-            $exception[0] = $this->class->getProject()->getClass( $exception[0] );
+            $exception[0] = $this->class->getProject()->getClass($exception[0]);
             $exceptions[] = $exception;
         }
 
         return $exceptions;
     }
 
-    public function setExceptions( $exceptions )
+    public function setExceptions($exceptions)
     {
 
         $this->exceptions = $exceptions;
@@ -182,7 +182,7 @@ class MethodReflection extends Reflection
         return $this->errors;
     }
 
-    public function setErrors( $errors )
+    public function setErrors($errors)
     {
 
         $this->errors = $errors;
@@ -203,10 +203,10 @@ class MethodReflection extends Reflection
             'is_by_ref'  => $this->byRef,
             'exceptions' => $this->exceptions,
             'errors'     => $this->errors,
-            'parameters' => array_map( function ( $parameter ) {
+            'parameters' => array_map(function ($parameter) {
 
                 return $parameter->toArray();
-            }, $this->parameters ),
+            }, $this->parameters),
         );
     }
 }

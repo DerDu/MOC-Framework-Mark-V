@@ -65,11 +65,11 @@ class Excludes extends DataType
     /**
      * @param Project $project
      */
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->directoryScanner = new DirectoryScanner();
-        $this->directoryScanner->setBasedir( $project->getBasedir() );
+        $this->directoryScanner->setBasedir($project->getBasedir());
     }
 
     /**
@@ -80,7 +80,7 @@ class Excludes extends DataType
     public function createFile()
     {
 
-        return $this->addExcludesNameEntry( $this->files );
+        return $this->addExcludesNameEntry($this->files);
     }
 
     /**
@@ -90,7 +90,7 @@ class Excludes extends DataType
      *
      * @return ExcludesNameEntry Reference to the created ExcludesNameEntry instance
      */
-    private function addExcludesNameEntry( &$excludesNameEntryList )
+    private function addExcludesNameEntry(&$excludesNameEntryList)
     {
 
         $excludesNameEntry = new ExcludesNameEntry();
@@ -107,7 +107,7 @@ class Excludes extends DataType
     public function createClass()
     {
 
-        return $this->addExcludesNameEntry( $this->classes );
+        return $this->addExcludesNameEntry($this->classes);
     }
 
     /**
@@ -118,7 +118,7 @@ class Excludes extends DataType
     public function createMethod()
     {
 
-        return $this->addExcludesNameEntry( $this->methods );
+        return $this->addExcludesNameEntry($this->methods);
     }
 
     /**
@@ -135,7 +135,7 @@ class Excludes extends DataType
             $includes[] = $file->getName();
         }
 
-        $this->directoryScanner->setIncludes( $includes );
+        $this->directoryScanner->setIncludes($includes);
         $this->directoryScanner->scan();
 
         $files = $this->directoryScanner->getIncludedFiles();
@@ -177,7 +177,7 @@ class Excludes extends DataType
         $excludedMethods = array();
 
         foreach ($this->methods as $excludedMethod) {
-            $classAndMethod = explode( '::', $excludedMethod->getName() );
+            $classAndMethod = explode('::', $excludedMethod->getName());
             $className = $classAndMethod[0];
             $methodName = $classAndMethod[1];
 

@@ -59,7 +59,7 @@ class LoadFileTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -72,7 +72,7 @@ class LoadFileTask extends Task
      *
      * @internal param PhingFile $file
      */
-    public function setSrcFile( $srcFile )
+    public function setSrcFile($srcFile)
     {
 
         $this->file = $srcFile;
@@ -85,7 +85,7 @@ class LoadFileTask extends Task
      *
      * @return void
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -99,7 +99,7 @@ class LoadFileTask extends Task
     public function createFilterChain()
     {
 
-        $num = array_push( $this->filterChains, new FilterChain( $this->project ) );
+        $num = array_push($this->filterChains, new FilterChain($this->project));
 
         return $this->filterChains[$num - 1];
     }
@@ -114,23 +114,23 @@ class LoadFileTask extends Task
     {
 
         if (empty( $this->file )) {
-            throw new BuildException( "Attribute 'file' required", $this->getLocation() );
+            throw new BuildException("Attribute 'file' required", $this->getLocation());
         }
 
         if (empty( $this->property )) {
-            throw new BuildException( "Attribute 'property' required", $this->getLocation() );
+            throw new BuildException("Attribute 'property' required", $this->getLocation());
         }
 
         // read file (through filterchains)
         $contents = "";
 
-        $reader = FileUtils::getChainedReader( new FileReader( $this->file ), $this->filterChains, $this->project );
+        $reader = FileUtils::getChainedReader(new FileReader($this->file), $this->filterChains, $this->project);
         while (-1 !== ( $buffer = $reader->read() )) {
             $contents .= $buffer;
         }
         $reader->close();
 
         // publish as property
-        $this->project->setProperty( $this->property, $contents );
+        $this->project->setProperty($this->property, $contents);
     }
 }

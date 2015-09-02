@@ -2,8 +2,6 @@
 
 namespace Guzzle\Batch;
 
-use Guzzle\Batch\BatchDivisorInterface;
-use Guzzle\Batch\BatchTransferInterface;
 use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Http\Message\RequestInterface;
 

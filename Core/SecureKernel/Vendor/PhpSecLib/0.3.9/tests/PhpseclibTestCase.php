@@ -16,32 +16,32 @@ abstract class PhpseclibTestCase extends PHPUnit_Framework_TestCase
      *
      * @return null
      */
-    static protected function ensureConstant( $constant, $expected )
+    static protected function ensureConstant($constant, $expected)
     {
 
-        if (defined( $constant )) {
-            $value = constant( $constant );
+        if (defined($constant)) {
+            $value = constant($constant);
 
             if ($value !== $expected) {
-                if (function_exists( 'runkit_constant_redefine' )) {
-                    if (!runkit_constant_redefine( $constant, $expected )) {
-                        self::markTestSkipped( sprintf(
+                if (function_exists('runkit_constant_redefine')) {
+                    if (!runkit_constant_redefine($constant, $expected)) {
+                        self::markTestSkipped(sprintf(
                             "Failed to redefine constant %s to %s",
                             $constant,
                             $expected
-                        ) );
+                        ));
                     }
                 } else {
-                    self::markTestSkipped( sprintf(
+                    self::markTestSkipped(sprintf(
                         "Skipping test because constant %s is %s instead of %s",
                         $constant,
                         $value,
                         $expected
-                    ) );
+                    ));
                 }
             }
         } else {
-            define( $constant, $expected );
+            define($constant, $expected);
         }
     }
 
@@ -50,10 +50,10 @@ abstract class PhpseclibTestCase extends PHPUnit_Framework_TestCase
      *
      * @return null
      */
-    static protected function reRequireFile( $filename )
+    static protected function reRequireFile($filename)
     {
 
-        if (function_exists( 'runkit_import' )) {
+        if (function_exists('runkit_import')) {
             $result = runkit_import(
                 $filename,
                 RUNKIT_IMPORT_FUNCTIONS |
@@ -62,7 +62,7 @@ abstract class PhpseclibTestCase extends PHPUnit_Framework_TestCase
             );
 
             if (!$result) {
-                self::markTestSkipped( "Failed to reimport file $filename" );
+                self::markTestSkipped("Failed to reimport file $filename");
             }
         }
     }
@@ -71,7 +71,7 @@ abstract class PhpseclibTestCase extends PHPUnit_Framework_TestCase
     {
 
         foreach ($this->tempFilesToUnlinkOnTearDown as $filename) {
-            if (!file_exists( $filename ) || unlink( $filename )) {
+            if (!file_exists($filename) || unlink($filename)) {
                 unset( $this->tempFilesToUnlinkOnTearDown[$filename] );
             }
         }
@@ -90,19 +90,19 @@ abstract class PhpseclibTestCase extends PHPUnit_Framework_TestCase
      *
      * @return string
      */
-    protected function createTempFile( $number_of_writes = 0, $bytes_per_write = 0 )
+    protected function createTempFile($number_of_writes = 0, $bytes_per_write = 0)
     {
 
-        $filename = tempnam( sys_get_temp_dir(), 'phpseclib-test-' );
-        $this->assertTrue( file_exists( $filename ) );
+        $filename = tempnam(sys_get_temp_dir(), 'phpseclib-test-');
+        $this->assertTrue(file_exists($filename));
         $this->tempFilesToUnlinkOnTearDown[] = $filename;
         if ($number_of_writes > 0 && $bytes_per_write > 0) {
-            $fp = fopen( $filename, 'wb' );
+            $fp = fopen($filename, 'wb');
             for ($i = 0; $i < $number_of_writes; ++$i) {
-                fwrite( $fp, str_repeat( 'a', $bytes_per_write ) );
+                fwrite($fp, str_repeat('a', $bytes_per_write));
             }
-            fclose( $fp );
-            $this->assertSame( $number_of_writes * $bytes_per_write, filesize( $filename ) );
+            fclose($fp);
+            $this->assertSame($number_of_writes * $bytes_per_write, filesize($filename));
         }
         return $filename;
     }

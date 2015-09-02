@@ -74,15 +74,15 @@ class ExportPropertiesTask extends Task
      * @throws BuildException
      * @return bool
      */
-    public function setTargetFile( $file )
+    public function setTargetFile($file)
     {
 
-        if (!is_dir( dirname( $file ) )) {
-            throw new BuildException( "Parent directory of target file doesn't exist" );
+        if (!is_dir(dirname($file))) {
+            throw new BuildException("Parent directory of target file doesn't exist");
         }
 
-        if (!is_writable( dirname( $file ) ) && ( file_exists( $file ) && !is_writable( $file ) )) {
-            throw new BuildException( "Target file isn't writable" );
+        if (!is_writable(dirname($file)) && ( file_exists($file) && !is_writable($file) )) {
+            throw new BuildException("Target file isn't writable");
         }
 
         $this->_targetFile = $file;
@@ -98,10 +98,10 @@ class ExportPropertiesTask extends Task
      * @internal param string $file
      * @return bool
      */
-    public function setDisallowedPropertyPrefixes( $prefixes )
+    public function setDisallowedPropertyPrefixes($prefixes)
     {
 
-        $this->_disallowedPropertyPrefixes = explode( ",", $prefixes );
+        $this->_disallowedPropertyPrefixes = explode(",", $prefixes);
 
         return true;
     }
@@ -112,16 +112,16 @@ class ExportPropertiesTask extends Task
         // Sets the currently declared properties
         $this->_properties = $this->getProject()->getProperties();
 
-        if (is_array( $this->_properties ) && !empty( $this->_properties ) && null !== $this->_targetFile) {
+        if (is_array($this->_properties) && !empty( $this->_properties ) && null !== $this->_targetFile) {
             $propertiesString = '';
             foreach ($this->_properties as $propertyName => $propertyValue) {
-                if (!$this->isDisallowedPropery( $propertyName )) {
+                if (!$this->isDisallowedPropery($propertyName)) {
                     $propertiesString .= $propertyName."=".$propertyValue.PHP_EOL;
                 }
             }
 
-            if (!file_put_contents( $this->_targetFile, $propertiesString )) {
-                throw new BuildException( 'Failed writing to '.$this->_targetFile );
+            if (!file_put_contents($this->_targetFile, $propertiesString)) {
+                throw new BuildException('Failed writing to '.$this->_targetFile);
             }
         }
     }
@@ -133,11 +133,11 @@ class ExportPropertiesTask extends Task
      *
      * @return bool
      */
-    protected function isDisallowedPropery( $propertyName )
+    protected function isDisallowedPropery($propertyName)
     {
 
         foreach ($this->_disallowedPropertyPrefixes as $property) {
-            if (substr( $propertyName, 0, strlen( $property ) ) == $property) {
+            if (substr($propertyName, 0, strlen($property)) == $property) {
                 return true;
             }
         }

@@ -34,10 +34,10 @@ class PhkPackageWebAccessPath
     /**
      * @param string $path
      */
-    public function addText( $path )
+    public function addText($path)
     {
 
-        $this->path = trim( $path );
+        $this->path = trim($path);
     }
 
     /**

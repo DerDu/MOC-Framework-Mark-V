@@ -2,7 +2,6 @@
 
 namespace Guzzle\Tests\Service\Command\LocationVisitor\Response;
 
-use Guzzle\Http\Message\Response;
 use Guzzle\Service\Command\LocationVisitor\Response\ReasonPhraseVisitor as Visitor;
 use Guzzle\Service\Description\Parameter;
 

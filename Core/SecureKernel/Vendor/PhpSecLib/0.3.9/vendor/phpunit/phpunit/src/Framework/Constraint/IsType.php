@@ -62,7 +62,7 @@ class PHPUnit_Framework_Constraint_IsType extends PHPUnit_Framework_Constraint
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct( $type )
+    public function __construct($type)
     {
 
         parent::__construct();
@@ -102,46 +102,46 @@ class PHPUnit_Framework_Constraint_IsType extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         switch ($this->type) {
             case 'numeric':
-                return is_numeric( $other );
+                return is_numeric($other);
 
             case 'integer':
             case 'int':
-                return is_integer( $other );
+            return is_integer($other);
 
             case 'double':
             case 'float':
             case 'real':
-                return is_float( $other );
+            return is_float($other);
 
             case 'string':
-                return is_string( $other );
+                return is_string($other);
 
             case 'boolean':
             case 'bool':
-                return is_bool( $other );
+            return is_bool($other);
 
             case 'null':
-                return is_null( $other );
+                return is_null($other);
 
             case 'array':
-                return is_array( $other );
+                return is_array($other);
 
             case 'object':
-                return is_object( $other );
+                return is_object($other);
 
             case 'resource':
-                return is_resource( $other ) || is_string( @get_resource_type( $other ) );
+                return is_resource($other) || is_string(@get_resource_type($other));
 
             case 'scalar':
-                return is_scalar( $other );
+                return is_scalar($other);
 
             case 'callable':
-                return is_callable( $other );
+                return is_callable($other);
         }
     }
 }

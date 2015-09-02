@@ -24,13 +24,13 @@ class PHPUnit_Util_Filter
      *
      * @return string
      */
-    public static function getFilteredStacktrace( Exception $e, $asString = true )
+    public static function getFilteredStacktrace(Exception $e, $asString = true)
     {
 
         $prefix = false;
-        $script = realpath( $GLOBALS['_SERVER']['SCRIPT_NAME'] );
+        $script = realpath($GLOBALS['_SERVER']['SCRIPT_NAME']);
 
-        if (defined( '__PHPUNIT_PHAR_ROOT__' )) {
+        if (defined('__PHPUNIT_PHAR_ROOT__')) {
             $prefix = __PHPUNIT_PHAR_ROOT__;
         }
 
@@ -57,19 +57,19 @@ class PHPUnit_Util_Filter
             $eLine = $e->getLine();
         }
 
-        if (!self::frameExists( $eTrace, $eFile, $eLine )) {
+        if (!self::frameExists($eTrace, $eFile, $eLine)) {
             array_unshift(
                 $eTrace,
-                array( 'file' => $eFile, 'line' => $eLine )
+                array('file' => $eFile, 'line' => $eLine)
             );
         }
 
         $blacklist = new PHPUnit_Util_Blacklist;
 
         foreach ($eTrace as $frame) {
-            if (isset( $frame['file'] ) && is_file( $frame['file'] ) &&
-                !$blacklist->isBlacklisted( $frame['file'] ) &&
-                ( $prefix === false || strpos( $frame['file'], $prefix ) !== 0 ) &&
+            if (isset( $frame['file'] ) && is_file($frame['file']) &&
+                !$blacklist->isBlacklisted($frame['file']) &&
+                ( $prefix === false || strpos($frame['file'], $prefix) !== 0 ) &&
                 $frame['file'] !== $script
             ) {
                 if ($asString === true) {
@@ -95,7 +95,7 @@ class PHPUnit_Util_Filter
      * @return bool
      * @since  Method available since Release 3.3.2
      */
-    private static function frameExists( array $trace, $file, $line )
+    private static function frameExists(array $trace, $file, $line)
     {
 
         foreach ($trace as $frame) {

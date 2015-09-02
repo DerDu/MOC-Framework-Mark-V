@@ -18,7 +18,7 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract
      * @param bool                            $byRef      Whether is passed by reference
      * @param array                           $attributes Additional attributes
      */
-    public function __construct( $name, $default = null, $type = null, $byRef = false, array $attributes = array() )
+    public function __construct($name, $default = null, $type = null, $byRef = false, array $attributes = array())
     {
 
         parent::__construct(

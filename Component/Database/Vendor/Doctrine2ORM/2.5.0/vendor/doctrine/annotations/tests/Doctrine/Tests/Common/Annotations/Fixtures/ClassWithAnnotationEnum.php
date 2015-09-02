@@ -2,8 +2,6 @@
 
 namespace Doctrine\Tests\Common\Annotations\Fixtures;
 
-use Doctrine\Tests\Common\Annotations\Fixtures\AnnotationEnum;
-
 class ClassWithAnnotationEnum
 {
 

@@ -26,7 +26,6 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\ORM\Cache;
 use Doctrine\ORM\Cache\QueryCacheKey;
 use Doctrine\ORM\Query\Parameter;
-use Doctrine\ORM\Query\QueryException;
 
 /**
  * Base contract for ORM queries. Base class for Query and NativeQuery.
@@ -658,25 +657,6 @@ abstract class AbstractQuery
     }
 
     /**
-     * Allows to translate entity namespaces to full qualified names.
-     *
-     * @param Query\ResultSetMapping $rsm
-     *
-     * @return void
-     */
-    private function translateNamespaces(Query\ResultSetMapping $rsm)
-    {
-
-        $translate = function ($alias) {
-
-            return $this->_em->getClassMetadata($alias)->getName();
-        };
-
-        $rsm->aliasMap = array_map($translate, $rsm->aliasMap);
-        $rsm->declaringClasses = array_map($translate, $rsm->declaringClasses);
-    }
-
-    /**
      * Generates a string of currently query to use for the cache second level cache.
      *
      * @return string
@@ -967,6 +947,25 @@ abstract class AbstractQuery
      * @return \Doctrine\DBAL\Driver\Statement The executed database statement that holds the results.
      */
     abstract protected function _doExecute();
+
+    /**
+     * Allows to translate entity namespaces to full qualified names.
+     *
+     * @param Query\ResultSetMapping $rsm
+     *
+     * @return void
+     */
+    private function translateNamespaces(Query\ResultSetMapping $rsm)
+    {
+
+        $translate = function ($alias) {
+
+            return $this->_em->getClassMetadata($alias)->getName();
+        };
+
+        $rsm->aliasMap = array_map($translate, $rsm->aliasMap);
+        $rsm->declaringClasses = array_map($translate, $rsm->declaringClasses);
+    }
 
     /**
      * Gets the array of results for the query.

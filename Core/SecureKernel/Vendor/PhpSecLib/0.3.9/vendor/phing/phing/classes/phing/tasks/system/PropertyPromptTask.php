@@ -86,7 +86,7 @@ class PropertyPromptTask extends Task
     public function main()
     {
 
-        $this->proposedValue = $this->project->getProperty( $this->propertyName );
+        $this->proposedValue = $this->project->getProperty($this->propertyName);
         $currentValue = $this->defaultValue;
 
         if ($currentValue == "" && $this->proposedValue !== null) {
@@ -103,21 +103,21 @@ class PropertyPromptTask extends Task
             $promptText = "\n".$this->promptText." [".$currentValue."] ".$this->promptCharacter." ";
 
             try {
-                $request = new InputRequest( $promptText );
-                $this->project->getInputHandler()->handleInput( $request );
+                $request = new InputRequest($promptText);
+                $this->project->getInputHandler()->handleInput($request);
                 $this->proposedValue = $request->getInput();
-            } catch( IOException $e ) {
-                $this->log( "Prompt failed. Using default. (Failure reason: ".$e->getMessage().")" );
+            } catch (IOException $e) {
+                $this->log("Prompt failed. Using default. (Failure reason: ".$e->getMessage().")");
                 $this->proposedValue = $this->defaultValue;
             }
 
             if ($this->proposedValue === "") {
-                $this->log( "No value specified, using default.", Project::MSG_VERBOSE );
+                $this->log("No value specified, using default.", Project::MSG_VERBOSE);
                 $this->proposedValue = $this->defaultValue;
             }
 
             if (isset( $this->proposedValue )) {
-                $this->project->setProperty( $this->propertyName, $this->proposedValue );
+                $this->project->setProperty($this->propertyName, $this->proposedValue);
             }
 
         }
@@ -157,7 +157,7 @@ class PropertyPromptTask extends Task
      *
      * @param string $newDefaultvalue
      */
-    public function setDefaultvalue( $newDefaultvalue )
+    public function setDefaultvalue($newDefaultvalue)
     {
 
         $this->defaultValue = $newDefaultvalue;
@@ -181,7 +181,7 @@ class PropertyPromptTask extends Task
      *
      * @param string $newPromptcharacter
      */
-    public function setPromptCharacter( $newPromptcharacter )
+    public function setPromptCharacter($newPromptcharacter)
     {
 
         $this->promptCharacter = $newPromptcharacter;
@@ -203,7 +203,7 @@ class PropertyPromptTask extends Task
      *
      * @param string $newPrompttext
      */
-    public function setPromptText( $newPrompttext )
+    public function setPromptText($newPrompttext)
     {
 
         $this->promptText = $newPrompttext;
@@ -229,7 +229,7 @@ class PropertyPromptTask extends Task
      *
      * @internal param java $newPropertyname .lang.String
      */
-    public function setPropertyName( $newPropertyname )
+    public function setPropertyName($newPropertyname)
     {
 
         $this->propertyName = $newPropertyname;
@@ -263,7 +263,7 @@ class PropertyPromptTask extends Task
      *
      * @param boolean $newUseExistingValue
      */
-    public function setUseExistingValue( $newUseExistingValue )
+    public function setUseExistingValue($newUseExistingValue)
     {
 
         $this->useExistingValue = $newUseExistingValue;
@@ -276,10 +276,10 @@ class PropertyPromptTask extends Task
      *
      * @return void
      */
-    public function addText( $prompt )
+    public function addText($prompt)
     {
 
-        $this->setPromptText( $prompt );
+        $this->setPromptText($prompt);
     }
 
 }

@@ -39,7 +39,7 @@ class UntarTask extends ExtractBaseTask
     /**
      * @param bool $preservePermissions
      */
-    public function setPreservePermissions( $preservePermissions )
+    public function setPreservePermissions($preservePermissions)
     {
 
         $this->preservePermissions = $preservePermissions;
@@ -52,8 +52,8 @@ class UntarTask extends ExtractBaseTask
     {
 
         include_once 'Archive/Tar.php';
-        if (!class_exists( 'Archive_Tar' )) {
-            throw new BuildException( "You must have installed the PEAR Archive_Tar class in order to use UntarTask." );
+        if (!class_exists('Archive_Tar')) {
+            throw new BuildException("You must have installed the PEAR Archive_Tar class in order to use UntarTask.");
         }
     }
 
@@ -63,7 +63,7 @@ class UntarTask extends ExtractBaseTask
      * @return mixed|void
      * @throws BuildException
      */
-    protected function extractArchive( PhingFile $tarfile )
+    protected function extractArchive(PhingFile $tarfile)
     {
 
         $this->log(
@@ -72,14 +72,14 @@ class UntarTask extends ExtractBaseTask
         );
 
         try {
-            $tar = $this->initTar( $tarfile );
-            if (!$tar->extractModify( $this->todir->getAbsolutePath(), $this->removepath, $this->preservePermissions )
+            $tar = $this->initTar($tarfile);
+            if (!$tar->extractModify($this->todir->getAbsolutePath(), $this->removepath, $this->preservePermissions)
             ) {
-                throw new BuildException( 'Failed to extract tar file: '.$tarfile->getAbsolutePath() );
+                throw new BuildException('Failed to extract tar file: '.$tarfile->getAbsolutePath());
             }
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             $msg = "Could not extract tar file: ".$ioe->getMessage();
-            throw new BuildException( $msg, $ioe, $this->getLocation() );
+            throw new BuildException($msg, $ioe, $this->getLocation());
         }
     }
 
@@ -90,25 +90,25 @@ class UntarTask extends ExtractBaseTask
      *
      * @return Archive_Tar the tar class instance
      */
-    private function initTar( PhingFile $tarfile )
+    private function initTar(PhingFile $tarfile)
     {
 
         $compression = null;
         $tarfileName = $tarfile->getName();
-        $mode = strtolower( substr( $tarfileName, strrpos( $tarfileName, '.' ) ) );
+        $mode = strtolower(substr($tarfileName, strrpos($tarfileName, '.')));
 
         $compressions = array(
-            'gz' => array( '.gz', '.tgz', ),
-            'bz2' => array( '.bz2', ),
+            'gz'  => array('.gz', '.tgz',),
+            'bz2' => array('.bz2',),
         );
         foreach ($compressions as $algo => $ext) {
-            if (array_search( $mode, $ext ) !== false) {
+            if (array_search($mode, $ext) !== false) {
                 $compression = $algo;
                 break;
             }
         }
 
-        return new Archive_Tar( $tarfile->getAbsolutePath(), $compression );
+        return new Archive_Tar($tarfile->getAbsolutePath(), $compression);
     }
 
     /**
@@ -116,10 +116,10 @@ class UntarTask extends ExtractBaseTask
      *
      * @return array|int
      */
-    protected function listArchiveContent( PhingFile $tarfile )
+    protected function listArchiveContent(PhingFile $tarfile)
     {
 
-        $tar = $this->initTar( $tarfile );
+        $tar = $this->initTar($tarfile);
 
         return $tar->listContent();
     }

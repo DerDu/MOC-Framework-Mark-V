@@ -60,7 +60,7 @@ class CoverageReportTransformer
     /**
      * @param Task $task
      */
-    public function __construct( Task $task )
+    public function __construct(Task $task)
     {
 
         $this->task = $task;
@@ -69,7 +69,7 @@ class CoverageReportTransformer
     /**
      * @param $styleDir
      */
-    public function setStyleDir( $styleDir )
+    public function setStyleDir($styleDir)
     {
 
         $this->styleDir = $styleDir;
@@ -78,7 +78,7 @@ class CoverageReportTransformer
     /**
      * @param PhingFile $toDir
      */
-    public function setToDir( PhingFile $toDir )
+    public function setToDir(PhingFile $toDir)
     {
 
         $this->toDir = $toDir;
@@ -87,7 +87,7 @@ class CoverageReportTransformer
     /**
      * @param $document
      */
-    public function setXmlDocument( $document )
+    public function setXmlDocument($document)
     {
 
         $this->document = $document;
@@ -98,7 +98,7 @@ class CoverageReportTransformer
      *
      * @param $title
      */
-    public function setTitle( $title )
+    public function setTitle($title)
     {
 
         $this->title = $title;
@@ -110,7 +110,7 @@ class CoverageReportTransformer
      *
      * @param boolean $useSortTable
      */
-    public function setUseSortTable( $useSortTable )
+    public function setUseSortTable($useSortTable)
     {
 
         $this->useSortTable = (boolean)$useSortTable;
@@ -120,24 +120,24 @@ class CoverageReportTransformer
     {
 
         if (!$this->toDir->exists()) {
-            throw new BuildException( "Directory '".$this->toDir."' does not exist" );
+            throw new BuildException("Directory '".$this->toDir."' does not exist");
         }
 
         $xslfile = $this->getStyleSheet();
 
         $xsl = new DOMDocument();
-        $xsl->load( $xslfile->getAbsolutePath() );
+        $xsl->load($xslfile->getAbsolutePath());
 
         $proc = new XSLTProcessor();
-        if (defined( 'XSL_SECPREF_WRITE_FILE' )) {
-            if (version_compare( PHP_VERSION, '5.4', "<" )) {
-                ini_set( "xsl.security_prefs", XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY );
+        if (defined('XSL_SECPREF_WRITE_FILE')) {
+            if (version_compare(PHP_VERSION, '5.4', "<")) {
+                ini_set("xsl.security_prefs", XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY);
             } else {
-                $proc->setSecurityPrefs( XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY );
+                $proc->setSecurityPrefs(XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY);
             }
         }
 
-        $proc->importStyleSheet( $xsl );
+        $proc->importStyleSheet($xsl);
 
         ExtendedFileStream::registerStream();
 
@@ -145,16 +145,16 @@ class CoverageReportTransformer
 
         // urlencode() the path if we're on Windows
         if (FileSystem::getFileSystem()->getSeparator() == '\\') {
-            $toDir = urlencode( $toDir );
+            $toDir = urlencode($toDir);
         }
 
         // no output for the framed report
         // it's all done by extension...
-        $proc->setParameter( '', 'output.dir', $toDir );
+        $proc->setParameter('', 'output.dir', $toDir);
 
-        $proc->setParameter( '', 'output.sorttable', $this->useSortTable );
-        $proc->setParameter( '', 'document.title', $this->title );
-        $proc->transformToXML( $this->document );
+        $proc->setParameter('', 'output.sorttable', $this->useSortTable);
+        $proc->setParameter('', 'document.title', $this->title);
+        $proc->transformToXML($this->document);
 
         ExtendedFileStream::unregisterStream();
     }
@@ -169,23 +169,23 @@ class CoverageReportTransformer
         $xslname = "coverage-frames.xsl";
 
         if ($this->styleDir) {
-            $file = new PhingFile( $this->styleDir, $xslname );
+            $file = new PhingFile($this->styleDir, $xslname);
         } else {
-            $path = Phing::getResourcePath( "phing/etc/$xslname" );
+            $path = Phing::getResourcePath("phing/etc/$xslname");
 
             if ($path === null) {
-                $path = Phing::getResourcePath( "etc/$xslname" );
+                $path = Phing::getResourcePath("etc/$xslname");
 
                 if ($path === null) {
-                    throw new BuildException( "Could not find $xslname in resource path" );
+                    throw new BuildException("Could not find $xslname in resource path");
                 }
             }
 
-            $file = new PhingFile( $path );
+            $file = new PhingFile($path);
         }
 
         if (!$file->exists()) {
-            throw new BuildException( "Could not find file ".$file->getPath() );
+            throw new BuildException("Could not find file ".$file->getPath());
         }
 
         return $file;

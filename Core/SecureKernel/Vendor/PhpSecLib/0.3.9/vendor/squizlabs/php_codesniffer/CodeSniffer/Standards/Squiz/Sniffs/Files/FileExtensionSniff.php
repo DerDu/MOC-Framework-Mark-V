@@ -39,7 +39,7 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -53,33 +53,33 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first PHP open tag so we don't process
         // the same file twice.
-        $prevOpenTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($prevOpenTag !== false) {
             return;
         }
 
         $fileName = $phpcsFile->getFileName();
-        $extension = substr( $fileName, strrpos( $fileName, '.' ) );
-        $nextClass = $phpcsFile->findNext( array( T_CLASS, T_INTERFACE, T_TRAIT ), $stackPtr );
+        $extension = substr($fileName, strrpos($fileName, '.'));
+        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), $stackPtr);
 
         if ($extension === '.php') {
             if ($nextClass !== false) {
                 $error = '%s found in ".php" file; use ".inc" extension instead';
-                $data = array( ucfirst( $tokens[$nextClass]['content'] ) );
-                $phpcsFile->addError( $error, $stackPtr, 'ClassFound', $data );
+                $data = array(ucfirst($tokens[$nextClass]['content']));
+                $phpcsFile->addError($error, $stackPtr, 'ClassFound', $data);
             }
         } else {
             if ($extension === '.inc') {
                 if ($nextClass === false) {
                     $error = 'No interface or class found in ".inc" file; use ".php" extension instead';
-                    $phpcsFile->addError( $error, $stackPtr, 'NoClass' );
+                    $phpcsFile->addError($error, $stackPtr, 'NoClass');
                 }
             }
         }
@@ -87,6 +87,5 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-
 
 ?>

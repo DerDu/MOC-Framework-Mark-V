@@ -62,14 +62,14 @@ class PathTokenizer
      *
      * @param string $path The path to tokenize. Must not be <code>null</code>.
      */
-    public function __construct( $path )
+    public function __construct($path)
     {
 
         // on Windows and Unix, we can ignore delimiters and still have
 
         // enough information to tokenize correctly.
 
-        $this->tokens = preg_split( "/[;:]/", $path, -1, PREG_SPLIT_NO_EMPTY );
+        $this->tokens = preg_split("/[;:]/", $path, -1, PREG_SPLIT_NO_EMPTY);
 
         $this->dosStyleFilesystem = ( PATH_SEPARATOR == ';' );
 
@@ -113,11 +113,11 @@ class PathTokenizer
 
         } else {
 
-            $token = trim( array_shift( $this->tokens ) );
+            $token = trim(array_shift($this->tokens));
 
         }
 
-        if (strlen( $token ) === 1 && Character::isLetter( $token{0} )
+        if (strlen($token) === 1 && Character::isLetter($token{0})
 
             && $this->dosStyleFilesystem
 
@@ -128,9 +128,9 @@ class PathTokenizer
 
             // spec. We look at the next token
 
-            $nextToken = trim( array_shift( $this->tokens ) );
+            $nextToken = trim(array_shift($this->tokens));
 
-            if (StringHelper::startsWith( '\\', $nextToken ) || StringHelper::startsWith( '/', $nextToken )) {
+            if (StringHelper::startsWith('\\', $nextToken) || StringHelper::startsWith('/', $nextToken)) {
 
                 // we know we are on a DOS style platform and the next path
 
@@ -161,9 +161,9 @@ class PathTokenizer
      *
      * @return boolean
      */
-    public function contains( $path )
+    public function contains($path)
     {
 
-        return in_array( $path, $this->tokens, true );
+        return in_array($path, $this->tokens, true);
     }
 }

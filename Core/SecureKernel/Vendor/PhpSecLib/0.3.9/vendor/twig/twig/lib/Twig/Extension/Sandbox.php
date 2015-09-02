@@ -16,7 +16,7 @@ class Twig_Extension_Sandbox extends Twig_Extension
     protected $sandboxed;
     protected $policy;
 
-    public function __construct( Twig_Sandbox_SecurityPolicyInterface $policy, $sandboxed = false )
+    public function __construct(Twig_Sandbox_SecurityPolicyInterface $policy, $sandboxed = false)
     {
 
         $this->policy = $policy;
@@ -31,7 +31,7 @@ class Twig_Extension_Sandbox extends Twig_Extension
     public function getTokenParsers()
     {
 
-        return array( new Twig_TokenParser_Sandbox() );
+        return array(new Twig_TokenParser_Sandbox());
     }
 
     /**
@@ -42,7 +42,7 @@ class Twig_Extension_Sandbox extends Twig_Extension
     public function getNodeVisitors()
     {
 
-        return array( new Twig_NodeVisitor_Sandbox() );
+        return array(new Twig_NodeVisitor_Sandbox());
     }
 
     public function enableSandbox()
@@ -63,7 +63,7 @@ class Twig_Extension_Sandbox extends Twig_Extension
         return $this->sandboxedGlobally;
     }
 
-    public function setSecurityPolicy( Twig_Sandbox_SecurityPolicyInterface $policy )
+    public function setSecurityPolicy(Twig_Sandbox_SecurityPolicyInterface $policy)
     {
 
         $this->policy = $policy;
@@ -75,11 +75,11 @@ class Twig_Extension_Sandbox extends Twig_Extension
         return $this->policy;
     }
 
-    public function checkSecurity( $tags, $filters, $functions )
+    public function checkSecurity($tags, $filters, $functions)
     {
 
         if ($this->isSandboxed()) {
-            $this->policy->checkSecurity( $tags, $filters, $functions );
+            $this->policy->checkSecurity($tags, $filters, $functions);
         }
     }
 
@@ -89,27 +89,27 @@ class Twig_Extension_Sandbox extends Twig_Extension
         return $this->sandboxedGlobally || $this->sandboxed;
     }
 
-    public function checkMethodAllowed( $obj, $method )
+    public function checkMethodAllowed($obj, $method)
     {
 
         if ($this->isSandboxed()) {
-            $this->policy->checkMethodAllowed( $obj, $method );
+            $this->policy->checkMethodAllowed($obj, $method);
         }
     }
 
-    public function checkPropertyAllowed( $obj, $method )
+    public function checkPropertyAllowed($obj, $method)
     {
 
         if ($this->isSandboxed()) {
-            $this->policy->checkPropertyAllowed( $obj, $method );
+            $this->policy->checkPropertyAllowed($obj, $method);
         }
     }
 
-    public function ensureToStringAllowed( $obj )
+    public function ensureToStringAllowed($obj)
     {
 
-        if ($this->isSandboxed() && is_object( $obj )) {
-            $this->policy->checkMethodAllowed( $obj, '__toString' );
+        if ($this->isSandboxed() && is_object($obj)) {
+            $this->policy->checkMethodAllowed($obj, '__toString');
         }
 
         return $obj;

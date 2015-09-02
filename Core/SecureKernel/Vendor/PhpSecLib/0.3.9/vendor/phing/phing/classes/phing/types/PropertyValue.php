@@ -37,11 +37,11 @@ class PropertyValue
      *
      * @param    mixed      Value of name, all scalars allowed
      */
-    public function __construct( $value = null )
+    public function __construct($value = null)
     {
 
         if ($value !== null) {
-            $this->setValue( $value );
+            $this->setValue($value);
         }
     }
 
@@ -66,7 +66,7 @@ class PropertyValue
      *
      * @param    mixed      Value of name, all scalars allowed
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = (string)$value;

@@ -17,13 +17,13 @@ use Sami\Reflection\PropertyReflection;
 class DefaultFilter extends TrueFilter
 {
 
-    public function acceptMethod( MethodReflection $method )
+    public function acceptMethod(MethodReflection $method)
     {
 
         return $method->isPublic();
     }
 
-    public function acceptProperty( PropertyReflection $property )
+    public function acceptProperty(PropertyReflection $property)
     {
 
         return $property->isPublic();

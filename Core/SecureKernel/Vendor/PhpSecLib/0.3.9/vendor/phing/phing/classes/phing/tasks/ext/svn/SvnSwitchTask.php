@@ -50,7 +50,7 @@ class SvnSwitchTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'switch' );
+        $this->setup('switch');
 
         $this->log(
             "Switching SVN repository at '".$this->getToDir()."' to '".$this->getRepositoryUrl()."' "
@@ -62,7 +62,7 @@ class SvnSwitchTask extends SvnBaseTask
             'r' => $this->getRevision(),
         );
 
-        $this->run( array( $this->getToDir() ), $switches );
+        $this->run(array($this->getToDir()), $switches);
     }
 
     /**
@@ -77,7 +77,7 @@ class SvnSwitchTask extends SvnBaseTask
     /**
      * @param $revision
      */
-    public function setRevision( $revision )
+    public function setRevision($revision)
     {
 
         $this->revision = $revision;

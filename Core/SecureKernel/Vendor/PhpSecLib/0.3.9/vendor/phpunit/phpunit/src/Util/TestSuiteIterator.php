@@ -29,7 +29,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
     /**
      * @param PHPUnit_Framework_TestSuite $testSuite
      */
-    public function __construct( PHPUnit_Framework_TestSuite $testSuite )
+    public function __construct(PHPUnit_Framework_TestSuite $testSuite)
     {
 
         $this->tests = $testSuite->tests();
@@ -74,7 +74,7 @@ class PHPUnit_Util_TestSuiteIterator implements RecursiveIterator
     public function valid()
     {
 
-        return $this->position < count( $this->tests );
+        return $this->position < count($this->tests);
     }
 
     /**

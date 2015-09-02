@@ -79,6 +79,24 @@ class DirectoryResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($resource->isFresh(time()), '->isFresh() returns false if the whole resource is removed');
     }
 
+    protected function removeDirectory($directory)
+    {
+
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory),
+            \RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($iterator as $path) {
+            if (preg_match('#[/\\\\]\.\.?$#', $path->__toString())) {
+                continue;
+            }
+            if ($path->isDir()) {
+                rmdir($path->__toString());
+            } else {
+                unlink($path->__toString());
+            }
+        }
+        rmdir($directory);
+    }
+
     public function testIsFreshCreateFileInSubdirectory()
     {
 
@@ -155,23 +173,5 @@ class DirectoryResourceTest extends \PHPUnit_Framework_TestCase
             return;
         }
         $this->removeDirectory($this->directory);
-    }
-
-    protected function removeDirectory($directory)
-    {
-
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory),
-            \RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($iterator as $path) {
-            if (preg_match('#[/\\\\]\.\.?$#', $path->__toString())) {
-                continue;
-            }
-            if ($path->isDir()) {
-                rmdir($path->__toString());
-            } else {
-                unlink($path->__toString());
-            }
-        }
-        rmdir($directory);
     }
 }

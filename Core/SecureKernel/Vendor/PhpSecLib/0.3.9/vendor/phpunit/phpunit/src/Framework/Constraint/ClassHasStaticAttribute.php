@@ -42,13 +42,13 @@ class PHPUnit_Framework_Constraint_ClassHasStaticAttribute extends PHPUnit_Frame
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $class = new ReflectionClass( $other );
+        $class = new ReflectionClass($other);
 
-        if ($class->hasProperty( $this->attributeName )) {
-            $attribute = $class->getProperty( $this->attributeName );
+        if ($class->hasProperty($this->attributeName)) {
+            $attribute = $class->getProperty($this->attributeName);
 
             return $attribute->isStatic();
         } else {

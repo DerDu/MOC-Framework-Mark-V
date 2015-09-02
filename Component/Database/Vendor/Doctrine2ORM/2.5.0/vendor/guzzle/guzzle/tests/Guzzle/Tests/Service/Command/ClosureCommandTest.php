@@ -3,7 +3,6 @@
 namespace Guzzle\Tests\Service\Command;
 
 use Guzzle\Http\Message\RequestFactory;
-use Guzzle\Service\Client;
 use Guzzle\Service\Command\ClosureCommand;
 
 /**

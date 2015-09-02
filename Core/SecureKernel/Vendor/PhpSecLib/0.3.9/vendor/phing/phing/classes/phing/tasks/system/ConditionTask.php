@@ -51,7 +51,7 @@ class ConditionTask extends ConditionBase
      *
      * @return void
      */
-    public function setProperty( $p )
+    public function setProperty($p)
     {
 
         $this->property = $p;
@@ -64,7 +64,7 @@ class ConditionTask extends ConditionBase
      *
      * @return void
      */
-    public function setValue( $v )
+    public function setValue($v)
     {
 
         $this->value = $v;
@@ -80,14 +80,14 @@ class ConditionTask extends ConditionBase
     {
 
         if ($this->countConditions() > 1) {
-            throw new BuildException( "You must not nest more than one condition into <condition>" );
+            throw new BuildException("You must not nest more than one condition into <condition>");
         }
         if ($this->countConditions() < 1) {
-            throw new BuildException( "You must nest a condition into <condition>" );
+            throw new BuildException("You must nest a condition into <condition>");
         }
         $cs = $this->getIterator();
         if ($cs->current()->evaluate()) {
-            $this->project->setProperty( $this->property, $this->value );
+            $this->project->setProperty($this->property, $this->value);
         }
     }
 }

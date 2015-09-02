@@ -54,7 +54,7 @@ class zsdtValidateTask extends zsdtBaseTask
         parent::validate();
 
         if ($this->descriptor === null) {
-            throw new BuildException( 'The package descriptor file have to be set.' );
+            throw new BuildException('The package descriptor file have to be set.');
         }
 
         $this->arguments .= $this->descriptor;

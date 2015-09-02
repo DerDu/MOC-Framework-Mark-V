@@ -44,7 +44,7 @@ class CoverageMergerTask extends Task
      *
      * @param FileSet the new fileset containing .php files
      */
-    public function addFileSet( FileSet $fileset )
+    public function addFileSet(FileSet $fileset)
     {
 
         $this->filesets[] = $fileset;
@@ -55,12 +55,12 @@ class CoverageMergerTask extends Task
 
         $files = $this->getFilenames();
 
-        $this->log( "Merging ".count( $files )." coverage files" );
+        $this->log("Merging ".count($files)." coverage files");
 
         foreach ($files as $file) {
-            $coverageInformation = unserialize( file_get_contents( $file ) );
+            $coverageInformation = unserialize(file_get_contents($file));
 
-            CoverageMerger::merge( $this->project, array( $coverageInformation ) );
+            CoverageMerger::merge($this->project, array($coverageInformation));
         }
     }
 
@@ -75,13 +75,13 @@ class CoverageMergerTask extends Task
         $files = array();
 
         foreach ($this->filesets as $fileset) {
-            $ds = $fileset->getDirectoryScanner( $this->project );
+            $ds = $fileset->getDirectoryScanner($this->project);
             $ds->scan();
 
             $includedFiles = $ds->getIncludedFiles();
 
             foreach ($includedFiles as $file) {
-                $fs = new PhingFile( basename( $ds->getBaseDir() ), $file );
+                $fs = new PhingFile(basename($ds->getBaseDir()), $file);
 
                 $files[] = $fs->getAbsolutePath();
             }

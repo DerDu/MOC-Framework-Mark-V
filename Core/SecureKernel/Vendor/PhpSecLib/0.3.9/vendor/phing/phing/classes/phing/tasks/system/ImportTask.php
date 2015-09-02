@@ -78,7 +78,7 @@ class ImportTask extends Task
      *
      * @return void
      */
-    public function setFile( $f )
+    public function setFile($f)
     {
 
         $this->file = $f;
@@ -92,7 +92,7 @@ class ImportTask extends Task
      *
      * @return void
      */
-    public function setOptional( $opt )
+    public function setOptional($opt)
     {
 
         $this->optional = $opt;
@@ -109,36 +109,36 @@ class ImportTask extends Task
     {
 
         if (!isset( $this->file )) {
-            throw new BuildException( "Missing attribute 'file'" );
+            throw new BuildException("Missing attribute 'file'");
         }
 
         if ($this->getOwningTarget() == null || $this->getOwningTarget()->getName() != '') {
-            throw new BuildException( "import only allowed as a top-level task" );
+            throw new BuildException("import only allowed as a top-level task");
         }
 
-        $file = new PhingFile( $this->file );
+        $file = new PhingFile($this->file);
         if (!$file->isAbsolute()) {
-            $file = new PhingFile( $this->project->getBasedir(), $this->file );
+            $file = new PhingFile($this->project->getBasedir(), $this->file);
         }
         if (!$file->exists()) {
             $msg = "Unable to find build file: {$file->getPath()}";
             if ($this->optional) {
-                $this->log( $msg.'... skipped' );
+                $this->log($msg.'... skipped');
 
                 return;
             } else {
-                throw new BuildException( $msg );
+                throw new BuildException($msg);
             }
         }
 
-        $ctx = $this->project->getReference( "phing.parsing.context" );
+        $ctx = $this->project->getReference("phing.parsing.context");
         $cfg = $ctx->getConfigurator();
         // Import xml file into current project scope
         // Since this is delayed until after the importing file has been
         // processed, the properties and targets of this new file may not take
         // effect if they have alreday been defined in the outer scope.
-        $this->log( "Importing file from {$file->getAbsolutePath()}", Project::MSG_VERBOSE );
-        ProjectConfigurator::configureProject( $this->project, $file );
+        $this->log("Importing file from {$file->getAbsolutePath()}", Project::MSG_VERBOSE);
+        ProjectConfigurator::configureProject($this->project, $file);
     } //end main
 
 } //end ImportTask

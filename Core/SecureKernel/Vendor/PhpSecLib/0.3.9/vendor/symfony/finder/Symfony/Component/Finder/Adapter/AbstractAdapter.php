@@ -45,7 +45,7 @@ abstract class AbstractAdapter implements AdapterInterface
 
         $name = $this->getName();
 
-        if (!array_key_exists( $name, self::$areSupported )) {
+        if (!array_key_exists($name, self::$areSupported)) {
             self::$areSupported[$name] = $this->canBeUsed();
         }
 
@@ -68,7 +68,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setFollowLinks( $followLinks )
+    public function setFollowLinks($followLinks)
     {
 
         $this->followLinks = $followLinks;
@@ -79,7 +79,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
         $this->mode = $mode;
@@ -90,7 +90,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setDepths( array $depths )
+    public function setDepths(array $depths)
     {
 
         $this->minDepth = 0;
@@ -121,7 +121,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setExclude( array $exclude )
+    public function setExclude(array $exclude)
     {
 
         $this->exclude = $exclude;
@@ -132,7 +132,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setNames( array $names )
+    public function setNames(array $names)
     {
 
         $this->names = $names;
@@ -143,7 +143,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setNotNames( array $notNames )
+    public function setNotNames(array $notNames)
     {
 
         $this->notNames = $notNames;
@@ -154,7 +154,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setContains( array $contains )
+    public function setContains(array $contains)
     {
 
         $this->contains = $contains;
@@ -165,7 +165,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setNotContains( array $notContains )
+    public function setNotContains(array $notContains)
     {
 
         $this->notContains = $notContains;
@@ -176,7 +176,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setSizes( array $sizes )
+    public function setSizes(array $sizes)
     {
 
         $this->sizes = $sizes;
@@ -187,7 +187,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setDates( array $dates )
+    public function setDates(array $dates)
     {
 
         $this->dates = $dates;
@@ -198,7 +198,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setFilters( array $filters )
+    public function setFilters(array $filters)
     {
 
         $this->filters = $filters;
@@ -209,7 +209,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setSort( $sort )
+    public function setSort($sort)
     {
 
         $this->sort = $sort;
@@ -220,7 +220,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setPath( array $paths )
+    public function setPath(array $paths)
     {
 
         $this->paths = $paths;
@@ -231,7 +231,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setNotPath( array $notPaths )
+    public function setNotPath(array $notPaths)
     {
 
         $this->notPaths = $notPaths;
@@ -242,7 +242,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function ignoreUnreadableDirs( $ignore = true )
+    public function ignoreUnreadableDirs($ignore = true)
     {
 
         $this->ignoreUnreadableDirs = (bool)$ignore;

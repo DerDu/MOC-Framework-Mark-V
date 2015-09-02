@@ -31,7 +31,7 @@
 class PresentSelector extends BaseSelector
 {
 
-    private static $filePresence = array( "srconly", "both" );
+    private static $filePresence = array("srconly", "both");
     private $targetdir = null;
     private $mapperElement = null;
     private $map = null;
@@ -73,7 +73,7 @@ class PresentSelector extends BaseSelector
      *
      * @return void
      */
-    public function setTargetdir( PhingFile $targetdir )
+    public function setTargetdir(PhingFile $targetdir)
     {
 
         $this->targetdir = $targetdir;
@@ -90,9 +90,9 @@ class PresentSelector extends BaseSelector
     {
 
         if ($this->mapperElement !== null) {
-            throw new BuildException( "Cannot define more than one mapper" );
+            throw new BuildException("Cannot define more than one mapper");
         }
-        $this->mapperElement = new Mapper( $this->getProject() );
+        $this->mapperElement = new Mapper($this->getProject());
 
         return $this->mapperElement;
     }
@@ -111,10 +111,10 @@ class PresentSelector extends BaseSelector
      *
      * @return void
      */
-    public function setPresent( $fp )
+    public function setPresent($fp)
     {
 
-        $idx = array_search( $fp, self::$filePresence, true );
+        $idx = array_search($fp, self::$filePresence, true);
         if ($idx === 0) {
             $this->destmustexist = false;
         }
@@ -130,7 +130,7 @@ class PresentSelector extends BaseSelector
     {
 
         if ($this->targetdir === null) {
-            $this->setError( "The targetdir attribute is required." );
+            $this->setError("The targetdir attribute is required.");
         }
         if ($this->mapperElement === null) {
             $this->map = new IdentityMapper();
@@ -138,7 +138,7 @@ class PresentSelector extends BaseSelector
             $this->map = $this->mapperElement->getImplementation();
         }
         if ($this->map === null) {
-            $this->setError( "Could not set <mapper> element." );
+            $this->setError("Could not set <mapper> element.");
         }
     }
 
@@ -154,25 +154,25 @@ class PresentSelector extends BaseSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
 
         // Determine file whose existence is to be checked
-        $destfiles = $this->map->main( $filename );
+        $destfiles = $this->map->main($filename);
         // If filename does not match the To attribute of the mapper
         // then filter it out of the files we are considering
         if ($destfiles === null) {
             return false;
         }
         // Sanity check
-        if (count( $destfiles ) !== 1 || $destfiles[0] === null) {
-            throw new BuildException( "Invalid destination file results for "
-                .$this->targetdir." with filename ".$filename );
+        if (count($destfiles) !== 1 || $destfiles[0] === null) {
+            throw new BuildException("Invalid destination file results for "
+                .$this->targetdir." with filename ".$filename);
         }
         $destname = $destfiles[0];
-        $destfile = new PhingFile( $this->targetdir, $destname );
+        $destfile = new PhingFile($this->targetdir, $destname);
 
         return $destfile->exists() === $this->destmustexist;
     }

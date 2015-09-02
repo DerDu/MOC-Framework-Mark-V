@@ -92,7 +92,7 @@ class HtmlColorLogger extends DefaultLogger
      * @param OutputStream $stream
      * @param int          $priority
      */
-    final protected function printMessage( $message, OutputStream $stream, $priority )
+    final protected function printMessage($message, OutputStream $stream, $priority)
     {
 
         if ($message !== null) {
@@ -102,16 +102,16 @@ class HtmlColorLogger extends DefaultLogger
                 $this->colorsSet = true;
             }
 
-            $search = array( '<', '>' );
-            $replace = array( '&lt;', '&gt;' );
-            $message = str_replace( $search, $replace, $message );
+            $search = array('<', '>');
+            $replace = array('&lt;', '&gt;');
+            $message = str_replace($search, $replace, $message);
 
-            $search = array( "\t", "\n", "\r" );
-            $replace = array( '&nbsp;&nbsp;&nbsp;', '<br>', '' );
-            $message = str_replace( $search, $replace, $message );
+            $search = array("\t", "\n", "\r");
+            $replace = array('&nbsp;&nbsp;&nbsp;', '<br>', '');
+            $message = str_replace($search, $replace, $message);
 
-            if (preg_match( '@^( +)([^ ].+)@', $message, $matches )) {
-                $len = strlen( $matches[1] );
+            if (preg_match('@^( +)([^ ].+)@', $message, $matches)) {
+                $len = strlen($matches[1]);
                 $space = '&nbsp;';
                 for ($i = 1; $i < $len; $i++) {
                     $space .= '&nbsp;';
@@ -137,7 +137,7 @@ class HtmlColorLogger extends DefaultLogger
                     break;
             }
 
-            $stream->write( $message.'<br/>' );
+            $stream->write($message.'<br/>');
         }
     }
 
@@ -148,18 +148,18 @@ class HtmlColorLogger extends DefaultLogger
     final private function setColors()
     {
 
-        $systemColorFile = new PhingFile( Phing::getResourcePath( "phing/listener/defaults.properties" ) );
+        $systemColorFile = new PhingFile(Phing::getResourcePath("phing/listener/defaults.properties"));
 
         try {
             $prop = new Properties();
 
-            $prop->load( $systemColorFile );
+            $prop->load($systemColorFile);
 
-            $err = $prop->getProperty( "HtmlColorLogger.ERROR_CLASS" );
-            $warn = $prop->getProperty( "HtmlColorLogger.WARNING_CLASS" );
-            $info = $prop->getProperty( "HtmlColorLogger.INFO_CLASS" );
-            $verbose = $prop->getProperty( "HtmlColorLogger.VERBOSE_CLASS" );
-            $debug = $prop->getProperty( "HtmlColorLogger.DEBUG_CLASS" );
+            $err = $prop->getProperty("HtmlColorLogger.ERROR_CLASS");
+            $warn = $prop->getProperty("HtmlColorLogger.WARNING_CLASS");
+            $info = $prop->getProperty("HtmlColorLogger.INFO_CLASS");
+            $verbose = $prop->getProperty("HtmlColorLogger.VERBOSE_CLASS");
+            $debug = $prop->getProperty("HtmlColorLogger.DEBUG_CLASS");
             if ($err !== null) {
                 $this->errColor = self::PREFIX.$err.self::SUFFIX;
             }
@@ -175,7 +175,7 @@ class HtmlColorLogger extends DefaultLogger
             if ($debug !== null) {
                 $this->debugColor = self::PREFIX.$debug.self::SUFFIX;
             }
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             //Ignore exception - we will use the defaults.
         }
     }

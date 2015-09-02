@@ -38,10 +38,10 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
      */
     protected $serializableTrace;
 
-    public function __construct( $message = '', $code = 0, Exception $previous = null )
+    public function __construct($message = '', $code = 0, Exception $previous = null)
     {
 
-        parent::__construct( $message, $code, $previous );
+        parent::__construct($message, $code, $previous);
 
         $this->serializableTrace = $this->getTrace();
         foreach ($this->serializableTrace as $i => $call) {
@@ -66,9 +66,9 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
     public function __toString()
     {
 
-        $string = PHPUnit_Framework_TestFailure::exceptionToString( $this );
+        $string = PHPUnit_Framework_TestFailure::exceptionToString($this);
 
-        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace( $this )) {
+        if ($trace = PHPUnit_Util_Filter::getFilteredStacktrace($this)) {
             $string .= "\n".$trace;
         }
 
@@ -78,6 +78,6 @@ class PHPUnit_Framework_Exception extends RuntimeException implements PHPUnit_Ex
     public function __sleep()
     {
 
-        return array_keys( get_object_vars( $this ) );
+        return array_keys(get_object_vars($this));
     }
 }

@@ -72,7 +72,7 @@ class ComposerTask extends Task
     public function init()
     {
 
-        $this->setPhp( $this->project->getProperty( 'php.interpreter' ) );
+        $this->setPhp($this->project->getProperty('php.interpreter'));
     }
 
     /**
@@ -94,18 +94,18 @@ class ComposerTask extends Task
     {
 
         $commandLine = $this->prepareCommandLine();
-        $this->log( "executing ".$commandLine );
+        $this->log("executing ".$commandLine);
 
-        $composerFile = new SplFileInfo( $this->getComposer() );
+        $composerFile = new SplFileInfo($this->getComposer());
         if (false === $composerFile->isFile()) {
-            throw new BuildException( sprintf( 'Composer binary not found, path is "%s"', $composerFile ) );
+            throw new BuildException(sprintf('Composer binary not found, path is "%s"', $composerFile));
         }
 
         $return = 0;
-        passthru( $commandLine, $return );
+        passthru($commandLine, $return);
 
         if ($return > 0) {
-            throw new BuildException( "Composer execution failed" );
+            throw new BuildException("Composer execution failed");
         }
     }
 
@@ -117,11 +117,11 @@ class ComposerTask extends Task
     private function prepareCommandLine()
     {
 
-        $this->commandLine->setExecutable( $this->getPhp() );
+        $this->commandLine->setExecutable($this->getPhp());
         //We are un-shifting arguments to the beginning of the command line because arguments should be at the end
-        $this->commandLine->createArgument( true )->setValue( $this->getCommand() );
-        $this->commandLine->createArgument( true )->setValue( $this->getComposer() );
-        $commandLine = strval( $this->commandLine );
+        $this->commandLine->createArgument(true)->setValue($this->getCommand());
+        $this->commandLine->createArgument(true)->setValue($this->getComposer());
+        $commandLine = strval($this->commandLine);
         //Creating new Commandline instance. It allows to handle subsequent calls correctly
         $this->commandLine = new Commandline();
 
@@ -144,7 +144,7 @@ class ComposerTask extends Task
      *
      * @param string $php
      */
-    public function setPhp( $php )
+    public function setPhp($php)
     {
 
         $this->php = $php;
@@ -166,7 +166,7 @@ class ComposerTask extends Task
      *
      * @param string $command
      */
-    public function setCommand( $command )
+    public function setCommand($command)
     {
 
         $this->command = $command;
@@ -188,7 +188,7 @@ class ComposerTask extends Task
      *
      * @param string $console
      */
-    public function setComposer( $console )
+    public function setComposer($console)
     {
 
         $this->composer = $console;

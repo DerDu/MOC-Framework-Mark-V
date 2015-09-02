@@ -40,7 +40,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_STRING_CONCAT );
+        return array(T_STRING_CONCAT);
 
     }//end register()
 
@@ -54,7 +54,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -62,7 +62,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
             || $tokens[( $stackPtr + 1 )]['code'] === T_WHITESPACE
         ) {
             $message = 'Concat operator must not be surrounded by spaces';
-            $phpcsFile->addError( $message, $stackPtr, 'Missing' );
+            $phpcsFile->addError($message, $stackPtr, 'Missing');
         }
 
     }//end process()

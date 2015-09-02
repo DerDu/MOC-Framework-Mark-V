@@ -23,10 +23,10 @@ class FailingAdapter extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    public function searchInDirectory( $dir )
+    public function searchInDirectory($dir)
     {
 
-        throw new AdapterFailureException( $this );
+        throw new AdapterFailureException($this);
     }
 
     /**

@@ -38,7 +38,7 @@ abstract class Reader
      *
      * @param int $len
      */
-    abstract public function read( $len = null );
+    abstract public function read($len = null);
 
     /**
      * Close stream.
@@ -61,7 +61,7 @@ abstract class Reader
      *
      * @param int $n
      */
-    public function skip( $n )
+    public function skip($n)
     {
     }
 

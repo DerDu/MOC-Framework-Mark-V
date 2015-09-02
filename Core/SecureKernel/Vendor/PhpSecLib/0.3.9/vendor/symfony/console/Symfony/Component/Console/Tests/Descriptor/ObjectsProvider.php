@@ -29,10 +29,10 @@ class ObjectsProvider
     {
 
         return array(
-            'input_argument_1' => new InputArgument( 'argument_name', InputArgument::REQUIRED ),
-            'input_argument_2' => new InputArgument( 'argument_name', InputArgument::IS_ARRAY, 'argument description' ),
-            'input_argument_3' => new InputArgument( 'argument_name', InputArgument::OPTIONAL, 'argument description',
-                'default_value' ),
+            'input_argument_1' => new InputArgument('argument_name', InputArgument::REQUIRED),
+            'input_argument_2' => new InputArgument('argument_name', InputArgument::IS_ARRAY, 'argument description'),
+            'input_argument_3' => new InputArgument('argument_name', InputArgument::OPTIONAL, 'argument description',
+                'default_value'),
         );
     }
 
@@ -40,13 +40,13 @@ class ObjectsProvider
     {
 
         return array(
-            'input_option_1' => new InputOption( 'option_name', 'o', InputOption::VALUE_NONE ),
-            'input_option_2' => new InputOption( 'option_name', 'o', InputOption::VALUE_OPTIONAL, 'option description',
-                'default_value' ),
-            'input_option_3' => new InputOption( 'option_name', 'o', InputOption::VALUE_REQUIRED,
-                'option description' ),
-            'input_option_4' => new InputOption( 'option_name', 'o',
-                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'option description', array() ),
+            'input_option_1' => new InputOption('option_name', 'o', InputOption::VALUE_NONE),
+            'input_option_2' => new InputOption('option_name', 'o', InputOption::VALUE_OPTIONAL, 'option description',
+                'default_value'),
+            'input_option_3' => new InputOption('option_name', 'o', InputOption::VALUE_REQUIRED,
+                'option description'),
+            'input_option_4' => new InputOption('option_name', 'o',
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'option description', array()),
         );
     }
 
@@ -55,16 +55,16 @@ class ObjectsProvider
 
         return array(
             'input_definition_1' => new InputDefinition(),
-            'input_definition_2' => new InputDefinition( array(
-                new InputArgument( 'argument_name', InputArgument::REQUIRED )
-            ) ),
-            'input_definition_3' => new InputDefinition( array(
-                new InputOption( 'option_name', 'o', InputOption::VALUE_NONE )
-            ) ),
-            'input_definition_4' => new InputDefinition( array(
-                new InputArgument( 'argument_name', InputArgument::REQUIRED ),
-                new InputOption( 'option_name', 'o', InputOption::VALUE_NONE ),
-            ) ),
+            'input_definition_2' => new InputDefinition(array(
+                new InputArgument('argument_name', InputArgument::REQUIRED)
+            )),
+            'input_definition_3' => new InputDefinition(array(
+                new InputOption('option_name', 'o', InputOption::VALUE_NONE)
+            )),
+            'input_definition_4' => new InputDefinition(array(
+                new InputArgument('argument_name', InputArgument::REQUIRED),
+                new InputOption('option_name', 'o', InputOption::VALUE_NONE),
+            )),
         );
     }
 

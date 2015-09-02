@@ -82,28 +82,28 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
      *
      * @return mixed buffer, -1 on EOF
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
 
-        $lines = explode( "\n", $buffer );
+        $lines = explode("\n", $buffer);
         $matched = array();
-        $containsSize = count( $this->_contains );
+        $containsSize = count($this->_contains);
 
         foreach ($lines as $line) {
             for ($i = 0; $i < $containsSize; $i++) {
                 $containsStr = $this->_contains[$i]->getValue();
-                if (strstr( $line, $containsStr ) === false) {
+                if (strstr($line, $containsStr) === false) {
                     $line = null;
                     break;
                 }
@@ -112,7 +112,7 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
                 $matched[] = $line;
             }
         }
-        $filtered_buffer = implode( "\n", $matched );
+        $filtered_buffer = implode("\n", $matched);
 
         return $filtered_buffer;
     }
@@ -128,8 +128,8 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
             foreach ($params as $param) {
                 if (self::CONTAINS_KEY == $param->getType()) {
                     $cont = new Contains();
-                    $cont->setValue( $param->getValue() );
-                    array_push( $this->_contains, $cont );
+                    $cont->setValue($param->getValue());
+                    array_push($this->_contains, $cont);
                     break; // because we only support a single contains
                 }
             }
@@ -152,27 +152,27 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
         $ch = -1;
 
         if ($this->_line !== null) {
-            $ch = substr( $this->_line, 0, 1 );
-            if (strlen( $this->_line ) === 1) {
+            $ch = substr($this->_line, 0, 1);
+            if (strlen($this->_line) === 1) {
                 $this->_line = null;
             } else {
-                $this->_line = substr( $this->_line, 1 );
+                $this->_line = substr($this->_line, 1);
             }
         } else {
             $this->_line = $this->readLine();
             if ($this->_line === null) {
                 $ch = -1;
             } else {
-                $containsSize = count( $this->_contains );
+                $containsSize = count($this->_contains);
                 for ($i = 0; $i < $containsSize; $i++) {
                     $containsStr = $this->_contains[$i]->getValue();
-                    if (strstr( $this->_line, $containsStr ) === false) {
+                    if (strstr($this->_line, $containsStr) === false) {
                         $this->_line = null;
                         break;
                     }
@@ -194,7 +194,7 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
     public function createContains()
     {
 
-        $num = array_push( $this->_contains, new Contains() );
+        $num = array_push($this->_contains, new Contains());
 
         return $this->_contains[$num - 1];
     }
@@ -209,13 +209,13 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
      * @return LineContains A new filter based on this configuration, but filtering
      *                      the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new LineContains( $reader );
-        $newFilter->setContains( $this->getContains() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new LineContains($reader);
+        $newFilter->setContains($this->getContains());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -245,12 +245,12 @@ class LineContains extends BaseParamFilterReader implements ChainableReader
      *
      * @throws Exception
      */
-    public function setContains( $contains )
+    public function setContains($contains)
     {
 
         // type check, error must never occur, bad code of it does
-        if (!is_array( $contains )) {
-            throw new Exception( "Excpected array got something else" );
+        if (!is_array($contains)) {
+            throw new Exception("Excpected array got something else");
         }
 
         $this->_contains = $contains;
@@ -286,7 +286,7 @@ class Contains
      *
      * @param string $contains
      */
-    public function setValue( $contains )
+    public function setValue($contains)
     {
 
         $this->_value = (string)$contains;

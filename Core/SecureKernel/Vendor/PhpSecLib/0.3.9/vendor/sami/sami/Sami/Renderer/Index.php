@@ -20,7 +20,7 @@ class Index implements \Serializable
     protected $versions;
     protected $namespaces;
 
-    public function __construct( Project $project = null )
+    public function __construct(Project $project = null)
     {
 
         $this->classes = array();
@@ -39,7 +39,7 @@ class Index implements \Serializable
 
         $this->namespaces = array();
         if (null !== $project) {
-            $this->namespaces = $project->getConfig( 'simulate_namespaces' ) ? $project->getSimulatedNamespaces() : $project->getNamespaces();
+            $this->namespaces = $project->getConfig('simulate_namespaces') ? $project->getSimulatedNamespaces() : $project->getNamespaces();
         }
     }
 
@@ -61,7 +61,7 @@ class Index implements \Serializable
         return $this->namespaces;
     }
 
-    public function getHash( $class )
+    public function getHash($class)
     {
 
         return isset( $this->classes[$class] ) ? $this->classes[$class] : false;
@@ -70,12 +70,12 @@ class Index implements \Serializable
     public function serialize()
     {
 
-        return serialize( array( $this->classes, $this->versions, $this->namespaces ) );
+        return serialize(array($this->classes, $this->versions, $this->namespaces));
     }
 
-    public function unserialize( $data )
+    public function unserialize($data)
     {
 
-        list( $this->classes, $this->versions, $this->namespaces ) = unserialize( $data );
+        list( $this->classes, $this->versions, $this->namespaces ) = unserialize($data);
     }
 }

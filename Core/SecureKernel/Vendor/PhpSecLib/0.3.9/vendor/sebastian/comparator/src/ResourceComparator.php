@@ -30,10 +30,10 @@ class ResourceComparator extends Comparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
-        return is_resource( $expected ) && is_resource( $actual );
+        return is_resource($expected) && is_resource($actual);
     }
 
     /**
@@ -52,15 +52,15 @@ class ResourceComparator extends Comparator
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals( $expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false )
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
 
         if ($actual != $expected) {
             throw new ComparisonFailure(
                 $expected,
                 $actual,
-                $this->exporter->export( $expected ),
-                $this->exporter->export( $actual )
+                $this->exporter->export($expected),
+                $this->exporter->export($actual)
             );
         }
     }

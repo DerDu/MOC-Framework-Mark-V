@@ -41,7 +41,7 @@ class SourceFileScanner
     /**
      * @param Task $task The task we should log messages through
      */
-    public function __construct( $task )
+    public function __construct($task)
     {
 
         $this->task = $task;
@@ -60,13 +60,13 @@ class SourceFileScanner
      *
      * @return array
      */
-    public function restrictAsFiles( &$files, &$srcDir, &$destDir, &$mapper )
+    public function restrictAsFiles(&$files, &$srcDir, &$destDir, &$mapper)
     {
 
-        $res = $this->restrict( $files, $srcDir, $destDir, $mapper );
+        $res = $this->restrict($files, $srcDir, $destDir, $mapper);
         $result = array();
-        for ($i = 0; $i < count( $res ); $i++) {
-            $result[$i] = new PhingFile( $srcDir, $res[$i] );
+        for ($i = 0; $i < count($res); $i++) {
+            $result[$i] = new PhingFile($srcDir, $res[$i]);
         }
 
         return $result;
@@ -87,7 +87,7 @@ class SourceFileScanner
      *
      * @return array
      */
-    public function restrict( &$files, $srcDir, $destDir, $mapper, $force = false )
+    public function restrict(&$files, $srcDir, $destDir, $mapper, $force = false)
     {
 
         $now = time();
@@ -98,30 +98,30 @@ class SourceFileScanner
           be able to check file modification times.
           (Windows has a max resolution of two secs for modification times)
         */
-        $osname = strtolower( Phing::getProperty( 'os.name' ) );
+        $osname = strtolower(Phing::getProperty('os.name'));
 
         // indexOf()
-        $index = ( ( ( $res = strpos( $osname, 'win' ) ) === false ) ? -1 : $res );
+        $index = ( ( ( $res = strpos($osname, 'win') ) === false ) ? -1 : $res );
         if ($index >= 0) {
             $now += 2000;
         }
 
         $v = array();
 
-        for ($i = 0, $size = count( $files ); $i < $size; $i++) {
+        for ($i = 0, $size = count($files); $i < $size; $i++) {
 
-            $targets = $mapper->main( $files[$i] );
+            $targets = $mapper->main($files[$i]);
             if (empty( $targets )) {
-                $this->task->log( $files[$i]." skipped - don't know how to handle it", Project::MSG_VERBOSE );
+                $this->task->log($files[$i]." skipped - don't know how to handle it", Project::MSG_VERBOSE);
                 continue;
             }
 
             $src = null;
             try {
                 if ($srcDir === null) {
-                    $src = new PhingFile( $files[$i] );
+                    $src = new PhingFile($files[$i]);
                 } else {
-                    $src = $this->fileUtils->resolveFile( $srcDir, $files[$i] );
+                    $src = $this->fileUtils->resolveFile($srcDir, $files[$i]);
                 }
 
                 if ($src->lastModified() > $now) {
@@ -130,21 +130,21 @@ class SourceFileScanner
                         Project::MSG_WARN
                     );
                 }
-            } catch( IOException $ioe ) {
-                $this->task->log( "Unable to read file ".$files[$i]." (skipping): ".$ioe->getMessage() );
+            } catch (IOException $ioe) {
+                $this->task->log("Unable to read file ".$files[$i]." (skipping): ".$ioe->getMessage());
                 continue;
             }
 
             $added = false;
             $targetList = "";
 
-            for ($j = 0, $_j = count( $targets ); ( !$added && $j < $_j ); $j++) {
+            for ($j = 0, $_j = count($targets); ( !$added && $j < $_j ); $j++) {
 
                 $dest = null;
                 if ($destDir === null) {
-                    $dest = new PhingFile( $targets[$j] );
+                    $dest = new PhingFile($targets[$j]);
                 } else {
-                    $dest = $this->fileUtils->resolveFile( $destDir, $targets[$j] );
+                    $dest = $this->fileUtils->resolveFile($destDir, $targets[$j]);
                 }
 
                 if (!$dest->exists()) {
@@ -169,7 +169,7 @@ class SourceFileScanner
                     $v[] = $files[$i];
                     $added = true;
                 } else {
-                    if (strlen( $targetList ) > 0) {
+                    if (strlen($targetList) > 0) {
                         $targetList .= ", ";
                     }
                     $targetList .= $dest->getAbsolutePath();

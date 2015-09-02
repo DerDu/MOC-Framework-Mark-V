@@ -15,14 +15,14 @@ class Twig_Tests_Node_Expression_TestTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $expr = new Twig_Node_Expression_Constant( 'foo', 1 );
-        $name = new Twig_Node_Expression_Constant( 'null', 1 );
+        $expr = new Twig_Node_Expression_Constant('foo', 1);
+        $name = new Twig_Node_Expression_Constant('null', 1);
         $args = new Twig_Node();
-        $node = new Twig_Node_Expression_Test( $expr, $name, $args, 1 );
+        $node = new Twig_Node_Expression_Test($expr, $name, $args, 1);
 
-        $this->assertEquals( $expr, $node->getNode( 'node' ) );
-        $this->assertEquals( $args, $node->getNode( 'arguments' ) );
-        $this->assertEquals( $name, $node->getAttribute( 'name' ) );
+        $this->assertEquals($expr, $node->getNode('node'));
+        $this->assertEquals($args, $node->getNode('arguments'));
+        $this->assertEquals($name, $node->getAttribute('name'));
     }
 
     public function getTests()
@@ -30,14 +30,14 @@ class Twig_Tests_Node_Expression_TestTest extends Twig_Test_NodeTestCase
 
         $tests = array();
 
-        $expr = new Twig_Node_Expression_Constant( 'foo', 1 );
-        $node = new Twig_Node_Expression_Test_Null( $expr, 'null', new Twig_Node( array() ), 1 );
-        $tests[] = array( $node, '(null === "foo")' );
+        $expr = new Twig_Node_Expression_Constant('foo', 1);
+        $node = new Twig_Node_Expression_Test_Null($expr, 'null', new Twig_Node(array()), 1);
+        $tests[] = array($node, '(null === "foo")');
 
         // test as an anonymous function
         if (PHP_VERSION_ID >= 50300) {
-            $node = $this->createTest( new Twig_Node_Expression_Constant( 'foo', 1 ), 'anonymous',
-                array( new Twig_Node_Expression_Constant( 'foo', 1 ) ) );
+            $node = $this->createTest(new Twig_Node_Expression_Constant('foo', 1), 'anonymous',
+                array(new Twig_Node_Expression_Constant('foo', 1)));
             $tests[] = array(
                 $node,
                 'call_user_func_array($this->env->getTest(\'anonymous\')->getCallable(), array("foo", "foo"))'
@@ -47,10 +47,10 @@ class Twig_Tests_Node_Expression_TestTest extends Twig_Test_NodeTestCase
         return $tests;
     }
 
-    protected function createTest( $node, $name, array $arguments = array() )
+    protected function createTest($node, $name, array $arguments = array())
     {
 
-        return new Twig_Node_Expression_Test( $node, $name, new Twig_Node( $arguments ), 1 );
+        return new Twig_Node_Expression_Test($node, $name, new Twig_Node($arguments), 1);
     }
 
     protected function getEnvironment()

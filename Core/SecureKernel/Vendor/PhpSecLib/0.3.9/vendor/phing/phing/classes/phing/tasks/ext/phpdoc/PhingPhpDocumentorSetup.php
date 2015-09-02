@@ -44,13 +44,13 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @internal param string $configDir Directory in which to look for configuration files.
      */
-    public function __construct( $configdir = null, $task )
+    public function __construct($configdir = null, $task)
     {
 
         global $_phpDocumentor_cvsphpfile_exts, $_phpDocumentor_setting, $_phpDocumentor_phpfile_exts;
 
         $this->setup = new Io();
-        $this->render = new phpDocumentor_IntermediateParser( "Default Title" );
+        $this->render = new phpDocumentor_IntermediateParser("Default Title");
 
         $GLOBALS['_phpDocumentor_install_dir'] = $configdir;
         $this->parseIni();
@@ -72,7 +72,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
 
         // Inject our own error tracker to PhpDocumentor
         $GLOBALS['phpDocumentor_errors'] = new PhingPhpDocumentorErrorTracker();
-        $GLOBALS['phpDocumentor_errors']->setTask( $task );
+        $GLOBALS['phpDocumentor_errors']->setTask($task);
 
     }
 
@@ -85,7 +85,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param bool $b
      */
-    public function setGenerateSourcecode( $b )
+    public function setGenerateSourcecode($b)
     {
 
         global $_phpDocumentor_setting;
@@ -101,7 +101,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param array $files Absolute paths to files.
      */
-    public function setRicFiles( $files )
+    public function setRicFiles($files)
     {
 
         global $_phpDocumentor_RIC_files;
@@ -117,17 +117,17 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $tags
      */
-    public function setIgnoreTags( $tags )
+    public function setIgnoreTags($tags)
     {
 
         global $_phpDocumentor_setting;
-        $ignoretags = explode( ',', $tags );
-        $ignoretags = array_map( 'trim', $ignoretags );
+        $ignoretags = explode(',', $tags);
+        $ignoretags = array_map('trim', $ignoretags);
         $tags = array();
         foreach ($ignoretags as $tag) {
             if (!in_array(
                 $tag,
-                array( '@global', '@access', '@package', '@ignore', '@name', '@param', '@return', '@staticvar', '@var' )
+                array('@global', '@access', '@package', '@ignore', '@name', '@param', '@return', '@staticvar', '@var')
             )
             ) {
                 $tags[] = $tag;
@@ -145,7 +145,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param bool $b
      */
-    public function setPear( $b )
+    public function setPear($b)
     {
 
         global $_phpDocumentor_setting;
@@ -161,7 +161,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $dir
      */
-    public function setExamplesDir( $dir )
+    public function setExamplesDir($dir)
     {
 
         global $_phpDocumentor_setting;
@@ -177,10 +177,10 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $name
      */
-    public function setDefaultPackageName( $name )
+    public function setDefaultPackageName($name)
     {
 
-        $GLOBALS['phpDocumentor_DefaultPackageName'] = trim( $name );
+        $GLOBALS['phpDocumentor_DefaultPackageName'] = trim($name);
     }
 
     /**
@@ -192,10 +192,10 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $name
      */
-    public function setDefaultCategoryName( $name )
+    public function setDefaultCategoryName($name)
     {
 
-        $GLOBALS['phpDocumentor_DefaultCategoryName'] = trim( $name );
+        $GLOBALS['phpDocumentor_DefaultCategoryName'] = trim($name);
     }
 
     /**
@@ -223,10 +223,10 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param bool $bEnable
      */
-    public function setUndocumentedelements( $bEnable )
+    public function setUndocumentedelements($bEnable)
     {
 
-        $this->render->setUndocumentedElementWarningsMode( $bEnable );
+        $this->render->setUndocumentedElementWarningsMode($bEnable);
     }
 
     /**
@@ -241,7 +241,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $sCustomtags
      */
-    public function setCustomtags( $sCustomtags )
+    public function setCustomtags($sCustomtags)
     {
 
         global $_phpDocumentor_setting;
@@ -253,7 +253,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup
      *
      * @param string $sIgnore
      */
-    public function setIgnore( $sIgnore )
+    public function setIgnore($sIgnore)
     {
 
         global $_phpDocumentor_setting;

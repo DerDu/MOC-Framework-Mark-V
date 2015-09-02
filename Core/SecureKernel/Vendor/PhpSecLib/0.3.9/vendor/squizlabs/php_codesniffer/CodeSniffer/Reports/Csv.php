@@ -60,9 +60,9 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $filename = str_replace( '"', '\"', $report['filename'] );
-                    $message = str_replace( '"', '\"', $error['message'] );
-                    $type = strtolower( $error['type'] );
+                    $filename = str_replace('"', '\"', $report['filename']);
+                    $message = str_replace('"', '\"', $error['message']);
+                    $type = strtolower($error['type']);
                     $source = $error['source'];
                     $severity = $error['severity'];
                     echo "\"$filename\",$line,$column,$type,\"$message\",$source,$severity".PHP_EOL;

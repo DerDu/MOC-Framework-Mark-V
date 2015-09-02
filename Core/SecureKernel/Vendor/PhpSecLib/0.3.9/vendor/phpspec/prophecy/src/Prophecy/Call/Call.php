@@ -54,7 +54,7 @@ class Call
 
         if ($file) {
             $this->file = $file;
-            $this->line = intval( $line );
+            $this->line = intval($line);
         }
     }
 
@@ -136,6 +136,6 @@ class Call
             return 'unknown';
         }
 
-        return sprintf( '%s:%d', $this->file, $this->line );
+        return sprintf('%s:%d', $this->file, $this->line);
     }
 }

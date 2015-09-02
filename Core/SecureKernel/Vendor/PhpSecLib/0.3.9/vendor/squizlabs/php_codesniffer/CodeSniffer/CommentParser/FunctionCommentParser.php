@@ -13,24 +13,24 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_AbstractParser', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_AbstractParser not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_ParameterElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_ParameterElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_ParameterElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_PairElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_PairElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_PairElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_SingleElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_SingleElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -76,10 +76,10 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      * @param string               $comment   The comment to parse.
      * @param PHP_CodeSniffer_File $phpcsFile The file that this comment is in.
      */
-    public function __construct( $comment, PHP_CodeSniffer_File $phpcsFile )
+    public function __construct($comment, PHP_CodeSniffer_File $phpcsFile)
     {
 
-        parent::__construct( $comment, $phpcsFile );
+        parent::__construct($comment, $phpcsFile);
 
     }//end __construct()
 
@@ -133,7 +133,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      *
      * @return PHP_CodeSniffer_CommentParser_ParameterElement
      */
-    protected function parseParam( $tokens )
+    protected function parseParam($tokens)
     {
 
         $param = new PHP_CodeSniffer_CommentParser_ParameterElement(
@@ -154,7 +154,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      *
      * @return PHP_CodeSniffer_CommentParser_PairElement
      */
-    protected function parseReturn( $tokens )
+    protected function parseReturn($tokens)
     {
 
         $return = new PHP_CodeSniffer_CommentParser_PairElement(
@@ -176,7 +176,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      *
      * @return PHP_CodeSniffer_CommentParser_PairElement
      */
-    protected function parseThrows( $tokens )
+    protected function parseThrows($tokens)
     {
 
         $throws = new PHP_CodeSniffer_CommentParser_PairElement(

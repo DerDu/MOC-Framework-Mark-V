@@ -152,20 +152,20 @@ class rSTTask extends Task
     public function main()
     {
 
-        $tool = $this->getToolPath( $this->format );
-        if (count( $this->filterChains )) {
+        $tool = $this->getToolPath($this->format);
+        if (count($this->filterChains)) {
             $this->fileUtils = new FileUtils();
         }
 
         if ($this->file != '') {
             $file = $this->file;
-            $targetFile = $this->getTargetFile( $file, $this->destination );
-            $this->render( $tool, $file, $targetFile );
+            $targetFile = $this->getTargetFile($file, $this->destination);
+            $this->render($tool, $file, $targetFile);
 
             return;
         }
 
-        if (!count( $this->filesets )) {
+        if (!count($this->filesets)) {
             throw new BuildException(
                 '"file" attribute or "fileset" subtag required'
             );
@@ -179,14 +179,14 @@ class rSTTask extends Task
 
         $project = $this->getProject();
         foreach ($this->filesets as $fs) {
-            $ds = $fs->getDirectoryScanner( $project );
-            $fromDir = $fs->getDir( $project );
+            $ds = $fs->getDirectoryScanner($project);
+            $fromDir = $fs->getDir($project);
             $srcFiles = $ds->getIncludedFiles();
 
             foreach ($srcFiles as $src) {
-                $file = new PhingFile( $fromDir, $src );
+                $file = new PhingFile($fromDir, $src);
                 if ($mapper !== null) {
-                    $results = $mapper->main( $file );
+                    $results = $mapper->main($file);
                     if ($results === null) {
                         throw new BuildException(
                             sprintf(
@@ -195,11 +195,11 @@ class rSTTask extends Task
                             )
                         );
                     }
-                    $targetFile = reset( $results );
+                    $targetFile = reset($results);
                 } else {
-                    $targetFile = $this->getTargetFile( $file, $this->destination );
+                    $targetFile = $this->getTargetFile($file, $this->destination);
                 }
-                $this->render( $tool, $file, $targetFile );
+                $this->render($tool, $file, $targetFile);
             }
         }
     }
@@ -213,7 +213,7 @@ class rSTTask extends Task
      *
      * @throws BuildException When the tool cannot be found
      */
-    protected function getToolPath( $format )
+    protected function getToolPath($format)
     {
 
         if ($this->toolPath !== null) {
@@ -221,10 +221,10 @@ class rSTTask extends Task
         }
 
         $tool = 'rst2'.$format;
-        $path = System::which( $tool );
+        $path = System::which($tool);
         if (!$path) {
             throw new BuildException(
-                sprintf( '"%s" not found. Install python-docutils.', $tool )
+                sprintf('"%s" not found. Install python-docutils.', $tool)
             );
         }
 
@@ -242,11 +242,11 @@ class rSTTask extends Task
      * @return void
      *
      */
-    public function setToolpath( $path )
+    public function setToolpath($path)
     {
 
-        if (!file_exists( $path )) {
-            $fullpath = System::which( $path );
+        if (!file_exists($path)) {
+            $fullpath = System::which($path);
             if ($fullpath === false) {
                 throw new BuildException(
                     'Tool does not exist. Path: '.$path
@@ -254,7 +254,7 @@ class rSTTask extends Task
             }
             $path = $fullpath;
         }
-        if (!is_executable( $path )) {
+        if (!is_executable($path)) {
             throw new BuildException(
                 'Tool not executable. Path: '.$path
             );
@@ -275,18 +275,18 @@ class rSTTask extends Task
      * @uses $format
      * @uses $targetExt
      */
-    public function getTargetFile( $file, $destination = null )
+    public function getTargetFile($file, $destination = null)
     {
 
         if ($destination != ''
-            && substr( $destination, -1 ) !== '/'
-            && substr( $destination, -1 ) !== '\\'
+            && substr($destination, -1) !== '/'
+            && substr($destination, -1) !== '\\'
         ) {
             return $destination;
         }
 
-        if (strtolower( substr( $file, -4 ) ) == '.rst') {
-            $file = substr( $file, 0, -4 );
+        if (strtolower(substr($file, -4)) == '.rst') {
+            $file = substr($file, 0, -4);
         }
 
         return $destination.$file.'.'.self::$targetExt[$this->format];
@@ -301,26 +301,26 @@ class rSTTask extends Task
      *
      * @return void
      */
-    protected function render( $tool, $source, $targetFile )
+    protected function render($tool, $source, $targetFile)
     {
 
-        if (count( $this->filterChains ) == 0) {
-            return $this->renderFile( $tool, $source, $targetFile );
+        if (count($this->filterChains) == 0) {
+            return $this->renderFile($tool, $source, $targetFile);
         }
 
-        $tmpTarget = tempnam( sys_get_temp_dir(), 'rST-' );
-        $this->renderFile( $tool, $source, $tmpTarget );
+        $tmpTarget = tempnam(sys_get_temp_dir(), 'rST-');
+        $this->renderFile($tool, $source, $tmpTarget);
 
         $this->fileUtils->copyFile(
-            new PhingFile( $tmpTarget ),
-            new PhingFile( $targetFile ),
+            new PhingFile($tmpTarget),
+            new PhingFile($targetFile),
             true,
             false,
             $this->filterChains,
             $this->getProject(),
             $this->mode
         );
-        unlink( $tmpTarget );
+        unlink($tmpTarget);
     }
 
     /**
@@ -334,36 +334,36 @@ class rSTTask extends Task
      *
      * @throws BuildException When the conversion fails
      */
-    protected function renderFile( $tool, $source, $targetFile )
+    protected function renderFile($tool, $source, $targetFile)
     {
 
-        if ($this->uptodate && file_exists( $targetFile )
-            && filemtime( $source ) <= filemtime( $targetFile )
+        if ($this->uptodate && file_exists($targetFile)
+            && filemtime($source) <= filemtime($targetFile)
         ) {
             //target is up to date
             return;
         }
         //work around a bug in php by replacing /./ with /
-        $targetDir = str_replace( '/./', '/', dirname( $targetFile ) );
-        if (!is_dir( $targetDir )) {
-            $this->log( "Creating directory '$targetDir'", Project::MSG_VERBOSE );
-            mkdir( $targetDir, $this->mode, true );
+        $targetDir = str_replace('/./', '/', dirname($targetFile));
+        if (!is_dir($targetDir)) {
+            $this->log("Creating directory '$targetDir'", Project::MSG_VERBOSE);
+            mkdir($targetDir, $this->mode, true);
         }
 
         $cmd = $tool
             .' --exit-status=2'
             .' '.$this->toolParam
-            .' '.escapeshellarg( $source )
-            .' '.escapeshellarg( $targetFile )
+            .' '.escapeshellarg($source)
+            .' '.escapeshellarg($targetFile)
             .' 2>&1';
 
-        $this->log( 'command: '.$cmd, Project::MSG_VERBOSE );
-        exec( $cmd, $arOutput, $retval );
+        $this->log('command: '.$cmd, Project::MSG_VERBOSE);
+        exec($cmd, $arOutput, $retval);
         if ($retval != 0) {
-            $this->log( implode( "\n", $arOutput ), Project::MSG_INFO );
-            throw new BuildException( 'Rendering rST failed' );
+            $this->log(implode("\n", $arOutput), Project::MSG_INFO);
+            throw new BuildException('Rendering rST failed');
         }
-        $this->log( implode( "\n", $arOutput ), Project::MSG_DEBUG );
+        $this->log(implode("\n", $arOutput), Project::MSG_DEBUG);
     }
 
     /**
@@ -373,7 +373,7 @@ class rSTTask extends Task
      *
      * @return void
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -388,15 +388,15 @@ class rSTTask extends Task
      *
      * @throws BuildException When the format is not supported
      */
-    public function setFormat( $format )
+    public function setFormat($format)
     {
 
-        if (!in_array( $format, self::$supportedFormats )) {
+        if (!in_array($format, self::$supportedFormats)) {
             throw new BuildException(
                 sprintf(
                     'Invalid output format "%s", allowed are: %s',
                     $format,
-                    implode( ', ', self::$supportedFormats )
+                    implode(', ', self::$supportedFormats)
                 )
             );
         }
@@ -411,7 +411,7 @@ class rSTTask extends Task
      *
      * @return void
      */
-    public function setDestination( $destination )
+    public function setDestination($destination)
     {
 
         $this->destination = $destination;
@@ -424,7 +424,7 @@ class rSTTask extends Task
      *
      * @return void
      */
-    public function setToolparam( $param )
+    public function setToolparam($param)
     {
 
         $this->toolParam = $param;
@@ -437,7 +437,7 @@ class rSTTask extends Task
      *
      * @return void
      */
-    public function setUptodate( $uptodate )
+    public function setUptodate($uptodate)
     {
 
         $this->uptodate = (boolean)$uptodate;
@@ -450,7 +450,7 @@ class rSTTask extends Task
      *
      * @return void
      */
-    public function addFileset( FileSet $fileset )
+    public function addFileset(FileSet $fileset)
     {
 
         $this->filesets[] = $fileset;
@@ -471,7 +471,7 @@ class rSTTask extends Task
                 'Cannot define more than one mapper', $this->location
             );
         }
-        $this->mapperElement = new Mapper( $this->project );
+        $this->mapperElement = new Mapper($this->project);
 
         return $this->mapperElement;
     }
@@ -484,7 +484,7 @@ class rSTTask extends Task
     public function createFilterChain()
     {
 
-        $num = array_push( $this->filterChains, new FilterChain( $this->project ) );
+        $num = array_push($this->filterChains, new FilterChain($this->project));
 
         return $this->filterChains[$num - 1];
     }

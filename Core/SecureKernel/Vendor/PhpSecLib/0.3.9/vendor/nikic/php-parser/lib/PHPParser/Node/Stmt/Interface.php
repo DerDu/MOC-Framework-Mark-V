@@ -23,7 +23,7 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt
      *                           'stmts'   => array(): Statements
      * @param array  $attributes Additional attributes
      */
-    public function __construct( $name, array $subNodes = array(), array $attributes = array() )
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
     {
 
         parent::__construct(
@@ -36,13 +36,13 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt
         $this->name = $name;
 
         if (isset( self::$specialNames[(string)$this->name] )) {
-            throw new PHPParser_Error( sprintf( 'Cannot use \'%s\' as class name as it is reserved', $this->name ) );
+            throw new PHPParser_Error(sprintf('Cannot use \'%s\' as class name as it is reserved', $this->name));
         }
 
         foreach ($this->extends as $interface) {
             if (isset( self::$specialNames[(string)$interface] )) {
-                throw new PHPParser_Error( sprintf( 'Cannot use \'%s\' as interface name as it is reserved',
-                    $interface ) );
+                throw new PHPParser_Error(sprintf('Cannot use \'%s\' as interface name as it is reserved',
+                    $interface));
             }
         }
     }

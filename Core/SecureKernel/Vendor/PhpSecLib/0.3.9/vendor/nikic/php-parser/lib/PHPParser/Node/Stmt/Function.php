@@ -19,7 +19,7 @@ class PHPParser_Node_Stmt_Function extends PHPParser_Node_Stmt
      *                           'stmts'  => array(): Statements
      * @param array  $attributes Additional attributes
      */
-    public function __construct( $name, array $subNodes = array(), array $attributes = array() )
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
     {
 
         parent::__construct(

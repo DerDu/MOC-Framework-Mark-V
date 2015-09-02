@@ -44,9 +44,9 @@ class FileSet extends AbstractFileSet
     {
 
         if ($this->isReference()) {
-            return new FileSet( $this->getRef( $this->getProject() ) );
+            return new FileSet($this->getRef($this->getProject()));
         } else {
-            return new FileSet( $this );
+            return new FileSet($this);
         }
     }
 }

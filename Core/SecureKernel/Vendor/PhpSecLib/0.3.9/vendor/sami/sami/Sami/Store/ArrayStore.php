@@ -26,7 +26,7 @@ class ArrayStore implements StoreInterface
 
     private $classes = array();
 
-    public function setClasses( $classes )
+    public function setClasses($classes)
     {
 
         foreach ($classes as $class) {
@@ -34,39 +34,39 @@ class ArrayStore implements StoreInterface
         }
     }
 
-    public function readClass( Project $project, $name )
+    public function readClass(Project $project, $name)
     {
 
         if (!isset( $this->classes[$name] )) {
-            throw new \InvalidArgumentException( sprintf( 'Class "%s" does not exist.', $name ) );
+            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $name));
         }
 
         return $this->classes[$name];
     }
 
-    public function removeClass( Project $project, $name )
+    public function removeClass(Project $project, $name)
     {
 
         if (!isset( $this->classes[$name] )) {
-            throw new \InvalidArgumentException( sprintf( 'Class "%s" does not exist.', $name ) );
+            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $name));
         }
 
         unset( $this->classes[$name] );
     }
 
-    public function writeClass( Project $project, ClassReflection $class )
+    public function writeClass(Project $project, ClassReflection $class)
     {
 
         $this->classes[$class->getName()] = $class;
     }
 
-    public function readProject( Project $project )
+    public function readProject(Project $project)
     {
 
         return $this->classes;
     }
 
-    public function flushProject( Project $project )
+    public function flushProject(Project $project)
     {
 
         $this->classes = array();

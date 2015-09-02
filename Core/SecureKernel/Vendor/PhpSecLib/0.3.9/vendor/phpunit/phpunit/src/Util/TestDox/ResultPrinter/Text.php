@@ -21,10 +21,10 @@ class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function startClass( $name )
+    protected function startClass($name)
     {
 
-        $this->write( $this->currentTestClassPrettified."\n" );
+        $this->write($this->currentTestClassPrettified."\n");
     }
 
     /**
@@ -33,16 +33,16 @@ class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_Resul
      * @param string $name
      * @param bool   $success
      */
-    protected function onTest( $name, $success = true )
+    protected function onTest($name, $success = true)
     {
 
         if ($success) {
-            $this->write( ' [x] ' );
+            $this->write(' [x] ');
         } else {
-            $this->write( ' [ ] ' );
+            $this->write(' [ ] ');
         }
 
-        $this->write( $name."\n" );
+        $this->write($name."\n");
     }
 
     /**
@@ -50,9 +50,9 @@ class PHPUnit_Util_TestDox_ResultPrinter_Text extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function endClass( $name )
+    protected function endClass($name)
     {
 
-        $this->write( "\n" );
+        $this->write("\n");
     }
 }

@@ -32,7 +32,7 @@ abstract class DbmsSyntax
     /**
      * @param $db
      */
-    public function applyAttributes( $db )
+    public function applyAttributes($db)
     {
     }
 

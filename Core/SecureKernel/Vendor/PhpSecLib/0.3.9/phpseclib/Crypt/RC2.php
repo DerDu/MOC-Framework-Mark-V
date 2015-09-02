@@ -56,7 +56,7 @@
  *
  * Base cipher class
  */
-if (!class_exists( 'Crypt_Base' )) {
+if (!class_exists('Crypt_Base')) {
     include_once 'Base.php';
 }
 
@@ -72,31 +72,31 @@ if (!class_exists( 'Crypt_Base' )) {
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Counter_.28CTR.29
  */
-define( 'CRYPT_RC2_MODE_CTR', CRYPT_MODE_CTR );
+define('CRYPT_RC2_MODE_CTR', CRYPT_MODE_CTR);
 /**
  * Encrypt / decrypt using the Electronic Code Book mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29
  */
-define( 'CRYPT_RC2_MODE_ECB', CRYPT_MODE_ECB );
+define('CRYPT_RC2_MODE_ECB', CRYPT_MODE_ECB);
 /**
  * Encrypt / decrypt using the Code Book Chaining mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29
  */
-define( 'CRYPT_RC2_MODE_CBC', CRYPT_MODE_CBC );
+define('CRYPT_RC2_MODE_CBC', CRYPT_MODE_CBC);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher_feedback_.28CFB.29
  */
-define( 'CRYPT_RC2_MODE_CFB', CRYPT_MODE_CFB );
+define('CRYPT_RC2_MODE_CFB', CRYPT_MODE_CFB);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Output_feedback_.28OFB.29
  */
-define( 'CRYPT_RC2_MODE_OFB', CRYPT_MODE_OFB );
+define('CRYPT_RC2_MODE_OFB', CRYPT_MODE_OFB);
 /**#@-*/
 
 /**#@+
@@ -106,11 +106,11 @@ define( 'CRYPT_RC2_MODE_OFB', CRYPT_MODE_OFB );
 /**
  * Toggles the internal implementation
  */
-define( 'CRYPT_RC2_MODE_INTERNAL', CRYPT_MODE_INTERNAL );
+define('CRYPT_RC2_MODE_INTERNAL', CRYPT_MODE_INTERNAL);
 /**
  * Toggles the mcrypt implementation
  */
-define( 'CRYPT_RC2_MODE_MCRYPT', CRYPT_MODE_MCRYPT );
+define('CRYPT_RC2_MODE_MCRYPT', CRYPT_MODE_MCRYPT);
 /**#@-*/
 
 /**
@@ -1013,11 +1013,11 @@ class Crypt_RC2 extends Crypt_Base
      *
      * @access public
      */
-    function Crypt_RC2( $mode = CRYPT_RC2_MODE_CBC )
+    function Crypt_RC2($mode = CRYPT_RC2_MODE_CBC)
     {
 
-        parent::Crypt_Base( $mode );
-        $this->setKey( '' );
+        parent::Crypt_Base($mode);
+        $this->setKey('');
     }
 
     /**
@@ -1037,7 +1037,7 @@ class Crypt_RC2 extends Crypt_Base
      * @param String  $key
      * @param Integer $t1 optional          Effective key length in bits.
      */
-    function setKey( $key, $t1 = 0 )
+    function setKey($key, $t1 = 0)
     {
 
         if ($t1 <= 0) {
@@ -1048,8 +1048,8 @@ class Crypt_RC2 extends Crypt_Base
             }
         }
         // Key byte count should be 1..128.
-        $key = strlen( $key ) ? substr( $key, 0, 128 ) : "\x00";
-        $t = strlen( $key );
+        $key = strlen($key) ? substr($key, 0, 128) : "\x00";
+        $t = strlen($key);
 
         // The mcrypt RC2 implementation only supports effective key length
         // of 1024 bits. It is however possible to handle effective key
@@ -1058,7 +1058,7 @@ class Crypt_RC2 extends Crypt_Base
         // to mcrypt.
 
         // Key expansion.
-        $l = array_values( unpack( 'C*', $key ) );
+        $l = array_values(unpack('C*', $key));
         $t8 = ( $t1 + 7 ) >> 3;
         $tm = 0xFF >> ( 8 * $t8 - $t1 );
 
@@ -1075,8 +1075,8 @@ class Crypt_RC2 extends Crypt_Base
 
         // Prepare the key for mcrypt.
         $l[0] = $this->invpitable[$l[0]];
-        array_unshift( $l, 'C*' );
-        parent::setKey( call_user_func_array( 'pack', $l ) );
+        array_unshift($l, 'C*');
+        parent::setKey(call_user_func_array('pack', $l));
     }
 
     /**
@@ -1090,7 +1090,7 @@ class Crypt_RC2 extends Crypt_Base
      *
      * @param Integer $length in bits
      */
-    function setKeyLength( $length )
+    function setKeyLength($length)
     {
 
         if ($length >= 1 && $length <= 1024) {
@@ -1109,13 +1109,13 @@ class Crypt_RC2 extends Crypt_Base
      *
      * @return String
      */
-    function _encryptBlock( $in )
+    function _encryptBlock($in)
     {
 
-        list( $r0, $r1, $r2, $r3 ) = array_values( unpack( 'v*', $in ) );
+        list( $r0, $r1, $r2, $r3 ) = array_values(unpack('v*', $in));
         $keys = $this->keys;
         $limit = 20;
-        $actions = array( $limit => 44, 44 => 64 );
+        $actions = array($limit => 44, 44 => 64);
         $j = 0;
 
         for (; ;) {
@@ -1143,7 +1143,7 @@ class Crypt_RC2 extends Crypt_Base
             }
         }
 
-        return pack( 'vvvv', $r0, $r1, $r2, $r3 );
+        return pack('vvvv', $r0, $r1, $r2, $r3);
     }
 
     /**
@@ -1157,13 +1157,13 @@ class Crypt_RC2 extends Crypt_Base
      *
      * @return String
      */
-    function _decryptBlock( $in )
+    function _decryptBlock($in)
     {
 
-        list( $r0, $r1, $r2, $r3 ) = array_values( unpack( 'v*', $in ) );
+        list( $r0, $r1, $r2, $r3 ) = array_values(unpack('v*', $in));
         $keys = $this->keys;
         $limit = 44;
-        $actions = array( $limit => 20, 20 => 0 );
+        $actions = array($limit => 20, 20 => 0);
         $j = 64;
 
         for (; ;) {
@@ -1191,7 +1191,7 @@ class Crypt_RC2 extends Crypt_Base
             }
         }
 
-        return pack( 'vvvv', $r0, $r1, $r2, $r3 );
+        return pack('vvvv', $r0, $r1, $r2, $r3);
     }
 
     /**
@@ -1205,8 +1205,8 @@ class Crypt_RC2 extends Crypt_Base
 
         // Key has already been expanded in Crypt_RC2::setKey():
         // Only the first value must be altered.
-        $l = unpack( 'Ca/Cb/v*', $this->key );
-        array_unshift( $l, $this->pitable[$l['a']] | ( $l['b'] << 8 ) );
+        $l = unpack('Ca/Cb/v*', $this->key);
+        array_unshift($l, $this->pitable[$l['a']] | ( $l['b'] << 8 ));
         unset( $l['a'] );
         unset( $l['b'] );
         $this->keys = $l;
@@ -1227,13 +1227,13 @@ class Crypt_RC2 extends Crypt_Base
         // for the mixing rounds, for better inline crypt performance [~20% faster].
         // But for memory reason we have to limit those ultra-optimized $lambda_functions to an amount of 10.
         $keys = $this->keys;
-        if (count( $lambda_functions ) >= 10) {
+        if (count($lambda_functions) >= 10) {
             foreach ($this->keys as $k => $v) {
                 $keys[$k] = '$keys['.$k.']';
             }
         }
 
-        $code_hash = md5( str_pad( "Crypt_RC2, {$this->mode}, ", 32, "\0" ).implode( ',', $keys ) );
+        $code_hash = md5(str_pad("Crypt_RC2, {$this->mode}, ", 32, "\0").implode(',', $keys));
 
         // Is there a re-usable $lambda_functions in there?
         // If not, we have to create it.
@@ -1252,7 +1252,7 @@ class Crypt_RC2 extends Crypt_Base
 
             // Create code for encryption.
             $limit = 20;
-            $actions = array( $limit => 44, 44 => 64 );
+            $actions = array($limit => 44, 44 => 64);
             $j = 0;
 
             for (; ;) {
@@ -1290,7 +1290,7 @@ class Crypt_RC2 extends Crypt_Base
 
             // Create code for decryption.
             $limit = 44;
-            $actions = array( $limit => 20, 20 => 0 );
+            $actions = array($limit => 20, 20 => 0);
             $j = 64;
 
             for (; ;) {

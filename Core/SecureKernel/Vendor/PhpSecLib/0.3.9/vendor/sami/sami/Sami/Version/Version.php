@@ -18,7 +18,7 @@ class Version
     protected $name;
     protected $longname;
 
-    public function __construct( $name, $longname = null )
+    public function __construct($name, $longname = null)
     {
 
         $this->name = $name;
@@ -38,7 +38,7 @@ class Version
         return $this->name;
     }
 
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -50,7 +50,7 @@ class Version
         return $this->longname;
     }
 
-    public function setFrozen( $isFrozen )
+    public function setFrozen($isFrozen)
     {
 
         $this->isFrozen = (Boolean)$isFrozen;

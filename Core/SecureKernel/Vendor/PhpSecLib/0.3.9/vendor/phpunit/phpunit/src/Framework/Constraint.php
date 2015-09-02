@@ -43,12 +43,12 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
 
         $success = false;
 
-        if ($this->matches( $other )) {
+        if ($this->matches($other)) {
             $success = true;
         }
 
@@ -57,7 +57,7 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 
@@ -71,7 +71,7 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         return false;
@@ -94,10 +94,10 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
 
         $failureDescription = sprintf(
             'Failed asserting that %s.',
-            $this->failureDescription( $other )
+            $this->failureDescription($other)
         );
 
-        $additionalFailureDescription = $this->additionalFailureDescription( $other );
+        $additionalFailureDescription = $this->additionalFailureDescription($other);
 
         if ($additionalFailureDescription) {
             $failureDescription .= "\n".$additionalFailureDescription;
@@ -126,10 +126,10 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        return $this->exporter->export( $other ).' '.$this->toString();
+        return $this->exporter->export($other).' '.$this->toString();
     }
 
     /**
@@ -142,7 +142,7 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      *
      * @return string
      */
-    protected function additionalFailureDescription( $other )
+    protected function additionalFailureDescription($other)
     {
 
         return '';

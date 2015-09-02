@@ -32,9 +32,9 @@ interface Twig_FunctionInterface
 
     public function needsContext();
 
-    public function getSafe( Twig_Node $filterArgs );
+    public function getSafe(Twig_Node $filterArgs);
 
-    public function setArguments( $arguments );
+    public function setArguments($arguments);
 
     public function getArguments();
 }

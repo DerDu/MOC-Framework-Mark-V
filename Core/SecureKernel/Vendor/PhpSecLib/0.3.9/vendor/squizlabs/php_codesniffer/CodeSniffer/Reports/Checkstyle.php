@@ -54,30 +54,30 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
         $out = new XMLWriter;
         $out->openMemory();
-        $out->setIndent( true );
+        $out->setIndent(true);
 
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
             return false;
         }
 
-        $out->startElement( 'file' );
-        $out->writeAttribute( 'name', $report['filename'] );
+        $out->startElement('file');
+        $out->writeAttribute('name', $report['filename']);
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $error['type'] = strtolower( $error['type'] );
+                    $error['type'] = strtolower($error['type']);
                     if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
-                        $error['message'] = iconv( PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message'] );
+                        $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
                     }
 
-                    $out->startElement( 'error' );
-                    $out->writeAttribute( 'line', $line );
-                    $out->writeAttribute( 'column', $column );
-                    $out->writeAttribute( 'severity', $error['type'] );
-                    $out->writeAttribute( 'message', $error['message'] );
-                    $out->writeAttribute( 'source', $error['source'] );
+                    $out->startElement('error');
+                    $out->writeAttribute('line', $line);
+                    $out->writeAttribute('column', $column);
+                    $out->writeAttribute('severity', $error['type']);
+                    $out->writeAttribute('message', $error['message']);
+                    $out->writeAttribute('source', $error['source']);
                     $out->endElement();
                 }
             }

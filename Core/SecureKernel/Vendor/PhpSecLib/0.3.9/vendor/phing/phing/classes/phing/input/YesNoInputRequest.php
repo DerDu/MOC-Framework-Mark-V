@@ -37,7 +37,7 @@ class YesNoInputRequest extends MultipleChoiceInputRequest
     public function isInputValid()
     {
 
-        return StringHelper::isBoolean( $this->input );
+        return StringHelper::isBoolean($this->input);
     }
 
     /**
@@ -48,6 +48,6 @@ class YesNoInputRequest extends MultipleChoiceInputRequest
     public function getInput()
     {
 
-        return StringHelper::booleanValue( $this->input );
+        return StringHelper::booleanValue($this->input);
     }
 }

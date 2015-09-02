@@ -25,7 +25,7 @@ class PHPUnit_Framework_Constraint_StringStartsWith extends PHPUnit_Framework_Co
     /**
      * @param string $prefix
      */
-    public function __construct( $prefix )
+    public function __construct($prefix)
     {
 
         parent::__construct();
@@ -51,9 +51,9 @@ class PHPUnit_Framework_Constraint_StringStartsWith extends PHPUnit_Framework_Co
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return strpos( $other, $this->prefix ) === 0;
+        return strpos($other, $this->prefix) === 0;
     }
 }

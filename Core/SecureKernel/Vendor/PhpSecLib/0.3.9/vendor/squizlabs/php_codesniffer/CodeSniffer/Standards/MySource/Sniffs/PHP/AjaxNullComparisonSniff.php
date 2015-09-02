@@ -38,7 +38,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -52,16 +52,16 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Make sure it is an API function. We know this by the doc comment.
-        $commentEnd = $phpcsFile->findPrevious( T_DOC_COMMENT, $stackPtr );
-        $commentStart = $phpcsFile->findPrevious( T_DOC_COMMENT, ( $commentEnd - 1 ), null, true );
-        $comment = $phpcsFile->getTokensAsString( $commentStart, ( $commentEnd - $commentStart ) );
-        if (strpos( $comment, '* @api' ) === false) {
+        $commentEnd = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr);
+        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, ( $commentEnd - 1 ), null, true);
+        $comment = $phpcsFile->getTokensAsString($commentStart, ( $commentEnd - $commentStart ));
+        if (strpos($comment, '* @api') === false) {
             return;
         }
 
@@ -84,25 +84,25 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         $end = $tokens[$stackPtr]['scope_closer'];
         for ($i = ( $start + 1 ); $i < $end; $i++) {
             if ($tokens[$i]['code'] !== T_VARIABLE
-                || in_array( $tokens[$i]['content'], $foundVars ) === false
+                || in_array($tokens[$i]['content'], $foundVars) === false
             ) {
                 continue;
             }
 
-            $operator = $phpcsFile->findNext( T_WHITESPACE, ( $i + 1 ), null, true );
+            $operator = $phpcsFile->findNext(T_WHITESPACE, ( $i + 1 ), null, true);
             if ($tokens[$operator]['code'] !== T_IS_IDENTICAL
                 && $tokens[$operator]['code'] !== T_IS_NOT_IDENTICAL
             ) {
                 continue;
             }
 
-            $nullValue = $phpcsFile->findNext( T_WHITESPACE, ( $operator + 1 ), null, true );
+            $nullValue = $phpcsFile->findNext(T_WHITESPACE, ( $operator + 1 ), null, true);
             if ($tokens[$nullValue]['code'] !== T_NULL) {
                 continue;
             }
 
             $error = 'Values submitted via Ajax requests must not be compared directly to NULL; use empty() instead';
-            $phpcsFile->addError( $error, $nullValue, 'Found' );
+            $phpcsFile->addError($error, $nullValue, 'Found');
         }//end for
 
     }//end process()

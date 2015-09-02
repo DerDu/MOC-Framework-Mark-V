@@ -15,10 +15,10 @@ class Twig_Tests_FileExtensionEscapingStrategyTest extends PHPUnit_Framework_Tes
     /**
      * @dataProvider getGuessData
      */
-    public function testGuess( $strategy, $filename )
+    public function testGuess($strategy, $filename)
     {
 
-        $this->assertEquals( $strategy, Twig_FileExtensionEscapingStrategy::guess( $filename ) );
+        $this->assertEquals($strategy, Twig_FileExtensionEscapingStrategy::guess($filename));
     }
 
     public function getGuessData()
@@ -26,24 +26,24 @@ class Twig_Tests_FileExtensionEscapingStrategyTest extends PHPUnit_Framework_Tes
 
         return array(
             // default
-            array( 'html', 'foo.html' ),
-            array( 'html', 'foo.html.twig' ),
-            array( 'html', 'foo' ),
-            array( 'html', 'foo.bar.twig' ),
-            array( 'html', 'foo.txt/foo' ),
-            array( 'html', 'foo.txt/foo.js/' ),
+            array('html', 'foo.html'),
+            array('html', 'foo.html.twig'),
+            array('html', 'foo'),
+            array('html', 'foo.bar.twig'),
+            array('html', 'foo.txt/foo'),
+            array('html', 'foo.txt/foo.js/'),
             // css
-            array( 'css', 'foo.css' ),
-            array( 'css', 'foo.css.twig' ),
-            array( 'css', 'foo.twig.css' ),
+            array('css', 'foo.css'),
+            array('css', 'foo.css.twig'),
+            array('css', 'foo.twig.css'),
             // js
-            array( 'js', 'foo.js' ),
-            array( 'js', 'foo.js.twig' ),
-            array( 'js', 'foo.txt/foo.js' ),
-            array( 'js', 'foo.txt.twig/foo.js' ),
+            array('js', 'foo.js'),
+            array('js', 'foo.js.twig'),
+            array('js', 'foo.txt/foo.js'),
+            array('js', 'foo.txt.twig/foo.js'),
             // txt
-            array( false, 'foo.txt' ),
-            array( false, 'foo.txt.twig' ),
+            array(false, 'foo.txt'),
+            array(false, 'foo.txt.twig'),
         );
     }
 }

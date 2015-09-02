@@ -55,10 +55,10 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setPackage( $package )
+    public function setPackage($package)
     {
 
-        $this->package = escapeshellarg( $package );
+        $this->package = escapeshellarg($package);
     }
 
     /**
@@ -68,7 +68,7 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setLint( $lint )
+    public function setLint($lint)
     {
 
         $this->lint = $lint;
@@ -82,10 +82,10 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setOutput( $output )
+    public function setOutput($output)
     {
 
-        $this->output = escapeshellarg( $output );
+        $this->output = escapeshellarg($output);
     }
 
     /**
@@ -95,10 +95,10 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setPhpbin( $phpbin )
+    public function setPhpbin($phpbin)
     {
 
-        $this->phpbin = escapeshellarg( $phpbin );
+        $this->phpbin = escapeshellarg($phpbin);
     }
 
     /**
@@ -109,10 +109,10 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setScripts( $scripts )
+    public function setScripts($scripts)
     {
 
-        $this->scripts = escapeshellarg( $scripts );
+        $this->scripts = escapeshellarg($scripts);
     }
 
     /**
@@ -123,10 +123,10 @@ class zsdtPackTask extends zsdtBaseTask
      *
      * @return void
      */
-    public function setSource( $source )
+    public function setSource($source)
     {
 
-        $this->source = escapeshellarg( $source );
+        $this->source = escapeshellarg($source);
     }
 
     /**
@@ -156,7 +156,7 @@ class zsdtPackTask extends zsdtBaseTask
                 .'the scripts folder and package folder to be set.'
             );
         } elseif ($this->lint !== false && $this->phpbin === null) {
-            throw new BuildException( 'You set the lint option but not the path to the php executable.' );
+            throw new BuildException('You set the lint option but not the path to the php executable.');
         }
 
         parent::validate();

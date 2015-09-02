@@ -85,7 +85,7 @@ class ChainReaderHelper
     /**
      * @param Reader $reader
      */
-    public function setPrimaryReader( Reader $reader )
+    public function setPrimaryReader(Reader $reader)
     {
 
         $this->primaryReader = $reader;
@@ -98,7 +98,7 @@ class ChainReaderHelper
     /**
      * @param $size
      */
-    public function setBufferSize( $size )
+    public function setBufferSize($size)
     {
 
         $this->bufferSize = $size;
@@ -111,7 +111,7 @@ class ChainReaderHelper
     /**
      * @param $fchain
      */
-    public function setFilterChains( &$fchain )
+    public function setFilterChains(&$fchain)
     {
 
         $this->filterChains = &$fchain;
@@ -130,21 +130,21 @@ class ChainReaderHelper
     {
 
         $instream = $this->primaryReader;
-        $filterReadersCount = count( $this->filterChains );
+        $filterReadersCount = count($this->filterChains);
         $finalFilters = array();
 
         // Collect all filter readers of all filter chains used ...
         for ($i = 0; $i < $filterReadersCount; $i++) {
             $filterchain = &$this->filterChains[$i];
             $filterReaders = $filterchain->getFilterReaders();
-            $readerCount = count( $filterReaders );
+            $readerCount = count($filterReaders);
             for ($j = 0; $j < $readerCount; $j++) {
                 $finalFilters[] = $filterReaders[$j];
             }
         }
 
         // ... then chain the filter readers.
-        $filtersCount = count( $finalFilters );
+        $filtersCount = count($finalFilters);
         if ($filtersCount > 0) {
             for ($i = 0; $i < $filtersCount; $i++) {
                 $filter = $finalFilters[$i];
@@ -157,30 +157,30 @@ class ChainReaderHelper
                     $project = $filter->getProject();
 
                     if ($className !== null) {
-                        $cls = Phing::import( $className, $classpath );
+                        $cls = Phing::import($className, $classpath);
                         $impl = new $cls();
                     }
 
                     if (!( $impl instanceof FilterReader )) {
-                        throw new Exception( $className." does not extend phing.system.io.FilterReader" );
+                        throw new Exception($className." does not extend phing.system.io.FilterReader");
                     }
 
-                    $impl->setReader( $instream ); // chain
-                    $impl->setProject( $this->getProject() ); // what about $project above ?
+                    $impl->setReader($instream); // chain
+                    $impl->setProject($this->getProject()); // what about $project above ?
 
                     if ($impl instanceof Parameterizable) {
-                        $impl->setParameters( $filter->getParams() );
+                        $impl->setParameters($filter->getParams());
                     }
 
                     $instream = $impl; // now that it's been chained
 
                 } elseif (( $filter instanceof ChainableReader ) && ( $filter instanceof Reader )) {
                     if ($this->getProject() !== null && ( $filter instanceof BaseFilterReader )) {
-                        $filter->setProject( $this->getProject() );
+                        $filter->setProject($this->getProject());
                     }
-                    $instream = $filter->chain( $instream );
+                    $instream = $filter->chain($instream);
                 } else {
-                    throw new Exception( "Cannot chain invalid filter: ".get_class( $filter ) );
+                    throw new Exception("Cannot chain invalid filter: ".get_class($filter));
                 }
             }
         }
@@ -205,7 +205,7 @@ class ChainReaderHelper
     /**
      * @param Project $project
      */
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         $this->project = $project;

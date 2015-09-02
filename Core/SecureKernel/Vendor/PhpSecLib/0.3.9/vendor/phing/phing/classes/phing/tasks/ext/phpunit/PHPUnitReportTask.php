@@ -61,7 +61,7 @@ class PHPUnitReportTask extends Task
      *
      * @return void
      */
-    public function setInFile( PhingFile $inFile )
+    public function setInFile(PhingFile $inFile)
     {
 
         $this->inFile = $inFile;
@@ -74,7 +74,7 @@ class PHPUnitReportTask extends Task
      *
      * @return void
      */
-    public function setFormat( $format )
+    public function setFormat($format)
     {
 
         $this->format = $format;
@@ -87,7 +87,7 @@ class PHPUnitReportTask extends Task
      *
      * @return void
      */
-    public function setStyleDir( $styleDir )
+    public function setStyleDir($styleDir)
     {
 
         $this->styleDir = $styleDir;
@@ -101,7 +101,7 @@ class PHPUnitReportTask extends Task
      *
      * @return void
      */
-    public function setToDir( PhingFile $toDir )
+    public function setToDir(PhingFile $toDir)
     {
 
         $this->toDir = $toDir;
@@ -115,7 +115,7 @@ class PHPUnitReportTask extends Task
      *
      * @return void
      */
-    public function setUseSortTable( $useSortTable )
+    public function setUseSortTable($useSortTable)
     {
 
         $this->useSortTable = (boolean)$useSortTable;
@@ -127,8 +127,8 @@ class PHPUnitReportTask extends Task
     public function init()
     {
 
-        if (!class_exists( 'XSLTProcessor' )) {
-            throw new BuildException( "PHPUnitReportTask requires the XSL extension" );
+        if (!class_exists('XSLTProcessor')) {
+            throw new BuildException("PHPUnitReportTask requires the XSL extension");
         }
     }
 
@@ -141,11 +141,11 @@ class PHPUnitReportTask extends Task
     {
 
         $testSuitesDoc = new DOMDocument();
-        $testSuitesDoc->load( (string)$this->inFile );
+        $testSuitesDoc->load((string)$this->inFile);
 
-        $this->fixDocument( $testSuitesDoc );
+        $this->fixDocument($testSuitesDoc);
 
-        $this->transform( $testSuitesDoc );
+        $this->transform($testSuitesDoc);
     }
 
     /**
@@ -156,36 +156,36 @@ class PHPUnitReportTask extends Task
      *
      * @param DOMDocument $document
      */
-    protected function fixDocument( DOMDocument $document )
+    protected function fixDocument(DOMDocument $document)
     {
 
         $rootElement = $document->firstChild;
 
-        $xp = new DOMXPath( $document );
+        $xp = new DOMXPath($document);
 
-        $nodes = $xp->query( "/testsuites/testsuite" );
+        $nodes = $xp->query("/testsuites/testsuite");
 
         foreach ($nodes as $node) {
-            $children = $xp->query( "./testsuite", $node );
+            $children = $xp->query("./testsuite", $node);
 
             if ($children->length) {
                 foreach ($children as $child) {
-                    $rootElement->appendChild( $child );
+                    $rootElement->appendChild($child);
 
-                    if ($child->hasAttribute( 'package' )) {
+                    if ($child->hasAttribute('package')) {
                         continue;
                     }
 
-                    $namespace = $child->getAttribute( 'namespace' );
+                    $namespace = $child->getAttribute('namespace');
 
                     if ($namespace == '') {
                         $namespace = 'default';
                     }
 
-                    $child->setAttribute( 'package', $namespace );
+                    $child->setAttribute('package', $namespace);
                 }
 
-                $rootElement->removeChild( $node );
+                $rootElement->removeChild($node);
             }
         }
     }
@@ -198,33 +198,33 @@ class PHPUnitReportTask extends Task
      * @throws BuildException
      * @throws IOException
      */
-    protected function transform( DOMDocument $document )
+    protected function transform(DOMDocument $document)
     {
 
         if (!$this->toDir->exists()) {
-            throw new BuildException( "Directory '".$this->toDir."' does not exist" );
+            throw new BuildException("Directory '".$this->toDir."' does not exist");
         }
 
         $xslfile = $this->getStyleSheet();
 
         $xsl = new DOMDocument();
-        $xsl->load( $xslfile->getAbsolutePath() );
+        $xsl->load($xslfile->getAbsolutePath());
 
         $proc = new XSLTProcessor();
-        if (defined( 'XSL_SECPREF_WRITE_FILE' )) {
-            if (version_compare( PHP_VERSION, '5.4', "<" )) {
-                ini_set( "xsl.security_prefs", XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY );
+        if (defined('XSL_SECPREF_WRITE_FILE')) {
+            if (version_compare(PHP_VERSION, '5.4', "<")) {
+                ini_set("xsl.security_prefs", XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY);
             } else {
-                $proc->setSecurityPrefs( XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY );
+                $proc->setSecurityPrefs(XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY);
             }
         }
 
-        $proc->importStyleSheet( $xsl );
-        $proc->setParameter( '', 'output.sorttable', (string)$this->useSortTable );
+        $proc->importStyleSheet($xsl);
+        $proc->setParameter('', 'output.sorttable', (string)$this->useSortTable);
 
         if ($this->format == "noframes") {
-            $writer = new FileWriter( new PhingFile( $this->toDir, "phpunit-noframes.html" ) );
-            $writer->write( $proc->transformToXML( $document ) );
+            $writer = new FileWriter(new PhingFile($this->toDir, "phpunit-noframes.html"));
+            $writer->write($proc->transformToXML($document));
             $writer->close();
         } else {
             ExtendedFileStream::registerStream();
@@ -233,13 +233,13 @@ class PHPUnitReportTask extends Task
 
             // urlencode() the path if we're on Windows
             if (FileSystem::getFileSystem()->getSeparator() == '\\') {
-                $toDir = urlencode( $toDir );
+                $toDir = urlencode($toDir);
             }
 
             // no output for the framed report
             // it's all done by extension...
-            $proc->setParameter( '', 'output.dir', $toDir );
-            $proc->transformToXML( $document );
+            $proc->setParameter('', 'output.dir', $toDir);
+            $proc->transformToXML($document);
 
             ExtendedFileStream::unregisterStream();
         }
@@ -256,23 +256,23 @@ class PHPUnitReportTask extends Task
         $xslname = "phpunit-".$this->format.".xsl";
 
         if ($this->styleDir) {
-            $file = new PhingFile( $this->styleDir, $xslname );
+            $file = new PhingFile($this->styleDir, $xslname);
         } else {
-            $path = Phing::getResourcePath( "phing/etc/$xslname" );
+            $path = Phing::getResourcePath("phing/etc/$xslname");
 
             if ($path === null) {
-                $path = Phing::getResourcePath( "etc/$xslname" );
+                $path = Phing::getResourcePath("etc/$xslname");
 
                 if ($path === null) {
-                    throw new BuildException( "Could not find $xslname in resource path" );
+                    throw new BuildException("Could not find $xslname in resource path");
                 }
             }
 
-            $file = new PhingFile( $path );
+            $file = new PhingFile($path);
         }
 
         if (!$file->exists()) {
-            throw new BuildException( "Could not find file ".$file->getPath() );
+            throw new BuildException("Could not find file ".$file->getPath());
         }
 
         return $file;

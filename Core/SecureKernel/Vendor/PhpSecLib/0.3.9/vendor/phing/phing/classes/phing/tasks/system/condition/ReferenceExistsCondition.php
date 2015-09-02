@@ -37,7 +37,7 @@ class ReferenceExistsCondition extends ProjectComponent implements Condition
     /**
      * @param $id
      */
-    public function setRef( $id )
+    public function setRef($id)
     {
 
         $this->refid = (string)$id;
@@ -52,8 +52,8 @@ class ReferenceExistsCondition extends ProjectComponent implements Condition
     {
 
         if ($this->refid === null) {
-            throw new BuildException( "No ref attribute specified for reference-exists "
-                ."condition" );
+            throw new BuildException("No ref attribute specified for reference-exists "
+                ."condition");
         }
         $refs = $this->project->getReferences();
 

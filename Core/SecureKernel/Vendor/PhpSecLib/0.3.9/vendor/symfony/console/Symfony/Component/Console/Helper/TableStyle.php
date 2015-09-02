@@ -48,11 +48,11 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setPaddingChar( $paddingChar )
+    public function setPaddingChar($paddingChar)
     {
 
         if (!$paddingChar) {
-            throw new \LogicException( 'The padding char must not be empty' );
+            throw new \LogicException('The padding char must not be empty');
         }
 
         $this->paddingChar = $paddingChar;
@@ -78,7 +78,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setHorizontalBorderChar( $horizontalBorderChar )
+    public function setHorizontalBorderChar($horizontalBorderChar)
     {
 
         $this->horizontalBorderChar = $horizontalBorderChar;
@@ -104,7 +104,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setVerticalBorderChar( $verticalBorderChar )
+    public function setVerticalBorderChar($verticalBorderChar)
     {
 
         $this->verticalBorderChar = $verticalBorderChar;
@@ -130,7 +130,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setCrossingChar( $crossingChar )
+    public function setCrossingChar($crossingChar)
     {
 
         $this->crossingChar = $crossingChar;
@@ -156,7 +156,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setCellHeaderFormat( $cellHeaderFormat )
+    public function setCellHeaderFormat($cellHeaderFormat)
     {
 
         $this->cellHeaderFormat = $cellHeaderFormat;
@@ -182,7 +182,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setCellRowFormat( $cellRowFormat )
+    public function setCellRowFormat($cellRowFormat)
     {
 
         $this->cellRowFormat = $cellRowFormat;
@@ -208,7 +208,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setCellRowContentFormat( $cellRowContentFormat )
+    public function setCellRowContentFormat($cellRowContentFormat)
     {
 
         $this->cellRowContentFormat = $cellRowContentFormat;
@@ -234,7 +234,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setBorderFormat( $borderFormat )
+    public function setBorderFormat($borderFormat)
     {
 
         $this->borderFormat = $borderFormat;
@@ -260,7 +260,7 @@ class TableStyle
      *
      * @return TableStyle
      */
-    public function setPadType( $padType )
+    public function setPadType($padType)
     {
 
         $this->padType = $padType;

@@ -22,10 +22,10 @@ class UnsupportedAdapter extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    public function searchInDirectory( $dir )
+    public function searchInDirectory($dir)
     {
 
-        return new \ArrayIterator( array() );
+        return new \ArrayIterator(array());
     }
 
     /**

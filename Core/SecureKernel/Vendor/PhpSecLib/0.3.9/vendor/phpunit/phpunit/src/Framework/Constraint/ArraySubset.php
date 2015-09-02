@@ -33,7 +33,7 @@ class PHPUnit_Framework_Constraint_ArraySubset extends PHPUnit_Framework_Constra
      * @param array|ArrayAccess $subset
      * @param bool              $strict Check for object identity
      */
-    public function __construct( $subset, $strict = false )
+    public function __construct($subset, $strict = false)
     {
 
         parent::__construct();
@@ -49,10 +49,10 @@ class PHPUnit_Framework_Constraint_ArraySubset extends PHPUnit_Framework_Constra
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $patched = array_replace_recursive( $other, $this->subset );
+        $patched = array_replace_recursive($other, $this->subset);
 
         if ($this->strict) {
             return $other === $patched;
@@ -71,7 +71,7 @@ class PHPUnit_Framework_Constraint_ArraySubset extends PHPUnit_Framework_Constra
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return 'an array '.$this->toString();
@@ -85,6 +85,6 @@ class PHPUnit_Framework_Constraint_ArraySubset extends PHPUnit_Framework_Constra
     public function toString()
     {
 
-        return 'has the subset '.$this->exporter->export( $this->subset );
+        return 'has the subset '.$this->exporter->export($this->subset);
     }
 }

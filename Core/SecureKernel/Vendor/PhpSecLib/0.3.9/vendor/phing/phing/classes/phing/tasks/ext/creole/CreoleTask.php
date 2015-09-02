@@ -90,8 +90,8 @@ abstract class CreoleTask extends Task
     {
 
         include_once 'creole/Creole.php';
-        if (!class_exists( 'Creole' )) {
-            throw new Exception( "Creole task depends on Creole classes being on include_path. (i.e. include of 'creole/Creole.php' failed.)" );
+        if (!class_exists('Creole')) {
+            throw new Exception("Creole task depends on Creole classes being on include_path. (i.e. include of 'creole/Creole.php' failed.)");
         }
     }
 
@@ -100,7 +100,7 @@ abstract class CreoleTask extends Task
      *
      * @param string $driver driver class name
      */
-    public function setDriver( $driver )
+    public function setDriver($driver)
     {
 
         $this->driver = $driver;
@@ -112,7 +112,7 @@ abstract class CreoleTask extends Task
      *
      * @param bool $autocommit The autocommit to set
      */
-    public function setAutocommit( $autocommit )
+    public function setAutocommit($autocommit)
     {
 
         $this->autocommit = $autocommit;
@@ -124,7 +124,7 @@ abstract class CreoleTask extends Task
      *
      * @param string $version
      */
-    public function setVersion( $version )
+    public function setVersion($version)
     {
 
         $this->version = $version;
@@ -133,7 +133,7 @@ abstract class CreoleTask extends Task
     /**
      * @param $value
      */
-    public function isCaching( $value )
+    public function isCaching($value)
     {
 
         $this->caching = $value;
@@ -146,7 +146,7 @@ abstract class CreoleTask extends Task
      *
      * @param bool $enable
      */
-    public function setCaching( $enable )
+    public function setCaching($enable)
     {
 
         $this->caching = $enable;
@@ -184,18 +184,18 @@ abstract class CreoleTask extends Task
     {
 
         if ($this->url === null) {
-            throw new BuildException( "Url attribute must be set!", $this->location );
+            throw new BuildException("Url attribute must be set!", $this->location);
         }
 
         try {
 
-            $this->log( "Connecting to ".$this->getUrl(), Project::MSG_VERBOSE );
+            $this->log("Connecting to ".$this->getUrl(), Project::MSG_VERBOSE);
             $info = new Properties();
 
-            $dsn = Creole::parseDSN( $this->url );
+            $dsn = Creole::parseDSN($this->url);
 
             if (!isset( $dsn["username"] ) && $this->userId === null) {
-                throw new BuildException( "Username must be in URL or userid attribute must be set.", $this->location );
+                throw new BuildException("Username must be in URL or userid attribute must be set.", $this->location);
             }
 
             if ($this->userId) {
@@ -207,16 +207,16 @@ abstract class CreoleTask extends Task
             }
 
             if ($this->driver) {
-                Creole::registerDriver( $dsn['phptype'], $this->driver );
+                Creole::registerDriver($dsn['phptype'], $this->driver);
             }
 
-            $conn = Creole::getConnection( $dsn );
-            $conn->setAutoCommit( $this->autocommit );
+            $conn = Creole::getConnection($dsn);
+            $conn->setAutoCommit($this->autocommit);
 
             return $conn;
 
-        } catch( SQLException $e ) {
-            throw new BuildException( $e->getMessage(), $this->location );
+        } catch (SQLException $e) {
+            throw new BuildException($e->getMessage(), $this->location);
         }
 
     }
@@ -237,7 +237,7 @@ abstract class CreoleTask extends Task
      *
      * @param string $url
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -259,7 +259,7 @@ abstract class CreoleTask extends Task
      *
      * @param string $userId
      */
-    public function setUserid( $userId )
+    public function setUserid($userId)
     {
 
         $this->userId = $userId;
@@ -281,7 +281,7 @@ abstract class CreoleTask extends Task
      *
      * @param string $password The password to set
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;

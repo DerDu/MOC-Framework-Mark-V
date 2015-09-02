@@ -49,7 +49,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -63,7 +63,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -74,7 +74,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         }
 
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
-        $prevContent = $phpcsFile->findPrevious( T_WHITESPACE, ( $closeBrace - 1 ), null, true );
+        $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ( $closeBrace - 1 ), null, true);
 
         // Special case for empty JS functions
         if ($phpcsFile->tokenizerType === 'JS' && $prevContent === $tokens[$stackPtr]['scope_opener']) {
@@ -82,7 +82,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             // right next to each other.
             if ($tokens[$stackPtr]['scope_closer'] !== ( $tokens[$stackPtr]['scope_opener'] + 1 )) {
                 $error = 'The opening and closing braces of empty functions must be directly next to each other; e.g., function () {}';
-                $phpcsFile->addError( $error, $closeBrace, 'SpacingBetween' );
+                $phpcsFile->addError($error, $closeBrace, 'SpacingBetween');
             }
 
             return;
@@ -92,25 +92,25 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         $prevLine = $tokens[$prevContent]['line'];
 
         $found = ( $braceLine - $prevLine - 1 );
-        if ($phpcsFile->hasCondition( $stackPtr,
-                T_FUNCTION ) === true || isset( $tokens[$stackPtr]['nested_parenthesis'] ) === true
+        if ($phpcsFile->hasCondition($stackPtr,
+                T_FUNCTION) === true || isset( $tokens[$stackPtr]['nested_parenthesis'] ) === true
         ) {
             // Nested function.
             if ($found < 0) {
                 $error = 'Closing brace of nested function must be on a new line';
-                $phpcsFile->addError( $error, $closeBrace, 'ContentBeforeClose' );
+                $phpcsFile->addError($error, $closeBrace, 'ContentBeforeClose');
             } else {
                 if ($found > 0) {
                     $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
-                    $data = array( $found );
-                    $phpcsFile->addError( $error, $closeBrace, 'SpacingBeforeNestedClose', $data );
+                    $data = array($found);
+                    $phpcsFile->addError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
                 }
             }
         } else {
             if ($found !== 1) {
                 $error = 'Expected 1 blank line before closing function brace; %s found';
-                $data = array( $found );
-                $phpcsFile->addError( $error, $closeBrace, 'SpacingBeforeClose', $data );
+                $data = array($found);
+                $phpcsFile->addError($error, $closeBrace, 'SpacingBeforeClose', $data);
             }
         }
 

@@ -1,6 +1,8 @@
 <?php
+
 class ClassThatImplementsSerializable implements Serializable
 {
+
     public function serialize()
     {
 

@@ -70,7 +70,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -81,7 +81,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Ignore comments at the end of code blocks.
-        if (substr( $tokens[$stackPtr]['content'], 0, 6 ) === '//end ') {
+        if (substr($tokens[$stackPtr]['content'], 0, 6) === '//end ') {
             return;
         }
 
@@ -100,36 +100,36 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 have additional whitespace tokens or comment tokens
             */
 
-            $tokenContent = trim( $tokens[$i]['content'] );
+            $tokenContent = trim($tokens[$i]['content']);
 
-            if (substr( $tokenContent, 0, 2 ) === '//') {
-                $tokenContent = substr( $tokenContent, 2 );
+            if (substr($tokenContent, 0, 2) === '//') {
+                $tokenContent = substr($tokenContent, 2);
             }
 
-            if (substr( $tokenContent, 0, 1 ) === '#') {
-                $tokenContent = substr( $tokenContent, 1 );
+            if (substr($tokenContent, 0, 1) === '#') {
+                $tokenContent = substr($tokenContent, 1);
             }
 
-            if (substr( $tokenContent, 0, 3 ) === '/**') {
-                $tokenContent = substr( $tokenContent, 3 );
+            if (substr($tokenContent, 0, 3) === '/**') {
+                $tokenContent = substr($tokenContent, 3);
             }
 
-            if (substr( $tokenContent, 0, 2 ) === '/*') {
-                $tokenContent = substr( $tokenContent, 2 );
+            if (substr($tokenContent, 0, 2) === '/*') {
+                $tokenContent = substr($tokenContent, 2);
             }
 
-            if (substr( $tokenContent, -2 ) === '*/') {
-                $tokenContent = substr( $tokenContent, 0, -2 );
+            if (substr($tokenContent, -2) === '*/') {
+                $tokenContent = substr($tokenContent, 0, -2);
             }
 
-            if (substr( $tokenContent, 0, 1 ) === '*') {
-                $tokenContent = substr( $tokenContent, 1 );
+            if (substr($tokenContent, 0, 1) === '*') {
+                $tokenContent = substr($tokenContent, 1);
             }
 
             $content .= $tokenContent.$phpcsFile->eolChar;
         }//end for
 
-        $content = trim( $content );
+        $content = trim($content);
 
         if ($phpcsFile->tokenizerType === 'PHP') {
             $content .= ' ?>';
@@ -137,14 +137,14 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         // Quite a few comments use multiple dashes, equals signs etc
         // to frame comments and licence headers.
-        $content = preg_replace( '/[-=*]+/', '-', $content );
+        $content = preg_replace('/[-=*]+/', '-', $content);
 
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
-        $oldErrors = ini_get( 'error_reporting' );
-        ini_set( 'error_reporting', 0 );
-        $stringTokens = PHP_CodeSniffer_File::tokenizeString( $content, $phpcsFile->tokenizer, $phpcsFile->eolChar );
-        ini_set( 'error_reporting', $oldErrors );
+        $oldErrors = ini_get('error_reporting');
+        ini_set('error_reporting', 0);
+        $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
             T_WHITESPACE,
@@ -154,7 +154,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             T_NONE,
         );
 
-        $numTokens = count( $stringTokens );
+        $numTokens = count($stringTokens);
 
         /*
             We know what the first two and last two tokens should be
@@ -177,7 +177,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
-        if (in_array( $stringTokens[( $numTokens - 2 )]['code'], PHP_CodeSniffer_Tokens::$emptyTokens ) === false) {
+        if (in_array($stringTokens[( $numTokens - 2 )]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
             return;
         }
 
@@ -186,12 +186,12 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         $numCode = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if (in_array( $stringTokens[$i]['code'], $emptyTokens ) === true) {
+            if (in_array($stringTokens[$i]['code'], $emptyTokens) === true) {
                 // Looks like comment.
                 $numComment++;
             } else {
-                if (in_array( $stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens )
-                    || in_array( $stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens )
+                if (in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens)
+                    || in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens)
                 ) {
                     // Commented out HTML/XML and other docs contain a lot of these
                     // characters, so it is best to not use them directly.
@@ -214,14 +214,14 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             $numCode -= 2;
         }
 
-        $percentCode = ceil( ( ( $numCode / $numTokens ) * 100 ) );
+        $percentCode = ceil(( ( $numCode / $numTokens ) * 100 ));
         if ($percentCode > $this->maxPercentage) {
             // Just in case.
-            $percentCode = min( 100, $percentCode );
+            $percentCode = min(100, $percentCode);
 
             $error = 'This comment is %s%% valid code; is this commented out code?';
-            $data = array( $percentCode );
-            $phpcsFile->addWarning( $error, $stackPtr, 'Found', $data );
+            $data = array($percentCode);
+            $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

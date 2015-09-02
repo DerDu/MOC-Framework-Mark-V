@@ -169,7 +169,7 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     public function testExitCodeText()
     {
 
-        $process = $this->getProcess( 'qdfsmfkqsdfmqmsd' );
+        $process = $this->getProcess('qdfsmfkqsdfmqmsd');
         $process->run();
 
         $process->getExitCodeText();
@@ -187,8 +187,8 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
         array $options = array()
     ) {
 
-        $process = new ProcessInSigchildEnvironment( $commandline, $cwd, $env, $input, $timeout, $options );
-        $process->setEnhanceSigchildCompatibility( false );
+        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
+        $process->setEnhanceSigchildCompatibility(false);
 
         return $process;
     }
@@ -266,25 +266,25 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     public function testStopWithTimeoutIsActuallyWorking()
     {
 
-        $this->markTestSkipped( 'Stopping with signal is not supported in sigchild environment' );
+        $this->markTestSkipped('Stopping with signal is not supported in sigchild environment');
     }
 
     public function testProcessThrowsExceptionWhenExternallySignaled()
     {
 
-        $this->markTestSkipped( 'Retrieving Pid is not supported in sigchild environment' );
+        $this->markTestSkipped('Retrieving Pid is not supported in sigchild environment');
     }
 
     public function testExitCodeIsAvailableAfterSignal()
     {
 
-        $this->markTestSkipped( 'Signal is not supported in sigchild environment' );
+        $this->markTestSkipped('Signal is not supported in sigchild environment');
     }
 
     public function testRunProcessWithTimeout()
     {
 
-        $this->markTestSkipped( 'Signal (required for timeout) is not supported in sigchild environment' );
+        $this->markTestSkipped('Signal (required for timeout) is not supported in sigchild environment');
     }
 
     public function provideStartMethods()

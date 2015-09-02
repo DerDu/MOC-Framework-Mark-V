@@ -63,7 +63,7 @@ class PathToFileSet extends Task
     /**
      * @param PhingFile $dir
      */
-    public function setDir( PhingFile $dir )
+    public function setDir(PhingFile $dir)
     {
 
         $this->dir = $dir;
@@ -72,7 +72,7 @@ class PathToFileSet extends Task
     /**
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -81,7 +81,7 @@ class PathToFileSet extends Task
     /**
      * @param $pathRefId
      */
-    public function setPathRefId( $pathRefId )
+    public function setPathRefId($pathRefId)
     {
 
         $this->pathRefId = $pathRefId;
@@ -90,7 +90,7 @@ class PathToFileSet extends Task
     /**
      * @param $ignoreNonRelative
      */
-    public function setIgnoreNonRelative( $ignoreNonRelative )
+    public function setIgnoreNonRelative($ignoreNonRelative)
     {
 
         $this->ignoreNonRelative = $ignoreNonRelative;
@@ -106,54 +106,54 @@ class PathToFileSet extends Task
     {
 
         if ($this->dir == null) {
-            throw new BuildException( "missing dir" );
+            throw new BuildException("missing dir");
         }
         if ($this->name == null) {
-            throw new BuildException( "missing name" );
+            throw new BuildException("missing name");
         }
         if ($this->pathRefId == null) {
-            throw new BuildException( "missing pathrefid" );
+            throw new BuildException("missing pathrefid");
         }
         if (!$this->dir->isDirectory()) {
             throw new BuildException(
-                $this->dir->toString()." is not a directory" );
+                $this->dir->toString()." is not a directory");
         }
-        $path = $this->getProject()->getReference( $this->pathRefId );
+        $path = $this->getProject()->getReference($this->pathRefId);
         if ($path == null) {
-            throw new BuildException( "Unknown reference ".$this->pathRefId );
+            throw new BuildException("Unknown reference ".$this->pathRefId);
         }
         if (!( $path instanceof Path )) {
-            throw new BuildException( $this->pathRefId." is not a path" );
+            throw new BuildException($this->pathRefId." is not a path");
         }
         $sources = $path->listPaths();
         $fileSet = new FileSet();
-        $fileSet->setProject( $this->getProject() );
-        $fileSet->setDir( $this->dir );
+        $fileSet->setProject($this->getProject());
+        $fileSet->setDir($this->dir);
         $fileUtils = new FileUtils();
-        $dirNormal = $fileUtils->normalize( $this->dir->getAbsolutePath() );
-        $dirNormal = rtrim( $dirNormal, PhingFile::$separator ).PhingFile::$separator;
+        $dirNormal = $fileUtils->normalize($this->dir->getAbsolutePath());
+        $dirNormal = rtrim($dirNormal, PhingFile::$separator).PhingFile::$separator;
 
         $atLeastOne = false;
-        for ($i = 0; $i < count( $sources ); ++$i) {
-            $sourceFile = new PhingFile( $sources[$i] );
+        for ($i = 0; $i < count($sources); ++$i) {
+            $sourceFile = new PhingFile($sources[$i]);
             if (!$sourceFile->exists()) {
                 continue;
             }
-            $includePattern = $this->getIncludePattern( $dirNormal, $sourceFile );
+            $includePattern = $this->getIncludePattern($dirNormal, $sourceFile);
             if ($includePattern === false && !$this->ignoreNonRelative) {
                 throw new BuildException(
-                    $sources[$i]." is not relative to ".$this->dir->getAbsolutePath() );
+                    $sources[$i]." is not relative to ".$this->dir->getAbsolutePath());
             }
             if ($includePattern === false) {
                 continue;
             }
-            $fileSet->createInclude()->setName( $includePattern );
+            $fileSet->createInclude()->setName($includePattern);
             $atLeastOne = true;
         }
         if (!$atLeastOne) {
-            $fileSet->createInclude()->setName( "a:b:c:d//THis si &&& not a file !!! " );
+            $fileSet->createInclude()->setName("a:b:c:d//THis si &&& not a file !!! ");
         }
-        $this->getProject()->addReference( $this->name, $fileSet );
+        $this->getProject()->addReference($this->name, $fileSet);
     }
 
     /**
@@ -163,12 +163,12 @@ class PathToFileSet extends Task
      * @return string|false
      * @throws IOException
      */
-    private function getIncludePattern( $dirNormal, PhingFile $file )
+    private function getIncludePattern($dirNormal, PhingFile $file)
     {
 
         $fileUtils = new FileUtils();
-        $fileNormal = $fileUtils->normalize( $file->getAbsolutePath() );
+        $fileNormal = $fileUtils->normalize($file->getAbsolutePath());
 
-        return rtrim( str_replace( '\\', '/', substr( $fileNormal, strlen( $dirNormal ) ) ), '/' ).'/';
+        return rtrim(str_replace('\\', '/', substr($fileNormal, strlen($dirNormal))), '/').'/';
     }
 }

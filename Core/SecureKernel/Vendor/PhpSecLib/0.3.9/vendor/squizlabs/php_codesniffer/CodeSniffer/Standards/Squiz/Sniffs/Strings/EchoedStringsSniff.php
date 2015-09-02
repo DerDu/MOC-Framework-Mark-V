@@ -40,7 +40,7 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_ECHO );
+        return array(T_ECHO);
 
     }//end register()
 
@@ -54,29 +54,29 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $firstContent = $phpcsFile->findNext( array( T_WHITESPACE ), ( $stackPtr + 1 ), null, true );
+        $firstContent = $phpcsFile->findNext(array(T_WHITESPACE), ( $stackPtr + 1 ), null, true);
         // If the first non-whitespace token is not an opening parenthesis, then we are not concerned.
         if ($tokens[$firstContent]['code'] !== T_OPEN_PARENTHESIS) {
             return;
         }
 
-        $endOfStatement = $phpcsFile->findNext( array( T_SEMICOLON ), $stackPtr, null, false );
+        $endOfStatement = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr, null, false);
 
         // If the token before the semi-colon is not a closing parenthesis, then we are not concerned.
         if ($tokens[( $endOfStatement - 1 )]['code'] !== T_CLOSE_PARENTHESIS) {
             return;
         }
 
-        if (( $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$operators, $stackPtr, $endOfStatement, false ) ) === false
+        if (( $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$operators, $stackPtr, $endOfStatement, false) ) === false
         ) {
             // There are no arithmetic operators in this.
             $error = 'Echoed strings should not be bracketed';
-            $phpcsFile->addError( $error, $stackPtr, 'HasBracket' );
+            $phpcsFile->addError($error, $stackPtr, 'HasBracket');
         }
 
     }//end process()

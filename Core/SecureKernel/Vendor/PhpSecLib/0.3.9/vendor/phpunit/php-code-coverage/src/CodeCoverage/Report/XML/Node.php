@@ -24,10 +24,10 @@ class PHP_CodeCoverage_Report_XML_Node
      */
     private $contextNode;
 
-    public function __construct( DOMElement $context )
+    public function __construct(DOMElement $context)
     {
 
-        $this->setContextNode( $context );
+        $this->setContextNode($context);
     }
 
     public function getTotals()
@@ -44,7 +44,7 @@ class PHP_CodeCoverage_Report_XML_Node
             );
         }
 
-        return new PHP_CodeCoverage_Report_XML_Totals( $totalsContainer );
+        return new PHP_CodeCoverage_Report_XML_Totals($totalsContainer);
     }
 
     protected function getContextNode()
@@ -53,14 +53,14 @@ class PHP_CodeCoverage_Report_XML_Node
         return $this->contextNode;
     }
 
-    protected function setContextNode( DOMElement $context )
+    protected function setContextNode(DOMElement $context)
     {
 
         $this->dom = $context->ownerDocument;
         $this->contextNode = $context;
     }
 
-    public function addDirectory( $name )
+    public function addDirectory($name)
     {
 
         $dirNode = $this->getDom()->createElementNS(
@@ -68,10 +68,10 @@ class PHP_CodeCoverage_Report_XML_Node
             'directory'
         );
 
-        $dirNode->setAttribute( 'name', $name );
-        $this->getContextNode()->appendChild( $dirNode );
+        $dirNode->setAttribute('name', $name);
+        $this->getContextNode()->appendChild($dirNode);
 
-        return new PHP_CodeCoverage_Report_XML_Directory( $dirNode );
+        return new PHP_CodeCoverage_Report_XML_Directory($dirNode);
     }
 
     public function getDom()
@@ -80,7 +80,7 @@ class PHP_CodeCoverage_Report_XML_Node
         return $this->dom;
     }
 
-    public function addFile( $name, $href )
+    public function addFile($name, $href)
     {
 
         $fileNode = $this->getDom()->createElementNS(
@@ -88,10 +88,10 @@ class PHP_CodeCoverage_Report_XML_Node
             'file'
         );
 
-        $fileNode->setAttribute( 'name', $name );
-        $fileNode->setAttribute( 'href', $href );
-        $this->getContextNode()->appendChild( $fileNode );
+        $fileNode->setAttribute('name', $name);
+        $fileNode->setAttribute('href', $href);
+        $this->getContextNode()->appendChild($fileNode);
 
-        return new PHP_CodeCoverage_Report_XML_File( $fileNode );
+        return new PHP_CodeCoverage_Report_XML_File($fileNode);
     }
 }

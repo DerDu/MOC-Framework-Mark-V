@@ -47,7 +47,7 @@ function anything()
  * @return PHPUnit_Framework_Constraint_ArrayHasKey
  * @since  Method available since Release 3.0.0
  */
-function arrayHasKey( $key )
+function arrayHasKey($key)
 {
 
     return call_user_func_array(
@@ -65,7 +65,7 @@ function arrayHasKey( $key )
  *
  * @since  Method available since Release 3.0.0
  */
-function assertArrayHasKey( $key, $array, $message = '' )
+function assertArrayHasKey($key, $array, $message = '')
 {
 
     return call_user_func_array(
@@ -84,7 +84,7 @@ function assertArrayHasKey( $key, $array, $message = '' )
  *
  * @since Method available since Release 4.4.0
  */
-function assertArraySubset( $subset, $array, $strict = false, $message = '' )
+function assertArraySubset($subset, $array, $strict = false, $message = '')
 {
 
     return call_user_func_array(
@@ -102,7 +102,7 @@ function assertArraySubset( $subset, $array, $strict = false, $message = '' )
  *
  * @since  Method available since Release 3.0.0
  */
-function assertArrayNotHasKey( $key, $array, $message = '' )
+function assertArrayNotHasKey($key, $array, $message = '')
 {
 
     return call_user_func_array(
@@ -178,7 +178,7 @@ function assertAttributeContainsOnly(
  *
  * @since Method available since Release 3.6.0
  */
-function assertAttributeCount( $expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -197,7 +197,7 @@ function assertAttributeCount( $expectedCount, $haystackAttributeName, $haystack
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeEmpty( $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeEmpty($haystackAttributeName, $haystackClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -245,7 +245,7 @@ function assertAttributeEquals(
  *
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeGreaterThan( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeGreaterThan($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -264,7 +264,7 @@ function assertAttributeGreaterThan( $expected, $actualAttributeName, $actualCla
  *
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeGreaterThanOrEqual( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeGreaterThanOrEqual($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -283,7 +283,7 @@ function assertAttributeGreaterThanOrEqual( $expected, $actualAttributeName, $ac
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeInstanceOf( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeInstanceOf($expected, $attributeName, $classOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -302,7 +302,7 @@ function assertAttributeInstanceOf( $expected, $attributeName, $classOrObject, $
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeInternalType( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeInternalType($expected, $attributeName, $classOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -321,7 +321,7 @@ function assertAttributeInternalType( $expected, $attributeName, $classOrObject,
  *
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeLessThan( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeLessThan($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -340,7 +340,7 @@ function assertAttributeLessThan( $expected, $actualAttributeName, $actualClassO
  *
  * @since  Method available since Release 3.1.0
  */
-function assertAttributeLessThanOrEqual( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeLessThanOrEqual($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -417,7 +417,7 @@ function assertAttributeNotContainsOnly(
  *
  * @since Method available since Release 3.6.0
  */
-function assertAttributeNotCount( $expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeNotCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -436,7 +436,7 @@ function assertAttributeNotCount( $expectedCount, $haystackAttributeName, $hayst
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotEmpty( $haystackAttributeName, $haystackClassOrObject, $message = '' )
+function assertAttributeNotEmpty($haystackAttributeName, $haystackClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -484,7 +484,7 @@ function assertAttributeNotEquals(
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotInstanceOf( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeNotInstanceOf($expected, $attributeName, $classOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -503,7 +503,7 @@ function assertAttributeNotInstanceOf( $expected, $attributeName, $classOrObject
  *
  * @since Method available since Release 3.5.0
  */
-function assertAttributeNotInternalType( $expected, $attributeName, $classOrObject, $message = '' )
+function assertAttributeNotInternalType($expected, $attributeName, $classOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -521,7 +521,7 @@ function assertAttributeNotInternalType( $expected, $attributeName, $classOrObje
  * @param  object $actualClassOrObject
  * @param  string $message
  */
-function assertAttributeNotSame( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeNotSame($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -539,7 +539,7 @@ function assertAttributeNotSame( $expected, $actualAttributeName, $actualClassOr
  * @param  object $actualClassOrObject
  * @param  string $message
  */
-function assertAttributeSame( $expected, $actualAttributeName, $actualClassOrObject, $message = '' )
+function assertAttributeSame($expected, $actualAttributeName, $actualClassOrObject, $message = '')
 {
 
     return call_user_func_array(
@@ -557,7 +557,7 @@ function assertAttributeSame( $expected, $actualAttributeName, $actualClassOrObj
  *
  * @since  Method available since Release 3.1.0
  */
-function assertClassHasAttribute( $attributeName, $className, $message = '' )
+function assertClassHasAttribute($attributeName, $className, $message = '')
 {
 
     return call_user_func_array(
@@ -575,7 +575,7 @@ function assertClassHasAttribute( $attributeName, $className, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertClassHasStaticAttribute( $attributeName, $className, $message = '' )
+function assertClassHasStaticAttribute($attributeName, $className, $message = '')
 {
 
     return call_user_func_array(
@@ -593,7 +593,7 @@ function assertClassHasStaticAttribute( $attributeName, $className, $message = '
  *
  * @since  Method available since Release 3.1.0
  */
-function assertClassNotHasAttribute( $attributeName, $className, $message = '' )
+function assertClassNotHasAttribute($attributeName, $className, $message = '')
 {
 
     return call_user_func_array(
@@ -611,7 +611,7 @@ function assertClassNotHasAttribute( $attributeName, $className, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertClassNotHasStaticAttribute( $attributeName, $className, $message = '' )
+function assertClassNotHasStaticAttribute($attributeName, $className, $message = '')
 {
 
     return call_user_func_array(
@@ -657,7 +657,7 @@ function assertContains(
  *
  * @since  Method available since Release 3.1.4
  */
-function assertContainsOnly( $type, $haystack, $isNativeType = null, $message = '' )
+function assertContainsOnly($type, $haystack, $isNativeType = null, $message = '')
 {
 
     return call_user_func_array(
@@ -673,7 +673,7 @@ function assertContainsOnly( $type, $haystack, $isNativeType = null, $message = 
  * @param array|Traversable $haystack
  * @param string            $message
  */
-function assertContainsOnlyInstancesOf( $classname, $haystack, $message = '' )
+function assertContainsOnlyInstancesOf($classname, $haystack, $message = '')
 {
 
     return call_user_func_array(
@@ -689,7 +689,7 @@ function assertContainsOnlyInstancesOf( $classname, $haystack, $message = '' )
  * @param mixed  $haystack
  * @param string $message
  */
-function assertCount( $expectedCount, $haystack, $message = '' )
+function assertCount($expectedCount, $haystack, $message = '')
 {
 
     return call_user_func_array(
@@ -706,7 +706,7 @@ function assertCount( $expectedCount, $haystack, $message = '' )
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertEmpty( $actual, $message = '' )
+function assertEmpty($actual, $message = '')
 {
 
     return call_user_func_array(
@@ -773,7 +773,7 @@ function assertEquals(
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotTrue( $condition, $message = '' )
+function assertNotTrue($condition, $message = '')
 {
 
     return call_user_func_array(
@@ -790,7 +790,7 @@ function assertNotTrue( $condition, $message = '' )
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertFalse( $condition, $message = '' )
+function assertFalse($condition, $message = '')
 {
 
     return call_user_func_array(
@@ -811,7 +811,7 @@ function assertFalse( $condition, $message = '' )
  *
  * @since  Method available since Release 3.2.14
  */
-function assertFileEquals( $expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false )
+function assertFileEquals($expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false)
 {
 
     return call_user_func_array(
@@ -828,7 +828,7 @@ function assertFileEquals( $expected, $actual, $message = '', $canonicalize = fa
  *
  * @since  Method available since Release 3.0.0
  */
-function assertFileExists( $filename, $message = '' )
+function assertFileExists($filename, $message = '')
 {
 
     return call_user_func_array(
@@ -849,7 +849,7 @@ function assertFileExists( $filename, $message = '' )
  *
  * @since  Method available since Release 3.2.14
  */
-function assertFileNotEquals( $expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false )
+function assertFileNotEquals($expected, $actual, $message = '', $canonicalize = false, $ignoreCase = false)
 {
 
     return call_user_func_array(
@@ -866,7 +866,7 @@ function assertFileNotEquals( $expected, $actual, $message = '', $canonicalize =
  *
  * @since  Method available since Release 3.0.0
  */
-function assertFileNotExists( $filename, $message = '' )
+function assertFileNotExists($filename, $message = '')
 {
 
     return call_user_func_array(
@@ -884,7 +884,7 @@ function assertFileNotExists( $filename, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertGreaterThan( $expected, $actual, $message = '' )
+function assertGreaterThan($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -902,7 +902,7 @@ function assertGreaterThan( $expected, $actual, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertGreaterThanOrEqual( $expected, $actual, $message = '' )
+function assertGreaterThanOrEqual($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -920,7 +920,7 @@ function assertGreaterThanOrEqual( $expected, $actual, $message = '' )
  *
  * @since Method available since Release 3.5.0
  */
-function assertInstanceOf( $expected, $actual, $message = '' )
+function assertInstanceOf($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -938,7 +938,7 @@ function assertInstanceOf( $expected, $actual, $message = '' )
  *
  * @since Method available since Release 3.5.0
  */
-function assertInternalType( $expected, $actual, $message = '' )
+function assertInternalType($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -955,7 +955,7 @@ function assertInternalType( $expected, $actual, $message = '' )
  *
  * @since  Method available since Release 3.7.20
  */
-function assertJson( $expectedJson, $message = '' )
+function assertJson($expectedJson, $message = '')
 {
 
     return call_user_func_array(
@@ -971,7 +971,7 @@ function assertJson( $expectedJson, $message = '' )
  * @param  string $actualFile
  * @param  string $message
  */
-function assertJsonFileEqualsJsonFile( $expectedFile, $actualFile, $message = '' )
+function assertJsonFileEqualsJsonFile($expectedFile, $actualFile, $message = '')
 {
 
     return call_user_func_array(
@@ -987,7 +987,7 @@ function assertJsonFileEqualsJsonFile( $expectedFile, $actualFile, $message = ''
  * @param  string $actualFile
  * @param  string $message
  */
-function assertJsonFileNotEqualsJsonFile( $expectedFile, $actualFile, $message = '' )
+function assertJsonFileNotEqualsJsonFile($expectedFile, $actualFile, $message = '')
 {
 
     return call_user_func_array(
@@ -1003,7 +1003,7 @@ function assertJsonFileNotEqualsJsonFile( $expectedFile, $actualFile, $message =
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringEqualsJsonFile( $expectedFile, $actualJson, $message = '' )
+function assertJsonStringEqualsJsonFile($expectedFile, $actualJson, $message = '')
 {
 
     return call_user_func_array(
@@ -1019,7 +1019,7 @@ function assertJsonStringEqualsJsonFile( $expectedFile, $actualJson, $message = 
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringEqualsJsonString( $expectedJson, $actualJson, $message = '' )
+function assertJsonStringEqualsJsonString($expectedJson, $actualJson, $message = '')
 {
 
     return call_user_func_array(
@@ -1035,7 +1035,7 @@ function assertJsonStringEqualsJsonString( $expectedJson, $actualJson, $message 
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringNotEqualsJsonFile( $expectedFile, $actualJson, $message = '' )
+function assertJsonStringNotEqualsJsonFile($expectedFile, $actualJson, $message = '')
 {
 
     return call_user_func_array(
@@ -1051,7 +1051,7 @@ function assertJsonStringNotEqualsJsonFile( $expectedFile, $actualJson, $message
  * @param string $actualJson
  * @param string $message
  */
-function assertJsonStringNotEqualsJsonString( $expectedJson, $actualJson, $message = '' )
+function assertJsonStringNotEqualsJsonString($expectedJson, $actualJson, $message = '')
 {
 
     return call_user_func_array(
@@ -1069,7 +1069,7 @@ function assertJsonStringNotEqualsJsonString( $expectedJson, $actualJson, $messa
  *
  * @since  Method available since Release 3.1.0
  */
-function assertLessThan( $expected, $actual, $message = '' )
+function assertLessThan($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1087,7 +1087,7 @@ function assertLessThan( $expected, $actual, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertLessThanOrEqual( $expected, $actual, $message = '' )
+function assertLessThanOrEqual($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1133,7 +1133,7 @@ function assertNotContains(
  *
  * @since  Method available since Release 3.1.4
  */
-function assertNotContainsOnly( $type, $haystack, $isNativeType = null, $message = '' )
+function assertNotContainsOnly($type, $haystack, $isNativeType = null, $message = '')
 {
 
     return call_user_func_array(
@@ -1149,7 +1149,7 @@ function assertNotContainsOnly( $type, $haystack, $isNativeType = null, $message
  * @param mixed  $haystack
  * @param string $message
  */
-function assertNotCount( $expectedCount, $haystack, $message = '' )
+function assertNotCount($expectedCount, $haystack, $message = '')
 {
 
     return call_user_func_array(
@@ -1166,7 +1166,7 @@ function assertNotCount( $expectedCount, $haystack, $message = '' )
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotEmpty( $actual, $message = '' )
+function assertNotEmpty($actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1213,7 +1213,7 @@ function assertNotEquals(
  *
  * @since Method available since Release 3.5.0
  */
-function assertNotInstanceOf( $expected, $actual, $message = '' )
+function assertNotInstanceOf($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1231,7 +1231,7 @@ function assertNotInstanceOf( $expected, $actual, $message = '' )
  *
  * @since Method available since Release 3.5.0
  */
-function assertNotInternalType( $expected, $actual, $message = '' )
+function assertNotInternalType($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1248,7 +1248,7 @@ function assertNotInternalType( $expected, $actual, $message = '' )
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertNotFalse( $condition, $message = '' )
+function assertNotFalse($condition, $message = '')
 {
 
     return call_user_func_array(
@@ -1263,7 +1263,7 @@ function assertNotFalse( $condition, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNotNull( $actual, $message = '' )
+function assertNotNull($actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1281,7 +1281,7 @@ function assertNotNull( $actual, $message = '' )
  *
  * @since  Method available since Release 2.1.0
  */
-function assertNotRegExp( $pattern, $string, $message = '' )
+function assertNotRegExp($pattern, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1299,7 +1299,7 @@ function assertNotRegExp( $pattern, $string, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNotSame( $expected, $actual, $message = '' )
+function assertNotSame($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1316,7 +1316,7 @@ function assertNotSame( $expected, $actual, $message = '' )
  * @param array|Countable|Traversable $actual
  * @param string                      $message
  */
-function assertNotSameSize( $expected, $actual, $message = '' )
+function assertNotSameSize($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1338,7 +1338,7 @@ function assertNotSameSize( $expected, $actual, $message = '' )
  *
  * @since  Method available since Release 3.3.0
  */
-function assertNotTag( $matcher, $actual, $message = '', $isHtml = true )
+function assertNotTag($matcher, $actual, $message = '', $isHtml = true)
 {
 
     return call_user_func_array(
@@ -1353,7 +1353,7 @@ function assertNotTag( $matcher, $actual, $message = '', $isHtml = true )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertNull( $actual, $message = '' )
+function assertNull($actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1371,7 +1371,7 @@ function assertNull( $actual, $message = '' )
  *
  * @since  Method available since Release 3.0.0
  */
-function assertObjectHasAttribute( $attributeName, $object, $message = '' )
+function assertObjectHasAttribute($attributeName, $object, $message = '')
 {
 
     return call_user_func_array(
@@ -1389,7 +1389,7 @@ function assertObjectHasAttribute( $attributeName, $object, $message = '' )
  *
  * @since  Method available since Release 3.0.0
  */
-function assertObjectNotHasAttribute( $attributeName, $object, $message = '' )
+function assertObjectNotHasAttribute($attributeName, $object, $message = '')
 {
 
     return call_user_func_array(
@@ -1405,7 +1405,7 @@ function assertObjectNotHasAttribute( $attributeName, $object, $message = '' )
  * @param  string $string
  * @param  string $message
  */
-function assertRegExp( $pattern, $string, $message = '' )
+function assertRegExp($pattern, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1423,7 +1423,7 @@ function assertRegExp( $pattern, $string, $message = '' )
  * @param  mixed  $actual
  * @param  string $message
  */
-function assertSame( $expected, $actual, $message = '' )
+function assertSame($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1440,7 +1440,7 @@ function assertSame( $expected, $actual, $message = '' )
  * @param array|Countable|Traversable $actual
  * @param string                      $message
  */
-function assertSameSize( $expected, $actual, $message = '' )
+function assertSameSize($expected, $actual, $message = '')
 {
 
     return call_user_func_array(
@@ -1472,7 +1472,7 @@ function assertSameSize( $expected, $actual, $message = '' )
  *
  * @since  Method available since Release 3.3.0
  */
-function assertSelectCount( $selector, $count, $actual, $message = '', $isHtml = true )
+function assertSelectCount($selector, $count, $actual, $message = '', $isHtml = true)
 {
 
     return call_user_func_array(
@@ -1494,7 +1494,7 @@ function assertSelectCount( $selector, $count, $actual, $message = '', $isHtml =
  *
  * @since  Method available since Release 3.3.0
  */
-function assertSelectEquals( $selector, $content, $count, $actual, $message = '', $isHtml = true )
+function assertSelectEquals($selector, $content, $count, $actual, $message = '', $isHtml = true)
 {
 
     return call_user_func_array(
@@ -1516,7 +1516,7 @@ function assertSelectEquals( $selector, $content, $count, $actual, $message = ''
  *
  * @since  Method available since Release 3.3.0
  */
-function assertSelectRegExp( $selector, $pattern, $count, $actual, $message = '', $isHtml = true )
+function assertSelectRegExp($selector, $pattern, $count, $actual, $message = '', $isHtml = true)
 {
 
     return call_user_func_array(
@@ -1534,7 +1534,7 @@ function assertSelectRegExp( $selector, $pattern, $count, $actual, $message = ''
  *
  * @since  Method available since Release 3.4.0
  */
-function assertStringEndsNotWith( $suffix, $string, $message = '' )
+function assertStringEndsNotWith($suffix, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1552,7 +1552,7 @@ function assertStringEndsNotWith( $suffix, $string, $message = '' )
  *
  * @since  Method available since Release 3.4.0
  */
-function assertStringEndsWith( $suffix, $string, $message = '' )
+function assertStringEndsWith($suffix, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1596,7 +1596,7 @@ function assertStringEqualsFile(
  *
  * @since  Method available since Release 3.5.0
  */
-function assertStringMatchesFormat( $format, $string, $message = '' )
+function assertStringMatchesFormat($format, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1614,7 +1614,7 @@ function assertStringMatchesFormat( $format, $string, $message = '' )
  *
  * @since  Method available since Release 3.5.0
  */
-function assertStringMatchesFormatFile( $formatFile, $string, $message = '' )
+function assertStringMatchesFormatFile($formatFile, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1658,7 +1658,7 @@ function assertStringNotEqualsFile(
  *
  * @since  Method available since Release 3.5.0
  */
-function assertStringNotMatchesFormat( $format, $string, $message = '' )
+function assertStringNotMatchesFormat($format, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1676,7 +1676,7 @@ function assertStringNotMatchesFormat( $format, $string, $message = '' )
  *
  * @since  Method available since Release 3.5.0
  */
-function assertStringNotMatchesFormatFile( $formatFile, $string, $message = '' )
+function assertStringNotMatchesFormatFile($formatFile, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1694,7 +1694,7 @@ function assertStringNotMatchesFormatFile( $formatFile, $string, $message = '' )
  *
  * @since  Method available since Release 3.4.0
  */
-function assertStringStartsNotWith( $prefix, $string, $message = '' )
+function assertStringStartsNotWith($prefix, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1712,7 +1712,7 @@ function assertStringStartsNotWith( $prefix, $string, $message = '' )
  *
  * @since  Method available since Release 3.4.0
  */
-function assertStringStartsWith( $prefix, $string, $message = '' )
+function assertStringStartsWith($prefix, $string, $message = '')
 {
 
     return call_user_func_array(
@@ -1857,7 +1857,7 @@ function assertStringStartsWith( $prefix, $string, $message = '' )
  *
  * @since  Method available since Release 3.3.0
  */
-function assertTag( $matcher, $actual, $message = '', $isHtml = true )
+function assertTag($matcher, $actual, $message = '', $isHtml = true)
 {
 
     return call_user_func_array(
@@ -1875,7 +1875,7 @@ function assertTag( $matcher, $actual, $message = '', $isHtml = true )
  *
  * @since  Method available since Release 3.0.0
  */
-function assertThat( $value, PHPUnit_Framework_Constraint $constraint, $message = '' )
+function assertThat($value, PHPUnit_Framework_Constraint $constraint, $message = '')
 {
 
     return call_user_func_array(
@@ -1892,7 +1892,7 @@ function assertThat( $value, PHPUnit_Framework_Constraint $constraint, $message 
  *
  * @throws PHPUnit_Framework_AssertionFailedError
  */
-function assertTrue( $condition, $message = '' )
+function assertTrue($condition, $message = '')
 {
 
     return call_user_func_array(
@@ -1910,7 +1910,7 @@ function assertTrue( $condition, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlFileEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
+function assertXmlFileEqualsXmlFile($expectedFile, $actualFile, $message = '')
 {
 
     return call_user_func_array(
@@ -1928,7 +1928,7 @@ function assertXmlFileEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
  *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlFileNotEqualsXmlFile( $expectedFile, $actualFile, $message = '' )
+function assertXmlFileNotEqualsXmlFile($expectedFile, $actualFile, $message = '')
 {
 
     return call_user_func_array(
@@ -1946,7 +1946,7 @@ function assertXmlFileNotEqualsXmlFile( $expectedFile, $actualFile, $message = '
  *
  * @since  Method available since Release 3.3.0
  */
-function assertXmlStringEqualsXmlFile( $expectedFile, $actualXml, $message = '' )
+function assertXmlStringEqualsXmlFile($expectedFile, $actualXml, $message = '')
 {
 
     return call_user_func_array(
@@ -1964,7 +1964,7 @@ function assertXmlStringEqualsXmlFile( $expectedFile, $actualXml, $message = '' 
  *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlStringEqualsXmlString( $expectedXml, $actualXml, $message = '' )
+function assertXmlStringEqualsXmlString($expectedXml, $actualXml, $message = '')
 {
 
     return call_user_func_array(
@@ -1982,7 +1982,7 @@ function assertXmlStringEqualsXmlString( $expectedXml, $actualXml, $message = ''
  *
  * @since  Method available since Release 3.3.0
  */
-function assertXmlStringNotEqualsXmlFile( $expectedFile, $actualXml, $message = '' )
+function assertXmlStringNotEqualsXmlFile($expectedFile, $actualXml, $message = '')
 {
 
     return call_user_func_array(
@@ -2000,7 +2000,7 @@ function assertXmlStringNotEqualsXmlFile( $expectedFile, $actualXml, $message = 
  *
  * @since  Method available since Release 3.1.0
  */
-function assertXmlStringNotEqualsXmlString( $expectedXml, $actualXml, $message = '' )
+function assertXmlStringNotEqualsXmlString($expectedXml, $actualXml, $message = '')
 {
 
     return call_user_func_array(
@@ -2018,7 +2018,7 @@ function assertXmlStringNotEqualsXmlString( $expectedXml, $actualXml, $message =
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex
  * @since  Method available since Release 3.0.0
  */
-function at( $index )
+function at($index)
 {
 
     return call_user_func_array(
@@ -2051,7 +2051,7 @@ function atLeastOnce()
  * @return PHPUnit_Framework_Constraint_Attribute
  * @since  Method available since Release 3.1.0
  */
-function attribute( PHPUnit_Framework_Constraint $constraint, $attributeName )
+function attribute(PHPUnit_Framework_Constraint $constraint, $attributeName)
 {
 
     return call_user_func_array(
@@ -2097,7 +2097,7 @@ function attributeEqualTo(
  *
  * @return PHPUnit_Framework_Constraint_Callback
  */
-function callback( $callback )
+function callback($callback)
 {
 
     return call_user_func_array(
@@ -2114,7 +2114,7 @@ function callback( $callback )
  * @return PHPUnit_Framework_Constraint_ClassHasAttribute
  * @since  Method available since Release 3.1.0
  */
-function classHasAttribute( $attributeName )
+function classHasAttribute($attributeName)
 {
 
     return call_user_func_array(
@@ -2132,7 +2132,7 @@ function classHasAttribute( $attributeName )
  * @return PHPUnit_Framework_Constraint_ClassHasStaticAttribute
  * @since  Method available since Release 3.1.0
  */
-function classHasStaticAttribute( $attributeName )
+function classHasStaticAttribute($attributeName)
 {
 
     return call_user_func_array(
@@ -2152,7 +2152,7 @@ function classHasStaticAttribute( $attributeName )
  * @return PHPUnit_Framework_Constraint_TraversableContains
  * @since  Method available since Release 3.0.0
  */
-function contains( $value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false )
+function contains($value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
 {
 
     return call_user_func_array(
@@ -2170,7 +2170,7 @@ function contains( $value, $checkForObjectIdentity = true, $checkForNonObjectIde
  * @return PHPUnit_Framework_Constraint_TraversableContainsOnly
  * @since  Method available since Release 3.1.4
  */
-function containsOnly( $type )
+function containsOnly($type)
 {
 
     return call_user_func_array(
@@ -2187,7 +2187,7 @@ function containsOnly( $type )
  *
  * @return PHPUnit_Framework_Constraint_TraversableContainsOnly
  */
-function containsOnlyInstancesOf( $classname )
+function containsOnlyInstancesOf($classname)
 {
 
     return call_user_func_array(
@@ -2208,7 +2208,7 @@ function containsOnlyInstancesOf( $classname )
  * @return PHPUnit_Framework_Constraint_IsEqual
  * @since  Method available since Release 3.0.0
  */
-function equalTo( $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false )
+function equalTo($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
 {
 
     return call_user_func_array(
@@ -2226,7 +2226,7 @@ function equalTo( $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $
  * @return PHPUnit_Framework_MockObject_Matcher_InvokedCount
  * @since  Method available since Release 3.0.0
  */
-function exactly( $count )
+function exactly($count)
 {
 
     return call_user_func_array(
@@ -2258,7 +2258,7 @@ function fileExists()
  * @return PHPUnit_Framework_Constraint_GreaterThan
  * @since  Method available since Release 3.0.0
  */
-function greaterThan( $value )
+function greaterThan($value)
 {
 
     return call_user_func_array(
@@ -2277,7 +2277,7 @@ function greaterThan( $value )
  * @return PHPUnit_Framework_Constraint_Or
  * @since  Method available since Release 3.1.0
  */
-function greaterThanOrEqual( $value )
+function greaterThanOrEqual($value)
 {
 
     return call_user_func_array(
@@ -2294,7 +2294,7 @@ function greaterThanOrEqual( $value )
  * @return PHPUnit_Framework_Constraint_IsIdentical
  * @since  Method available since Release 3.0.0
  */
-function identicalTo( $value )
+function identicalTo($value)
 {
 
     return call_user_func_array(
@@ -2341,7 +2341,7 @@ function isFalse()
  * @return PHPUnit_Framework_Constraint_IsInstanceOf
  * @since  Method available since Release 3.0.0
  */
-function isInstanceOf( $className )
+function isInstanceOf($className)
 {
 
     return call_user_func_array(
@@ -2403,7 +2403,7 @@ function isTrue()
  * @return PHPUnit_Framework_Constraint_IsType
  * @since  Method available since Release 3.0.0
  */
-function isType( $type )
+function isType($type)
 {
 
     return call_user_func_array(
@@ -2420,7 +2420,7 @@ function isType( $type )
  * @return PHPUnit_Framework_Constraint_LessThan
  * @since  Method available since Release 3.0.0
  */
-function lessThan( $value )
+function lessThan($value)
 {
 
     return call_user_func_array(
@@ -2439,7 +2439,7 @@ function lessThan( $value )
  * @return PHPUnit_Framework_Constraint_Or
  * @since  Method available since Release 3.1.0
  */
-function lessThanOrEqual( $value )
+function lessThanOrEqual($value)
 {
 
     return call_user_func_array(
@@ -2471,7 +2471,7 @@ function logicalAnd()
  * @return PHPUnit_Framework_Constraint_Not
  * @since  Method available since Release 3.0.0
  */
-function logicalNot( PHPUnit_Framework_Constraint $constraint )
+function logicalNot(PHPUnit_Framework_Constraint $constraint)
 {
 
     return call_user_func_array(
@@ -2518,7 +2518,7 @@ function logicalXor()
  * @return PHPUnit_Framework_Constraint_StringMatches
  * @since  Method available since Release 3.5.0
  */
-function matches( $string )
+function matches($string)
 {
 
     return call_user_func_array(
@@ -2535,7 +2535,7 @@ function matches( $string )
  * @return PHPUnit_Framework_Constraint_PCREMatch
  * @since  Method available since Release 3.0.0
  */
-function matchesRegularExpression( $pattern )
+function matchesRegularExpression($pattern)
 {
 
     return call_user_func_array(
@@ -2567,7 +2567,7 @@ function never()
  * @return PHPUnit_Framework_Constraint_ObjectHasAttribute
  * @since  Method available since Release 3.0.0
  */
-function objectHasAttribute( $attributeName )
+function objectHasAttribute($attributeName)
 {
 
     return call_user_func_array(
@@ -2612,7 +2612,7 @@ function once()
  * @return PHPUnit_Framework_MockObject_Stub_ReturnArgument
  * @since  Method available since Release 3.3.0
  */
-function returnArgument( $argumentIndex )
+function returnArgument($argumentIndex)
 {
 
     return call_user_func_array(
@@ -2627,7 +2627,7 @@ function returnArgument( $argumentIndex )
  * @return PHPUnit_Framework_MockObject_Stub_ReturnCallback
  * @since  Method available since Release 3.3.0
  */
-function returnCallback( $callback )
+function returnCallback($callback)
 {
 
     return call_user_func_array(
@@ -2659,7 +2659,7 @@ function returnSelf()
  * @return PHPUnit_Framework_MockObject_Stub_Return
  * @since  Method available since Release 3.0.0
  */
-function returnValue( $value )
+function returnValue($value)
 {
 
     return call_user_func_array(
@@ -2674,7 +2674,7 @@ function returnValue( $value )
  * @return PHPUnit_Framework_MockObject_Stub_ReturnValueMap
  * @since  Method available since Release 3.6.0
  */
-function returnValueMap( array $valueMap )
+function returnValueMap(array $valueMap)
 {
 
     return call_user_func_array(
@@ -2692,7 +2692,7 @@ function returnValueMap( array $valueMap )
  * @return PHPUnit_Framework_Constraint_StringContains
  * @since  Method available since Release 3.0.0
  */
-function stringContains( $string, $case = true )
+function stringContains($string, $case = true)
 {
 
     return call_user_func_array(
@@ -2709,7 +2709,7 @@ function stringContains( $string, $case = true )
  * @return PHPUnit_Framework_Constraint_StringEndsWith
  * @since  Method available since Release 3.4.0
  */
-function stringEndsWith( $suffix )
+function stringEndsWith($suffix)
 {
 
     return call_user_func_array(
@@ -2726,7 +2726,7 @@ function stringEndsWith( $suffix )
  * @return PHPUnit_Framework_Constraint_StringStartsWith
  * @since  Method available since Release 3.4.0
  */
-function stringStartsWith( $prefix )
+function stringStartsWith($prefix)
 {
 
     return call_user_func_array(
@@ -2741,7 +2741,7 @@ function stringStartsWith( $prefix )
  * @return PHPUnit_Framework_MockObject_Stub_Exception
  * @since  Method available since Release 3.1.0
  */
-function throwException( Exception $exception )
+function throwException(Exception $exception)
 {
 
     return call_user_func_array(

@@ -13,19 +13,19 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_SingleElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_SingleElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_CommentElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_CommentElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_CommentElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_ParserException', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_ParserException', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_ParserException not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -171,7 +171,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @param string               $comment   The comment to parse.
      * @param PHP_CodeSniffer_File $phpcsFile The file that this comment is in.
      */
-    public function __construct( $comment, PHP_CodeSniffer_File $phpcsFile )
+    public function __construct($comment, PHP_CodeSniffer_File $phpcsFile)
     {
 
         $this->commentString = $comment;
@@ -192,7 +192,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     {
 
         if ($this->_hasParsed === false) {
-            $this->_parse( $this->commentString );
+            $this->_parse($this->commentString);
         }
 
     }//end parse()
@@ -206,23 +206,23 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @return void
      * @see _parseWords()
      */
-    private function _parse( $comment )
+    private function _parse($comment)
     {
 
         // Firstly, remove the comment tags and any stars from the left side.
-        $lines = explode( $this->phpcsFile->eolChar, $comment );
+        $lines = explode($this->phpcsFile->eolChar, $comment);
         foreach ($lines as &$line) {
-            $line = trim( $line );
+            $line = trim($line);
 
             if ($line !== '') {
-                if (substr( $line, 0, 3 ) === '/**') {
-                    $line = substr( $line, 3 );
+                if (substr($line, 0, 3) === '/**') {
+                    $line = substr($line, 3);
                 } else {
-                    if (substr( $line, -2, 2 ) === '*/') {
-                        $line = substr( $line, 0, -2 );
+                    if (substr($line, -2, 2) === '*/') {
+                        $line = substr($line, 0, -2);
                     } else {
                         if ($line{0} === '*') {
-                            $line = substr( $line, 1 );
+                            $line = substr($line, 1);
                         }
                     }
                 }
@@ -238,7 +238,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     $flags
                 );
 
-                $this->words = array_merge( $this->words, $words );
+                $this->words = array_merge($this->words, $words);
             }//end if
         }//end foreach
 
@@ -260,22 +260,22 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     {
 
         $allowedTags = ( self::$_tags + $this->getAllowedTags() );
-        $allowedTagNames = array_keys( $allowedTags );
+        $allowedTagNames = array_keys($allowedTags);
         $prevTagPos = false;
         $wordWasEmpty = true;
 
         foreach ($this->words as $wordPos => $word) {
-            if (trim( $word ) !== '') {
+            if (trim($word) !== '') {
                 $wordWasEmpty = false;
             }
 
             if ($word{0} === '@') {
-                $tag = substr( $word, 1 );
+                $tag = substr($word, 1);
 
                 // Filter out @ tags in the comment description.
                 // A real comment tag should have whitespace and a newline before it.
                 if (isset( $this->words[( $wordPos - 1 )] ) === false
-                    || trim( $this->words[( $wordPos - 1 )] ) !== ''
+                    || trim($this->words[( $wordPos - 1 )]) !== ''
                 ) {
                     continue;
                 }
@@ -288,23 +288,23 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
 
                 $this->foundTags[] = array(
                     'tag'  => $tag,
-                    'line' => $this->getLine( $wordPos ),
+                    'line' => $this->getLine($wordPos),
                     'pos'  => $wordPos,
                 );
 
                 if ($prevTagPos !== false) {
                     // There was a tag before this so let's process it.
-                    $prevTag = substr( $this->words[$prevTagPos], 1 );
-                    $this->parseTag( $prevTag, $prevTagPos, ( $wordPos - 1 ) );
+                    $prevTag = substr($this->words[$prevTagPos], 1);
+                    $this->parseTag($prevTag, $prevTagPos, ( $wordPos - 1 ));
                 } else {
                     // There must have been a comment before this tag, so
                     // let's process that.
-                    $this->parseTag( 'comment', 0, ( $wordPos - 1 ) );
+                    $this->parseTag('comment', 0, ( $wordPos - 1 ));
                 }
 
                 $prevTagPos = $wordPos;
 
-                if (in_array( $tag, $allowedTagNames ) === false) {
+                if (in_array($tag, $allowedTagNames) === false) {
                     // This is not a tag that we process, but let's check to
                     // see if it is a tag we know about. If we don't know about it,
                     // we add it to a list of unknown tags.
@@ -325,10 +325,10 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                         'package_version@',
                     );
 
-                    if (in_array( $tag, $knownTags ) === false) {
+                    if (in_array($tag, $knownTags) === false) {
                         $this->unknown[] = array(
                             'tag'  => $tag,
-                            'line' => $this->getLine( $wordPos ),
+                            'line' => $this->getLine($wordPos),
                             'pos'  => $wordPos,
                         );
                     }
@@ -340,31 +340,31 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         if ($wordWasEmpty === false) {
             if ($prevTagPos === false) {
                 // There must only be a comment in this doc comment.
-                $this->parseTag( 'comment', 0, count( $this->words ) );
+                $this->parseTag('comment', 0, count($this->words));
             } else {
                 // Process the last tag element.
-                $prevTag = substr( $this->words[$prevTagPos], 1 );
-                $numWords = count( $this->words );
+                $prevTag = substr($this->words[$prevTagPos], 1);
+                $numWords = count($this->words);
                 $endPos = $numWords;
 
                 if ($prevTag === 'package' || $prevTag === 'subpackage') {
                     // These are single-word tags, so anything after a newline
                     // is really a comment.
                     for ($endPos = $prevTagPos; $endPos < $numWords; $endPos++) {
-                        if (strpos( $this->words[$endPos], $this->phpcsFile->eolChar ) !== false) {
+                        if (strpos($this->words[$endPos], $this->phpcsFile->eolChar) !== false) {
                             break;
                         }
                     }
                 }
 
-                $this->parseTag( $prevTag, $prevTagPos, $endPos );
+                $this->parseTag($prevTag, $prevTagPos, $endPos);
 
                 if ($endPos !== $numWords) {
                     // Process the final comment, if it is not empty.
-                    $tokens = array_slice( $this->words, ( $endPos + 1 ), $numWords );
-                    $content = implode( '', $tokens );
-                    if (trim( $content ) !== '') {
-                        $this->parseTag( 'comment', ( $endPos + 1 ), $numWords );
+                    $tokens = array_slice($this->words, ( $endPos + 1 ), $numWords);
+                    $content = implode('', $tokens);
+                    if (trim($content) !== '') {
+                        $this->parseTag('comment', ( $endPos + 1 ), $numWords);
                     }
                 }
             }//end if
@@ -392,12 +392,12 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return int
      */
-    protected function getLine( $tokenPos )
+    protected function getLine($tokenPos)
     {
 
         $newlines = 0;
         for ($i = 0; $i < $tokenPos; $i++) {
-            $newlines += substr_count( $this->phpcsFile->eolChar, $this->words[$i] );
+            $newlines += substr_count($this->phpcsFile->eolChar, $this->words[$i]);
         }
 
         return $newlines;
@@ -417,21 +417,21 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @return void
      * @throws Exception If the process method for the tag cannot be found.
      */
-    protected function parseTag( $tag, $start, $end )
+    protected function parseTag($tag, $start, $end)
     {
 
-        $tokens = array_slice( $this->words, ( $start + 1 ), ( $end - $start ) );
+        $tokens = array_slice($this->words, ( $start + 1 ), ( $end - $start ));
 
         $allowedTags = ( self::$_tags + $this->getAllowedTags() );
-        $allowedTagNames = array_keys( $allowedTags );
-        if ($tag === 'comment' || in_array( $tag, $allowedTagNames ) === true) {
+        $allowedTagNames = array_keys($allowedTags);
+        if ($tag === 'comment' || in_array($tag, $allowedTagNames) === true) {
             $method = 'parse'.$tag;
-            if (method_exists( $this, $method ) === false) {
+            if (method_exists($this, $method) === false) {
                 $error = 'Method '.$method.' must be implemented to process '.$tag.' tags';
-                throw new Exception( $error );
+                throw new Exception($error);
             }
 
-            $this->previousElement = $this->$method( $tokens );
+            $this->previousElement = $this->$method($tokens);
         } else {
             $this->previousElement = new PHP_CodeSniffer_CommentParser_SingleElement(
                 $this->previousElement,
@@ -446,7 +446,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         if ($this->previousElement === null
             || ( $this->previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement ) === false
         ) {
-            throw new Exception( 'Parse method must return a DocElement' );
+            throw new Exception('Parse method must return a DocElement');
         }
 
     }//end parseComment()
@@ -572,7 +572,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return DocElement The element that represents this see comment.
      */
-    protected function parseSee( $tokens )
+    protected function parseSee($tokens)
     {
 
         $see = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -594,7 +594,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return DocElement The element that represents this comment element.
      */
-    protected function parseComment( $tokens )
+    protected function parseComment($tokens)
     {
 
         $this->comment = new PHP_CodeSniffer_CommentParser_CommentElement(
@@ -614,7 +614,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return DocElement The element that represents this deprecated tag.
      */
-    protected function parseDeprecated( $tokens )
+    protected function parseDeprecated($tokens)
     {
 
         $this->deprecated = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -635,7 +635,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return SingleElement The element that represents this since tag.
      */
-    protected function parseSince( $tokens )
+    protected function parseSince($tokens)
     {
 
         $this->since = new PHP_CodeSniffer_CommentParser_SingleElement(
@@ -656,7 +656,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return SingleElement The element that represents this link tag.
      */
-    protected function parseLink( $tokens )
+    protected function parseLink($tokens)
     {
 
         $link = new PHP_CodeSniffer_CommentParser_SingleElement(

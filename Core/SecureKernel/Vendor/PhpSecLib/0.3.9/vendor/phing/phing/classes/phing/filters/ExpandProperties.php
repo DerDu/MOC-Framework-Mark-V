@@ -47,7 +47,7 @@ class ExpandProperties extends BaseFilterReader implements ChainableReader
      *
      * @param string $level
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         switch ($level) {
@@ -80,18 +80,18 @@ class ExpandProperties extends BaseFilterReader implements ChainableReader
      * @exception IOException if the underlying stream throws an IOException
      * during reading
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
 
         $project = $this->getProject();
-        $buffer = ProjectConfigurator::replaceProperties( $project, $buffer, $project->getProperties(),
-            $this->logLevel );
+        $buffer = ProjectConfigurator::replaceProperties($project, $buffer, $project->getProperties(),
+            $this->logLevel);
 
         return $buffer;
     }
@@ -106,11 +106,11 @@ class ExpandProperties extends BaseFilterReader implements ChainableReader
      * @return ExpandProperties A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new ExpandProperties( $reader );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new ExpandProperties($reader);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }

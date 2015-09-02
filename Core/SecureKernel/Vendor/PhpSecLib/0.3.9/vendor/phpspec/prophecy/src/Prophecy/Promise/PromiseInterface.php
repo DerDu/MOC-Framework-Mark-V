@@ -32,5 +32,5 @@ interface PromiseInterface
      *
      * @return mixed
      */
-    public function execute( array $args, ObjectProphecy $object, MethodProphecy $method );
+    public function execute(array $args, ObjectProphecy $object, MethodProphecy $method);
 }

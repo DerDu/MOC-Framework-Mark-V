@@ -35,10 +35,10 @@ class SimpleTestSummaryResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $test_name
      */
-    public function paintCaseEnd( $test_name )
+    public function paintCaseEnd($test_name)
     {
 
-        parent::paintCaseEnd( $test_name );
+        parent::paintCaseEnd($test_name);
 
         /* Only count suites where more than one test was run */
         if ($this->getRunCount()) {
@@ -49,7 +49,7 @@ class SimpleTestSummaryResultFormatter extends SimpleTestResultFormatter
             $sb .= " sec\n";
 
             if ($this->out != null) {
-                $this->out->write( $sb );
+                $this->out->write($sb);
             }
         }
     }

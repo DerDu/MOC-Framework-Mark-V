@@ -17,6 +17,7 @@
  */
 interface PHPUnit_Framework_MockObject_Builder_Namespace
 {
+
     /**
      * Looks up the match builder with identification $id and returns it.
      *

@@ -48,7 +48,7 @@ abstract class ConditionBase extends ProjectComponent
     public function countConditions()
     {
 
-        return count( $this->conditions );
+        return count($this->conditions);
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class ConditionBase extends ProjectComponent
     public function getIterator()
     {
 
-        return new ConditionEnumeration( $this );
+        return new ConditionEnumeration($this);
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class ConditionBase extends ProjectComponent
      *
      * @return void
      */
-    public function addAvailable( AvailableTask $a )
+    public function addAvailable(AvailableTask $a)
     {
 
         $this->conditions[] = $a;
@@ -87,7 +87,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/NotCondition.php';
-        $num = array_push( $this->conditions, new NotCondition() );
+        $num = array_push($this->conditions, new NotCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -99,7 +99,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/AndCondition.php';
-        $num = array_push( $this->conditions, new AndCondition() );
+        $num = array_push($this->conditions, new AndCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -111,7 +111,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/OrCondition.php';
-        $num = array_push( $this->conditions, new OrCondition() );
+        $num = array_push($this->conditions, new OrCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -123,7 +123,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/XorCondition.php';
-        $num = array_push( $this->conditions, new XorCondition() );
+        $num = array_push($this->conditions, new XorCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -135,7 +135,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/EqualsCondition.php';
-        $num = array_push( $this->conditions, new EqualsCondition() );
+        $num = array_push($this->conditions, new EqualsCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -147,7 +147,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/OsCondition.php';
-        $num = array_push( $this->conditions, new OsCondition() );
+        $num = array_push($this->conditions, new OsCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -159,7 +159,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/IsFalseCondition.php';
-        $num = array_push( $this->conditions, new IsFalseCondition() );
+        $num = array_push($this->conditions, new IsFalseCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -171,7 +171,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/IsTrueCondition.php';
-        $num = array_push( $this->conditions, new IsTrueCondition() );
+        $num = array_push($this->conditions, new IsTrueCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -183,7 +183,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/ContainsCondition.php';
-        $num = array_push( $this->conditions, new ContainsCondition() );
+        $num = array_push($this->conditions, new ContainsCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -195,7 +195,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/IsSetCondition.php';
-        $num = array_push( $this->conditions, new IsSetCondition() );
+        $num = array_push($this->conditions, new IsSetCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -207,7 +207,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/ReferenceExistsCondition.php';
-        $num = array_push( $this->conditions, new ReferenceExistsCondition() );
+        $num = array_push($this->conditions, new ReferenceExistsCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -216,7 +216,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/VersionCompareCondition.php';
-        $num = array_push( $this->conditions, new VersionCompareCondition() );
+        $num = array_push($this->conditions, new VersionCompareCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -225,7 +225,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/HttpCondition.php';
-        $num = array_push( $this->conditions, new HttpCondition() );
+        $num = array_push($this->conditions, new HttpCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -234,7 +234,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/PhingVersion.php';
-        $num = array_push( $this->conditions, new PhingVersion() );
+        $num = array_push($this->conditions, new PhingVersion());
 
         return $this->conditions[$num - 1];
     }
@@ -243,7 +243,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/HasFreeSpaceCondition.php';
-        $num = array_push( $this->conditions, new HasFreeSpaceCondition() );
+        $num = array_push($this->conditions, new HasFreeSpaceCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -252,7 +252,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/FilesMatch.php';
-        $num = array_push( $this->conditions, new FilesMatch() );
+        $num = array_push($this->conditions, new FilesMatch());
 
         return $this->conditions[$num - 1];
     }
@@ -261,7 +261,7 @@ abstract class ConditionBase extends ProjectComponent
     {
 
         include_once 'phing/tasks/system/condition/SocketCondition.php';
-        $num = array_push( $this->conditions, new SocketCondition() );
+        $num = array_push($this->conditions, new SocketCondition());
 
         return $this->conditions[$num - 1];
     }
@@ -273,11 +273,11 @@ abstract class ConditionBase extends ProjectComponent
      * @throws BuildException
      * @return Condition
      */
-    public function customChildCreator( $elementName, Project $project )
+    public function customChildCreator($elementName, Project $project)
     {
 
-        $condition = $project->createCondition( $elementName );
-        $num = array_push( $this->conditions, $condition );
+        $condition = $project->createCondition($elementName);
+        $num = array_push($this->conditions, $condition);
 
         return $this->conditions[$num - 1];
     }
@@ -302,7 +302,7 @@ class ConditionEnumeration implements Iterator
     /**
      * @param ConditionBase $outer
      */
-    public function __construct( ConditionBase $outer )
+    public function __construct(ConditionBase $outer)
     {
 
         $this->outer = $outer;
@@ -322,7 +322,7 @@ class ConditionEnumeration implements Iterator
 
         $o = $this->outer->conditions[$this->num];
         if ($o instanceof ProjectComponent) {
-            $o->setProject( $this->outer->getProject() );
+            $o->setProject($this->outer->getProject());
         }
 
         return $o;

@@ -41,7 +41,7 @@ class Location
      * @param  integer the line number
      * @param  integer the column number
      */
-    public function Location( $fileName = null, $lineNumber = null, $columnNumber = null )
+    public function Location($fileName = null, $lineNumber = null, $columnNumber = null)
     {
 
         $this->fileName = $fileName;

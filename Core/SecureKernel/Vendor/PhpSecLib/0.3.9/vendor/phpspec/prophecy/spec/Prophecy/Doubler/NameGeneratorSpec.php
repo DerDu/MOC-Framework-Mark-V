@@ -10,34 +10,34 @@ class NameGeneratorSpec extends ObjectBehavior
     /**
      * @param \ReflectionClass $class
      */
-    function its_name_generates_name_based_on_simple_class_reflection( $class )
+    function its_name_generates_name_based_on_simple_class_reflection($class)
     {
 
-        $class->getName()->willReturn( 'stdClass' );
-        $this->name( $class, array() )->shouldStartWith( 'Double\stdClass\\' );
+        $class->getName()->willReturn('stdClass');
+        $this->name($class, array())->shouldStartWith('Double\stdClass\\');
     }
 
     /**
      * @param \ReflectionClass $class
      */
-    function its_name_generates_name_based_on_namespaced_class_reflection( $class )
+    function its_name_generates_name_based_on_namespaced_class_reflection($class)
     {
 
-        $class->getName()->willReturn( 'Some\Custom\Class' );
-        $this->name( $class, array() )->shouldStartWith( 'Double\Some\Custom\Class\P' );
+        $class->getName()->willReturn('Some\Custom\Class');
+        $this->name($class, array())->shouldStartWith('Double\Some\Custom\Class\P');
     }
 
     /**
      * @param \ReflectionClass $interface1
      * @param \ReflectionClass $interface2
      */
-    function its_name_generates_name_based_on_interface_shortnames( $interface1, $interface2 )
+    function its_name_generates_name_based_on_interface_shortnames($interface1, $interface2)
     {
 
-        $interface1->getShortName()->willReturn( 'HandlerInterface' );
-        $interface2->getShortName()->willReturn( 'LoaderInterface' );
+        $interface1->getShortName()->willReturn('HandlerInterface');
+        $interface2->getShortName()->willReturn('LoaderInterface');
 
-        $this->name( null, array( $interface1, $interface2 ) )->shouldStartWith(
+        $this->name(null, array($interface1, $interface2))->shouldStartWith(
             'Double\HandlerInterface\LoaderInterface\P'
         );
     }
@@ -45,7 +45,7 @@ class NameGeneratorSpec extends ObjectBehavior
     function it_generates_proper_name_for_no_class_and_interfaces_list()
     {
 
-        $this->name( null, array() )->shouldStartWith( 'Double\stdClass\P' );
+        $this->name(null, array())->shouldStartWith('Double\stdClass\P');
     }
 
     /**
@@ -59,11 +59,11 @@ class NameGeneratorSpec extends ObjectBehavior
         $interface2
     ) {
 
-        $class->getName()->willReturn( 'Some\Custom\Class' );
-        $interface1->getShortName()->willReturn( 'HandlerInterface' );
-        $interface2->getShortName()->willReturn( 'LoaderInterface' );
+        $class->getName()->willReturn('Some\Custom\Class');
+        $interface1->getShortName()->willReturn('HandlerInterface');
+        $interface2->getShortName()->willReturn('LoaderInterface');
 
-        $this->name( $class, array( $interface1, $interface2 ) )->shouldStartWith(
+        $this->name($class, array($interface1, $interface2))->shouldStartWith(
             'Double\Some\Custom\Class\P'
         );
     }
@@ -72,9 +72,9 @@ class NameGeneratorSpec extends ObjectBehavior
     {
 
         return array(
-            'startWith' => function ( $subject, $string ) {
+            'startWith' => function ($subject, $string) {
 
-                return 0 === strpos( $subject, $string );
+                return 0 === strpos($subject, $string);
             },
         );
     }

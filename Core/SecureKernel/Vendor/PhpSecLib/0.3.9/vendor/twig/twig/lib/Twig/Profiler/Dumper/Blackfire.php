@@ -15,14 +15,14 @@
 class Twig_Profiler_Dumper_Blackfire
 {
 
-    public function dump( Twig_Profiler_Profile $profile )
+    public function dump(Twig_Profiler_Profile $profile)
     {
 
         $data = array();
-        $this->dumpProfile( 'main()', $profile, $data );
-        $this->dumpChildren( 'main()', $profile, $data );
+        $this->dumpProfile('main()', $profile, $data);
+        $this->dumpChildren('main()', $profile, $data);
 
-        $start = microtime( true );
+        $start = microtime(true);
         $str = <<<EOF
 file-format: BlackfireProbe
 cost-dimensions: wt mu pmu
@@ -38,35 +38,35 @@ EOF;
         return $str;
     }
 
-    private function dumpProfile( $edge, Twig_Profiler_Profile $profile, &$data )
+    private function dumpProfile($edge, Twig_Profiler_Profile $profile, &$data)
     {
 
         if (isset( $data[$edge] )) {
             $data[$edge]['ct'] += 1;
-            $data[$edge]['wt'] += floor( $profile->getDuration() * 1000000 );
+            $data[$edge]['wt'] += floor($profile->getDuration() * 1000000);
             $data[$edge]['mu'] += $profile->getMemoryUsage();
             $data[$edge]['pmu'] += $profile->getPeakMemoryUsage();
         } else {
             $data[$edge] = array(
                 'ct'  => 1,
-                'wt'  => floor( $profile->getDuration() * 1000000 ),
+                'wt'  => floor($profile->getDuration() * 1000000),
                 'mu'  => $profile->getMemoryUsage(),
                 'pmu' => $profile->getPeakMemoryUsage(),
             );
         }
     }
 
-    private function dumpChildren( $parent, Twig_Profiler_Profile $profile, &$data )
+    private function dumpChildren($parent, Twig_Profiler_Profile $profile, &$data)
     {
 
         foreach ($profile as $p) {
             if ($p->isTemplate()) {
                 $name = $p->getTemplate();
             } else {
-                $name = sprintf( '%s::%s(%s)', $p->getTemplate(), $p->getType(), $p->getName() );
+                $name = sprintf('%s::%s(%s)', $p->getTemplate(), $p->getType(), $p->getName());
             }
-            $this->dumpProfile( sprintf( '%s==>%s', $parent, $name ), $p, $data );
-            $this->dumpChildren( $name, $p, $data );
+            $this->dumpProfile(sprintf('%s==>%s', $parent, $name), $p, $data);
+            $this->dumpChildren($name, $p, $data);
         }
     }
 }

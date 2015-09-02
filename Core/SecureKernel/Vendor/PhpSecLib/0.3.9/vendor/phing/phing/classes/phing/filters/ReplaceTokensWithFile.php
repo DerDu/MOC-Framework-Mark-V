@@ -132,16 +132,16 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @return mixed filtered stream, -1 on EOF.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
         // read from next filter up the chain
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
@@ -149,8 +149,8 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
 
         // filter buffer
         $buffer = preg_replace_callback(
-            "/".preg_quote( $this->_beginToken )."([\w\.\-:\/]+?)".preg_quote( $this->_endToken )."/",
-            array( $this, 'replaceTokenCallback' ),
+            "/".preg_quote($this->_beginToken)."([\w\.\-:\/]+?)".preg_quote($this->_endToken)."/",
+            array($this, 'replaceTokenCallback'),
             $buffer
         );
 
@@ -166,7 +166,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
     {
 
         $params = $this->getParameters();
-        $n = count( $params );
+        $n = count($params);
 
         if ($params !== null) {
             for ($i = 0; $i < $n; $i++) {
@@ -209,18 +209,18 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new ReplaceTokensWithFile( $reader );
-        $newFilter->setProject( $this->getProject() );
-        $newFilter->setTranslateHTML( $this->getTranslateHTML() );
-        $newFilter->setDir( $this->getDir() );
-        $newFilter->setPrefix( $this->getPrefix() );
-        $newFilter->setPostfix( $this->getPostfix() );
-        $newFilter->setBeginToken( $this->getBeginToken() );
-        $newFilter->setEndToken( $this->getEndToken() );
-        $newFilter->setInitialized( true );
+        $newFilter = new ReplaceTokensWithFile($reader);
+        $newFilter->setProject($this->getProject());
+        $newFilter->setTranslateHTML($this->getTranslateHTML());
+        $newFilter->setDir($this->getDir());
+        $newFilter->setPrefix($this->getPrefix());
+        $newFilter->setPostfix($this->getPostfix());
+        $newFilter->setBeginToken($this->getBeginToken());
+        $newFilter->setEndToken($this->getEndToken());
+        $newFilter->setInitialized(true);
 
         return $newFilter;
     }
@@ -241,7 +241,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @internal param string $dir
      */
-    public function setTranslateHTML( $translate )
+    public function setTranslateHTML($translate)
     {
 
         $this->_translatehtml = (bool)$translate;
@@ -267,7 +267,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @param string $dir
      */
-    public function setDir( $dir )
+    public function setDir($dir)
     {
 
         $this->_dir = (string)$dir;
@@ -289,7 +289,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @param string $prefix
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->_prefix = (string)$prefix;
@@ -313,7 +313,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @param string $postfix
      */
-    public function setPostfix( $postfix )
+    public function setPostfix($postfix)
     {
 
         $this->_postfix = (string)$postfix;
@@ -335,7 +335,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @param string $beginToken the character used to denote the beginning of a token.
      */
-    public function setBeginToken( $beginToken )
+    public function setBeginToken($beginToken)
     {
 
         $this->_beginToken = (string)$beginToken;
@@ -357,7 +357,7 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @param string $endToken the character used to denote the end of a token
      */
-    public function setEndToken( $endToken )
+    public function setEndToken($endToken)
     {
 
         $this->_endToken = (string)$endToken;
@@ -370,24 +370,24 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
      *
      * @return string Text with which to replace key or value of key if none is found.
      */
-    private function replaceTokenCallback( $matches )
+    private function replaceTokenCallback($matches)
     {
 
         $filetoken = $matches[1];
 
         // We look in all specified directories for the named file and use
         // the first directory which has the file.
-        $dirs = explode( ';', $this->_dir );
+        $dirs = explode(';', $this->_dir);
 
-        $ndirs = count( $dirs );
+        $ndirs = count($dirs);
         $n = 0;
         $file = $dirs[$n].$this->_prefix.$filetoken.$this->_postfix;
 
-        while ($n < $ndirs && !is_readable( $file )) {
+        while ($n < $ndirs && !is_readable($file)) {
             ++$n;
         }
 
-        if (!is_readable( $file ) || $n >= $ndirs) {
+        if (!is_readable($file) || $n >= $ndirs) {
             $this->log(
                 "Can not read or find file \"$file\". Searched in directories: {$this->_dir}",
                 Project::MSG_WARN
@@ -396,14 +396,14 @@ class ReplaceTokensWithFile extends BaseParamFilterReader implements ChainableRe
             return "[Phing::Filters::ReplaceTokensWithFile: Can not find file ".'"'.$filetoken.$this->_postfix.'"'."]";
         }
 
-        $buffer = file_get_contents( $file );
+        $buffer = file_get_contents($file);
         if ($this->_translatehtml) {
-            $buffer = htmlentities( $buffer );
+            $buffer = htmlentities($buffer);
         }
 
         if ($buffer === null) {
             $buffer = $this->_beginToken.$filetoken.$this->_endToken;
-            $this->log( "No corresponding file found for key \"$buffer\"", Project::MSG_WARN );
+            $this->log("No corresponding file found for key \"$buffer\"", Project::MSG_WARN);
         } else {
             $this->log(
                 "Replaced \"".$this->_beginToken.$filetoken.$this->_endToken."\" with content from file \"$file\""

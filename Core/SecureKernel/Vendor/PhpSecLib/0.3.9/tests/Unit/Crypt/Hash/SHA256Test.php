@@ -34,28 +34,28 @@ class Unit_Crypt_Hash_SHA256Test extends Unit_Crypt_Hash_TestCase
             // RFC 4231
             // Test Case 1
             array(
-                pack( 'H*', '0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b' ),
-                pack( 'H*', '4869205468657265' ),
+                pack('H*', '0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b'),
+                pack('H*', '4869205468657265'),
                 'b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7',
             ),
             // Test Case 2
             array(
-                pack( 'H*', '4a656665' ),
-                pack( 'H*', '7768617420646f2079612077616e7420666f72206e6f7468696e673f' ),
+                pack('H*', '4a656665'),
+                pack('H*', '7768617420646f2079612077616e7420666f72206e6f7468696e673f'),
                 '5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843',
             ),
             // Test Case 3
             array(
-                pack( 'H*', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' ),
-                pack( 'H*',
-                    'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd' ),
+                pack('H*', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+                pack('H*',
+                    'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'),
                 '773ea91e36800e46854db8ebd09181a72959098b3ef8c122d9635514ced565fe',
             ),
             // Test Case 4
             array(
-                pack( 'H*', '0102030405060708090a0b0c0d0e0f10111213141516171819' ),
-                pack( 'H*',
-                    'cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd' ),
+                pack('H*', '0102030405060708090a0b0c0d0e0f10111213141516171819'),
+                pack('H*',
+                    'cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd'),
                 '82558a389a443c0ea4cc819899f2083a85f0faa3e578f8077a2e3ff46729665b',
             ),
         );
@@ -64,24 +64,24 @@ class Unit_Crypt_Hash_SHA256Test extends Unit_Crypt_Hash_TestCase
     /**
      * @dataProvider hashData()
      */
-    public function testHash( $message, $result )
+    public function testHash($message, $result)
     {
 
-        $this->assertHashesTo( $this->getInstance(), $message, $result );
+        $this->assertHashesTo($this->getInstance(), $message, $result);
     }
 
     public function getInstance()
     {
 
-        return new Crypt_Hash( 'sha256' );
+        return new Crypt_Hash('sha256');
     }
 
     /**
      * @dataProvider hmacData()
      */
-    public function testHMAC( $key, $message, $result )
+    public function testHMAC($key, $message, $result)
     {
 
-        $this->assertHMACsTo( $this->getInstance(), $key, $message, $result );
+        $this->assertHMACsTo($this->getInstance(), $key, $message, $result);
     }
 }

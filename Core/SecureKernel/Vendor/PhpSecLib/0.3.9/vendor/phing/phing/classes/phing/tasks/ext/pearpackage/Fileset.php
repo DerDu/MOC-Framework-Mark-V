@@ -57,10 +57,10 @@ class PEAR_PackageFileManager_Fileset
      * @param PEAR_PackageFileManager
      * @param array
      */
-    public function __construct( $options )
+    public function __construct($options)
     {
 
-        if (!is_array( $options )) {
+        if (!is_array($options)) {
             $options = $options->getOptions();
         }
 
@@ -83,14 +83,14 @@ class PEAR_PackageFileManager_Fileset
         $allfiles = array();
 
         foreach ($this->filesets as $fs) {
-            $ds = $fs->getDirectoryScanner( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
 
             $files = $ds->getIncludedFiles();
 
             // We need to store these files keyed by the basedir from DirectoryScanner
             // so that we can resolve the fullpath of the file later.
             if (isset( $allfiles[$ds->getBasedir()] )) {
-                $allfiles[$ds->getBasedir()] = array_merge( $allfiles[$ds->getBasedir()], $files );
+                $allfiles[$ds->getBasedir()] = array_merge($allfiles[$ds->getBasedir()], $files);
             } else {
                 $allfiles[$ds->getBasedir()] = $files;
             }
@@ -103,45 +103,45 @@ class PEAR_PackageFileManager_Fileset
             foreach ($files as $file) {
 
                 // paths are relative to $basedir above
-                $path = strtr( dirname( $file ), DIRECTORY_SEPARATOR, '/' );
+                $path = strtr(dirname($file), DIRECTORY_SEPARATOR, '/');
 
                 if (!$path || $path == '.') {
                     $path = '/'; // for array index
                 }
 
-                $parts = explode( '.', basename( $file ) );
-                $ext = array_pop( $parts );
-                if (strlen( $ext ) == strlen( $file )) {
+                $parts = explode('.', basename($file));
+                $ext = array_pop($parts);
+                if (strlen($ext) == strlen($file)) {
                     $ext = '';
                 }
 
-                $f = new PhingFile( $basedir, $file );
+                $f = new PhingFile($basedir, $file);
 
                 $struc[$path][] = array(
-                    'file'     => basename( $file ),
+                    'file'     => basename($file),
                     'ext'      => $ext,
-                    'path'     => ( ( $path == '/' ) ? basename( $file ) : $path.'/'.basename( $file ) ),
+                    'path'     => ( ( $path == '/' ) ? basename($file) : $path.'/'.basename($file) ),
                     'fullpath' => $f->getAbsolutePath()
                 );
             }
         }
 
-        uksort( $struc, 'strnatcasecmp' );
+        uksort($struc, 'strnatcasecmp');
         foreach ($struc as $key => $ind) {
-            usort( $ind, array( $this, 'sortfiles' ) );
+            usort($ind, array($this, 'sortfiles'));
             $struc[$key] = $ind;
         }
 
         $tempstruc = $struc;
-        $struc = array( '/' => $tempstruc['/'] );
+        $struc = array('/' => $tempstruc['/']);
         $bv = 0;
         foreach ($tempstruc as $key => $ind) {
             $save = $key;
             if ($key != '/') {
-                $struc['/'] = $this->setupDirs( $struc['/'], explode( '/', $key ), $tempstruc[$key] );
+                $struc['/'] = $this->setupDirs($struc['/'], explode('/', $key), $tempstruc[$key]);
             }
         }
-        uksort( $struc['/'], array( $this, 'mystrucsort' ) );
+        uksort($struc['/'], array($this, 'mystrucsort'));
 
         return $struc;
     }
@@ -162,22 +162,22 @@ class PEAR_PackageFileManager_Fileset
      * @return array same as struc but with array('dir' =>
      *               array(file1,file2,'subdir' => array(file1,...)))
      */
-    private function setupDirs( $struc, $dir, $contents )
+    private function setupDirs($struc, $dir, $contents)
     {
 
-        if (!count( $dir )) {
+        if (!count($dir)) {
             foreach ($contents as $dir => $files) {
-                if (is_string( $dir )) {
-                    if (strpos( $dir, '/' )) {
+                if (is_string($dir)) {
+                    if (strpos($dir, '/')) {
                         $test = true;
                         $a = $contents[$dir];
                         unset( $contents[$dir] );
-                        $b = explode( '/', $dir );
-                        $c = array_shift( $b );
+                        $b = explode('/', $dir);
+                        $c = array_shift($b);
                         if (isset( $contents[$c] )) {
-                            $contents[$c] = $this->setDir( $contents[$c], $this->setupDirs( array(), $b, $a ) );
+                            $contents[$c] = $this->setDir($contents[$c], $this->setupDirs(array(), $b, $a));
                         } else {
-                            $contents[$c] = $this->setupDirs( array(), $b, $a );
+                            $contents[$c] = $this->setupDirs(array(), $b, $a);
                         }
                     }
                 }
@@ -185,11 +185,11 @@ class PEAR_PackageFileManager_Fileset
 
             return $contents;
         }
-        $me = array_shift( $dir );
+        $me = array_shift($dir);
         if (!isset( $struc[$me] )) {
             $struc[$me] = array();
         }
-        $struc[$me] = $this->setupDirs( $struc[$me], $dir, $contents );
+        $struc[$me] = $this->setupDirs($struc[$me], $dir, $contents);
 
         return $struc;
     }
@@ -203,12 +203,12 @@ class PEAR_PackageFileManager_Fileset
      *
      * @return array processed $dir
      */
-    public function setDir( $dir, $contents )
+    public function setDir($dir, $contents)
     {
 
-        while (list( $one, $two ) = each( $contents )) {
+        while (list( $one, $two ) = each($contents)) {
             if (isset( $dir[$one] )) {
-                $dir[$one] = $this->setDir( $dir[$one], $contents[$one] );
+                $dir[$one] = $this->setDir($dir[$one], $contents[$one]);
             } else {
                 $dir[$one] = $two;
             }
@@ -225,10 +225,10 @@ class PEAR_PackageFileManager_Fileset
      *
      * @return int
      */
-    private function sortfiles( $a, $b )
+    private function sortfiles($a, $b)
     {
 
-        return strnatcasecmp( $a['file'], $b['file'] );
+        return strnatcasecmp($a['file'], $b['file']);
     }
 
     /**
@@ -237,16 +237,16 @@ class PEAR_PackageFileManager_Fileset
      *
      * @return int
      */
-    private function mystrucsort( $a, $b )
+    private function mystrucsort($a, $b)
     {
 
-        if (is_numeric( $a ) && is_string( $b )) {
+        if (is_numeric($a) && is_string($b)) {
             return 1;
         }
-        if (is_numeric( $b ) && is_string( $a )) {
+        if (is_numeric($b) && is_string($a)) {
             return -1;
         }
-        if (is_numeric( $a ) && is_numeric( $b )) {
+        if (is_numeric($a) && is_numeric($b)) {
             if ($a > $b) {
                 return 1;
             }
@@ -258,6 +258,6 @@ class PEAR_PackageFileManager_Fileset
             }
         }
 
-        return strnatcasecmp( $a, $b );
+        return strnatcasecmp($a, $b);
     }
 }

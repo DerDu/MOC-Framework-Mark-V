@@ -82,7 +82,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setErrorproperty( $value )
+    public function setErrorproperty($value)
     {
 
         $this->errorproperty = $value;
@@ -91,7 +91,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setFailureproperty( $value )
+    public function setFailureproperty($value)
     {
 
         $this->failureproperty = $value;
@@ -100,7 +100,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setIncompleteproperty( $value )
+    public function setIncompleteproperty($value)
     {
 
         $this->incompleteproperty = $value;
@@ -109,7 +109,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setSkippedproperty( $value )
+    public function setSkippedproperty($value)
     {
 
         $this->skippedproperty = $value;
@@ -127,7 +127,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setHaltonfailure( $value )
+    public function setHaltonfailure($value)
     {
 
         $this->haltonfailure = $value;
@@ -145,7 +145,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setHaltonincomplete( $value )
+    public function setHaltonincomplete($value)
     {
 
         $this->haltonincomplete = $value;
@@ -163,7 +163,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setHaltonskipped( $value )
+    public function setHaltonskipped($value)
     {
 
         $this->haltonskipped = $value;
@@ -172,7 +172,7 @@ class PHPUnitTask extends Task
     /**
      * @param $printsummary
      */
-    public function setPrintsummary( $printsummary )
+    public function setPrintsummary($printsummary)
     {
 
         $this->printsummary = $printsummary;
@@ -181,7 +181,7 @@ class PHPUnitTask extends Task
     /**
      * @param $codecoverage
      */
-    public function setCodecoverage( $codecoverage )
+    public function setCodecoverage($codecoverage)
     {
 
         $this->codecoverage = $codecoverage;
@@ -190,7 +190,7 @@ class PHPUnitTask extends Task
     /**
      * @param $usecustomerrorhandler
      */
-    public function setUseCustomErrorHandler( $usecustomerrorhandler )
+    public function setUseCustomErrorHandler($usecustomerrorhandler)
     {
 
         $this->usecustomerrorhandler = $usecustomerrorhandler;
@@ -199,30 +199,30 @@ class PHPUnitTask extends Task
     /**
      * @param $groups
      */
-    public function setGroups( $groups )
+    public function setGroups($groups)
     {
 
         $token = ' ,;';
         $this->groups = array();
-        $tok = strtok( $groups, $token );
+        $tok = strtok($groups, $token);
         while ($tok !== false) {
             $this->groups[] = $tok;
-            $tok = strtok( $token );
+            $tok = strtok($token);
         }
     }
 
     /**
      * @param $excludeGroups
      */
-    public function setExcludeGroups( $excludeGroups )
+    public function setExcludeGroups($excludeGroups)
     {
 
         $token = ' ,;';
         $this->excludeGroups = array();
-        $tok = strtok( $excludeGroups, $token );
+        $tok = strtok($excludeGroups, $token);
         while ($tok !== false) {
             $this->excludeGroups[] = $tok;
-            $tok = strtok( $token );
+            $tok = strtok($token);
         }
     }
 
@@ -231,17 +231,17 @@ class PHPUnitTask extends Task
      *
      * @param FormatterElement formatter element
      */
-    public function addFormatter( FormatterElement $fe )
+    public function addFormatter(FormatterElement $fe)
     {
 
-        $fe->setParent( $this );
+        $fe->setParent($this);
         $this->formatters[] = $fe;
     }
 
     /**
      * @param PhingFile $configuration
      */
-    public function setConfiguration( PhingFile $configuration )
+    public function setConfiguration(PhingFile $configuration)
     {
 
         $this->configuration = $configuration;
@@ -250,7 +250,7 @@ class PHPUnitTask extends Task
     /**
      * @param string $pharLocation
      */
-    public function setPharLocation( $pharLocation )
+    public function setPharLocation($pharLocation)
     {
 
         $this->pharLocation = $pharLocation;
@@ -264,31 +264,31 @@ class PHPUnitTask extends Task
     public function main()
     {
 
-        if ($this->codecoverage && !extension_loaded( 'xdebug' )) {
-            throw new Exception( "PHPUnitTask depends on Xdebug being installed to gather code coverage information." );
+        if ($this->codecoverage && !extension_loaded('xdebug')) {
+            throw new Exception("PHPUnitTask depends on Xdebug being installed to gather code coverage information.");
         }
 
         $this->loadPHPUnit();
 
-        $suite = new PHPUnit_Framework_TestSuite( 'AllTests' );
+        $suite = new PHPUnit_Framework_TestSuite('AllTests');
 
         if ($this->configuration) {
-            $arguments = $this->handlePHPUnitConfiguration( $this->configuration );
+            $arguments = $this->handlePHPUnitConfiguration($this->configuration);
 
             if ($arguments['backupGlobals'] === false) {
-                $suite->setBackupGlobals( false );
+                $suite->setBackupGlobals(false);
             }
 
             if ($arguments['backupStaticAttributes'] === true) {
-                $suite->setBackupStaticAttributes( true );
+                $suite->setBackupStaticAttributes(true);
             }
         }
 
         if ($this->printsummary) {
             $fe = new FormatterElement();
-            $fe->setParent( $this );
-            $fe->setType( "summary" );
-            $fe->setUseFile( false );
+            $fe->setParent($this);
+            $fe->setType("summary");
+            $fe->setUseFile(false);
             $this->formatters[] = $fe;
         }
 
@@ -299,22 +299,22 @@ class PHPUnitTask extends Task
         }
 
         foreach ($this->batchtests as $batchTest) {
-            $this->appendBatchTestToTestSuite( $batchTest, $suite );
+            $this->appendBatchTestToTestSuite($batchTest, $suite);
         }
 
-        $this->execute( $suite );
+        $this->execute($suite);
 
         if ($this->testfailed) {
-            throw new BuildException( $this->testfailuremessage );
+            throw new BuildException($this->testfailuremessage);
         }
 
         $autoloadNew = spl_autoload_functions();
         foreach ($autoloadNew as $autoload) {
-            spl_autoload_unregister( $autoload );
+            spl_autoload_unregister($autoload);
         }
 
         foreach ($autoloadSave as $autoload) {
-            spl_autoload_register( $autoload );
+            spl_autoload_register($autoload);
         }
     }
 
@@ -335,14 +335,14 @@ class PHPUnitTask extends Task
         }
         @include_once 'PHPUnit/Autoload.php';
 
-        if (!class_exists( 'PHPUnit_Runner_Version' )) {
-            throw new BuildException( "PHPUnitTask requires PHPUnit to be installed", $this->getLocation() );
+        if (!class_exists('PHPUnit_Runner_Version')) {
+            throw new BuildException("PHPUnitTask requires PHPUnit to be installed", $this->getLocation());
         }
 
         $version = PHPUnit_Runner_Version::id();
 
-        if (version_compare( $version, '3.6.0' ) < 0) {
-            throw new BuildException( "PHPUnitTask requires PHPUnit version >= 3.6.0", $this->getLocation() );
+        if (version_compare($version, '3.6.0') < 0) {
+            throw new BuildException("PHPUnitTask requires PHPUnit version >= 3.6.0", $this->getLocation());
         }
 
         /**
@@ -353,8 +353,8 @@ class PHPUnitTask extends Task
         /**
          * point PHPUnit_MAIN_METHOD define to non-existing method
          */
-        if (!defined( 'PHPUnit_MAIN_METHOD' )) {
-            define( 'PHPUnit_MAIN_METHOD', 'PHPUnitTask::undefined' );
+        if (!defined('PHPUnit_MAIN_METHOD')) {
+            define('PHPUnit_MAIN_METHOD', 'PHPUnitTask::undefined');
         }
     }
 
@@ -366,14 +366,14 @@ class PHPUnitTask extends Task
      * @throws BuildException
      * @return array
      */
-    protected function handlePHPUnitConfiguration( $configuration )
+    protected function handlePHPUnitConfiguration($configuration)
     {
 
         if (!$configuration->exists()) {
-            throw new BuildException( "Unable to find PHPUnit configuration file '".(string)$configuration."'" );
+            throw new BuildException("Unable to find PHPUnit configuration file '".(string)$configuration."'");
         }
 
-        $config = PHPUnit_Util_Configuration::getInstance( $configuration->getAbsolutePath() );
+        $config = PHPUnit_Util_Configuration::getInstance($configuration->getAbsolutePath());
 
         if (empty( $config )) {
             return;
@@ -388,38 +388,38 @@ class PHPUnitTask extends Task
         $config->handlePHPConfiguration();
 
         if (isset( $phpunit['bootstrap'] )) {
-            $this->setBootstrap( $phpunit['bootstrap'] );
+            $this->setBootstrap($phpunit['bootstrap']);
         }
 
         if (isset( $phpunit['stopOnFailure'] )) {
-            $this->setHaltonfailure( $phpunit['stopOnFailure'] );
+            $this->setHaltonfailure($phpunit['stopOnFailure']);
         }
 
         if (isset( $phpunit['stopOnError'] )) {
-            $this->setHaltonerror( $phpunit['stopOnError'] );
+            $this->setHaltonerror($phpunit['stopOnError']);
         }
 
         if (isset( $phpunit['stopOnSkipped'] )) {
-            $this->setHaltonskipped( $phpunit['stopOnSkipped'] );
+            $this->setHaltonskipped($phpunit['stopOnSkipped']);
         }
 
         if (isset( $phpunit['stopOnIncomplete'] )) {
-            $this->setHaltonincomplete( $phpunit['stopOnIncomplete'] );
+            $this->setHaltonincomplete($phpunit['stopOnIncomplete']);
         }
 
         if (isset( $phpunit['processIsolation'] )) {
-            $this->setProcessIsolation( $phpunit['processIsolation'] );
+            $this->setProcessIsolation($phpunit['processIsolation']);
         }
 
         foreach ($config->getListenerConfiguration() as $listener) {
-            if (!class_exists( $listener['class'], false ) &&
+            if (!class_exists($listener['class'], false) &&
                 $listener['file'] !== ''
             ) {
                 require_once $listener['file'];
             }
 
-            if (class_exists( $listener['class'] )) {
-                if (count( $listener['arguments'] ) == 0) {
+            if (class_exists($listener['class'])) {
+                if (count($listener['arguments']) == 0) {
                     $listener = new $listener['class'];
                 } else {
                     $listenerClass = new ReflectionClass(
@@ -431,7 +431,7 @@ class PHPUnitTask extends Task
                 }
 
                 if ($listener instanceof PHPUnit_Framework_TestListener) {
-                    $this->addListener( $listener );
+                    $this->addListener($listener);
                 }
             }
         }
@@ -439,7 +439,7 @@ class PHPUnitTask extends Task
         $browsers = $config->getSeleniumBrowserConfiguration();
 
         if (!empty( $browsers ) &&
-            class_exists( 'PHPUnit_Extensions_SeleniumTestCase' )
+            class_exists('PHPUnit_Extensions_SeleniumTestCase')
         ) {
             PHPUnit_Extensions_SeleniumTestCase::$browsers = $browsers;
         }
@@ -453,7 +453,7 @@ class PHPUnitTask extends Task
      *
      * @param string $bootstrap the name of the bootstrap file
      */
-    public function setBootstrap( $bootstrap )
+    public function setBootstrap($bootstrap)
     {
 
         $this->bootstrap = $bootstrap;
@@ -462,7 +462,7 @@ class PHPUnitTask extends Task
     /**
      * @param $value
      */
-    public function setHaltonerror( $value )
+    public function setHaltonerror($value)
     {
 
         $this->haltonerror = $value;
@@ -471,7 +471,7 @@ class PHPUnitTask extends Task
     /**
      * @param $processIsolation
      */
-    public function setProcessIsolation( $processIsolation )
+    public function setProcessIsolation($processIsolation)
     {
 
         $this->processIsolation = $processIsolation;
@@ -482,7 +482,7 @@ class PHPUnitTask extends Task
      *
      * @param $listener
      */
-    private function addListener( $listener )
+    private function addListener($listener)
     {
 
         $this->listeners[] = $listener;
@@ -494,63 +494,63 @@ class PHPUnitTask extends Task
      * @param BatchTest                   $batchTest
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    protected function appendBatchTestToTestSuite( BatchTest $batchTest, PHPUnit_Framework_TestSuite $suite )
+    protected function appendBatchTestToTestSuite(BatchTest $batchTest, PHPUnit_Framework_TestSuite $suite)
     {
 
         foreach ($batchTest->elements() as $element) {
             $testClass = new $element();
             if (!( $testClass instanceof PHPUnit_Framework_TestSuite )) {
-                $testClass = new ReflectionClass( $element );
+                $testClass = new ReflectionClass($element);
             }
-            $suite->addTestSuite( $testClass );
+            $suite->addTestSuite($testClass);
         }
     }
 
     /**
      * @param $suite
      */
-    protected function execute( $suite )
+    protected function execute($suite)
     {
 
-        $runner = new PHPUnitTestRunner( $this->project, $this->groups, $this->excludeGroups, $this->processIsolation );
+        $runner = new PHPUnitTestRunner($this->project, $this->groups, $this->excludeGroups, $this->processIsolation);
 
         if ($this->codecoverage) {
             /**
              * Add some defaults to the PHPUnit filter
              */
-            $pwd = dirname( __FILE__ );
-            $path = realpath( $pwd.'/../../../' );
+            $pwd = dirname(__FILE__);
+            $path = realpath($pwd.'/../../../');
 
             $filter = new PHP_CodeCoverage_Filter();
-            $filter->addDirectoryToBlacklist( $path );
-            $runner->setCodecoverage( new PHP_CodeCoverage( null, $filter ) );
+            $filter->addDirectoryToBlacklist($path);
+            $runner->setCodecoverage(new PHP_CodeCoverage(null, $filter));
         }
 
-        $runner->setUseCustomErrorHandler( $this->usecustomerrorhandler );
+        $runner->setUseCustomErrorHandler($this->usecustomerrorhandler);
 
         foreach ($this->listeners as $listener) {
-            $runner->addListener( $listener );
+            $runner->addListener($listener);
         }
 
         foreach ($this->formatters as $fe) {
             $formatter = $fe->getFormatter();
 
             if ($fe->getUseFile()) {
-                $destFile = new PhingFile( $fe->getToDir(), $fe->getOutfile() );
+                $destFile = new PhingFile($fe->getToDir(), $fe->getOutfile());
 
-                $writer = new FileWriter( $destFile->getAbsolutePath() );
+                $writer = new FileWriter($destFile->getAbsolutePath());
 
-                $formatter->setOutput( $writer );
+                $formatter->setOutput($writer);
             } else {
-                $formatter->setOutput( $this->getDefaultOutput() );
+                $formatter->setOutput($this->getDefaultOutput());
             }
 
-            $runner->addFormatter( $formatter );
+            $runner->addFormatter($formatter);
 
             $formatter->startTestRun();
         }
 
-        $runner->run( $suite );
+        $runner->run($suite);
 
         foreach ($this->formatters as $fe) {
             $formatter = $fe->getFormatter();
@@ -559,7 +559,7 @@ class PHPUnitTask extends Task
 
         if ($runner->hasErrors()) {
             if ($this->errorproperty) {
-                $this->project->setNewProperty( $this->errorproperty, true );
+                $this->project->setNewProperty($this->errorproperty, true);
             }
             if ($this->haltonerror) {
                 $this->testfailed = true;
@@ -569,7 +569,7 @@ class PHPUnitTask extends Task
 
         if ($runner->hasFailures()) {
             if ($this->failureproperty) {
-                $this->project->setNewProperty( $this->failureproperty, true );
+                $this->project->setNewProperty($this->failureproperty, true);
             }
 
             if ($this->haltonfailure) {
@@ -580,7 +580,7 @@ class PHPUnitTask extends Task
 
         if ($runner->hasIncomplete()) {
             if ($this->incompleteproperty) {
-                $this->project->setNewProperty( $this->incompleteproperty, true );
+                $this->project->setNewProperty($this->incompleteproperty, true);
             }
 
             if ($this->haltonincomplete) {
@@ -591,7 +591,7 @@ class PHPUnitTask extends Task
 
         if ($runner->hasSkipped()) {
             if ($this->skippedproperty) {
-                $this->project->setNewProperty( $this->skippedproperty, true );
+                $this->project->setNewProperty($this->skippedproperty, true);
             }
 
             if ($this->haltonskipped) {
@@ -607,7 +607,7 @@ class PHPUnitTask extends Task
     protected function getDefaultOutput()
     {
 
-        return new LogWriter( $this );
+        return new LogWriter($this);
     }
 
     /**
@@ -618,7 +618,7 @@ class PHPUnitTask extends Task
     public function createBatchTest()
     {
 
-        $batchtest = new BatchTest( $this->getProject() );
+        $batchtest = new BatchTest($this->getProject());
 
         $this->batchtests[] = $batchtest;
 

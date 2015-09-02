@@ -35,10 +35,10 @@ class MethodNotFoundException extends DoubleException
      * @param string                                $methodName
      * @param null|Argument\ArgumentsWildcard|array $arguments
      */
-    public function __construct( $message, $classname, $methodName, $arguments = null )
+    public function __construct($message, $classname, $methodName, $arguments = null)
     {
 
-        parent::__construct( $message );
+        parent::__construct($message);
 
         $this->classname = $classname;
         $this->methodName = $methodName;

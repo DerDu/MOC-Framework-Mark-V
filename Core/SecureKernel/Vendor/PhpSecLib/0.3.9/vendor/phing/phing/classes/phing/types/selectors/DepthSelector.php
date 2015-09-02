@@ -63,23 +63,23 @@ class DepthSelector extends BaseExtendSelector
      *
      * @return mixed|void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::MIN_KEY:
-                        $this->setMin( $parameters[$i]->getValue() );
+                        $this->setMin($parameters[$i]->getValue());
                         break;
                     case self::MAX_KEY:
-                        $this->setMax( $parameters[$i]->getValue() );
+                        $this->setMax($parameters[$i]->getValue());
                         break;
 
                     default:
-                        $this->setError( "Invalud parameter ".$paramname );
+                        $this->setError("Invalud parameter ".$paramname);
                 } // switch
             }
         }
@@ -92,7 +92,7 @@ class DepthSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setMin( $min )
+    public function setMin($min)
     {
 
         $this->min = (int)$min;
@@ -105,7 +105,7 @@ class DepthSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setMax( $max )
+    public function setMax($max)
     {
 
         $this->max = (int)$max;
@@ -129,7 +129,7 @@ class DepthSelector extends BaseExtendSelector
             );
         }
         if ($this->max < $this->min && $this->max > -1) {
-            $this->setError( "The maximum depth is lower than the minimum." );
+            $this->setError("The maximum depth is lower than the minimum.");
         }
     }
 
@@ -150,7 +150,7 @@ class DepthSelector extends BaseExtendSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
@@ -160,17 +160,17 @@ class DepthSelector extends BaseExtendSelector
         $abs_base = $basedir->getAbsolutePath();
         $abs_file = $file->getAbsolutePath();
 
-        $tok_base = explode( DIRECTORY_SEPARATOR, $abs_base );
-        $tok_file = explode( DIRECTORY_SEPARATOR, $abs_file );
+        $tok_base = explode(DIRECTORY_SEPARATOR, $abs_base);
+        $tok_file = explode(DIRECTORY_SEPARATOR, $abs_file);
 
-        for ($i = 0, $size = count( $tok_file ); $i < $size; $i++) {
+        for ($i = 0, $size = count($tok_file); $i < $size; $i++) {
             $filetoken = $tok_file[$i];
             if (isset( $tok_base[$i] )) {
                 $basetoken = $tok_base[$i];
                 // Sanity check. Ditch it if you want faster performance
                 if ($basetoken !== $filetoken) {
-                    throw new BuildException( "File ".$filename.
-                        " does not appear within ".$abs_base."directory" );
+                    throw new BuildException("File ".$filename.
+                        " does not appear within ".$abs_base."directory");
                 }
             } else { // no more basepath tokens
                 $depth++;
@@ -180,8 +180,8 @@ class DepthSelector extends BaseExtendSelector
             }
         }
         if (isset( $tok_base[$i + 1] )) {
-            throw new BuildException( "File ".$filename.
-                " is outside of ".$abs_base."directory tree" );
+            throw new BuildException("File ".$filename.
+                " is outside of ".$abs_base."directory tree");
         }
         if ($this->min > -1 && $depth < $this->min) {
             return false;

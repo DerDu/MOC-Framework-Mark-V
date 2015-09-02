@@ -49,7 +49,7 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'JS' );
+    public $supportedTokenizers = array('JS');
 
 
     /**
@@ -60,7 +60,7 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -75,20 +75,20 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jslint.js could not be run
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $fileName = $phpcsFile->getFilename();
 
-        $lintPath = PHP_CodeSniffer::getConfigData( 'gjslint_path' );
+        $lintPath = PHP_CodeSniffer::getConfigData('gjslint_path');
         if ($lintPath === null) {
             return;
         }
 
         $cmd = "$lintPath --nosummary --notime --unix_mode \"$fileName\"";
-        $msg = exec( $cmd, $output, $retval );
+        $msg = exec($cmd, $output, $retval);
 
-        if (is_array( $output ) === false) {
+        if (is_array($output) === false) {
             return;
         }
 
@@ -96,19 +96,19 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
 
         foreach ($output as $finding) {
             $matches = array();
-            $numMatches = preg_match( '/^(.*):([0-9]+):\(.*?([0-9]+)\)(.*)$/', $finding, $matches );
+            $numMatches = preg_match('/^(.*):([0-9]+):\(.*?([0-9]+)\)(.*)$/', $finding, $matches);
             if ($numMatches === 0) {
                 continue;
             }
 
             // Skip error codes we are ignoring.
             $code = $matches[3];
-            if (in_array( $code, $this->ignoreCodes ) === true) {
+            if (in_array($code, $this->ignoreCodes) === true) {
                 continue;
             }
 
             $line = (int)$matches[2];
-            $error = trim( $matches[4] );
+            $error = trim($matches[4]);
 
             // Find the token at the start of the line.
             $lineToken = null;
@@ -125,10 +125,10 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
                     $code,
                     $error,
                 );
-                if (in_array( $code, $this->errorCodes ) === true) {
-                    $phpcsFile->addError( $message, $lineToken, 'ExternalToolError', $data );
+                if (in_array($code, $this->errorCodes) === true) {
+                    $phpcsFile->addError($message, $lineToken, 'ExternalToolError', $data);
                 } else {
-                    $phpcsFile->addWarning( $message, $lineToken, 'ExternalTool', $data );
+                    $phpcsFile->addWarning($message, $lineToken, 'ExternalTool', $data);
                 }
             }
         }//end foreach

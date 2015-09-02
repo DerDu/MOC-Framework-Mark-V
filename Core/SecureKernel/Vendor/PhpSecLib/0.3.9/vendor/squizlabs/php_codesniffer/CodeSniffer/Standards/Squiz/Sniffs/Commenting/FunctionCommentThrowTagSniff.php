@@ -15,9 +15,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
     public function __construct()
     {
 
-        parent::__construct( array( T_FUNCTION ), array( T_THROW ) );
+        parent::__construct(array(T_FUNCTION), array(T_THROW));
 
     }//end __construct()
 
@@ -58,12 +58,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
         // Is this the first throw token within the current function scope?
         // If so, we have to validate other throw tokens within the same scope.
-        $previousThrow = $phpcsFile->findPrevious( T_THROW, ( $stackPtr - 1 ), $currScope );
+        $previousThrow = $phpcsFile->findPrevious(T_THROW, ( $stackPtr - 1 ), $currScope);
         if ($previousThrow !== false) {
             return;
         }
@@ -78,7 +78,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             T_OPEN_TAG,
         );
 
-        $commentEnd = $phpcsFile->findPrevious( $find, ( $currScope - 1 ) );
+        $commentEnd = $phpcsFile->findPrevious($find, ( $currScope - 1 ));
 
         if ($commentEnd === false) {
             return;
@@ -89,15 +89,15 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             return;
         }
 
-        $commentStart = ( $phpcsFile->findPrevious( T_DOC_COMMENT, ( $commentEnd - 1 ), null, true ) + 1 );
-        $comment = $phpcsFile->getTokensAsString( $commentStart, ( $commentEnd - $commentStart + 1 ) );
+        $commentStart = ( $phpcsFile->findPrevious(T_DOC_COMMENT, ( $commentEnd - 1 ), null, true) + 1 );
+        $comment = $phpcsFile->getTokensAsString($commentStart, ( $commentEnd - $commentStart + 1 ));
 
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser( $comment, $phpcsFile );
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
-        } catch( PHP_CodeSniffer_CommentParser_ParserException $e ) {
+        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ( $e->getLineWithinComment() + $commentStart );
-            $phpcsFile->addError( $e->getMessage(), $line, 'FailedParse' );
+            $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
             return;
         }
 
@@ -120,7 +120,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                     don't know the exception class.
                 */
 
-                $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $currPos + 1 ), null, true );
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $currPos + 1 ), null, true);
                 if ($tokens[$nextToken]['code'] === T_NEW) {
                     $currException = $phpcsFile->findNext(
                         array(
@@ -150,24 +150,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                         if ($endException === false) {
                             $throwTokens[] = $tokens[$currException]['content'];
                         } else {
-                            $throwTokens[] = $phpcsFile->getTokensAsString( $currException,
-                                ( $endException - $currException ) );
+                            $throwTokens[] = $phpcsFile->getTokensAsString($currException,
+                                ( $endException - $currException ));
                         }
                     }//end if
                 }//end if
 
-                $currPos = $phpcsFile->findNext( T_THROW, ( $currPos + 1 ), $currScopeEnd );
+                $currPos = $phpcsFile->findNext(T_THROW, ( $currPos + 1 ), $currScopeEnd);
             }//end while
         }//end if
 
         // Only need one @throws tag for each type of exception thrown.
-        $throwTokens = array_unique( $throwTokens );
-        sort( $throwTokens );
+        $throwTokens = array_unique($throwTokens);
+        sort($throwTokens);
 
         $throws = $this->commentParser->getThrows();
         if (empty( $throws ) === true) {
             $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError( $error, $commentEnd, 'Missing' );
+            $phpcsFile->addError($error, $commentEnd, 'Missing');
         } else {
             if (empty( $throwTokens ) === true) {
                 // If token count is zero, it means that only variables are being
@@ -182,19 +182,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                     $lineNumber[$throw->getValue()] = $throw->getLine();
                 }
 
-                $throwTags = array_unique( $throwTags );
-                sort( $throwTags );
+                $throwTags = array_unique($throwTags);
+                sort($throwTags);
 
                 // Make sure @throws tag count matches throw token count.
-                $tokenCount = count( $throwTokens );
-                $tagCount = count( $throwTags );
+                $tokenCount = count($throwTokens);
+                $tagCount = count($throwTags);
                 if ($tokenCount !== $tagCount) {
                     $error = 'Expected %s @throws tag(s) in function comment; %s found';
                     $data = array(
                         $tokenCount,
                         $tagCount,
                     );
-                    $phpcsFile->addError( $error, $commentEnd, 'WrongNumber', $data );
+                    $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
                     return;
                 } else {
                     // Exception type in @throws tag must be thrown in the function.
@@ -206,7 +206,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                                 $throwTokens[$i],
                                 $throwTag,
                             );
-                            $phpcsFile->addError( $error, $errorPos, 'WrongType', $data );
+                            $phpcsFile->addError($error, $errorPos, 'WrongType', $data);
                         }
                     }
                 }

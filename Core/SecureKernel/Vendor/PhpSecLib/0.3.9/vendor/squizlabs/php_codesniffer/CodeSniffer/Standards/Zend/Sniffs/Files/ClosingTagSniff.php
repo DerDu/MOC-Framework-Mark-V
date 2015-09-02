@@ -39,7 +39,7 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_CLOSE_TAG );
+        return array(T_CLOSE_TAG);
 
     }//end register()
 
@@ -53,12 +53,12 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $next = $phpcsFile->findNext( T_INLINE_HTML, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_INLINE_HTML, ( $stackPtr + 1 ), null, true);
         if ($next !== false) {
             return;
         }
@@ -72,10 +72,10 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check if the remaining inline HTML is just whitespace.
-        $content = trim( $content );
+        $content = trim($content);
         if (empty( $content ) === true) {
             $error = 'A closing tag is not permitted at the end of a PHP file';
-            $phpcsFile->addError( $error, $stackPtr, 'NotAllowed' );
+            $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
         }
 
     }//end process()

@@ -85,13 +85,13 @@ class TaskdefTask extends Task
      *
      * @param Path $classpath A Path object containing the classpath.
      */
-    public function setClasspath( Path $classpath )
+    public function setClasspath(Path $classpath)
     {
 
         if ($this->classpath === null) {
             $this->classpath = $classpath;
         } else {
-            $this->classpath->append( $classpath );
+            $this->classpath->append($classpath);
         }
     }
 
@@ -100,11 +100,11 @@ class TaskdefTask extends Task
      *
      * @param Reference $r
      */
-    public function setClasspathRef( Reference $r )
+    public function setClasspathRef(Reference $r)
     {
 
         $this->classpathId = $r->getRefId();
-        $this->createClasspath()->setRefid( $r );
+        $this->createClasspath()->setRefid($r);
     }
 
     /**
@@ -116,7 +116,7 @@ class TaskdefTask extends Task
     {
 
         if ($this->classpath === null) {
-            $this->classpath = new Path( $this->project );
+            $this->classpath = new Path($this->project);
         }
 
         return $this->classpath->createPath();
@@ -127,7 +127,7 @@ class TaskdefTask extends Task
      *
      * @param string $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -138,7 +138,7 @@ class TaskdefTask extends Task
      *
      * @param string $class
      */
-    public function setClassname( $class )
+    public function setClassname($class)
     {
 
         $this->classname = $class;
@@ -149,7 +149,7 @@ class TaskdefTask extends Task
      *
      * @param string $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->typeFile = $file;
@@ -162,28 +162,28 @@ class TaskdefTask extends Task
         if ($this->typeFile === null &&
             ( $this->name === null || $this->classname === null )
         ) {
-            throw new BuildException( "You must specify name and class attributes for <taskdef>." );
+            throw new BuildException("You must specify name and class attributes for <taskdef>.");
         }
         if ($this->typeFile == null) {
-            $this->log( "Task ".$this->name." will be handled by class ".$this->classname, Project::MSG_VERBOSE );
-            $this->project->addTaskDefinition( $this->name, $this->classname, $this->classpath );
+            $this->log("Task ".$this->name." will be handled by class ".$this->classname, Project::MSG_VERBOSE);
+            $this->project->addTaskDefinition($this->name, $this->classname, $this->classpath);
         } else {
             try { // try to load taskdefs given in file
                 $props = new Properties();
-                $in = new PhingFile( (string)$this->typeFile );
+                $in = new PhingFile((string)$this->typeFile);
 
                 if ($in === null) {
-                    throw new BuildException( "Can't load task list {$this->typeFile}" );
+                    throw new BuildException("Can't load task list {$this->typeFile}");
                 }
-                $props->load( $in );
+                $props->load($in);
 
                 $enum = $props->propertyNames();
                 foreach ($enum as $key) {
-                    $value = $props->getProperty( $key );
-                    $this->project->addTaskDefinition( $key, $value, $this->classpath );
+                    $value = $props->getProperty($key);
+                    $this->project->addTaskDefinition($key, $value, $this->classpath);
                 }
-            } catch( IOException $ioe ) {
-                throw new BuildException( "Can't load task list {$this->typeFile}" );
+            } catch (IOException $ioe) {
+                throw new BuildException("Can't load task list {$this->typeFile}");
             }
         }
     }

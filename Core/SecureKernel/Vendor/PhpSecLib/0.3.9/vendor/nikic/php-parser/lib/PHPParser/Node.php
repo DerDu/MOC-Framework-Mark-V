@@ -29,7 +29,7 @@ interface PHPParser_Node
      *
      * @param int $line Line
      */
-    public function setLine( $line );
+    public function setLine($line);
 
     /**
      * Gets the doc comment of the node.
@@ -46,7 +46,7 @@ interface PHPParser_Node
      * @param string $key
      * @param mixed  $value
      */
-    public function setAttribute( $key, $value );
+    public function setAttribute($key, $value);
 
     /**
      * Returns whether an attribute exists.
@@ -55,7 +55,7 @@ interface PHPParser_Node
      *
      * @return bool
      */
-    public function hasAttribute( $key );
+    public function hasAttribute($key);
 
     /**
      * Returns the value of an attribute.
@@ -65,7 +65,7 @@ interface PHPParser_Node
      *
      * @return mixed
      */
-    public function &getAttribute( $key, $default = null );
+    public function &getAttribute($key, $default = null);
 
     /**
      * Returns all attributes for the given node.

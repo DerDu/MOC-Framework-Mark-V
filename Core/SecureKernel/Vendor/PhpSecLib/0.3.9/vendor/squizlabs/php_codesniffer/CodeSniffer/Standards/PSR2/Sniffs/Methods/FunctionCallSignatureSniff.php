@@ -47,7 +47,7 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
      *
      * @return void
      */
-    public function isMultiLineCall( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens )
+    public function isMultiLineCall(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];

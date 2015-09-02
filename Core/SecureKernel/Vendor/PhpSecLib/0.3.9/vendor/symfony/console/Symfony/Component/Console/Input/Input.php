@@ -38,13 +38,13 @@ abstract class Input implements InputInterface
      *
      * @param InputDefinition $definition A InputDefinition instance
      */
-    public function __construct( InputDefinition $definition = null )
+    public function __construct(InputDefinition $definition = null)
     {
 
         if (null === $definition) {
             $this->definition = new InputDefinition();
         } else {
-            $this->bind( $definition );
+            $this->bind($definition);
             $this->validate();
         }
     }
@@ -54,7 +54,7 @@ abstract class Input implements InputInterface
      *
      * @param InputDefinition $definition A InputDefinition instance
      */
-    public function bind( InputDefinition $definition )
+    public function bind(InputDefinition $definition)
     {
 
         $this->arguments = array();
@@ -77,8 +77,8 @@ abstract class Input implements InputInterface
     public function validate()
     {
 
-        if (count( $this->arguments ) < $this->definition->getArgumentRequiredCount()) {
-            throw new \RuntimeException( 'Not enough arguments.' );
+        if (count($this->arguments) < $this->definition->getArgumentRequiredCount()) {
+            throw new \RuntimeException('Not enough arguments.');
         }
     }
 
@@ -98,7 +98,7 @@ abstract class Input implements InputInterface
      *
      * @param bool $interactive If the input should be interactive
      */
-    public function setInteractive( $interactive )
+    public function setInteractive($interactive)
     {
 
         $this->interactive = (bool)$interactive;
@@ -112,7 +112,7 @@ abstract class Input implements InputInterface
     public function getArguments()
     {
 
-        return array_merge( $this->definition->getArgumentDefaults(), $this->arguments );
+        return array_merge($this->definition->getArgumentDefaults(), $this->arguments);
     }
 
     /**
@@ -124,14 +124,14 @@ abstract class Input implements InputInterface
      *
      * @throws \InvalidArgumentException When argument given doesn't exist
      */
-    public function getArgument( $name )
+    public function getArgument($name)
     {
 
-        if (!$this->definition->hasArgument( $name )) {
-            throw new \InvalidArgumentException( sprintf( 'The "%s" argument does not exist.', $name ) );
+        if (!$this->definition->hasArgument($name)) {
+            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
-        return isset( $this->arguments[$name] ) ? $this->arguments[$name] : $this->definition->getArgument( $name )->getDefault();
+        return isset( $this->arguments[$name] ) ? $this->arguments[$name] : $this->definition->getArgument($name)->getDefault();
     }
 
     /**
@@ -142,11 +142,11 @@ abstract class Input implements InputInterface
      *
      * @throws \InvalidArgumentException When argument given doesn't exist
      */
-    public function setArgument( $name, $value )
+    public function setArgument($name, $value)
     {
 
-        if (!$this->definition->hasArgument( $name )) {
-            throw new \InvalidArgumentException( sprintf( 'The "%s" argument does not exist.', $name ) );
+        if (!$this->definition->hasArgument($name)) {
+            throw new \InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));
         }
 
         $this->arguments[$name] = $value;
@@ -159,10 +159,10 @@ abstract class Input implements InputInterface
      *
      * @return bool true if the InputArgument object exists, false otherwise
      */
-    public function hasArgument( $name )
+    public function hasArgument($name)
     {
 
-        return $this->definition->hasArgument( $name );
+        return $this->definition->hasArgument($name);
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class Input implements InputInterface
     public function getOptions()
     {
 
-        return array_merge( $this->definition->getOptionDefaults(), $this->options );
+        return array_merge($this->definition->getOptionDefaults(), $this->options);
     }
 
     /**
@@ -185,14 +185,14 @@ abstract class Input implements InputInterface
      *
      * @throws \InvalidArgumentException When option given doesn't exist
      */
-    public function getOption( $name )
+    public function getOption($name)
     {
 
-        if (!$this->definition->hasOption( $name )) {
-            throw new \InvalidArgumentException( sprintf( 'The "%s" option does not exist.', $name ) );
+        if (!$this->definition->hasOption($name)) {
+            throw new \InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
         }
 
-        return isset( $this->options[$name] ) ? $this->options[$name] : $this->definition->getOption( $name )->getDefault();
+        return isset( $this->options[$name] ) ? $this->options[$name] : $this->definition->getOption($name)->getDefault();
     }
 
     /**
@@ -203,11 +203,11 @@ abstract class Input implements InputInterface
      *
      * @throws \InvalidArgumentException When option given doesn't exist
      */
-    public function setOption( $name, $value )
+    public function setOption($name, $value)
     {
 
-        if (!$this->definition->hasOption( $name )) {
-            throw new \InvalidArgumentException( sprintf( 'The "%s" option does not exist.', $name ) );
+        if (!$this->definition->hasOption($name)) {
+            throw new \InvalidArgumentException(sprintf('The "%s" option does not exist.', $name));
         }
 
         $this->options[$name] = $value;
@@ -220,10 +220,10 @@ abstract class Input implements InputInterface
      *
      * @return bool true if the InputOption object exists, false otherwise
      */
-    public function hasOption( $name )
+    public function hasOption($name)
     {
 
-        return $this->definition->hasOption( $name );
+        return $this->definition->hasOption($name);
     }
 
     /**
@@ -233,9 +233,9 @@ abstract class Input implements InputInterface
      *
      * @return string
      */
-    public function escapeToken( $token )
+    public function escapeToken($token)
     {
 
-        return preg_match( '{^[\w-]+$}', $token ) ? $token : escapeshellarg( $token );
+        return preg_match('{^[\w-]+$}', $token) ? $token : escapeshellarg($token);
     }
 }

@@ -1,6 +1,8 @@
 <?php
+
 class FailureTest extends PHPUnit_Framework_TestCase
 {
+
     public function testAssertArrayEqualsArray()
     {
 

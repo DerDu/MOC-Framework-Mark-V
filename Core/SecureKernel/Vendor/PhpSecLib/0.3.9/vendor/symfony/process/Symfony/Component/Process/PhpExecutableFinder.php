@@ -35,42 +35,42 @@ class PhpExecutableFinder
      *
      * @return string|false The PHP executable path or false if it cannot be found
      */
-    public function find( $includeArgs = true )
+    public function find($includeArgs = true)
     {
 
         // HHVM support
-        if (defined( 'HHVM_VERSION' )) {
-            return ( false !== ( $hhvm = getenv( 'PHP_BINARY' ) ) ? $hhvm : PHP_BINARY ).( $includeArgs ? ' '.implode( ' ',
-                    $this->findArguments() ) : '' );
+        if (defined('HHVM_VERSION')) {
+            return ( false !== ( $hhvm = getenv('PHP_BINARY') ) ? $hhvm : PHP_BINARY ).( $includeArgs ? ' '.implode(' ',
+                    $this->findArguments()) : '' );
         }
 
         // PHP_BINARY return the current sapi executable
-        if (defined( 'PHP_BINARY' ) && PHP_BINARY && in_array( PHP_SAPI,
-                array( 'cli', 'cli-server' ) ) && is_file( PHP_BINARY )
+        if (defined('PHP_BINARY') && PHP_BINARY && in_array(PHP_SAPI,
+                array('cli', 'cli-server')) && is_file(PHP_BINARY)
         ) {
             return PHP_BINARY;
         }
 
-        if ($php = getenv( 'PHP_PATH' )) {
-            if (!is_executable( $php )) {
+        if ($php = getenv('PHP_PATH')) {
+            if (!is_executable($php)) {
                 return false;
             }
 
             return $php;
         }
 
-        if ($php = getenv( 'PHP_PEAR_PHP_BIN' )) {
-            if (is_executable( $php )) {
+        if ($php = getenv('PHP_PEAR_PHP_BIN')) {
+            if (is_executable($php)) {
                 return $php;
             }
         }
 
-        $dirs = array( PHP_BINDIR );
+        $dirs = array(PHP_BINDIR);
         if ('\\' === DIRECTORY_SEPARATOR) {
             $dirs[] = 'C:\xampp\php\\';
         }
 
-        return $this->executableFinder->find( 'php', false, $dirs );
+        return $this->executableFinder->find('php', false, $dirs);
     }
 
     /**
@@ -84,7 +84,7 @@ class PhpExecutableFinder
         $arguments = array();
 
         // HHVM support
-        if (defined( 'HHVM_VERSION' )) {
+        if (defined('HHVM_VERSION')) {
             $arguments[] = '--php';
         }
 

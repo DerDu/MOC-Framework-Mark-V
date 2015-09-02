@@ -21,10 +21,10 @@ class PropertyReflection extends Reflection
     protected $default;
     protected $errors = array();
 
-    static public function fromArray( Project $project, $array )
+    static public function fromArray(Project $project, $array)
     {
 
-        $property = new self( $array['name'], $array['line'] );
+        $property = new self($array['name'], $array['line']);
         $property->shortDesc = $array['short_desc'];
         $property->longDesc = $array['long_desc'];
         $property->hint = $array['hint'];
@@ -43,7 +43,7 @@ class PropertyReflection extends Reflection
         return $this->class.'::$'.$this->name;
     }
 
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
         $this->modifiers = $modifiers;
@@ -85,7 +85,7 @@ class PropertyReflection extends Reflection
         return $this->default;
     }
 
-    public function setDefault( $default )
+    public function setDefault($default)
     {
 
         $this->default = $default;
@@ -97,7 +97,7 @@ class PropertyReflection extends Reflection
         return $this->class;
     }
 
-    public function setClass( ClassReflection $class )
+    public function setClass(ClassReflection $class)
     {
 
         $this->class = $class;
@@ -109,7 +109,7 @@ class PropertyReflection extends Reflection
         return $this->errors;
     }
 
-    public function setErrors( $errors )
+    public function setErrors($errors)
     {
 
         $this->errors = $errors;

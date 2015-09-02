@@ -56,7 +56,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $ioncubePath
      */
-    public function setIoncubePath( $ioncubePath )
+    public function setIoncubePath($ioncubePath)
     {
 
         $this->ioncubePath = $ioncubePath;
@@ -76,7 +76,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $licensePath
      */
-    public function setLicensePath( $licensePath )
+    public function setLicensePath($licensePath)
     {
 
         $this->licensePath = $licensePath;
@@ -96,7 +96,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $passPhrase
      */
-    public function setPassPhrase( $passPhrase )
+    public function setPassPhrase($passPhrase)
     {
 
         $this->passPhrase = $passPhrase;
@@ -107,7 +107,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param IoncubeComment $comment
      */
-    public function addComment( IoncubeComment $comment )
+    public function addComment(IoncubeComment $comment)
     {
 
         $this->comments[] = $comment;
@@ -127,7 +127,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $allowedServer
      */
-    public function setAllowedServer( $allowedServer )
+    public function setAllowedServer($allowedServer)
     {
 
         $this->allowedServer = $allowedServer;
@@ -147,7 +147,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $expireOn
      */
-    public function setExpireOn( $expireOn )
+    public function setExpireOn($expireOn)
     {
 
         $this->expireOn = $expireOn;
@@ -167,7 +167,7 @@ class IoncubeLicenseTask extends Task
      *
      * @param $expireIn
      */
-    public function setExpireIn( $expireIn )
+    public function setExpireIn($expireIn)
     {
 
         $this->expireIn = $expireIn;
@@ -183,14 +183,14 @@ class IoncubeLicenseTask extends Task
 
         $arguments = $this->constructArguments();
 
-        $makelicense = new PhingFile( $this->ioncubePath, 'make_license' );
+        $makelicense = new PhingFile($this->ioncubePath, 'make_license');
 
-        $this->log( "Running ionCube make_license..." );
+        $this->log("Running ionCube make_license...");
 
-        exec( $makelicense->__toString()." ".$arguments." 2>&1", $output, $return );
+        exec($makelicense->__toString()." ".$arguments." 2>&1", $output, $return);
 
         if ($return != 0) {
-            throw new BuildException( "Could not execute ionCube make_license: ".implode( ' ', $output ) );
+            throw new BuildException("Could not execute ionCube make_license: ".implode(' ', $output));
         }
     }
 

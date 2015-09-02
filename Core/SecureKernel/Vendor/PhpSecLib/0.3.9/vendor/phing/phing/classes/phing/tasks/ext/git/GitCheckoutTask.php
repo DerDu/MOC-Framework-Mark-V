@@ -98,44 +98,44 @@ class GitCheckoutTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
         if (null === $this->getBranchname()) {
-            throw new BuildException( '"branchname" is required parameter' );
+            throw new BuildException('"branchname" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'checkout' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('checkout');
         $command
-            ->setOption( 'no-track', $this->isNoTrack() )
-            ->setOption( 'q', $this->isQuiet() )
-            ->setOption( 'force', $this->isForce() )
-            ->setOption( 'b', $this->isCreate() )
-            ->setOption( 'B', $this->isForceCreate() )
-            ->setOption( 'm', $this->isMerge() );
+            ->setOption('no-track', $this->isNoTrack())
+            ->setOption('q', $this->isQuiet())
+            ->setOption('force', $this->isForce())
+            ->setOption('b', $this->isCreate())
+            ->setOption('B', $this->isForceCreate())
+            ->setOption('m', $this->isMerge());
         if ($this->isNoTrack()) {
-            $command->setOption( 'track', $this->isTrack() );
+            $command->setOption('track', $this->isTrack());
         }
 
-        $command->addArgument( $this->getBranchname() );
+        $command->addArgument($this->getBranchname());
 
         if (null !== $this->getStartPoint()) {
-            $command->addArgument( $this->getStartPoint() );
+            $command->addArgument($this->getStartPoint());
         }
 
-        $this->log( 'git-checkout command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-checkout command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed.', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed.', $e);
         }
 
         $this->log(
-            sprintf( 'git-checkout: checkout "%s" repository', $this->getRepository() ),
+            sprintf('git-checkout: checkout "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
-        $this->log( 'git-checkout output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-checkout output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -150,7 +150,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $branchname
      */
-    public function setBranchname( $branchname )
+    public function setBranchname($branchname)
     {
 
         $this->branchname = $branchname;
@@ -204,7 +204,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $startPoint
      */
-    public function setStartPoint( $startPoint )
+    public function setStartPoint($startPoint)
     {
 
         $this->startPoint = $startPoint;
@@ -231,7 +231,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForce( $flag )
+    public function setForce($flag)
     {
 
         $this->force = $flag;
@@ -258,7 +258,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setQuiet( $flag )
+    public function setQuiet($flag)
     {
 
         $this->quiet = $flag;
@@ -285,7 +285,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setTrack( $flag )
+    public function setTrack($flag)
     {
 
         $this->track = $flag;
@@ -315,7 +315,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoTrack( $flag )
+    public function setNoTrack($flag)
     {
 
         $this->noTrack = $flag;
@@ -324,7 +324,7 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setCreate( $flag )
+    public function setCreate($flag)
     {
 
         $this->extraOptions['b'] = $flag;
@@ -333,16 +333,16 @@ class GitCheckoutTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForceCreate( $flag )
+    public function setForceCreate($flag)
     {
 
-        $this->setForce( $flag );
+        $this->setForce($flag);
     }
 
     /**
      * @param $flag
      */
-    public function setMerge( $flag )
+    public function setMerge($flag)
     {
 
         $this->extraOptions['m'] = $flag;

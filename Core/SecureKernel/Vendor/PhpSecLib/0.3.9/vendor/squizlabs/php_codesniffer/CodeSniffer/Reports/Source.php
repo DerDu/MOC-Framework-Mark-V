@@ -106,73 +106,73 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         $toScreen = true
     ) {
 
-        $width = max( $width, 70 );
+        $width = max($width, 70);
 
         if (empty( $this->_sourceCache ) === true) {
             // Nothing to show.
             return;
         }
 
-        asort( $this->_sourceCache );
-        $this->_sourceCache = array_reverse( $this->_sourceCache );
+        asort($this->_sourceCache);
+        $this->_sourceCache = array_reverse($this->_sourceCache);
 
         echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         if ($showSources === true) {
-            echo 'SOURCE'.str_repeat( ' ', ( $width - 11 ) ).'COUNT'.PHP_EOL;
-            echo str_repeat( '-', $width ).PHP_EOL;
+            echo 'SOURCE'.str_repeat(' ', ( $width - 11 )).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         } else {
-            echo 'STANDARD  CATEGORY            SNIFF'.str_repeat( ' ', ( $width - 40 ) ).'COUNT'.PHP_EOL;
-            echo str_repeat( '-', $width ).PHP_EOL;
+            echo 'STANDARD  CATEGORY            SNIFF'.str_repeat(' ', ( $width - 40 )).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         }
 
         foreach ($this->_sourceCache as $source => $count) {
             if ($showSources === true) {
-                echo $source.str_repeat( ' ', ( $width - 5 - strlen( $source ) ) );
+                echo $source.str_repeat(' ', ( $width - 5 - strlen($source) ));
             } else {
-                $parts = explode( '.', $source );
+                $parts = explode('.', $source);
 
-                if (strlen( $parts[0] ) > 8) {
-                    $parts[0] = substr( $parts[0], 0, ( ( strlen( $parts[0] ) - 8 ) * -1 ) );
+                if (strlen($parts[0]) > 8) {
+                    $parts[0] = substr($parts[0], 0, ( ( strlen($parts[0]) - 8 ) * -1 ));
                 }
 
-                echo $parts[0].str_repeat( ' ', ( 10 - strlen( $parts[0] ) ) );
+                echo $parts[0].str_repeat(' ', ( 10 - strlen($parts[0]) ));
 
-                $category = $this->makeFriendlyName( $parts[1] );
-                if (strlen( $category ) > 18) {
-                    $category = substr( $category, 0, ( ( strlen( $category ) - 18 ) * -1 ) );
+                $category = $this->makeFriendlyName($parts[1]);
+                if (strlen($category) > 18) {
+                    $category = substr($category, 0, ( ( strlen($category) - 18 ) * -1 ));
                 }
 
-                echo $category.str_repeat( ' ', ( 20 - strlen( $category ) ) );
+                echo $category.str_repeat(' ', ( 20 - strlen($category) ));
 
-                $sniff = $this->makeFriendlyName( $parts[2] );
+                $sniff = $this->makeFriendlyName($parts[2]);
                 if (isset( $parts[3] ) === true) {
-                    $name = $this->makeFriendlyName( $parts[3] );
-                    $name[0] = strtolower( $name[0] );
+                    $name = $this->makeFriendlyName($parts[3]);
+                    $name[0] = strtolower($name[0]);
                     $sniff .= ' '.$name;
                 }
 
-                if (strlen( $sniff ) > ( $width - 37 )) {
-                    $sniff = substr( $sniff, 0, ( $width - 37 - strlen( $sniff ) ) );
+                if (strlen($sniff) > ( $width - 37 )) {
+                    $sniff = substr($sniff, 0, ( $width - 37 - strlen($sniff) ));
                 }
 
-                echo $sniff.str_repeat( ' ', ( $width - 35 - strlen( $sniff ) ) );
+                echo $sniff.str_repeat(' ', ( $width - 35 - strlen($sniff) ));
             }//end if
 
             echo $count.PHP_EOL;
         }//end foreach
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.( $totalErrors + $totalWarnings ).' SNIFF VIOLATION(S) ';
-        echo 'WERE FOUND IN '.count( $this->_sourceCache ).' SOURCE(S)'.PHP_EOL;
+        echo 'WERE FOUND IN '.count($this->_sourceCache).' SOURCE(S)'.PHP_EOL;
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'UPGRADE TO PHP_CODESNIFFER 2.0 TO FIX ERRORS AUTOMATICALLY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists( 'PHP_Timer', false ) === true
+            && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
@@ -187,16 +187,16 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      *
      * @return string
      */
-    public function makeFriendlyName( $name )
+    public function makeFriendlyName($name)
     {
 
         $friendlyName = '';
-        $length = strlen( $name );
+        $length = strlen($name);
 
         $lastWasUpper = false;
         $lastWasNumeric = false;
         for ($i = 0; $i < $length; $i++) {
-            if (is_numeric( $name[$i] ) === true) {
+            if (is_numeric($name[$i]) === true) {
                 if ($lastWasNumeric === false) {
                     $friendlyName .= ' ';
                 }
@@ -206,7 +206,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             } else {
                 $lastWasNumeric = false;
 
-                $char = strtolower( $name[$i] );
+                $char = strtolower($name[$i]);
                 if ($char === $name[$i]) {
                     // Lowercase.
                     $lastWasUpper = false;
@@ -216,9 +216,9 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                         $friendlyName .= ' ';
                         if ($i < ( $length - 1 )) {
                             $next = $name[( $i + 1 )];
-                            if (strtolower( $next ) === $next) {
+                            if (strtolower($next) === $next) {
                                 // Next char is lowercase so it is a word boundary.
-                                $name[$i] = strtolower( $name[$i] );
+                                $name[$i] = strtolower($name[$i]);
                             }
                         }
                     }
@@ -230,8 +230,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             $friendlyName .= $name[$i];
         }//end for
 
-        $friendlyName = trim( $friendlyName );
-        $friendlyName[0] = strtoupper( $friendlyName[0] );
+        $friendlyName = trim($friendlyName);
+        $friendlyName[0] = strtoupper($friendlyName[0]);
 
         return $friendlyName;
 

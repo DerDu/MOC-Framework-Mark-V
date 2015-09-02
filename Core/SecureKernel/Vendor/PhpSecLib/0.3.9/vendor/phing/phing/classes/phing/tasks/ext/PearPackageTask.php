@@ -106,8 +106,8 @@ class PearPackageTask extends MatchingTask
     {
 
         include_once 'PEAR/PackageFileManager.php';
-        if (!class_exists( 'PEAR_PackageFileManager' )) {
-            throw new BuildException( "You must have installed PEAR_PackageFileManager in order to create a PEAR package.xml file." );
+        if (!class_exists('PEAR_PackageFileManager')) {
+            throw new BuildException("You must have installed PEAR_PackageFileManager in order to create a PEAR package.xml file.");
         }
     }
 
@@ -121,11 +121,11 @@ class PearPackageTask extends MatchingTask
     {
 
         if ($this->dir === null) {
-            throw new BuildException( "You must specify the \"dir\" attribute for PEAR package task." );
+            throw new BuildException("You must specify the \"dir\" attribute for PEAR package task.");
         }
 
         if ($this->package === null) {
-            throw new BuildException( "You must specify the \"name\" attribute for PEAR package task." );
+            throw new BuildException("You must specify the \"name\" attribute for PEAR package task.");
         }
 
         $this->pkg = new PEAR_PackageFileManager();
@@ -133,8 +133,8 @@ class PearPackageTask extends MatchingTask
         $this->setOptions();
 
         $e = $this->pkg->writePackageFile();
-        if (PEAR::isError( $e )) {
-            throw new BuildException( "Unable to write package file.", new Exception( $e->getMessage() ) );
+        if (PEAR::isError($e)) {
+            throw new BuildException("Unable to write package file.", new Exception($e->getMessage()));
         }
 
     }
@@ -161,30 +161,30 @@ class PearPackageTask extends MatchingTask
         // unless filelistgenerator has been overridden, we use Phing FileSet generator
         if (!isset( $this->preparedOptions['filelistgenerator'] )) {
             if (empty( $this->filesets )) {
-                throw new BuildException( "You must use a <fileset> tag to specify the files to include in the package.xml" );
+                throw new BuildException("You must use a <fileset> tag to specify the files to include in the package.xml");
             }
             $this->preparedOptions['filelistgenerator'] = 'Fileset';
-            $this->preparedOptions['usergeneratordir'] = dirname( __FILE__ ).DIRECTORY_SEPARATOR.'pearpackage';
+            $this->preparedOptions['usergeneratordir'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'pearpackage';
             // Some PHING-specific options needed by our Fileset reader
             $this->preparedOptions['phing_project'] = $this->project;
             $this->preparedOptions['phing_filesets'] = $this->filesets;
         } elseif ($this->preparedOptions['filelistgenerator'] != 'Fileset' && !empty( $this->filesets )) {
-            throw new BuildException( "You cannot use <fileset> element if you have specified the \"filelistgenerator\" option." );
+            throw new BuildException("You cannot use <fileset> element if you have specified the \"filelistgenerator\" option.");
         }
 
         // 3) Set the options
 
         // No need for excessive validation here, since the  PEAR class will do its own
         // validation & return errors
-        $e = $this->pkg->setOptions( $this->preparedOptions );
+        $e = $this->pkg->setOptions($this->preparedOptions);
 
-        if (PEAR::isError( $e )) {
-            throw new BuildException( "Unable to set options.", new Exception( $e->getMessage() ) );
+        if (PEAR::isError($e)) {
+            throw new BuildException("Unable to set options.", new Exception($e->getMessage()));
         }
 
         // convert roles
         foreach ($this->roles as $role) {
-            $this->pkg->addRole( $role->getExtension(), $role->getRole() );
+            $this->pkg->addRole($role->getExtension(), $role->getRole());
         }
     }
 
@@ -200,13 +200,13 @@ class PearPackageTask extends MatchingTask
 
         if ($this->packageFile !== null) {
             // create one w/ full path
-            $f = new PhingFile( $this->packageFile->getAbsolutePath() );
+            $f = new PhingFile($this->packageFile->getAbsolutePath());
             $this->preparedOptions['packagefile'] = $f->getName();
             // must end in trailing slash
             $this->preparedOptions['outputdirectory'] = $f->getParent().DIRECTORY_SEPARATOR;
-            $this->log( "Creating package file: ".$f->__toString(), Project::MSG_INFO );
+            $this->log("Creating package file: ".$f->__toString(), Project::MSG_INFO);
         } else {
-            $this->log( "Creating [default] package.xml file in base directory.", Project::MSG_INFO );
+            $this->log("Creating [default] package.xml file in base directory.", Project::MSG_INFO);
         }
 
         // converts option objects and mapping objects into
@@ -220,7 +220,7 @@ class PearPackageTask extends MatchingTask
             $value = $map->getValue(); // getValue returns complex value
 
             if ($map->getName() == 'deps') {
-                $value = $this->fixDeps( $value );
+                $value = $this->fixDeps($value);
             }
 
             $this->preparedOptions[$map->getName()] = $value;
@@ -234,10 +234,10 @@ class PearPackageTask extends MatchingTask
      *
      * @return
      */
-    private function fixDeps( $deps )
+    private function fixDeps($deps)
     {
 
-        foreach (array_keys( $deps ) as $dep) {
+        foreach (array_keys($deps) as $dep) {
             if (isset( $deps[$dep]['optional'] ) && $deps[$dep]['optional']) {
                 $deps[$dep]['optional'] = "yes";
             }
@@ -270,7 +270,7 @@ class PearPackageTask extends MatchingTask
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -285,7 +285,7 @@ class PearPackageTask extends MatchingTask
      *
      * @return void
      */
-    public function setPackage( $v )
+    public function setPackage($v)
     {
 
         $this->package = $v;
@@ -298,7 +298,7 @@ class PearPackageTask extends MatchingTask
      *
      * @return void
      */
-    public function setDir( PhingFile $f )
+    public function setDir(PhingFile $f)
     {
 
         $this->dir = $f;
@@ -311,7 +311,7 @@ class PearPackageTask extends MatchingTask
      *
      * @return void
      */
-    public function setName( $v )
+    public function setName($v)
     {
 
         $this->package = $v;
@@ -322,7 +322,7 @@ class PearPackageTask extends MatchingTask
      *
      * @param PhingFile $f
      */
-    public function setDestFile( PhingFile $f )
+    public function setDestFile(PhingFile $f)
     {
 
         $this->packageFile = $f;
@@ -387,7 +387,7 @@ class PearPkgOption
     /**
      * @param $v
      */
-    public function setName( $v )
+    public function setName($v)
     {
 
         $this->name = $v;
@@ -402,7 +402,7 @@ class PearPkgOption
     /**
      * @param $v
      */
-    public function setValue( $v )
+    public function setValue($v)
     {
 
         $this->value = $v;
@@ -411,10 +411,10 @@ class PearPkgOption
     /**
      * @param $txt
      */
-    public function addText( $txt )
+    public function addText($txt)
     {
 
-        $this->value = trim( $txt );
+        $this->value = trim($txt);
     }
 
 }
@@ -439,7 +439,7 @@ class PearPkgMapping
     /**
      * @param $v
      */
-    public function setName( $v )
+    public function setName($v)
     {
 
         $this->name = $v;
@@ -508,7 +508,7 @@ class PearPkgMappingElement
     /**
      * @param $v
      */
-    public function setKey( $v )
+    public function setKey($v)
     {
 
         $this->key = $v;
@@ -542,7 +542,7 @@ class PearPkgMappingElement
     /**
      * @param $v
      */
-    public function setValue( $v )
+    public function setValue($v)
     {
 
         $this->value = $v;
@@ -596,7 +596,7 @@ class PearPkgRole
      *
      * @param string $extension
      */
-    public function setExtension( $extension )
+    public function setExtension($extension)
     {
 
         $this->extension = $extension;
@@ -618,7 +618,7 @@ class PearPkgRole
      *
      * @param string $role
      */
-    public function setRole( $role )
+    public function setRole($role)
     {
 
         $this->role = $role;

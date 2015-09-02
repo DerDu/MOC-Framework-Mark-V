@@ -47,11 +47,11 @@ class Basename extends Task
      *
      * @param PhingFile $file file or directory to get base name from
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
-        if (is_string( $file )) {
-            $this->file = new PhingFile( $file );
+        if (is_string($file)) {
+            $this->file = new PhingFile($file);
         } else {
             $this->file = $file;
         }
@@ -62,7 +62,7 @@ class Basename extends Task
      *
      * @param string $property name of property
      */
-    public function setProperty( $property )
+    public function setProperty($property)
     {
 
         $this->property = $property;
@@ -73,7 +73,7 @@ class Basename extends Task
      *
      * @param string $suffix suffix to remove from base name
      */
-    public function setSuffix( $suffix )
+    public function setSuffix($suffix)
     {
 
         $this->suffix = $suffix;
@@ -89,25 +89,25 @@ class Basename extends Task
     {
 
         if ($this->property === null) {
-            throw new BuildException( "property attribute required", $this->getLocation() );
+            throw new BuildException("property attribute required", $this->getLocation());
         }
 
         if ($this->file == null) {
-            throw new BuildException( "file attribute required", $this->getLocation() );
+            throw new BuildException("file attribute required", $this->getLocation());
         }
 
         $value = $this->file->getName();
-        if ($this->suffix != null && StringHelper::endsWith( $this->suffix, $value )) {
+        if ($this->suffix != null && StringHelper::endsWith($this->suffix, $value)) {
             // if the suffix does not starts with a '.' and the
             // char preceding the suffix is a '.', we assume the user
             // wants to remove the '.' as well
-            $pos = strlen( $value ) - strlen( $this->suffix ) - 1;
+            $pos = strlen($value) - strlen($this->suffix) - 1;
             if ($pos > 0 && $this->suffix{0} !== '.' && $value{$pos} === '.') {
                 $pos--;
             }
-            $value = StringHelper::substring( $value, 0, $pos );
+            $value = StringHelper::substring($value, 0, $pos);
 
         }
-        $this->getProject()->setNewProperty( $this->property, $value );
+        $this->getProject()->setNewProperty($this->property, $value);
     }
 }

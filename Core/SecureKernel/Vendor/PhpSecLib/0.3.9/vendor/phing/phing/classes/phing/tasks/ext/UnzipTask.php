@@ -39,7 +39,7 @@ class UnzipTask extends ExtractBaseTask
      *
      * @return boolean
      */
-    protected function extractArchive( PhingFile $zipfile )
+    protected function extractArchive(PhingFile $zipfile)
     {
 
         $this->log(
@@ -49,16 +49,16 @@ class UnzipTask extends ExtractBaseTask
 
         $zip = new ZipArchive();
 
-        $result = $zip->open( $zipfile->getAbsolutePath() );
+        $result = $zip->open($zipfile->getAbsolutePath());
         if (!$result) {
-            $this->log( "Unable to open zipfile ".$zipfile->__toString(), Project::MSG_ERR );
+            $this->log("Unable to open zipfile ".$zipfile->__toString(), Project::MSG_ERR);
 
             return false;
         }
 
-        $result = $zip->extractTo( $this->todir->getAbsolutePath() );
+        $result = $zip->extractTo($this->todir->getAbsolutePath());
         if (!$result) {
-            $this->log( "Unable to extract zipfile ".$zipfile->__toString(), Project::MSG_ERR );
+            $this->log("Unable to extract zipfile ".$zipfile->__toString(), Project::MSG_ERR);
 
             return false;
         }
@@ -73,16 +73,16 @@ class UnzipTask extends ExtractBaseTask
      *
      * @return array List of files inside $zipfile
      */
-    protected function listArchiveContent( PhingFile $zipfile )
+    protected function listArchiveContent(PhingFile $zipfile)
     {
 
         $zip = new ZipArchive();
-        $zip->open( $zipfile->getAbsolutePath() );
+        $zip->open($zipfile->getAbsolutePath());
 
         $content = array();
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $content[] = array(
-                'filename' => $zip->getNameIndex( $i )
+                'filename' => $zip->getNameIndex($i)
             );
         }
 

@@ -40,7 +40,7 @@ class PimpleServiceProvider implements ServiceProviderInterface
      *
      * @param Container $pimple An Container instance
      */
-    public function register( Container $pimple )
+    public function register(Container $pimple)
     {
 
         $pimple['param'] = 'value';
@@ -50,9 +50,9 @@ class PimpleServiceProvider implements ServiceProviderInterface
             return new Service();
         };
 
-        $pimple['factory'] = $pimple->factory( function () {
+        $pimple['factory'] = $pimple->factory(function () {
 
             return new Service();
-        } );
+        });
     }
 }

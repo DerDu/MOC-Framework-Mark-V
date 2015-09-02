@@ -19,33 +19,33 @@ class ThemeSet
 
     protected $themes;
 
-    public function __construct( array $dirs )
+    public function __construct(array $dirs)
     {
 
-        $this->discover( $dirs );
+        $this->discover($dirs);
     }
 
-    protected function discover( array $dirs )
+    protected function discover(array $dirs)
     {
 
         $this->themes = array();
         $parents = array();
-        foreach (Finder::create()->name( 'manifest.yml' )->in( $dirs ) as $manifest) {
-            $config = Yaml::parse( $manifest );
+        foreach (Finder::create()->name('manifest.yml')->in($dirs) as $manifest) {
+            $config = Yaml::parse($manifest);
             if (!isset( $config['name'] )) {
-                throw new \InvalidArgumentException( sprintf( 'Theme manifest in "%s" must have a "name" entry.',
-                    $manifest ) );
+                throw new \InvalidArgumentException(sprintf('Theme manifest in "%s" must have a "name" entry.',
+                    $manifest));
             }
 
-            $this->themes[$config['name']] = $theme = new Theme( $config['name'], dirname( $manifest ) );
+            $this->themes[$config['name']] = $theme = new Theme($config['name'], dirname($manifest));
 
             if (isset( $config['parent'] )) {
                 $parents[$config['name']] = $config['parent'];
             }
 
-            foreach (array( 'static', 'global', 'namespace', 'class' ) as $type) {
+            foreach (array('static', 'global', 'namespace', 'class') as $type) {
                 if (isset( $config[$type] )) {
-                    $theme->setTemplates( $type, $config[$type] );
+                    $theme->setTemplates($type, $config[$type]);
                 }
             }
         }
@@ -53,19 +53,19 @@ class ThemeSet
         // populate parent
         foreach ($parents as $name => $parent) {
             if (!isset( $this->themes[$parent] )) {
-                throw new \LogicException( sprintf( 'Theme "%s" inherits from an unknomwn "%s" theme.', $name,
-                    $parent ) );
+                throw new \LogicException(sprintf('Theme "%s" inherits from an unknomwn "%s" theme.', $name,
+                    $parent));
             }
 
-            $this->themes[$name]->setParent( $this->themes[$parent] );
+            $this->themes[$name]->setParent($this->themes[$parent]);
         }
     }
 
-    public function getTheme( $name )
+    public function getTheme($name)
     {
 
         if (!isset( $this->themes[$name] )) {
-            throw new \InvalidArgumentException( sprintf( 'Theme "%s" does not exist.', $name ) );
+            throw new \InvalidArgumentException(sprintf('Theme "%s" does not exist.', $name));
         }
 
         return $this->themes[$name];

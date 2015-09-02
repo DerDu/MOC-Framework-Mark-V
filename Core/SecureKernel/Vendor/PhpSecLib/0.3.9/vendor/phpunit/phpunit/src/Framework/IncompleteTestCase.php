@@ -51,11 +51,11 @@ class PHPUnit_Framework_IncompleteTestCase extends PHPUnit_Framework_TestCase
      * @param string $methodName
      * @param string $message
      */
-    public function __construct( $className, $methodName, $message = '' )
+    public function __construct($className, $methodName, $message = '')
     {
 
         $this->message = $message;
-        parent::__construct( $className.'::'.$methodName );
+        parent::__construct($className.'::'.$methodName);
     }
 
     /**
@@ -84,6 +84,6 @@ class PHPUnit_Framework_IncompleteTestCase extends PHPUnit_Framework_TestCase
     protected function runTest()
     {
 
-        $this->markTestIncomplete( $this->message );
+        $this->markTestIncomplete($this->message);
     }
 }

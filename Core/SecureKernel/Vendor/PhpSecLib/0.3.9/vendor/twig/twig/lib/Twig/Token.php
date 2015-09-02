@@ -42,7 +42,7 @@ class Twig_Token
      * @param string $value  The token value
      * @param int    $lineno The line position in the source
      */
-    public function __construct( $type, $value, $lineno )
+    public function __construct($type, $value, $lineno)
     {
 
         $this->type = $type;
@@ -57,7 +57,7 @@ class Twig_Token
      *
      * @return string The string representation
      */
-    public static function typeToEnglish( $type )
+    public static function typeToEnglish($type)
     {
 
         switch ($type) {
@@ -88,7 +88,7 @@ class Twig_Token
             case self::INTERPOLATION_END_TYPE:
                 return 'end of string interpolation';
             default:
-                throw new LogicException( sprintf( 'Token of type "%s" does not exist.', $type ) );
+                throw new LogicException(sprintf('Token of type "%s" does not exist.', $type));
         }
     }
 
@@ -100,7 +100,7 @@ class Twig_Token
     public function __toString()
     {
 
-        return sprintf( '%s(%s)', self::typeToString( $this->type, true ), $this->value );
+        return sprintf('%s(%s)', self::typeToString($this->type, true), $this->value);
     }
 
     /**
@@ -111,7 +111,7 @@ class Twig_Token
      *
      * @return string The string representation
      */
-    public static function typeToString( $type, $short = false )
+    public static function typeToString($type, $short = false)
     {
 
         switch ($type) {
@@ -155,7 +155,7 @@ class Twig_Token
                 $name = 'INTERPOLATION_END_TYPE';
                 break;
             default:
-                throw new LogicException( sprintf( 'Token of type "%s" does not exist.', $type ) );
+                throw new LogicException(sprintf('Token of type "%s" does not exist.', $type));
         }
 
         return $short ? $name : 'Twig_Token::'.$name;
@@ -174,17 +174,17 @@ class Twig_Token
      *
      * @return bool
      */
-    public function test( $type, $values = null )
+    public function test($type, $values = null)
     {
 
-        if (null === $values && !is_int( $type )) {
+        if (null === $values && !is_int($type)) {
             $values = $type;
             $type = self::NAME_TYPE;
         }
 
         return ( $this->type === $type ) && (
             null === $values ||
-            ( is_array( $values ) && in_array( $this->value, $values ) ) ||
+            ( is_array($values) && in_array($this->value, $values) ) ||
             $this->value == $values
         );
     }

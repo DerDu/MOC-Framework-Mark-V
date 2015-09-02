@@ -56,7 +56,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -70,39 +70,39 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
             $openBracket = $tokens[$stackPtr]['bracket_opener'];
         }
 
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $openBracket - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $openBracket - 1 ), null, true);
         if ($tokens[$prev]['code'] === T_EQUAL) {
             return;
         }
 
         // Square brackets can not have a space before them.
         $prevType = $tokens[( $stackPtr - 1 )]['code'];
-        if (in_array( $prevType, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
-            $nonSpace = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 2 ), null, true );
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 2 ), null, true);
             $expected = $tokens[$nonSpace]['content'].$tokens[$stackPtr]['content'];
-            $found = $phpcsFile->getTokensAsString( $nonSpace,
-                    ( $stackPtr - $nonSpace ) ).$tokens[$stackPtr]['content'];
+            $found = $phpcsFile->getTokensAsString($nonSpace,
+                    ( $stackPtr - $nonSpace )).$tokens[$stackPtr]['content'];
             $error = 'Space found before square bracket; expected "%s" but found "%s"';
             $data = array(
                 $expected,
                 $found,
             );
-            $phpcsFile->addError( $error, $stackPtr, 'SpaceBeforeBracket', $data );
+            $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeBracket', $data);
         }
 
         // Open square brackets can't ever have spaces after them.
         if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
             $nextType = $tokens[( $stackPtr + 1 )]['code'];
-            if (in_array( $nextType, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
-                $nonSpace = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 2 ), null, true );
+            if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                $nonSpace = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 2 ), null, true);
                 $expected = $tokens[$stackPtr]['content'].$tokens[$nonSpace]['content'];
-                $found = $phpcsFile->getTokensAsString( $stackPtr, ( $nonSpace - $stackPtr + 1 ) );
+                $found = $phpcsFile->getTokensAsString($stackPtr, ( $nonSpace - $stackPtr + 1 ));
                 $error = 'Space found after square bracket; expected "%s" but found "%s"';
                 $data = array(
                     $expected,
                     $found,
                 );
-                $phpcsFile->addError( $error, $stackPtr, 'SpaceAfterBracket', $data );
+                $phpcsFile->addError($error, $stackPtr, 'SpaceAfterBracket', $data);
             }
         }
 

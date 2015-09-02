@@ -24,4 +24,4 @@
  * THE SOFTWARE.
  */
 
-class_alias( 'Pimple\Container', 'Pimple' );
+class_alias('Pimple\Container', 'Pimple');

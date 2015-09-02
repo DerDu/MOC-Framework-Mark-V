@@ -116,16 +116,16 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      *
      * @return mixed filtered stream, -1 on EOF.
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
         // read from next filter up the chain
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
@@ -133,8 +133,8 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
 
         // filter buffer
         $buffer = preg_replace_callback(
-            "/".preg_quote( $this->_beginToken, '/' )."([\w\.\-:]+?)".preg_quote( $this->_endToken, '/' )."/",
-            array( $this, 'replaceTokenCallback' ),
+            "/".preg_quote($this->_beginToken, '/')."([\w\.\-:]+?)".preg_quote($this->_endToken, '/')."/",
+            array($this, 'replaceTokenCallback'),
             $buffer
         );
 
@@ -151,16 +151,16 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0; $i < count( $params ); $i++) {
+            for ($i = 0; $i < count($params); $i++) {
                 if ($params[$i] !== null) {
                     $type = $params[$i]->getType();
                     if ($type === "tokenchar") {
                         $name = $params[$i]->getName();
                         if ($name === "begintoken") {
-                            $this->_beginToken = substr( $params[$i]->getValue(), 0, 1 );
+                            $this->_beginToken = substr($params[$i]->getValue(), 0, 1);
                         } else {
                             if ($name === "endtoken") {
-                                $this->_endToken = substr( $params[$i]->getValue(), 0, 1 );
+                                $this->_endToken = substr($params[$i]->getValue(), 0, 1);
                             }
                         }
                     } else {
@@ -169,10 +169,10 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
                             $value = $params[$i]->getValue();
 
                             $tok = new Token();
-                            $tok->setKey( $name );
-                            $tok->setValue( $value );
+                            $tok->setKey($name);
+                            $tok->setValue($value);
 
-                            array_push( $this->_tokens, $tok );
+                            array_push($this->_tokens, $tok);
                         } else {
                             if ($type === "tokensource") {
                                 // Store data from nested tags in local array
@@ -186,17 +186,17 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
                                 // Create TokenSource
                                 $tokensource = new TokenSource();
                                 if (isset( $arr["classname"] )) {
-                                    $tokensource->setClassname( $arr["classname"] );
+                                    $tokensource->setClassname($arr["classname"]);
                                 }
 
                                 // Copy other parameters 1:1 to freshly created TokenSource
                                 foreach ($arr as $key => $value) {
-                                    if (strtolower( $key ) === "classname") {
+                                    if (strtolower($key) === "classname") {
                                         continue;
                                     }
                                     $param = $tokensource->createParam();
-                                    $param->setName( $key );
-                                    $param->setValue( $value );
+                                    $param->setName($key);
+                                    $param->setValue($value);
                                 }
 
                                 $this->_tokensources[] = $tokensource;
@@ -217,7 +217,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
     public function createToken()
     {
 
-        $num = array_push( $this->_tokens, new Token() );
+        $num = array_push($this->_tokens, new Token());
 
         return $this->_tokens[$num - 1];
     }
@@ -230,7 +230,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
     public function createTokensource()
     {
 
-        $num = array_push( $this->_tokensources, new TokenSource() );
+        $num = array_push($this->_tokensources, new TokenSource());
 
         return $this->_tokensources[$num - 1];
     }
@@ -248,16 +248,16 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new ReplaceTokens( $reader );
-        $newFilter->setProject( $this->getProject() );
-        $newFilter->setBeginToken( $this->getBeginToken() );
-        $newFilter->setEndToken( $this->getEndToken() );
-        $newFilter->setTokens( $this->getTokens() );
-        $newFilter->setTokensources( $this->getTokensources() );
-        $newFilter->setInitialized( true );
+        $newFilter = new ReplaceTokens($reader);
+        $newFilter->setProject($this->getProject());
+        $newFilter->setBeginToken($this->getBeginToken());
+        $newFilter->setEndToken($this->getEndToken());
+        $newFilter->setTokens($this->getTokens());
+        $newFilter->setTokensources($this->getTokensources());
+        $newFilter->setInitialized(true);
 
         return $newFilter;
     }
@@ -278,7 +278,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      *
      * @param string $beginToken the character used to denote the beginning of a token.
      */
-    public function setBeginToken( $beginToken )
+    public function setBeginToken($beginToken)
     {
 
         $this->_beginToken = (string)$beginToken;
@@ -300,7 +300,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      *
      * @param string $endToken the character used to denote the end of a token
      */
-    public function setEndToken( $endToken )
+    public function setEndToken($endToken)
     {
 
         $this->_endToken = (string)$endToken;
@@ -328,12 +328,12 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      * @internal param A $array map (String->String) of token keys to replacement
      *              values. Must not be <code>null</code>.
      */
-    public function setTokens( $tokens )
+    public function setTokens($tokens)
     {
 
         // type check, error must never occur, bad code of it does
-        if (!is_array( $tokens )) {
-            throw new Exception( "Excpected 'array', got something else" );
+        if (!is_array($tokens)) {
+            throw new Exception("Excpected 'array', got something else");
         }
 
         $this->_tokens = $tokens;
@@ -358,12 +358,12 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      * @throws Exception
      * @internal param An $array array of token sources.
      */
-    public function setTokensources( $sources )
+    public function setTokensources($sources)
     {
 
         // type check
-        if (!is_array( $sources )) {
-            throw new Exception( "Exspected 'array', got something else" );
+        if (!is_array($sources)) {
+            throw new Exception("Exspected 'array', got something else");
         }
         $this->_tokensources = $sources;
     }
@@ -375,7 +375,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
      *
      * @return string Text with which to replace key or value of key if none is found.
      */
-    private function replaceTokenCallback( $matches )
+    private function replaceTokenCallback($matches)
     {
 
         $key = $matches[1];
@@ -387,19 +387,19 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
         if ($this->_alltokens === null) {
             $this->_alltokens = array();
 
-            $count = count( $this->_tokensources );
+            $count = count($this->_tokensources);
             for ($i = 0; $i < $count; $i++) {
                 $source = $this->_tokensources[$i];
-                $this->_alltokens = array_merge( $this->_alltokens, $source->getTokens() );
+                $this->_alltokens = array_merge($this->_alltokens, $source->getTokens());
             }
 
-            $this->_alltokens = array_merge( $this->_tokens, $this->_alltokens );
+            $this->_alltokens = array_merge($this->_tokens, $this->_alltokens);
         }
 
         $tokens = $this->_alltokens;
 
         $replaceWith = null;
-        $count = count( $tokens );
+        $count = count($tokens);
 
         for ($i = 0; $i < $count; $i++) {
             if ($tokens[$i]->getKey() === $key) {
@@ -409,7 +409,7 @@ class ReplaceTokens extends BaseParamFilterReader implements ChainableReader
 
         if ($replaceWith === null) {
             $replaceWith = $this->_beginToken.$key.$this->_endToken;
-            $this->log( "No token defined for key \"".$this->_beginToken.$key.$this->_endToken."\"" );
+            $this->log("No token defined for key \"".$this->_beginToken.$key.$this->_endToken."\"");
         } else {
             $this->log(
                 "Replaced \"".$this->_beginToken.$key.$this->_endToken."\" with \"".$replaceWith."\"",
@@ -459,7 +459,7 @@ class Token
      *
      * @param string $key The key for this token. Must not be <code>null</code>.
      */
-    public function setKey( $key )
+    public function setKey($key)
     {
 
         $this->_key = (string)$key;
@@ -481,11 +481,11 @@ class Token
      *
      * @param string $value The value for this token. Must not be <code>null</code>.
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         // special case for boolean values
-        if (is_bool( $value )) {
+        if (is_bool($value)) {
             if ($value) {
                 $this->_value = "true";
             } else {
@@ -501,9 +501,9 @@ class Token
      *
      * @param string $value The value for this token. Must not be <code>null</code>.
      */
-    public function addText( $value )
+    public function addText($value)
     {
 
-        $this->setValue( $value );
+        $this->setValue($value);
     }
 }

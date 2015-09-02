@@ -35,20 +35,20 @@ class Character
      *
      * @return bool
      */
-    public static function isLetter( $char )
+    public static function isLetter($char)
     {
 
-        if (strlen( $char ) !== 1) {
+        if (strlen($char) !== 1) {
             $char = 0;
         }
 
-        $char = (int)ord( $char );
+        $char = (int)ord($char);
 
-        if ($char >= ord( 'A' ) && $char <= ord( 'Z' )) {
+        if ($char >= ord('A') && $char <= ord('Z')) {
             return true;
         }
 
-        if ($char >= ord( 'a' ) && $char <= ord( 'z' )) {
+        if ($char >= ord('a') && $char <= ord('z')) {
             return true;
         }
 

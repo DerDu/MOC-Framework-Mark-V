@@ -6,6 +6,7 @@ namespace bar\baz;
  */
 class source_with_namespace
 {
+
 }
 
 /**

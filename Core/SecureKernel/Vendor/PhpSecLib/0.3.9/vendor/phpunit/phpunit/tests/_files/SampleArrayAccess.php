@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Sample class that implements ArrayAccess copied from
  * http://www.php.net/manual/en/class.arrayaccess.php
@@ -7,10 +8,12 @@
  */
 class SampleArrayAccess implements ArrayAccess
 {
+
     private $container;
 
     public function __construct()
     {
+
         $this->container = array();
     }
 

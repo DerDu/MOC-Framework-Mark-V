@@ -13,13 +13,13 @@ class Unit_Net_SSH1Test extends PhpseclibTestCase
 
         return array(
             array(
-                array( 'hello world' ),
-                array( '<--' ),
+                array('hello world'),
+                array('<--'),
                 "<--\r\n00000000  68:65:6c:6c:6f:20:77:6f:72:6c:64                 hello world\r\n\r\n"
             ),
             array(
-                array( 'hello', 'world' ),
-                array( '<--', '<--' ),
+                array('hello', 'world'),
+                array('<--', '<--'),
                 "<--\r\n00000000  68:65:6c:6c:6f                                   hello\r\n\r\n".
                 "<--\r\n00000000  77:6f:72:6c:64                                   world\r\n\r\n"
             ),
@@ -29,16 +29,16 @@ class Unit_Net_SSH1Test extends PhpseclibTestCase
     /**
      * @dataProvider formatLogDataProvider
      */
-    public function testFormatLog( array $message_log, array $message_number_log, $expected )
+    public function testFormatLog(array $message_log, array $message_number_log, $expected)
     {
 
-        $ssh = $this->getMockBuilder( 'Net_SSH1' )
+        $ssh = $this->getMockBuilder('Net_SSH1')
             ->disableOriginalConstructor()
-            ->setMethods( null )
+            ->setMethods(null)
             ->getMock();
 
-        $result = $ssh->_format_log( $message_log, $message_number_log );
+        $result = $ssh->_format_log($message_log, $message_number_log);
 
-        $this->assertEquals( $expected, $result );
+        $this->assertEquals($expected, $result);
     }
 }

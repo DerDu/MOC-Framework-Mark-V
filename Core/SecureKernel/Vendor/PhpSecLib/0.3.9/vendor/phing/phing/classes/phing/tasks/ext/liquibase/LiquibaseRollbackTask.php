@@ -36,7 +36,7 @@ class LiquibaseRollbackTask extends AbstractLiquibaseTask
      *
      * @param string the name to roll back to
      */
-    public function setRollbackTag( $rollbackTag )
+    public function setRollbackTag($rollbackTag)
     {
 
         $this->rollbackTag = $rollbackTag;
@@ -49,7 +49,7 @@ class LiquibaseRollbackTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( 'rollback', escapeshellarg( $this->rollbackTag ) );
+        $this->execute('rollback', escapeshellarg($this->rollbackTag));
     }
 
     /**

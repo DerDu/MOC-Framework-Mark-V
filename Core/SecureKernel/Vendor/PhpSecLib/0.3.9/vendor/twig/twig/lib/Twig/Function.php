@@ -23,14 +23,14 @@ abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCal
     protected $options;
     protected $arguments = array();
 
-    public function __construct( array $options = array() )
+    public function __construct(array $options = array())
     {
 
-        $this->options = array_merge( array(
+        $this->options = array_merge(array(
             'needs_environment' => false,
             'needs_context'     => false,
             'callable'          => null,
-        ), $options );
+        ), $options);
     }
 
     public function getArguments()
@@ -39,7 +39,7 @@ abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCal
         return $this->arguments;
     }
 
-    public function setArguments( $arguments )
+    public function setArguments($arguments)
     {
 
         $this->arguments = $arguments;
@@ -57,7 +57,7 @@ abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCal
         return $this->options['needs_context'];
     }
 
-    public function getSafe( Twig_Node $functionArgs )
+    public function getSafe(Twig_Node $functionArgs)
     {
 
         if (isset( $this->options['is_safe'] )) {
@@ -65,7 +65,7 @@ abstract class Twig_Function implements Twig_FunctionInterface, Twig_FunctionCal
         }
 
         if (isset( $this->options['is_safe_callback'] )) {
-            return call_user_func( $this->options['is_safe_callback'], $functionArgs );
+            return call_user_func($this->options['is_safe_callback'], $functionArgs);
         }
 
         return array();

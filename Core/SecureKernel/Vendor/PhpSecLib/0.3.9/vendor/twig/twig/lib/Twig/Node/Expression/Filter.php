@@ -21,26 +21,26 @@ class Twig_Node_Expression_Filter extends Twig_Node_Expression_Call
         $tag = null
     ) {
 
-        parent::__construct( array( 'node' => $node, 'filter' => $filterName, 'arguments' => $arguments ), array(),
-            $lineno, $tag );
+        parent::__construct(array('node' => $node, 'filter' => $filterName, 'arguments' => $arguments), array(),
+            $lineno, $tag);
     }
 
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $name = $this->getNode( 'filter' )->getAttribute( 'value' );
-        $filter = $compiler->getEnvironment()->getFilter( $name );
+        $name = $this->getNode('filter')->getAttribute('value');
+        $filter = $compiler->getEnvironment()->getFilter($name);
 
-        $this->setAttribute( 'name', $name );
-        $this->setAttribute( 'type', 'filter' );
-        $this->setAttribute( 'thing', $filter );
-        $this->setAttribute( 'needs_environment', $filter->needsEnvironment() );
-        $this->setAttribute( 'needs_context', $filter->needsContext() );
-        $this->setAttribute( 'arguments', $filter->getArguments() );
+        $this->setAttribute('name', $name);
+        $this->setAttribute('type', 'filter');
+        $this->setAttribute('thing', $filter);
+        $this->setAttribute('needs_environment', $filter->needsEnvironment());
+        $this->setAttribute('needs_context', $filter->needsContext());
+        $this->setAttribute('arguments', $filter->getArguments());
         if ($filter instanceof Twig_FilterCallableInterface || $filter instanceof Twig_SimpleFilter) {
-            $this->setAttribute( 'callable', $filter->getCallable() );
+            $this->setAttribute('callable', $filter->getCallable());
         }
 
-        $this->compileCallable( $compiler );
+        $this->compileCallable($compiler);
     }
 }

@@ -26,7 +26,7 @@ interface Twig_LoaderInterface
      *
      * @throws Twig_Error_Loader When $name is not found
      */
-    public function getSource( $name );
+    public function getSource($name);
 
     /**
      * Gets the cache key to use for the cache for a given template name.
@@ -37,7 +37,7 @@ interface Twig_LoaderInterface
      *
      * @throws Twig_Error_Loader When $name is not found
      */
-    public function getCacheKey( $name );
+    public function getCacheKey($name);
 
     /**
      * Returns true if the template is still fresh.
@@ -50,5 +50,5 @@ interface Twig_LoaderInterface
      *
      * @throws Twig_Error_Loader When $name is not found
      */
-    public function isFresh( $name, $time );
+    public function isFresh($name, $time);
 }

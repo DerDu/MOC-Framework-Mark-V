@@ -58,7 +58,7 @@ class ArrayEntryTokenSpec extends ObjectBehavior
     }
 
     /**
-     * @param \stdClass $object
+     * @param \stdClass                               $object
      * @param \Prophecy\Argument\Token\TokenInterface $value
      */
     function it_wraps_non_token_key_into_ExactValueToken($object, $value)

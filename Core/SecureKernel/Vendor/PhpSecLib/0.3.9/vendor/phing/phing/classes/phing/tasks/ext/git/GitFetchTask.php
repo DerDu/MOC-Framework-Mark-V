@@ -117,46 +117,46 @@ class GitFetchTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'fetch' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('fetch');
         $command
-            ->setOption( 'tags', $this->isTags() )
-            ->setOption( 'no-tags', $this->isNoTags() )
-            ->setOption( 'prune', $this->isPrune() )
-            ->setOption( 'keep', $this->isKeepFiles() )
-            ->setOption( 'q', $this->isQuiet() )
-            ->setOption( 'force', $this->isForce() );
+            ->setOption('tags', $this->isTags())
+            ->setOption('no-tags', $this->isNoTags())
+            ->setOption('prune', $this->isPrune())
+            ->setOption('keep', $this->isKeepFiles())
+            ->setOption('q', $this->isQuiet())
+            ->setOption('force', $this->isForce());
 
         // set operation target
         if ($this->isAllRemotes()) { // --all
-            $command->setOption( 'all', true );
+            $command->setOption('all', true);
         } elseif ($this->getGroup()) { // <group>
-            $command->addArgument( $this->getGroup() );
+            $command->addArgument($this->getGroup());
         } elseif ($this->getSource()) { // <repository> [<refspec>]
-            $command->addArgument( $this->getSource() );
+            $command->addArgument($this->getSource());
             if ($this->getRefspec()) {
-                $command->addArgument( $this->getRefspec() );
+                $command->addArgument($this->getRefspec());
             }
         } else {
-            throw new BuildException( 'No remote repository specified' );
+            throw new BuildException('No remote repository specified');
         }
 
-        $this->log( 'git-fetch command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-fetch command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed.', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed.', $e);
         }
 
         $this->log(
-            sprintf( 'git-fetch: branch "%s" repository', $this->getRepository() ),
+            sprintf('git-fetch: branch "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
-        $this->log( 'git-fetch output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-fetch output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -207,7 +207,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $group
      */
-    public function setGroup( $group )
+    public function setGroup($group)
     {
 
         $this->group = $group;
@@ -225,7 +225,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $source
      */
-    public function setSource( $source )
+    public function setSource($source)
     {
 
         $this->source = $source;
@@ -243,7 +243,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $spec
      */
-    public function setRefspec( $spec )
+    public function setRefspec($spec)
     {
 
         $this->refspec = $spec;
@@ -270,7 +270,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForce( $flag )
+    public function setForce($flag)
     {
 
         $this->force = $flag;
@@ -297,7 +297,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setQuiet( $flag )
+    public function setQuiet($flag)
     {
 
         $this->quiet = $flag;
@@ -306,7 +306,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setAll( $flag )
+    public function setAll($flag)
     {
 
         $this->allRemotes = $flag;
@@ -315,7 +315,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setKeep( $flag )
+    public function setKeep($flag)
     {
 
         $this->keepFiles = $flag;
@@ -342,7 +342,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setPrune( $flag )
+    public function setPrune($flag)
     {
 
         $this->prune = $flag;
@@ -369,7 +369,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoTags( $flag )
+    public function setNoTags($flag)
     {
 
         $this->noTags = $flag;
@@ -396,7 +396,7 @@ class GitFetchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setTags( $flag )
+    public function setTags($flag)
     {
 
         $this->tags = $flag;

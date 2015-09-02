@@ -37,11 +37,11 @@ class OutputStream
      *
      * @throws IOException
      */
-    public function __construct( $stream )
+    public function __construct($stream)
     {
 
-        if (!is_resource( $stream )) {
-            throw new IOException( "Passed argument is not a valid stream." );
+        if (!is_resource($stream)) {
+            throw new IOException("Passed argument is not a valid stream.");
         }
         $this->stream = $stream;
     }
@@ -59,11 +59,11 @@ class OutputStream
             return;
         }
         $this->flush();
-        if (false === @fclose( $this->stream )) {
-            $metaData = stream_get_meta_data( $this->stream );
+        if (false === @fclose($this->stream)) {
+            $metaData = stream_get_meta_data($this->stream);
             $resource = $metaData["uri"];
             $msg = "Cannot close ".$resource.": $php_errormsg";
-            throw new IOException( $msg );
+            throw new IOException($msg);
         }
         $this->stream = null;
     }
@@ -76,8 +76,8 @@ class OutputStream
     public function flush()
     {
 
-        if (false === @fflush( $this->stream )) {
-            throw new IOException( "Could not flush stream: ".$php_errormsg );
+        if (false === @fflush($this->stream)) {
+            throw new IOException("Could not flush stream: ".$php_errormsg);
         }
     }
 
@@ -91,23 +91,23 @@ class OutputStream
      * @return void
      * @throws IOException - if there is an error writing to stream
      */
-    public function write( $buf, $off = null, $len = null )
+    public function write($buf, $off = null, $len = null)
     {
 
         if ($off === null && $len === null) {
             $to_write = $buf;
         } elseif ($off !== null && $len === null) {
-            $to_write = substr( $buf, $off );
+            $to_write = substr($buf, $off);
         } elseif ($off === null && $len !== null) {
-            $to_write = substr( $buf, 0, $len );
+            $to_write = substr($buf, 0, $len);
         } else {
-            $to_write = substr( $buf, $off, $len );
+            $to_write = substr($buf, $off, $len);
         }
 
-        $result = @fwrite( $this->stream, $to_write );
+        $result = @fwrite($this->stream, $to_write);
 
         if ($result === false) {
-            throw new IOException( "Error writing to stream." );
+            throw new IOException("Error writing to stream.");
         }
     }
 

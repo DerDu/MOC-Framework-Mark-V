@@ -44,7 +44,7 @@ class OutputStreamWriter extends Writer
      *
      * @param OutputStream $outStream OutputStream to write to
      */
-    public function __construct( OutputStream $outStream )
+    public function __construct(OutputStream $outStream)
     {
 
         $this->outStream = $outStream;
@@ -70,10 +70,10 @@ class OutputStreamWriter extends Writer
      *
      * @return void
      */
-    public function write( $buf, $off = null, $len = null )
+    public function write($buf, $off = null, $len = null)
     {
 
-        return $this->outStream->write( $buf, $off, $len );
+        return $this->outStream->write($buf, $off, $len);
     }
 
     /**

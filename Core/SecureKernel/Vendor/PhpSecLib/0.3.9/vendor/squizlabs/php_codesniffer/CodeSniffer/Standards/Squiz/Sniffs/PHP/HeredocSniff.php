@@ -56,11 +56,11 @@ class Squiz_Sniffs_PHP_HeredocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $error = 'Use of heredoc and nowdoc syntax ("<<<") is not allowed; use standard strings or inline HTML instead';
-        $phpcsFile->addError( $error, $stackPtr, 'NotAllowed' );
+        $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
 
     }//end process()
 

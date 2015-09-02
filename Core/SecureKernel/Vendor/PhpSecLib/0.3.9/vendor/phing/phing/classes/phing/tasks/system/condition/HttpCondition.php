@@ -49,7 +49,7 @@ class HttpCondition extends ProjectComponent implements Condition
      *
      * @return void
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -62,7 +62,7 @@ class HttpCondition extends ProjectComponent implements Condition
      *
      * @return void
      */
-    public function setErrorsBeginAt( $errorsBeginAt )
+    public function setErrorsBeginAt($errorsBeginAt)
     {
 
         $this->errorsBeginAt = $errorsBeginAt;
@@ -79,28 +79,28 @@ class HttpCondition extends ProjectComponent implements Condition
     {
 
         if ($this->url === null) {
-            throw new BuildException( "No url specified in http condition" );
+            throw new BuildException("No url specified in http condition");
         }
 
-        if (!filter_var( $this->url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED )) {
-            $this->log( "Possible malformed URL: ".$this->url, Project::MSG_WARN );
+        if (!filter_var($this->url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
+            $this->log("Possible malformed URL: ".$this->url, Project::MSG_WARN);
         }
 
-        $this->log( "Checking for ".$this->url, Project::MSG_VERBOSE );
+        $this->log("Checking for ".$this->url, Project::MSG_VERBOSE);
 
-        $handle = curl_init( $this->url );
-        curl_setopt( $handle, CURLOPT_NOBODY, true );
+        $handle = curl_init($this->url);
+        curl_setopt($handle, CURLOPT_NOBODY, true);
 
-        if (!curl_exec( $handle )) {
-            $this->log( "Possible malformed URL: ".$this->url, Project::MSG_ERR );
+        if (!curl_exec($handle)) {
+            $this->log("Possible malformed URL: ".$this->url, Project::MSG_ERR);
 
             return false;
         }
 
-        $httpCode = curl_getinfo( $handle, CURLINFO_HTTP_CODE );
-        curl_close( $handle );
+        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+        curl_close($handle);
 
-        $this->log( "Result code for ".$this->url." was ".$httpCode, Project::MSG_VERBOSE );
+        $this->log("Result code for ".$this->url." was ".$httpCode, Project::MSG_VERBOSE);
 
         $result = false;
         if ($httpCode > 0 && $httpCode < $this->errorsBeginAt) {

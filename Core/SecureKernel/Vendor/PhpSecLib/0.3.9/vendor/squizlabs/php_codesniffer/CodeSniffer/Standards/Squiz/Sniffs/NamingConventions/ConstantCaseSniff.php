@@ -12,14 +12,14 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'Generic_Sniffs_PHP_LowerCaseConstantSniff', true ) === false) {
+if (class_exists('Generic_Sniffs_PHP_LowerCaseConstantSniff', true) === false) {
     $error = 'Class Generic_Sniffs_PHP_LowerCaseConstantSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
-if (class_exists( 'Generic_Sniffs_PHP_UpperCaseConstantSniff', true ) === false) {
+if (class_exists('Generic_Sniffs_PHP_UpperCaseConstantSniff', true) === false) {
     $error = 'Class Generic_Sniffs_PHP_UpperCaseConstantSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -48,14 +48,14 @@ class Squiz_Sniffs_NamingConventions_ConstantCaseSniff extends Generic_Sniffs_PH
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         if ($phpcsFile->tokenizerType === 'JS') {
-            parent::process( $phpcsFile, $stackPtr );
+            parent::process($phpcsFile, $stackPtr);
         } else {
             $sniff = new Generic_Sniffs_PHP_UpperCaseConstantSniff;
-            $sniff->process( $phpcsFile, $stackPtr );
+            $sniff->process($phpcsFile, $stackPtr);
         }
 
     }//end process()

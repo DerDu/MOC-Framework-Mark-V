@@ -2,7 +2,6 @@
 
 namespace Guzzle\Tests\Http\Exception;
 
-use Guzzle\Http\Curl\CurlHandle;
 use Guzzle\Http\Exception\MultiTransferException;
 use Guzzle\Http\Message\Request;
 

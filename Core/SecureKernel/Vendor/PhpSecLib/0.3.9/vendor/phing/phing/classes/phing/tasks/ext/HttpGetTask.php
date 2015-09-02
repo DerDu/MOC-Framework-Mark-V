@@ -73,7 +73,7 @@ class HttpGetTask extends HttpTask
      *
      * @param string $filename
      */
-    public function setFilename( $filename )
+    public function setFilename($filename)
     {
 
         $this->filename = $filename;
@@ -84,7 +84,7 @@ class HttpGetTask extends HttpTask
      *
      * @param string $dir
      */
-    public function setDir( $dir )
+    public function setDir($dir)
     {
 
         $this->dir = $dir;
@@ -95,7 +95,7 @@ class HttpGetTask extends HttpTask
      *
      * @param bool $value
      */
-    public function setSslVerifyPeer( $value )
+    public function setSslVerifyPeer($value)
     {
 
         $this->sslVerifyPeer = $value;
@@ -106,7 +106,7 @@ class HttpGetTask extends HttpTask
      *
      * @param bool $value
      */
-    public function setFollowRedirects( $value )
+    public function setFollowRedirects($value)
     {
 
         $this->followRedirects = $value;
@@ -117,7 +117,7 @@ class HttpGetTask extends HttpTask
      *
      * @param string $proxy
      */
-    public function setProxy( $proxy )
+    public function setProxy($proxy)
     {
 
         $this->proxy = $proxy;
@@ -132,7 +132,7 @@ class HttpGetTask extends HttpTask
     {
 
         if (!isset( $this->dir )) {
-            throw new BuildException( "Required attribute 'dir' is missing" );
+            throw new BuildException("Required attribute 'dir' is missing");
         }
 
         $config = array(
@@ -146,9 +146,9 @@ class HttpGetTask extends HttpTask
         }
 
         $request = parent::createRequest();
-        $request->setConfig( $config );
+        $request->setConfig($config);
 
-        $this->log( "Fetching ".$this->url );
+        $this->log("Fetching ".$this->url);
 
         return $request;
     }
@@ -161,7 +161,7 @@ class HttpGetTask extends HttpTask
      * @return void
      * @throws BuildException
      */
-    protected function processResponse( HTTP_Request2_Response $response )
+    protected function processResponse(HTTP_Request2_Response $response)
     {
 
         if ($response->getStatus() != 200) {
@@ -172,27 +172,27 @@ class HttpGetTask extends HttpTask
         }
 
         $content = $response->getBody();
-        $disposition = $response->getHeader( 'content-disposition' );
+        $disposition = $response->getHeader('content-disposition');
 
         if ($this->filename) {
             $filename = $this->filename;
 
-        } elseif ($disposition && 0 == strpos( $disposition, 'attachment' )
-            && preg_match( '/filename="([^"]+)"/', $disposition, $m )
+        } elseif ($disposition && 0 == strpos($disposition, 'attachment')
+            && preg_match('/filename="([^"]+)"/', $disposition, $m)
         ) {
-            $filename = basename( $m[1] );
+            $filename = basename($m[1]);
 
         } else {
-            $filename = basename( parse_url( $this->url, PHP_URL_PATH ) );
+            $filename = basename(parse_url($this->url, PHP_URL_PATH));
         }
 
-        if (!is_writable( $this->dir )) {
-            throw new BuildException( "Cannot write to directory: ".$this->dir );
+        if (!is_writable($this->dir)) {
+            throw new BuildException("Cannot write to directory: ".$this->dir);
         }
 
         $filename = $this->dir."/".$filename;
-        file_put_contents( $filename, $content );
+        file_put_contents($filename, $content);
 
-        $this->log( "Contents from ".$this->url." saved to $filename" );
+        $this->log("Contents from ".$this->url." saved to $filename");
     }
 }

@@ -81,7 +81,7 @@ class PhingCallTask extends Task
      *
      * @param boolean new value
      */
-    public function setInheritAll( $inherit )
+    public function setInheritAll($inherit)
     {
 
         $this->inheritAll = (boolean)$inherit;
@@ -93,7 +93,7 @@ class PhingCallTask extends Task
      *
      * @param boolean new value
      */
-    public function setInheritRefs( $inheritRefs )
+    public function setInheritRefs($inheritRefs)
     {
 
         $this->inheritRefs = (boolean)$inheritRefs;
@@ -121,11 +121,11 @@ class PhingCallTask extends Task
     public function init()
     {
 
-        $this->callee = $this->project->createTask( "phing" );
-        $this->callee->setOwningTarget( $this->getOwningTarget() );
-        $this->callee->setTaskName( $this->getTaskName() );
-        $this->callee->setHaltOnFailure( true );
-        $this->callee->setLocation( $this->getLocation() );
+        $this->callee = $this->project->createTask("phing");
+        $this->callee->setOwningTarget($this->getOwningTarget());
+        $this->callee->setTaskName($this->getTaskName());
+        $this->callee->setHaltOnFailure(true);
+        $this->callee->setLocation($this->getLocation());
         $this->callee->init();
     }
 
@@ -147,7 +147,7 @@ class PhingCallTask extends Task
      *
      * @param $target
      */
-    public function setTarget( $target )
+    public function setTarget($target)
     {
 
         $this->subTarget = (string)$target;
@@ -162,19 +162,19 @@ class PhingCallTask extends Task
     public function main()
     {
 
-        $this->log( "Running PhingCallTask for target '".$this->subTarget."'", Project::MSG_DEBUG );
+        $this->log("Running PhingCallTask for target '".$this->subTarget."'", Project::MSG_DEBUG);
         if ($this->callee === null) {
             $this->init();
         }
 
         if ($this->subTarget === null) {
-            throw new BuildException( "Attribute target is required.", $this->getLocation() );
+            throw new BuildException("Attribute target is required.", $this->getLocation());
         }
 
-        $this->callee->setPhingfile( $this->project->getProperty( "phing.file" ) );
-        $this->callee->setTarget( $this->subTarget );
-        $this->callee->setInheritAll( $this->inheritAll );
-        $this->callee->setInheritRefs( $this->inheritRefs );
+        $this->callee->setPhingfile($this->project->getProperty("phing.file"));
+        $this->callee->setTarget($this->subTarget);
+        $this->callee->setInheritAll($this->inheritAll);
+        $this->callee->setInheritRefs($this->inheritRefs);
         $this->callee->main();
     }
 

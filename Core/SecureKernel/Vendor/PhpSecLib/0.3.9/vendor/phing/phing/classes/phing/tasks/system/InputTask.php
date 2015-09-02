@@ -51,7 +51,7 @@ class InputTask extends Task
      *
      * @param string $validargs A comma separated String defining valid input args.
      */
-    public function setValidargs( $validargs )
+    public function setValidargs($validargs)
     {
 
         $this->validargs = $validargs;
@@ -62,7 +62,7 @@ class InputTask extends Task
      *
      * @param string $name Name for the property to be set from input
      */
-    public function setPropertyName( $name )
+    public function setPropertyName($name)
     {
 
         $this->propertyName = $name;
@@ -75,7 +75,7 @@ class InputTask extends Task
      *
      * @internal param The $message message to be displayed.
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
 
         $this->message = $message;
@@ -86,10 +86,10 @@ class InputTask extends Task
      *
      * @param $msg
      */
-    public function addText( $msg )
+    public function addText($msg)
     {
 
-        $this->message .= $this->project->replaceProperties( $msg );
+        $this->message .= $this->project->replaceProperties($msg);
     }
 
     /**
@@ -97,7 +97,7 @@ class InputTask extends Task
      *
      * @param string $v
      */
-    public function setDefaultValue( $v )
+    public function setDefaultValue($v)
     {
 
         $this->defaultValue = $v;
@@ -108,7 +108,7 @@ class InputTask extends Task
      *
      * @param string $c
      */
-    public function setPromptChar( $c )
+    public function setPromptChar($c)
     {
 
         $this->promptChar = $c;
@@ -123,52 +123,52 @@ class InputTask extends Task
     {
 
         if ($this->propertyName === null) {
-            throw new BuildException( "You must specify a value for propertyName attribute." );
+            throw new BuildException("You must specify a value for propertyName attribute.");
         }
 
         if ($this->message === "") {
-            throw new BuildException( "You must specify a message for input task." );
+            throw new BuildException("You must specify a message for input task.");
         }
 
         if ($this->validargs !== null) {
-            $accept = preg_split( '/[\s,]+/', $this->validargs );
+            $accept = preg_split('/[\s,]+/', $this->validargs);
 
             // is it a boolean (yes/no) inputrequest?
             $yesno = false;
-            if (count( $accept ) == 2) {
+            if (count($accept) == 2) {
                 $yesno = true;
                 foreach ($accept as $ans) {
-                    if (!StringHelper::isBoolean( $ans )) {
+                    if (!StringHelper::isBoolean($ans)) {
                         $yesno = false;
                         break;
                     }
                 }
             }
             if ($yesno) {
-                $request = new YesNoInputRequest( $this->message, $accept );
+                $request = new YesNoInputRequest($this->message, $accept);
             } else {
-                $request = new MultipleChoiceInputRequest( $this->message, $accept );
+                $request = new MultipleChoiceInputRequest($this->message, $accept);
             }
         } else {
-            $request = new InputRequest( $this->message );
+            $request = new InputRequest($this->message);
         }
 
         // default default is curr prop value
-        $request->setDefaultValue( $this->project->getProperty( $this->propertyName ) );
+        $request->setDefaultValue($this->project->getProperty($this->propertyName));
 
-        $request->setPromptChar( $this->promptChar );
+        $request->setPromptChar($this->promptChar);
 
         // unless overridden...
         if ($this->defaultValue !== null) {
-            $request->setDefaultValue( $this->defaultValue );
+            $request->setDefaultValue($this->defaultValue);
         }
 
-        $this->project->getInputHandler()->handleInput( $request );
+        $this->project->getInputHandler()->handleInput($request);
 
         $value = $request->getInput();
 
         if ($value !== null) {
-            $this->project->setUserProperty( $this->propertyName, $value );
+            $this->project->setUserProperty($this->propertyName, $value);
         }
     }
 

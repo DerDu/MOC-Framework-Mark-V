@@ -16,10 +16,10 @@ class LazyClassReflection extends ClassReflection
 
     protected $loaded = false;
 
-    public function __construct( $name )
+    public function __construct($name)
     {
 
-        parent::__construct( $name, -1 );
+        parent::__construct($name, -1);
     }
 
     public function isProjectClass()
@@ -35,12 +35,12 @@ class LazyClassReflection extends ClassReflection
     protected function load()
     {
 
-        $class = $this->project->loadClass( $this->name );
+        $class = $this->project->loadClass($this->name);
 
         if (null === $class) {
             $this->projectClass = false;
         } else {
-            foreach (array_keys( get_class_vars( 'Sami\Reflection\ClassReflection' ) ) as $property) {
+            foreach (array_keys(get_class_vars('Sami\Reflection\ClassReflection')) as $property) {
                 $this->$property = $class->$property;
             }
         }
@@ -58,10 +58,10 @@ class LazyClassReflection extends ClassReflection
         return parent::getShortDesc();
     }
 
-    public function setShortDesc( $shortDesc )
+    public function setShortDesc($shortDesc)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
     public function getLongDesc()
@@ -74,10 +74,10 @@ class LazyClassReflection extends ClassReflection
         return parent::getLongDesc();
     }
 
-    public function setLongDesc( $longDesc )
+    public function setLongDesc($longDesc)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
     public function getHint()
@@ -90,10 +90,10 @@ class LazyClassReflection extends ClassReflection
         return parent::getHint();
     }
 
-    public function setHint( $hint )
+    public function setHint($hint)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
     public function isAbstract()
@@ -126,108 +126,108 @@ class LazyClassReflection extends ClassReflection
         return parent::getFile();
     }
 
-    public function setFile( $file )
+    public function setFile($file)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function addProperty( PropertyReflection $property )
+    public function addProperty(PropertyReflection $property)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function getProperties( $deep = false )
+    public function getProperties($deep = false)
     {
 
         if (false === $this->loaded) {
             $this->load();
         }
 
-        return parent::getProperties( $deep );
+        return parent::getProperties($deep);
     }
 
-    public function setProperties( $properties )
+    public function setProperties($properties)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function addMethod( MethodReflection $method )
+    public function addMethod(MethodReflection $method)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function getParentMethod( $name )
-    {
-
-        if (false === $this->loaded) {
-            $this->load();
-        }
-
-        return parent::getParentMethod( $name );
-    }
-
-    public function getMethods( $deep = false )
+    public function getParentMethod($name)
     {
 
         if (false === $this->loaded) {
             $this->load();
         }
 
-        return parent::getMethods( $deep );
+        return parent::getParentMethod($name);
     }
 
-    public function setMethods( $methods )
-    {
-
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
-    }
-
-    public function addInterface( $interface )
-    {
-
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
-    }
-
-    public function getInterfaces( $deep = false )
+    public function getMethods($deep = false)
     {
 
         if (false === $this->loaded) {
             $this->load();
         }
 
-        return parent::getInterfaces( $deep );
+        return parent::getMethods($deep);
     }
 
-    public function setParent( $parent )
+    public function setMethods($methods)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
-    public function getParent( $deep = false )
+    public function addInterface($interface)
+    {
+
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
+    }
+
+    public function getInterfaces($deep = false)
     {
 
         if (false === $this->loaded) {
             $this->load();
         }
 
-        return parent::getParent( $deep );
+        return parent::getInterfaces($deep);
     }
 
-    public function setInterface( $boolean )
+    public function setParent($parent)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
+    }
+
+    public function getParent($deep = false)
+    {
+
+        if (false === $this->loaded) {
+            $this->load();
+        }
+
+        return parent::getParent($deep);
+    }
+
+    public function setInterface($boolean)
+    {
+
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 
     public function isInterface()
@@ -260,9 +260,9 @@ class LazyClassReflection extends ClassReflection
         return parent::getAliases();
     }
 
-    public function setAliases( $aliases )
+    public function setAliases($aliases)
     {
 
-        throw new \LogicException( 'A LazyClassReflection instance is read-only.' );
+        throw new \LogicException('A LazyClassReflection instance is read-only.');
     }
 }

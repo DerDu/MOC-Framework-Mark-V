@@ -142,7 +142,7 @@ class CapsuleTask extends Task
      *
      * @return void
      */
-    public function setControlTemplate( $controlTemplate )
+    public function setControlTemplate($controlTemplate)
     {
 
         $this->controlTemplate = $controlTemplate;
@@ -170,22 +170,22 @@ class CapsuleTask extends Task
      *
      * @return void
      */
-    public function setTemplatePath( $templatePath )
+    public function setTemplatePath($templatePath)
     {
 
         $resolvedPath = "";
-        $tok = strtok( $templatePath, "," );
+        $tok = strtok($templatePath, ",");
         while ($tok) {
             // resolve relative path from basedir and leave
             // absolute path untouched.
-            $fullPath = $this->project->resolveFile( $tok );
+            $fullPath = $this->project->resolveFile($tok);
             $cpath = $fullPath->getCanonicalPath();
             if ($cpath === false) {
-                $this->log( "Template directory does not exist: ".$fullPath->getAbsolutePath() );
+                $this->log("Template directory does not exist: ".$fullPath->getAbsolutePath());
             } else {
                 $resolvedPath .= $cpath;
             }
-            $tok = strtok( "," );
+            $tok = strtok(",");
             if ($tok) {
                 $resolvedPath .= ",";
             }
@@ -213,7 +213,7 @@ class CapsuleTask extends Task
      * @return void
      * @throws Exception
      */
-    public function setOutputDirectory( PhingFile $outputDirectory )
+    public function setOutputDirectory(PhingFile $outputDirectory)
     {
 
         try {
@@ -223,12 +223,12 @@ class CapsuleTask extends Task
                     Project::MSG_VERBOSE
                 );
                 if (!$outputDirectory->mkdirs()) {
-                    throw new IOException( "Unable to create Ouptut directory: ".$outputDirectory->getAbsolutePath() );
+                    throw new IOException("Unable to create Ouptut directory: ".$outputDirectory->getAbsolutePath());
                 }
             }
             $this->outputDirectory = $outputDirectory->getCanonicalPath();
-        } catch( IOException $ioe ) {
-            throw new BuildException( $ioe );
+        } catch (IOException $ioe) {
+            throw new BuildException($ioe);
         }
     }
 
@@ -252,7 +252,7 @@ class CapsuleTask extends Task
      *
      * @return void
      */
-    public function setOutputFile( $outputFile )
+    public function setOutputFile($outputFile)
     {
 
         $this->outputFile = $outputFile;
@@ -281,10 +281,10 @@ class CapsuleTask extends Task
      * @throws BuildException
      * @return void
      */
-    public function setContextProperties( $file )
+    public function setContextProperties($file)
     {
 
-        $sources = explode( ",", $file );
+        $sources = explode(",", $file);
         $this->contextProperties = new Properties();
 
         // Always try to get the context properties resource
@@ -293,21 +293,21 @@ class CapsuleTask extends Task
         // resource in the filesystem. If this fails than attempt
         // to get the context properties resource from the
         // classpath.
-        for ($i = 0, $sourcesLength = count( $sources ); $i < $sourcesLength; $i++) {
+        for ($i = 0, $sourcesLength = count($sources); $i < $sourcesLength; $i++) {
             $source = new Properties();
 
             try {
 
                 // resolve relative path from basedir and leave
                 // absolute path untouched.
-                $fullPath = $this->project->resolveFile( $sources[$i] );
-                $this->log( "Using contextProperties file: ".$fullPath->toString() );
-                $source->load( $fullPath );
+                $fullPath = $this->project->resolveFile($sources[$i]);
+                $this->log("Using contextProperties file: ".$fullPath->toString());
+                $source->load($fullPath);
 
-            } catch( Exception $e ) {
+            } catch (Exception $e) {
 
-                throw new BuildException( "Context properties file ".$sources[$i].
-                    " could not be found in the file system!" );
+                throw new BuildException("Context properties file ".$sources[$i].
+                    " could not be found in the file system!");
 
             }
 
@@ -315,8 +315,8 @@ class CapsuleTask extends Task
 
             foreach ($keys as $key) {
                 $name = $key;
-                $value = $this->project->replaceProperties( $source->getProperty( $name ) );
-                $this->contextProperties->setProperty( $name, $value );
+                $value = $this->project->replaceProperties($source->getProperty($name));
+                $this->contextProperties->setProperty($name, $value);
             }
         }
     }
@@ -349,22 +349,22 @@ class CapsuleTask extends Task
 
         // Make sure the template path is set.
         if (empty( $this->templatePath )) {
-            throw new BuildException( "The template path needs to be defined!" );
+            throw new BuildException("The template path needs to be defined!");
         }
 
         // Make sure the control template is set.
         if ($this->controlTemplate === null) {
-            throw new BuildException( "The control template needs to be defined!" );
+            throw new BuildException("The control template needs to be defined!");
         }
 
         // Make sure the output directory is set.
         if ($this->outputDirectory === null) {
-            throw new BuildException( "The output directory needs to be defined!" );
+            throw new BuildException("The output directory needs to be defined!");
         }
 
         // Make sure there is an output file.
         if ($this->outputFile === null) {
-            throw new BuildException( "The output file needs to be defined!" );
+            throw new BuildException("The output file needs to be defined!");
         }
 
         // Setup Smarty runtime.
@@ -376,22 +376,22 @@ class CapsuleTask extends Task
         $this->context = new Capsule();
 
         if ($this->templatePath !== null) {
-            $this->log( "Using templatePath: ".$this->templatePath );
-            $this->context->setTemplatePath( $this->templatePath );
+            $this->log("Using templatePath: ".$this->templatePath);
+            $this->context->setTemplatePath($this->templatePath);
         }
 
         // Make sure the output directory exists, if it doesn't
         // then create it.
-        $outputDir = new PhingFile( $this->outputDirectory );
+        $outputDir = new PhingFile($this->outputDirectory);
         if (!$outputDir->exists()) {
-            $this->log( "Output directory does not exist, creating: ".$outputDir->getAbsolutePath() );
+            $this->log("Output directory does not exist, creating: ".$outputDir->getAbsolutePath());
             $outputDir->mkdirs();
         }
 
-        $this->context->setOutputDirectory( $outputDir->getAbsolutePath() );
+        $this->context->setOutputDirectory($outputDir->getAbsolutePath());
 
         $path = $this->outputDirectory.DIRECTORY_SEPARATOR.$this->outputFile;
-        $this->log( "Generating to file ".$path );
+        $this->log("Generating to file ".$path);
 
         //$writer = new FileWriter($path);
 
@@ -402,7 +402,7 @@ class CapsuleTask extends Task
 
         // Set any variables that need to always
         // be loaded
-        $this->populateInitialContext( $c );
+        $this->populateInitialContext($c);
 
         // Feed all the options into the initial
         // control context so they are available
@@ -411,43 +411,43 @@ class CapsuleTask extends Task
 
             foreach ($this->contextProperties->keys() as $property) {
 
-                $value = $this->contextProperties->getProperty( $property );
+                $value = $this->contextProperties->getProperty($property);
 
                 // Special exception (from Texen)
                 // for properties ending in file.contents:
                 // in that case we dump the contents of the file
                 // as the "value" for the Property.
-                if (preg_match( '/file\.contents$/', $property )) {
+                if (preg_match('/file\.contents$/', $property)) {
                     // pull in contents of file specified
 
-                    $property = substr( $property, 0, strpos( $property, "file.contents" ) - 1 );
+                    $property = substr($property, 0, strpos($property, "file.contents") - 1);
 
                     // reset value, and then
                     // read in the contents of the file into that var
                     $value = "";
-                    $f = new PhingFile( $this->project->resolveFile( $value )->getCanonicalPath() );
+                    $f = new PhingFile($this->project->resolveFile($value)->getCanonicalPath());
                     if ($f->exists()) {
-                        $fr = new FileReader( $f );
-                        $fr->readInto( $value );
+                        $fr = new FileReader($f);
+                        $fr->readInto($value);
                     }
 
                 } // if ends with file.contents
 
-                if (StringHelper::isBoolean( $value )) {
-                    $value = StringHelper::booleanValue( $value );
+                if (StringHelper::isBoolean($value)) {
+                    $value = StringHelper::booleanValue($value);
                 }
 
-                $c->put( $property, $value );
+                $c->put($property, $value);
 
             } // foreach property
 
         } // if contextProperties !== null
 
         try {
-            $this->log( "Parsing control template: ".$this->controlTemplate );
-            $c->parse( $this->controlTemplate, $path );
-        } catch( Exception $ioe ) {
-            throw new BuildException( "Cannot write parsed template: ".$ioe->getMessage() );
+            $this->log("Parsing control template: ".$this->controlTemplate);
+            $c->parse($this->controlTemplate, $path);
+        } catch (Exception $ioe) {
+            throw new BuildException("Cannot write parsed template: ".$ioe->getMessage());
         }
 
         $this->cleanup();
@@ -465,7 +465,7 @@ class CapsuleTask extends Task
 
         $this->context->clear();
         foreach ($this->assignedVars as $var) {
-            $this->context->put( $var->getName(), $var->getValue() );
+            $this->context->put($var->getName(), $var->getValue());
         }
 
         return $this->context;
@@ -483,11 +483,11 @@ class CapsuleTask extends Task
      *                           #main()} method will catch and rethrow as a
      *                           <code>BuildException</code>.
      */
-    protected function populateInitialContext( Capsule $context )
+    protected function populateInitialContext(Capsule $context)
     {
 
-        $this->context->put( "now", strftime( "%c", time() ) );
-        $this->context->put( "task", $this );
+        $this->context->put("now", strftime("%c", time()));
+        $this->context->put("task", $this);
     }
 
     /**
@@ -527,7 +527,7 @@ class AssignedVar
     /**
      * @param string $v
      */
-    public function setName( $v )
+    public function setName($v)
     {
 
         $this->name = $v;
@@ -545,7 +545,7 @@ class AssignedVar
     /**
      * @param mixed $v
      */
-    public function setValue( $v )
+    public function setValue($v)
     {
 
         $this->value = $v;

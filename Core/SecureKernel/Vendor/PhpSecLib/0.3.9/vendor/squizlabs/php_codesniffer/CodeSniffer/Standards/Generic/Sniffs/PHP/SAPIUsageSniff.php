@@ -37,7 +37,7 @@ class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_STRING );
+        return array(T_STRING);
 
     }//end register()
 
@@ -51,7 +51,7 @@ class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -63,16 +63,16 @@ class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
             T_CONST,
         );
 
-        $prevToken = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
-        if (in_array( $tokens[$prevToken]['code'], $ignore ) === true) {
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
+        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
             // Not a call to a PHP function.
             return;
         }
 
-        $function = strtolower( $tokens[$stackPtr]['content'] );
+        $function = strtolower($tokens[$stackPtr]['content']);
         if ($function === 'php_sapi_name') {
             $error = 'Use the PHP_SAPI constant instead of calling php_sapi_name()';
-            $phpcsFile->addError( $error, $stackPtr, 'FunctionFound' );
+            $phpcsFile->addError($error, $stackPtr, 'FunctionFound');
         }
 
     }//end process()

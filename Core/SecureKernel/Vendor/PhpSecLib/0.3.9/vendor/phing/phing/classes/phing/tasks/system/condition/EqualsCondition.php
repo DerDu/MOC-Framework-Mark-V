@@ -41,7 +41,7 @@ class EqualsCondition implements Condition
     /**
      * @param $a1
      */
-    public function setArg1( $a1 )
+    public function setArg1($a1)
     {
 
         $this->arg1 = $a1;
@@ -50,7 +50,7 @@ class EqualsCondition implements Condition
     /**
      * @param $a2
      */
-    public function setArg2( $a2 )
+    public function setArg2($a2)
     {
 
         $this->arg2 = $a2;
@@ -61,7 +61,7 @@ class EqualsCondition implements Condition
      *
      * @param boolean $b
      */
-    public function setTrim( $b )
+    public function setTrim($b)
     {
 
         $this->trim = (boolean)$b;
@@ -72,7 +72,7 @@ class EqualsCondition implements Condition
      *
      * @param boolean $b
      */
-    public function setCaseSensitive( $b )
+    public function setCaseSensitive($b)
     {
 
         $this->caseSensitive = (boolean)$b;
@@ -86,15 +86,15 @@ class EqualsCondition implements Condition
     {
 
         if ($this->arg1 === null || $this->arg2 === null) {
-            throw new BuildException( "Both arg1 and arg2 are required in equals." );
+            throw new BuildException("Both arg1 and arg2 are required in equals.");
         }
 
         if ($this->trim) {
-            $this->arg1 = trim( $this->arg1 );
-            $this->arg2 = trim( $this->arg2 );
+            $this->arg1 = trim($this->arg1);
+            $this->arg2 = trim($this->arg2);
         }
 
         //print("[comparison] Comparing '".$this->arg1."' and '".$this->arg2."'\n");
-        return $this->caseSensitive ? $this->arg1 === $this->arg2 : strtolower( $this->arg1 ) === strtolower( $this->arg2 );
+        return $this->caseSensitive ? $this->arg1 === $this->arg2 : strtolower($this->arg1) === strtolower($this->arg2);
     }
 }

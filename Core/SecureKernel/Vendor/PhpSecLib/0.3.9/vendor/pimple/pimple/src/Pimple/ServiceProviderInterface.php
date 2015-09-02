@@ -43,5 +43,5 @@ interface ServiceProviderInterface
      *
      * @param Container $pimple An Container instance
      */
-    public function register( Container $pimple );
+    public function register(Container $pimple);
 }

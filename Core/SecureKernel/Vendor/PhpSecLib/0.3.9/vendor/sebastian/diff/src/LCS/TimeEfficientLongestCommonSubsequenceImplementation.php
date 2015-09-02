@@ -31,14 +31,14 @@ class TimeEfficientImplementation implements LongestCommonSubsequence
      *
      * @return array
      */
-    public function calculate( array $from, array $to )
+    public function calculate(array $from, array $to)
     {
 
         $common = array();
-        $fromLength = count( $from );
-        $toLength = count( $to );
+        $fromLength = count($from);
+        $toLength = count($to);
         $width = $fromLength + 1;
-        $matrix = new \SplFixedArray( $width * ( $toLength + 1 ) );
+        $matrix = new \SplFixedArray($width * ( $toLength + 1 ));
 
         for ($i = 0; $i <= $fromLength; ++$i) {
             $matrix[$i] = 0;
@@ -77,6 +77,6 @@ class TimeEfficientImplementation implements LongestCommonSubsequence
             }
         }
 
-        return array_reverse( $common );
+        return array_reverse($common);
     }
 }

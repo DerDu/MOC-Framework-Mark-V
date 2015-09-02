@@ -53,14 +53,14 @@ final class Context
      * @throws InvalidArgumentException Thrown if $value is not an array or
      *                                  object
      */
-    public function add( &$value )
+    public function add(&$value)
     {
 
-        if (is_array( $value )) {
-            return $this->addArray( $value );
+        if (is_array($value)) {
+            return $this->addArray($value);
         } else {
-            if (is_object( $value )) {
-                return $this->addObject( $value );
+            if (is_object($value)) {
+                return $this->addObject($value);
             }
         }
 
@@ -74,10 +74,10 @@ final class Context
      *
      * @return bool|int
      */
-    private function addArray( array &$array )
+    private function addArray(array &$array)
     {
 
-        $key = $this->containsArray( $array );
+        $key = $this->containsArray($array);
 
         if ($key !== false) {
             return $key;
@@ -85,7 +85,7 @@ final class Context
 
         $this->arrays[] = &$array;
 
-        return count( $this->arrays ) - 1;
+        return count($this->arrays) - 1;
     }
 
     /**
@@ -93,11 +93,11 @@ final class Context
      *
      * @return integer|false
      */
-    private function containsArray( array &$array )
+    private function containsArray(array &$array)
     {
 
-        $keys = array_keys( $this->arrays, $array, true );
-        $hash = '_Key_'.hash( 'sha512', microtime( true ) );
+        $keys = array_keys($this->arrays, $array, true);
+        $hash = '_Key_'.hash('sha512', microtime(true));
 
         foreach ($keys as $key) {
             $this->arrays[$key][$hash] = $hash;
@@ -118,14 +118,14 @@ final class Context
      *
      * @return string
      */
-    private function addObject( $object )
+    private function addObject($object)
     {
 
-        if (!$this->objects->contains( $object )) {
-            $this->objects->attach( $object );
+        if (!$this->objects->contains($object)) {
+            $this->objects->attach($object);
         }
 
-        return spl_object_hash( $object );
+        return spl_object_hash($object);
     }
 
     /**
@@ -139,14 +139,14 @@ final class Context
      * @throws InvalidArgumentException Thrown if $value is not an array or
      *                                  object
      */
-    public function contains( &$value )
+    public function contains(&$value)
     {
 
-        if (is_array( $value )) {
-            return $this->containsArray( $value );
+        if (is_array($value)) {
+            return $this->containsArray($value);
         } else {
-            if (is_object( $value )) {
-                return $this->containsObject( $value );
+            if (is_object($value)) {
+                return $this->containsObject($value);
             }
         }
 
@@ -160,11 +160,11 @@ final class Context
      *
      * @return string|false
      */
-    private function containsObject( $value )
+    private function containsObject($value)
     {
 
-        if ($this->objects->contains( $value )) {
-            return spl_object_hash( $value );
+        if ($this->objects->contains($value)) {
+            return spl_object_hash($value);
         }
 
         return false;

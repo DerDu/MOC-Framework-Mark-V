@@ -15,21 +15,21 @@ class Twig_Tests_Node_Expression_Unary_NegTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $expr = new Twig_Node_Expression_Constant( 1, 1 );
-        $node = new Twig_Node_Expression_Unary_Neg( $expr, 1 );
+        $expr = new Twig_Node_Expression_Constant(1, 1);
+        $node = new Twig_Node_Expression_Unary_Neg($expr, 1);
 
-        $this->assertEquals( $expr, $node->getNode( 'node' ) );
+        $this->assertEquals($expr, $node->getNode('node'));
     }
 
     public function getTests()
     {
 
-        $node = new Twig_Node_Expression_Constant( 1, 1 );
-        $node = new Twig_Node_Expression_Unary_Neg( $node, 1 );
+        $node = new Twig_Node_Expression_Constant(1, 1);
+        $node = new Twig_Node_Expression_Unary_Neg($node, 1);
 
         return array(
-            array( $node, '-1' ),
-            array( new Twig_Node_Expression_Unary_Neg( $node, 1 ), '- -1' ),
+            array($node, '-1'),
+            array(new Twig_Node_Expression_Unary_Neg($node, 1), '- -1'),
         );
     }
 }

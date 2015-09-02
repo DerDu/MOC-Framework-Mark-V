@@ -60,19 +60,19 @@ class RegularExpression extends DataType
     /**
      * @param $pattern
      */
-    public function setPattern( $pattern )
+    public function setPattern($pattern)
     {
 
-        $this->regexp->setPattern( $pattern );
+        $this->regexp->setPattern($pattern);
     }
 
     /**
      * @param $replace
      */
-    public function setReplace( $replace )
+    public function setReplace($replace)
     {
 
-        $this->regexp->setReplace( $replace );
+        $this->regexp->setReplace($replace);
     }
 
     /**
@@ -81,13 +81,13 @@ class RegularExpression extends DataType
      * @return string
      * @throws BuildException
      */
-    public function getPattern( $p )
+    public function getPattern($p)
     {
 
         if ($this->isReference()) {
-            $ref = $this->getRef( $p );
+            $ref = $this->getRef($p);
 
-            return $ref->getPattern( $p );
+            return $ref->getPattern($p);
         }
 
         return $this->regexp->getPattern();
@@ -99,18 +99,18 @@ class RegularExpression extends DataType
      * @return mixed
      * @throws BuildException
      */
-    public function getRef( Project $p )
+    public function getRef(Project $p)
     {
 
         if (!$this->checked) {
             $stk = array();
-            array_push( $stk, $this );
-            $this->dieOnCircularReference( $stk, $p );
+            array_push($stk, $this);
+            $this->dieOnCircularReference($stk, $p);
         }
 
-        $o = $this->ref->getReferencedObject( $p );
+        $o = $this->ref->getReferencedObject($p);
         if (!( $o instanceof RegularExpression )) {
-            throw new BuildException( $this->ref->getRefId()." doesn't denote a RegularExpression" );
+            throw new BuildException($this->ref->getRefId()." doesn't denote a RegularExpression");
         } else {
             return $o;
         }
@@ -122,13 +122,13 @@ class RegularExpression extends DataType
      * @return string
      * @throws BuildException
      */
-    public function getReplace( $p )
+    public function getReplace($p)
     {
 
         if ($this->isReference()) {
-            $ref = $this->getRef( $p );
+            $ref = $this->getRef($p);
 
-            return $ref->getReplace( $p );
+            return $ref->getReplace($p);
         }
 
         return $this->regexp->getReplace();
@@ -137,10 +137,10 @@ class RegularExpression extends DataType
     /**
      * @param $modifiers
      */
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
-        $this->regexp->setModifiers( $modifiers );
+        $this->regexp->setModifiers($modifiers);
     }
 
     /**
@@ -164,10 +164,10 @@ class RegularExpression extends DataType
     /**
      * @param $bit
      */
-    public function setIgnoreCase( $bit )
+    public function setIgnoreCase($bit)
     {
 
-        $this->regexp->setIgnoreCase( $bit );
+        $this->regexp->setIgnoreCase($bit);
     }
 
     /**
@@ -182,10 +182,10 @@ class RegularExpression extends DataType
     /**
      * @param $multiline
      */
-    public function setMultiline( $multiline )
+    public function setMultiline($multiline)
     {
 
-        $this->regexp->setMultiline( $multiline );
+        $this->regexp->setMultiline($multiline);
     }
 
     /**
@@ -194,13 +194,13 @@ class RegularExpression extends DataType
      * @return null|Regexp
      * @throws BuildException
      */
-    public function getRegexp( Project $p )
+    public function getRegexp(Project $p)
     {
 
         if ($this->isReference()) {
-            $ref = $this->getRef( $p );
+            $ref = $this->getRef($p);
 
-            return $ref->getRegexp( $p );
+            return $ref->getRegexp($p);
         }
 
         return $this->regexp;

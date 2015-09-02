@@ -79,19 +79,19 @@ class GlobMapper implements FileNameMapper
      *
      * @return array|null
      */
-    public function main( $sourceFileName )
+    public function main($sourceFileName)
     {
 
         if (( $this->fromPrefix === null )
-            || !StringHelper::startsWith( $this->fromPrefix, $sourceFileName )
-            || !StringHelper::endsWith( $this->fromPostfix, $sourceFileName )
+            || !StringHelper::startsWith($this->fromPrefix, $sourceFileName)
+            || !StringHelper::endsWith($this->fromPostfix, $sourceFileName)
         ) {
             return null;
         }
-        $varpart = $this->extractVariablePart( $sourceFileName );
+        $varpart = $this->extractVariablePart($sourceFileName);
         $substitution = $this->toPrefix.$varpart.$this->toPostfix;
 
-        return array( $substitution );
+        return array($substitution);
     }
 
     /**
@@ -101,15 +101,15 @@ class GlobMapper implements FileNameMapper
      *
      * @return string
      */
-    private function extractVariablePart( $name )
+    private function extractVariablePart($name)
     {
 
         // ergh, i really hate php's string functions .... all but natural
         $start = ( $this->prefixLength === 0 ) ? 0 : $this->prefixLength;
-        $end = ( $this->postfixLength === 0 ) ? strlen( $name ) : strlen( $name ) - $this->postfixLength;
+        $end = ( $this->postfixLength === 0 ) ? strlen($name) : strlen($name) - $this->postfixLength;
         $len = $end - $start;
 
-        return substr( $name, $start, $len );
+        return substr($name, $start, $len);
     }
 
     /**
@@ -118,20 +118,20 @@ class GlobMapper implements FileNameMapper
      *
      * @return void
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
 
-        $index = strrpos( $from, '*' );
+        $index = strrpos($from, '*');
 
         if ($index === false) {
             $this->fromPrefix = $from;
             $this->fromPostfix = "";
         } else {
-            $this->fromPrefix = substr( $from, 0, $index );
-            $this->fromPostfix = substr( $from, $index + 1 );
+            $this->fromPrefix = substr($from, 0, $index);
+            $this->fromPostfix = substr($from, $index + 1);
         }
-        $this->prefixLength = strlen( $this->fromPrefix );
-        $this->postfixLength = strlen( $this->fromPostfix );
+        $this->prefixLength = strlen($this->fromPrefix);
+        $this->postfixLength = strlen($this->fromPostfix);
     }
 
     /**
@@ -142,16 +142,16 @@ class GlobMapper implements FileNameMapper
      *
      * @return void
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
 
-        $index = strrpos( $to, '*' );
+        $index = strrpos($to, '*');
         if ($index === false) {
             $this->toPrefix = $to;
             $this->toPostfix = "";
         } else {
-            $this->toPrefix = substr( $to, 0, $index );
-            $this->toPostfix = substr( $to, $index + 1 );
+            $this->toPrefix = substr($to, 0, $index);
+            $this->toPostfix = substr($to, $index + 1);
         }
     }
 }

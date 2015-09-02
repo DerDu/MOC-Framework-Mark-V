@@ -52,7 +52,7 @@ class FileSizeTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -65,7 +65,7 @@ class FileSizeTask extends Task
      *
      * @return void
      */
-    public function setPropertyName( $property )
+    public function setPropertyName($property)
     {
 
         $this->propertyName = $property;
@@ -83,15 +83,15 @@ class FileSizeTask extends Task
         $this->checkFile();
         $this->checkPropertyName();
 
-        $size = filesize( $this->file );
+        $size = filesize($this->file);
 
         if ($size === false) {
-            throw new BuildException( sprintf( '[FileSize] Cannot determine size of file: %s', $this->file ) );
+            throw new BuildException(sprintf('[FileSize] Cannot determine size of file: %s', $this->file));
 
         }
 
         // publish hash value
-        $this->project->setProperty( $this->propertyName, $size );
+        $this->project->setProperty($this->propertyName, $size);
 
     }
 
@@ -106,16 +106,16 @@ class FileSizeTask extends Task
 
         // check File
         if ($this->file === null ||
-            strlen( $this->file ) == 0
+            strlen($this->file) == 0
         ) {
-            throw new BuildException( '[FileSize] You must specify an input file.', $this->file );
+            throw new BuildException('[FileSize] You must specify an input file.', $this->file);
         }
 
-        if (!is_readable( $this->file )) {
-            throw new BuildException( sprintf(
+        if (!is_readable($this->file)) {
+            throw new BuildException(sprintf(
                 '[FileSize] Input file does not exist or is not readable: %s',
                 $this->file
-            ) );
+            ));
         }
 
     }
@@ -129,10 +129,10 @@ class FileSizeTask extends Task
     private function checkPropertyName()
     {
 
-        if (is_null( $this->propertyName ) ||
-            strlen( $this->propertyName ) === 0
+        if (is_null($this->propertyName) ||
+            strlen($this->propertyName) === 0
         ) {
-            throw new BuildException( '[FileSize] Property name for publishing file size is not set' );
+            throw new BuildException('[FileSize] Property name for publishing file size is not set');
         }
     }
 }

@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (interface_exists( 'PHP_CodeSniffer_CommentParser_DocElement', true ) === false) {
+if (interface_exists('PHP_CodeSniffer_CommentParser_DocElement', true) === false) {
     $error = 'Interface PHP_CodeSniffer_CommentParser_DocElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -137,7 +137,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
             && ( $previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement ) === false
         ) {
             $error = '$previousElement must be an instance of DocElement';
-            throw new Exception( $error );
+            throw new Exception($error);
         }
 
         $this->phpcsFile = $phpcsFile;
@@ -152,23 +152,23 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
 
         $subElements = $this->getSubElements();
 
-        if (is_array( $subElements ) === false) {
-            throw new Exception( 'getSubElements() must return an array' );
+        if (is_array($subElements) === false) {
+            throw new Exception('getSubElements() must return an array');
         }
 
         $whitespace = '';
         $currElem = 0;
         $lastElement = '';
         $lastElementWhitespace = null;
-        $numSubElements = count( $subElements );
+        $numSubElements = count($subElements);
 
         foreach ($this->tokens as $token) {
-            if (trim( $token ) === '') {
+            if (trim($token) === '') {
                 $whitespace .= $token;
             } else {
                 if ($currElem < ( $numSubElements - 1 )) {
                     $element = $subElements[$currElem];
-                    $this->processSubElement( $element, $token, $whitespace );
+                    $this->processSubElement($element, $token, $whitespace);
                     $whitespace = '';
                     $currElem++;
                 } else {
@@ -182,7 +182,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
             }
         }//end foreach
 
-        $lastElement = ltrim( $lastElement );
+        $lastElement = ltrim($lastElement);
         $lastElementName = $subElements[( $numSubElements - 1 )];
 
         // Process the last element in this tag.
@@ -310,7 +310,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     public function getRawContent()
     {
 
-        return implode( '', $this->tokens );
+        return implode('', $this->tokens);
 
     }//end getLine()
 
@@ -341,7 +341,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
             $previousContent = $this->previousElement->getRawContent();
             $previousLine = $this->previousElement->getLine();
 
-            return ( $previousLine + substr_count( $previousContent, $this->phpcsFile->eolChar ) );
+            return ( $previousLine + substr_count($previousContent, $this->phpcsFile->eolChar) );
         }
 
     }

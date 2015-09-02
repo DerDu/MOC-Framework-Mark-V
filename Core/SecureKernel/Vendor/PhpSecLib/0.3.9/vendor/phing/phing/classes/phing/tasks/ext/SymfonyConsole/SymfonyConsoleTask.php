@@ -21,7 +21,7 @@
  */
 
 require_once "phing/Task.php";
-require_once dirname( __FILE__ )."/Arg.php";
+require_once dirname(__FILE__)."/Arg.php";
 
 /**
  * Symfony Console Task
@@ -81,7 +81,7 @@ class SymfonyConsoleTask extends Task
      *
      * @param string $command
      */
-    public function setCommand( $command )
+    public function setCommand($command)
     {
 
         $this->command = $command;
@@ -103,7 +103,7 @@ class SymfonyConsoleTask extends Task
      *
      * @param string $console
      */
-    public function setConsole( $console )
+    public function setConsole($console)
     {
 
         $this->console = $console;
@@ -116,7 +116,7 @@ class SymfonyConsoleTask extends Task
      *
      * @return void
      */
-    public function setPropertyName( $property )
+    public function setPropertyName($property)
     {
 
         $this->propertyName = $property;
@@ -129,7 +129,7 @@ class SymfonyConsoleTask extends Task
      *
      * @return void
      */
-    public function setCheckreturn( $checkreturn )
+    public function setCheckreturn($checkreturn)
     {
 
         $this->checkreturn = (bool)$checkreturn;
@@ -144,7 +144,7 @@ class SymfonyConsoleTask extends Task
     public function createArg()
     {
 
-        $num = array_push( $this->args, new Arg() );
+        $num = array_push($this->args, new Arg());
 
         return $this->args[$num - 1];
     }
@@ -168,22 +168,22 @@ class SymfonyConsoleTask extends Task
 
         $cmd = $this->getCmdString();
 
-        $this->log( "executing $cmd" );
+        $this->log("executing $cmd");
         $return = null;
         $output = array();
-        exec( $cmd, $output, $return );
+        exec($cmd, $output, $return);
 
-        $lines = implode( "\r\n", $output );
+        $lines = implode("\r\n", $output);
 
-        $this->log( $lines, Project::MSG_INFO );
+        $this->log($lines, Project::MSG_INFO);
 
         if ($this->propertyName != null) {
-            $this->project->setProperty( $this->propertyName, $lines );
+            $this->project->setProperty($this->propertyName, $lines);
         }
 
         if ($return != 0 && $this->checkreturn) {
-            $this->log( 'Task exited with code: '.$return, Project::MSG_ERR );
-            throw new BuildException( "SymfonyConsole execution failed" );
+            $this->log('Task exited with code: '.$return, Project::MSG_ERR);
+            throw new BuildException("SymfonyConsole execution failed");
         }
     }
 
@@ -198,9 +198,9 @@ class SymfonyConsoleTask extends Task
         $cmd = array(
             $this->console,
             $this->command,
-            implode( ' ', $this->args )
+            implode(' ', $this->args)
         );
-        $cmd = implode( ' ', $cmd );
+        $cmd = implode(' ', $cmd);
 
         return $cmd;
     }

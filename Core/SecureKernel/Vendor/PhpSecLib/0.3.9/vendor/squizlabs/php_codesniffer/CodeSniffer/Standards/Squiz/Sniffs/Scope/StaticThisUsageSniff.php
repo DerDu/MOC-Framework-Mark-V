@@ -13,8 +13,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
-    throw new PHP_CodeSniffer_Exception( 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found' );
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
 /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS ), array( T_FUNCTION ) );
+        parent::__construct(array(T_CLASS), array(T_FUNCTION));
 
     }//end __construct()
 
@@ -59,7 +59,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
      *
      * @return void
      */
-    public function processTokenWithinScope( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope )
+    public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -73,7 +73,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
         $classOpener = $tokens[$currScope]['scope_condition'];
         $className = $tokens[( $classOpener + 2 )]['content'];
 
-        $methodProps = $phpcsFile->getMethodProperties( $stackPtr );
+        $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
         if ($methodProps['is_static'] === true) {
             if (isset( $tokens[$stackPtr]['scope_closer'] ) === false) {
@@ -83,14 +83,14 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
             }
 
             $thisUsage = $stackPtr;
-            while (( $thisUsage = $phpcsFile->findNext( array( T_VARIABLE ), ( $thisUsage + 1 ),
-                    $tokens[$stackPtr]['scope_closer'], false, '$this' ) ) !== false) {
+            while (( $thisUsage = $phpcsFile->findNext(array(T_VARIABLE), ( $thisUsage + 1 ),
+                    $tokens[$stackPtr]['scope_closer'], false, '$this') ) !== false) {
                 if ($thisUsage === false) {
                     return;
                 }
 
                 $error = 'Usage of "$this" in static methods will cause runtime errors';
-                $phpcsFile->addError( $error, $thisUsage, 'Found' );
+                $phpcsFile->addError($error, $thisUsage, 'Found');
             }
         }//end if
 

@@ -45,7 +45,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_OBJECT_OPERATOR );
+        return array(T_OBJECT_OPERATOR);
 
     }//end register()
 
@@ -59,13 +59,13 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first object operator in a chain of them.
-        $varToken = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $varToken = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
         if ($varToken === false || $tokens[$varToken]['code'] !== T_VARIABLE) {
             return;
         }
@@ -95,7 +95,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
 
         $requiredIndent = 0;
         if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
-            $requiredIndent = strlen( $tokens[$i]['content'] );
+            $requiredIndent = strlen($tokens[$i]['content']);
         }
 
         $requiredIndent += $this->indent;
@@ -135,7 +135,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                 $indent = $tokens[( $next - 1 )];
                 if ($indent['code'] === T_WHITESPACE) {
                     if ($indent['line'] === $tokens[$next]['line']) {
-                        $foundIndent = strlen( $indent['content'] );
+                        $foundIndent = strlen($indent['content']);
                     } else {
                         $foundIndent = 0;
                     }
@@ -146,15 +146,15 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                             $requiredIndent,
                             $foundIndent,
                         );
-                        $phpcsFile->addError( $error, $next, 'Incorrect', $data );
+                        $phpcsFile->addError($error, $next, 'Incorrect', $data);
                     }
                 }
 
                 // It cant be the last thing on the line either.
-                $content = $phpcsFile->findNext( T_WHITESPACE, ( $next + 1 ), null, true );
+                $content = $phpcsFile->findNext(T_WHITESPACE, ( $next + 1 ), null, true);
                 if ($tokens[$content]['line'] !== $tokens[$next]['line']) {
                     $error = 'Object operator must be at the start of the line, not the end';
-                    $phpcsFile->addError( $error, $next, 'StartOfLine' );
+                    $phpcsFile->addError($error, $next, 'StartOfLine');
                 }
             }//end if
 

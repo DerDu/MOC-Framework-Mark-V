@@ -93,7 +93,7 @@ class ElementHandler extends AbstractHandler
         $target = null
     ) {
 
-        parent::__construct( $parser, $parentHandler );
+        parent::__construct($parser, $parentHandler);
         $this->configurator = $configurator;
         if ($parentWrapper != null) {
             $this->parent = $parentWrapper->getProxy();
@@ -111,13 +111,13 @@ class ElementHandler extends AbstractHandler
      *
      * @throws ExpatParseException if the CDATA could not be set-up properly
      */
-    public function characters( $data )
+    public function characters($data)
     {
 
         $configurator = $this->configurator;
         $project = $this->configurator->project;
 
-        $this->childWrapper->addText( $data );
+        $this->childWrapper->addText($data);
     }
 
     /**
@@ -127,12 +127,12 @@ class ElementHandler extends AbstractHandler
      * @param  string  the tag that comes in
      * @param  array   attributes the tag carries
      */
-    public function startElement( $name, $attrs )
+    public function startElement($name, $attrs)
     {
 
-        $eh = new ElementHandler( $this->parser, $this, $this->configurator, $this->child, $this->childWrapper,
-            $this->target );
-        $eh->init( $name, $attrs );
+        $eh = new ElementHandler($this->parser, $this, $this->configurator, $this->child, $this->childWrapper,
+            $this->target);
+        $eh->init($name, $attrs);
     }
 
     /**
@@ -152,40 +152,40 @@ class ElementHandler extends AbstractHandler
      *
      * @throws ExpatParseException if the setup process fails
      */
-    public function init( $propType, $attrs )
+    public function init($propType, $attrs)
     {
 
         $configurator = $this->configurator;
         $project = $this->configurator->project;
 
         try {
-            $this->child = new UnknownElement( strtolower( $propType ) );
-            $this->child->setTaskName( $propType );
-            $this->child->setTaskType( $propType );
-            $this->child->setProject( $project );
-            $this->child->setLocation( $this->parser->getLocation() );
+            $this->child = new UnknownElement(strtolower($propType));
+            $this->child->setTaskName($propType);
+            $this->child->setTaskType($propType);
+            $this->child->setProject($project);
+            $this->child->setLocation($this->parser->getLocation());
 
             if ($this->target !== null) {
-                $this->child->setOwningTarget( $this->target );
+                $this->child->setOwningTarget($this->target);
             }
 
             if ($this->parent !== null) {
-                $this->parent->addChild( $this->child );
+                $this->parent->addChild($this->child);
             } elseif ($this->target !== null) {
-                $this->target->addTask( $this->child );
+                $this->target->addTask($this->child);
             }
 
-            $configurator->configureId( $this->child, $attrs );
+            $configurator->configureId($this->child, $attrs);
 
-            $this->childWrapper = new RuntimeConfigurable( $this->child, $propType );
-            $this->childWrapper->setAttributes( $attrs );
+            $this->childWrapper = new RuntimeConfigurable($this->child, $propType);
+            $this->childWrapper->setAttributes($attrs);
 
             if ($this->parentWrapper !== null) {
-                $this->parentWrapper->addChild( $this->childWrapper );
+                $this->parentWrapper->addChild($this->childWrapper);
             }
-        } catch( BuildException $exc ) {
-            throw new ExpatParseException( "Error initializing nested element <$propType>", $exc,
-                $this->parser->getLocation() );
+        } catch (BuildException $exc) {
+            throw new ExpatParseException("Error initializing nested element <$propType>", $exc,
+                $this->parser->getLocation());
         }
     }
 }

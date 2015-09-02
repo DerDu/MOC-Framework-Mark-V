@@ -38,7 +38,7 @@ class IsSetCondition extends ProjectComponent implements Condition
     /**
      * @param $p
      */
-    public function setProperty( $p )
+    public function setProperty($p)
     {
 
         $this->property = $p;
@@ -53,11 +53,11 @@ class IsSetCondition extends ProjectComponent implements Condition
     {
 
         if ($this->property === null) {
-            throw new BuildException( "No property specified for isset "
-                ."condition" );
+            throw new BuildException("No property specified for isset "
+                ."condition");
         }
 
-        return $this->project->getProperty( $this->property ) !== null;
+        return $this->project->getProperty($this->property) !== null;
     }
 
 }

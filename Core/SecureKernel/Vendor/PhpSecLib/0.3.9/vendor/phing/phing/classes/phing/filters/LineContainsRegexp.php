@@ -70,29 +70,29 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
      *
      * @return mixed buffer, -1 on EOF
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
 
-        $lines = explode( "\n", $buffer );
+        $lines = explode("\n", $buffer);
         $matched = array();
 
-        $regexpsSize = count( $this->_regexps );
+        $regexpsSize = count($this->_regexps);
         foreach ($lines as $line) {
             for ($i = 0; $i < $regexpsSize; $i++) {
                 $regexp = $this->_regexps[$i];
-                $re = $regexp->getRegexp( $this->getProject() );
-                $matches = $re->matches( $line );
+                $re = $regexp->getRegexp($this->getProject());
+                $matches = $re->matches($line);
                 if (!$matches) {
                     $line = null;
                     break;
@@ -102,7 +102,7 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
                 $matched[] = $line;
             }
         }
-        $filtered_buffer = implode( "\n", $matched );
+        $filtered_buffer = implode("\n", $matched);
 
         return $filtered_buffer;
     }
@@ -115,12 +115,12 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0; $i < count( $params ); $i++) {
+            for ($i = 0; $i < count($params); $i++) {
                 if (self::REGEXP_KEY === $params[$i]->getType()) {
                     $pattern = $params[$i]->getValue();
                     $regexp = new RegularExpression();
-                    $regexp->setPattern( $pattern );
-                    array_push( $this->_regexps, $regexp );
+                    $regexp->setPattern($pattern);
+                    array_push($this->_regexps, $regexp);
                 }
             }
         }
@@ -134,7 +134,7 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
     public function createRegexp()
     {
 
-        $num = array_push( $this->_regexps, new RegularExpression() );
+        $num = array_push($this->_regexps, new RegularExpression());
 
         return $this->_regexps[$num - 1];
     }
@@ -152,13 +152,13 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new LineContainsRegExp( $reader );
-        $newFilter->setRegexps( $this->getRegexps() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new LineContainsRegExp($reader);
+        $newFilter->setRegexps($this->getRegexps());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -191,12 +191,12 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
      *                within a line in order for it to match in this filter. Must not be
      *                <code>null</code>.
      */
-    public function setRegexps( $regexps )
+    public function setRegexps($regexps)
     {
 
         // type check, error must never occur, bad code of it does
-        if (!is_array( $regexps )) {
-            throw new Exception( "Excpected an 'array', got something else" );
+        if (!is_array($regexps)) {
+            throw new Exception("Excpected an 'array', got something else");
         }
         $this->_regexps = $regexps;
     }

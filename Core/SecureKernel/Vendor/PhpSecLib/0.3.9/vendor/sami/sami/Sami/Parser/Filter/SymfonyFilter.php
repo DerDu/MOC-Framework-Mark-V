@@ -17,15 +17,15 @@ use Sami\Reflection\MethodReflection;
 class SymfonyFilter extends DefaultFilter
 {
 
-    public function acceptClass( ClassReflection $class )
+    public function acceptClass(ClassReflection $class)
     {
 
-        return $class->getTags( 'api' );
+        return $class->getTags('api');
     }
 
-    public function acceptMethod( MethodReflection $method )
+    public function acceptMethod(MethodReflection $method)
     {
 
-        return parent::acceptMethod( $method ) && $method->getTags( 'api' );
+        return parent::acceptMethod($method) && $method->getTags('api');
     }
 }

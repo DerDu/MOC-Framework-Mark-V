@@ -15,24 +15,24 @@ class Twig_Tests_Node_MacroTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $arguments = new Twig_Node( array( new Twig_Node_Expression_Name( 'foo', 1 ) ), array(), 1 );
-        $node = new Twig_Node_Macro( 'foo', $body, $arguments, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $arguments = new Twig_Node(array(new Twig_Node_Expression_Name('foo', 1)), array(), 1);
+        $node = new Twig_Node_Macro('foo', $body, $arguments, 1);
 
-        $this->assertEquals( $body, $node->getNode( 'body' ) );
-        $this->assertEquals( $arguments, $node->getNode( 'arguments' ) );
-        $this->assertEquals( 'foo', $node->getAttribute( 'name' ) );
+        $this->assertEquals($body, $node->getNode('body'));
+        $this->assertEquals($arguments, $node->getNode('arguments'));
+        $this->assertEquals('foo', $node->getAttribute('name'));
     }
 
     public function getTests()
     {
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $arguments = new Twig_Node( array(
-            'foo' => new Twig_Node_Expression_Constant( null, 1 ),
-            'bar' => new Twig_Node_Expression_Constant( 'Foo', 1 ),
-        ), array(), 1 );
-        $node = new Twig_Node_Macro( 'foo', $body, $arguments, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $arguments = new Twig_Node(array(
+            'foo' => new Twig_Node_Expression_Constant(null, 1),
+            'bar' => new Twig_Node_Expression_Constant('Foo', 1),
+        ), array(), 1);
+        $node = new Twig_Node_Macro('foo', $body, $arguments, 1);
 
         return array(
             array(

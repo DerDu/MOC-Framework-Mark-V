@@ -65,7 +65,7 @@ class PHP_CodeSniffer_Reports_Emacs implements PHP_CodeSniffer_Report
                         $message .= ' ('.$error['source'].')';
                     }
 
-                    $type = strtolower( $error['type'] );
+                    $type = strtolower($error['type']);
                     echo $report['filename'].':'.$line.':'.$column.': '.$type.' - '.$message.PHP_EOL;
                 }
             }

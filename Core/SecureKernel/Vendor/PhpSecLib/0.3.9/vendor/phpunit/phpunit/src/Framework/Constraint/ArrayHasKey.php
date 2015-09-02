@@ -29,7 +29,7 @@ class PHPUnit_Framework_Constraint_ArrayHasKey extends PHPUnit_Framework_Constra
     /**
      * @param int|string $key
      */
-    public function __construct( $key )
+    public function __construct($key)
     {
 
         parent::__construct();
@@ -44,15 +44,15 @@ class PHPUnit_Framework_Constraint_ArrayHasKey extends PHPUnit_Framework_Constra
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        if (is_array( $other )) {
-            return array_key_exists( $this->key, $other );
+        if (is_array($other)) {
+            return array_key_exists($this->key, $other);
         }
 
         if ($other instanceof ArrayAccess) {
-            return $other->offsetExists( $this->key );
+            return $other->offsetExists($this->key);
         }
 
         return false;
@@ -68,7 +68,7 @@ class PHPUnit_Framework_Constraint_ArrayHasKey extends PHPUnit_Framework_Constra
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return 'an array '.$this->toString();
@@ -82,6 +82,6 @@ class PHPUnit_Framework_Constraint_ArrayHasKey extends PHPUnit_Framework_Constra
     public function toString()
     {
 
-        return 'has the key '.$this->exporter->export( $this->key );
+        return 'has the key '.$this->exporter->export($this->key);
     }
 }

@@ -22,7 +22,7 @@ interface Twig_TokenParserInterface
      *
      * @param Twig_Parser $parser A Twig_Parser instance
      */
-    public function setParser( Twig_Parser $parser );
+    public function setParser(Twig_Parser $parser);
 
     /**
      * Parses a token and returns a node.
@@ -33,7 +33,7 @@ interface Twig_TokenParserInterface
      *
      * @throws Twig_Error_Syntax
      */
-    public function parse( Twig_Token $token );
+    public function parse(Twig_Token $token);
 
     /**
      * Gets the tag name associated with this token parser.

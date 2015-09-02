@@ -12,16 +12,16 @@
 class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
 {
 
-    public static function customStaticFunction( $arg1, $arg2 = 'default', $arg3 = array() )
+    public static function customStaticFunction($arg1, $arg2 = 'default', $arg3 = array())
     {
     }
 
     public function testGetArguments()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(), array( 'type' => 'function', 'name' => 'date' ) );
-        $this->assertEquals( array( 'U', null ),
-            $node->getArguments( 'date', array( 'format' => 'U', 'timestamp' => null ) ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(), array('type' => 'function', 'name' => 'date'));
+        $this->assertEquals(array('U', null),
+            $node->getArguments('date', array('format' => 'U', 'timestamp' => null)));
     }
 
     /**
@@ -31,8 +31,8 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
     public function testGetArgumentsWhenPositionalArgumentsAfterNamedArguments()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(), array( 'type' => 'function', 'name' => 'date' ) );
-        $node->getArguments( 'date', array( 'timestamp' => 123456, 'Y-m-d' ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(), array('type' => 'function', 'name' => 'date'));
+        $node->getArguments('date', array('timestamp' => 123456, 'Y-m-d'));
     }
 
     /**
@@ -42,8 +42,8 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
     public function testGetArgumentsWhenArgumentIsDefinedTwice()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(), array( 'type' => 'function', 'name' => 'date' ) );
-        $node->getArguments( 'date', array( 'Y-m-d', 'format' => 'U' ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(), array('type' => 'function', 'name' => 'date'));
+        $node->getArguments('date', array('Y-m-d', 'format' => 'U'));
     }
 
     /**
@@ -53,8 +53,8 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
     public function testGetArgumentsWithWrongNamedArgumentName()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(), array( 'type' => 'function', 'name' => 'date' ) );
-        $node->getArguments( 'date', array( 'Y-m-d', 'timestamp' => null, 'unknown' => '' ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(), array('type' => 'function', 'name' => 'date'));
+        $node->getArguments('date', array('Y-m-d', 'timestamp' => null, 'unknown' => ''));
     }
 
     /**
@@ -64,8 +64,8 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
     public function testGetArgumentsWithWrongNamedArgumentNames()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(), array( 'type' => 'function', 'name' => 'date' ) );
-        $node->getArguments( 'date', array( 'Y-m-d', 'timestamp' => null, 'unknown1' => '', 'unknown2' => '' ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(), array('type' => 'function', 'name' => 'date'));
+        $node->getArguments('date', array('Y-m-d', 'timestamp' => null, 'unknown1' => '', 'unknown2' => ''));
     }
 
     /**
@@ -75,35 +75,35 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
     public function testResolveArgumentsWithMissingValueForOptionalArgument()
     {
 
-        if (defined( 'HHVM_VERSION' )) {
-            $this->markTestSkipped( 'Skip under HHVM as the behavior is not the same as plain PHP (which is an edge case anyway)' );
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('Skip under HHVM as the behavior is not the same as plain PHP (which is an edge case anyway)');
         }
 
-        $node = new Twig_Tests_Node_Expression_Call( array(),
-            array( 'type' => 'function', 'name' => 'substr_compare' ) );
-        $node->getArguments( 'substr_compare', array( 'abcd', 'bc', 'offset' => 1, 'case_sensitivity' => true ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(),
+            array('type' => 'function', 'name' => 'substr_compare'));
+        $node->getArguments('substr_compare', array('abcd', 'bc', 'offset' => 1, 'case_sensitivity' => true));
     }
 
     public function testResolveArgumentsOnlyNecessaryArgumentsForCustomFunction()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(),
-            array( 'type' => 'function', 'name' => 'custom_function' ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(),
+            array('type' => 'function', 'name' => 'custom_function'));
 
-        $this->assertEquals( array( 'arg1' ),
-            $node->getArguments( array( $this, 'customFunction' ), array( 'arg1' => 'arg1' ) ) );
+        $this->assertEquals(array('arg1'),
+            $node->getArguments(array($this, 'customFunction'), array('arg1' => 'arg1')));
     }
 
     public function testGetArgumentsForStaticMethod()
     {
 
-        $node = new Twig_Tests_Node_Expression_Call( array(),
-            array( 'type' => 'function', 'name' => 'custom_static_function' ) );
-        $this->assertEquals( array( 'arg1' ),
-            $node->getArguments( __CLASS__.'::customStaticFunction', array( 'arg1' => 'arg1' ) ) );
+        $node = new Twig_Tests_Node_Expression_Call(array(),
+            array('type' => 'function', 'name' => 'custom_static_function'));
+        $this->assertEquals(array('arg1'),
+            $node->getArguments(__CLASS__.'::customStaticFunction', array('arg1' => 'arg1')));
     }
 
-    public function customFunction( $arg1, $arg2 = 'default', $arg3 = array() )
+    public function customFunction($arg1, $arg2 = 'default', $arg3 = array())
     {
     }
 }
@@ -111,9 +111,9 @@ class Twig_Tests_Node_Expression_CallTest extends PHPUnit_Framework_TestCase
 class Twig_Tests_Node_Expression_Call extends Twig_Node_Expression_Call
 {
 
-    public function getArguments( $callable, $arguments )
+    public function getArguments($callable, $arguments)
     {
 
-        return parent::getArguments( $callable, $arguments );
+        return parent::getArguments($callable, $arguments);
     }
 }

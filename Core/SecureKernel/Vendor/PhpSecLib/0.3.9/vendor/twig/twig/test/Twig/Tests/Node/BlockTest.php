@@ -15,18 +15,18 @@ class Twig_Tests_Node_BlockTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $node = new Twig_Node_Block( 'foo', $body, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $node = new Twig_Node_Block('foo', $body, 1);
 
-        $this->assertEquals( $body, $node->getNode( 'body' ) );
-        $this->assertEquals( 'foo', $node->getAttribute( 'name' ) );
+        $this->assertEquals($body, $node->getNode('body'));
+        $this->assertEquals('foo', $node->getAttribute('name'));
     }
 
     public function getTests()
     {
 
-        $body = new Twig_Node_Text( 'foo', 1 );
-        $node = new Twig_Node_Block( 'foo', $body, 1 );
+        $body = new Twig_Node_Text('foo', 1);
+        $node = new Twig_Node_Block('foo', $body, 1);
 
         return array(
             array(

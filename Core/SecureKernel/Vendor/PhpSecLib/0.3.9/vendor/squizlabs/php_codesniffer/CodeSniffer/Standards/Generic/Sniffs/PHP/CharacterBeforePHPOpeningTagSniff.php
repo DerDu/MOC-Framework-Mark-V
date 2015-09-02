@@ -35,7 +35,7 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -49,12 +49,12 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         if ($stackPtr > 0) {
             $error = 'The opening PHP tag must be the first content in the file';
-            $phpcsFile->addError( $error, $stackPtr, 'Found' );
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

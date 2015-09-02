@@ -46,12 +46,12 @@ class VersionTagTest extends \PHPUnit_Framework_TestCase
         $exVersion
     ) {
 
-        $tag = new VersionTag( $type, $content );
+        $tag = new VersionTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exVersion, $tag->getVersion() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exVersion, $tag->getVersion());
     }
 
     /**

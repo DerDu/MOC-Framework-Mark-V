@@ -2,11 +2,6 @@
 
 namespace Doctrine\Tests\Common\Annotations;
 
-use Doctrine\Tests\Common\Annotations\DummyAnnotation;
-use Doctrine\Tests\Common\Annotations\DummyJoinColumn;
-use Doctrine\Tests\Common\Annotations\DummyJoinTable;
-use Doctrine\Tests\Common\Annotations\Name;
-
 /**
  * A description of this class.
  *

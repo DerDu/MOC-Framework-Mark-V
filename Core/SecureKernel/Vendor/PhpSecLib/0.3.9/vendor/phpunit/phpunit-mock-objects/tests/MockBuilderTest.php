@@ -13,6 +13,7 @@
  */
 class Framework_MockBuilderTest extends PHPUnit_Framework_TestCase
 {
+
     public function testMockBuilderRequiresClassName()
     {
 
@@ -97,6 +98,7 @@ class Framework_MockBuilderTest extends PHPUnit_Framework_TestCase
 
     public function testCallingAutoloadCanBeDisabled()
     {
+
         // it is not clear to me how to test this nor the difference
         // between calling it or not
         $this->markTestIncomplete();

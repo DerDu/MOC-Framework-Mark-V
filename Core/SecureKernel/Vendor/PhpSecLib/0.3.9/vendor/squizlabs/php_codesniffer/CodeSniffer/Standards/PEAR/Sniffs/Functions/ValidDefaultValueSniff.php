@@ -40,7 +40,7 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -54,7 +54,7 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -67,15 +67,15 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
         $defaultFound = false;
 
         $nextArg = $argStart;
-        while (( $nextArg = $phpcsFile->findNext( T_VARIABLE, ( $nextArg + 1 ), $argEnd ) ) !== false) {
+        while (( $nextArg = $phpcsFile->findNext(T_VARIABLE, ( $nextArg + 1 ), $argEnd) ) !== false) {
             if ($tokens[( $nextArg - 1 )]['code'] === T_ELLIPSIS) {
                 continue;
             }
 
-            $argHasDefault = self::_argHasDefault( $phpcsFile, $nextArg );
+            $argHasDefault = self::_argHasDefault($phpcsFile, $nextArg);
             if ($argHasDefault === false && $defaultFound === true) {
                 $error = 'Arguments with default values must be at the end of the argument list';
-                $phpcsFile->addError( $error, $nextArg, 'NotAtEnd' );
+                $phpcsFile->addError($error, $nextArg, 'NotAtEnd');
                 return;
             }
 
@@ -96,11 +96,11 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return bool
      */
-    private static function _argHasDefault( PHP_CodeSniffer_File $phpcsFile, $argPtr )
+    private static function _argHasDefault(PHP_CodeSniffer_File $phpcsFile, $argPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
-        $nextToken = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $argPtr + 1 ), null, true );
+        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $argPtr + 1 ), null, true);
         if ($tokens[$nextToken]['code'] !== T_EQUAL) {
             return false;
         }

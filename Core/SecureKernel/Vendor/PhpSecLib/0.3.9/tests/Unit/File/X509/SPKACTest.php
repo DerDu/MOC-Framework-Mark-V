@@ -28,13 +28,13 @@ class Unit_File_X509_SPKACTest extends PhpseclibTestCase
 
         $x509 = new File_X509();
 
-        $spkac = $x509->loadSPKAC( $test );
+        $spkac = $x509->loadSPKAC($test);
 
-        $this->assertInternalType( 'array', $spkac );
+        $this->assertInternalType('array', $spkac);
 
-        $spkac = $x509->loadSPKAC( 'SPKAC='.$test );
+        $spkac = $x509->loadSPKAC('SPKAC='.$test);
 
-        $this->assertInternalType( 'array', $spkac );
+        $this->assertInternalType('array', $spkac);
 
         $this->assertTrue(
             $x509->validateSignature(),
@@ -43,32 +43,32 @@ class Unit_File_X509_SPKACTest extends PhpseclibTestCase
 
         $pubKey = $x509->getPublicKey();
 
-        $this->assertInternalType( 'string', "$pubKey" );
+        $this->assertInternalType('string', "$pubKey");
     }
 
     public function testSaveSPKAC()
     {
 
         $privKey = new Crypt_RSA();
-        extract( $privKey->createKey() );
-        $privKey->loadKey( $privatekey );
+        extract($privKey->createKey());
+        $privKey->loadKey($privatekey);
 
         $x509 = new File_X509();
-        $x509->setPrivateKey( $privKey );
-        $x509->setChallenge( '...' );
+        $x509->setPrivateKey($privKey);
+        $x509->setChallenge('...');
 
         $spkac = $x509->signSPKAC();
-        $this->assertInternalType( 'array', $spkac );
+        $this->assertInternalType('array', $spkac);
 
-        $this->assertInternalType( 'string', $x509->saveSPKAC( $spkac ) );
+        $this->assertInternalType('string', $x509->saveSPKAC($spkac));
 
         $x509 = new File_X509();
-        $x509->setPrivateKey( $privKey );
+        $x509->setPrivateKey($privKey);
 
         $spkac = $x509->signSPKAC();
-        $this->assertInternalType( 'array', $spkac );
+        $this->assertInternalType('array', $spkac);
 
-        $this->assertInternalType( 'string', $x509->saveSPKAC( $spkac ) );
+        $this->assertInternalType('string', $x509->saveSPKAC($spkac));
     }
 
     public function testBadSignatureSPKAC()
@@ -88,11 +88,11 @@ class Unit_File_X509_SPKACTest extends PhpseclibTestCase
 
         $x509 = new File_X509();
 
-        $spkac = $x509->loadSPKAC( $test );
+        $spkac = $x509->loadSPKAC($test);
 
         $spkac['publicKeyAndChallenge']['challenge'] = 'zzzz';
 
-        $x509->loadSPKAC( $x509->saveSPKAC( $spkac ) );
+        $x509->loadSPKAC($x509->saveSPKAC($spkac));
 
         $this->assertFalse(
             $x509->validateSignature(),

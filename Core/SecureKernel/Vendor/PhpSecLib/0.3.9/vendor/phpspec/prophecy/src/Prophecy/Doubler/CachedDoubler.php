@@ -27,26 +27,26 @@ class CachedDoubler extends Doubler
     /**
      * {@inheritdoc}
      */
-    public function registerClassPatch( ClassPatch\ClassPatchInterface $patch )
+    public function registerClassPatch(ClassPatch\ClassPatchInterface $patch)
     {
 
         $this->classes[] = array();
 
-        parent::registerClassPatch( $patch );
+        parent::registerClassPatch($patch);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function createDoubleClass( ReflectionClass $class = null, array $interfaces )
+    protected function createDoubleClass(ReflectionClass $class = null, array $interfaces)
     {
 
-        $classId = $this->generateClassId( $class, $interfaces );
+        $classId = $this->generateClassId($class, $interfaces);
         if (isset( $this->classes[$classId] )) {
             return $this->classes[$classId];
         }
 
-        return $this->classes[$classId] = parent::createDoubleClass( $class, $interfaces );
+        return $this->classes[$classId] = parent::createDoubleClass($class, $interfaces);
     }
 
     /**
@@ -55,7 +55,7 @@ class CachedDoubler extends Doubler
      *
      * @return string
      */
-    private function generateClassId( ReflectionClass $class = null, array $interfaces )
+    private function generateClassId(ReflectionClass $class = null, array $interfaces)
     {
 
         $parts = array();
@@ -65,8 +65,8 @@ class CachedDoubler extends Doubler
         foreach ($interfaces as $interface) {
             $parts[] = $interface->getName();
         }
-        sort( $parts );
+        sort($parts);
 
-        return md5( implode( '', $parts ) );
+        return md5(implode('', $parts));
     }
 }

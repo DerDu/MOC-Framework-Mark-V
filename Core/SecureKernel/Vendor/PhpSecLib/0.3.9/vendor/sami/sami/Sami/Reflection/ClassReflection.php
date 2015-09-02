@@ -41,10 +41,10 @@ class ClassReflection extends Reflection
     protected $aliases = array();
     protected $errors = array();
 
-    static public function fromArray( Project $project, $array )
+    static public function fromArray(Project $project, $array)
     {
 
-        $class = new self( $array['name'], $array['line'] );
+        $class = new self($array['name'], $array['line']);
         $class->shortDesc = $array['short_desc'];
         $class->longDesc = $array['long_desc'];
         $class->hint = $array['hint'];
@@ -54,10 +54,10 @@ class ClassReflection extends Reflection
         $class->file = $array['file'];
         $class->modifiers = $array['modifiers'];
         if ($array['is_interface']) {
-            $class->setInterface( true );
+            $class->setInterface(true);
         }
         if ($array['is_trait']) {
-            $class->setTrait( true );
+            $class->setTrait(true);
         }
         $class->aliases = $array['aliases'];
         $class->errors = $array['errors'];
@@ -65,30 +65,30 @@ class ClassReflection extends Reflection
         $class->interfaces = $array['interfaces'];
         $class->constants = $array['constants'];
 
-        $class->setProject( $project );
+        $class->setProject($project);
 
         foreach ($array['methods'] as $method) {
-            $method = MethodReflection::fromArray( $project, $method );
-            $method->setClass( $class );
-            $class->addMethod( $method );
+            $method = MethodReflection::fromArray($project, $method);
+            $method->setClass($class);
+            $class->addMethod($method);
         }
 
         foreach ($array['properties'] as $property) {
-            $property = PropertyReflection::fromArray( $project, $property );
-            $property->setClass( $class );
-            $class->addProperty( $property );
+            $property = PropertyReflection::fromArray($project, $property);
+            $property->setClass($class);
+            $class->addProperty($property);
         }
 
         foreach ($array['constants'] as $constant) {
-            $constant = ConstantReflection::fromArray( $project, $constant );
-            $constant->setClass( $class );
-            $class->addConstant( $constant );
+            $constant = ConstantReflection::fromArray($project, $constant);
+            $constant->setClass($class);
+            $class->addConstant($constant);
         }
 
         return $class;
     }
 
-    public function setInterface( $boolean )
+    public function setInterface($boolean)
     {
 
         if ($boolean) {
@@ -98,7 +98,7 @@ class ClassReflection extends Reflection
         }
     }
 
-    public function setTrait( $boolean )
+    public function setTrait($boolean)
     {
 
         if ($boolean) {
@@ -108,25 +108,25 @@ class ClassReflection extends Reflection
         }
     }
 
-    public function addMethod( MethodReflection $method )
+    public function addMethod(MethodReflection $method)
     {
 
         $this->methods[$method->getName()] = $method;
-        $method->setClass( $this );
+        $method->setClass($this);
     }
 
-    public function addProperty( PropertyReflection $property )
+    public function addProperty(PropertyReflection $property)
     {
 
         $this->properties[$property->getName()] = $property;
-        $property->setClass( $this );
+        $property->setClass($this);
     }
 
-    public function addConstant( ConstantReflection $constant )
+    public function addConstant(ConstantReflection $constant)
     {
 
         $this->constants[$constant->getName()] = $constant;
-        $constant->setClass( $this );
+        $constant->setClass($this);
     }
 
     public function __toString()
@@ -151,25 +151,25 @@ class ClassReflection extends Reflection
     {
 
         try {
-            $r = new \ReflectionClass( $this->name );
+            $r = new \ReflectionClass($this->name);
 
             return $r->isInternal();
-        } catch( \ReflectionException $e ) {
+        } catch (\ReflectionException $e) {
             return false;
         }
     }
 
-    public function setName( $name )
+    public function setName($name)
     {
 
-        parent::setName( ltrim( $name, '\\' ) );
+        parent::setName(ltrim($name, '\\'));
     }
 
     public function getShortName()
     {
 
-        if (false !== $pos = strrpos( $this->name, '\\' )) {
-            return substr( $this->name, $pos + 1 );
+        if (false !== $pos = strrpos($this->name, '\\')) {
+            return substr($this->name, $pos + 1);
         }
 
         return $this->name;
@@ -193,7 +193,7 @@ class ClassReflection extends Reflection
         return $this->hash;
     }
 
-    public function setHash( $hash )
+    public function setHash($hash)
     {
 
         $this->hash = $hash;
@@ -205,7 +205,7 @@ class ClassReflection extends Reflection
         return $this->file;
     }
 
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -221,7 +221,7 @@ class ClassReflection extends Reflection
      * Can be any iterator (so that we can lazy-load the properties)
      */
 
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         $this->project = $project;
@@ -233,19 +233,19 @@ class ClassReflection extends Reflection
         return $this->namespace;
     }
 
-    public function setNamespace( $namespace )
+    public function setNamespace($namespace)
     {
 
-        $this->namespace = ltrim( $namespace, '\\' );
+        $this->namespace = ltrim($namespace, '\\');
     }
 
-    public function setModifiers( $modifiers )
+    public function setModifiers($modifiers)
     {
 
         $this->modifiers = $modifiers;
     }
 
-    public function getProperties( $deep = false )
+    public function getProperties($deep = false)
     {
 
         if (false === $deep) {
@@ -254,7 +254,7 @@ class ClassReflection extends Reflection
 
         $properties = array();
         if ($this->getParent()) {
-            foreach ($this->getParent()->getProperties( true ) as $name => $property) {
+            foreach ($this->getParent()->getProperties(true) as $name => $property) {
                 $properties[$name] = $property;
             }
         }
@@ -266,35 +266,35 @@ class ClassReflection extends Reflection
         return $properties;
     }
 
-    public function setProperties( $properties )
+    public function setProperties($properties)
     {
 
         $this->properties = $properties;
     }
 
-    public function getParent( $deep = false )
+    public function getParent($deep = false)
     {
 
         if (!$this->parent) {
             return $deep ? array() : null;
         }
 
-        $parent = $this->project->getClass( $this->parent );
+        $parent = $this->project->getClass($this->parent);
 
         if (false === $deep) {
             return $parent;
         }
 
-        return array_merge( array( $parent ), $parent->getParent( true ) );
+        return array_merge(array($parent), $parent->getParent(true));
     }
 
-    public function setParent( $parent )
+    public function setParent($parent)
     {
 
         $this->parent = $parent;
     }
 
-    public function getConstants( $deep = false )
+    public function getConstants($deep = false)
     {
 
         if (false === $deep) {
@@ -303,7 +303,7 @@ class ClassReflection extends Reflection
 
         $constants = array();
         if ($this->getParent()) {
-            foreach ($this->getParent()->getConstants( true ) as $name => $constant) {
+            foreach ($this->getParent()->getConstants(true) as $name => $constant) {
                 $constants[$name] = $constant;
             }
         }
@@ -315,31 +315,31 @@ class ClassReflection extends Reflection
         return $constants;
     }
 
-    public function setConstants( $constants )
+    public function setConstants($constants)
     {
 
         $this->constants = $constants;
     }
 
-    public function getMethod( $name )
+    public function getMethod($name)
     {
 
         return isset( $this->methods[$name] ) ? $this->methods[$name] : false;
     }
 
-    public function getParentMethod( $name )
+    public function getParentMethod($name)
     {
 
         if ($this->getParent()) {
-            foreach ($this->getParent()->getMethods( true ) as $n => $method) {
+            foreach ($this->getParent()->getMethods(true) as $n => $method) {
                 if ($name == $n) {
                     return $method;
                 }
             }
         }
 
-        foreach ($this->getInterfaces( true ) as $interface) {
-            foreach ($interface->getMethods( true ) as $n => $method) {
+        foreach ($this->getInterfaces(true) as $interface) {
+            foreach ($interface->getMethods(true) as $n => $method) {
                 if ($name == $n) {
                     return $method;
                 }
@@ -347,12 +347,12 @@ class ClassReflection extends Reflection
         }
     }
 
-    public function getInterfaces( $deep = false )
+    public function getInterfaces($deep = false)
     {
 
         $interfaces = array();
         foreach ($this->interfaces as $interface) {
-            $interfaces[] = $this->project->getClass( $interface );
+            $interfaces[] = $this->project->getClass($interface);
         }
 
         if (false === $deep) {
@@ -361,17 +361,17 @@ class ClassReflection extends Reflection
 
         $allInterfaces = $interfaces;
         foreach ($interfaces as $interface) {
-            $allInterfaces = array_merge( $allInterfaces, $interface->getInterfaces( true ) );
+            $allInterfaces = array_merge($allInterfaces, $interface->getInterfaces(true));
         }
 
         if ($parent = $this->getParent()) {
-            $allInterfaces = array_merge( $allInterfaces, $parent->getInterfaces( true ) );
+            $allInterfaces = array_merge($allInterfaces, $parent->getInterfaces(true));
         }
 
         return $allInterfaces;
     }
 
-    public function getMethods( $deep = false )
+    public function getMethods($deep = false)
     {
 
         if (false === $deep) {
@@ -380,15 +380,15 @@ class ClassReflection extends Reflection
 
         $methods = array();
         if ($this->isInterface()) {
-            foreach ($this->getInterfaces( true ) as $interface) {
-                foreach ($interface->getMethods( true ) as $name => $method) {
+            foreach ($this->getInterfaces(true) as $interface) {
+                foreach ($interface->getMethods(true) as $name => $method) {
                     $methods[$name] = $method;
                 }
             }
         }
 
         if ($this->getParent()) {
-            foreach ($this->getParent()->getMethods( true ) as $name => $method) {
+            foreach ($this->getParent()->getMethods(true) as $name => $method) {
                 $methods[$name] = $method;
             }
         }
@@ -400,7 +400,7 @@ class ClassReflection extends Reflection
         return $methods;
     }
 
-    public function setMethods( $methods )
+    public function setMethods($methods)
     {
 
         $this->methods = $methods;
@@ -412,13 +412,13 @@ class ClassReflection extends Reflection
         return $this->category === self::CATEGORY_INTERFACE;
     }
 
-    public function addInterface( $interface )
+    public function addInterface($interface)
     {
 
         $this->interfaces[$interface] = $interface;
     }
 
-    public function setCategory( $category )
+    public function setCategory($category)
     {
 
         $this->category = $category;
@@ -443,7 +443,7 @@ class ClassReflection extends Reflection
         return $this->aliases;
     }
 
-    public function setAliases( $aliases )
+    public function setAliases($aliases)
     {
 
         $this->aliases = $aliases;
@@ -455,7 +455,7 @@ class ClassReflection extends Reflection
         return $this->errors;
     }
 
-    public function setErrors( $errors )
+    public function setErrors($errors)
     {
 
         $this->errors = $errors;
@@ -481,18 +481,18 @@ class ClassReflection extends Reflection
             'aliases'      => $this->aliases,
             'errors'       => $this->errors,
             'interfaces'   => $this->interfaces,
-            'properties'   => array_map( function ( $property ) {
+            'properties'   => array_map(function ($property) {
 
                 return $property->toArray();
-            }, $this->properties ),
-            'methods'      => array_map( function ( $method ) {
+            }, $this->properties),
+            'methods'      => array_map(function ($method) {
 
                 return $method->toArray();
-            }, $this->methods ),
-            'constants'    => array_map( function ( $constant ) {
+            }, $this->methods),
+            'constants'    => array_map(function ($constant) {
 
                 return $constant->toArray();
-            }, $this->constants ),
+            }, $this->constants),
         );
     }
 

@@ -34,7 +34,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -45,7 +45,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
     public function register()
     {
 
-        return array( T_OPEN_CURLY_BRACKET );
+        return array(T_OPEN_CURLY_BRACKET);
 
     }//end register()
 
@@ -59,29 +59,29 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[( $stackPtr - 1 )]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space before opening brace of class definition; 0 found';
-            $phpcsFile->addError( $error, $stackPtr, 'NoneBefore' );
+            $phpcsFile->addError($error, $stackPtr, 'NoneBefore');
         } else {
             $content = $tokens[( $stackPtr - 1 )]['content'];
             if ($content !== ' ') {
-                $length = strlen( $content );
+                $length = strlen($content);
                 if ($length === 1) {
                     $length = 'tab';
                 }
 
                 $error = 'Expected 1 space before opening brace of class definition; %s found';
-                $data = array( $length );
-                $phpcsFile->addError( $error, $stackPtr, 'Before', $data );
+                $data = array($length);
+                $phpcsFile->addError($error, $stackPtr, 'Before', $data);
             }
         }//end if
 
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true);
         if ($next === false) {
             return;
         }
@@ -101,14 +101,14 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
         if ($nested === true) {
             if ($foundLines !== 1) {
                 $error = 'Expected 1 blank line after opening brace of nesting class definition; %s found';
-                $data = array( $foundLines );
-                $phpcsFile->addError( $error, $stackPtr, 'AfterNesting', $data );
+                $data = array($foundLines);
+                $phpcsFile->addError($error, $stackPtr, 'AfterNesting', $data);
             }
         } else {
             if ($foundLines !== 0) {
                 $error = 'Expected 0 blank lines after opening brace of class definition; %s found';
-                $data = array( $foundLines );
-                $phpcsFile->addError( $error, $stackPtr, 'After', $data );
+                $data = array($foundLines);
+                $phpcsFile->addError($error, $stackPtr, 'After', $data);
             }
         }
 

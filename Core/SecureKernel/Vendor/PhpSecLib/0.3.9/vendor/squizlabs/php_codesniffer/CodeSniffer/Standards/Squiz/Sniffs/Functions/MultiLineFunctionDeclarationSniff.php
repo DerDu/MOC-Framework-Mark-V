@@ -12,9 +12,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PEAR_Sniffs_Functions_FunctionDeclarationSniff', true ) === false) {
+if (class_exists('PEAR_Sniffs_Functions_FunctionDeclarationSniff', true) === false) {
     $error = 'Class PEAR_Sniffs_Functions_FunctionDeclarationSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -45,31 +45,31 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
      *
      * @return void
      */
-    public function processMultiLineDeclaration( PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens )
+    public function processMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
     {
 
         // We do everything the parent sniff does, and a bit more.
-        parent::processMultiLineDeclaration( $phpcsFile, $stackPtr, $tokens );
+        parent::processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens);
 
         $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
-        $this->processBracket( $phpcsFile, $openBracket, $tokens, 'function' );
+        $this->processBracket($phpcsFile, $openBracket, $tokens, 'function');
 
         if ($tokens[$stackPtr]['code'] !== T_CLOSURE) {
             return;
         }
 
-        $use = $phpcsFile->findNext( T_USE, ( $tokens[$stackPtr]['parenthesis_closer'] + 1 ),
-            $tokens[$stackPtr]['scope_opener'] );
+        $use = $phpcsFile->findNext(T_USE, ( $tokens[$stackPtr]['parenthesis_closer'] + 1 ),
+            $tokens[$stackPtr]['scope_opener']);
         if ($use === false) {
             return;
         }
 
-        $openBracket = $phpcsFile->findNext( T_OPEN_PARENTHESIS, ( $use + 1 ), null );
-        $this->processBracket( $phpcsFile, $openBracket, $tokens, 'use' );
+        $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ( $use + 1 ), null);
+        $this->processBracket($phpcsFile, $openBracket, $tokens, 'use');
 
         // Also check spacing.
         if ($tokens[( $use - 1 )]['code'] === T_WHITESPACE) {
-            $gap = strlen( $tokens[( $use - 1 )]['content'] );
+            $gap = strlen($tokens[( $use - 1 )]['content']);
         } else {
             $gap = 0;
         }
@@ -90,7 +90,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
      *
      * @return void
      */
-    public function processBracket( PHP_CodeSniffer_File $phpcsFile, $openBracket, $tokens, $type = 'function' )
+    public function processBracket(PHP_CodeSniffer_File $phpcsFile, $openBracket, $tokens, $type = 'function')
     {
 
         $errorPrefix = '';
@@ -102,10 +102,10 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
 
         // The open bracket should be the last thing on the line.
         if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
-            $next = $phpcsFile->findNext( T_WHITESPACE, ( $openBracket + 1 ), null, true );
+            $next = $phpcsFile->findNext(T_WHITESPACE, ( $openBracket + 1 ), null, true);
             if ($tokens[$next]['line'] !== ( $tokens[$openBracket]['line'] + 1 )) {
                 $error = 'The first parameter of a multi-line '.$type.' declaration must be on the line after the opening bracket';
-                $phpcsFile->addError( $error, $next, $errorPrefix.'FirstParamSpacing' );
+                $phpcsFile->addError($error, $next, $errorPrefix.'FirstParamSpacing');
             }
         }
 
@@ -121,13 +121,13 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             if ($tokens[$i]['code'] === T_COMMA) {
                 if ($lastCommaLine !== null && $lastCommaLine === $tokens[$i]['line']) {
                     $error = 'Multi-line '.$type.' declarations must define one parameter per line';
-                    $phpcsFile->addError( $error, $i, $errorPrefix.'OneParamPerLine' );
+                    $phpcsFile->addError($error, $i, $errorPrefix.'OneParamPerLine');
                 } else {
                     // Comma must be the last thing on the line.
-                    $next = $phpcsFile->findNext( T_WHITESPACE, ( $i + 1 ), null, true );
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ( $i + 1 ), null, true);
                     if ($tokens[$next]['line'] !== ( $tokens[$i]['line'] + 1 )) {
                         $error = 'Commas in multi-line '.$type.' declarations must be the last content on a line';
-                        $phpcsFile->addError( $error, $next, $errorPrefix.'ContentAfterComma' );
+                        $phpcsFile->addError($error, $next, $errorPrefix.'ContentAfterComma');
                     }
                 }
 

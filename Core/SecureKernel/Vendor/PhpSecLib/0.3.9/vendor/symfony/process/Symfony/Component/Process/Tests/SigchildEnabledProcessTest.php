@@ -87,10 +87,10 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     public function testExitCodeText()
     {
 
-        $process = $this->getProcess( 'qdfsmfkqsdfmqmsd' );
+        $process = $this->getProcess('qdfsmfkqsdfmqmsd');
         $process->run();
 
-        $this->assertInternalType( 'string', $process->getExitCodeText() );
+        $this->assertInternalType('string', $process->getExitCodeText());
     }
 
     /**
@@ -105,8 +105,8 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
         array $options = array()
     ) {
 
-        $process = new ProcessInSigchildEnvironment( $commandline, $cwd, $env, $input, $timeout, $options );
-        $process->setEnhanceSigchildCompatibility( true );
+        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
+        $process->setEnhanceSigchildCompatibility(true);
 
         return $process;
     }
@@ -134,20 +134,20 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     public function testProcessThrowsExceptionWhenExternallySignaled()
     {
 
-        $this->markTestSkipped( 'Retrieving Pid is not supported in sigchild environment' );
+        $this->markTestSkipped('Retrieving Pid is not supported in sigchild environment');
     }
 
     public function testExitCodeIsAvailableAfterSignal()
     {
 
-        $this->markTestSkipped( 'Signal is not supported in sigchild environment' );
+        $this->markTestSkipped('Signal is not supported in sigchild environment');
     }
 
     public function testStartAfterATimeout()
     {
 
         if ('\\' === DIRECTORY_SEPARATOR) {
-            $this->markTestSkipped( 'Restarting a timed-out process on Windows is not supported in sigchild environment' );
+            $this->markTestSkipped('Restarting a timed-out process on Windows is not supported in sigchild environment');
         }
         parent::testStartAfterATimeout();
     }
@@ -155,18 +155,18 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     public function testStopWithTimeoutIsActuallyWorking()
     {
 
-        $this->markTestSkipped( 'Stopping with signal is not supported in sigchild environment' );
+        $this->markTestSkipped('Stopping with signal is not supported in sigchild environment');
     }
 
     public function testRunProcessWithTimeout()
     {
 
-        $this->markTestSkipped( 'Signal (required for timeout) is not supported in sigchild environment' );
+        $this->markTestSkipped('Signal (required for timeout) is not supported in sigchild environment');
     }
 
     public function testCheckTimeoutOnStartedProcess()
     {
 
-        $this->markTestSkipped( 'Signal (required for timeout) is not supported in sigchild environment' );
+        $this->markTestSkipped('Signal (required for timeout) is not supported in sigchild environment');
     }
 }

@@ -6,7 +6,6 @@ use Guzzle\Http\Client;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\PostFile;
-use Guzzle\Http\Message\Request;
 use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\QueryString;
 use Guzzle\Http\RedirectPlugin;

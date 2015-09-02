@@ -70,7 +70,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -88,7 +88,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (in_array( $code, PHP_CodeSniffer_Tokens::$emptyTokens ) === true) {
+            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 continue;
             } else {
                 if ($code !== T_TRUE && $code !== T_FALSE) {
@@ -99,7 +99,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
 
         if ($goodCondition === false) {
             $error = 'Avoid IF statements that are always true or false';
-            $phpcsFile->addWarning( $error, $stackPtr, 'Found' );
+            $phpcsFile->addWarning($error, $stackPtr, 'Found');
         }
 
     }//end process()

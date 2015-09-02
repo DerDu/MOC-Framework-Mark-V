@@ -70,25 +70,25 @@ class FilenameSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $len = count( $parameters ); $i < $len; $i++) {
+            for ($i = 0, $len = count($parameters); $i < $len; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch (strtolower( $paramname )) {
+                switch (strtolower($paramname)) {
                     case self::NAME_KEY:
-                        $this->setName( $parameters[$i]->getValue() );
+                        $this->setName($parameters[$i]->getValue());
                         break;
                     case self::CASE_KEY:
-                        $this->setCasesensitive( $parameters[$i]->getValue() );
+                        $this->setCasesensitive($parameters[$i]->getValue());
                         break;
                     case self::NEGATE_KEY:
-                        $this->setNegate( $parameters[$i]->getValue() );
+                        $this->setNegate($parameters[$i]->getValue());
                         break;
                     default:
-                        $this->setError( "Invalid parameter ".$paramname );
+                        $this->setError("Invalid parameter ".$paramname);
                 }
             } // for each param
         } // if params
@@ -103,13 +103,13 @@ class FilenameSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setName( $pattern )
+    public function setName($pattern)
     {
 
-        $pattern = str_replace( '\\', DIRECTORY_SEPARATOR, $pattern );
-        $pattern = str_replace( '/', DIRECTORY_SEPARATOR, $pattern );
+        $pattern = str_replace('\\', DIRECTORY_SEPARATOR, $pattern);
+        $pattern = str_replace('/', DIRECTORY_SEPARATOR, $pattern);
 
-        if (StringHelper::endsWith( DIRECTORY_SEPARATOR, $pattern )) {
+        if (StringHelper::endsWith(DIRECTORY_SEPARATOR, $pattern)) {
             $pattern .= "**";
         }
         $this->pattern = $pattern;
@@ -122,7 +122,7 @@ class FilenameSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setCasesensitive( $casesensitive )
+    public function setCasesensitive($casesensitive)
     {
 
         $this->casesensitive = $casesensitive;
@@ -138,7 +138,7 @@ class FilenameSelector extends BaseExtendSelector
      *
      * @return void
      */
-    public function setNegate( $negated )
+    public function setNegate($negated)
     {
 
         $this->negated = $negated;
@@ -156,7 +156,7 @@ class FilenameSelector extends BaseExtendSelector
     {
 
         if ($this->pattern === null) {
-            $this->setError( "The name attribute is required" );
+            $this->setError("The name attribute is required");
         }
     }
 
@@ -175,12 +175,12 @@ class FilenameSelector extends BaseExtendSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
 
-        return ( SelectorUtils::matchPath( $this->pattern, $filename, $this->casesensitive )
+        return ( SelectorUtils::matchPath($this->pattern, $filename, $this->casesensitive)
             === !( $this->negated ) );
     }
 }

@@ -16,7 +16,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
      * @param PHPParser_Node_Name[] $insteadof  Overwritten traits
      * @param array                 $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Name $trait, $method, array $insteadof, array $attributes = array() )
+    public function __construct(PHPParser_Node_Name $trait, $method, array $insteadof, array $attributes = array())
     {
 
         parent::__construct(

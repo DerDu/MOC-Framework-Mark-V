@@ -35,7 +35,7 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
     public function register()
     {
 
-        return array( T_CLASS );
+        return array(T_CLASS);
 
     }//end register()
 
@@ -49,21 +49,21 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // We are not interested in abstract classes.
-        $prev = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
         if ($prev !== false && $tokens[$prev]['code'] === T_ABSTRACT) {
             return;
         }
 
         // We are only interested in Action classes.
-        $classNameToken = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $classNameToken = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         $className = $tokens[$classNameToken]['content'];
-        if (substr( $className, -7 ) !== 'Actions') {
+        if (substr($className, -7) !== 'Actions') {
             return;
         }
 
@@ -76,23 +76,23 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             if ($tokens[$i]['code'] !== T_DOUBLE_COLON) {
                 if ($tokens[$i]['code'] === T_FUNCTION) {
                     // Cache the function information.
-                    $funcName = $phpcsFile->findNext( T_STRING, ( $i + 1 ) );
-                    $funcScope = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$scopeModifiers, ( $i - 1 ) );
+                    $funcName = $phpcsFile->findNext(T_STRING, ( $i + 1 ));
+                    $funcScope = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, ( $i - 1 ));
 
-                    $foundFunctions[$tokens[$funcName]['content']] = strtolower( $tokens[$funcScope]['content'] );
+                    $foundFunctions[$tokens[$funcName]['content']] = strtolower($tokens[$funcScope]['content']);
                 }
 
                 continue;
             }
 
-            $prevToken = $phpcsFile->findPrevious( T_WHITESPACE, ( $i - 1 ), null, true );
+            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ( $i - 1 ), null, true);
             if ($tokens[$prevToken]['content'] !== 'self'
                 && $tokens[$prevToken]['content'] !== 'static'
             ) {
                 continue;
             }
 
-            $funcNameToken = $phpcsFile->findNext( T_WHITESPACE, ( $i + 1 ), null, true );
+            $funcNameToken = $phpcsFile->findNext(T_WHITESPACE, ( $i + 1 ), null, true);
             if ($tokens[$funcNameToken]['code'] === T_VARIABLE) {
                 // We are only interested in function calls.
                 continue;
@@ -109,11 +109,11 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
 
             $foundCalls[$i] = array(
                 'name' => $funcName,
-                'type' => strtolower( $tokens[$prevToken]['content'] ),
+                'type' => strtolower($tokens[$prevToken]['content']),
             );
         }//end for
 
-        $errorClassName = substr( $className, 0, -7 );
+        $errorClassName = substr($className, 0, -7);
 
         foreach ($foundCalls as $token => $funcData) {
             if (isset( $foundFunctions[$funcData['name']] ) === false) {
@@ -128,7 +128,7 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                         $errorClassName,
                         $funcName,
                     );
-                    $phpcsFile->addError( $error, $token, 'Found'.ucfirst( $funcData['type'] ), $data );
+                    $phpcsFile->addError($error, $token, 'Found'.ucfirst($funcData['type']), $data);
                 }
             }
         }

@@ -10,73 +10,73 @@ class CallbackPromiseSpec extends ObjectBehavior
     function let()
     {
 
-        $this->beConstructedWith( 'get_class' );
+        $this->beConstructedWith('get_class');
     }
 
     function it_is_promise()
     {
 
-        $this->shouldBeAnInstanceOf( 'Prophecy\Promise\PromiseInterface' );
+        $this->shouldBeAnInstanceOf('Prophecy\Promise\PromiseInterface');
     }
 
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $object
      * @param \Prophecy\Prophecy\MethodProphecy $method
      */
-    function it_should_execute_closure_callback( $object, $method )
+    function it_should_execute_closure_callback($object, $method)
     {
 
-        $firstArgumentCallback = function ( $args ) {
+        $firstArgumentCallback = function ($args) {
 
             return $args[0];
         };
 
-        $this->beConstructedWith( $firstArgumentCallback );
+        $this->beConstructedWith($firstArgumentCallback);
 
-        $this->execute( array( 'one', 'two' ), $object, $method )->shouldReturn( 'one' );
+        $this->execute(array('one', 'two'), $object, $method)->shouldReturn('one');
     }
 
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $object
      * @param \Prophecy\Prophecy\MethodProphecy $method
      */
-    function it_should_execute_static_array_callback( $object, $method )
+    function it_should_execute_static_array_callback($object, $method)
     {
 
-        $firstArgumentCallback = array( 'spec\Prophecy\Promise\ClassCallback', 'staticCallbackMethod' );
+        $firstArgumentCallback = array('spec\Prophecy\Promise\ClassCallback', 'staticCallbackMethod');
 
-        $this->beConstructedWith( $firstArgumentCallback );
+        $this->beConstructedWith($firstArgumentCallback);
 
-        $this->execute( array( 'one', 'two' ), $object, $method )->shouldReturn( 'one' );
+        $this->execute(array('one', 'two'), $object, $method)->shouldReturn('one');
     }
 
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $object
      * @param \Prophecy\Prophecy\MethodProphecy $method
      */
-    function it_should_execute_instance_array_callback( $object, $method )
+    function it_should_execute_instance_array_callback($object, $method)
     {
 
         $class = new ClassCallback();
-        $firstArgumentCallback = array( $class, 'callbackMethod' );
+        $firstArgumentCallback = array($class, 'callbackMethod');
 
-        $this->beConstructedWith( $firstArgumentCallback );
+        $this->beConstructedWith($firstArgumentCallback);
 
-        $this->execute( array( 'one', 'two' ), $object, $method )->shouldReturn( 'one' );
+        $this->execute(array('one', 'two'), $object, $method)->shouldReturn('one');
     }
 
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $object
      * @param \Prophecy\Prophecy\MethodProphecy $method
      */
-    function it_should_execute_string_function_callback( $object, $method )
+    function it_should_execute_string_function_callback($object, $method)
     {
 
         $firstArgumentCallback = 'spec\Prophecy\Promise\functionCallbackFirstArgument';
 
-        $this->beConstructedWith( $firstArgumentCallback );
+        $this->beConstructedWith($firstArgumentCallback);
 
-        $this->execute( array( 'one', 'two' ), $object, $method )->shouldReturn( 'one' );
+        $this->execute(array('one', 'two'), $object, $method)->shouldReturn('one');
     }
 
 }
@@ -94,7 +94,7 @@ class ClassCallback
     /**
      * @param array $args
      */
-    static function staticCallbackMethod( $args )
+    static function staticCallbackMethod($args)
     {
 
         return $args[0];
@@ -103,7 +103,7 @@ class ClassCallback
     /**
      * @param array $args
      */
-    function callbackMethod( $args )
+    function callbackMethod($args)
     {
 
         return $args[0];
@@ -117,7 +117,7 @@ class ClassCallback
  *
  * @return string
  */
-function functionCallbackFirstArgument( $args )
+function functionCallbackFirstArgument($args)
 {
 
     return $args[0];

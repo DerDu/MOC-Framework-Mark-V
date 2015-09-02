@@ -18,12 +18,12 @@ class Twig_Node_Expression_AssignName extends Twig_Node_Expression_Name
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->raw( '$context[' )
-            ->string( $this->getAttribute( 'name' ) )
-            ->raw( ']' );
+            ->raw('$context[')
+            ->string($this->getAttribute('name'))
+            ->raw(']');
     }
 }

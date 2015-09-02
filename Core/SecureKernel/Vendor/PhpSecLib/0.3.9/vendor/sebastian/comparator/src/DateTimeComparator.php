@@ -30,7 +30,7 @@ class DateTimeComparator extends ObjectComparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
         return $expected instanceof \DateTime && $actual instanceof \DateTime;
@@ -52,22 +52,22 @@ class DateTimeComparator extends ObjectComparator
      *                           fails. Contains information about the
      *                           specific errors that lead to the failure.
      */
-    public function assertEquals( $expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false )
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
 
-        $delta = new \DateInterval( sprintf( 'PT%sS', abs( $delta ) ) );
+        $delta = new \DateInterval(sprintf('PT%sS', abs($delta)));
 
         $expectedLower = clone $expected;
         $expectedUpper = clone $expected;
 
-        if ($actual < $expectedLower->sub( $delta ) ||
-            $actual > $expectedUpper->add( $delta )
+        if ($actual < $expectedLower->sub($delta) ||
+            $actual > $expectedUpper->add($delta)
         ) {
             throw new ComparisonFailure(
                 $expected,
                 $actual,
-                $this->dateTimeToString( $expected ),
-                $this->dateTimeToString( $actual ),
+                $this->dateTimeToString($expected),
+                $this->dateTimeToString($actual),
                 false,
                 'Failed asserting that two DateTime objects are equal.'
             );
@@ -83,10 +83,10 @@ class DateTimeComparator extends ObjectComparator
      *
      * @return string
      */
-    protected function dateTimeToString( \DateTime $datetime )
+    protected function dateTimeToString(\DateTime $datetime)
     {
 
-        $string = $datetime->format( \DateTime::ISO8601 );
+        $string = $datetime->format(\DateTime::ISO8601);
 
         return $string ? $string : 'Invalid DateTime object';
     }

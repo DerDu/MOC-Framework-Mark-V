@@ -15,6 +15,7 @@
  */
 interface PHPUnit_Framework_MockObject_Builder_Match extends PHPUnit_Framework_MockObject_Builder_Stub
 {
+
     /**
      * Defines the expectation which must occur before the current is valid.
      *

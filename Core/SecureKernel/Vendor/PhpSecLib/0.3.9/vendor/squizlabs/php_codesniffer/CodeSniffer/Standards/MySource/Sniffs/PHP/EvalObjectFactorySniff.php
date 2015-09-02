@@ -35,7 +35,7 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
     public function register()
     {
 
-        return array( T_EVAL );
+        return array(T_EVAL);
 
     }//end register()
 
@@ -49,7 +49,7 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -59,14 +59,14 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
             to determine if the "new" keyword is being used.
         */
 
-        $openBracket = $phpcsFile->findNext( T_OPEN_PARENTHESIS, ( $stackPtr + 1 ) );
+        $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ( $stackPtr + 1 ));
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $strings = array();
         $vars = array();
 
         for ($i = ( $openBracket + 1 ); $i < $closeBracket; $i++) {
-            if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens ) === true) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
                 $strings[$i] = $tokens[$i]['content'];
             } else {
                 if ($tokens[$i]['code'] === T_VARIABLE) {
@@ -81,10 +81,10 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
         */
 
         foreach ($vars as $varPtr => $varName) {
-            while (( $prev = $phpcsFile->findPrevious( T_VARIABLE, ( $varPtr - 1 ) ) ) !== false) {
+            while (( $prev = $phpcsFile->findPrevious(T_VARIABLE, ( $varPtr - 1 )) ) !== false) {
                 // Make sure this is an assignment of the variable. That means
                 // it will be the first thing on the line.
-                $prevContent = $phpcsFile->findPrevious( T_WHITESPACE, ( $prev - 1 ), null, true );
+                $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ( $prev - 1 ), null, true);
                 if ($tokens[$prevContent]['line'] === $tokens[$prev]['line']) {
                     $varPtr = $prevContent;
                     continue;
@@ -102,9 +102,9 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
 
             if ($prev !== false) {
                 // Find all strings on the line.
-                $lineEnd = $phpcsFile->findNext( T_SEMICOLON, ( $prev + 1 ) );
+                $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ( $prev + 1 ));
                 for ($i = ( $prev + 1 ); $i < $lineEnd; $i++) {
-                    if (in_array( $tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens ) === true) {
+                    if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
                         $strings[$i] = $tokens[$i]['content'];
                     }
                 }
@@ -116,9 +116,9 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
             // We don't bother checking if the word "new" is echo'd
             // because that is unlikely to happen. We assume the use
             // of "new" is for object instantiation.
-            if (strstr( $string, ' new ' ) !== false) {
+            if (strstr($string, ' new ') !== false) {
                 $error = 'Do not use eval() to create objects dynamically; use reflection instead';
-                $phpcsFile->addWarning( $error, $stackPtr, 'Found' );
+                $phpcsFile->addWarning($error, $stackPtr, 'Found');
             }
         }
 

@@ -49,14 +49,14 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
         $exFilePath
     ) {
 
-        $tag = new ExampleTag( $type, $content );
+        $tag = new ExampleTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exStartingLine, $tag->getStartingLine() );
-        $this->assertEquals( $exLineCount, $tag->getLineCount() );
-        $this->assertEquals( $exFilePath, $tag->getFilePath() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exStartingLine, $tag->getStartingLine());
+        $this->assertEquals($exLineCount, $tag->getLineCount());
+        $this->assertEquals($exFilePath, $tag->getFilePath());
     }
 
     /**

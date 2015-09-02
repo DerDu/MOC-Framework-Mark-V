@@ -58,7 +58,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -69,7 +69,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
             'xor' => '^',
         );
 
-        $operator = strtolower( $tokens[$stackPtr]['content'] );
+        $operator = strtolower($tokens[$stackPtr]['content']);
         if (isset( $replacements[$operator] ) === false) {
             return;
         }
@@ -79,7 +79,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
             $operator,
             $replacements[$operator],
         );
-        $phpcsFile->addError( $error, $stackPtr, 'NotAllowed', $data );
+        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
 
     }//end process()
 

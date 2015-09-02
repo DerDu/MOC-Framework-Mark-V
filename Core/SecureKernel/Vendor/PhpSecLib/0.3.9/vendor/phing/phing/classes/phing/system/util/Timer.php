@@ -76,7 +76,7 @@ class Timer
     private function getMicrotime()
     {
 
-        list( $usec, $sec ) = explode( " ", microtime() );
+        list( $usec, $sec ) = explode(" ", microtime());
 
         return ( (float)$usec + (float)$sec );
     }
@@ -104,12 +104,12 @@ class Timer
      *
      * @return string Properly formatted time.
      */
-    public function getElapsedTime( $places = 5 )
+    public function getElapsedTime($places = 5)
     {
 
         $etime = $this->etime - $this->stime;
         $format = "%0.".$places."f";
 
-        return ( sprintf( $format, $etime ) );
+        return ( sprintf($format, $etime) );
     }
 }

@@ -16,11 +16,11 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt
      * @param PHPParser_Node[]            $finallyStmts Finally statements (null means no finally clause)
      * @param array|null                  $attributes   Additional attributes
      */
-    public function __construct( array $stmts, array $catches, array $finallyStmts = null, array $attributes = array() )
+    public function __construct(array $stmts, array $catches, array $finallyStmts = null, array $attributes = array())
     {
 
         if (empty( $catches ) && null === $finallyStmts) {
-            throw new PHPParser_Error( 'Cannot use try without catch or finally' );
+            throw new PHPParser_Error('Cannot use try without catch or finally');
         }
 
         parent::__construct(

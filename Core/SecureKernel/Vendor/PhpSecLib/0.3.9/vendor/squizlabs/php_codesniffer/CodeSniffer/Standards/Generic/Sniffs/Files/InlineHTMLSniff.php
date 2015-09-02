@@ -38,7 +38,7 @@ class Generic_Sniffs_Files_InlineHTMLSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -52,22 +52,22 @@ class Generic_Sniffs_Files_InlineHTMLSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // Make sure this is the first open tag.
-        $previousOpenTag = $phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) );
+        $previousOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 ));
         if ($previousOpenTag !== false) {
             return;
         }
 
-        $inline = $phpcsFile->findNext( T_INLINE_HTML, 0 );
+        $inline = $phpcsFile->findNext(T_INLINE_HTML, 0);
         if ($inline === false) {
             return;
         }
 
         $error = 'PHP files must only contain PHP code';
-        $phpcsFile->addError( $error, $inline, 'Found' );
+        $phpcsFile->addError($error, $inline, 'Found');
 
     }//end process()
 

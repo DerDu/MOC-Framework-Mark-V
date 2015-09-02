@@ -69,15 +69,15 @@ class PHPUnit_Util_Blacklist
             self::$directories = array();
 
             foreach (self::$blacklistedClassNames as $className => $parent) {
-                if (!class_exists( $className )) {
+                if (!class_exists($className)) {
                     continue;
                 }
 
-                $reflector = new ReflectionClass( $className );
+                $reflector = new ReflectionClass($className);
                 $directory = $reflector->getFileName();
 
                 for ($i = 0; $i < $parent; $i++) {
-                    $directory = dirname( $directory );
+                    $directory = dirname($directory);
                 }
 
                 self::$directories[] = $directory;
@@ -99,17 +99,17 @@ class PHPUnit_Util_Blacklist
      *
      * @return bool
      */
-    public function isBlacklisted( $file )
+    public function isBlacklisted($file)
     {
 
-        if (defined( 'PHPUNIT_TESTSUITE' )) {
+        if (defined('PHPUNIT_TESTSUITE')) {
             return false;
         }
 
         $this->initialize();
 
         foreach (self::$directories as $directory) {
-            if (strpos( $file, $directory ) === 0) {
+            if (strpos($file, $directory) === 0) {
                 return true;
             }
         }

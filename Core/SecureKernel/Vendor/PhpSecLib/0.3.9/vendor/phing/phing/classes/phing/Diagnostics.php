@@ -43,39 +43,39 @@ class Diagnostics
      *
      * @param PrintStream $out the stream to print the report to.
      */
-    public static function doReport( PrintStream $out )
+    public static function doReport(PrintStream $out)
     {
 
-        $out->println( str_pad( 'Phing diagnostics report', 79, "-", STR_PAD_BOTH ) );
-        self::header( $out, "Version" );
-        $out->println( Phing::getPhingVersion() );
+        $out->println(str_pad('Phing diagnostics report', 79, "-", STR_PAD_BOTH));
+        self::header($out, "Version");
+        $out->println(Phing::getPhingVersion());
 
-        self::header( $out, "Project properties" );
-        self::doReportProjectProperties( $out );
+        self::header($out, "Project properties");
+        self::doReportProjectProperties($out);
 
-        self::header( $out, "System properties" );
-        self::doReportSystemProperties( $out );
+        self::header($out, "System properties");
+        self::doReportSystemProperties($out);
 
-        self::header( $out, "PHING_HOME/vendor package listing" );
-        self::doReportPhingVendorLibraries( $out );
+        self::header($out, "PHING_HOME/vendor package listing");
+        self::doReportPhingVendorLibraries($out);
 
-        self::header( $out, "COMPOSER_HOME/vendor package listing" );
-        self::doReportComposerSystemLibraries( $out );
+        self::header($out, "COMPOSER_HOME/vendor package listing");
+        self::doReportComposerSystemLibraries($out);
 
-        self::header( $out, "Tasks availability" );
-        self::doReportTasksAvailability( $out );
+        self::header($out, "Tasks availability");
+        self::doReportTasksAvailability($out);
 
-        self::header( $out, "Temp dir" );
-        self::doReportTempDir( $out );
+        self::header($out, "Temp dir");
+        self::doReportTempDir($out);
     }
 
-    private static function header( PrintStream $out, $section )
+    private static function header(PrintStream $out, $section)
     {
 
-        $out->println( str_repeat( '-', 79 ) );
-        $out->prints( " " );
-        $out->println( $section );
-        $out->println( str_repeat( '-', 79 ) );
+        $out->println(str_repeat('-', 79));
+        $out->prints(" ");
+        $out->println($section);
+        $out->println(str_repeat('-', 79));
     }
 
     /**
@@ -83,7 +83,7 @@ class Diagnostics
      *
      * @param PrintStream $out the stream to print the properties to.
      */
-    private static function doReportProjectProperties( PrintStream $out )
+    private static function doReportProjectProperties(PrintStream $out)
     {
 
         $project = new Project();
@@ -92,7 +92,7 @@ class Diagnostics
         $sysprops = $project->getProperties();
 
         foreach ($sysprops as $key => $value) {
-            $out->println( $key." : ".$value );
+            $out->println($key." : ".$value);
         }
     }
 
@@ -101,7 +101,7 @@ class Diagnostics
      *
      * @param PrintStream $out the stream to print the properties to.
      */
-    private static function doReportSystemProperties( PrintStream $out )
+    private static function doReportSystemProperties(PrintStream $out)
     {
 
         $phing = new Phing();
@@ -109,7 +109,7 @@ class Diagnostics
         $phingprops = $phing->getProperties();
 
         foreach ($phingprops as $key => $value) {
-            $out->println( $key." : ".$value );
+            $out->println($key." : ".$value);
         }
     }
 
@@ -118,11 +118,11 @@ class Diagnostics
      *
      * @param PrintStream $out the stream to print the content to
      */
-    private static function doReportPhingVendorLibraries( PrintStream $out )
+    private static function doReportPhingVendorLibraries(PrintStream $out)
     {
 
-        $libs = self::listLibraries( 'installed' );
-        self::printLibraries( $libs, $out );
+        $libs = self::listLibraries('installed');
+        self::printLibraries($libs, $out);
     }
 
     /**
@@ -133,17 +133,17 @@ class Diagnostics
      * @return array the list of jar files existing in ant.home/lib or
      *               <tt>null</tt> if an error occurs.
      */
-    public static function listLibraries( $type )
+    public static function listLibraries($type)
     {
 
-        $home = Phing::getProperty( Phing::PHING_HOME );
+        $home = Phing::getProperty(Phing::PHING_HOME);
         if ($home == null) {
             return null;
         }
         $currentWorkingDir = getcwd();
-        chdir( $home );
-        exec( 'composer show --'.$type, $packages, $code );
-        chdir( $currentWorkingDir );
+        chdir($home);
+        exec('composer show --'.$type, $packages, $code);
+        chdir($currentWorkingDir);
 
         return $packages;
     }
@@ -154,16 +154,16 @@ class Diagnostics
      * @param array       $libs array of libraries (can be null)
      * @param PrintStream $out  output stream
      */
-    private static function printLibraries( $libs, PrintStream $out )
+    private static function printLibraries($libs, PrintStream $out)
     {
 
         if ($libs == null) {
-            $out->println( "No such directory." );
+            $out->println("No such directory.");
             return;
         }
 
         foreach ($libs as $lib) {
-            $out->println( $lib );
+            $out->println($lib);
         }
     }
 
@@ -172,11 +172,11 @@ class Diagnostics
      *
      * @param PrintStream $out the stream to print the content to
      */
-    private static function doReportComposerSystemLibraries( PrintStream $out )
+    private static function doReportComposerSystemLibraries(PrintStream $out)
     {
 
-        $libs = self::listLibraries( 'platform' );
-        self::printLibraries( $libs, $out );
+        $libs = self::listLibraries('platform');
+        self::printLibraries($libs, $out);
     }
 
     /**
@@ -185,15 +185,15 @@ class Diagnostics
      * @param PrintStream $out the stream to print the tasks report to
      *                         <tt>null</tt> for a missing stream (ie mapping).
      */
-    private static function doReportTasksAvailability( PrintStream $out )
+    private static function doReportTasksAvailability(PrintStream $out)
     {
 
         $project = new Project();
         $project->init();
         $tasks = $project->getTaskDefinitions();
-        ksort( $tasks );
+        ksort($tasks);
         foreach ($tasks as $shortName => $task) {
-            $out->println( $shortName );
+            $out->println($shortName);
         }
     }
 
@@ -204,38 +204,38 @@ class Diagnostics
      *
      * @param PrintStream $out
      */
-    private static function doReportTempDir( PrintStream $out )
+    private static function doReportTempDir(PrintStream $out)
     {
 
         $tempdir = PhingFile::getTempDir();
         if ($tempdir == null) {
-            $out->println( "Warning: php.tmpdir is undefined" );
+            $out->println("Warning: php.tmpdir is undefined");
             return;
         }
-        $out->println( "Temp dir is ".$tempdir );
-        $tempDirectory = new PhingFile( $tempdir );
+        $out->println("Temp dir is ".$tempdir);
+        $tempDirectory = new PhingFile($tempdir);
 
         if (!$tempDirectory->exists()) {
-            $out->println( "Warning, php.tmpdir directory does not exist: ".$tempdir );
+            $out->println("Warning, php.tmpdir directory does not exist: ".$tempdir);
             return;
 
         }
 
         $now = time();
-        $tempFile = PhingFile::createTempFile( 'diag', 'txt', $tempDirectory );
-        $fileWriter = new FileWriter( $tempFile );
-        $fileWriter->write( 'some test text' );
+        $tempFile = PhingFile::createTempFile('diag', 'txt', $tempDirectory);
+        $fileWriter = new FileWriter($tempFile);
+        $fileWriter->write('some test text');
         $fileWriter->close();
 
         $filetime = $tempFile->lastModified();
 
         $tempFile->delete();
 
-        $out->println( "Temp dir is writeable" );
+        $out->println("Temp dir is writeable");
         $drift = $filetime - $now;
-        $out->println( "Temp dir alignment with system clock is ".$drift." s" );
-        if (abs( $drift ) > 10) {
-            $out->println( "Warning: big clock drift -maybe a network filesystem" );
+        $out->println("Temp dir alignment with system clock is ".$drift." s");
+        if (abs($drift) > 10) {
+            $out->println("Warning: big clock drift -maybe a network filesystem");
         }
     }
 }

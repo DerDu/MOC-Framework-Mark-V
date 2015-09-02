@@ -23,7 +23,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      * @param string $value      Value of the string
      * @param array  $attributes Additional attributes
      */
-    public function __construct( $value = '', array $attributes = array() )
+    public function __construct($value = '', array $attributes = array())
     {
 
         parent::__construct(
@@ -41,7 +41,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @return string The parsed string
      */
-    public static function parse( $str )
+    public static function parse($str)
     {
 
         $bLength = 0;
@@ -51,12 +51,12 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
 
         if ('\'' === $str[$bLength]) {
             return str_replace(
-                array( '\\\\', '\\\'' ),
-                array( '\\', '\'' ),
-                substr( $str, $bLength + 1, -1 )
+                array('\\\\', '\\\''),
+                array('\\', '\''),
+                substr($str, $bLength + 1, -1)
             );
         } else {
-            return self::parseEscapeSequences( substr( $str, $bLength + 1, -1 ), '"' );
+            return self::parseEscapeSequences(substr($str, $bLength + 1, -1), '"');
         }
     }
 
@@ -68,21 +68,21 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @return string String with escape sequences parsed
      */
-    public static function parseEscapeSequences( $str, $quote )
+    public static function parseEscapeSequences($str, $quote)
     {
 
         if (null !== $quote) {
-            $str = str_replace( '\\'.$quote, $quote, $str );
+            $str = str_replace('\\'.$quote, $quote, $str);
         }
 
         return preg_replace_callback(
             '~\\\\([\\\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3})~',
-            array( __CLASS__, 'parseCallback' ),
+            array(__CLASS__, 'parseCallback'),
             $str
         );
     }
 
-    public static function parseCallback( $matches )
+    public static function parseCallback($matches)
     {
 
         $str = $matches[1];
@@ -90,9 +90,9 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
         if (isset( self::$replacements[$str] )) {
             return self::$replacements[$str];
         } elseif ('x' === $str[0] || 'X' === $str[0]) {
-            return chr( hexdec( $str ) );
+            return chr(hexdec($str));
         } else {
-            return chr( octdec( $str ) );
+            return chr(octdec($str));
         }
     }
 
@@ -104,17 +104,17 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @return string Parsed string
      */
-    public static function parseDocString( $startToken, $str )
+    public static function parseDocString($startToken, $str)
     {
 
         // strip last newline (thanks tokenizer for sticking it into the string!)
-        $str = preg_replace( '~(\r\n|\n|\r)$~', '', $str );
+        $str = preg_replace('~(\r\n|\n|\r)$~', '', $str);
 
         // nowdoc string
-        if (false !== strpos( $startToken, '\'' )) {
+        if (false !== strpos($startToken, '\'')) {
             return $str;
         }
 
-        return self::parseEscapeSequences( $str, null );
+        return self::parseEscapeSequences($str, null);
     }
 }

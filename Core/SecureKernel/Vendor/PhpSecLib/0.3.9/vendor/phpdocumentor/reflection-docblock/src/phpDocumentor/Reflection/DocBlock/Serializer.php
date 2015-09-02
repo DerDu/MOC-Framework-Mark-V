@@ -53,10 +53,10 @@ class Serializer
         $lineLength = null
     ) {
 
-        $this->setIndentationString( $indentString );
-        $this->setIndent( $indent );
-        $this->setIsFirstLineIndented( $indentFirstLine );
-        $this->setLineLength( $lineLength );
+        $this->setIndentationString($indentString);
+        $this->setIndent($indent);
+        $this->setIsFirstLineIndented($indentFirstLine);
+        $this->setLineLength($lineLength);
     }
 
     /**
@@ -66,7 +66,7 @@ class Serializer
      *
      * @return $this This serializer object.
      */
-    public function setIndentationString( $indentString )
+    public function setIndentationString($indentString)
     {
 
         $this->indentString = (string)$indentString;
@@ -83,7 +83,7 @@ class Serializer
      *
      * @return $this This serializer object.
      */
-    public function setIsFirstLineIndented( $indentFirstLine )
+    public function setIsFirstLineIndented($indentFirstLine)
     {
 
         $this->isFirstLineIndented = (bool)$indentFirstLine;
@@ -119,7 +119,7 @@ class Serializer
      *
      * @return $this This serializer object.
      */
-    public function setIndent( $indent )
+    public function setIndent($indent)
     {
 
         $this->indent = (int)$indent;
@@ -160,7 +160,7 @@ class Serializer
      *
      * @return $this This serializer object.
      */
-    public function setLineLength( $lineLength )
+    public function setLineLength($lineLength)
     {
 
         $this->lineLength = null === $lineLength ? null : (int)$lineLength;
@@ -174,19 +174,19 @@ class Serializer
      *
      * @return string The serialized doc block.
      */
-    public function getDocComment( DocBlock $docblock )
+    public function getDocComment(DocBlock $docblock)
     {
 
-        $indent = str_repeat( $this->indentString, $this->indent );
+        $indent = str_repeat($this->indentString, $this->indent);
         $firstIndent = $this->isFirstLineIndented ? $indent : '';
 
         $text = $docblock->getText();
         if ($this->lineLength) {
             //3 === strlen(' * ')
-            $wrapLength = $this->lineLength - strlen( $indent ) - 3;
-            $text = wordwrap( $text, $wrapLength );
+            $wrapLength = $this->lineLength - strlen($indent) - 3;
+            $text = wordwrap($text, $wrapLength);
         }
-        $text = str_replace( "\n", "\n{$indent} * ", $text );
+        $text = str_replace("\n", "\n{$indent} * ", $text);
 
         $comment = "{$firstIndent}/**\n{$indent} * {$text}\n{$indent} *\n";
 
@@ -194,9 +194,9 @@ class Serializer
         foreach ($docblock->getTags() as $tag) {
             $tagText = (string)$tag;
             if ($this->lineLength) {
-                $tagText = wordwrap( $tagText, $wrapLength );
+                $tagText = wordwrap($tagText, $wrapLength);
             }
-            $tagText = str_replace( "\n", "\n{$indent} * ", $tagText );
+            $tagText = str_replace("\n", "\n{$indent} * ", $tagText);
 
             $comment .= "{$indent} * {$tagText}\n";
         }

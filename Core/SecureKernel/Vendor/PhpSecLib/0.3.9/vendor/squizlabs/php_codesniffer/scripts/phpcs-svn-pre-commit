@@ -14,13 +14,13 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (is_file( dirname( __FILE__ ).'/../CodeSniffer/CLI.php' ) === true) {
-    include_once dirname( __FILE__ ).'/../CodeSniffer/CLI.php';
+if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
 }
 
-define( 'PHP_CODESNIFFER_SVNLOOK', '/usr/bin/svnlook' );
+define('PHP_CODESNIFFER_SVNLOOK', '/usr/bin/svnlook');
 
 
 /**
@@ -67,10 +67,10 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
      * @return array The updated CLI values.
      * @see getCommandLineValues()
      */
-    public function processUnknownArgument( $arg, $pos, $values )
+    public function processUnknownArgument($arg, $pos, $values)
     {
 
-        $values['svnArgs'][] = escapeshellarg( $arg );
+        $values['svnArgs'][] = escapeshellarg($arg);
         return $values;
 
     }//end processUnknownArgument()
@@ -84,7 +84,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
      * @return int The number of error and warning messages shown.
      * @see getCommandLineValues()
      */
-    public function process( $values = array() )
+    public function process($values = array())
     {
 
         if (empty( $values ) === true) {
@@ -92,26 +92,26 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         }
 
         // Get list of files in this transaction.
-        $command = PHP_CODESNIFFER_SVNLOOK.' changed '.implode( ' ', $values['svnArgs'] );
-        $handle = popen( $command, 'r' );
+        $command = PHP_CODESNIFFER_SVNLOOK.' changed '.implode(' ', $values['svnArgs']);
+        $handle = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
             exit( 2 );
         }
 
-        $contents = stream_get_contents( $handle );
-        fclose( $handle );
+        $contents = stream_get_contents($handle);
+        fclose($handle);
 
         // Do not check deleted paths.
-        $contents = preg_replace( '/^D.*/m', null, $contents );
+        $contents = preg_replace('/^D.*/m', null, $contents);
 
         // Drop the four characters representing the action which precede the path on
         // each line.
-        $contents = preg_replace( '/^.{4}/m', null, $contents );
+        $contents = preg_replace('/^.{4}/m', null, $contents);
 
-        $values['standard'] = $this->validateStandard( $values['standard'] );
+        $values['standard'] = $this->validateStandard($values['standard']);
         foreach ($values['standard'] as $standard) {
-            if (PHP_CodeSniffer::isInstalledStandard( $standard ) === false) {
+            if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
                 // They didn't select a valid coding standard, so help them
                 // out by letting them know which standards are installed.
                 echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
@@ -129,12 +129,12 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
         if (empty( $values['extensions'] ) === false) {
-            $phpcs->setAllowedFileExtensions( $values['extensions'] );
+            $phpcs->setAllowedFileExtensions($values['extensions']);
         }
 
         // Set ignore patterns if they were specified.
         if (empty( $values['ignored'] ) === false) {
-            $phpcs->setIgnorePatterns( $values['ignored'] );
+            $phpcs->setIgnorePatterns($values['ignored']);
         }
 
         // Set some convenience member vars.
@@ -155,35 +155,35 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         }
 
         // Initialize PHP_CodeSniffer listeners but don't process any files.
-        $phpcs->setCli( $this );
-        $phpcs->process( array(), $values['standard'], $values['sniffs'] );
+        $phpcs->setCli($this);
+        $phpcs->process(array(), $values['standard'], $values['sniffs']);
 
         // Need double quotes around the following regex beause the vertical whitespace
         // char is not always treated correctly for whatever reason.
-        foreach (preg_split( "/\v|\n/", $contents, -1, PREG_SPLIT_NO_EMPTY ) as $path) {
+        foreach (preg_split("/\v|\n/", $contents, -1, PREG_SPLIT_NO_EMPTY) as $path) {
             // No need to process folders as each changed file is checked.
-            if (substr( $path, -1 ) === '/') {
+            if (substr($path, -1) === '/') {
                 continue;
             }
 
             // We need to check ignore rules ourself because they are
             // not checked when processing a single file.
-            if ($phpcs->shouldProcessFile( $path, dirname( $path ) ) === false) {
+            if ($phpcs->shouldProcessFile($path, dirname($path)) === false) {
                 continue;
             }
 
             // Get the contents of each file, as it would be after this transaction.
-            $command = PHP_CODESNIFFER_SVNLOOK.' cat '.implode( ' ', $values['svnArgs'] ).' '.escapeshellarg( $path );
-            $handle = popen( $command, 'r' );
+            $command = PHP_CODESNIFFER_SVNLOOK.' cat '.implode(' ', $values['svnArgs']).' '.escapeshellarg($path);
+            $handle = popen($command, 'r');
             if ($handle === false) {
                 echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
                 exit( 2 );
             }
 
-            $contents = stream_get_contents( $handle );
-            fclose( $handle );
+            $contents = stream_get_contents($handle);
+            fclose($handle);
 
-            $phpcs->processFile( $path, $contents );
+            $phpcs->processFile($path, $contents);
         }//end foreach
 
         return $this->printErrorReport(
@@ -213,7 +213,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         echo '    however Subversion displays only standard error to the user, so in a'.PHP_EOL;
         echo '    pre-commit hook, this script should be invoked as follows:'.PHP_EOL;
         echo PHP_EOL;
-        echo '    '.basename( $_SERVER['argv'][0] ).' ... "$REPOS" -t "$TXN" >&2 || exit 1'.PHP_EOL;
+        echo '    '.basename($_SERVER['argv'][0]).' ... "$REPOS" -t "$TXN" >&2 || exit 1'.PHP_EOL;
 
     }//end printUsage()
 

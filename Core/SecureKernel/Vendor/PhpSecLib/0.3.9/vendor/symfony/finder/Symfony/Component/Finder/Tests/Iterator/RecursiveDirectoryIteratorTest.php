@@ -24,18 +24,18 @@ class RecursiveDirectoryIteratorTest extends IteratorTestCase
      * @param array  $contains
      * @param string $message
      */
-    public function testRewind( $path, $seekable, $contains, $message = null )
+    public function testRewind($path, $seekable, $contains, $message = null)
     {
 
         try {
-            $i = new RecursiveDirectoryIterator( $path, \RecursiveDirectoryIterator::SKIP_DOTS );
-        } catch( \UnexpectedValueException $e ) {
-            $this->markTestSkipped( sprintf( 'Unsupported stream "%s".', $path ) );
+            $i = new RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+        } catch (\UnexpectedValueException $e) {
+            $this->markTestSkipped(sprintf('Unsupported stream "%s".', $path));
         }
 
         $i->rewind();
 
-        $this->assertTrue( true, $message );
+        $this->assertTrue(true, $message);
     }
 
     /**
@@ -46,27 +46,27 @@ class RecursiveDirectoryIteratorTest extends IteratorTestCase
      * @param array  $contains
      * @param string $message
      */
-    public function testSeek( $path, $seekable, $contains, $message = null )
+    public function testSeek($path, $seekable, $contains, $message = null)
     {
 
         try {
-            $i = new RecursiveDirectoryIterator( $path, \RecursiveDirectoryIterator::SKIP_DOTS );
-        } catch( \UnexpectedValueException $e ) {
-            $this->markTestSkipped( sprintf( 'Unsupported stream "%s".', $path ) );
+            $i = new RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+        } catch (\UnexpectedValueException $e) {
+            $this->markTestSkipped(sprintf('Unsupported stream "%s".', $path));
         }
 
         $actual = array();
 
-        $i->seek( 0 );
+        $i->seek(0);
         $actual[] = $i->getPathname();
 
-        $i->seek( 1 );
+        $i->seek(1);
         $actual[] = $i->getPathname();
 
-        $i->seek( 2 );
+        $i->seek(2);
         $actual[] = $i->getPathname();
 
-        $this->assertEquals( $contains, $actual );
+        $this->assertEquals($contains, $actual);
     }
 
     public function getPaths()
@@ -80,7 +80,7 @@ class RecursiveDirectoryIteratorTest extends IteratorTestCase
             'ftp://ftp.mozilla.org'.DIRECTORY_SEPARATOR.'index.html',
             'ftp://ftp.mozilla.org'.DIRECTORY_SEPARATOR.'pub',
         );
-        $data[] = array( 'ftp://ftp.mozilla.org/', false, $contains );
+        $data[] = array('ftp://ftp.mozilla.org/', false, $contains);
 
         return $data;
     }

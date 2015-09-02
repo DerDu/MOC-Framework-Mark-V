@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_CommentParser_SingleElement', true ) === false) {
+if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
     $error = 'Class PHP_CodeSniffer_CommentParser_SingleElement not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -71,7 +71,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
         PHP_CodeSniffer_File $phpcsFile
     ) {
 
-        parent::__construct( $previousElement, $tokens, 'comment', $phpcsFile );
+        parent::__construct($previousElement, $tokens, 'comment', $phpcsFile);
 
     }//end __construct()
 
@@ -90,7 +90,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
             return '';
         }
 
-        return implode( '', array_slice( $this->tokens, 0, ( $pos + 1 ) ) );
+        return implode('', array_slice($this->tokens, 0, ( $pos + 1 )));
 
     }//end getShortComment()
 
@@ -111,7 +111,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
         );
 
         foreach ($this->tokens as $pos => $token) {
-            $token = str_replace( $whiteSpace, '', $token );
+            $token = str_replace($whiteSpace, '', $token);
             if ($token === $this->phpcsFile->eolChar) {
                 if ($found === false) {
                     // Include newlines before short description.
@@ -130,7 +130,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
             }
         }//end foreach
 
-        return ( count( $this->tokens ) - 1 );
+        return ( count($this->tokens) - 1 );
 
     }//end _getShortCommentEndPos()
 
@@ -151,7 +151,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
         return implode(
             '',
-            array_slice( $this->tokens, $endShort, ( $startLong - $endShort ) )
+            array_slice($this->tokens, $endShort, ( $startLong - $endShort ))
         );
 
     }//end getLongComment()
@@ -168,13 +168,13 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     {
 
         $pos = ( $this->_getShortCommentEndPos() + 1 );
-        if ($pos === ( count( $this->tokens ) - 1 )) {
+        if ($pos === ( count($this->tokens) - 1 )) {
             return -1;
         }
 
-        $count = count( $this->tokens );
+        $count = count($this->tokens);
         for ($i = $pos; $i < $count; $i++) {
-            $content = trim( $this->tokens[$i] );
+            $content = trim($this->tokens[$i]);
             if ($content !== '') {
                 if ($content{0} === '@') {
                     return -1;
@@ -198,17 +198,17 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
         $long = $this->getLongComment();
         if ($long !== '') {
-            $long = rtrim( $long, ' ' );
-            $long = strrev( $long );
-            $newlines = strspn( $long, $this->phpcsFile->eolChar );
+            $long = rtrim($long, ' ');
+            $long = strrev($long);
+            $newlines = strspn($long, $this->phpcsFile->eolChar);
         } else {
             $endShort = ( $this->_getShortCommentEndPos() + 1 );
-            $after = implode( '', array_slice( $this->tokens, $endShort ) );
-            $after = trim( $after, ' ' );
-            $newlines = strspn( $after, $this->phpcsFile->eolChar );
+            $after = implode('', array_slice($this->tokens, $endShort));
+            $after = trim($after, ' ');
+            $newlines = strspn($after, $this->phpcsFile->eolChar);
         }
 
-        return ( $newlines / strlen( $this->phpcsFile->eolChar ) );
+        return ( $newlines / strlen($this->phpcsFile->eolChar) );
 
     }//end getWhiteSpaceBetween()
 
@@ -226,7 +226,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
             return '';
         }
 
-        return implode( '', array_slice( $this->tokens, $start ) );
+        return implode('', array_slice($this->tokens, $start));
 
     }//end getNewlineAfter()
 
@@ -238,7 +238,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     public function isEmpty()
     {
 
-        return ( trim( $this->getContent() ) === '' );
+        return ( trim($this->getContent()) === '' );
 
     }//end isEmpty()
 

@@ -34,7 +34,7 @@ abstract class Writer
      * @param int    $off
      * @param int    $len
      */
-    abstract public function write( $buf, $off = null, $len = null );
+    abstract public function write($buf, $off = null, $len = null);
 
     /**
      * Close the stream.

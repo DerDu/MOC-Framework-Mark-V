@@ -23,7 +23,6 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Utility\PersisterHelper;
 
 /**

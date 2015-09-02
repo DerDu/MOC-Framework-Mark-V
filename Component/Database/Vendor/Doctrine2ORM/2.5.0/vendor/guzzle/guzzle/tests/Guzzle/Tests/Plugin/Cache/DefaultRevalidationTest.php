@@ -14,7 +14,6 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cache\CachePlugin;
 use Guzzle\Plugin\Cache\DefaultCacheStorage;
 use Guzzle\Plugin\Mock\MockPlugin;
-use Guzzle\Tests\Http\Server;
 
 /**
  * @covers Guzzle\Plugin\Cache\DefaultRevalidation

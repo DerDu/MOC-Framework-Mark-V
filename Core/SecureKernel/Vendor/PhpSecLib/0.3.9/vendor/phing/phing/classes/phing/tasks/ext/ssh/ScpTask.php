@@ -91,7 +91,7 @@ class ScpTask extends Task
      *
      * @param $h
      */
-    public function setHost( $h )
+    public function setHost($h)
     {
 
         $this->host = $h;
@@ -111,7 +111,7 @@ class ScpTask extends Task
      *
      * @param $p
      */
-    public function setPort( $p )
+    public function setPort($p)
     {
 
         $this->port = $p;
@@ -131,7 +131,7 @@ class ScpTask extends Task
      *
      * @param $value
      */
-    public function setMode( $value )
+    public function setMode($value)
     {
 
         $this->mode = $value;
@@ -151,7 +151,7 @@ class ScpTask extends Task
      *
      * @param $username
      */
-    public function setUsername( $username )
+    public function setUsername($username)
     {
 
         $this->username = $username;
@@ -171,7 +171,7 @@ class ScpTask extends Task
      *
      * @param $password
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;
@@ -191,7 +191,7 @@ class ScpTask extends Task
      *
      * @param $pubkeyfile
      */
-    public function setPubkeyfile( $pubkeyfile )
+    public function setPubkeyfile($pubkeyfile)
     {
 
         $this->pubkeyfile = $pubkeyfile;
@@ -211,7 +211,7 @@ class ScpTask extends Task
      *
      * @param $privkeyfile
      */
-    public function setPrivkeyfile( $privkeyfile )
+    public function setPrivkeyfile($privkeyfile)
     {
 
         $this->privkeyfile = $privkeyfile;
@@ -224,7 +224,7 @@ class ScpTask extends Task
      *
      * @return string
      */
-    public function getPrivkeyfilepassphrase( $privkeyfilepassphrase )
+    public function getPrivkeyfilepassphrase($privkeyfilepassphrase)
     {
 
         return $this->privkeyfilepassphrase;
@@ -235,7 +235,7 @@ class ScpTask extends Task
      *
      * @param $privkeyfilepassphrase
      */
-    public function setPrivkeyfilepassphrase( $privkeyfilepassphrase )
+    public function setPrivkeyfilepassphrase($privkeyfilepassphrase)
     {
 
         $this->privkeyfilepassphrase = $privkeyfilepassphrase;
@@ -255,7 +255,7 @@ class ScpTask extends Task
      *
      * @param $autocreate
      */
-    public function setAutocreate( $autocreate )
+    public function setAutocreate($autocreate)
     {
 
         $this->autocreate = (bool)$autocreate;
@@ -275,7 +275,7 @@ class ScpTask extends Task
      *
      * @param $todir
      */
-    public function setTodir( $todir )
+    public function setTodir($todir)
     {
 
         $this->todir = $todir;
@@ -295,7 +295,7 @@ class ScpTask extends Task
      *
      * @param $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -315,7 +315,7 @@ class ScpTask extends Task
      *
      * @param $fetch
      */
-    public function setFetch( $fetch )
+    public function setFetch($fetch)
     {
 
         $this->fetch = (bool)$fetch;
@@ -337,7 +337,7 @@ class ScpTask extends Task
      *
      * @param int $heuristicDecision Number
      */
-    public function setHeuristicDecision( $heuristicDecision )
+    public function setHeuristicDecision($heuristicDecision)
     {
 
         $this->heuristicDecision = (int)$heuristicDecision;
@@ -350,7 +350,7 @@ class ScpTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -374,7 +374,7 @@ class ScpTask extends Task
      *
      * @param string $level
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         switch ($level) {
@@ -405,22 +405,22 @@ class ScpTask extends Task
 
         $p = $this->getProject();
 
-        if (!function_exists( 'ssh2_connect' )) {
-            throw new BuildException( "To use ScpTask, you need to install the PHP SSH2 extension." );
+        if (!function_exists('ssh2_connect')) {
+            throw new BuildException("To use ScpTask, you need to install the PHP SSH2 extension.");
         }
 
         if ($this->file == "" && empty( $this->filesets )) {
-            throw new BuildException( "Missing either a nested fileset or attribute 'file'" );
+            throw new BuildException("Missing either a nested fileset or attribute 'file'");
         }
 
         if ($this->host == "" || $this->username == "") {
-            throw new BuildException( "Attribute 'host' and 'username' must be set" );
+            throw new BuildException("Attribute 'host' and 'username' must be set");
         }
 
-        $methods = !empty( $this->methods ) ? $this->methods->toArray( $p ) : array();
-        $this->connection = ssh2_connect( $this->host, $this->port, $methods );
+        $methods = !empty( $this->methods ) ? $this->methods->toArray($p) : array();
+        $this->connection = ssh2_connect($this->host, $this->port, $methods);
         if (!$this->connection) {
-            throw new BuildException( "Could not establish connection to ".$this->host.":".$this->port."!" );
+            throw new BuildException("Could not establish connection to ".$this->host.":".$this->port."!");
         }
 
         $could_auth = null;
@@ -433,33 +433,33 @@ class ScpTask extends Task
                 $this->privkeyfilepassphrase
             );
         } else {
-            $could_auth = ssh2_auth_password( $this->connection, $this->username, $this->password );
+            $could_auth = ssh2_auth_password($this->connection, $this->username, $this->password);
         }
         if (!$could_auth) {
-            throw new BuildException( "Could not authenticate connection!" );
+            throw new BuildException("Could not authenticate connection!");
         }
 
         // prepare sftp resource
         if ($this->autocreate) {
-            $this->sftp = ssh2_sftp( $this->connection );
+            $this->sftp = ssh2_sftp($this->connection);
         }
 
         if ($this->file != "") {
-            $this->copyFile( $this->file, basename( $this->file ) );
+            $this->copyFile($this->file, basename($this->file));
         } else {
             if ($this->fetch) {
-                throw new BuildException( "Unable to use filesets to retrieve files from remote server" );
+                throw new BuildException("Unable to use filesets to retrieve files from remote server");
             }
 
             foreach ($this->filesets as $fs) {
-                $ds = $fs->getDirectoryScanner( $this->project );
+                $ds = $fs->getDirectoryScanner($this->project);
                 $files = $ds->getIncludedFiles();
-                $dir = $fs->getDir( $this->project )->getPath();
+                $dir = $fs->getDir($this->project)->getPath();
                 foreach ($files as $file) {
                     $path = $dir.DIRECTORY_SEPARATOR.$file;
 
                     // Translate any Windows paths
-                    $this->copyFile( $path, strtr( $file, '\\', '/' ) );
+                    $this->copyFile($path, strtr($file, '\\', '/'));
                 }
             }
         }
@@ -469,7 +469,7 @@ class ScpTask extends Task
         );
 
         // explicitly close ssh connection
-        @ssh2_exec( $this->connection, 'exit' );
+        @ssh2_exec($this->connection, 'exit');
     }
 
     /**
@@ -478,21 +478,21 @@ class ScpTask extends Task
      *
      * @throws BuildException
      */
-    protected function copyFile( $local, $remote )
+    protected function copyFile($local, $remote)
     {
 
-        $path = rtrim( $this->todir, "/" )."/";
+        $path = rtrim($this->todir, "/")."/";
 
         if ($this->fetch) {
             $localEndpoint = $path.$remote;
             $remoteEndpoint = $local;
 
-            $this->log( 'Will fetch '.$remoteEndpoint.' to '.$localEndpoint, $this->logLevel );
+            $this->log('Will fetch '.$remoteEndpoint.' to '.$localEndpoint, $this->logLevel);
 
-            $ret = @ssh2_scp_recv( $this->connection, $remoteEndpoint, $localEndpoint );
+            $ret = @ssh2_scp_recv($this->connection, $remoteEndpoint, $localEndpoint);
 
             if ($ret === false) {
-                throw new BuildException( "Could not fetch remote file '".$remoteEndpoint."'" );
+                throw new BuildException("Could not fetch remote file '".$remoteEndpoint."'");
             }
         } else {
             $localEndpoint = $local;
@@ -501,22 +501,22 @@ class ScpTask extends Task
             if ($this->autocreate) {
                 ssh2_sftp_mkdir(
                     $this->sftp,
-                    dirname( $remoteEndpoint ),
-                    ( is_null( $this->mode ) ? 0777 : $this->mode ),
+                    dirname($remoteEndpoint),
+                    ( is_null($this->mode) ? 0777 : $this->mode ),
                     true
                 );
             }
 
-            $this->log( 'Will copy '.$localEndpoint.' to '.$remoteEndpoint, $this->logLevel );
+            $this->log('Will copy '.$localEndpoint.' to '.$remoteEndpoint, $this->logLevel);
 
             $ret = false;
             // If more than "$this->heuristicDecision" successfully send files by "ssh2.sftp" over "ssh2_scp_send"
             // then ship this step (task finish ~40% faster)
             if ($this->heuristicScpSftp < $this->heuristicDecision) {
                 if (null !== $this->mode) {
-                    $ret = @ssh2_scp_send( $this->connection, $localEndpoint, $remoteEndpoint, $this->mode );
+                    $ret = @ssh2_scp_send($this->connection, $localEndpoint, $remoteEndpoint, $this->mode);
                 } else {
-                    $ret = @ssh2_scp_send( $this->connection, $localEndpoint, $remoteEndpoint );
+                    $ret = @ssh2_scp_send($this->connection, $localEndpoint, $remoteEndpoint);
                 }
             }
 
@@ -526,10 +526,10 @@ class ScpTask extends Task
                 --$this->heuristicScpSftp;
 
                 // try create file via ssh2.sftp://file wrapper
-                $fh = @fopen( "ssh2.sftp://$this->sftp/$remoteEndpoint", 'wb' );
-                if (is_resource( $fh )) {
-                    $ret = fwrite( $fh, file_get_contents( $localEndpoint ) );
-                    fclose( $fh );
+                $fh = @fopen("ssh2.sftp://$this->sftp/$remoteEndpoint", 'wb');
+                if (is_resource($fh)) {
+                    $ret = fwrite($fh, file_get_contents($localEndpoint));
+                    fclose($fh);
 
                     // mark success of "sftp"
                     $this->heuristicScpSftp += 2;
@@ -537,7 +537,7 @@ class ScpTask extends Task
             }
 
             if ($ret === false) {
-                throw new BuildException( "Could not create remote file '".$remoteEndpoint."'" );
+                throw new BuildException("Could not create remote file '".$remoteEndpoint."'");
             }
         }
 

@@ -86,10 +86,10 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
             '+zoEIxqgXjGgPdrWkzU/H6rnXiqMtiZZqUXwWY0zkCmy';
 
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( base64_decode( $str ) );
-        $result = $asn1->asn1map( $decoded[0], $AS_REP );
+        $decoded = $asn1->decodeBER(base64_decode($str));
+        $result = $asn1->asn1map($decoded[0], $AS_REP);
 
-        $this->assertInternalType( 'array', $result );
+        $this->assertInternalType('array', $result);
     }
 
     /**
@@ -134,7 +134,7 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
                     'min'      => 0,
                     'max'      => -1,
                     'type'     => FILE_ASN1_TYPE_SEQUENCE,
-                    'children' => array( 'type' => FILE_ASN1_TYPE_IA5_STRING )
+                    'children' => array('type' => FILE_ASN1_TYPE_IA5_STRING)
                     // should be FILE_ASN1_TYPE_GENERAL_STRING
                 )
             )
@@ -248,10 +248,10 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
             '+zoEIxqgXjGgPdrWkzU/H6rnXiqMtiZZqUXwWY0zkCmy';
 
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( base64_decode( $str ) );
-        $result = $asn1->asn1map( $decoded[0], $AS_REP );
+        $decoded = $asn1->decodeBER(base64_decode($str));
+        $result = $asn1->asn1map($decoded[0], $AS_REP);
 
-        $this->assertInternalType( 'array', $result );
+        $this->assertInternalType('array', $result);
     }
 
     /**
@@ -261,9 +261,9 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
     {
 
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( file_get_contents( dirname( __FILE__ ).'/ASN1/FE.pdf.p7m' ) );
-        $this->assertCount( 5,
-            $decoded[0]['content'][1]['content'][0]['content'] ); // older versions would have returned 3
+        $decoded = $asn1->decodeBER(file_get_contents(dirname(__FILE__).'/ASN1/FE.pdf.p7m'));
+        $this->assertCount(5,
+            $decoded[0]['content'][1]['content'][0]['content']); // older versions would have returned 3
     }
 
     public function testDefiniteLength()
@@ -288,8 +288,8 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
             'ulvKGQSy068Bsn5fFNum21K5mvMSf3yinDtvmX3qUA12IxL/92ZzKbeVCq3Yi7Le'.
             'IOkKcGQRCMha8X2e7GmlpdWC1ycenlbN0nbVeSv3JUMcafC4+Q==';
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( base64_decode( $str ) );
-        $this->assertCount( 3, $decoded[0]['content'] );
+        $decoded = $asn1->decodeBER(base64_decode($str));
+        $this->assertCount(3, $decoded[0]['content']);
     }
 
     /**
@@ -299,8 +299,8 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
     {
 
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( base64_decode( 'MBaAFJtUo7c00HsI5EPZ4bkICfkOY2Pv' ) );
-        $this->assertInternalType( 'string', $decoded[0]['content'][0]['content'] );
+        $decoded = $asn1->decodeBER(base64_decode('MBaAFJtUo7c00HsI5EPZ4bkICfkOY2Pv'));
+        $this->assertInternalType('string', $decoded[0]['content'][0]['content']);
     }
 
     /**
@@ -310,8 +310,8 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
     {
 
         $asn1 = new File_ASN1();
-        $decoded = $asn1->decodeBER( "\xa0\x00" );
-        $this->assertInternalType( 'array', $decoded );
-        $this->assertCount( 0, $decoded[0]['content'] );
+        $decoded = $asn1->decodeBER("\xa0\x00");
+        $this->assertInternalType('array', $decoded);
+        $this->assertCount(0, $decoded[0]['content']);
     }
 }

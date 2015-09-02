@@ -69,7 +69,7 @@ class PharDataTask extends MatchingTask
      *
      * @param string $compression
      */
-    public function setCompression( $compression )
+    public function setCompression($compression)
     {
 
         /**
@@ -92,7 +92,7 @@ class PharDataTask extends MatchingTask
      *
      * @param PhingFile $destinationFile
      */
-    public function setDestFile( PhingFile $destinationFile )
+    public function setDestFile(PhingFile $destinationFile)
     {
 
         $this->destinationFile = $destinationFile;
@@ -104,7 +104,7 @@ class PharDataTask extends MatchingTask
      *
      * @param PhingFile $baseDirectory
      */
-    public function setBaseDir( PhingFile $baseDirectory )
+    public function setBaseDir(PhingFile $baseDirectory)
     {
 
         $this->baseDirectory = $baseDirectory;
@@ -130,31 +130,31 @@ class PharDataTask extends MatchingTask
             if ($this->destinationFile->exists()) {
                 $isDeleted = $this->destinationFile->delete();
                 if (!$isDeleted) {
-                    $this->log( "Could not delete destination file $this->destinationFile", Project::MSG_WARN );
+                    $this->log("Could not delete destination file $this->destinationFile", Project::MSG_WARN);
                 }
             }
 
-            $pharData = new PharData( $this->baseDirectory->getPath().'/'.$this->destinationFile->getName() );
+            $pharData = new PharData($this->baseDirectory->getPath().'/'.$this->destinationFile->getName());
 
             foreach ($this->filesets as $fileset) {
                 $this->log(
-                    'Adding specified files in '.$fileset->getDir( $this->project ).' to archive',
+                    'Adding specified files in '.$fileset->getDir($this->project).' to archive',
                     Project::MSG_VERBOSE
                 );
 
-                $pharData->buildFromIterator( $fileset->getIterator(), $fileset->getDir( $this->project ) );
+                $pharData->buildFromIterator($fileset->getIterator(), $fileset->getDir($this->project));
             }
 
-            if ($this->compression !== PHAR::NONE && $pharData->canCompress( $this->compression )) {
+            if ($this->compression !== PHAR::NONE && $pharData->canCompress($this->compression)) {
                 try {
-                    $pharData->compress( $this->compression );
-                } catch( UnexpectedValueException $uve ) {
-                    $pharData->compressFiles( $this->compression );
+                    $pharData->compress($this->compression);
+                } catch (UnexpectedValueException $uve) {
+                    $pharData->compressFiles($this->compression);
                 }
 
                 unset( $pharData );
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             throw new BuildException(
                 'Problem creating archive: '.$e->getMessage(),
                 $e,
@@ -169,31 +169,31 @@ class PharDataTask extends MatchingTask
     private function checkPreconditions()
     {
 
-        if (!extension_loaded( 'phar' )) {
+        if (!extension_loaded('phar')) {
             throw new BuildException(
                 "PharDataTask require either PHP 5.3 or better or the PECL's Phar extension"
             );
         }
 
-        if (is_null( $this->destinationFile )) {
-            throw new BuildException( "destfile attribute must be set!", $this->getLocation() );
+        if (is_null($this->destinationFile)) {
+            throw new BuildException("destfile attribute must be set!", $this->getLocation());
         }
 
         if ($this->destinationFile->exists() && $this->destinationFile->isDirectory()) {
-            throw new BuildException( "destfile is a directory!", $this->getLocation() );
+            throw new BuildException("destfile is a directory!", $this->getLocation());
         }
 
         if (!$this->destinationFile->canWrite()) {
-            throw new BuildException( "Can not write to the specified destfile!", $this->getLocation() );
+            throw new BuildException("Can not write to the specified destfile!", $this->getLocation());
         }
 
-        if (is_null( $this->baseDirectory )) {
-            throw new BuildException( "basedir cattribute must be set", $this->getLocation() );
+        if (is_null($this->baseDirectory)) {
+            throw new BuildException("basedir cattribute must be set", $this->getLocation());
         }
 
         if (!$this->baseDirectory->exists()) {
-            throw new BuildException( "basedir '".(string)$this->baseDirectory."' does not exist!",
-                $this->getLocation() );
+            throw new BuildException("basedir '".(string)$this->baseDirectory."' does not exist!",
+                $this->getLocation());
         }
     }
 }

@@ -60,18 +60,18 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             return false;
         }
 
-        $width = max( $width, 70 );
+        $width = max($width, 70);
         $file = $report['filename'];
 
-        $padding = ( $width - 18 - strlen( $file ) );
+        $padding = ( $width - 18 - strlen($file) );
         if ($padding < 0) {
-            $file = '...'.substr( $file, ( ( $padding * -1 ) + 3 ) );
+            $file = '...'.substr($file, ( ( $padding * -1 ) + 3 ));
             $padding = 0;
         }
 
-        echo $file.str_repeat( ' ', $padding ).'  ';
+        echo $file.str_repeat(' ', $padding).'  ';
         echo $report['errors'];
-        echo str_repeat( ' ', ( 8 - strlen( (string)$report['errors'] ) ) );
+        echo str_repeat(' ', ( 8 - strlen((string)$report['errors']) ));
         echo $report['warnings'];
         echo PHP_EOL;
 
@@ -109,25 +109,25 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         }
 
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL;
-        echo 'FILE'.str_repeat( ' ', ( $width - 20 ) ).'ERRORS  WARNINGS'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
+        echo 'FILE'.str_repeat(' ', ( $width - 20 )).'ERRORS  WARNINGS'.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
 
         echo $cachedData;
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.$totalErrors.' ERROR(S) ';
         echo 'AND '.$totalWarnings.' WARNING(S) ';
 
         echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
 
-        echo str_repeat( '-', $width ).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo 'UPGRADE TO PHP_CODESNIFFER 2.0 TO FIX ERRORS AUTOMATICALLY'.PHP_EOL;
-        echo str_repeat( '-', $width ).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists( 'PHP_Timer', false ) === true
+            && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }

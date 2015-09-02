@@ -87,7 +87,7 @@ class DependSelector extends BaseSelector
      *
      * @internal param the $targetdir directory to scan looking for files.
      */
-    public function setTargetdir( PhingFile $targetdir )
+    public function setTargetdir(PhingFile $targetdir)
     {
 
         $this->targetdir = $targetdir;
@@ -99,7 +99,7 @@ class DependSelector extends BaseSelector
      *
      * @param $granularity
      */
-    public function setGranularity( $granularity )
+    public function setGranularity($granularity)
     {
 
         $this->granularity = (int)$granularity;
@@ -114,9 +114,9 @@ class DependSelector extends BaseSelector
     {
 
         if ($this->mapperElement !== null) {
-            throw new BuildException( "Cannot define more than one mapper" );
+            throw new BuildException("Cannot define more than one mapper");
         }
-        $this->mapperElement = new Mapper( $this->project );
+        $this->mapperElement = new Mapper($this->project);
 
         return $this->mapperElement;
     }
@@ -129,7 +129,7 @@ class DependSelector extends BaseSelector
     {
 
         if ($this->targetdir === null) {
-            $this->setError( "The targetdir attribute is required." );
+            $this->setError("The targetdir attribute is required.");
         }
         if ($this->mapperElement === null) {
             $this->map = new IdentityMapper();
@@ -137,7 +137,7 @@ class DependSelector extends BaseSelector
             $this->map = $this->mapperElement->getImplementation();
         }
         if ($this->map === null) {
-            $this->setError( "Could not set <mapper> element." );
+            $this->setError("Could not set <mapper> element.");
         }
     }
 
@@ -153,13 +153,13 @@ class DependSelector extends BaseSelector
      *
      * @return bool whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         $this->validate();
 
         // Determine file whose out-of-dateness is to be checked
-        $destfiles = $this->map->main( $filename );
+        $destfiles = $this->map->main($filename);
 
         // If filename does not match the To attribute of the mapper
         // then filter it out of the files we are considering
@@ -167,12 +167,12 @@ class DependSelector extends BaseSelector
             return false;
         }
         // Sanity check
-        if (count( $destfiles ) !== 1 || $destfiles[0] === null) {
-            throw new BuildException( "Invalid destination file results for ".$this->targetdir." with filename ".$filename );
+        if (count($destfiles) !== 1 || $destfiles[0] === null) {
+            throw new BuildException("Invalid destination file results for ".$this->targetdir." with filename ".$filename);
         }
         $destname = $destfiles[0];
-        $destfile = new PhingFile( $this->targetdir, $destname );
+        $destfile = new PhingFile($this->targetdir, $destname);
 
-        return SelectorUtils::isOutOfDate( $file, $destfile, $this->granularity );
+        return SelectorUtils::isOutOfDate($file, $destfile, $this->granularity);
     }
 }

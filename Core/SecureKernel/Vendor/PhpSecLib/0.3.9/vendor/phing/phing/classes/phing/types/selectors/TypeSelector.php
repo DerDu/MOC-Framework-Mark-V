@@ -36,7 +36,7 @@ class TypeSelector extends BaseExtendSelector
     /** Key to used for parameterized custom selector */
     const TYPE_KEY = "type";
     /** Valid types */
-    private static $types = array( 'file', 'dir', 'link' );
+    private static $types = array('file', 'dir', 'link');
     private $type;
 
     /**
@@ -58,17 +58,17 @@ class TypeSelector extends BaseExtendSelector
      *
      * @return mixed|void
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
-        parent::setParameters( $parameters );
+        parent::setParameters($parameters);
         if ($parameters !== null) {
-            for ($i = 0, $size = count( $parameters ); $i < $size; $i++) {
+            for ($i = 0, $size = count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                if (self::TYPE_KEY == strtolower( $paramname )) {
-                    $this->setType( $parameters[$i]->getValue() );
+                if (self::TYPE_KEY == strtolower($paramname)) {
+                    $this->setType($parameters[$i]->getValue());
                 } else {
-                    $this->setError( "Invalid parameter ".$paramname );
+                    $this->setError("Invalid parameter ".$paramname);
                 }
             }
         }
@@ -79,7 +79,7 @@ class TypeSelector extends BaseExtendSelector
      *
      * @param string $type The type of file - 'file' or 'dir'
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
@@ -94,9 +94,9 @@ class TypeSelector extends BaseExtendSelector
     {
 
         if ($this->type === null) {
-            $this->setError( "The type attribute is required" );
-        } elseif (!in_array( $this->type, self::$types, true )) {
-            $this->setError( "Invalid type specified; must be one of (".implode( self::$types ).")" );
+            $this->setError("The type attribute is required");
+        } elseif (!in_array($this->type, self::$types, true)) {
+            $this->setError("Invalid type specified; must be one of (".implode(self::$types).")");
         }
     }
 
@@ -110,7 +110,7 @@ class TypeSelector extends BaseExtendSelector
      *
      * @return boolean   Whether the file should be selected or not
      */
-    public function isSelected( PhingFile $basedir, $filename, PhingFile $file )
+    public function isSelected(PhingFile $basedir, $filename, PhingFile $file)
     {
 
         // throw BuildException on error
@@ -125,7 +125,7 @@ class TypeSelector extends BaseExtendSelector
                 $file->getAbsolutePath()." is a link, proceeding with ".$file->getCanonicalPath()." instead.",
                 Project::MSG_DEBUG
             );
-            $file = new PhingFile( $file->getCanonicalPath() );
+            $file = new PhingFile($file->getCanonicalPath());
         }
 
         if ($file->isDirectory()) {

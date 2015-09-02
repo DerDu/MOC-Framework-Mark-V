@@ -37,10 +37,10 @@ class MultipleChoiceInputRequest extends InputRequest
      * @param array  $choices holds all input values that are allowed.
      *                        Must not be null.
      */
-    public function __construct( $prompt, $choices )
+    public function __construct($prompt, $choices)
     {
 
-        parent::__construct( $prompt );
+        parent::__construct($prompt);
         $this->choices = $choices;
     }
 
@@ -59,6 +59,6 @@ class MultipleChoiceInputRequest extends InputRequest
     public function isInputValid()
     {
 
-        return in_array( $this->getInput(), $this->choices ); // not strict (?)
+        return in_array($this->getInput(), $this->choices); // not strict (?)
     }
 }

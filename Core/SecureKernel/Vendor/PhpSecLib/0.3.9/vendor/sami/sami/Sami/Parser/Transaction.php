@@ -22,21 +22,21 @@ class Transaction
     protected $visited;
     protected $modified;
 
-    public function __construct( Project $project )
+    public function __construct(Project $project)
     {
 
         $this->hashes = array();
         $this->classes = array();
 
         foreach ($project->getProjectClasses() as $class) {
-            $this->addClass( $class );
+            $this->addClass($class);
         }
 
         $this->visited = array();
         $this->modified = array();
     }
 
-    public function addClass( ClassReflection $class )
+    public function addClass(ClassReflection $class)
     {
 
         $name = $class->getName();
@@ -55,10 +55,10 @@ class Transaction
         $this->visited[$hash] = true;
     }
 
-    public function hasHash( $hash )
+    public function hasHash($hash)
     {
 
-        if (!array_key_exists( $hash, $this->hashes )) {
+        if (!array_key_exists($hash, $this->hashes)) {
             return false;
         }
 
@@ -79,10 +79,10 @@ class Transaction
         $classes = array();
         foreach ($this->hashes as $hash => $c) {
             if (!isset( $this->visited[$hash] )) {
-                $classes = array_merge( $classes, $c );
+                $classes = array_merge($classes, $c);
             }
         }
 
-        return array_keys( $classes );
+        return array_keys($classes);
     }
 }

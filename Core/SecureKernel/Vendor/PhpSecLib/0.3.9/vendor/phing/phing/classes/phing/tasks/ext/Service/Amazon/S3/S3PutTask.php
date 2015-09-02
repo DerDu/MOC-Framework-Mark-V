@@ -19,7 +19,7 @@
  * <http://phing.info>.
  */
 
-require_once dirname( dirname( __FILE__ ) ).'/S3.php';
+require_once dirname(dirname(__FILE__)).'/S3.php';
 
 /**
  * Stores an object on S3
@@ -136,11 +136,11 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setObject( $object )
+    public function setObject($object)
     {
 
-        if (empty( $object ) || !is_string( $object )) {
-            throw new BuildException( 'Object must be a non-empty string' );
+        if (empty( $object ) || !is_string($object)) {
+            throw new BuildException('Object must be a non-empty string');
         }
 
         $this->_object = $object;
@@ -163,7 +163,7 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @param int $seconds
      */
-    public function setMaxage( $seconds )
+    public function setMaxage($seconds)
     {
 
         $this->_maxage = $seconds;
@@ -174,7 +174,7 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @param boolean $gzipped
      */
-    public function setGzip( $gzipped )
+    public function setGzip($gzipped)
     {
 
         $this->_gzipped = $gzipped;
@@ -195,7 +195,7 @@ class S3PutTask extends Service_Amazon_S3
     /**
      * @param $fileNameOnly
      */
-    public function setFileNameOnly( $fileNameOnly )
+    public function setFileNameOnly($fileNameOnly)
     {
 
         $this->_fileNameOnly = (bool)$fileNameOnly;
@@ -209,7 +209,7 @@ class S3PutTask extends Service_Amazon_S3
     public function createFileset()
     {
 
-        $num = array_push( $this->_filesets, new FileSet() );
+        $num = array_push($this->_filesets, new FileSet());
 
         return $this->_filesets[$num - 1];
     }
@@ -236,10 +236,10 @@ class S3PutTask extends Service_Amazon_S3
 
         if (!$this->isBucketAvailable()) {
             if (!$this->getCreateBuckets()) {
-                throw new BuildException( 'Bucket doesn\'t exist and createBuckets not specified' );
+                throw new BuildException('Bucket doesn\'t exist and createBuckets not specified');
             } else {
                 if (!$this->createBucket()) {
-                    throw new BuildException( 'Bucket cannot be created' );
+                    throw new BuildException('Bucket cannot be created');
                 }
             }
         }
@@ -253,23 +253,23 @@ class S3PutTask extends Service_Amazon_S3
                     continue;
                 }
 
-                $ds = $fs->getDirectoryScanner( $this->getProject() );
-                $objects = array_merge( $objects, $ds->getIncludedFiles() );
+                $ds = $fs->getDirectoryScanner($this->getProject());
+                $objects = array_merge($objects, $ds->getIncludedFiles());
             }
 
-            $fromDir = $fs->getDir( $this->getProject() )->getAbsolutePath();
+            $fromDir = $fs->getDir($this->getProject())->getAbsolutePath();
 
             if ($this->_fileNameOnly) {
                 foreach ($objects as $object) {
                     $this->_source = $object;
-                    $this->saveObject( basename( $object ), file_get_contents( $fromDir.DIRECTORY_SEPARATOR.$object ) );
+                    $this->saveObject(basename($object), file_get_contents($fromDir.DIRECTORY_SEPARATOR.$object));
                 }
             } else {
                 foreach ($objects as $object) {
                     $this->_source = $object;
                     $this->saveObject(
-                        str_replace( '\\', '/', $object ),
-                        file_get_contents( $fromDir.DIRECTORY_SEPARATOR.$object )
+                        str_replace('\\', '/', $object),
+                        file_get_contents($fromDir.DIRECTORY_SEPARATOR.$object)
                     );
                 }
             }
@@ -277,7 +277,7 @@ class S3PutTask extends Service_Amazon_S3
             return true;
         }
 
-        $this->saveObject( $this->getObject(), $this->getObjectData() );
+        $this->saveObject($this->getObject(), $this->getObjectData());
     }
 
     /**
@@ -292,7 +292,7 @@ class S3PutTask extends Service_Amazon_S3
     /**
      * @param $createBuckets
      */
-    public function setCreateBuckets( $createBuckets )
+    public function setCreateBuckets($createBuckets)
     {
 
         $this->_createBuckets = (bool)$createBuckets;
@@ -304,18 +304,18 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    protected function saveObject( $object, $data )
+    protected function saveObject($object, $data)
     {
 
-        $object = $this->getObjectInstance( $object );
+        $object = $this->getObjectInstance($object);
         $object->data = $data;
         $object->acl = $this->getAcl();
         $object->contentType = $this->getContentType();
         $object->httpHeaders = $this->getHttpHeaders();
         $object->save();
 
-        if (!$this->isObjectAvailable( $object->key )) {
-            throw new BuildException( 'Upload failed' );
+        if (!$this->isObjectAvailable($object->key)) {
+            throw new BuildException('Upload failed');
         }
     }
 
@@ -333,12 +333,12 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setAcl( $permission )
+    public function setAcl($permission)
     {
 
-        $valid_acl = array( 'private', 'public-read', 'public-read-write', 'authenticated-read' );
-        if (empty( $permission ) || !is_string( $permission ) || !in_array( $permission, $valid_acl )) {
-            throw new BuildException( 'Object must be one of the following values: '.implode( '|', $valid_acl ) );
+        $valid_acl = array('private', 'public-read', 'public-read-write', 'authenticated-read');
+        if (empty( $permission ) || !is_string($permission) || !in_array($permission, $valid_acl)) {
+            throw new BuildException('Object must be one of the following values: '.implode('|', $valid_acl));
         }
         $this->_acl = $permission;
     }
@@ -351,7 +351,7 @@ class S3PutTask extends Service_Amazon_S3
     {
 
         if ($this->_contentType === 'auto') {
-            $ext = strtolower( substr( strrchr( $this->getSource(), '.' ), 1 ) );
+            $ext = strtolower(substr(strrchr($this->getSource(), '.'), 1));
             if (isset( $this->_extensionContentTypeMapper[$ext] )) {
                 return $this->_extensionContentTypeMapper[$ext];
             } else {
@@ -365,7 +365,7 @@ class S3PutTask extends Service_Amazon_S3
     /**
      * @param $contentType
      */
-    public function setContentType( $contentType )
+    public function setContentType($contentType)
     {
 
         $this->_contentType = $contentType;
@@ -379,7 +379,7 @@ class S3PutTask extends Service_Amazon_S3
     {
 
         if ($this->_source === null) {
-            throw new BuildException( 'Source is not set' );
+            throw new BuildException('Source is not set');
         }
 
         return $this->_source;
@@ -390,11 +390,11 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setSource( $source )
+    public function setSource($source)
     {
 
-        if (!is_readable( $source )) {
-            throw new BuildException( 'Source is not readable: '.$source );
+        if (!is_readable($source)) {
+            throw new BuildException('Source is not readable: '.$source);
         }
 
         $this->_source = $source;
@@ -410,7 +410,7 @@ class S3PutTask extends Service_Amazon_S3
     {
 
         $headers = array();
-        if (!is_null( $this->_maxage )) {
+        if (!is_null($this->_maxage)) {
             $headers['Cache-Control'] = 'max-age='.$this->_maxage;
         }
         if ($this->_gzipped) {
@@ -424,7 +424,7 @@ class S3PutTask extends Service_Amazon_S3
     {
 
         if ($this->_object === null) {
-            throw new BuildException( 'Object is not set' );
+            throw new BuildException('Object is not set');
         }
 
         return $this->_object;
@@ -444,14 +444,14 @@ class S3PutTask extends Service_Amazon_S3
 
         try {
             $content = $this->getContent();
-        } catch( BuildException $e ) {
+        } catch (BuildException $e) {
             $source = $this->getSource();
 
-            if (!is_file( $source )) {
-                throw new BuildException( 'Currently only files can be used as source' );
+            if (!is_file($source)) {
+                throw new BuildException('Currently only files can be used as source');
             }
 
-            $content = file_get_contents( $source );
+            $content = file_get_contents($source);
         }
 
         return $content;
@@ -465,7 +465,7 @@ class S3PutTask extends Service_Amazon_S3
     {
 
         if ($this->_content === null) {
-            throw new BuildException( 'Content is not set' );
+            throw new BuildException('Content is not set');
         }
 
         return $this->_content;
@@ -476,11 +476,11 @@ class S3PutTask extends Service_Amazon_S3
      *
      * @throws BuildException
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        if (empty( $content ) || !is_string( $content )) {
-            throw new BuildException( 'Content must be a non-empty string' );
+        if (empty( $content ) || !is_string($content)) {
+            throw new BuildException('Content must be a non-empty string');
         }
 
         $this->_content = $content;

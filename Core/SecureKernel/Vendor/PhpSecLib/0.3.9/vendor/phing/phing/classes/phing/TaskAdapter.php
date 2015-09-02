@@ -46,30 +46,30 @@ class TaskAdapter extends Task
     public function main()
     {
 
-        if (method_exists( $this->proxy, "setProject" )) {
+        if (method_exists($this->proxy, "setProject")) {
             try { // try to set project
-                $this->proxy->setProject( $this->project );
-            } catch( Exception $ex ) {
-                $this->log( "Error setting project in ".get_class( $this->proxy ).Project::MSG_ERR );
-                throw new BuildException( $ex );
+                $this->proxy->setProject($this->project);
+            } catch (Exception $ex) {
+                $this->log("Error setting project in ".get_class($this->proxy).Project::MSG_ERR);
+                throw new BuildException($ex);
             }
         } else {
-            throw new Exception( "Error setting project in class ".get_class( $this->proxy ) );
+            throw new Exception("Error setting project in class ".get_class($this->proxy));
         }
 
-        if (method_exists( $this->proxy, "main" )) {
+        if (method_exists($this->proxy, "main")) {
             try { //try to call main
-                $this->proxy->main( $this->project );
-            } catch( BuildException $be ) {
+                $this->proxy->main($this->project);
+            } catch (BuildException $be) {
                 throw $be;
-            } catch( Exception $ex ) {
-                $this->log( "Error in ".get_class( $this->proxy ), Project::MSG_ERR );
-                throw new BuildException( "Error in ".get_class( $this->proxy ), $ex );
+            } catch (Exception $ex) {
+                $this->log("Error in ".get_class($this->proxy), Project::MSG_ERR);
+                throw new BuildException("Error in ".get_class($this->proxy), $ex);
             }
         } else {
-            throw new BuildException( "Your task-like class '".get_class(
+            throw new BuildException("Your task-like class '".get_class(
                     $this->proxy
-                )."' does not have a main() method" );
+                )."' does not have a main() method");
         }
     }
 
@@ -91,7 +91,7 @@ class TaskAdapter extends Task
      *
      * @return void
      */
-    public function setProxy( $o )
+    public function setProxy($o)
     {
 
         $this->proxy = $o;

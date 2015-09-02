@@ -97,7 +97,7 @@ class SymlinkTask extends Task
     public function createFileset()
     {
 
-        $num = array_push( $this->_filesets, new FileSet() );
+        $num = array_push($this->_filesets, new FileSet());
 
         return $this->_filesets[$num - 1];
     }
@@ -113,13 +113,13 @@ class SymlinkTask extends Task
         $map = $this->getMap();
 
         // Single file symlink
-        if (is_string( $map )) {
-            return $this->symlink( $map, $this->getLink() );
+        if (is_string($map)) {
+            return $this->symlink($map, $this->getLink());
         }
 
         // Multiple symlinks
         foreach ($map as $name => $targetPath) {
-            $this->symlink( $targetPath, $this->getLink().DIRECTORY_SEPARATOR.$name );
+            $this->symlink($targetPath, $this->getLink().DIRECTORY_SEPARATOR.$name);
         }
 
         return true;
@@ -151,20 +151,20 @@ class SymlinkTask extends Task
             }
 
             // We need a directory to store the links
-            if (!is_dir( $this->getLink() )) {
-                throw new BuildException( 'Link must be an existing directory when using fileset' );
+            if (!is_dir($this->getLink())) {
+                throw new BuildException('Link must be an existing directory when using fileset');
             }
 
-            $fromDir = $fs->getDir( $this->getProject() )->getAbsolutePath();
+            $fromDir = $fs->getDir($this->getProject())->getAbsolutePath();
 
-            if (!is_dir( $fromDir )) {
-                $this->log( 'Directory doesn\'t exist: '.$fromDir, Project::MSG_WARN );
+            if (!is_dir($fromDir)) {
+                $this->log('Directory doesn\'t exist: '.$fromDir, Project::MSG_WARN);
                 continue;
             }
 
             $fsTargets = array();
 
-            $ds = $fs->getDirectoryScanner( $this->getProject() );
+            $ds = $fs->getDirectoryScanner($this->getProject());
 
             $fsTargets = array_merge(
                 $fsTargets,
@@ -204,7 +204,7 @@ class SymlinkTask extends Task
     {
 
         if ($this->_target === null) {
-            throw new BuildException( 'Target not set' );
+            throw new BuildException('Target not set');
         }
 
         return $this->_target;
@@ -217,7 +217,7 @@ class SymlinkTask extends Task
      *
      * @return void
      */
-    public function setTarget( $target )
+    public function setTarget($target)
     {
 
         $this->_target = $target;
@@ -233,7 +233,7 @@ class SymlinkTask extends Task
     {
 
         if ($this->_link === null) {
-            throw new BuildException( 'Link not set' );
+            throw new BuildException('Link not set');
         }
 
         return $this->_link;
@@ -246,7 +246,7 @@ class SymlinkTask extends Task
      *
      * @return void
      */
-    public function setLink( $link )
+    public function setLink($link)
     {
 
         $this->_link = $link;
@@ -260,36 +260,36 @@ class SymlinkTask extends Task
      *
      * @return bool
      */
-    protected function symlink( $target, $link )
+    protected function symlink($target, $link)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        if (is_link( $link ) && @readlink( $link ) == $target) {
-            $this->log( 'Link exists: '.$link, Project::MSG_INFO );
+        if (is_link($link) && @readlink($link) == $target) {
+            $this->log('Link exists: '.$link, Project::MSG_INFO);
 
             return true;
         }
 
-        if (file_exists( $link ) || is_link( $link )) {
+        if (file_exists($link) || is_link($link)) {
             if (!$this->getOverwrite()) {
-                $this->log( 'Not overwriting existing link '.$link, Project::MSG_ERR );
+                $this->log('Not overwriting existing link '.$link, Project::MSG_ERR);
 
                 return false;
             }
 
-            if (is_link( $link ) || is_file( $link )) {
-                $fs->unlink( $link );
-                $this->log( 'Link removed: '.$link, Project::MSG_INFO );
+            if (is_link($link) || is_file($link)) {
+                $fs->unlink($link);
+                $this->log('Link removed: '.$link, Project::MSG_INFO);
             } else {
-                $fs->rmdir( $link, true );
-                $this->log( 'Directory removed: '.$link, Project::MSG_INFO );
+                $fs->rmdir($link, true);
+                $this->log('Directory removed: '.$link, Project::MSG_INFO);
             }
         }
 
-        $this->log( 'Linking: '.$target.' to '.$link, Project::MSG_INFO );
+        $this->log('Linking: '.$target.' to '.$link, Project::MSG_INFO);
 
-        return $fs->symlink( $target, $link );
+        return $fs->symlink($target, $link);
     }
 
     /**
@@ -310,7 +310,7 @@ class SymlinkTask extends Task
      *
      * @return void
      */
-    public function setOverwrite( $overwrite )
+    public function setOverwrite($overwrite)
     {
 
         $this->_overwrite = $overwrite;

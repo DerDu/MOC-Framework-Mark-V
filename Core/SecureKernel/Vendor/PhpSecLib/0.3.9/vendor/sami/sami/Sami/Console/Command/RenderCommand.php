@@ -26,13 +26,13 @@ class RenderCommand extends Command
 
         parent::configure();
 
-        $this->getDefinition()->addOption( new InputOption( 'force', '', InputOption::VALUE_NONE,
-            'Forces to rebuild from scratch', null ) );
+        $this->getDefinition()->addOption(new InputOption('force', '', InputOption::VALUE_NONE,
+            'Forces to rebuild from scratch', null));
 
         $this
-            ->setName( 'render' )
-            ->setDescription( 'Renders a project' )
-            ->setHelp( <<<EOF
+            ->setName('render')
+            ->setDescription('Renders a project')
+            ->setHelp(<<<EOF
 The <info>%command.name%</info> command renders a project as a static set of HTML files:
 
     <info>php %command.full_name% render config/symfony.php</info>
@@ -55,11 +55,11 @@ EOF
      *
      * @throws \InvalidArgumentException When the target directory does not exist
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( '<bg=cyan;fg=white> Rendering project </>' );
+        $output->writeln('<bg=cyan;fg=white> Rendering project </>');
 
-        $this->render( $this->sami['project'] );
+        $this->render($this->sami['project']);
     }
 }

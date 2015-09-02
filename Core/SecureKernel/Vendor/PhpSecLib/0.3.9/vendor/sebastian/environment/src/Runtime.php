@@ -47,7 +47,7 @@ class Runtime
     public function isHHVM()
     {
 
-        return defined( 'HHVM_VERSION' );
+        return defined('HHVM_VERSION');
     }
 
     /**
@@ -58,7 +58,7 @@ class Runtime
     public function hasXdebug()
     {
 
-        return $this->isPHP() && extension_loaded( 'xdebug' );
+        return $this->isPHP() && extension_loaded('xdebug');
     }
 
     /**
@@ -83,32 +83,32 @@ class Runtime
 
         // HHVM
         if (self::$binary === null && $this->isHHVM()) {
-            if (( self::$binary = getenv( 'PHP_BINARY' ) ) === false) {
+            if (( self::$binary = getenv('PHP_BINARY') ) === false) {
                 self::$binary = PHP_BINARY;
             }
 
-            self::$binary = escapeshellarg( self::$binary ).' --php';
+            self::$binary = escapeshellarg(self::$binary).' --php';
         }
 
         // PHP >= 5.4.0
-        if (self::$binary === null && defined( 'PHP_BINARY' )) {
-            self::$binary = escapeshellarg( PHP_BINARY );
+        if (self::$binary === null && defined('PHP_BINARY')) {
+            self::$binary = escapeshellarg(PHP_BINARY);
         }
 
         // PHP < 5.4.0
         if (self::$binary === null) {
             if (PHP_SAPI == 'cli' && isset( $_SERVER['_'] )) {
-                if (strpos( $_SERVER['_'], 'phpunit' ) !== false) {
-                    $file = file( $_SERVER['_'] );
+                if (strpos($_SERVER['_'], 'phpunit') !== false) {
+                    $file = file($_SERVER['_']);
 
-                    if (strpos( $file[0], ' ' ) !== false) {
-                        $tmp = explode( ' ', $file[0] );
-                        self::$binary = escapeshellarg( trim( $tmp[1] ) );
+                    if (strpos($file[0], ' ') !== false) {
+                        $tmp = explode(' ', $file[0]);
+                        self::$binary = escapeshellarg(trim($tmp[1]));
                     } else {
-                        self::$binary = escapeshellarg( ltrim( trim( $file[0] ), '#!' ) );
+                        self::$binary = escapeshellarg(ltrim(trim($file[0]), '#!'));
                     }
-                } elseif (strpos( basename( $_SERVER['_'] ), 'php' ) !== false) {
-                    self::$binary = escapeshellarg( $_SERVER['_'] );
+                } elseif (strpos(basename($_SERVER['_']), 'php') !== false) {
+                    self::$binary = escapeshellarg($_SERVER['_']);
                 }
             }
         }
@@ -121,8 +121,8 @@ class Runtime
             );
 
             foreach ($possibleBinaryLocations as $binary) {
-                if (is_readable( $binary )) {
-                    self::$binary = escapeshellarg( $binary );
+                if (is_readable($binary)) {
+                    self::$binary = escapeshellarg($binary);
                     break;
                 }
             }

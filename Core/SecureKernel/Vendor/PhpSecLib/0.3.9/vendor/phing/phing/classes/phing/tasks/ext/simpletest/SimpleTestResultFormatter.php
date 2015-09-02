@@ -53,7 +53,7 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
      *
      * @param Writer $out
      */
-    public function setOutput( Writer $out )
+    public function setOutput(Writer $out)
     {
 
         $this->out = $out;
@@ -75,7 +75,7 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
      *
      * @param Project the project
      */
-    public function setProject( Project $project )
+    public function setProject(Project $project)
     {
 
         $this->project = $project;
@@ -93,10 +93,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $test_name
      */
-    public function paintMethodStart( $test_name )
+    public function paintMethodStart($test_name)
     {
 
-        parent::paintMethodStart( $test_name );
+        parent::paintMethodStart($test_name);
 
         $this->currentTest = $test_name;
     }
@@ -104,10 +104,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $test_name
      */
-    public function paintMethodEnd( $test_name )
+    public function paintMethodEnd($test_name)
     {
 
-        parent::paintMethodEnd( $test_name );
+        parent::paintMethodEnd($test_name);
 
         $this->runCount++;
     }
@@ -115,10 +115,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $test_name
      */
-    public function paintCaseStart( $test_name )
+    public function paintCaseStart($test_name)
     {
 
-        parent::paintCaseStart( $test_name );
+        parent::paintCaseStart($test_name);
 
         $this->runCount = 0;
         $this->failureCount = 0;
@@ -131,10 +131,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $test_name
      */
-    public function paintCaseEnd( $test_name )
+    public function paintCaseEnd($test_name)
     {
 
-        parent::paintCaseEnd( $test_name );
+        parent::paintCaseEnd($test_name);
 
         $this->timer->stop();
     }
@@ -142,10 +142,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $message
      */
-    public function paintError( $message )
+    public function paintError($message)
     {
 
-        parent::paintError( $message );
+        parent::paintError($message);
 
         $this->errorCount++;
     }
@@ -153,10 +153,10 @@ abstract class SimpleTestResultFormatter extends SimpleReporter
     /**
      * @param string $message
      */
-    public function paintFail( $message )
+    public function paintFail($message)
     {
 
-        parent::paintFail( $message );
+        parent::paintFail($message);
 
         $this->failureCount++;
     }

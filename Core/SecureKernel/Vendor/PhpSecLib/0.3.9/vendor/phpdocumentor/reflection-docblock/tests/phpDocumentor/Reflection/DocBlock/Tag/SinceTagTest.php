@@ -46,12 +46,12 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
         $exVersion
     ) {
 
-        $tag = new SinceTag( $type, $content );
+        $tag = new SinceTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exVersion, $tag->getVersion() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exVersion, $tag->getVersion());
     }
 
     /**

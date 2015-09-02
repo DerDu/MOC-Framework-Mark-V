@@ -22,10 +22,10 @@ class ReturnByReferenceException extends DoubleException
      * @param string $classname
      * @param string $methodName
      */
-    public function __construct( $message, $classname, $methodName )
+    public function __construct($message, $classname, $methodName)
     {
 
-        parent::__construct( $message );
+        parent::__construct($message);
 
         $this->classname = $classname;
         $this->methodName = $methodName;

@@ -16,7 +16,7 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt
      * @param PHPParser_Node[]    $stmts      Statements
      * @param array               $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Name $type, $var, array $stmts = array(), array $attributes = array() )
+    public function __construct(PHPParser_Node_Name $type, $var, array $stmts = array(), array $attributes = array())
     {
 
         parent::__construct(

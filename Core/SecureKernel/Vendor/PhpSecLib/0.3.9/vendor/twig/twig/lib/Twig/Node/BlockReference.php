@@ -18,10 +18,10 @@
 class Twig_Node_BlockReference extends Twig_Node implements Twig_NodeOutputInterface
 {
 
-    public function __construct( $name, $lineno, $tag = null )
+    public function __construct($name, $lineno, $tag = null)
     {
 
-        parent::__construct( array(), array( 'name' => $name ), $lineno, $tag );
+        parent::__construct(array(), array('name' => $name), $lineno, $tag);
     }
 
     /**
@@ -29,11 +29,11 @@ class Twig_Node_BlockReference extends Twig_Node implements Twig_NodeOutputInter
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
         $compiler
-            ->addDebugInfo( $this )
-            ->write( sprintf( "\$this->displayBlock('%s', \$context, \$blocks);\n", $this->getAttribute( 'name' ) ) );
+            ->addDebugInfo($this)
+            ->write(sprintf("\$this->displayBlock('%s', \$context, \$blocks);\n", $this->getAttribute('name')));
     }
 }

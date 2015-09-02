@@ -50,7 +50,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
     public function register()
     {
 
-        return array( T_WHITESPACE );
+        return array(T_WHITESPACE);
 
     }//end register()
 
@@ -64,7 +64,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -75,9 +75,9 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
             return;
         }
 
-        if (strpos( $tokens[$stackPtr]['content'], "\t" ) !== false) {
+        if (strpos($tokens[$stackPtr]['content'], "\t") !== false) {
             $error = 'Spaces must be used to indent lines; tabs are not allowed';
-            $phpcsFile->addError( $error, $stackPtr, 'TabsUsed' );
+            $phpcsFile->addError($error, $stackPtr, 'TabsUsed');
         }
 
     }//end process()

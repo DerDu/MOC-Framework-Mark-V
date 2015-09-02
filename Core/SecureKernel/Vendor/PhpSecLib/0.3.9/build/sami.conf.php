@@ -4,7 +4,7 @@
 class MyArrayStore extends Sami\Store\ArrayStore
 {
 
-    public function removeClass( Sami\Project $project, $name )
+    public function removeClass(Sami\Project $project, $name)
     {
 
         unset( $this->classes[$name] );
@@ -13,14 +13,14 @@ class MyArrayStore extends Sami\Store\ArrayStore
 
 $iterator = Symfony\Component\Finder\Finder::create()
     ->files()
-    ->name( '*.php' )
-    ->in( __DIR__.'/../phpseclib/' );
+    ->name('*.php')
+    ->in(__DIR__.'/../phpseclib/');
 
-$versions = Sami\Version\GitVersionCollection::create( __DIR__.'/../' )
-    ->add( 'master' )
-    ->add( 'php5' );
+$versions = Sami\Version\GitVersionCollection::create(__DIR__.'/../')
+    ->add('master')
+    ->add('php5');
 
-return new Sami\Sami( $iterator, array(
+return new Sami\Sami($iterator, array(
     'theme'                => 'enhanced',
     'versions'             => $versions,
     'title'                => 'phpseclib API Documentation',
@@ -28,4 +28,4 @@ return new Sami\Sami( $iterator, array(
     'cache_dir'            => __DIR__.'/api/cache/%version%',
     'default_opened_level' => 2,
     'store'                => new MyArrayStore,
-) );
+));

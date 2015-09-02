@@ -48,10 +48,10 @@ class MailTask extends Task
     {
 
         if (empty( $this->from )) {
-            throw new BuildException( 'Missing "from" attribute' );
+            throw new BuildException('Missing "from" attribute');
         }
 
-        $this->log( 'Sending mail to '.$this->tolist );
+        $this->log('Sending mail to '.$this->tolist);
 
         if (!empty( $this->filesets )) {
             $this->sendFilesets();
@@ -59,7 +59,7 @@ class MailTask extends Task
             return;
         }
 
-        mail( $this->tolist, $this->subject, $this->msg, "From: {$this->from}\n" );
+        mail($this->tolist, $this->subject, $this->msg, "From: {$this->from}\n");
     }
 
     protected function sendFilesets()
@@ -68,32 +68,32 @@ class MailTask extends Task
         @require_once 'Mail.php';
         @require_once 'Mail/mime.php';
 
-        if (!class_exists( 'Mail_mime' )) {
-            throw new BuildException( 'Need the PEAR Mail_mime package to send attachments' );
+        if (!class_exists('Mail_mime')) {
+            throw new BuildException('Need the PEAR Mail_mime package to send attachments');
         }
 
-        $mime = new Mail_mime( array( 'text_charset' => 'UTF-8' ) );
+        $mime = new Mail_mime(array('text_charset' => 'UTF-8'));
         $hdrs = array(
             'From'    => $this->from,
             'Subject' => $this->subject
         );
-        $mime->setTXTBody( $this->msg );
+        $mime->setTXTBody($this->msg);
 
         foreach ($this->filesets as $fs) {
-            $ds = $fs->getDirectoryScanner( $this->project );
-            $fromDir = $fs->getDir( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
+            $fromDir = $fs->getDir($this->project);
             $srcFiles = $ds->getIncludedFiles();
 
             foreach ($srcFiles as $file) {
-                $mime->addAttachment( $fromDir.DIRECTORY_SEPARATOR.$file, 'application/octet-stream' );
+                $mime->addAttachment($fromDir.DIRECTORY_SEPARATOR.$file, 'application/octet-stream');
             }
         }
 
         $body = $mime->get();
-        $hdrs = $mime->headers( $hdrs );
+        $hdrs = $mime->headers($hdrs);
 
-        $mail = Mail::factory( $this->backend, $this->backendParams );
-        $mail->send( $this->tolist, $hdrs, $body );
+        $mail = Mail::factory($this->backend, $this->backendParams);
+        $mail->send($this->tolist, $hdrs, $body);
     }
 
     /**
@@ -101,10 +101,10 @@ class MailTask extends Task
      *
      * @param $msg
      */
-    public function setMsg( $msg )
+    public function setMsg($msg)
     {
 
-        $this->setMessage( $msg );
+        $this->setMessage($msg);
     }
 
     /**
@@ -112,7 +112,7 @@ class MailTask extends Task
      *
      * @param $msg
      */
-    public function setMessage( $msg )
+    public function setMessage($msg)
     {
 
         $this->msg = (string)$msg;
@@ -123,7 +123,7 @@ class MailTask extends Task
      *
      * @param $subject
      */
-    public function setSubject( $subject )
+    public function setSubject($subject)
     {
 
         $this->subject = (string)$subject;
@@ -134,7 +134,7 @@ class MailTask extends Task
      *
      * @param $tolist
      */
-    public function setToList( $tolist )
+    public function setToList($tolist)
     {
 
         $this->tolist = $tolist;
@@ -145,7 +145,7 @@ class MailTask extends Task
      *
      * @param $recipient
      */
-    public function setRecipient( $recipient )
+    public function setRecipient($recipient)
     {
 
         $this->tolist = (string)$recipient;
@@ -156,7 +156,7 @@ class MailTask extends Task
      *
      * @param $to
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
 
         $this->tolist = (string)$to;
@@ -167,7 +167,7 @@ class MailTask extends Task
      *
      * @param $msg
      */
-    public function addText( $msg )
+    public function addText($msg)
     {
 
         $this->msg = (string)$msg;
@@ -178,7 +178,7 @@ class MailTask extends Task
      *
      * @param $from
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
 
         $this->from = $from;
@@ -189,7 +189,7 @@ class MailTask extends Task
      *
      * @param $backend
      */
-    public function setBackend( $backend )
+    public function setBackend($backend)
     {
 
         $this->backend = $backend;
@@ -200,19 +200,19 @@ class MailTask extends Task
      *
      * @param $backendParams
      */
-    public function setBackendParams( $backendParams )
+    public function setBackendParams($backendParams)
     {
 
-        $params = explode( ',', $backendParams );
+        $params = explode(',', $backendParams);
 
         foreach ($params as $param) {
-            $values = explode( '=', $param );
+            $values = explode('=', $param);
 
-            if (count( $values ) < 1) {
+            if (count($values) < 1) {
                 continue;
             }
 
-            if (count( $values ) == 1) {
+            if (count($values) == 1) {
                 $this->backendParams[] = $values[0];
             } else {
                 $key = $values[0];
@@ -229,7 +229,7 @@ class MailTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;

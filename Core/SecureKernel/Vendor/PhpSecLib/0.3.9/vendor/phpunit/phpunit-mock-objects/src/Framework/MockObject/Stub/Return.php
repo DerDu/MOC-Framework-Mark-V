@@ -24,13 +24,13 @@ class PHPUnit_Framework_MockObject_Stub_Return implements PHPUnit_Framework_Mock
 
     protected $value;
 
-    public function __construct( $value )
+    public function __construct($value)
     {
 
         $this->value = $value;
     }
 
-    public function invoke( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
         return $this->value;
@@ -41,7 +41,7 @@ class PHPUnit_Framework_MockObject_Stub_Return implements PHPUnit_Framework_Mock
 
         return sprintf(
             'return user-specified value %s',
-            PHPUnit_Util_Type::export( $this->value )
+            PHPUnit_Util_Type::export($this->value)
         );
     }
 }

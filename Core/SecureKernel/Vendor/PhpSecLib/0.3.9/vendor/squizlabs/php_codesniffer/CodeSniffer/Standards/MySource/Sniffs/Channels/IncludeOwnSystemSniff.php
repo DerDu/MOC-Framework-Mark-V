@@ -35,7 +35,7 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_DOUBLE_COLON );
+        return array(T_DOUBLE_COLON);
 
     }//end register()
 
@@ -49,12 +49,12 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $fileName = $phpcsFile->getFilename();
         $matches = array();
-        if (preg_match( '|/systems/(.*)/([^/]+)?actions.inc$|i', $fileName, $matches ) === 0) {
+        if (preg_match('|/systems/(.*)/([^/]+)?actions.inc$|i', $fileName, $matches) === 0) {
             // Not an actions file.
             return;
         }
@@ -62,26 +62,26 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
         $ownClass = $matches[2];
         $tokens = $phpcsFile->getTokens();
 
-        $typeName = $phpcsFile->findNext( T_CONSTANT_ENCAPSED_STRING, ( $stackPtr + 2 ), null, false, true );
-        $typeName = trim( $tokens[$typeName]['content'], " '" );
-        switch (strtolower( $tokens[( $stackPtr + 1 )]['content'] )) {
+        $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ( $stackPtr + 2 ), null, false, true);
+        $typeName = trim($tokens[$typeName]['content'], " '");
+        switch (strtolower($tokens[( $stackPtr + 1 )]['content'])) {
             case 'includesystem' :
-                $included = strtolower( $typeName );
+                $included = strtolower($typeName);
                 break;
             case 'includeasset' :
-                $included = strtolower( $typeName ).'assettype';
+                $included = strtolower($typeName).'assettype';
                 break;
             case 'includewidget' :
-                $included = strtolower( $typeName ).'widgettype';
+                $included = strtolower($typeName).'widgettype';
                 break;
             default:
                 return;
         }
 
-        if ($included === strtolower( $ownClass )) {
+        if ($included === strtolower($ownClass)) {
             $error = "You do not need to include \"%s\" from within the system's own actions file";
-            $data = array( $ownClass );
-            $phpcsFile->addError( $error, $stackPtr, 'NotRequired', $data );
+            $data = array($ownClass);
+            $phpcsFile->addError($error, $stackPtr, 'NotRequired', $data);
         }
 
     }//end process()

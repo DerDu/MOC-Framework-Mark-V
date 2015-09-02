@@ -23,14 +23,14 @@ use Sami\Reflection\PropertyReflection;
 class PropertyClassVisitor implements ClassVisitorInterface
 {
 
-    public function visit( ClassReflection $class )
+    public function visit(ClassReflection $class)
     {
 
         $modified = false;
-        $properties = $class->getTags( 'property' );
+        $properties = $class->getTags('property');
         if (!empty( $properties )) {
             foreach ($properties as $propertyTag) {
-                if ($this->injectProperty( $class, implode( ' ', $propertyTag ) )) {
+                if ($this->injectProperty($class, implode(' ', $propertyTag))) {
                     $modified = true;
                 }
             }
@@ -47,22 +47,22 @@ class PropertyClassVisitor implements ClassVisitorInterface
      *
      * @return Boolean
      */
-    protected function injectProperty( ClassReflection $class, $propertyTag )
+    protected function injectProperty(ClassReflection $class, $propertyTag)
     {
 
-        if (!$data = $this->parseProperty( $propertyTag )) {
+        if (!$data = $this->parseProperty($propertyTag)) {
             return false;
         }
 
-        $property = new PropertyReflection( $data['name'], $class->getLine() );
-        $property->setDocComment( $data['description'] );
-        $property->setShortDesc( $data['description'] );
+        $property = new PropertyReflection($data['name'], $class->getLine());
+        $property->setDocComment($data['description']);
+        $property->setShortDesc($data['description']);
 
         if (isset( $data['hint'] )) {
-            $property->setHint( array( array( $data['hint'], null ) ) );
+            $property->setHint(array(array($data['hint'], null)));
         }
 
-        $class->addProperty( $property );
+        $class->addProperty($property);
 
         return true;
     }
@@ -74,29 +74,29 @@ class PropertyClassVisitor implements ClassVisitorInterface
      *
      * @return array
      */
-    protected function parseProperty( $tag )
+    protected function parseProperty($tag)
     {
 
         // Account for default array syntax
-        $tag = str_replace( 'array()', 'array', $tag );
+        $tag = str_replace('array()', 'array', $tag);
 
-        $parts = preg_split( '/(?:\s+)/Su', $tag, 3, PREG_SPLIT_DELIM_CAPTURE );
+        $parts = preg_split('/(?:\s+)/Su', $tag, 3, PREG_SPLIT_DELIM_CAPTURE);
         if (isset( $parts[1] )) {
             if ('$' !== $parts[0][0]) {
                 $type = $parts[0];
-                $propertyName = substr( $parts[1], 1 );
+                $propertyName = substr($parts[1], 1);
             } elseif ('$' !== $parts[1][0]) {
                 $type = $parts[1];
-                $propertyName = substr( $parts[0], 1 );
+                $propertyName = substr($parts[0], 1);
             }
         } elseif (isset( $parts[0] )) {
-            $propertyName = substr( $parts[0], 1 );
+            $propertyName = substr($parts[0], 1);
         } else {
             return array();
         }
 
-        $description = implode( '', $parts );
-        $property = array( 'name' => $propertyName );
+        $description = implode('', $parts);
+        $property = array('name' => $propertyName);
         if (isset( $type )) {
             $property['hint'] = $type;
         }

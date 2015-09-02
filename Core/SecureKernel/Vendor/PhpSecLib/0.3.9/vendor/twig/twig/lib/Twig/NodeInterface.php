@@ -24,7 +24,7 @@ interface Twig_NodeInterface extends Countable, IteratorAggregate
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler );
+    public function compile(Twig_Compiler $compiler);
 
     public function getLine();
 

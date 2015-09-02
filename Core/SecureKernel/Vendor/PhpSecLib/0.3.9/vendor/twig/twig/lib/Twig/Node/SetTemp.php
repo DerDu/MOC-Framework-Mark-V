@@ -12,26 +12,26 @@
 class Twig_Node_SetTemp extends Twig_Node
 {
 
-    public function __construct( $name, $lineno )
+    public function __construct($name, $lineno)
     {
 
-        parent::__construct( array(), array( 'name' => $name ), $lineno );
+        parent::__construct(array(), array('name' => $name), $lineno);
     }
 
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $name = $this->getAttribute( 'name' );
+        $name = $this->getAttribute('name');
         $compiler
-            ->addDebugInfo( $this )
-            ->write( 'if (isset($context[' )
-            ->string( $name )
-            ->raw( '])) { $_' )
-            ->raw( $name )
-            ->raw( '_ = $context[' )
-            ->repr( $name )
-            ->raw( ']; } else { $_' )
-            ->raw( $name )
-            ->raw( "_ = null; }\n" );
+            ->addDebugInfo($this)
+            ->write('if (isset($context[')
+            ->string($name)
+            ->raw('])) { $_')
+            ->raw($name)
+            ->raw('_ = $context[')
+            ->repr($name)
+            ->raw(']; } else { $_')
+            ->raw($name)
+            ->raw("_ = null; }\n");
     }
 }

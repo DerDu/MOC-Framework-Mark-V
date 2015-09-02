@@ -146,19 +146,19 @@ class DbDeployTask extends Task
 
         try {
             // get correct DbmsSyntax object
-            $dbms = substr( $this->url, 0, strpos( $this->url, ':' ) );
-            $dbmsSyntaxFactory = new DbmsSyntaxFactory( $dbms );
+            $dbms = substr($this->url, 0, strpos($this->url, ':'));
+            $dbmsSyntaxFactory = new DbmsSyntaxFactory($dbms);
             $this->dbmsSyntax = $dbmsSyntaxFactory->getDbmsSyntax();
 
             // figure out which revisions are in the db already
             $this->appliedChangeNumbers = $this->getAppliedChangeNumbers();
-            $this->log( 'Current db revision: '.$this->getLastChangeAppliedInDb() );
-            $this->log( 'Checkall: '.( $this->checkall ? 'On' : 'Off' ) );
+            $this->log('Current db revision: '.$this->getLastChangeAppliedInDb());
+            $this->log('Checkall: '.( $this->checkall ? 'On' : 'Off' ));
 
             $this->deploy();
 
-        } catch( Exception $e ) {
-            throw new BuildException( $e );
+        } catch (Exception $e) {
+            throw new BuildException($e);
         }
     }
 
@@ -171,17 +171,17 @@ class DbDeployTask extends Task
     protected function getAppliedChangeNumbers()
     {
 
-        if (count( $this->appliedChangeNumbers ) == 0) {
-            $this->log( 'Getting applied changed numbers from DB: '.$this->url );
+        if (count($this->appliedChangeNumbers) == 0) {
+            $this->log('Getting applied changed numbers from DB: '.$this->url);
             $appliedChangeNumbers = array();
-            $dbh = new PDO( $this->url, $this->userid, $this->password );
-            $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            $this->dbmsSyntax->applyAttributes( $dbh );
+            $dbh = new PDO($this->url, $this->userid, $this->password);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbmsSyntax->applyAttributes($dbh);
             $sql = "SELECT *
                     FROM ".DbDeployTask::$TABLE_NAME."
                     WHERE delta_set = '$this->deltaSet'
                     ORDER BY change_number";
-            foreach ($dbh->query( $sql ) as $change) {
+            foreach ($dbh->query($sql) as $change) {
                 $appliedChangeNumbers[] = $change['change_number'];
             }
             $this->appliedChangeNumbers = $appliedChangeNumbers;
@@ -198,8 +198,8 @@ class DbDeployTask extends Task
     protected function getLastChangeAppliedInDb()
     {
 
-        return ( count( $this->appliedChangeNumbers ) > 0 )
-            ? max( $this->appliedChangeNumbers ) : 0;
+        return ( count($this->appliedChangeNumbers) > 0 )
+            ? max($this->appliedChangeNumbers) : 0;
     }
 
     /**
@@ -211,10 +211,10 @@ class DbDeployTask extends Task
     {
 
         // create deploy outputfile
-        $this->createOutputFile( $this->outputFile, false );
+        $this->createOutputFile($this->outputFile, false);
 
         // create undo deploy outputfile
-        $this->createOutputFile( $this->undoOutputFile, true );
+        $this->createOutputFile($this->undoOutputFile, true);
     }
 
     /**
@@ -225,12 +225,12 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    protected function createOutputFile( $file, $undo = false )
+    protected function createOutputFile($file, $undo = false)
     {
 
-        $fileHandle = fopen( $file, "w+" );
-        $sql = $this->generateSql( $undo );
-        fwrite( $fileHandle, $sql );
+        $fileHandle = fopen($file, "w+");
+        $sql = $this->generateSql($undo);
+        fwrite($fileHandle, $sql);
     }
 
     /**
@@ -240,16 +240,16 @@ class DbDeployTask extends Task
      *
      * @return string The sql
      */
-    protected function generateSql( $undo = false )
+    protected function generateSql($undo = false)
     {
 
         $sql = '';
         $lastChangeAppliedInDb = $this->getLastChangeAppliedInDb();
         $files = $this->getDeltasFilesArray();
-        $this->sortFiles( $files, $undo );
+        $this->sortFiles($files, $undo);
 
         foreach ($files as $fileChangeNumber => $fileName) {
-            if ($this->fileNeedsToBeRead( $fileChangeNumber, $lastChangeAppliedInDb )) {
+            if ($this->fileNeedsToBeRead($fileChangeNumber, $lastChangeAppliedInDb)) {
                 $sql .= '-- Fragment begins: '.$fileChangeNumber.' --'."\n";
 
                 if (!$undo) {
@@ -262,24 +262,24 @@ class DbDeployTask extends Task
 
                 // read the file
                 $fullFileName = $this->dir.'/'.$fileName;
-                $fh = fopen( $fullFileName, 'r' );
-                $contents = fread( $fh, filesize( $fullFileName ) );
+                $fh = fopen($fullFileName, 'r');
+                $contents = fread($fh, filesize($fullFileName));
                 // allow construct with and without space added
-                $split = strpos( $contents, '-- //@UNDO' );
+                $split = strpos($contents, '-- //@UNDO');
                 if ($split === false) {
-                    $split = strpos( $contents, '--//@UNDO' );
+                    $split = strpos($contents, '--//@UNDO');
                 }
                 if ($split === false) {
-                    $split = strlen( $contents );
+                    $split = strlen($contents);
                 }
 
                 if ($undo) {
-                    $sql .= substr( $contents, $split + 10 )."\n";
+                    $sql .= substr($contents, $split + 10)."\n";
                     $sql .= 'DELETE FROM '.DbDeployTask::$TABLE_NAME.'
 	                         WHERE change_number = '.$fileChangeNumber.'
 	                         AND delta_set = \''.$this->deltaSet.'\';'."\n";
                 } else {
-                    $sql .= substr( $contents, 0, $split );
+                    $sql .= substr($contents, 0, $split);
                     // Ensuring there's a newline after the final -- //
                     $sql .= PHP_EOL;
                     $sql .= 'UPDATE '.DbDeployTask::$TABLE_NAME.'
@@ -305,17 +305,17 @@ class DbDeployTask extends Task
 
         $files = array();
 
-        $baseDir = realpath( $this->dir );
-        $dh = opendir( $baseDir );
+        $baseDir = realpath($this->dir);
+        $dh = opendir($baseDir);
 
         if ($dh === false) {
             return $files;
         }
 
         $fileChangeNumberPrefix = '';
-        while (( $file = readdir( $dh ) ) !== false) {
-            if (preg_match( '[\d+]', $file, $fileChangeNumberPrefix )) {
-                $files[intval( $fileChangeNumberPrefix[0] )] = $file;
+        while (( $file = readdir($dh) ) !== false) {
+            if (preg_match('[\d+]', $file, $fileChangeNumberPrefix)) {
+                $files[intval($fileChangeNumberPrefix[0])] = $file;
             }
         }
 
@@ -330,13 +330,13 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    protected function sortFiles( &$files, $undo )
+    protected function sortFiles(&$files, $undo)
     {
 
         if ($undo) {
-            krsort( $files );
+            krsort($files);
         } else {
-            ksort( $files );
+            ksort($files);
         }
     }
 
@@ -349,11 +349,11 @@ class DbDeployTask extends Task
      *
      * @return bool   True or false if patch file needs to be deployed
      */
-    protected function fileNeedsToBeRead( $fileChangeNumber, $lastChangeAppliedInDb )
+    protected function fileNeedsToBeRead($fileChangeNumber, $lastChangeAppliedInDb)
     {
 
         if ($this->checkall) {
-            return ( !in_array( $fileChangeNumber, $this->appliedChangeNumbers ) );
+            return ( !in_array($fileChangeNumber, $this->appliedChangeNumbers) );
         } else {
             return ( $fileChangeNumber > $lastChangeAppliedInDb && $fileChangeNumber <= $this->lastChangeToApply );
         }
@@ -366,7 +366,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -379,7 +379,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setUserId( $userid )
+    public function setUserId($userid)
     {
 
         $this->userid = $userid;
@@ -392,7 +392,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;
@@ -405,7 +405,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setDir( $dir )
+    public function setDir($dir)
     {
 
         $this->dir = $dir;
@@ -418,7 +418,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setOutputFile( $outputFile )
+    public function setOutputFile($outputFile)
     {
 
         $this->outputFile = $outputFile;
@@ -431,7 +431,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setUndoOutputFile( $undoOutputFile )
+    public function setUndoOutputFile($undoOutputFile)
     {
 
         $this->undoOutputFile = $undoOutputFile;
@@ -444,7 +444,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setLastChangeToApply( $lastChangeToApply )
+    public function setLastChangeToApply($lastChangeToApply)
     {
 
         $this->lastChangeToApply = $lastChangeToApply;
@@ -457,7 +457,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setDeltaSet( $deltaSet )
+    public function setDeltaSet($deltaSet)
     {
 
         $this->deltaSet = $deltaSet;
@@ -470,7 +470,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setCheckAll( $checkall )
+    public function setCheckAll($checkall)
     {
 
         $this->checkall = (int)$checkall;
@@ -483,7 +483,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function setAppliedBy( $appliedBy )
+    public function setAppliedBy($appliedBy)
     {
 
         $this->appliedBy = $appliedBy;
@@ -496,7 +496,7 @@ class DbDeployTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;

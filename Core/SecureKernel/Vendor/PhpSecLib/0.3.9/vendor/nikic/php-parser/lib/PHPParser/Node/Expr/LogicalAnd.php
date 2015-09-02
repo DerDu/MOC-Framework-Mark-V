@@ -14,7 +14,7 @@ class PHPParser_Node_Expr_LogicalAnd extends PHPParser_Node_Expr
      * @param PHPParser_Node_Expr $right      The right hand side expression
      * @param array               $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Expr $left, PHPParser_Node_Expr $right, array $attributes = array() )
+    public function __construct(PHPParser_Node_Expr $left, PHPParser_Node_Expr $right, array $attributes = array())
     {
 
         parent::__construct(

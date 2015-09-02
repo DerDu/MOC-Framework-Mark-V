@@ -61,9 +61,9 @@ abstract class GitBaseTask extends Task
     {
 
         @include_once 'VersionControl/Git.php';
-        if (false == class_exists( 'VersionControl_Git' )) {
-            throw new BuildException( "The Git tasks depend on PEAR\'s "
-                ."VersionControl_Git package.", $this->getLocation() );
+        if (false == class_exists('VersionControl_Git')) {
+            throw new BuildException("The Git tasks depend on PEAR\'s "
+                ."VersionControl_Git package.", $this->getLocation());
         }
     }
 
@@ -74,7 +74,7 @@ abstract class GitBaseTask extends Task
      * @return null|VersionControl_Git
      * @throws BuildException
      */
-    protected function getGitClient( $reset = false, $repository = null )
+    protected function getGitClient($reset = false, $repository = null)
     {
 
         $this->gitClient = ( $reset === true ) ? null : $this->gitClient;
@@ -84,15 +84,15 @@ abstract class GitBaseTask extends Task
 
         if (null === $this->gitClient) {
             try {
-                $this->gitClient = new VersionControl_Git( $repository );
-            } catch( VersionControl_Git_Exception $e ) {
+                $this->gitClient = new VersionControl_Git($repository);
+            } catch (VersionControl_Git_Exception $e) {
                 // re-package
                 throw new BuildException(
-                    'You must specify readable directory as repository.', $e );
+                    'You must specify readable directory as repository.', $e);
 
             }
         }
-        $this->gitClient->setGitCommandPath( $this->getGitPath() );
+        $this->gitClient->setGitCommandPath($this->getGitPath());
 
         return $this->gitClient;
     }
@@ -115,7 +115,7 @@ abstract class GitBaseTask extends Task
      *
      * @return GitBaseTask
      */
-    public function setRepository( $repository )
+    public function setRepository($repository)
     {
 
         $this->repository = $repository;
@@ -141,7 +141,7 @@ abstract class GitBaseTask extends Task
      *
      * @return GitBaseTask
      */
-    public function setGitPath( $gitPath )
+    public function setGitPath($gitPath)
     {
 
         $this->gitPath = $gitPath;

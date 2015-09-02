@@ -30,7 +30,7 @@ class ExceptionComparator extends ObjectComparator
      *
      * @return boolean
      */
-    public function accepts( $expected, $actual )
+    public function accepts($expected, $actual)
     {
 
         return $expected instanceof \Exception && $actual instanceof \Exception;
@@ -44,10 +44,10 @@ class ExceptionComparator extends ObjectComparator
      *
      * @return array
      */
-    protected function toArray( $object )
+    protected function toArray($object)
     {
 
-        $array = parent::toArray( $object );
+        $array = parent::toArray($object);
 
         unset(
             $array['file'],

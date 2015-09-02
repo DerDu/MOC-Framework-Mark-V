@@ -29,7 +29,7 @@ namespace Pimple\Tests\Fixtures;
 class Invokable
 {
 
-    public function __invoke( $value = null )
+    public function __invoke($value = null)
     {
 
         $service = new Service();

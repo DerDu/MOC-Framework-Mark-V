@@ -15,9 +15,9 @@ class Twig_Tests_Node_BlockReferenceTest extends Twig_Test_NodeTestCase
     public function testConstructor()
     {
 
-        $node = new Twig_Node_BlockReference( 'foo', 1 );
+        $node = new Twig_Node_BlockReference('foo', 1);
 
-        $this->assertEquals( 'foo', $node->getAttribute( 'name' ) );
+        $this->assertEquals('foo', $node->getAttribute('name'));
     }
 
     public function getTests()
@@ -25,7 +25,7 @@ class Twig_Tests_Node_BlockReferenceTest extends Twig_Test_NodeTestCase
 
         return array(
             array(
-                new Twig_Node_BlockReference( 'foo', 1 ),
+                new Twig_Node_BlockReference('foo', 1),
                 <<<EOF
                // line 1
 \$this->displayBlock('foo', \$context, \$blocks);

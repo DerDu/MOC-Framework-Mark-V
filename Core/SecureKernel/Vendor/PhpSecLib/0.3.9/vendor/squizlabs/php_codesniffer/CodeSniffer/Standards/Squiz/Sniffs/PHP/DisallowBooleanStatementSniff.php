@@ -51,7 +51,7 @@ class Squiz_Sniffs_PHP_DisallowBooleanStatementSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -66,7 +66,7 @@ class Squiz_Sniffs_PHP_DisallowBooleanStatementSniff implements PHP_CodeSniffer_
         }
 
         $error = 'Boolean operators are not allowed outside of control structure conditions';
-        $phpcsFile->addError( $error, $stackPtr, 'Found' );
+        $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()
 

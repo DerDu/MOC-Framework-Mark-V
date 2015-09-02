@@ -60,15 +60,15 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_INC || $tokens[$stackPtr]['code'] === T_DEC) {
-            $this->processIncDec( $phpcsFile, $stackPtr );
+            $this->processIncDec($phpcsFile, $stackPtr);
         } else {
-            $this->processAssignment( $phpcsFile, $stackPtr );
+            $this->processAssignment($phpcsFile, $stackPtr);
         }
 
     }//end process()
@@ -83,7 +83,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    protected function processIncDec( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processIncDec(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -96,18 +96,18 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             $start = ( $stackPtr + 2 );
         }
 
-        $next = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, $start, null, true );
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $start, null, true);
         if ($next === false) {
             return;
         }
 
-        if (in_array( $tokens[$next]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens ) === true) {
+        if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens) === true) {
             $error = 'Increment and decrement operators cannot be used in an arithmetic operation';
-            $phpcsFile->addError( $error, $stackPtr, 'NotAllowed' );
+            $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
             return;
         }
 
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $start - 3 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $start - 3 ), null, true);
         if ($prev === false) {
             return;
         }
@@ -115,7 +115,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         // Check if this is in a string concat.
         if ($tokens[$next]['code'] === T_STRING_CONCAT || $tokens[$prev]['code'] === T_STRING_CONCAT) {
             $error = 'Increment and decrement operators must be bracketed when used in string concatenation';
-            $phpcsFile->addError( $error, $stackPtr, 'NoBrackets' );
+            $phpcsFile->addError($error, $stackPtr, 'NoBrackets');
         }
 
     }//end processIncDec()
@@ -130,33 +130,33 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    protected function processAssignment( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    protected function processAssignment(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVar = $phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
+        $assignedVar = $phpcsFile->findPrevious(T_WHITESPACE, ( $stackPtr - 1 ), null, true);
         // Not an assignment, return.
         if ($tokens[$assignedVar]['code'] !== T_VARIABLE) {
             return;
         }
 
-        $statementEnd = $phpcsFile->findNext( array(
+        $statementEnd = $phpcsFile->findNext(array(
             T_SEMICOLON,
             T_CLOSE_PARENTHESIS,
             T_CLOSE_SQUARE_BRACKET,
             T_CLOSE_CURLY_BRACKET
-        ), $stackPtr );
+        ), $stackPtr);
 
         // If there is anything other than variables, numbers, spaces or operators we need to return.
-        $noiseTokens = $phpcsFile->findNext( array(
+        $noiseTokens = $phpcsFile->findNext(array(
             T_LNUMBER,
             T_VARIABLE,
             T_WHITESPACE,
             T_PLUS,
             T_MINUS,
             T_OPEN_PARENTHESIS
-        ), ( $stackPtr + 1 ), $statementEnd, true );
+        ), ( $stackPtr + 1 ), $statementEnd, true);
 
         if ($noiseTokens !== false) {
             return;
@@ -165,7 +165,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         // If we are already using += or -=, we need to ignore
         // the statement if a variable is being used.
         if ($tokens[$stackPtr]['code'] !== T_EQUAL) {
-            $nextVar = $phpcsFile->findNext( T_VARIABLE, ( $stackPtr + 1 ), $statementEnd );
+            $nextVar = $phpcsFile->findNext(T_VARIABLE, ( $stackPtr + 1 ), $statementEnd);
             if ($nextVar !== false) {
                 return;
             }
@@ -175,7 +175,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             $nextVar = ( $stackPtr + 1 );
             $previousVariable = ( $stackPtr + 1 );
             $variableCount = 0;
-            while (( $nextVar = $phpcsFile->findNext( T_VARIABLE, ( $nextVar + 1 ), $statementEnd ) ) !== false) {
+            while (( $nextVar = $phpcsFile->findNext(T_VARIABLE, ( $nextVar + 1 ), $statementEnd) ) !== false) {
                 $previousVariable = $nextVar;
                 $variableCount++;
             }
@@ -195,8 +195,8 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $nextNumber = ( $stackPtr + 1 );
         $previousNumber = ( $stackPtr + 1 );
         $numberCount = 0;
-        while (( $nextNumber = $phpcsFile->findNext( array( T_LNUMBER ), ( $nextNumber + 1 ), $statementEnd,
-                false ) ) !== false) {
+        while (( $nextNumber = $phpcsFile->findNext(array(T_LNUMBER), ( $nextNumber + 1 ), $statementEnd,
+                false) ) !== false) {
             $previousNumber = $nextNumber;
             $numberCount++;
         }
@@ -208,7 +208,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $nextNumber = $previousNumber;
         if ($tokens[$nextNumber]['content'] === '1') {
             if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-                $opToken = $phpcsFile->findNext( array( T_PLUS, T_MINUS ), ( $nextVar + 1 ), $statementEnd );
+                $opToken = $phpcsFile->findNext(array(T_PLUS, T_MINUS), ( $nextVar + 1 ), $statementEnd);
                 if ($opToken === false) {
                     // Operator was before the variable, like:
                     // $var = 1 + $var;
@@ -218,20 +218,20 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
                 $operator = $tokens[$opToken]['content'];
             } else {
-                $operator = substr( $tokens[$stackPtr]['content'], 0, 1 );
+                $operator = substr($tokens[$stackPtr]['content'], 0, 1);
             }
 
             // If we are adding or subtracting negative value, the operator
             // needs to be reversed.
             if ($tokens[$stackPtr]['code'] !== T_EQUAL) {
-                $negative = $phpcsFile->findPrevious( T_MINUS, ( $nextNumber - 1 ), $stackPtr );
+                $negative = $phpcsFile->findPrevious(T_MINUS, ( $nextNumber - 1 ), $stackPtr);
                 if ($negative !== false) {
                     $operator = ( $operator === '+' ) ? '-' : '+';
                 }
             }
 
             $expected = $tokens[$assignedVar]['content'].$operator.$operator;
-            $found = $phpcsFile->getTokensAsString( $assignedVar, ( $statementEnd - $assignedVar + 1 ) );
+            $found = $phpcsFile->getTokensAsString($assignedVar, ( $statementEnd - $assignedVar + 1 ));
 
             if ($operator === '+') {
                 $error = 'Increment';
@@ -240,7 +240,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             }
 
             $error .= " operators should be used where possible; found \"$found\" but expected \"$expected\"";
-            $phpcsFile->addError( $error, $stackPtr );
+            $phpcsFile->addError($error, $stackPtr);
         }//end if
 
     }//end processAssignment()

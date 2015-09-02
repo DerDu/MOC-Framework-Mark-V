@@ -27,7 +27,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
     protected function startRun()
     {
 
-        $this->write( '<html><body>' );
+        $this->write('<html><body>');
     }
 
     /**
@@ -35,7 +35,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function startClass( $name )
+    protected function startClass($name)
     {
 
         $this->write(
@@ -50,7 +50,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      * @param string $name
      * @param bool   $success
      */
-    protected function onTest( $name, $success = true )
+    protected function onTest($name, $success = true)
     {
 
         if (!$success) {
@@ -61,7 +61,7 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
             $strikeClose = '';
         }
 
-        $this->write( '<li>'.$strikeOpen.$name.$strikeClose.'</li>' );
+        $this->write('<li>'.$strikeOpen.$name.$strikeClose.'</li>');
     }
 
     /**
@@ -69,10 +69,10 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      *
      * @param string $name
      */
-    protected function endClass( $name )
+    protected function endClass($name)
     {
 
-        $this->write( '</ul>' );
+        $this->write('</ul>');
     }
 
     /**
@@ -81,6 +81,6 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
     protected function endRun()
     {
 
-        $this->write( '</body></html>' );
+        $this->write('</body></html>');
     }
 }

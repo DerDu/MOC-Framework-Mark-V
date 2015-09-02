@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -58,14 +58,14 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         // Find the content of each class definition name.
         $classNames = array();
-        $next = $phpcsFile->findNext( T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ) );
+        $next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ( $stackPtr + 1 ));
         if ($next === false) {
             // No class definitions in the file.
             return;
@@ -78,7 +78,7 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
         );
 
         while ($next !== false) {
-            $prev = $phpcsFile->findPrevious( $find, ( $next - 1 ) );
+            $prev = $phpcsFile->findPrevious($find, ( $next - 1 ));
 
             // Create a sorted name for the class so we can compare classes
             // even when the individual names are all over the place.
@@ -87,25 +87,25 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
                 $name .= $tokens[$i]['content'];
             }
 
-            $name = trim( $name );
-            $name = str_replace( "\n", ' ', $name );
-            $name = preg_replace( '|[\s]+|', ' ', $name );
-            $name = str_replace( ', ', ',', $name );
+            $name = trim($name);
+            $name = str_replace("\n", ' ', $name);
+            $name = preg_replace('|[\s]+|', ' ', $name);
+            $name = str_replace(', ', ',', $name);
 
-            $names = explode( ',', $name );
-            sort( $names );
-            $name = implode( ',', $names );
+            $names = explode(',', $name);
+            sort($names);
+            $name = implode(',', $names);
 
             if (isset( $classNames[$name] ) === true) {
                 $first = $classNames[$name];
                 $error = 'Duplicate class definition found; first defined on line %s';
-                $data = array( $tokens[$first]['line'] );
-                $phpcsFile->addError( $error, $next, 'Found', $data );
+                $data = array($tokens[$first]['line']);
+                $phpcsFile->addError($error, $next, 'Found', $data);
             } else {
                 $classNames[$name] = $next;
             }
 
-            $next = $phpcsFile->findNext( T_OPEN_CURLY_BRACKET, ( $next + 1 ) );
+            $next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ( $next + 1 ));
         }//end while
 
     }//end process()

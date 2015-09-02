@@ -19,18 +19,18 @@ class MethodClassVisitorTest extends \PHPUnit_Framework_TestCase
     public function testAddsMethods()
     {
 
-        $class = $this->getMock( 'Sami\Reflection\ClassReflection', array( 'getTags' ), array( 'Mock', 1 ) );
+        $class = $this->getMock('Sami\Reflection\ClassReflection', array('getTags'), array('Mock', 1));
         $property = array(
-            explode( ' ', 'string askQuestion() Ask 3 questions' )
+            explode(' ', 'string askQuestion() Ask 3 questions')
         );
-        $class->expects( $this->any() )
-            ->method( 'getTags' )
-            ->with( $this->equalTo( 'method' ) )
-            ->will( $this->returnValue( $property ) );
+        $class->expects($this->any())
+            ->method('getTags')
+            ->with($this->equalTo('method'))
+            ->will($this->returnValue($property));
 
         $visitor = new MethodClassVisitor();
-        $visitor->visit( $class );
+        $visitor->visit($class);
 
-        $this->assertTrue( array_key_exists( 'askQuestion', $class->getMethods() ) );
+        $this->assertTrue(array_key_exists('askQuestion', $class->getMethods()));
     }
 }

@@ -31,7 +31,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @param Twig_Environment $env A Twig_Environment instance
      */
-    public function __construct( Twig_Environment $env )
+    public function __construct(Twig_Environment $env)
     {
 
         $this->env = $env;
@@ -66,11 +66,11 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @return string The rendered block
      */
-    public function renderParentBlock( $name, array $context, array $blocks = array() )
+    public function renderParentBlock($name, array $context, array $blocks = array())
     {
 
         ob_start();
-        $this->displayParentBlock( $name, $context, $blocks );
+        $this->displayParentBlock($name, $context, $blocks);
 
         return ob_get_clean();
     }
@@ -85,18 +85,18 @@ abstract class Twig_Template implements Twig_TemplateInterface
      * @param array  $context The context
      * @param array  $blocks  The current set of blocks
      */
-    public function displayParentBlock( $name, array $context, array $blocks = array() )
+    public function displayParentBlock($name, array $context, array $blocks = array())
     {
 
         $name = (string)$name;
 
         if (isset( $this->traits[$name] )) {
-            $this->traits[$name][0]->displayBlock( $name, $context, $blocks, false );
-        } elseif (false !== $parent = $this->getParent( $context )) {
-            $parent->displayBlock( $name, $context, $blocks, false );
+            $this->traits[$name][0]->displayBlock($name, $context, $blocks, false);
+        } elseif (false !== $parent = $this->getParent($context)) {
+            $parent->displayBlock($name, $context, $blocks, false);
         } else {
-            throw new Twig_Error_Runtime( sprintf( 'The template has no parent and no traits defining the "%s" block',
-                $name ), -1, $this->getTemplateName() );
+            throw new Twig_Error_Runtime(sprintf('The template has no parent and no traits defining the "%s" block',
+                $name), -1, $this->getTemplateName());
         }
     }
 
@@ -110,7 +110,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @return Twig_TemplateInterface|false The parent template or false if there is no parent
      */
-    public function getParent( array $context )
+    public function getParent(array $context)
     {
 
         if (null !== $this->parent) {
@@ -118,7 +118,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         }
 
         try {
-            $parent = $this->doGetParent( $context );
+            $parent = $this->doGetParent($context);
 
             if (false === $parent) {
                 return false;
@@ -129,10 +129,10 @@ abstract class Twig_Template implements Twig_TemplateInterface
             }
 
             if (!isset( $this->parents[$parent] )) {
-                $this->parents[$parent] = $this->loadTemplate( $parent );
+                $this->parents[$parent] = $this->loadTemplate($parent);
             }
-        } catch( Twig_Error_Loader $e ) {
-            $e->setTemplateFile( null );
+        } catch (Twig_Error_Loader $e) {
+            $e->setTemplateFile(null);
             $e->guess();
 
             throw $e;
@@ -141,7 +141,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         return $this->parents[$parent];
     }
 
-    protected function doGetParent( array $context )
+    protected function doGetParent(array $context)
     {
 
         return false;
@@ -154,22 +154,22 @@ abstract class Twig_Template implements Twig_TemplateInterface
      */
     abstract public function getTemplateName();
 
-    protected function loadTemplate( $template, $templateName = null, $line = null, $index = null )
+    protected function loadTemplate($template, $templateName = null, $line = null, $index = null)
     {
 
         try {
-            if (is_array( $template )) {
-                return $this->env->resolveTemplate( $template );
+            if (is_array($template)) {
+                return $this->env->resolveTemplate($template);
             }
 
             if ($template instanceof self) {
                 return $template;
             }
 
-            return $this->env->loadTemplate( $template, $index );
-        } catch( Twig_Error $e ) {
+            return $this->env->loadTemplate($template, $index);
+        } catch (Twig_Error $e) {
             if (!$e->getTemplateFile()) {
-                $e->setTemplateFile( $templateName ? $templateName : $this->getTemplateName() );
+                $e->setTemplateFile($templateName ? $templateName : $this->getTemplateName());
             }
 
             if ($e->getTemplateLine()) {
@@ -179,7 +179,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
             if (!$line) {
                 $e->guess();
             } else {
-                $e->setTemplateLine( $line );
+                $e->setTemplateLine($line);
             }
 
             throw $e;
@@ -199,11 +199,11 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @return string The rendered block
      */
-    public function renderBlock( $name, array $context, array $blocks = array(), $useBlocks = true )
+    public function renderBlock($name, array $context, array $blocks = array(), $useBlocks = true)
     {
 
         ob_start();
-        $this->displayBlock( $name, $context, $blocks, $useBlocks );
+        $this->displayBlock($name, $context, $blocks, $useBlocks);
 
         return ob_get_clean();
     }
@@ -219,7 +219,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      * @param array  $blocks    The current set of blocks
      * @param bool   $useBlocks Whether to use the current set of blocks
      */
-    public function displayBlock( $name, array $context, array $blocks = array(), $useBlocks = true )
+    public function displayBlock($name, array $context, array $blocks = array(), $useBlocks = true)
     {
 
         $name = (string)$name;
@@ -237,15 +237,15 @@ abstract class Twig_Template implements Twig_TemplateInterface
 
         if (null !== $template) {
             try {
-                $template->$block( $context, $blocks );
-            } catch( Twig_Error $e ) {
+                $template->$block($context, $blocks);
+            } catch (Twig_Error $e) {
                 throw $e;
-            } catch( Exception $e ) {
-                throw new Twig_Error_Runtime( sprintf( 'An exception has been thrown during the rendering of a template ("%s").',
-                    $e->getMessage() ), -1, $template->getTemplateName(), $e );
+            } catch (Exception $e) {
+                throw new Twig_Error_Runtime(sprintf('An exception has been thrown during the rendering of a template ("%s").',
+                    $e->getMessage()), -1, $template->getTemplateName(), $e);
             }
-        } elseif (false !== $parent = $this->getParent( $context )) {
-            $parent->displayBlock( $name, $context, array_merge( $this->blocks, $blocks ), false );
+        } elseif (false !== $parent = $this->getParent($context)) {
+            $parent->displayBlock($name, $context, array_merge($this->blocks, $blocks), false);
         }
     }
 
@@ -266,7 +266,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @return bool true if the block exists, false otherwise
      */
-    public function hasBlock( $name )
+    public function hasBlock($name)
     {
 
         return isset( $this->blocks[(string)$name] );
@@ -285,7 +285,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
     public function getBlockNames()
     {
 
-        return array_keys( $this->blocks );
+        return array_keys($this->blocks);
     }
 
     /**
@@ -307,14 +307,14 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * {@inheritdoc}
      */
-    public function render( array $context )
+    public function render(array $context)
     {
 
         $level = ob_get_level();
         ob_start();
         try {
-            $this->display( $context );
-        } catch( Exception $e ) {
+            $this->display($context);
+        } catch (Exception $e) {
             while (ob_get_level() > $level) {
                 ob_end_clean();
             }
@@ -328,33 +328,33 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * {@inheritdoc}
      */
-    public function display( array $context, array $blocks = array() )
+    public function display(array $context, array $blocks = array())
     {
 
-        $this->displayWithErrorHandling( $this->env->mergeGlobals( $context ), array_merge( $this->blocks, $blocks ) );
+        $this->displayWithErrorHandling($this->env->mergeGlobals($context), array_merge($this->blocks, $blocks));
     }
 
-    protected function displayWithErrorHandling( array $context, array $blocks = array() )
+    protected function displayWithErrorHandling(array $context, array $blocks = array())
     {
 
         try {
-            $this->doDisplay( $context, $blocks );
-        } catch( Twig_Error $e ) {
+            $this->doDisplay($context, $blocks);
+        } catch (Twig_Error $e) {
             if (!$e->getTemplateFile()) {
-                $e->setTemplateFile( $this->getTemplateName() );
+                $e->setTemplateFile($this->getTemplateName());
             }
 
             // this is mostly useful for Twig_Error_Loader exceptions
             // see Twig_Error_Loader
             if (false === $e->getTemplateLine()) {
-                $e->setTemplateLine( -1 );
+                $e->setTemplateLine(-1);
                 $e->guess();
             }
 
             throw $e;
-        } catch( Exception $e ) {
-            throw new Twig_Error_Runtime( sprintf( 'An exception has been thrown during the rendering of a template ("%s").',
-                $e->getMessage() ), -1, $this->getTemplateName(), $e );
+        } catch (Exception $e) {
+            throw new Twig_Error_Runtime(sprintf('An exception has been thrown during the rendering of a template ("%s").',
+                $e->getMessage()), -1, $this->getTemplateName(), $e);
         }
     }
 
@@ -364,7 +364,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      * @param array $context An array of parameters to pass to the template
      * @param array $blocks  An array of blocks to pass to the template
      */
-    abstract protected function doDisplay( array $context, array $blocks = array() );
+    abstract protected function doDisplay(array $context, array $blocks = array());
 
     /**
      * Returns a variable from the context.
@@ -385,16 +385,16 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @throws Twig_Error_Runtime if the variable does not exist and Twig is running in strict mode
      */
-    final protected function getContext( $context, $item, $ignoreStrictCheck = false )
+    final protected function getContext($context, $item, $ignoreStrictCheck = false)
     {
 
-        if (!array_key_exists( $item, $context )) {
+        if (!array_key_exists($item, $context)) {
             if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
                 return;
             }
 
-            throw new Twig_Error_Runtime( sprintf( 'Variable "%s" does not exist', $item ), -1,
-                $this->getTemplateName() );
+            throw new Twig_Error_Runtime(sprintf('Variable "%s" does not exist', $item), -1,
+                $this->getTemplateName());
         }
 
         return $context[$item];
@@ -425,9 +425,9 @@ abstract class Twig_Template implements Twig_TemplateInterface
 
         // array
         if (self::METHOD_CALL !== $type) {
-            $arrayItem = is_bool( $item ) || is_float( $item ) ? (int)$item : $item;
+            $arrayItem = is_bool($item) || is_float($item) ? (int)$item : $item;
 
-            if (( is_array( $object ) && array_key_exists( $arrayItem, $object ) )
+            if (( is_array($object) && array_key_exists($arrayItem, $object) )
                 || ( $object instanceof ArrayAccess && isset( $object[$arrayItem] ) )
             ) {
                 if ($isDefinedTest) {
@@ -437,7 +437,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
                 return $object[$arrayItem];
             }
 
-            if (self::ARRAY_CALL === $type || !is_object( $object )) {
+            if (self::ARRAY_CALL === $type || !is_object($object)) {
                 if ($isDefinedTest) {
                     return false;
                 }
@@ -447,37 +447,37 @@ abstract class Twig_Template implements Twig_TemplateInterface
                 }
 
                 if ($object instanceof ArrayAccess) {
-                    $message = sprintf( 'Key "%s" in object with ArrayAccess of class "%s" does not exist', $arrayItem,
-                        get_class( $object ) );
-                } elseif (is_object( $object )) {
-                    $message = sprintf( 'Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface',
-                        $item, get_class( $object ) );
-                } elseif (is_array( $object )) {
+                    $message = sprintf('Key "%s" in object with ArrayAccess of class "%s" does not exist', $arrayItem,
+                        get_class($object));
+                } elseif (is_object($object)) {
+                    $message = sprintf('Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface',
+                        $item, get_class($object));
+                } elseif (is_array($object)) {
                     if (empty( $object )) {
-                        $message = sprintf( 'Key "%s" does not exist as the array is empty', $arrayItem );
+                        $message = sprintf('Key "%s" does not exist as the array is empty', $arrayItem);
                     } else {
-                        $message = sprintf( 'Key "%s" for array with keys "%s" does not exist', $arrayItem,
-                            implode( ', ', array_keys( $object ) ) );
+                        $message = sprintf('Key "%s" for array with keys "%s" does not exist', $arrayItem,
+                            implode(', ', array_keys($object)));
                     }
                 } elseif (self::ARRAY_CALL === $type) {
                     if (null === $object) {
-                        $message = sprintf( 'Impossible to access a key ("%s") on a null variable', $item );
+                        $message = sprintf('Impossible to access a key ("%s") on a null variable', $item);
                     } else {
-                        $message = sprintf( 'Impossible to access a key ("%s") on a %s variable ("%s")', $item,
-                            gettype( $object ), $object );
+                        $message = sprintf('Impossible to access a key ("%s") on a %s variable ("%s")', $item,
+                            gettype($object), $object);
                     }
                 } elseif (null === $object) {
-                    $message = sprintf( 'Impossible to access an attribute ("%s") on a null variable', $item );
+                    $message = sprintf('Impossible to access an attribute ("%s") on a null variable', $item);
                 } else {
-                    $message = sprintf( 'Impossible to access an attribute ("%s") on a %s variable ("%s")', $item,
-                        gettype( $object ), $object );
+                    $message = sprintf('Impossible to access an attribute ("%s") on a %s variable ("%s")', $item,
+                        gettype($object), $object);
                 }
 
-                throw new Twig_Error_Runtime( $message, -1, $this->getTemplateName() );
+                throw new Twig_Error_Runtime($message, -1, $this->getTemplateName());
             }
         }
 
-        if (!is_object( $object )) {
+        if (!is_object($object)) {
             if ($isDefinedTest) {
                 return false;
             }
@@ -487,39 +487,39 @@ abstract class Twig_Template implements Twig_TemplateInterface
             }
 
             if (null === $object) {
-                $message = sprintf( 'Impossible to invoke a method ("%s") on a null variable', $item );
+                $message = sprintf('Impossible to invoke a method ("%s") on a null variable', $item);
             } else {
-                $message = sprintf( 'Impossible to invoke a method ("%s") on a %s variable ("%s")', $item,
-                    gettype( $object ), $object );
+                $message = sprintf('Impossible to invoke a method ("%s") on a %s variable ("%s")', $item,
+                    gettype($object), $object);
             }
 
-            throw new Twig_Error_Runtime( $message, -1, $this->getTemplateName() );
+            throw new Twig_Error_Runtime($message, -1, $this->getTemplateName());
         }
 
         // object property
         if (self::METHOD_CALL !== $type) {
-            if (isset( $object->$item ) || array_key_exists( (string)$item, $object )) {
+            if (isset( $object->$item ) || array_key_exists((string)$item, $object)) {
                 if ($isDefinedTest) {
                     return true;
                 }
 
-                if ($this->env->hasExtension( 'sandbox' )) {
-                    $this->env->getExtension( 'sandbox' )->checkPropertyAllowed( $object, $item );
+                if ($this->env->hasExtension('sandbox')) {
+                    $this->env->getExtension('sandbox')->checkPropertyAllowed($object, $item);
                 }
 
                 return $object->$item;
             }
         }
 
-        $class = get_class( $object );
+        $class = get_class($object);
 
         // object method
         if (!isset( self::$cache[$class]['methods'] )) {
-            self::$cache[$class]['methods'] = array_change_key_case( array_flip( get_class_methods( $object ) ) );
+            self::$cache[$class]['methods'] = array_change_key_case(array_flip(get_class_methods($object)));
         }
 
         $call = false;
-        $lcItem = strtolower( $item );
+        $lcItem = strtolower($item);
         if (isset( self::$cache[$class]['methods'][$lcItem] )) {
             $method = (string)$item;
         } elseif (isset( self::$cache[$class]['methods']['get'.$lcItem] )) {
@@ -538,23 +538,23 @@ abstract class Twig_Template implements Twig_TemplateInterface
                 return;
             }
 
-            throw new Twig_Error_Runtime( sprintf( 'Method "%s" for object "%s" does not exist', $item,
-                get_class( $object ) ), -1, $this->getTemplateName() );
+            throw new Twig_Error_Runtime(sprintf('Method "%s" for object "%s" does not exist', $item,
+                get_class($object)), -1, $this->getTemplateName());
         }
 
         if ($isDefinedTest) {
             return true;
         }
 
-        if ($this->env->hasExtension( 'sandbox' )) {
-            $this->env->getExtension( 'sandbox' )->checkMethodAllowed( $object, $method );
+        if ($this->env->hasExtension('sandbox')) {
+            $this->env->getExtension('sandbox')->checkMethodAllowed($object, $method);
         }
 
         // Some objects throw exceptions when they have __call, and the method we try
         // to call is not supported. If ignoreStrictCheck is true, we should return null.
         try {
-            $ret = call_user_func_array( array( $object, $method ), $arguments );
-        } catch( BadMethodCallException $e ) {
+            $ret = call_user_func_array(array($object, $method), $arguments);
+        } catch (BadMethodCallException $e) {
             if ($call && ( $ignoreStrictCheck || !$this->env->isStrictVariables() )) {
                 return;
             }
@@ -564,7 +564,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         // useful when calling a template method from a template
         // this is not supported but unfortunately heavily used in the Symfony profiler
         if ($object instanceof Twig_TemplateInterface) {
-            return $ret === '' ? '' : new Twig_Markup( $ret, $this->env->getCharset() );
+            return $ret === '' ? '' : new Twig_Markup($ret, $this->env->getCharset());
         }
 
         return $ret;

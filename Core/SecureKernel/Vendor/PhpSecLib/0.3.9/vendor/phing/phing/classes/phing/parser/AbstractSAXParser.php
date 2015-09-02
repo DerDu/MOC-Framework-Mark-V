@@ -53,7 +53,7 @@ abstract class AbstractSAXParser
      *
      * @return
      */
-    abstract public function parserSetOption( $opt, $val );
+    abstract public function parserSetOption($opt, $val);
 
     /**
      * Sets the current element handler object for this parser. Usually this
@@ -61,7 +61,7 @@ abstract class AbstractSAXParser
      *
      * @param AbstractHandler $obj The handler object.
      */
-    public function setHandler( $obj )
+    public function setHandler($obj)
     {
 
         $this->handler = $obj;
@@ -81,10 +81,10 @@ abstract class AbstractSAXParser
      *
      * @throws Exception - Exceptions may be thrown by the Handler
      */
-    public function startElement( $parser, $name, $attribs )
+    public function startElement($parser, $name, $attribs)
     {
 
-        $this->handler->startElement( $name, $attribs );
+        $this->handler->startElement($name, $attribs);
     }
 
     /**
@@ -101,10 +101,10 @@ abstract class AbstractSAXParser
      *
      * @throws Exception - Exceptions may be thrown by the Handler
      */
-    public function endElement( $parser, $name )
+    public function endElement($parser, $name)
     {
 
-        $this->handler->endElement( $name );
+        $this->handler->endElement($name);
     }
 
     /**
@@ -121,10 +121,10 @@ abstract class AbstractSAXParser
      *
      * @throws Exception - Exceptions may be thrown by the Handler
      */
-    public function characters( $parser, $data )
+    public function characters($parser, $data)
     {
 
-        $this->handler->characters( $data );
+        $this->handler->characters($data);
     }
 
     /**

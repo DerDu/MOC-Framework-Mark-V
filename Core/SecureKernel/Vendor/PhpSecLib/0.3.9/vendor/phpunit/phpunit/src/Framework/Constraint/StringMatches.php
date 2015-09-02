@@ -26,19 +26,19 @@ class PHPUnit_Framework_Constraint_StringMatches extends PHPUnit_Framework_Const
     /**
      * @param string $string
      */
-    public function __construct( $string )
+    public function __construct($string)
     {
 
-        parent::__construct( $string );
+        parent::__construct($string);
 
         $this->pattern = $this->createPatternFromFormat(
-            preg_replace( '/\r\n/', "\n", $string )
+            preg_replace('/\r\n/', "\n", $string)
         );
 
         $this->string = $string;
     }
 
-    protected function createPatternFromFormat( $string )
+    protected function createPatternFromFormat($string)
     {
 
         $string = str_replace(
@@ -68,39 +68,39 @@ class PHPUnit_Framework_Constraint_StringMatches extends PHPUnit_Framework_Const
                 '[+-]?\.?\d+\.?\d*(?:[Ee][+-]?\d+)?',
                 '.'
             ),
-            preg_quote( $string, '/' )
+            preg_quote($string, '/')
         );
 
         return '/^'.$string.'$/s';
     }
 
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return 'format description matches text';
     }
 
-    protected function additionalFailureDescription( $other )
+    protected function additionalFailureDescription($other)
     {
 
-        $from = preg_split( '(\r\n|\r|\n)', $this->string );
-        $to = preg_split( '(\r\n|\r|\n)', $other );
+        $from = preg_split('(\r\n|\r|\n)', $this->string);
+        $to = preg_split('(\r\n|\r|\n)', $other);
 
         foreach ($from as $index => $line) {
             if (isset( $to[$index] ) && $line !== $to[$index]) {
-                $line = $this->createPatternFromFormat( $line );
+                $line = $this->createPatternFromFormat($line);
 
-                if (preg_match( $line, $to[$index] ) > 0) {
+                if (preg_match($line, $to[$index]) > 0) {
                     $from[$index] = $to[$index];
                 }
             }
         }
 
-        $this->string = implode( "\n", $from );
-        $other = implode( "\n", $to );
+        $this->string = implode("\n", $from);
+        $other = implode("\n", $to);
 
-        $differ = new Differ( "--- Expected\n+++ Actual\n" );
+        $differ = new Differ("--- Expected\n+++ Actual\n");
 
-        return $differ->diff( $this->string, $other );
+        return $differ->diff($this->string, $other);
     }
 }

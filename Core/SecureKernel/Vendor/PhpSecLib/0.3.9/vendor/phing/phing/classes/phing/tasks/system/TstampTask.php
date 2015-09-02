@@ -45,7 +45,7 @@ class TstampTask extends Task
      *
      * @param string $prefix the prefix to use.
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->prefix = $prefix;
@@ -60,7 +60,7 @@ class TstampTask extends Task
      *
      * @param TstampCustomFormat custom format
      */
-    public function addFormat( TstampCustomFormat $cf )
+    public function addFormat(TstampCustomFormat $cf)
     {
 
         $this->customFormats[] = $cf;
@@ -76,17 +76,17 @@ class TstampTask extends Task
     {
 
         foreach ($this->customFormats as $cf) {
-            $cf->execute( $this );
+            $cf->execute($this);
         }
 
-        $dstamp = strftime( '%Y%m%d' );
-        $this->prefixProperty( 'DSTAMP', $dstamp );
+        $dstamp = strftime('%Y%m%d');
+        $this->prefixProperty('DSTAMP', $dstamp);
 
-        $tstamp = strftime( '%H%M' );
-        $this->prefixProperty( 'TSTAMP', $tstamp );
+        $tstamp = strftime('%H%M');
+        $this->prefixProperty('TSTAMP', $tstamp);
 
-        $today = strftime( '%B %d %Y' );
-        $this->prefixProperty( 'TODAY', $today );
+        $today = strftime('%B %d %Y');
+        $this->prefixProperty('TODAY', $today);
     }
 
     /**
@@ -96,10 +96,10 @@ class TstampTask extends Task
      * @param $name
      * @param $value
      */
-    public function prefixProperty( $name, $value )
+    public function prefixProperty($name, $value)
     {
 
-        $this->getProject()->setNewProperty( $this->prefix.$name, $value );
+        $this->getProject()->setNewProperty($this->prefix.$name, $value);
     }
 }
 
@@ -118,7 +118,7 @@ class TstampCustomFormat
      *
      * @param string $propertyName the name of the property.
      */
-    public function setProperty( $propertyName )
+    public function setProperty($propertyName)
     {
 
         $this->propertyName = $propertyName;
@@ -130,7 +130,7 @@ class TstampCustomFormat
      *
      * @param pattern
      */
-    public function setPattern( $pattern )
+    public function setPattern($pattern)
     {
 
         $this->pattern = $pattern;
@@ -141,7 +141,7 @@ class TstampCustomFormat
      *
      * @param string $locale
      */
-    public function setLocale( $locale )
+    public function setLocale($locale)
     {
 
         $this->locale = $locale;
@@ -154,27 +154,27 @@ class TstampCustomFormat
      *
      * @throws BuildException
      */
-    public function execute( TstampTask $tstamp )
+    public function execute(TstampTask $tstamp)
     {
 
         if (empty( $this->propertyName )) {
-            throw new BuildException( "property attribute must be provided" );
+            throw new BuildException("property attribute must be provided");
         }
 
         if (empty( $this->pattern )) {
-            throw new BuildException( "pattern attribute must be provided" );
+            throw new BuildException("pattern attribute must be provided");
         }
 
         if (!empty( $this->locale )) {
-            setlocale( LC_ALL, $this->locale );
+            setlocale(LC_ALL, $this->locale);
         }
 
-        $value = strftime( $this->pattern );
-        $tstamp->prefixProperty( $this->propertyName, $value );
+        $value = strftime($this->pattern);
+        $tstamp->prefixProperty($this->propertyName, $value);
 
         if (!empty( $this->locale )) {
             // reset locale
-            setlocale( LC_ALL, null );
+            setlocale(LC_ALL, null);
         }
     }
 }

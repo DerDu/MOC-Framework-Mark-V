@@ -36,12 +36,12 @@ class PHPUnit_Framework_MockObject_Matcher_MethodName extends PHPUnit_Framework_
      *
      * @throws PHPUnit_Framework_Constraint
      */
-    public function __construct( $constraint )
+    public function __construct($constraint)
     {
 
         if (!$constraint instanceof PHPUnit_Framework_Constraint) {
-            if (!is_string( $constraint )) {
-                throw PHPUnit_Util_InvalidArgumentHelper::factory( 1, 'string' );
+            if (!is_string($constraint)) {
+                throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
             }
 
             $constraint = new PHPUnit_Framework_Constraint_IsEqual(
@@ -70,9 +70,9 @@ class PHPUnit_Framework_MockObject_Matcher_MethodName extends PHPUnit_Framework_
      *
      * @return boolean
      */
-    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
-        return $this->constraint->evaluate( $invocation->methodName, '', true );
+        return $this->constraint->evaluate($invocation->methodName, '', true);
     }
 }

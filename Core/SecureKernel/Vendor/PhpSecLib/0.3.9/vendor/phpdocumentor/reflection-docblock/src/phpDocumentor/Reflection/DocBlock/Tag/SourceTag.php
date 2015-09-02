@@ -53,10 +53,10 @@ class SourceTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        parent::setContent( $content );
+        parent::setContent($content);
         if (preg_match(
             '/^
                 # Starting line
@@ -77,7 +77,7 @@ class SourceTag extends Tag
             if (isset( $matches[2] ) && '' !== $matches[2]) {
                 $this->lineCount = (int)$matches[2];
             }
-            $this->setDescription( $matches[3] );
+            $this->setDescription($matches[3]);
             $this->content = $content;
         }
 
@@ -104,7 +104,7 @@ class SourceTag extends Tag
      *
      * @return $this
      */
-    public function setStartingLine( $startingLine )
+    public function setStartingLine($startingLine)
     {
 
         $this->startingLine = $startingLine;
@@ -133,7 +133,7 @@ class SourceTag extends Tag
      *
      * @return $this
      */
-    public function setLineCount( $lineCount )
+    public function setLineCount($lineCount)
     {
 
         $this->lineCount = $lineCount;

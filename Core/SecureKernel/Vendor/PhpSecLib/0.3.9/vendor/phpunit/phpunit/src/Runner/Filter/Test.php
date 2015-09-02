@@ -32,24 +32,24 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
      * @param RecursiveIterator $iterator
      * @param string            $filter
      */
-    public function __construct( RecursiveIterator $iterator, $filter )
+    public function __construct(RecursiveIterator $iterator, $filter)
     {
 
-        parent::__construct( $iterator );
-        $this->setFilter( $filter );
+        parent::__construct($iterator);
+        $this->setFilter($filter);
     }
 
     /**
      * @param string $filter
      */
-    protected function setFilter( $filter )
+    protected function setFilter($filter)
     {
 
-        if (PHPUnit_Util_Regex::pregMatchSafe( $filter, '' ) === false) {
+        if (PHPUnit_Util_Regex::pregMatchSafe($filter, '') === false) {
             // Handles:
             //  * testAssertEqualsSucceeds#4
             //  * testAssertEqualsSucceeds#4-8
-            if (preg_match( '/^(.*?)#(\d+)(?:-(\d+))?$/', $filter, $matches )) {
+            if (preg_match('/^(.*?)#(\d+)(?:-(\d+))?$/', $filter, $matches)) {
                 if (isset( $matches[3] ) && $matches[2] < $matches[3]) {
                     $filter = sprintf(
                         '%s.*with data set #(\d+)$',
@@ -68,7 +68,7 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
             } // Handles:
             //  * testDetermineJsonError@JSON_ERROR_NONE
             //  * testDetermineJsonError@JSON.*
-            elseif (preg_match( '/^(.*?)@(.+)$/', $filter, $matches )) {
+            elseif (preg_match('/^(.*?)@(.+)$/', $filter, $matches)) {
                 $filter = sprintf(
                     '%s.*with data set "%s"$',
                     $matches[1],
@@ -78,11 +78,11 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
 
             // Escape delimiters in regular expression. Do NOT use preg_quote,
             // to keep magic characters.
-            $filter = sprintf( '/%s/', str_replace(
+            $filter = sprintf('/%s/', str_replace(
                 '/',
                 '\\/',
                 $filter
-            ) );
+            ));
         }
 
         $this->filter = $filter;
@@ -100,18 +100,18 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
             return true;
         }
 
-        $tmp = PHPUnit_Util_Test::describe( $test, false );
+        $tmp = PHPUnit_Util_Test::describe($test, false);
 
         if ($tmp[0] != '') {
-            $name = implode( '::', $tmp );
+            $name = implode('::', $tmp);
         } else {
             $name = $tmp[1];
         }
 
-        $accepted = preg_match( $this->filter, $name, $matches );
+        $accepted = preg_match($this->filter, $name, $matches);
 
         if ($accepted && isset( $this->filterMax )) {
-            $set = end( $matches );
+            $set = end($matches);
             $accepted = $set >= $this->filterMin && $set <= $this->filterMax;
         }
 

@@ -19,10 +19,10 @@ class UnexpectedCallsException extends MethodProphecyException implements Predic
 
     private $calls = array();
 
-    public function __construct( $message, MethodProphecy $methodProphecy, array $calls )
+    public function __construct($message, MethodProphecy $methodProphecy, array $calls)
     {
 
-        parent::__construct( $message, $methodProphecy );
+        parent::__construct($message, $methodProphecy);
 
         $this->calls = $calls;
     }

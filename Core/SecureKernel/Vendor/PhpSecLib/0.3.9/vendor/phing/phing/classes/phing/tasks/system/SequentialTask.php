@@ -44,7 +44,7 @@ class SequentialTask extends Task implements TaskContainer
      *
      * @param Task $nestedTask Nested task to execute Sequential
      */
-    public function addTask( Task $nestedTask )
+    public function addTask(Task $nestedTask)
     {
 
         $this->nestedTasks[] = $nestedTask;

@@ -13,9 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists( 'PHP_CodeSniffer_Standards_AbstractScopeSniff', true ) === false) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception( $error );
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -57,7 +57,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
     public function __construct()
     {
 
-        parent::__construct( array( T_CLASS, T_INTERFACE ), array( T_FUNCTION ), true );
+        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION), true);
 
     }//end __construct()
 
@@ -78,21 +78,21 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
         $currScope
     ) {
 
-        $className = $phpcsFile->getDeclarationName( $currScope );
+        $className = $phpcsFile->getDeclarationName($currScope);
         if ($className !== $this->_currentClass) {
-            $this->loadFunctionNamesInScope( $phpcsFile, $currScope );
+            $this->loadFunctionNamesInScope($phpcsFile, $currScope);
             $this->_currentClass = $className;
         }
 
-        $methodName = $phpcsFile->getDeclarationName( $stackPtr );
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
-        if (strcasecmp( $methodName, $className ) === 0) {
-            if (in_array( '__construct', $this->_functionList ) === false) {
+        if (strcasecmp($methodName, $className) === 0) {
+            if (in_array('__construct', $this->_functionList) === false) {
                 $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
-                $phpcsFile->addError( $error, $stackPtr, 'OldStyle' );
+                $phpcsFile->addError($error, $stackPtr, 'OldStyle');
             }
         } else {
-            if (strcasecmp( $methodName, '__construct' ) !== 0) {
+            if (strcasecmp($methodName, '__construct') !== 0) {
                 // Not a constructor.
                 return;
             }
@@ -100,7 +100,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
         $tokens = $phpcsFile->getTokens();
 
-        $parentClassName = $phpcsFile->findExtendedClassName( $currScope );
+        $parentClassName = $phpcsFile->findExtendedClassName($currScope);
         if ($parentClassName === false) {
             return;
         }
@@ -112,12 +112,12 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
         $endFunctionIndex = $tokens[$stackPtr]['scope_closer'];
         $startIndex = $stackPtr;
-        while ($doubleColonIndex = $phpcsFile->findNext( T_DOUBLE_COLON, $startIndex, $endFunctionIndex )) {
+        while ($doubleColonIndex = $phpcsFile->findNext(T_DOUBLE_COLON, $startIndex, $endFunctionIndex)) {
             if ($tokens[( $doubleColonIndex + 1 )]['code'] === T_STRING
                 && $tokens[( $doubleColonIndex + 1 )]['content'] === $parentClassName
             ) {
                 $error = 'PHP4 style calls to parent constructors are not allowed; use "parent::__construct()" instead';
-                $phpcsFile->addError( $error, ( $doubleColonIndex + 1 ), 'OldStyleCall' );
+                $phpcsFile->addError($error, ( $doubleColonIndex + 1 ), 'OldStyleCall');
             }
 
             $startIndex = ( $doubleColonIndex + 1 );
@@ -134,7 +134,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
      *
      * @return void
      */
-    protected function loadFunctionNamesInScope( PHP_CodeSniffer_File $phpcsFile, $currScope )
+    protected function loadFunctionNamesInScope(PHP_CodeSniffer_File $phpcsFile, $currScope)
     {
 
         $this->_functionList = array();
@@ -145,8 +145,8 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
                 continue;
             }
 
-            $next = $phpcsFile->findNext( T_STRING, $i );
-            $this->_functionList[] = trim( $tokens[$next]['content'] );
+            $next = $phpcsFile->findNext(T_STRING, $i);
+            $this->_functionList[] = trim($tokens[$next]['content']);
         }
 
     }//end loadFunctionNamesInScope()

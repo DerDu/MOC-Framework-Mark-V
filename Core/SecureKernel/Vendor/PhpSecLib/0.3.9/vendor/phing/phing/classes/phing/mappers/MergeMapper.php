@@ -44,14 +44,14 @@ class MergeMapper implements FileNameMapper
      * @return mixed The data after the mapper has been applied
      * @author  Andreas Aderhold, andi@binarycloud.com
      */
-    public function main( $sourceFileName )
+    public function main($sourceFileName)
     {
 
         if ($this->mergedFile === null) {
-            throw new BuildException( "MergeMapper error, to attribute not set" );
+            throw new BuildException("MergeMapper error, to attribute not set");
         }
 
-        return array( $this->mergedFile );
+        return array($this->mergedFile);
     }
 
     /**
@@ -62,7 +62,7 @@ class MergeMapper implements FileNameMapper
      * @return boolean True
      * @author  Andreas Aderhold, andi@binarycloud.com
      */
-    public function setTo( $to )
+    public function setTo($to)
     {
 
         $this->mergedFile = $to;
@@ -73,7 +73,7 @@ class MergeMapper implements FileNameMapper
      *
      * @param string $from
      */
-    public function setFrom( $from )
+    public function setFrom($from)
     {
     }
 

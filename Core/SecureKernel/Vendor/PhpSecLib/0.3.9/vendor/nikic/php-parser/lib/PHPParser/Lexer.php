@@ -22,7 +22,7 @@ class PHPParser_Lexer
 
         // map of tokens to drop while lexing (the map is only used for isset lookup,
         // that's why the value is simply set to 1; the value is never actually used.)
-        $this->dropTokens = array_fill_keys( array( T_WHITESPACE, T_OPEN_TAG ), 1 );
+        $this->dropTokens = array_fill_keys(array(T_WHITESPACE, T_OPEN_TAG), 1);
     }
 
     /**
@@ -50,12 +50,12 @@ class PHPParser_Lexer
                 $tokenMap[$i] = PHPParser_Parser::T_ECHO;
                 // T_CLOSE_TAG is equivalent to ';'
             } elseif (T_CLOSE_TAG === $i) {
-                $tokenMap[$i] = ord( ';' );
+                $tokenMap[$i] = ord(';');
                 // and the others can be mapped directly
-            } elseif ('UNKNOWN' !== ( $name = token_name( $i ) )
-                && defined( $name = 'PHPParser_Parser::'.$name )
+            } elseif ('UNKNOWN' !== ( $name = token_name($i) )
+                && defined($name = 'PHPParser_Parser::'.$name)
             ) {
-                $tokenMap[$i] = constant( $name );
+                $tokenMap[$i] = constant($name);
             }
         }
 
@@ -69,16 +69,16 @@ class PHPParser_Lexer
      *
      * @throws PHPParser_Error on lexing errors (unterminated comment or unexpected character)
      */
-    public function startLexing( $code )
+    public function startLexing($code)
     {
 
-        $scream = ini_set( 'xdebug.scream', 0 );
+        $scream = ini_set('xdebug.scream', 0);
 
         $this->resetErrors();
-        $this->tokens = @token_get_all( $code );
+        $this->tokens = @token_get_all($code);
         $this->handleErrors();
 
-        ini_set( 'xdebug.scream', $scream );
+        ini_set('xdebug.scream', $scream);
 
         $this->code = $code; // keep the code around for __halt_compiler() handling
         $this->pos = -1;
@@ -89,7 +89,7 @@ class PHPParser_Lexer
     {
 
         // set error_get_last() to defined state by forcing an undefined variable error
-        set_error_handler( array( $this, 'dummyErrorHandler' ), 0 );
+        set_error_handler(array($this, 'dummyErrorHandler'), 0);
         @$undefinedVariable;
         restore_error_handler();
     }
@@ -103,22 +103,22 @@ class PHPParser_Lexer
             '~^Unterminated comment starting line ([0-9]+)$~',
             $error['message'], $matches
         )) {
-            throw new PHPParser_Error( 'Unterminated comment', $matches[1] );
+            throw new PHPParser_Error('Unterminated comment', $matches[1]);
         }
 
         if (preg_match(
             '~^Unexpected character in input:  \'(.)\' \(ASCII=([0-9]+)\)~s',
             $error['message'], $matches
         )) {
-            throw new PHPParser_Error( sprintf(
+            throw new PHPParser_Error(sprintf(
                 'Unexpected character "%s" (ASCII %d)',
                 $matches[1], $matches[2]
-            ) );
+            ));
         }
 
         // PHP cuts error message after null byte, so need special case
-        if (preg_match( '~^Unexpected character in input:  \'$~', $error['message'] )) {
-            throw new PHPParser_Error( 'Unexpected null byte' );
+        if (preg_match('~^Unexpected character in input:  \'$~', $error['message'])) {
+            throw new PHPParser_Error('Unexpected null byte');
         }
     }
 
@@ -131,7 +131,7 @@ class PHPParser_Lexer
      *
      * @return int Token id
      */
-    public function getNextToken( &$value = null, &$startAttributes = null, &$endAttributes = null )
+    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null)
     {
 
         $startAttributes = array();
@@ -140,25 +140,25 @@ class PHPParser_Lexer
         while (isset( $this->tokens[++$this->pos] )) {
             $token = $this->tokens[$this->pos];
 
-            if (is_string( $token )) {
+            if (is_string($token)) {
                 $startAttributes['startLine'] = $this->line;
                 $endAttributes['endLine'] = $this->line;
 
                 // bug in token_get_all
                 if ('b"' === $token) {
                     $value = 'b"';
-                    return ord( '"' );
+                    return ord('"');
                 } else {
                     $value = $token;
-                    return ord( $token );
+                    return ord($token);
                 }
             } else {
-                $this->line += substr_count( $token[1], "\n" );
+                $this->line += substr_count($token[1], "\n");
 
                 if (T_COMMENT === $token[0]) {
-                    $startAttributes['comments'][] = new PHPParser_Comment( $token[1], $token[2] );
+                    $startAttributes['comments'][] = new PHPParser_Comment($token[1], $token[2]);
                 } elseif (T_DOC_COMMENT === $token[0]) {
-                    $startAttributes['comments'][] = new PHPParser_Comment_Doc( $token[1], $token[2] );
+                    $startAttributes['comments'][] = new PHPParser_Comment_Doc($token[1], $token[2]);
                 } elseif (!isset( $this->dropTokens[$token[0]] )) {
                     $value = $token[1];
                     $startAttributes['startLine'] = $token[2];
@@ -186,7 +186,7 @@ class PHPParser_Lexer
         // get the length of the text before the T_HALT_COMPILER token
         $textBefore = '';
         for ($i = 0; $i <= $this->pos; ++$i) {
-            if (is_string( $this->tokens[$i] )) {
+            if (is_string($this->tokens[$i])) {
                 $textBefore .= $this->tokens[$i];
             } else {
                 $textBefore .= $this->tokens[$i][1];
@@ -194,20 +194,20 @@ class PHPParser_Lexer
         }
 
         // text after T_HALT_COMPILER, still including ();
-        $textAfter = substr( $this->code, strlen( $textBefore ) );
+        $textAfter = substr($this->code, strlen($textBefore));
 
         // ensure that it is followed by ();
         // this simplifies the situation, by not allowing any comments
         // in between of the tokens.
-        if (!preg_match( '~\s*\(\s*\)\s*(?:;|\?>\r?\n?)~', $textAfter, $matches )) {
-            throw new PHPParser_Error( '__HALT_COMPILER must be followed by "();"' );
+        if (!preg_match('~\s*\(\s*\)\s*(?:;|\?>\r?\n?)~', $textAfter, $matches)) {
+            throw new PHPParser_Error('__HALT_COMPILER must be followed by "();"');
         }
 
         // prevent the lexer from returning any further tokens
-        $this->pos = count( $this->tokens );
+        $this->pos = count($this->tokens);
 
         // return with (); removed
-        return (string)substr( $textAfter, strlen( $matches[0] ) ); // (string) converts false to ''
+        return (string)substr($textAfter, strlen($matches[0])); // (string) converts false to ''
     }
 
     private function dummyErrorHandler()

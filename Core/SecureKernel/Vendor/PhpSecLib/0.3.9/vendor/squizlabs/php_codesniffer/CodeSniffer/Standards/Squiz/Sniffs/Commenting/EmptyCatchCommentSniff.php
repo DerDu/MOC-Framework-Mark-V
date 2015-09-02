@@ -39,7 +39,7 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
     public function register()
     {
 
-        return array( T_CATCH );
+        return array(T_CATCH);
 
     }//end register()
 
@@ -53,23 +53,22 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
         $scopeStart = $tokens[$stackPtr]['scope_opener'];
-        $firstContent = $phpcsFile->findNext( T_WHITESPACE, ( $scopeStart + 1 ), $tokens[$stackPtr]['scope_closer'],
-            true );
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ( $scopeStart + 1 ), $tokens[$stackPtr]['scope_closer'],
+            true);
 
         if ($firstContent === false) {
             $error = 'Empty CATCH statement must have a comment to explain why the exception is not handled';
-            $phpcsFile->addError( $error, $scopeStart, 'Missing' );
+            $phpcsFile->addError($error, $scopeStart, 'Missing');
         }
 
     }//end process()
 
 }//end class
-
 
 ?>

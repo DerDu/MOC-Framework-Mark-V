@@ -52,7 +52,7 @@ class ChownTask extends Task
      *
      * @param $bool
      */
-    public function setFailonerror( $bool )
+    public function setFailonerror($bool)
     {
 
         $this->failonerror = $bool;
@@ -65,7 +65,7 @@ class ChownTask extends Task
      *
      * @param $bool
      */
-    public function setQuiet( $bool )
+    public function setQuiet($bool)
     {
 
         $this->quiet = $bool;
@@ -80,7 +80,7 @@ class ChownTask extends Task
      *
      * @param $bool
      */
-    public function setVerbose( $bool )
+    public function setVerbose($bool)
     {
 
         $this->verbose = (bool)$bool;
@@ -92,7 +92,7 @@ class ChownTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -103,7 +103,7 @@ class ChownTask extends Task
      *
      * @param $user
      */
-    public function setUser( $user )
+    public function setUser($user)
     {
 
         $this->user = $user;
@@ -114,7 +114,7 @@ class ChownTask extends Task
      *
      * @param $group
      */
-    public function setGroup( $group )
+    public function setGroup($group)
     {
 
         $this->group = $group;
@@ -125,7 +125,7 @@ class ChownTask extends Task
      *
      * @param FileSet $fs
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -154,11 +154,11 @@ class ChownTask extends Task
     {
 
         if ($this->file === null && empty( $this->filesets )) {
-            throw new BuildException( "Specify at least one source - a file or a fileset." );
+            throw new BuildException("Specify at least one source - a file or a fileset.");
         }
 
         if ($this->user === null && $this->group === null) {
-            throw new BuildException( "You have to specify either an owner or a group for chown." );
+            throw new BuildException("You have to specify either an owner or a group for chown.");
         }
     }
 
@@ -170,11 +170,11 @@ class ChownTask extends Task
     private function chown()
     {
 
-        $userElements = explode( '.', $this->user );
+        $userElements = explode('.', $this->user);
 
         $user = $userElements[0];
 
-        if (count( $userElements ) > 1) {
+        if (count($userElements) > 1) {
             $group = $userElements[1];
         } else {
             $group = $this->group;
@@ -187,34 +187,34 @@ class ChownTask extends Task
         // one file
         if ($this->file !== null) {
             $total_files = 1;
-            $this->chownFile( $this->file, $user, $group );
+            $this->chownFile($this->file, $user, $group);
         }
 
         // filesets
         foreach ($this->filesets as $fs) {
 
-            $ds = $fs->getDirectoryScanner( $this->project );
-            $fromDir = $fs->getDir( $this->project );
+            $ds = $fs->getDirectoryScanner($this->project);
+            $fromDir = $fs->getDir($this->project);
 
             $srcFiles = $ds->getIncludedFiles();
             $srcDirs = $ds->getIncludedDirectories();
 
-            $filecount = count( $srcFiles );
+            $filecount = count($srcFiles);
             $total_files = $total_files + $filecount;
             for ($j = 0; $j < $filecount; $j++) {
-                $this->chownFile( new PhingFile( $fromDir, $srcFiles[$j] ), $user, $group );
+                $this->chownFile(new PhingFile($fromDir, $srcFiles[$j]), $user, $group);
             }
 
-            $dircount = count( $srcDirs );
+            $dircount = count($srcDirs);
             $total_dirs = $total_dirs + $dircount;
             for ($j = 0; $j < $dircount; $j++) {
-                $this->chownFile( new PhingFile( $fromDir, $srcDirs[$j] ), $user, $group );
+                $this->chownFile(new PhingFile($fromDir, $srcDirs[$j]), $user, $group);
             }
         }
 
         if (!$this->verbose) {
-            $this->log( 'Total files changed to '.$user.( $group ? ".".$group : "" ).': '.$total_files );
-            $this->log( 'Total directories changed to '.$user.( $group ? ".".$group : "" ).': '.$total_dirs );
+            $this->log('Total files changed to '.$user.( $group ? ".".$group : "" ).': '.$total_files);
+            $this->log('Total directories changed to '.$user.( $group ? ".".$group : "" ).': '.$total_dirs);
         }
 
     }
@@ -229,20 +229,20 @@ class ChownTask extends Task
      * @throws BuildException
      * @throws Exception
      */
-    private function chownFile( PhingFile $file, $user, $group = "" )
+    private function chownFile(PhingFile $file, $user, $group = "")
     {
 
         if (!$file->exists()) {
-            throw new BuildException( "The file ".$file->__toString()." does not exist" );
+            throw new BuildException("The file ".$file->__toString()." does not exist");
         }
 
         try {
             if (!empty( $user )) {
-                $file->setUser( $user );
+                $file->setUser($user);
             }
 
             if (!empty( $group )) {
-                $file->setGroup( $group );
+                $file->setGroup($group);
             }
 
             if ($this->verbose) {
@@ -250,11 +250,11 @@ class ChownTask extends Task
                     "Changed file owner on '".$file->__toString()."' to ".$user.( $group ? ".".$group : "" )
                 );
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             if ($this->failonerror) {
                 throw $e;
             } else {
-                $this->log( $e->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN );
+                $this->log($e->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN);
             }
         }
     }

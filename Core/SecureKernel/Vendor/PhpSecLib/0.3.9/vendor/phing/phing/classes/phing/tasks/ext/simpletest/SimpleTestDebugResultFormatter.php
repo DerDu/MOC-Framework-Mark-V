@@ -40,64 +40,64 @@ class SimpleTestDebugResultFormatter extends SimpleTestResultFormatter
     {
 
         foreach ($this->failingTests as $test) {
-            $this->out->write( $test."\n" );
+            $this->out->write($test."\n");
         }
     }
 
     /**
      * @param string $test_name
      */
-    public function paintCaseStart( $test_name )
+    public function paintCaseStart($test_name)
     {
 
-        parent::paintCaseStart( $test_name );
-        $this->paint( "Testsuite: $test_name\n" );
+        parent::paintCaseStart($test_name);
+        $this->paint("Testsuite: $test_name\n");
         $this->current_case = $test_name;
     }
 
     /**
      * @param $msg
      */
-    public function paint( $msg )
+    public function paint($msg)
     {
 
         if ($this->out == null) {
             print $msg;
         } else {
-            $this->out->write( $msg );
+            $this->out->write($msg);
         }
     }
 
     /**
      * @param string $test_name
      */
-    public function paintMethodStart( $test_name )
+    public function paintMethodStart($test_name)
     {
 
-        parent::paintMethodStart( $test_name );
+        parent::paintMethodStart($test_name);
         $this->current_test = $test_name;
         //$msg = "{$this->current_case} :: $test_name\n";
         $msg = "    TestCase: $test_name";
-        $this->paint( $msg );
+        $this->paint($msg);
     }
 
     /**
      * @param string $test_name
      */
-    public function paintMethodEnd( $test_name )
+    public function paintMethodEnd($test_name)
     {
 
-        parent::paintMethodEnd( $test_name );
-        $this->paint( "\n" );
+        parent::paintMethodEnd($test_name);
+        $this->paint("\n");
     }
 
     /**
      * @param string $test_name
      */
-    public function paintCaseEnd( $test_name )
+    public function paintCaseEnd($test_name)
     {
 
-        parent::paintCaseEnd( $test_name );
+        parent::paintCaseEnd($test_name);
         $this->current_case = "";
         /* Only count suites where more than one test was run */
 
@@ -108,7 +108,7 @@ class SimpleTestDebugResultFormatter extends SimpleTestResultFormatter
             $sb .= ", Errors: ".$this->getErrorCount();
             $sb .= ", Time elapsed: ".$this->getElapsedTime();
             $sb .= " sec\n";
-            $this->paint( $sb );
+            $this->paint($sb);
         }
 
     }
@@ -116,11 +116,11 @@ class SimpleTestDebugResultFormatter extends SimpleTestResultFormatter
     /**
      * @param string $message
      */
-    public function paintError( $message )
+    public function paintError($message)
     {
 
-        parent::paintError( $message );
-        $this->formatError( "ERROR", $message );
+        parent::paintError($message);
+        $this->formatError("ERROR", $message);
         $this->failingTests[] = $this->current_case."->".$this->current_test;
     }
 
@@ -128,32 +128,32 @@ class SimpleTestDebugResultFormatter extends SimpleTestResultFormatter
      * @param $type
      * @param $message
      */
-    private function formatError( $type, $message )
+    private function formatError($type, $message)
     {
 
-        $this->paint( "ERROR: $type: $message" );
+        $this->paint("ERROR: $type: $message");
     }
 
     /**
      * @param string $message
      */
-    public function paintFail( $message )
+    public function paintFail($message)
     {
 
-        parent::paintFail( $message );
-        $this->formatError( "FAILED", $message );
+        parent::paintFail($message);
+        $this->formatError("FAILED", $message);
         $this->failingTests[] = $this->current_case."->".$this->current_test;
     }
 
     /**
      * @param Exception $message
      */
-    public function paintException( $message )
+    public function paintException($message)
     {
 
-        parent::paintException( $message );
+        parent::paintException($message);
         $this->failingTests[] = $this->current_case."->".$this->current_test;
-        $this->formatError( "Exception", $message );
+        $this->formatError("Exception", $message);
     }
 
 }

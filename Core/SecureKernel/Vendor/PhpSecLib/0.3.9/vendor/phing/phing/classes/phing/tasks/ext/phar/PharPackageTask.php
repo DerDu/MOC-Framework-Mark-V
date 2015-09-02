@@ -118,7 +118,7 @@ class PharPackageTask
      *
      * @param string $algorithm
      */
-    public function setSignature( $algorithm )
+    public function setSignature($algorithm)
     {
 
         /*
@@ -150,7 +150,7 @@ class PharPackageTask
      *
      * @param string $compression
      */
-    public function setCompression( $compression )
+    public function setCompression($compression)
     {
 
         /**
@@ -173,7 +173,7 @@ class PharPackageTask
      *
      * @param PhingFile $destinationFile
      */
-    public function setDestFile( PhingFile $destinationFile )
+    public function setDestFile(PhingFile $destinationFile)
     {
 
         $this->destinationFile = $destinationFile;
@@ -185,7 +185,7 @@ class PharPackageTask
      *
      * @param PhingFile $baseDirectory
      */
-    public function setBaseDir( PhingFile $baseDirectory )
+    public function setBaseDir(PhingFile $baseDirectory)
     {
 
         $this->baseDirectory = $baseDirectory;
@@ -197,7 +197,7 @@ class PharPackageTask
      *
      * @param PhingFile $stubFile
      */
-    public function setCliStub( PhingFile $stubFile )
+    public function setCliStub(PhingFile $stubFile)
     {
 
         $this->cliStubFile = $stubFile;
@@ -209,7 +209,7 @@ class PharPackageTask
      *
      * @param PhingFile $stubFile
      */
-    public function setWebStub( PhingFile $stubFile )
+    public function setWebStub(PhingFile $stubFile)
     {
 
         $this->webStubFile = $stubFile;
@@ -220,7 +220,7 @@ class PharPackageTask
      *
      * @param string $stubPath
      */
-    public function setStub( $stubPath )
+    public function setStub($stubPath)
     {
 
         $this->stubPath = $stubPath;
@@ -231,7 +231,7 @@ class PharPackageTask
      *
      * @param string $alias
      */
-    public function setAlias( $alias )
+    public function setAlias($alias)
     {
 
         $this->alias = $alias;
@@ -242,7 +242,7 @@ class PharPackageTask
      *
      * @param PhingFile $key Private key to sign the Phar with.
      */
-    public function setKey( PhingFile $key )
+    public function setKey(PhingFile $key)
     {
 
         $this->key = $key;
@@ -253,7 +253,7 @@ class PharPackageTask
      *
      * @param string $keyPassword
      */
-    public function setKeyPassword( $keyPassword )
+    public function setKeyPassword($keyPassword)
     {
 
         $this->keyPassword = $keyPassword;
@@ -286,15 +286,15 @@ class PharPackageTask
             $phar = $this->buildPhar();
             $phar->startBuffering();
 
-            $baseDirectory = realpath( $this->baseDirectory->getPath() );
+            $baseDirectory = realpath($this->baseDirectory->getPath());
 
             foreach ($this->filesets as $fileset) {
                 $this->log(
-                    'Adding specified files in '.$fileset->getDir( $this->project ).' to package',
+                    'Adding specified files in '.$fileset->getDir($this->project).' to package',
                     Project::MSG_VERBOSE
                 );
 
-                $phar->buildFromIterator( $fileset, $baseDirectory );
+                $phar->buildFromIterator($fileset, $baseDirectory);
             }
 
             $phar->stopBuffering();
@@ -303,36 +303,36 @@ class PharPackageTask
              * File compression, if needed.
              */
             if (Phar::NONE != $this->compression) {
-                $phar->compressFiles( $this->compression );
+                $phar->compressFiles($this->compression);
             }
 
             if ($this->signatureAlgorithm == Phar::OPENSSL) {
 
                 // Load up the contents of the key
-                $keyContents = file_get_contents( $this->key );
+                $keyContents = file_get_contents($this->key);
 
                 // Attempt to load the given key as a PKCS#12 Cert Store first.
-                if (openssl_pkcs12_read( $keyContents, $certs, $this->keyPassword )) {
-                    $private = openssl_pkey_get_private( $certs['pkey'] );
+                if (openssl_pkcs12_read($keyContents, $certs, $this->keyPassword)) {
+                    $private = openssl_pkey_get_private($certs['pkey']);
                 } else {
                     // Fall back to a regular PEM-encoded private key.
                     // Setup an OpenSSL resource using the private key
                     // and tell the Phar to sign it using that key.
-                    $private = openssl_pkey_get_private( $keyContents, $this->keyPassword );
+                    $private = openssl_pkey_get_private($keyContents, $this->keyPassword);
                 }
 
-                openssl_pkey_export( $private, $pkey );
-                $phar->setSignatureAlgorithm( Phar::OPENSSL, $pkey );
+                openssl_pkey_export($private, $pkey);
+                $phar->setSignatureAlgorithm(Phar::OPENSSL, $pkey);
 
                 // Get the details so we can get the public key and write that out
                 // alongside the phar.
-                $details = openssl_pkey_get_details( $private );
-                file_put_contents( $this->destinationFile.'.pubkey', $details['key'] );
+                $details = openssl_pkey_get_details($private);
+                file_put_contents($this->destinationFile.'.pubkey', $details['key']);
 
             } else {
-                $phar->setSignatureAlgorithm( $this->signatureAlgorithm );
+                $phar->setSignatureAlgorithm($this->signatureAlgorithm);
             }
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             throw new BuildException(
                 'Problem creating package: '.$e->getMessage(),
                 $e,
@@ -347,46 +347,46 @@ class PharPackageTask
     private function checkPreconditions()
     {
 
-        if (!extension_loaded( 'phar' )) {
+        if (!extension_loaded('phar')) {
             throw new BuildException(
                 "PharPackageTask require either PHP 5.3 or better or the PECL's Phar extension"
             );
         }
 
-        if (is_null( $this->destinationFile )) {
-            throw new BuildException( "destfile attribute must be set!", $this->getLocation() );
+        if (is_null($this->destinationFile)) {
+            throw new BuildException("destfile attribute must be set!", $this->getLocation());
         }
 
         if ($this->destinationFile->exists() && $this->destinationFile->isDirectory()) {
-            throw new BuildException( "destfile is a directory!", $this->getLocation() );
+            throw new BuildException("destfile is a directory!", $this->getLocation());
         }
 
         if (!$this->destinationFile->canWrite()) {
-            throw new BuildException( "Can not write to the specified destfile!", $this->getLocation() );
+            throw new BuildException("Can not write to the specified destfile!", $this->getLocation());
         }
-        if (!is_null( $this->baseDirectory )) {
+        if (!is_null($this->baseDirectory)) {
             if (!$this->baseDirectory->exists()) {
-                throw new BuildException( "basedir '".(string)$this->baseDirectory."' does not exist!",
-                    $this->getLocation() );
+                throw new BuildException("basedir '".(string)$this->baseDirectory."' does not exist!",
+                    $this->getLocation());
             }
         }
         if ($this->signatureAlgorithm == Phar::OPENSSL) {
 
-            if (!extension_loaded( 'openssl' )) {
-                throw new BuildException( "PHP OpenSSL extension is required for OpenSSL signing of Phars!",
-                    $this->getLocation() );
+            if (!extension_loaded('openssl')) {
+                throw new BuildException("PHP OpenSSL extension is required for OpenSSL signing of Phars!",
+                    $this->getLocation());
             }
 
-            if (is_null( $this->key )) {
-                throw new BuildException( "key attribute must be set for OpenSSL signing!", $this->getLocation() );
+            if (is_null($this->key)) {
+                throw new BuildException("key attribute must be set for OpenSSL signing!", $this->getLocation());
             }
 
             if (!$this->key->exists()) {
-                throw new BuildException( "key '".(string)$this->key."' does not exist!", $this->getLocation() );
+                throw new BuildException("key '".(string)$this->key."' does not exist!", $this->getLocation());
             }
 
             if (!$this->key->canRead()) {
-                throw new BuildException( "key '".(string)$this->key."' cannot be read!", $this->getLocation() );
+                throw new BuildException("key '".(string)$this->key."' cannot be read!", $this->getLocation());
             }
         }
     }
@@ -399,24 +399,24 @@ class PharPackageTask
     private function buildPhar()
     {
 
-        $phar = new Phar( $this->destinationFile );
+        $phar = new Phar($this->destinationFile);
 
         if (!empty( $this->stubPath )) {
-            $phar->setStub( file_get_contents( $this->stubPath ) );
+            $phar->setStub(file_get_contents($this->stubPath));
         } else {
             if (!empty( $this->cliStubFile )) {
-                $cliStubFile = $this->cliStubFile->getPathWithoutBase( $this->baseDirectory );
+                $cliStubFile = $this->cliStubFile->getPathWithoutBase($this->baseDirectory);
             } else {
                 $cliStubFile = null;
             }
 
             if (!empty( $this->webStubFile )) {
-                $webStubFile = $this->webStubFile->getPathWithoutBase( $this->baseDirectory );
+                $webStubFile = $this->webStubFile->getPathWithoutBase($this->baseDirectory);
             } else {
                 $webStubFile = null;
             }
 
-            $phar->setDefaultStub( $cliStubFile, $webStubFile );
+            $phar->setDefaultStub($cliStubFile, $webStubFile);
         }
 
         if ($this->metadata === null) {
@@ -424,11 +424,11 @@ class PharPackageTask
         }
 
         if ($metadata = $this->metadata->toArray()) {
-            $phar->setMetadata( $metadata );
+            $phar->setMetadata($metadata);
         }
 
         if (!empty( $this->alias )) {
-            $phar->setAlias( $this->alias );
+            $phar->setAlias($this->alias);
         }
 
         return $phar;

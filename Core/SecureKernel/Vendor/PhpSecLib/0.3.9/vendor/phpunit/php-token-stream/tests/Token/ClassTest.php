@@ -22,6 +22,7 @@
  */
 class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
 {
+
     protected $class;
     protected $function;
 

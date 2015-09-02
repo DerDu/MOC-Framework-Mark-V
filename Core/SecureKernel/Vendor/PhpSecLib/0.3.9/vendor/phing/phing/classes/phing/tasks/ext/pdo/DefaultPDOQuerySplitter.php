@@ -57,10 +57,10 @@ class DefaultPDOQuerySplitter extends PDOQuerySplitter
      * @param Reader         $reader
      * @param string         $delimiterType
      */
-    public function __construct( PDOSQLExecTask $parent, Reader $reader, $delimiterType = PDOSQLExecTask::DELIM_NORMAL )
+    public function __construct(PDOSQLExecTask $parent, Reader $reader, $delimiterType = PDOSQLExecTask::DELIM_NORMAL)
     {
 
-        parent::__construct( $parent, $reader );
+        parent::__construct($parent, $reader);
         $this->delimiterType = $delimiterType;
     }
 
@@ -84,27 +84,27 @@ class DefaultPDOQuerySplitter extends PDOQuerySplitter
             $project = $this->parent->getOwningTarget()->getProject();
             $line = ProjectConfigurator::replaceProperties(
                 $project,
-                trim( $line ),
+                trim($line),
                 $project->getProperties()
             );
 
             if (( $line != $delimiter ) && (
-                    StringHelper::startsWith( "//", $line ) ||
-                    StringHelper::startsWith( "--", $line ) ||
-                    StringHelper::startsWith( "#", $line ) )
+                    StringHelper::startsWith("//", $line) ||
+                    StringHelper::startsWith("--", $line) ||
+                    StringHelper::startsWith("#", $line) )
             ) {
                 continue;
             }
 
-            if (strlen( $line ) > 4
-                && strtoupper( substr( $line, 0, 4 ) ) == "REM "
+            if (strlen($line) > 4
+                && strtoupper(substr($line, 0, 4)) == "REM "
             ) {
                 continue;
             }
 
             // MySQL supports defining new delimiters
-            if (preg_match( '/DELIMITER [\'"]?([^\'" $]+)[\'"]?/i', $line, $matches )) {
-                $this->parent->setDelimiter( $matches[1] );
+            if (preg_match('/DELIMITER [\'"]?([^\'" $]+)[\'"]?/i', $line, $matches)) {
+                $this->parent->setDelimiter($matches[1]);
                 continue;
             }
 
@@ -118,16 +118,16 @@ class DefaultPDOQuerySplitter extends PDOQuerySplitter
             // SQL defines "--" as a comment to EOL
             // and in Oracle it may contain a hint
             // so we cannot just remove it, instead we must end it
-            if (strpos( $line, "--" ) !== false) {
+            if (strpos($line, "--") !== false) {
                 $sql .= "\n";
             }
 
             // DELIM_ROW doesn't need this (as far as i can tell)
             if ($this->delimiterType == PDOSQLExecTask::DELIM_NORMAL) {
 
-                $reg = "#((?:\"(?:\\\\.|[^\"])*\"?)+|'(?:\\\\.|[^'])*'?|".preg_quote( $delimiter ).")#";
+                $reg = "#((?:\"(?:\\\\.|[^\"])*\"?)+|'(?:\\\\.|[^'])*'?|".preg_quote($delimiter).")#";
 
-                $sqlParts = preg_split( $reg, $sql, 0, PREG_SPLIT_DELIM_CAPTURE );
+                $sqlParts = preg_split($reg, $sql, 0, PREG_SPLIT_DELIM_CAPTURE);
                 $this->sqlBacklog = "";
                 foreach ($sqlParts as $sqlPart) {
                     // we always want to append, even if it's a delim (which will be stripped off later)
@@ -147,7 +147,7 @@ class DefaultPDOQuerySplitter extends PDOQuerySplitter
                 $sql = StringHelper::substring(
                     $sql,
                     0,
-                    strlen( $sql ) - strlen( $delimiter )
+                    strlen($sql) - strlen($delimiter)
                     - ( $this->delimiterType == PDOSQLExecTask::DELIM_ROW ? 2 : 1 )
                 );
 

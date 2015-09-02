@@ -49,7 +49,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -63,7 +63,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -74,7 +74,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
         }
 
         $openBrace = $tokens[$stackPtr]['scope_opener'];
-        $nextContent = $phpcsFile->findNext( T_WHITESPACE, ( $openBrace + 1 ), null, true );
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ( $openBrace + 1 ), null, true);
 
         if ($nextContent === $tokens[$stackPtr]['scope_closer']) {
             // The next bit of content is the closing brace, so this
@@ -89,14 +89,14 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
         $found = ( $nextLine - $braceLine - 1 );
         if ($found > 0) {
             $error = 'Expected 0 blank lines after opening function brace; %s found';
-            $data = array( $found );
-            $phpcsFile->addError( $error, $openBrace, 'SpacingAfter', $data );
+            $data = array($found);
+            $phpcsFile->addError($error, $openBrace, 'SpacingAfter', $data);
         }
 
         if ($phpcsFile->tokenizerType === 'JS') {
             // Do some additional checking before the function brace.
-            $nestedFunction = ( $phpcsFile->hasCondition( $stackPtr,
-                    T_FUNCTION ) === true || isset( $tokens[$stackPtr]['nested_parenthesis'] ) === true );
+            $nestedFunction = ( $phpcsFile->hasCondition($stackPtr,
+                    T_FUNCTION) === true || isset( $tokens[$stackPtr]['nested_parenthesis'] ) === true );
 
             $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
             $lineDifference = ( $braceLine - $functionLine );
@@ -104,19 +104,19 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
             if ($nestedFunction === true) {
                 if ($lineDifference > 0) {
                     $error = 'Opening brace should be on the same line as the function keyword';
-                    $phpcsFile->addError( $error, $openBrace, 'SpacingAfterNested' );
+                    $phpcsFile->addError($error, $openBrace, 'SpacingAfterNested');
                 }
             } else {
                 if ($lineDifference === 0) {
                     $error = 'Opening brace should be on a new line';
-                    $phpcsFile->addError( $error, $openBrace, 'ContentBefore' );
+                    $phpcsFile->addError($error, $openBrace, 'ContentBefore');
                     return;
                 }
 
                 if ($lineDifference > 1) {
                     $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
-                    $data = array( ( $lineDifference - 1 ) );
-                    $phpcsFile->addError( $error, $openBrace, 'SpacingBefore', $data );
+                    $data = array(( $lineDifference - 1 ));
+                    $phpcsFile->addError($error, $openBrace, 'SpacingBefore', $data);
                     return;
                 }
             }//end if

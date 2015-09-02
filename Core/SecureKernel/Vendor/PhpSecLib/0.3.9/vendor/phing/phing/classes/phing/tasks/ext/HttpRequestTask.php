@@ -81,7 +81,7 @@ class HttpRequestTask extends HttpTask
      *
      * @param string $regex
      */
-    public function setResponseRegex( $regex )
+    public function setResponseRegex($regex)
     {
 
         $this->responseRegex = $regex;
@@ -92,10 +92,10 @@ class HttpRequestTask extends HttpTask
      *
      * @param boolean $verbose
      */
-    public function setVerbose( $verbose )
+    public function setVerbose($verbose)
     {
 
-        $this->verbose = StringHelper::booleanValue( $verbose );
+        $this->verbose = StringHelper::booleanValue($verbose);
     }
 
     /**
@@ -103,17 +103,17 @@ class HttpRequestTask extends HttpTask
      *
      * @param string $observerEvents List of observer events
      */
-    public function setObserverEvents( $observerEvents )
+    public function setObserverEvents($observerEvents)
     {
 
         $this->observerEvents = array();
 
         $token = ' ,;';
-        $ext = strtok( $observerEvents, $token );
+        $ext = strtok($observerEvents, $token);
 
         while ($ext !== false) {
             $this->observerEvents[] = $ext;
-            $ext = strtok( $token );
+            $ext = strtok($token);
         }
     }
 
@@ -122,7 +122,7 @@ class HttpRequestTask extends HttpTask
      *
      * @param $method
      */
-    public function setMethod( $method )
+    public function setMethod($method)
     {
 
         $this->method = $method;
@@ -136,7 +136,7 @@ class HttpRequestTask extends HttpTask
     public function createPostParameter()
     {
 
-        $num = array_push( $this->postParameters, new Parameter() );
+        $num = array_push($this->postParameters, new Parameter());
 
         return $this->postParameters[$num - 1];
     }
@@ -168,10 +168,10 @@ class HttpRequestTask extends HttpTask
         $request = parent::createRequest();
 
         if ($this->method == HTTP_Request2::METHOD_POST) {
-            $request->setMethod( HTTP_Request2::METHOD_POST );
+            $request->setMethod(HTTP_Request2::METHOD_POST);
 
             foreach ($this->postParameters as $postParameter) {
-                $request->addPostParameter( $postParameter->getName(), $postParameter->getValue() );
+                $request->addPostParameter($postParameter->getName(), $postParameter->getValue());
             }
         }
 
@@ -181,7 +181,7 @@ class HttpRequestTask extends HttpTask
             // set the events we want to log
             $observer->events = $this->observerEvents;
 
-            $request->attach( $observer );
+            $request->attach($observer);
         }
 
         return $request;
@@ -195,17 +195,17 @@ class HttpRequestTask extends HttpTask
      * @return void
      * @throws BuildException
      */
-    protected function processResponse( HTTP_Request2_Response $response )
+    protected function processResponse(HTTP_Request2_Response $response)
     {
 
         if ($this->responseRegex !== '') {
             $matches = array();
-            preg_match( $this->responseRegex, $response->getBody(), $matches );
+            preg_match($this->responseRegex, $response->getBody(), $matches);
 
-            if (count( $matches ) === 0) {
-                throw new BuildException( 'The received response body did not match the given regular expression' );
+            if (count($matches) === 0) {
+                throw new BuildException('The received response body did not match the given regular expression');
             } else {
-                $this->log( 'The response body matched the provided regex.' );
+                $this->log('The response body matched the provided regex.');
             }
         }
     }

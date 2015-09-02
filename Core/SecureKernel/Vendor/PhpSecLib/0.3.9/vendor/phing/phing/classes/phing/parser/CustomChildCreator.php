@@ -38,5 +38,5 @@ interface CustomChildCreator
      *
      * @return object  Returns the nested element
      */
-    public function customChildCreator( $elementName, Project $project );
+    public function customChildCreator($elementName, Project $project);
 }

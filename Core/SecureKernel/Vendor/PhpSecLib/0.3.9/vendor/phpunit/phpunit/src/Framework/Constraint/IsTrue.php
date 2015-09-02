@@ -35,7 +35,7 @@ class PHPUnit_Framework_Constraint_IsTrue extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         return $other === true;

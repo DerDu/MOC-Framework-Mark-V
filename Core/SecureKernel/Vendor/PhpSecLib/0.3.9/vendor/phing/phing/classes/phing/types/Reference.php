@@ -31,11 +31,11 @@ class Reference
     /**
      * @param string $id
      */
-    public function __construct( $id = null )
+    public function __construct($id = null)
     {
 
         if ($id !== null) {
-            $this->setRefId( $id );
+            $this->setRefId($id);
         }
     }
 
@@ -51,7 +51,7 @@ class Reference
     /**
      * @param $id
      */
-    public function setRefId( $id )
+    public function setRefId($id)
     {
 
         $this->refid = (string)$id;
@@ -66,16 +66,16 @@ class Reference
      *
      * @return Reference
      */
-    public function getReferencedObject( Project $project )
+    public function getReferencedObject(Project $project)
     {
 
         if ($this->refid === null) {
-            throw new BuildException( "No reference specified" );
+            throw new BuildException("No reference specified");
         }
         $refs = $project->getReferences();
         $o = @$refs[$this->refid];
-        if (!is_object( $o )) {
-            throw new BuildException( "Reference {$this->refid} not found." );
+        if (!is_object($o)) {
+            throw new BuildException("Reference {$this->refid} not found.");
         }
 
         return $o;

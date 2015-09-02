@@ -21,12 +21,12 @@ abstract class Twig_Test implements Twig_TestInterface, Twig_TestCallableInterfa
     protected $options;
     protected $arguments = array();
 
-    public function __construct( array $options = array() )
+    public function __construct(array $options = array())
     {
 
-        $this->options = array_merge( array(
+        $this->options = array_merge(array(
             'callable' => null,
-        ), $options );
+        ), $options);
     }
 
     public function getCallable()

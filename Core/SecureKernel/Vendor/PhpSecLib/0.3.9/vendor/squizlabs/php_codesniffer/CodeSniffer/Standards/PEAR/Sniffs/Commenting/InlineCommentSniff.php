@@ -39,7 +39,7 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_COMMENT );
+        return array(T_COMMENT);
 
     }//end register()
 
@@ -53,7 +53,7 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -61,7 +61,7 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$stackPtr]['content']{0} === '#') {
             $error = 'Perl-style comments are not allowed. Use "// Comment."';
             $error .= ' or "/* comment */" instead.';
-            $phpcsFile->addError( $error, $stackPtr, 'WrongStyle' );
+            $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
         }
 
     }//end process()

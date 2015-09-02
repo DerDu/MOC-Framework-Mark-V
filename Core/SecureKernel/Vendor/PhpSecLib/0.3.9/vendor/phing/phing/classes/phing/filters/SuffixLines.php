@@ -60,27 +60,27 @@ class SuffixLines extends BaseParamFilterReader implements ChainableReader
      *
      * @return mixed buffer, -1 on EOF
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
-        $lines = preg_split( "~\R~", $buffer );
+        $lines = preg_split("~\R~", $buffer);
         $filtered = array();
 
         foreach ($lines as $line) {
             $filtered[] = $line.$this->suffix;
         }
 
-        $filtered_buffer = implode( PHP_EOL, $filtered );
+        $filtered_buffer = implode(PHP_EOL, $filtered);
 
         return $filtered_buffer;
     }
@@ -93,7 +93,7 @@ class SuffixLines extends BaseParamFilterReader implements ChainableReader
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0, $_i = count( $params ); $i < $_i; $i++) {
+            for ($i = 0, $_i = count($params); $i < $_i; $i++) {
                 if (self::SUFFIX_KEY == $params[$i]->getName()) {
                     $this->suffix = (string)$params[$i]->getValue();
                     break;
@@ -114,13 +114,13 @@ class SuffixLines extends BaseParamFilterReader implements ChainableReader
      * @return object A new filter based on this configuration, but filtering
      *                the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new SuffixLines( $reader );
-        $newFilter->setSuffix( $this->getSuffix() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new SuffixLines($reader);
+        $newFilter->setSuffix($this->getSuffix());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -143,7 +143,7 @@ class SuffixLines extends BaseParamFilterReader implements ChainableReader
      *                       May be <code>null</code>, in which case no suffix
      *                       is added.
      */
-    public function setSuffix( $suffix )
+    public function setSuffix($suffix)
     {
 
         $this->suffix = (string)$suffix;

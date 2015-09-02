@@ -15,7 +15,7 @@ class PHPParser_Template
      * @param PHPParser_Parser $parser   A parser instance
      * @param string           $template The template string
      */
-    public function __construct( PHPParser_Parser $parser, $template )
+    public function __construct(PHPParser_Parser $parser, $template)
     {
 
         $this->parser = $parser;
@@ -30,22 +30,22 @@ class PHPParser_Template
      *
      * @return PHPParser_Node[] Statements
      */
-    public function getStmts( array $placeholders )
+    public function getStmts(array $placeholders)
     {
 
         return $this->parser->parse(
-            $this->getTemplateWithPlaceholdersReplaced( $placeholders )
+            $this->getTemplateWithPlaceholdersReplaced($placeholders)
         );
     }
 
-    protected function getTemplateWithPlaceholdersReplaced( array $placeholders )
+    protected function getTemplateWithPlaceholdersReplaced(array $placeholders)
     {
 
         if (empty( $placeholders )) {
             return $this->template;
         }
 
-        return strtr( $this->template, $this->preparePlaceholders( $placeholders ) );
+        return strtr($this->template, $this->preparePlaceholders($placeholders));
     }
 
     /*
@@ -56,7 +56,7 @@ class PHPParser_Template
      * E.g. for an input array of ['foo' => 'bar'] the result will be
      * ['__foo__' => 'bar', '__Foo__' => 'Bar'].
      */
-    protected function preparePlaceholders( array $placeholders )
+    protected function preparePlaceholders(array $placeholders)
     {
 
         $preparedPlaceholders = array();
@@ -64,17 +64,17 @@ class PHPParser_Template
         foreach ($placeholders as $name => $value) {
             $preparedPlaceholders['__'.$name.'__'] = $value;
 
-            if (ctype_lower( $name[0] )) {
-                $ucfirstName = ucfirst( $name );
+            if (ctype_lower($name[0])) {
+                $ucfirstName = ucfirst($name);
                 if (!isset( $placeholders[$ucfirstName] )) {
-                    $preparedPlaceholders['__'.$ucfirstName.'__'] = ucfirst( $value );
+                    $preparedPlaceholders['__'.$ucfirstName.'__'] = ucfirst($value);
                 }
             }
 
-            if (ctype_upper( $name[0] )) {
-                $lcfirstName = lcfirst( $name );
+            if (ctype_upper($name[0])) {
+                $lcfirstName = lcfirst($name);
                 if (!isset( $placeholders[$lcfirstName] )) {
-                    $preparedPlaceholders['__'.$lcfirstName.'__'] = lcfirst( $value );
+                    $preparedPlaceholders['__'.$lcfirstName.'__'] = lcfirst($value);
                 }
             }
         }

@@ -17,25 +17,25 @@ abstract class Twig_Test_NodeTestCase extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider getTests
      */
-    public function testCompile( $node, $source, $environment = null )
+    public function testCompile($node, $source, $environment = null)
     {
 
-        $this->assertNodeCompilation( $source, $node, $environment );
+        $this->assertNodeCompilation($source, $node, $environment);
     }
 
-    public function assertNodeCompilation( $source, Twig_Node $node, Twig_Environment $environment = null )
+    public function assertNodeCompilation($source, Twig_Node $node, Twig_Environment $environment = null)
     {
 
-        $compiler = $this->getCompiler( $environment );
-        $compiler->compile( $node );
+        $compiler = $this->getCompiler($environment);
+        $compiler->compile($node);
 
-        $this->assertEquals( $source, trim( $compiler->getSource() ) );
+        $this->assertEquals($source, trim($compiler->getSource()));
     }
 
-    protected function getCompiler( Twig_Environment $environment = null )
+    protected function getCompiler(Twig_Environment $environment = null)
     {
 
-        return new Twig_Compiler( null === $environment ? $this->getEnvironment() : $environment );
+        return new Twig_Compiler(null === $environment ? $this->getEnvironment() : $environment);
     }
 
     protected function getEnvironment()
@@ -44,22 +44,22 @@ abstract class Twig_Test_NodeTestCase extends PHPUnit_Framework_TestCase
         return new Twig_Environment();
     }
 
-    protected function getVariableGetter( $name, $line = false )
+    protected function getVariableGetter($name, $line = false)
     {
 
         $line = $line > 0 ? "// line {$line}\n" : '';
 
         if (PHP_VERSION_ID >= 50400) {
-            return sprintf( '%s(isset($context["%s"]) ? $context["%s"] : null)', $line, $name, $name );
+            return sprintf('%s(isset($context["%s"]) ? $context["%s"] : null)', $line, $name, $name);
         }
 
-        return sprintf( '%s$this->getContext($context, "%s")', $line, $name );
+        return sprintf('%s$this->getContext($context, "%s")', $line, $name);
     }
 
     protected function getAttributeGetter()
     {
 
-        if (function_exists( 'twig_template_get_attributes' )) {
+        if (function_exists('twig_template_get_attributes')) {
             return 'twig_template_get_attributes($this, ';
         }
 

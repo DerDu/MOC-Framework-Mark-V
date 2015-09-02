@@ -35,7 +35,7 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
     public function register()
     {
 
-        return array( T_OPEN_TAG );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -49,25 +49,25 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         // We are only interested if this is the first open tag.
         if ($stackPtr !== 0) {
-            if ($phpcsFile->findPrevious( T_OPEN_TAG, ( $stackPtr - 1 ) ) !== false) {
+            if ($phpcsFile->findPrevious(T_OPEN_TAG, ( $stackPtr - 1 )) !== false) {
                 return;
             }
         }
 
-        $fileName = basename( $phpcsFile->getFilename() );
-        $lowercaseFileName = strtolower( $fileName );
+        $fileName = basename($phpcsFile->getFilename());
+        $lowercaseFileName = strtolower($fileName);
         if ($fileName !== $lowercaseFileName) {
             $data = array(
                 $fileName,
                 $lowercaseFileName,
             );
             $error = 'Filename "%s" doesn\'t match the expected filename "%s"';
-            $phpcsFile->addError( $error, $stackPtr, 'NotFound', $data );
+            $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
         }
 
     }//end process()

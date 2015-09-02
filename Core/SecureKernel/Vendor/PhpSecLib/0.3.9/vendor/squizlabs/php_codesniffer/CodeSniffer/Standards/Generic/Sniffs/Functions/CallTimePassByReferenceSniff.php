@@ -54,7 +54,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -66,7 +66,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
         $functionName = $stackPtr;
         $findTokens = array_merge(
             PHP_CodeSniffer_Tokens::$emptyTokens,
-            array( T_BITWISE_AND )
+            array(T_BITWISE_AND)
         );
 
         $functionKeyword = $phpcsFile->findPrevious(
@@ -102,8 +102,8 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $nextSeparator = $openBracket;
-        while (( $nextSeparator = $phpcsFile->findNext( T_VARIABLE, ( $nextSeparator + 1 ),
-                $closeBracket ) ) !== false) {
+        while (( $nextSeparator = $phpcsFile->findNext(T_VARIABLE, ( $nextSeparator + 1 ),
+                $closeBracket) ) !== false) {
             if (isset( $tokens[$nextSeparator]['nested_parenthesis'] ) === false) {
                 continue;
             }
@@ -111,7 +111,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
             // Make sure the variable belongs directly to this function call
             // and is not inside a nested function call or array.
             $brackets = $tokens[$nextSeparator]['nested_parenthesis'];
-            $lastBracket = array_pop( $brackets );
+            $lastBracket = array_pop($brackets);
             if ($lastBracket !== $closeBracket) {
                 continue;
             }
@@ -148,7 +148,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
                     default:
                         // T_BITWISE_AND represents a pass-by-reference.
                         $error = 'Call-time pass-by-reference calls are prohibited';
-                        $phpcsFile->addError( $error, $tokenBefore, 'NotAllowed' );
+                        $phpcsFile->addError($error, $tokenBefore, 'NotAllowed');
                         break;
                 }
             }//end if

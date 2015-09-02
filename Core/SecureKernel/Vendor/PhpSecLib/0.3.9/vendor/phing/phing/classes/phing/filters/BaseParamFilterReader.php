@@ -62,15 +62,15 @@ class BaseParamFilterReader extends BaseFilterReader implements Parameterizable
      *
      * @throws Exception
      */
-    public function setParameters( $parameters )
+    public function setParameters($parameters)
     {
 
         // type check, error must never occur, bad code of it does
-        if (!is_array( $parameters )) {
-            throw new Exception( "Expected parameters array got something else" );
+        if (!is_array($parameters)) {
+            throw new Exception("Expected parameters array got something else");
         }
 
         $this->_parameters = $parameters;
-        $this->setInitialized( false );
+        $this->setInitialized(false);
     }
 }

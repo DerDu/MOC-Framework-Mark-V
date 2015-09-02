@@ -37,7 +37,7 @@ class LiquibaseDbDocTask extends AbstractLiquibaseTask
      *
      * @param string the output directory
      */
-    public function setOutputDir( $outputDir )
+    public function setOutputDir($outputDir)
     {
 
         $this->outputDir = $outputDir;
@@ -50,7 +50,7 @@ class LiquibaseDbDocTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( 'dbdoc', escapeshellarg( $this->outputDir ) );
+        $this->execute('dbdoc', escapeshellarg($this->outputDir));
     }
 
     /**
@@ -61,8 +61,8 @@ class LiquibaseDbDocTask extends AbstractLiquibaseTask
 
         parent::checkParams();
 
-        if (( null === $this->outputDir ) or !is_dir( $this->outputDir )) {
-            if (!mkdir( $this->outputDir, 0777, true )) {
+        if (( null === $this->outputDir ) or !is_dir($this->outputDir)) {
+            if (!mkdir($this->outputDir, 0777, true)) {
                 throw new BuildException(
                     sprintf(
                         'The directory "%s" does not exist and could not be created!',
@@ -72,7 +72,7 @@ class LiquibaseDbDocTask extends AbstractLiquibaseTask
             }
         }
 
-        if (!is_writable( $this->outputDir )) {
+        if (!is_writable($this->outputDir)) {
             throw new BuildException(
                 sprintf(
                     'The directory "%s" is not writable!',

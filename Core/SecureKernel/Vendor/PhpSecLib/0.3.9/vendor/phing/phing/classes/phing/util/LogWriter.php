@@ -43,7 +43,7 @@ class LogWriter extends Writer
      * @param Task $task
      * @param int  $level
      */
-    public function __construct( Task $task, $level = Project::MSG_INFO )
+    public function __construct(Task $task, $level = Project::MSG_INFO)
     {
 
         $this->task = $task;
@@ -57,17 +57,17 @@ class LogWriter extends Writer
      * @param null   $off
      * @param null   $len
      */
-    public function write( $buf, $off = null, $len = null )
+    public function write($buf, $off = null, $len = null)
     {
 
-        $lines = explode( "\n", $buf );
+        $lines = explode("\n", $buf);
 
         foreach ($lines as $line) {
             if ($line == "") {
                 continue;
             }
 
-            $this->task->log( $line, $this->level );
+            $this->task->log($line, $this->level);
         }
     }
 

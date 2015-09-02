@@ -1,10 +1,6 @@
 <?php
 namespace Satooshi\Bundle\CoverallsV1Bundle\Repository;
 
-use Guzzle\Common\Exception\RuntimeException;
-use Guzzle\Http\Exception\ClientErrorResponseException;
-use Guzzle\Http\Exception\CurlException;
-use Psr\Log\NullLogger;
 use Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration;
 use Satooshi\Bundle\CoverallsV1Bundle\Entity\Exception\RequirementsNotSatisfiedException;
 use Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile;

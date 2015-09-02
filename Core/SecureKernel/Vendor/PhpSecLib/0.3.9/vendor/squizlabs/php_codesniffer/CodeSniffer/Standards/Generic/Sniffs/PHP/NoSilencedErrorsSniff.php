@@ -49,7 +49,7 @@ class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_ASPERAND );
+        return array(T_ASPERAND);
 
     }//end register()
 
@@ -63,16 +63,16 @@ class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $error = 'Silencing errors is forbidden';
         if ($this->error === true) {
             $error = 'Silencing errors is forbidden';
-            $phpcsFile->addError( $error, $stackPtr, 'Forbidden' );
+            $phpcsFile->addError($error, $stackPtr, 'Forbidden');
         } else {
             $error = 'Silencing errors is discouraged';
-            $phpcsFile->addWarning( $error, $stackPtr, 'Discouraged' );
+            $phpcsFile->addWarning($error, $stackPtr, 'Discouraged');
         }
 
     }//end process()

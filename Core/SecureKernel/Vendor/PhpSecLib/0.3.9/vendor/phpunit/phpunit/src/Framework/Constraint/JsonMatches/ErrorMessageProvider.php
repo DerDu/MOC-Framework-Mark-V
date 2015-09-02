@@ -24,7 +24,7 @@ class PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider
      *
      * @return string
      */
-    public static function determineJsonError( $error, $prefix = '' )
+    public static function determineJsonError($error, $prefix = '')
     {
 
         switch ($error) {
@@ -52,10 +52,10 @@ class PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider
      *
      * @return string
      */
-    public static function translateTypeToPrefix( $type )
+    public static function translateTypeToPrefix($type)
     {
 
-        switch (strtolower( $type )) {
+        switch (strtolower($type)) {
             case 'expected':
                 $prefix = 'Expected value JSON decode error - ';
                 break;

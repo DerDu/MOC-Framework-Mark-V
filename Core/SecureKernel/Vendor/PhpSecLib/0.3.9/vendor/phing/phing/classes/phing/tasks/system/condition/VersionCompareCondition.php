@@ -56,7 +56,7 @@ class VersionCompareCondition implements Condition
     /**
      * @param $version
      */
-    public function setVersion( $version )
+    public function setVersion($version)
     {
 
         $this->version = $version;
@@ -65,7 +65,7 @@ class VersionCompareCondition implements Condition
     /**
      * @param $desiredVersion
      */
-    public function setDesiredVersion( $desiredVersion )
+    public function setDesiredVersion($desiredVersion)
     {
 
         $this->desiredVersion = $desiredVersion;
@@ -76,17 +76,17 @@ class VersionCompareCondition implements Condition
      *
      * @throws BuildException
      */
-    public function setOperator( $operator )
+    public function setOperator($operator)
     {
 
-        $allowed = array( '<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne' );
-        if (!in_array( $operator, $allowed )) { // allowed operators for php's version_comapare()
+        $allowed = array('<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne');
+        if (!in_array($operator, $allowed)) { // allowed operators for php's version_comapare()
             require_once 'phing/BuildException.php';
-            throw new BuildException( sprintf(
+            throw new BuildException(sprintf(
                 'Operator "%s" is not supported. Supported operators: %s',
                 $operator,
-                implode( ', ', $allowed )
-            ) );
+                implode(', ', $allowed)
+            ));
         }
         $this->operator = $operator;
     }
@@ -94,7 +94,7 @@ class VersionCompareCondition implements Condition
     /**
      * @param $debug
      */
-    public function setDebug( $debug )
+    public function setDebug($debug)
     {
 
         $this->debug = (bool)$debug;
@@ -109,9 +109,9 @@ class VersionCompareCondition implements Condition
 
         if ($this->version === null || $this->desiredVersion === null) {
             require_once 'phing/BuildException.php';
-            throw new BuildException( "Missing one version parameter for version compare" );
+            throw new BuildException("Missing one version parameter for version compare");
         }
-        $isValid = version_compare( $this->version, $this->desiredVersion, $this->operator );
+        $isValid = version_compare($this->version, $this->desiredVersion, $this->operator);
         if ($this->debug) {
             echo sprintf(
                 'Assertion that %s %s %s failed'.PHP_EOL,

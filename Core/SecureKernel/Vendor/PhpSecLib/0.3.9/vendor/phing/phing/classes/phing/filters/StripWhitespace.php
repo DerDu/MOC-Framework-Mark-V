@@ -46,7 +46,7 @@ class StripWhitespace extends BaseFilterReader implements ChainableReader
      *             if the end of the resulting stream has been reached
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if ($this->processed === true) {
@@ -55,7 +55,7 @@ class StripWhitespace extends BaseFilterReader implements ChainableReader
 
         // Read XML
         $php = null;
-        while (( $buffer = $this->in->read( $len ) ) !== -1) {
+        while (( $buffer = $this->in->read($len) ) !== -1) {
             $php .= $buffer;
         }
 
@@ -65,16 +65,16 @@ class StripWhitespace extends BaseFilterReader implements ChainableReader
         }
 
         if (empty( $php )) {
-            $this->log( "PHP file is empty!", Project::MSG_WARN );
+            $this->log("PHP file is empty!", Project::MSG_WARN);
 
             return ''; // return empty string, don't attempt to strip whitespace
         }
 
         // write buffer to a temporary file, since php_strip_whitespace() needs a filename
-        $file = new PhingFile( tempnam( PhingFile::getTempDir(), 'stripwhitespace' ) );
-        file_put_contents( $file->getAbsolutePath(), $php );
-        $output = php_strip_whitespace( $file->getAbsolutePath() );
-        unlink( $file->getAbsolutePath() );
+        $file = new PhingFile(tempnam(PhingFile::getTempDir(), 'stripwhitespace'));
+        file_put_contents($file->getAbsolutePath(), $php);
+        $output = php_strip_whitespace($file->getAbsolutePath());
+        unlink($file->getAbsolutePath());
 
         $this->processed = true;
 
@@ -93,11 +93,11 @@ class StripWhitespace extends BaseFilterReader implements ChainableReader
      * @return a new filter based on this configuration, but filtering
      *           the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new StripWhitespace( $reader );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new StripWhitespace($reader);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }

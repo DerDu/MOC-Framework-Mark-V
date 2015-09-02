@@ -36,7 +36,7 @@ interface SelectorScanner
      *
      * @param $selectors the list of selectors
      */
-    public function setSelectors( $selectors );
+    public function setSelectors($selectors);
 
     /**
      * Directories which were selected out of a scan.

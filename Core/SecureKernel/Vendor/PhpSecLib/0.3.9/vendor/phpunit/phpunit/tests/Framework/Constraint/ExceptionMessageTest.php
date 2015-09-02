@@ -22,7 +22,7 @@ class ExceptionMessageTest extends PHPUnit_Framework_TestCase
     public function testLiteralMessage()
     {
 
-        throw new Exception( 'A literal exception message' );
+        throw new Exception('A literal exception message');
     }
 
     /**
@@ -32,7 +32,7 @@ class ExceptionMessageTest extends PHPUnit_Framework_TestCase
     public function testPatialMessageBegin()
     {
 
-        throw new Exception( 'A partial exception message' );
+        throw new Exception('A partial exception message');
     }
 
     /**
@@ -42,7 +42,7 @@ class ExceptionMessageTest extends PHPUnit_Framework_TestCase
     public function testPatialMessageMiddle()
     {
 
-        throw new Exception( 'A partial exception message' );
+        throw new Exception('A partial exception message');
     }
 
     /**
@@ -52,6 +52,6 @@ class ExceptionMessageTest extends PHPUnit_Framework_TestCase
     public function testPatialMessageEnd()
     {
 
-        throw new Exception( 'A partial exception message' );
+        throw new Exception('A partial exception message');
     }
 }

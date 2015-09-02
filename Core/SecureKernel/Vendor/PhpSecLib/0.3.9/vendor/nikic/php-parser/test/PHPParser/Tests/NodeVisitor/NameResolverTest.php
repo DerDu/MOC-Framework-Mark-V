@@ -76,15 +76,15 @@ namespace {
 }
 EOC;
 
-        $parser = new PHPParser_Parser( new PHPParser_Lexer_Emulative );
+        $parser = new PHPParser_Parser(new PHPParser_Lexer_Emulative);
         $prettyPrinter = new PHPParser_PrettyPrinter_Default;
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $stmts = $parser->parse( $code );
-        $stmts = $traverser->traverse( $stmts );
+        $stmts = $parser->parse($code);
+        $stmts = $traverser->traverse($stmts);
 
-        $this->assertEquals( $expectedCode, $prettyPrinter->prettyPrint( $stmts ) );
+        $this->assertEquals($expectedCode, $prettyPrinter->prettyPrint($stmts));
     }
 
     /**
@@ -145,78 +145,78 @@ try {
 }
 EOC;
 
-        $parser = new PHPParser_Parser( new PHPParser_Lexer_Emulative );
+        $parser = new PHPParser_Parser(new PHPParser_Lexer_Emulative);
         $prettyPrinter = new PHPParser_PrettyPrinter_Default;
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $stmts = $parser->parse( $code );
-        $stmts = $traverser->traverse( $stmts );
+        $stmts = $parser->parse($code);
+        $stmts = $traverser->traverse($stmts);
 
-        $this->assertEquals( $expectedCode, $prettyPrinter->prettyPrint( $stmts ) );
+        $this->assertEquals($expectedCode, $prettyPrinter->prettyPrint($stmts));
     }
 
     public function testNoResolveSpecialName()
     {
 
-        $stmts = array( new PHPParser_Node_Expr_New( new PHPParser_Node_Name( 'self' ) ) );
+        $stmts = array(new PHPParser_Node_Expr_New(new PHPParser_Node_Name('self')));
 
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $this->assertEquals( $stmts, $traverser->traverse( $stmts ) );
+        $this->assertEquals($stmts, $traverser->traverse($stmts));
     }
 
     public function testAddNamespacedName()
     {
 
-        $stmts = $this->createNamespacedAndNonNamespaced( array(
-            new PHPParser_Node_Stmt_Class( 'A' ),
-            new PHPParser_Node_Stmt_Interface( 'B' ),
-            new PHPParser_Node_Stmt_Function( 'C' ),
-            new PHPParser_Node_Stmt_Const( array(
-                new PHPParser_Node_Const( 'D', new PHPParser_Node_Scalar_String( 'E' ) )
-            ) ),
-        ) );
+        $stmts = $this->createNamespacedAndNonNamespaced(array(
+            new PHPParser_Node_Stmt_Class('A'),
+            new PHPParser_Node_Stmt_Interface('B'),
+            new PHPParser_Node_Stmt_Function('C'),
+            new PHPParser_Node_Stmt_Const(array(
+                new PHPParser_Node_Const('D', new PHPParser_Node_Scalar_String('E'))
+            )),
+        ));
 
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $stmts = $traverser->traverse( $stmts );
+        $stmts = $traverser->traverse($stmts);
 
-        $this->assertEquals( 'NS\\A', (string)$stmts[0]->stmts[0]->namespacedName );
-        $this->assertEquals( 'NS\\B', (string)$stmts[0]->stmts[1]->namespacedName );
-        $this->assertEquals( 'NS\\C', (string)$stmts[0]->stmts[2]->namespacedName );
-        $this->assertEquals( 'NS\\D', (string)$stmts[0]->stmts[3]->consts[0]->namespacedName );
-        $this->assertEquals( 'A', (string)$stmts[1]->stmts[0]->namespacedName );
-        $this->assertEquals( 'B', (string)$stmts[1]->stmts[1]->namespacedName );
-        $this->assertEquals( 'C', (string)$stmts[1]->stmts[2]->namespacedName );
-        $this->assertEquals( 'D', (string)$stmts[1]->stmts[3]->consts[0]->namespacedName );
+        $this->assertEquals('NS\\A', (string)$stmts[0]->stmts[0]->namespacedName);
+        $this->assertEquals('NS\\B', (string)$stmts[0]->stmts[1]->namespacedName);
+        $this->assertEquals('NS\\C', (string)$stmts[0]->stmts[2]->namespacedName);
+        $this->assertEquals('NS\\D', (string)$stmts[0]->stmts[3]->consts[0]->namespacedName);
+        $this->assertEquals('A', (string)$stmts[1]->stmts[0]->namespacedName);
+        $this->assertEquals('B', (string)$stmts[1]->stmts[1]->namespacedName);
+        $this->assertEquals('C', (string)$stmts[1]->stmts[2]->namespacedName);
+        $this->assertEquals('D', (string)$stmts[1]->stmts[3]->consts[0]->namespacedName);
     }
 
-    protected function createNamespacedAndNonNamespaced( array $stmts )
+    protected function createNamespacedAndNonNamespaced(array $stmts)
     {
 
         return array(
-            new PHPParser_Node_Stmt_Namespace( new PHPParser_Node_Name( 'NS' ), $stmts ),
-            new PHPParser_Node_Stmt_Namespace( null, $stmts ),
+            new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name('NS'), $stmts),
+            new PHPParser_Node_Stmt_Namespace(null, $stmts),
         );
     }
 
     public function testAddTraitNamespacedName()
     {
 
-        $stmts = $this->createNamespacedAndNonNamespaced( array(
-            new PHPParser_Node_Stmt_Trait( 'A' )
-        ) );
+        $stmts = $this->createNamespacedAndNonNamespaced(array(
+            new PHPParser_Node_Stmt_Trait('A')
+        ));
 
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $stmts = $traverser->traverse( $stmts );
+        $stmts = $traverser->traverse($stmts);
 
-        $this->assertEquals( 'NS\\A', (string)$stmts[0]->stmts[0]->namespacedName );
-        $this->assertEquals( 'A', (string)$stmts[1]->stmts[0]->namespacedName );
+        $this->assertEquals('NS\\A', (string)$stmts[0]->stmts[0]->namespacedName);
+        $this->assertEquals('A', (string)$stmts[1]->stmts[0]->namespacedName);
     }
 
     /**
@@ -227,15 +227,15 @@ EOC;
     {
 
         $stmts = array(
-            new PHPParser_Node_Stmt_Use( array(
-                new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( 'A\B' ), 'B', array( 'startLine' => 1 ) ),
-                new PHPParser_Node_Stmt_UseUse( new PHPParser_Node_Name( 'C' ), 'B', array( 'startLine' => 2 ) ),
-            ) )
+            new PHPParser_Node_Stmt_Use(array(
+                new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name('A\B'), 'B', array('startLine' => 1)),
+                new PHPParser_Node_Stmt_UseUse(new PHPParser_Node_Name('C'), 'B', array('startLine' => 2)),
+            ))
         );
 
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
-        $traverser->traverse( $stmts );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+        $traverser->traverse($stmts);
     }
 
     public function testClassNameIsCaseInsensitive()
@@ -248,15 +248,15 @@ use Bar\\Baz;
 \$test = new baz();
 EOC;
 
-        $parser = new PHPParser_Parser( new PHPParser_Lexer_Emulative );
-        $stmts = $parser->parse( $source );
+        $parser = new PHPParser_Parser(new PHPParser_Lexer_Emulative);
+        $stmts = $parser->parse($source);
 
         $traverser = new PHPParser_NodeTraverser;
-        $traverser->addVisitor( new PHPParser_NodeVisitor_NameResolver );
+        $traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
 
-        $stmts = $traverser->traverse( $stmts );
+        $stmts = $traverser->traverse($stmts);
         $stmt = $stmts[0];
 
-        $this->assertEquals( array( 'Bar', 'Baz' ), $stmt->stmts[1]->expr->class->parts );
+        $this->assertEquals(array('Bar', 'Baz'), $stmt->stmts[1]->expr->class->parts);
     }
 }

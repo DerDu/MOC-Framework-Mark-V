@@ -25,13 +25,13 @@ class PHP_CodeCoverage_Report_XML_Tests
         5 => 'RISKY'       // PHPUnit_Runner_BaseTestRunner::STATUS_RISKY
     );
 
-    public function __construct( DOMElement $context )
+    public function __construct(DOMElement $context)
     {
 
         $this->contextNode = $context;
     }
 
-    public function addTest( $test, array $result )
+    public function addTest($test, array $result)
     {
 
         $node = $this->contextNode->appendChild(
@@ -40,10 +40,10 @@ class PHP_CodeCoverage_Report_XML_Tests
                 'test'
             )
         );
-        $node->setAttribute( 'name', $test );
-        $node->setAttribute( 'size', $result['size'] );
-        $node->setAttribute( 'result', (int)$result['status'] );
-        $node->setAttribute( 'status', $this->codeMap[(int)$result['status']] );
+        $node->setAttribute('name', $test);
+        $node->setAttribute('size', $result['size']);
+        $node->setAttribute('result', (int)$result['status']);
+        $node->setAttribute('status', $this->codeMap[(int)$result['status']]);
 
     }
 }

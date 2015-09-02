@@ -71,7 +71,7 @@ class PHPCPDFormatterElement
      *
      * @param PHPCPDTask $parentTask
      */
-    public function __construct( PHPCPDTask $parentTask )
+    public function __construct(PHPCPDTask $parentTask)
     {
 
         $this->parentTask = $parentTask;
@@ -95,7 +95,7 @@ class PHPCPDFormatterElement
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
@@ -103,7 +103,7 @@ class PHPCPDFormatterElement
         switch ($this->type) {
             case 'pmd':
                 if ($this->useFile === false) {
-                    throw new BuildException( 'Formatter "'.$this->type.'" can only print the result to an file' );
+                    throw new BuildException('Formatter "'.$this->type.'" can only print the result to an file');
                 }
 
                 include_once 'phing/tasks/ext/phpcpd/formatter/PMDPHPCPDResultFormatter.php';
@@ -118,7 +118,7 @@ class PHPCPDFormatterElement
                 break;
 
             default:
-                throw new BuildException( 'Formatter "'.$this->type.'" not implemented' );
+                throw new BuildException('Formatter "'.$this->type.'" not implemented');
         }
     }
 
@@ -138,10 +138,10 @@ class PHPCPDFormatterElement
      *
      * @param boolean $useFile True or false.
      */
-    public function setUseFile( $useFile )
+    public function setUseFile($useFile)
     {
 
-        $this->useFile = StringHelper::booleanValue( $useFile );
+        $this->useFile = StringHelper::booleanValue($useFile);
     }
 
     /**
@@ -160,7 +160,7 @@ class PHPCPDFormatterElement
      *
      * @param PhingFile $outfile The output file
      */
-    public function setOutfile( PhingFile $outfile )
+    public function setOutfile(PhingFile $outfile)
     {
 
         $this->outfile = $outfile;

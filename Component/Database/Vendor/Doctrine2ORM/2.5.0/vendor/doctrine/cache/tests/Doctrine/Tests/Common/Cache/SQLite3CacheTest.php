@@ -2,7 +2,6 @@
 
 namespace Doctrine\Tests\Common\Cache;
 
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\SQLite3Cache;
 use SQLite3;
 

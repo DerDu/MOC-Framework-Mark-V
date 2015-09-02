@@ -43,7 +43,7 @@ abstract class PDOResultFormatter
      *
      * @param Writer $out
      */
-    public function setOutput( Writer $out )
+    public function setOutput(Writer $out)
     {
 
         $this->out = $out;
@@ -80,7 +80,7 @@ abstract class PDOResultFormatter
      *
      * @param array $row Row of PDO result set.
      */
-    abstract public function processRow( $row );
+    abstract public function processRow($row);
 
     /**
      * Perform any final tasks and Close the writer.

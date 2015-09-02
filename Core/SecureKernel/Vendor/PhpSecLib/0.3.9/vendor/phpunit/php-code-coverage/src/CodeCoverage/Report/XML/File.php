@@ -24,7 +24,7 @@ class PHP_CodeCoverage_Report_XML_File
      */
     protected $contextNode;
 
-    public function __construct( DOMElement $context )
+    public function __construct(DOMElement $context)
     {
 
         $this->dom = $context->ownerDocument;
@@ -45,16 +45,16 @@ class PHP_CodeCoverage_Report_XML_File
             );
         }
 
-        return new PHP_CodeCoverage_Report_XML_Totals( $totalsContainer );
+        return new PHP_CodeCoverage_Report_XML_Totals($totalsContainer);
     }
 
-    public function getLineCoverage( $line )
+    public function getLineCoverage($line)
     {
 
         $coverage = $this->contextNode->getElementsByTagNameNS(
             'http://schema.phpunit.de/coverage/1.0',
             'coverage'
-        )->item( 0 );
+        )->item(0);
 
         if (!$coverage) {
             $coverage = $this->contextNode->appendChild(
@@ -72,6 +72,6 @@ class PHP_CodeCoverage_Report_XML_File
             )
         );
 
-        return new PHP_CodeCoverage_Report_XML_File_Coverage( $lineNode, $line );
+        return new PHP_CodeCoverage_Report_XML_File_Coverage($lineNode, $line);
     }
 }

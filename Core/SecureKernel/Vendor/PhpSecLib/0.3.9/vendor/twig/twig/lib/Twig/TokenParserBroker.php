@@ -29,18 +29,18 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      * @param array|Traversable $parsers A Traversable of Twig_TokenParserInterface instances
      * @param array|Traversable $brokers A Traversable of Twig_TokenParserBrokerInterface instances
      */
-    public function __construct( $parsers = array(), $brokers = array() )
+    public function __construct($parsers = array(), $brokers = array())
     {
 
         foreach ($parsers as $parser) {
             if (!$parser instanceof Twig_TokenParserInterface) {
-                throw new LogicException( '$parsers must a an array of Twig_TokenParserInterface' );
+                throw new LogicException('$parsers must a an array of Twig_TokenParserInterface');
             }
             $this->parsers[$parser->getTag()] = $parser;
         }
         foreach ($brokers as $broker) {
             if (!$broker instanceof Twig_TokenParserBrokerInterface) {
-                throw new LogicException( '$brokers must a an array of Twig_TokenParserBrokerInterface' );
+                throw new LogicException('$brokers must a an array of Twig_TokenParserBrokerInterface');
             }
             $this->brokers[] = $broker;
         }
@@ -51,7 +51,7 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      *
      * @param Twig_TokenParserInterface $parser A Twig_TokenParserInterface instance
      */
-    public function addTokenParser( Twig_TokenParserInterface $parser )
+    public function addTokenParser(Twig_TokenParserInterface $parser)
     {
 
         $this->parsers[$parser->getTag()] = $parser;
@@ -62,7 +62,7 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      *
      * @param Twig_TokenParserInterface $parser A Twig_TokenParserInterface instance
      */
-    public function removeTokenParser( Twig_TokenParserInterface $parser )
+    public function removeTokenParser(Twig_TokenParserInterface $parser)
     {
 
         $name = $parser->getTag();
@@ -76,7 +76,7 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      *
      * @param Twig_TokenParserBroker $broker A Twig_TokenParserBroker instance
      */
-    public function addTokenParserBroker( Twig_TokenParserBroker $broker )
+    public function addTokenParserBroker(Twig_TokenParserBroker $broker)
     {
 
         $this->brokers[] = $broker;
@@ -87,10 +87,10 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      *
      * @param Twig_TokenParserBroker $broker A Twig_TokenParserBroker instance
      */
-    public function removeTokenParserBroker( Twig_TokenParserBroker $broker )
+    public function removeTokenParserBroker(Twig_TokenParserBroker $broker)
     {
 
-        if (false !== $pos = array_search( $broker, $this->brokers )) {
+        if (false !== $pos = array_search($broker, $this->brokers)) {
             unset( $this->brokers[$pos] );
         }
     }
@@ -104,19 +104,19 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      *
      * @return null|Twig_TokenParserInterface A Twig_TokenParserInterface or null if no suitable TokenParser was found
      */
-    public function getTokenParser( $tag )
+    public function getTokenParser($tag)
     {
 
         if (isset( $this->parsers[$tag] )) {
             return $this->parsers[$tag];
         }
-        $broker = end( $this->brokers );
+        $broker = end($this->brokers);
         while (false !== $broker) {
-            $parser = $broker->getTokenParser( $tag );
+            $parser = $broker->getTokenParser($tag);
             if (null !== $parser) {
                 return $parser;
             }
-            $broker = prev( $this->brokers );
+            $broker = prev($this->brokers);
         }
     }
 
@@ -132,15 +132,15 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
         return $this->parser;
     }
 
-    public function setParser( Twig_ParserInterface $parser )
+    public function setParser(Twig_ParserInterface $parser)
     {
 
         $this->parser = $parser;
         foreach ($this->parsers as $tokenParser) {
-            $tokenParser->setParser( $parser );
+            $tokenParser->setParser($parser);
         }
         foreach ($this->brokers as $broker) {
-            $broker->setParser( $parser );
+            $broker->setParser($parser);
         }
     }
 }

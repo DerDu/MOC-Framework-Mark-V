@@ -23,10 +23,10 @@
 class Twig_Node_AutoEscape extends Twig_Node
 {
 
-    public function __construct( $value, Twig_NodeInterface $body, $lineno, $tag = 'autoescape' )
+    public function __construct($value, Twig_NodeInterface $body, $lineno, $tag = 'autoescape')
     {
 
-        parent::__construct( array( 'body' => $body ), array( 'value' => $value ), $lineno, $tag );
+        parent::__construct(array('body' => $body), array('value' => $value), $lineno, $tag);
     }
 
     /**
@@ -34,9 +34,9 @@ class Twig_Node_AutoEscape extends Twig_Node
      *
      * @param Twig_Compiler $compiler A Twig_Compiler instance
      */
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $compiler->subcompile( $this->getNode( 'body' ) );
+        $compiler->subcompile($this->getNode('body'));
     }
 }

@@ -22,7 +22,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
     /**
      * @param string $className
      */
-    public function __construct( $className )
+    public function __construct($className)
     {
 
         parent::__construct();
@@ -51,7 +51,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
         return $other instanceof $this->className;
@@ -67,7 +67,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         if ($other !== null) {
@@ -79,7 +79,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
 
             return sprintf(
                 'exception of type "%s" matches expected exception "%s"%s',
-                get_class( $other ),
+                get_class($other),
                 $this->className,
                 $message
             );

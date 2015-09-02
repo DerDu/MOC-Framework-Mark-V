@@ -43,6 +43,21 @@ class Filesystem
     }
 
     /**
+     * @param mixed $files
+     *
+     * @return \Traversable
+     */
+    private function toIterator($files)
+    {
+
+        if (!$files instanceof \Traversable) {
+            $files = new \ArrayObject(is_array($files) ? $files : array($files));
+        }
+
+        return $files;
+    }
+
+    /**
      * Change the owner of an array of files or directories.
      *
      * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change owner
@@ -274,6 +289,36 @@ class Filesystem
     }
 
     /**
+     * Creates a directory recursively.
+     *
+     * @param string|array|\Traversable $dirs The directory path
+     * @param int                       $mode The directory mode
+     *
+     * @throws IOException On any directory creation failure
+     */
+    public function mkdir($dirs, $mode = 0777)
+    {
+
+        foreach ($this->toIterator($dirs) as $dir) {
+            if (is_dir($dir)) {
+                continue;
+            }
+
+            if (true !== @mkdir($dir, $mode, true)) {
+                $error = error_get_last();
+                if (!is_dir($dir)) {
+                    // The directory was not created by a concurrent process. Let's throw an exception with a developer friendly error message if we have one
+                    if ($error) {
+                        throw new IOException(sprintf('Failed to create "%s": %s.', $dir, $error['message']), 0, null,
+                            $dir);
+                    }
+                    throw new IOException(sprintf('Failed to create "%s"', $dir), 0, null, $dir);
+                }
+            }
+        }
+    }
+
+    /**
      * Copies a file.
      *
      * This method only copies the file if the origin file is newer than the target file.
@@ -335,51 +380,6 @@ class Filesystem
                     $originFile, $targetFile, $bytesCopied, $bytesOrigin), 0, null, $originFile);
             }
         }
-    }
-
-    /**
-     * Creates a directory recursively.
-     *
-     * @param string|array|\Traversable $dirs The directory path
-     * @param int                       $mode The directory mode
-     *
-     * @throws IOException On any directory creation failure
-     */
-    public function mkdir($dirs, $mode = 0777)
-    {
-
-        foreach ($this->toIterator($dirs) as $dir) {
-            if (is_dir($dir)) {
-                continue;
-            }
-
-            if (true !== @mkdir($dir, $mode, true)) {
-                $error = error_get_last();
-                if (!is_dir($dir)) {
-                    // The directory was not created by a concurrent process. Let's throw an exception with a developer friendly error message if we have one
-                    if ($error) {
-                        throw new IOException(sprintf('Failed to create "%s": %s.', $dir, $error['message']), 0, null,
-                            $dir);
-                    }
-                    throw new IOException(sprintf('Failed to create "%s"', $dir), 0, null, $dir);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param mixed $files
-     *
-     * @return \Traversable
-     */
-    private function toIterator($files)
-    {
-
-        if (!$files instanceof \Traversable) {
-            $files = new \ArrayObject(is_array($files) ? $files : array($files));
-        }
-
-        return $files;
     }
 
     /**

@@ -31,24 +31,24 @@ Searchdoc.Navigation = new function()
     {
         var _this = this;
 
-        $( document ).keydown( function( e )
+        $(document).keydown(function(e)
         {
-            _this.onkeydown( e );
-        } ).keyup( function( e )
+            _this.onkeydown(e);
+        }).keyup(function(e)
         {
-            _this.onkeyup( e );
-        } );
+            _this.onkeyup(e);
+        });
 
         this.navigationActive = true;
     };
 
-    this.setNavigationActive = function( state )
+    this.setNavigationActive = function(state)
     {
         this.navigationActive = state;
         this.clearMoveTimeout();
     };
 
-    this.onkeyup = function( e )
+    this.onkeyup = function(e)
     {
         if (!this.navigationActive) {
             return;
@@ -71,7 +71,7 @@ Searchdoc.Navigation = new function()
         }
     };
 
-    this.onkeydown = function( e )
+    this.onkeydown = function(e)
     {
         if (!this.navigationActive) {
             return;
@@ -91,7 +91,7 @@ Searchdoc.Navigation = new function()
                     if (this.moveUp()) {
                         e.preventDefault();
                     }
-                    this.startMoveTimeout( false );
+                    this.startMoveTimeout(false);
                 }
                 break;
             case 39: //Event.KEY_RIGHT:
@@ -108,28 +108,28 @@ Searchdoc.Navigation = new function()
                     if (this.moveDown()) {
                         e.preventDefault();
                     }
-                    this.startMoveTimeout( true );
+                    this.startMoveTimeout(true);
                 }
                 break;
             case 9: //Event.KEY_TAB:
             case 13: //Event.KEY_RETURN:
                 if (this.$current) {
-                    this.select( this.$current );
+                    this.select(this.$current);
                 }
                 break;
         }
         if (e.ctrlKey && e.shiftKey) {
-            this.select( this.$current );
+            this.select(this.$current);
         }
     };
 
     this.clearMoveTimeout = function()
     {
-        clearTimeout( this.moveTimeout );
+        clearTimeout(this.moveTimeout);
         this.moveTimeout = null;
     };
 
-    this.startMoveTimeout = function( isDown )
+    this.startMoveTimeout = function(isDown)
     {
         if (!$.browser.mozilla && !$.browser.opera) {
             return;
@@ -145,9 +145,9 @@ Searchdoc.Navigation = new function()
                 return;
             }
             _this[isDown ? 'moveDown' : 'moveUp']();
-            _this.moveTimout = setTimeout( go, 100 );
+            _this.moveTimout = setTimeout(go, 100);
         };
-        this.moveTimeout = setTimeout( go, 200 );
+        this.moveTimeout = setTimeout(go, 200);
     };
 
     this.moveRight = function()
@@ -158,24 +158,24 @@ Searchdoc.Navigation = new function()
     {
     };
 
-    this.move = function( isDown )
+    this.move = function(isDown)
     {
     };
 
     this.moveUp = function()
     {
-        return this.move( false );
+        return this.move(false);
     };
 
     this.moveDown = function()
     {
-        return this.move( true );
+        return this.move(true);
     }
 };
 
 // scrollIntoView.js --------------------------------------
 
-function scrollIntoView( element, view )
+function scrollIntoView(element, view)
 {
     var offset, viewHeight, viewScroll, height;
     offset = element.offsetTop;
@@ -192,7 +192,7 @@ function scrollIntoView( element, view )
 
 // searcher.js --------------------------------------------
 
-Searchdoc.Searcher = function( data )
+Searchdoc.Searcher = function(data)
 {
     this.data = data;
     this.handlers = [];
@@ -205,11 +205,11 @@ Searchdoc.Searcher.prototype = new function()
         huid = 1, suid = 1,
         runs = 0;
 
-    this.find = function( query )
+    this.find = function(query)
     {
-        var queries = splitQuery( query ),
-            regexps = buildRegexps( queries ),
-            highlighters = buildHilighters( queries ),
+        var queries = splitQuery(query),
+            regexps = buildRegexps(queries),
+            highlighters = buildHilighters(queries),
             state = {from: 0, pass: 0, limit: MAX_RESULTS, n: suid++},
             _this = this;
         this.currentSuid = state.n;
@@ -225,12 +225,12 @@ Searchdoc.Searcher.prototype = new function()
                 return;
             }
 
-            var results = performSearch( _this.data, regexps, queries, highlighters, state ),
+            var results = performSearch(_this.data, regexps, queries, highlighters, state),
                 hasMore = (state.limit > 0 && state.pass < 3);
 
-            triggerResults.call( _this, results, !hasMore );
+            triggerResults.call(_this, results, !hasMore);
             if (hasMore) {
-                setTimeout( run, 2 );
+                setTimeout(run, 2);
             }
             runs++;
         };
@@ -241,38 +241,38 @@ Searchdoc.Searcher.prototype = new function()
     };
 
     /*  ----- Events ------  */
-    this.ready = function( fn )
+    this.ready = function(fn)
     {
         fn.huid = huid;
-        this.handlers.push( fn );
+        this.handlers.push(fn);
     };
 
     /*  ----- Utilities ------  */
-    function splitQuery( query )
+    function splitQuery(query)
     {
-        return jQuery.grep( query.split( /(\s+|\(\)?)/ ), function( string )
+        return jQuery.grep(query.split(/(\s+|\(\)?)/), function(string)
         {
-            return string.match( /\S/ )
-        } );
+            return string.match(/\S/)
+        });
     }
 
-    function buildRegexps( queries )
+    function buildRegexps(queries)
     {
-        return jQuery.map( queries, function( query )
+        return jQuery.map(queries, function(query)
         {
-            return new RegExp( query.replace( /(.)/g, '([$1])([^$1]*?)' ), 'i' )
-        } );
+            return new RegExp(query.replace(/(.)/g, '([$1])([^$1]*?)'), 'i')
+        });
     }
 
-    function buildHilighters( queries )
+    function buildHilighters(queries)
     {
-        return jQuery.map( queries, function( query )
+        return jQuery.map(queries, function(query)
         {
-            return jQuery.map( query.split( '' ), function( l, i )
+            return jQuery.map(query.split(''), function(l, i)
             {
                 return '\u0001$' + (i * 2 + 1) + '\u0002$' + (i * 2 + 2)
-            } ).join( '' )
-        } );
+            }).join('')
+        });
     }
 
     // function longMatchRegexp(index, longIndex, regexps) {
@@ -283,39 +283,39 @@ Searchdoc.Searcher.prototype = new function()
     // }
 
     /*  ----- Mathchers ------  */
-    function matchPass1( index, longIndex, queries, regexps )
+    function matchPass1(index, longIndex, queries, regexps)
     {
-        if (index.indexOf( queries[0] ) != 0) {
+        if (index.indexOf(queries[0]) != 0) {
             return false;
         }
         for (var i = 1, l = regexps.length; i < l; i++) {
-            if (!index.match( regexps[i] ) && !longIndex.match( regexps[i] )) {
+            if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) {
                 return false;
             }
         }
         return true;
     }
 
-    function matchPass2( index, longIndex, queries, regexps )
+    function matchPass2(index, longIndex, queries, regexps)
     {
-        if (index.indexOf( queries[0] ) == -1) {
+        if (index.indexOf(queries[0]) == -1) {
             return false;
         }
         for (var i = 1, l = regexps.length; i < l; i++) {
-            if (!index.match( regexps[i] ) && !longIndex.match( regexps[i] )) {
+            if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) {
                 return false;
             }
         }
         return true;
     }
 
-    function matchPassRegexp( index, longIndex, queries, regexps )
+    function matchPassRegexp(index, longIndex, queries, regexps)
     {
-        if (!index.match( regexps[0] )) {
+        if (!index.match(regexps[0])) {
             return false;
         }
         for (var i = 1, l = regexps.length; i < l; i++) {
-            if (!index.match( regexps[i] ) && !longIndex.match( regexps[i] )) {
+            if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) {
                 return false;
             }
         }
@@ -323,39 +323,39 @@ Searchdoc.Searcher.prototype = new function()
     }
 
     /*  ----- Highlighters ------  */
-    function highlightRegexp( info, queries, regexps, highlighters )
+    function highlightRegexp(info, queries, regexps, highlighters)
     {
-        var result = createResult( info );
+        var result = createResult(info);
         for (var i = 0, l = regexps.length; i < l; i++) {
-            result.title = result.title.replace( regexps[i], highlighters[i] );
+            result.title = result.title.replace(regexps[i], highlighters[i]);
             if (i > 0) {
-                result.namespace = result.namespace.replace( regexps[i], highlighters[i] );
+                result.namespace = result.namespace.replace(regexps[i], highlighters[i]);
             }
         }
         return result;
     }
 
-    function hltSubstring( string, pos, length )
+    function hltSubstring(string, pos, length)
     {
-        return string.substring( 0, pos ) + '\u0001' + string.substring( pos,
-                pos + length ) + '\u0002' + string.substring( pos + length );
+        return string.substring(0, pos) + '\u0001' + string.substring(pos,
+                pos + length) + '\u0002' + string.substring(pos + length);
     }
 
-    function highlightQuery( info, queries, regexps, highlighters )
+    function highlightQuery(info, queries, regexps, highlighters)
     {
-        var result = createResult( info ), pos = 0, lcTitle = result.title.toLowerCase();
-        pos = lcTitle.indexOf( queries[0] );
+        var result = createResult(info), pos = 0, lcTitle = result.title.toLowerCase();
+        pos = lcTitle.indexOf(queries[0]);
         if (pos != -1) {
-            result.title = hltSubstring( result.title, pos, queries[0].length );
+            result.title = hltSubstring(result.title, pos, queries[0].length);
         }
         for (var i = 1, l = regexps.length; i < l; i++) {
-            result.title = result.title.replace( regexps[i], highlighters[i] );
-            result.namespace = result.namespace.replace( regexps[i], highlighters[i] );
+            result.title = result.title.replace(regexps[i], highlighters[i]);
+            result.namespace = result.namespace.replace(regexps[i], highlighters[i]);
         }
         return result;
     }
 
-    function createResult( info )
+    function createResult(info)
     {
         var result = {};
         result.title = info[0];
@@ -368,7 +368,7 @@ Searchdoc.Searcher.prototype = new function()
     }
 
     /*  ----- Searching ------  */
-    function performSearch( data, regexps, queries, highlighters, state )
+    function performSearch(data, regexps, queries, highlighters, state)
     {
         var searchIndex = data.searchIndex, // search by title first and then by source
             longSearchIndex = data.longSearchIndex,
@@ -399,9 +399,9 @@ Searchdoc.Searcher.prototype = new function()
                 if (info[i].n == state.n) {
                     continue;
                 }
-                if (matchFunc( searchIndex[i], longSearchIndex[i], queries, regexps )) {
+                if (matchFunc(searchIndex[i], longSearchIndex[i], queries, regexps)) {
                     info[i].n = state.n;
-                    result.push( hltFunc( info[i], queries, regexps, highlighters ) );
+                    result.push(hltFunc(info[i], queries, regexps, highlighters));
                     state.limit--;
                 }
             }
@@ -415,32 +415,32 @@ Searchdoc.Searcher.prototype = new function()
         return result;
     }
 
-    function triggerResults( results, isLast )
+    function triggerResults(results, isLast)
     {
-        jQuery.each( this.handlers, function( i, fn )
+        jQuery.each(this.handlers, function(i, fn)
         {
-            fn.call( this, results, isLast )
-        } )
+            fn.call(this, results, isLast)
+        })
     }
 };
 
 // panel.js -----------------------------------------------
 
-Searchdoc.Panel = function( element, data, tree, frame )
+Searchdoc.Panel = function(element, data, tree, frame)
 {
-    this.$element = $( element );
-    this.$input = $( 'input', element ).eq( 0 );
-    this.$result = $( '.result ul', element ).eq( 0 );
+    this.$element = $(element);
+    this.$input = $('input', element).eq(0);
+    this.$result = $('.result ul', element).eq(0);
     this.frame = frame;
     this.$current = null;
     this.$view = this.$result.parent();
     this.data = data;
-    this.searcher = new Searchdoc.Searcher( data.index );
-    this.tree = new Searchdoc.Tree( $( '.tree', element ), tree, this );
+    this.searcher = new Searchdoc.Searcher(data.index);
+    this.tree = new Searchdoc.Tree($('.tree', element), tree, this);
     this.init();
 };
 
-Searchdoc.Panel.prototype = $.extend( {}, Searchdoc.Navigation, new function()
+Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function()
 {
     var suid = 1;
 
@@ -449,169 +449,169 @@ Searchdoc.Panel.prototype = $.extend( {}, Searchdoc.Navigation, new function()
         var _this = this;
         var observer = function()
         {
-            _this.search( _this.$input[0].value );
+            _this.search(_this.$input[0].value);
         };
-        this.$input.keyup( observer );
-        this.$input.click( observer ); // mac's clear field
+        this.$input.keyup(observer);
+        this.$input.click(observer); // mac's clear field
 
-        this.searcher.ready( function( results, isLast )
+        this.searcher.ready(function(results, isLast)
         {
-            _this.addResults( results, isLast );
-        } );
+            _this.addResults(results, isLast);
+        });
 
-        this.$result.click( function( e )
+        this.$result.click(function(e)
         {
-            _this.$current.removeClass( 'current' );
-            _this.$current = $( e.target ).closest( 'li' ).addClass( 'current' );
+            _this.$current.removeClass('current');
+            _this.$current = $(e.target).closest('li').addClass('current');
             _this.select();
             _this.$input.focus();
-        } );
+        });
 
         this.initNavigation();
-        this.setNavigationActive( false );
+        this.setNavigationActive(false);
     };
 
-    this.search = function( value, selectFirstMatch )
+    this.search = function(value, selectFirstMatch)
     {
-        value = jQuery.trim( value ).toLowerCase();
+        value = jQuery.trim(value).toLowerCase();
         this.selectFirstMatch = selectFirstMatch;
         if (value) {
-            this.$element.removeClass( 'panel_tree' ).addClass( 'panel_results' );
-            this.tree.setNavigationActive( false );
-            this.setNavigationActive( true );
+            this.$element.removeClass('panel_tree').addClass('panel_results');
+            this.tree.setNavigationActive(false);
+            this.setNavigationActive(true);
         } else {
-            this.$element.addClass( 'panel_tree' ).removeClass( 'panel_results' );
-            this.tree.setNavigationActive( true );
-            this.setNavigationActive( false );
+            this.$element.addClass('panel_tree').removeClass('panel_results');
+            this.tree.setNavigationActive(true);
+            this.setNavigationActive(false);
         }
         if (value != this.lastQuery) {
             this.lastQuery = value;
             this.firstRun = true;
-            this.searcher.find( value );
+            this.searcher.find(value);
         }
     };
 
-    this.addResults = function( results, isLast )
+    this.addResults = function(results, isLast)
     {
-        var target = this.$result.get( 0 );
+        var target = this.$result.get(0);
         if (this.firstRun && (results.length > 0 || isLast)) {
             this.$current = null;
             this.$result.empty();
         }
         for (var i = 0, l = results.length; i < l; i++) {
-            target.appendChild( renderItem.call( this, results[i] ) );
+            target.appendChild(renderItem.call(this, results[i]));
         }
         if (this.firstRun && results.length > 0) {
             this.firstRun = false;
-            this.$current = $( target.firstChild );
-            this.$current.addClass( 'current' );
+            this.$current = $(target.firstChild);
+            this.$current.addClass('current');
             if (this.selectFirstMatch) {
                 this.select();
             }
-            scrollIntoView( this.$current[0], this.$view[0] )
+            scrollIntoView(this.$current[0], this.$view[0])
         }
         if (jQuery.browser.msie) {
             this.$element[0].className += '';
         }
     };
 
-    this.open = function( src )
+    this.open = function(src)
     {
         this.frame.location.href = src;
         if (this.frame.highlight) {
-            this.frame.highlight( src );
+            this.frame.highlight(src);
         }
     };
 
     this.select = function()
     {
-        this.open( this.$current.data( 'path' ) );
+        this.open(this.$current.data('path'));
     };
 
-    this.move = function( isDown )
+    this.move = function(isDown)
     {
         if (!this.$current) {
             return;
         }
         var $next = this.$current[isDown ? 'next' : 'prev']();
         if ($next.length) {
-            this.$current.removeClass( 'current' );
-            $next.addClass( 'current' );
-            scrollIntoView( $next[0], this.$view[0] );
+            this.$current.removeClass('current');
+            $next.addClass('current');
+            scrollIntoView($next[0], this.$view[0]);
             this.$current = $next;
         }
         return true;
     };
 
-    function renderItem( result )
+    function renderItem(result)
     {
-        var li = document.createElement( 'li' ),
+        var li = document.createElement('li'),
             html = '', badge = result.badge;
-        html += '<h1>' + hlt( result.title );
+        html += '<h1>' + hlt(result.title);
         if (result.params) {
             html += '<i>' + result.params + '</i>';
         }
         html += '</h1>';
         html += '<p>';
         if (typeof badge != 'undefined') {
-            html += '<span class="badge badge_' + (badge % 6 + 1) + '">' + escapeHTML( this.data.badges[badge] || 'unknown' ) + '</span>';
+            html += '<span class="badge badge_' + (badge % 6 + 1) + '">' + escapeHTML(this.data.badges[badge] || 'unknown') + '</span>';
         }
-        html += hlt( result.namespace ) + '</p>';
+        html += hlt(result.namespace) + '</p>';
         if (result.snippet) {
-            html += '<p class="snippet">' + escapeHTML( result.snippet ) + '</p>';
+            html += '<p class="snippet">' + escapeHTML(result.snippet) + '</p>';
         }
         li.innerHTML = html;
-        jQuery.data( li, 'path', result.path );
+        jQuery.data(li, 'path', result.path);
         return li;
     }
 
-    function hlt( html )
+    function hlt(html)
     {
-        return escapeHTML( html ).replace( /\u0001/g, '<b>' ).replace( /\u0002/g, '</b>' )
+        return escapeHTML(html).replace(/\u0001/g, '<b>').replace(/\u0002/g, '</b>')
     }
 
-    function escapeHTML( html )
+    function escapeHTML(html)
     {
-        return html.replace( /[&<>]/g, function( c )
+        return html.replace(/[&<>]/g, function(c)
         {
-            return '&#' + c.charCodeAt( 0 ) + ';';
-        } );
+            return '&#' + c.charCodeAt(0) + ';';
+        });
     }
 
-} );
+});
 
 // tree.js ------------------------------------------------
 
-Searchdoc.Tree = function( element, tree, panel )
+Searchdoc.Tree = function(element, tree, panel)
 {
-    this.$element = $( element );
-    this.$list = $( 'ul', element );
+    this.$element = $(element);
+    this.$list = $('ul', element);
     this.tree = tree;
     this.panel = panel;
     this.init();
 };
 
-Searchdoc.Tree.prototype = $.extend( {}, Searchdoc.Navigation, new function()
+Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function()
 {
     this.init = function()
     {
-        var stopper = document.createElement( 'li' );
+        var stopper = document.createElement('li');
         stopper.className = 'stopper';
-        this.$list[0].appendChild( stopper );
+        this.$list[0].appendChild(stopper);
         for (var i = 0, l = this.tree.length; i < l; i++) {
-            buildAndAppendItem.call( this, this.tree[i], 0, stopper );
+            buildAndAppendItem.call(this, this.tree[i], 0, stopper);
         }
         var _this = this;
-        this.$list.click( function( e )
+        this.$list.click(function(e)
         {
-            var $target = $( e.target ),
-                $li = $target.closest( 'li' );
-            if ($target.hasClass( 'icon' )) {
-                _this.toggle( $li );
+            var $target = $(e.target),
+                $li = $target.closest('li');
+            if ($target.hasClass('icon')) {
+                _this.toggle($li);
             } else {
-                _this.select( $li );
+                _this.select($li);
             }
-        } );
+        });
 
         this.initNavigation();
         if (jQuery.browser.msie) {
@@ -619,69 +619,69 @@ Searchdoc.Tree.prototype = $.extend( {}, Searchdoc.Navigation, new function()
         }
     };
 
-    this.select = function( $li )
+    this.select = function($li)
     {
-        this.highlight( $li );
+        this.highlight($li);
         var path = $li[0].searchdoc_tree_data.path;
         if (path) {
-            this.panel.open( path );
+            this.panel.open(path);
         }
     };
 
-    this.highlight = function( $li )
+    this.highlight = function($li)
     {
         if (this.$current) {
-            this.$current.removeClass( 'current' );
+            this.$current.removeClass('current');
         }
-        this.$current = $li.addClass( 'current' );
+        this.$current = $li.addClass('current');
     };
 
-    this.toggle = function( $li )
+    this.toggle = function($li)
     {
-        var closed = !$li.hasClass( 'closed' ),
+        var closed = !$li.hasClass('closed'),
             children = $li[0].searchdoc_tree_data.children;
-        $li.toggleClass( 'closed' );
+        $li.toggleClass('closed');
         for (var i = 0, l = children.length; i < l; i++) {
-            toggleVis.call( this, $( children[i].li ), !closed );
+            toggleVis.call(this, $(children[i].li), !closed);
         }
     };
 
     this.moveRight = function()
     {
         if (!this.$current) {
-            this.highlight( this.$list.find( 'li:first' ) );
+            this.highlight(this.$list.find('li:first'));
             return;
         }
-        if (this.$current.hasClass( 'closed' )) {
-            this.toggle( this.$current );
+        if (this.$current.hasClass('closed')) {
+            this.toggle(this.$current);
         }
     };
 
     this.moveLeft = function()
     {
         if (!this.$current) {
-            this.highlight( this.$list.find( 'li:first' ) );
+            this.highlight(this.$list.find('li:first'));
             return;
         }
-        if (!this.$current.hasClass( 'closed' )) {
-            this.toggle( this.$current );
+        if (!this.$current.hasClass('closed')) {
+            this.toggle(this.$current);
         } else {
             var level = this.$current[0].searchdoc_tree_data.level;
             if (level == 0) {
                 return;
             }
-            var $next = this.$current.prevAll( 'li.level_' + (level - 1) + ':visible:first' );
-            this.$current.removeClass( 'current' );
-            $next.addClass( 'current' );
-            scrollIntoView( $next[0], this.$element[0] );
+            var $next = this.$current.prevAll('li.level_' + (level - 1) + ':visible:first');
+            this.$current.removeClass('current');
+            $next.addClass('current');
+            scrollIntoView($next[0], this.$element[0]);
             this.$current = $next;
         }
     };
 
-    this.move = function( isDown )
+    this.move = function(isDown)
     {
         if (!this.$current) {
-            this.highlight( this.$list.find( 'li:first' ) );
+            this.highlight(this.$list.find('li:first'));
             return true;
         }
         var next = this.$current[0];
@@ -700,68 +700,68 @@ Searchdoc.Tree.prototype = $.extend( {}, Searchdoc.Navigation, new function()
                 }
             } while (next);
         }
-        if (next && next.className.indexOf( 'stopper' ) == -1) {
-            this.$current.removeClass( 'current' );
-            $( next ).addClass( 'current' );
-            scrollIntoView( next, this.$element[0] );
-            this.$current = $( next );
+        if (next && next.className.indexOf('stopper') == -1) {
+            this.$current.removeClass('current');
+            $(next).addClass('current');
+            scrollIntoView(next, this.$element[0]);
+            this.$current = $(next);
         }
         return true;
     };
 
-    function toggleVis( $li, show )
+    function toggleVis($li, show)
     {
-        var closed = $li.hasClass( 'closed' ),
+        var closed = $li.hasClass('closed'),
             children = $li[0].searchdoc_tree_data.children;
-        $li.css( 'display', show ? '' : 'none' );
+        $li.css('display', show ? '' : 'none');
         if (!show && this.$current && $li[0] == this.$current[0]) {
-            this.$current.removeClass( 'current' );
+            this.$current.removeClass('current');
             this.$current = null;
         }
         for (var i = 0, l = children.length; i < l; i++) {
-            toggleVis.call( this, $( children[i].li ), show && !closed );
+            toggleVis.call(this, $(children[i].li), show && !closed);
         }
     }
 
-    function buildAndAppendItem( item, level, before )
+    function buildAndAppendItem(item, level, before)
     {
-        var li = renderItem( item, level ),
+        var li = renderItem(item, level),
             list = this.$list[0];
         item.li = li;
-        list.insertBefore( li, before );
+        list.insertBefore(li, before);
         for (var i = 0, l = item[3].length; i < l; i++) {
-            buildAndAppendItem.call( this, item[3][i], level + 1, before );
+            buildAndAppendItem.call(this, item[3][i], level + 1, before);
         }
         return li;
     }
 
-    function renderItem( item, level )
+    function renderItem(item, level)
     {
-        var li = document.createElement( 'li' ),
-            cnt = document.createElement( 'div' ),
-            h1 = document.createElement( 'h1' ),
-            p = document.createElement( 'p' ),
+        var li = document.createElement('li'),
+            cnt = document.createElement('div'),
+            h1 = document.createElement('h1'),
+            p = document.createElement('p'),
             icon, i;
 
-        li.appendChild( cnt );
-        li.style.paddingLeft = getOffset( level );
+        li.appendChild(cnt);
+        li.style.paddingLeft = getOffset(level);
         cnt.className = 'content';
         if (!item[1]) {
             li.className = 'empty ';
         }
-        cnt.appendChild( h1 );
+        cnt.appendChild(h1);
         // cnt.appendChild(p);
-        h1.appendChild( document.createTextNode( item[0] ) );
+        h1.appendChild(document.createTextNode(item[0]));
         // p.appendChild(document.createTextNode(item[4]));
         if (item[2]) {
-            i = document.createElement( 'i' );
-            i.appendChild( document.createTextNode( item[2] ) );
-            h1.appendChild( i );
+            i = document.createElement('i');
+            i.appendChild(document.createTextNode(item[2]));
+            h1.appendChild(i);
         }
         if (item[3].length > 0) {
-            icon = document.createElement( 'div' );
+            icon = document.createElement('div');
             icon.className = 'icon';
-            cnt.appendChild( icon );
+            cnt.appendChild(icon);
         }
 
         // user direct assignement instead of $()
@@ -782,8 +782,8 @@ Searchdoc.Tree.prototype = $.extend( {}, Searchdoc.Navigation, new function()
         return li;
     }
 
-    function getOffset( level )
+    function getOffset(level)
     {
         return 5 + 18 * level + 'px';
     }
-} );
+});

@@ -39,7 +39,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
     /**
      * @param array $parameters
      */
-    public function __construct( array $parameters )
+    public function __construct(array $parameters)
     {
 
         foreach ($parameters as $parameter) {
@@ -77,7 +77,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      *
      * @return boolean
      */
-    public function matches( PHPUnit_Framework_MockObject_Invocation $invocation )
+    public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
 
         $this->invocation = $invocation;
@@ -105,21 +105,21 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
             );
         }
 
-        if (count( $this->invocation->parameters ) < count( $this->parameters )) {
+        if (count($this->invocation->parameters) < count($this->parameters)) {
             $message = 'Parameter count for invocation %s is too low.';
 
             // The user called `->with($this->anything())`, but may have meant
             // `->withAnyParameters()`.
             //
             // @see https://github.com/sebastianbergmann/phpunit-mock-objects/issues/199
-            if (count( $this->parameters ) === 1 &&
-                get_class( $this->parameters[0] ) === 'PHPUnit_Framework_Constraint_IsAnything'
+            if (count($this->parameters) === 1 &&
+                get_class($this->parameters[0]) === 'PHPUnit_Framework_Constraint_IsAnything'
             ) {
                 $message .= "\nTo allow 0 or more parameters with any value, omit ->with() or use ->withAnyParameters() instead.";
             }
 
             throw new PHPUnit_Framework_ExpectationFailedException(
-                sprintf( $message, $this->invocation->toString() )
+                sprintf($message, $this->invocation->toString())
             );
         }
 

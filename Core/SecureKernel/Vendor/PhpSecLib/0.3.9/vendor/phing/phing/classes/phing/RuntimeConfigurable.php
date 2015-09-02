@@ -55,14 +55,14 @@ class RuntimeConfigurable
      * @param Task|object $proxy
      * @param mixed       $elementTag The element to wrap.
      */
-    public function __construct( $proxy, $elementTag )
+    public function __construct($proxy, $elementTag)
     {
 
         $this->wrappedObject = $proxy;
         $this->elementTag = $elementTag;
 
         if ($proxy instanceof Task) {
-            $proxy->setRuntimeConfigurableWrapper( $this );
+            $proxy->setRuntimeConfigurableWrapper($this);
         }
     }
 
@@ -80,7 +80,7 @@ class RuntimeConfigurable
      *
      * @return void
      */
-    public function setProxy( $proxy )
+    public function setProxy($proxy)
     {
 
         $this->wrappedObject = $proxy;
@@ -105,7 +105,7 @@ class RuntimeConfigurable
      *
      * @return void
      */
-    public function setAttributes( $attributes )
+    public function setAttributes($attributes)
     {
 
         $this->attributes = $attributes;
@@ -118,7 +118,7 @@ class RuntimeConfigurable
      *
      * @return void
      */
-    public function addChild( RuntimeConfigurable $child )
+    public function addChild(RuntimeConfigurable $child)
     {
 
         $this->children[] = $child;
@@ -131,7 +131,7 @@ class RuntimeConfigurable
      *
      * @return RuntimeConfigurable
      */
-    public function getChild( $index )
+    public function getChild($index)
     {
 
         return $this->children[(int)$index];
@@ -144,7 +144,7 @@ class RuntimeConfigurable
      *
      * @return void
      */
-    public function addText( $data )
+    public function addText($data)
     {
 
         $this->characters .= (string)$data;
@@ -166,7 +166,7 @@ class RuntimeConfigurable
      * @throws BuildException
      * @throws Exception
      */
-    public function maybeConfigure( Project $project )
+    public function maybeConfigure(Project $project)
     {
 
         if ($this->proxyConfigured) {
@@ -180,17 +180,17 @@ class RuntimeConfigurable
         //            return;
 
         if ($this->attributes || $this->characters) {
-            ProjectConfigurator::configure( $this->wrappedObject, $this->attributes, $project );
+            ProjectConfigurator::configure($this->wrappedObject, $this->attributes, $project);
 
             if (isset( $this->attributes["id"] )) {
                 $id = $this->attributes["id"];
             }
 
             if ($this->characters) {
-                ProjectConfigurator::addText( $project, $this->wrappedObject, (string)$this->characters );
+                ProjectConfigurator::addText($project, $this->wrappedObject, (string)$this->characters);
             }
             if ($id !== null) {
-                $project->addReference( $id, $this->wrappedObject );
+                $project->addReference($id, $this->wrappedObject);
             }
         }
 

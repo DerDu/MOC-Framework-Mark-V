@@ -27,13 +27,13 @@ class ContextTest extends PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( true ),
-            array( false ),
-            array( null ),
-            array( 'string' ),
-            array( 1 ),
-            array( 1.5 ),
-            array( fopen( 'php://memory', 'r' ) )
+            array(true),
+            array(false),
+            array(null),
+            array('string'),
+            array(1),
+            array(1.5),
+            array(fopen('php://memory', 'r'))
         );
     }
 
@@ -43,7 +43,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $obj2 = new \stdClass();
         $obj2->foo = 'bar';
 
-        $obj3 = (object)array( 1, 2, "Test\r\n", 4, 5, 6, 7, 8 );
+        $obj3 = (object)array(1, 2, "Test\r\n", 4, 5, 6, 7, 8);
 
         $obj = new \stdClass();
         //@codingStandardsIgnoreStart
@@ -56,23 +56,23 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $obj->text = "this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext";
         $obj->object = $obj2;
         $obj->objectagain = $obj2;
-        $obj->array = array( 'foo' => 'bar' );
-        $obj->array2 = array( 1, 2, 3, 4, 5, 6 );
-        $obj->array3 = array( $obj, $obj2, $obj3 );
+        $obj->array = array('foo' => 'bar');
+        $obj->array2 = array(1, 2, 3, 4, 5, 6);
+        $obj->array3 = array($obj, $obj2, $obj3);
         $obj->self = $obj;
 
         $storage = new \SplObjectStorage();
-        $storage->attach( $obj2 );
+        $storage->attach($obj2);
         $storage->foo = $obj2;
 
         return array(
-            array( $obj, spl_object_hash( $obj ) ),
-            array( $obj2, spl_object_hash( $obj2 ) ),
-            array( $obj3, spl_object_hash( $obj3 ) ),
-            array( $storage, spl_object_hash( $storage ) ),
-            array( $obj->array, 0 ),
-            array( $obj->array2, 0 ),
-            array( $obj->array3, 0 )
+            array($obj, spl_object_hash($obj)),
+            array($obj2, spl_object_hash($obj2)),
+            array($obj3, spl_object_hash($obj3)),
+            array($storage, spl_object_hash($storage)),
+            array($obj->array, 0),
+            array($obj->array2, 0),
+            array($obj->array3, 0)
         );
     }
 
@@ -81,14 +81,14 @@ class ContextTest extends PHPUnit_Framework_TestCase
      * @uses         SebastianBergmann\RecursionContext\InvalidArgumentException
      * @dataProvider failsProvider
      */
-    public function testAddFails( $value )
+    public function testAddFails($value)
     {
 
         $this->setExpectedException(
             'SebastianBergmann\\RecursionContext\\Exception',
             'Only arrays and objects are supported'
         );
-        $this->context->add( $value );
+        $this->context->add($value);
     }
 
     /**
@@ -96,27 +96,27 @@ class ContextTest extends PHPUnit_Framework_TestCase
      * @uses         SebastianBergmann\RecursionContext\InvalidArgumentException
      * @dataProvider failsProvider
      */
-    public function testContainsFails( $value )
+    public function testContainsFails($value)
     {
 
         $this->setExpectedException(
             'SebastianBergmann\\RecursionContext\\Exception',
             'Only arrays and objects are supported'
         );
-        $this->context->contains( $value );
+        $this->context->contains($value);
     }
 
     /**
      * @covers       SebastianBergmann\RecursionContext\Context::add
      * @dataProvider valuesProvider
      */
-    public function testAdd( $value, $key )
+    public function testAdd($value, $key)
     {
 
-        $this->assertEquals( $key, $this->context->add( $value ) );
+        $this->assertEquals($key, $this->context->add($value));
 
         // Test we get the same key on subsequent adds
-        $this->assertEquals( $key, $this->context->add( $value ) );
+        $this->assertEquals($key, $this->context->add($value));
     }
 
     /**
@@ -125,24 +125,24 @@ class ContextTest extends PHPUnit_Framework_TestCase
      * @depends      testAdd
      * @dataProvider valuesProvider
      */
-    public function testContainsFound( $value, $key )
+    public function testContainsFound($value, $key)
     {
 
-        $this->context->add( $value );
-        $this->assertEquals( $key, $this->context->contains( $value ) );
+        $this->context->add($value);
+        $this->assertEquals($key, $this->context->contains($value));
 
         // Test we get the same key on subsequent calls
-        $this->assertEquals( $key, $this->context->contains( $value ) );
+        $this->assertEquals($key, $this->context->contains($value));
     }
 
     /**
      * @covers       SebastianBergmann\RecursionContext\Context::contains
      * @dataProvider valuesProvider
      */
-    public function testContainsNotFound( $value )
+    public function testContainsNotFound($value)
     {
 
-        $this->assertFalse( $this->context->contains( $value ) );
+        $this->assertFalse($this->context->contains($value));
     }
 
     protected function setUp()

@@ -41,10 +41,10 @@ class DefaultInputHandler implements InputHandler
      *
      * @throws BuildException
      */
-    public function handleInput( InputRequest $request )
+    public function handleInput(InputRequest $request)
     {
 
-        $prompt = $this->getPrompt( $request );
+        $prompt = $this->getPrompt($request);
         $in = new ConsoleReader();
         do {
             print $prompt;
@@ -53,9 +53,9 @@ class DefaultInputHandler implements InputHandler
                 if ($input === "" && ( $request->getDefaultValue() !== null )) {
                     $input = $request->getDefaultValue();
                 }
-                $request->setInput( $input );
-            } catch( Exception $e ) {
-                throw new BuildException( "Failed to read input from Console.", $e );
+                $request->setInput($input);
+            } catch (Exception $e) {
+                throw new BuildException("Failed to read input from Console.", $e);
             }
         } while (!$request->isInputValid());
     }
@@ -71,7 +71,7 @@ class DefaultInputHandler implements InputHandler
      *
      * @return string
      */
-    protected function getPrompt( InputRequest $request )
+    protected function getPrompt(InputRequest $request)
     {
 
         $prompt = $request->getPrompt();
@@ -80,9 +80,9 @@ class DefaultInputHandler implements InputHandler
         if ($request instanceof YesNoInputRequest) {
             $choices = $request->getChoices();
             $defaultValue = $choices[(int)!$request->getDefaultValue()];
-            $prompt .= '('.implode( '/', $request->getChoices() ).')';
+            $prompt .= '('.implode('/', $request->getChoices()).')';
         } elseif ($request instanceof MultipleChoiceInputRequest) { // (a,b,c,d)
-            $prompt .= '('.implode( ',', $request->getChoices() ).')';
+            $prompt .= '('.implode(',', $request->getChoices()).')';
         }
 
         if ($request->getDefaultValue() !== null) {

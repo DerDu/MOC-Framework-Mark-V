@@ -34,7 +34,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
     public function testInvalidTagLine()
     {
 
-        Tag::createInstance( 'Invalid tag line' );
+        Tag::createInstance('Invalid tag line');
     }
 
     /**
@@ -46,7 +46,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
     {
 
         $currentHandler = __NAMESPACE__.'\Tag\VarTag';
-        $tagPreUnreg = Tag::createInstance( '@var mixed' );
+        $tagPreUnreg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPreUnreg
@@ -56,9 +56,9 @@ class TagTest extends \PHPUnit_Framework_TestCase
             $tagPreUnreg
         );
 
-        Tag::registerTagHandler( 'var', null );
+        Tag::registerTagHandler('var', null);
 
-        $tagPostUnreg = Tag::createInstance( '@var mixed' );
+        $tagPostUnreg = Tag::createInstance('@var mixed');
         $this->assertNotInstanceOf(
             $currentHandler,
             $tagPostUnreg
@@ -68,7 +68,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
             $tagPostUnreg
         );
 
-        Tag::registerTagHandler( 'var', $currentHandler );
+        Tag::registerTagHandler('var', $currentHandler);
     }
 
     /**
@@ -79,11 +79,11 @@ class TagTest extends \PHPUnit_Framework_TestCase
     public function testTagHandlerCorrectRegistration()
     {
 
-        if (0 == ini_get( 'allow_url_include' )) {
-            $this->markTestSkipped( '"data" URIs for includes are required.' );
+        if (0 == ini_get('allow_url_include')) {
+            $this->markTestSkipped('"data" URIs for includes are required.');
         }
         $currentHandler = __NAMESPACE__.'\Tag\VarTag';
-        $tagPreReg = Tag::createInstance( '@var mixed' );
+        $tagPreReg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPreReg
@@ -100,9 +100,9 @@ class TagTest extends \PHPUnit_Framework_TestCase
 TAG_HANDLER
             );
 
-        $this->assertTrue( Tag::registerTagHandler( 'var', '\MyTagHandler' ) );
+        $this->assertTrue(Tag::registerTagHandler('var', '\MyTagHandler'));
 
-        $tagPostReg = Tag::createInstance( '@var mixed' );
+        $tagPostReg = Tag::createInstance('@var mixed');
         $this->assertNotInstanceOf(
             $currentHandler,
             $tagPostReg
@@ -116,7 +116,7 @@ TAG_HANDLER
             $tagPostReg
         );
 
-        $this->assertTrue( Tag::registerTagHandler( 'var', $currentHandler ) );
+        $this->assertTrue(Tag::registerTagHandler('var', $currentHandler));
     }
 
     /**
@@ -129,7 +129,7 @@ TAG_HANDLER
     public function testNamespacedTagHandlerCorrectRegistration()
     {
 
-        $tagPreReg = Tag::createInstance( '@T something' );
+        $tagPreReg = Tag::createInstance('@T something');
         $this->assertInstanceOf(
             __NAMESPACE__.'\Tag',
             $tagPreReg
@@ -140,14 +140,14 @@ TAG_HANDLER
         );
 
         $this->assertTrue(
-            Tag::registerTagHandler( '\MyNamespace\MyTag', '\MyTagHandler' )
+            Tag::registerTagHandler('\MyNamespace\MyTag', '\MyTagHandler')
         );
 
         $tagPostReg = Tag::createInstance(
             '@T something',
             new DocBlock(
                 '',
-                new Context( '', array( 'T' => '\MyNamespace\MyTag' ) )
+                new Context('', array('T' => '\MyNamespace\MyTag'))
             )
         );
         $this->assertInstanceOf(
@@ -160,7 +160,7 @@ TAG_HANDLER
         );
 
         $this->assertTrue(
-            Tag::registerTagHandler( '\MyNamespace\MyTag', null )
+            Tag::registerTagHandler('\MyNamespace\MyTag', null)
         );
     }
 
@@ -174,7 +174,7 @@ TAG_HANDLER
     public function testNamespacedTagHandlerIncorrectRegistration()
     {
 
-        $tagPreReg = Tag::createInstance( '@T something' );
+        $tagPreReg = Tag::createInstance('@T something');
         $this->assertInstanceOf(
             __NAMESPACE__.'\Tag',
             $tagPreReg
@@ -185,14 +185,14 @@ TAG_HANDLER
         );
 
         $this->assertFalse(
-            Tag::registerTagHandler( 'MyNamespace\MyTag', '\MyTagHandler' )
+            Tag::registerTagHandler('MyNamespace\MyTag', '\MyTagHandler')
         );
 
         $tagPostReg = Tag::createInstance(
             '@T something',
             new DocBlock(
                 '',
-                new Context( '', array( 'T' => '\MyNamespace\MyTag' ) )
+                new Context('', array('T' => '\MyNamespace\MyTag'))
             )
         );
         $this->assertInstanceOf(
@@ -214,7 +214,7 @@ TAG_HANDLER
     {
 
         $currentHandler = __NAMESPACE__.'\Tag\VarTag';
-        $tagPreReg = Tag::createInstance( '@var mixed' );
+        $tagPreReg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPreReg
@@ -224,9 +224,9 @@ TAG_HANDLER
             $tagPreReg
         );
 
-        $this->assertFalse( Tag::registerTagHandler( 'var', 'Non existent' ) );
+        $this->assertFalse(Tag::registerTagHandler('var', 'Non existent'));
 
-        $tagPostReg = Tag::createInstance( '@var mixed' );
+        $tagPostReg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPostReg
@@ -246,7 +246,7 @@ TAG_HANDLER
     {
 
         $currentHandler = __NAMESPACE__.'\Tag\VarTag';
-        $tagPreReg = Tag::createInstance( '@var mixed' );
+        $tagPreReg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPreReg
@@ -257,10 +257,10 @@ TAG_HANDLER
         );
 
         $this->assertFalse(
-            Tag::registerTagHandler( 'var', __NAMESPACE__.'\TagTest' )
+            Tag::registerTagHandler('var', __NAMESPACE__.'\TagTest')
         );
 
-        $tagPostReg = Tag::createInstance( '@var mixed' );
+        $tagPostReg = Tag::createInstance('@var mixed');
         $this->assertInstanceOf(
             $currentHandler,
             $tagPostReg
@@ -290,11 +290,11 @@ TAG_HANDLER
         $exDescription
     ) {
 
-        $tag = new Tag( $type, $content );
+        $tag = new Tag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $content, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($content, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
     }
 
     /**

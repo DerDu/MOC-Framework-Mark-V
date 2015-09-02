@@ -14,23 +14,23 @@ class FooCommand extends Command
     {
 
         $this
-            ->setName( 'foo:bar' )
-            ->setDescription( 'The foo:bar command' )
-            ->setAliases( array( 'afoobar' ) );
+            ->setName('foo:bar')
+            ->setDescription('The foo:bar command')
+            ->setAliases(array('afoobar'));
     }
 
-    protected function interact( InputInterface $input, OutputInterface $output )
+    protected function interact(InputInterface $input, OutputInterface $output)
     {
 
-        $output->writeln( 'interact called' );
+        $output->writeln('interact called');
     }
 
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $this->input = $input;
         $this->output = $output;
 
-        $output->writeln( 'called' );
+        $output->writeln('called');
     }
 }

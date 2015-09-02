@@ -38,7 +38,7 @@ class PhpProcess extends Process
      *
      * @api
      */
-    public function __construct( $script, $cwd = null, array $env = array(), $timeout = 60, array $options = array() )
+    public function __construct($script, $cwd = null, array $env = array(), $timeout = 60, array $options = array())
     {
 
         $executableFinder = new PhpExecutableFinder();
@@ -46,7 +46,7 @@ class PhpProcess extends Process
             $php = null;
         }
 
-        parent::__construct( $php, $cwd, $env, $script, $timeout, $options );
+        parent::__construct($php, $cwd, $env, $script, $timeout, $options);
     }
 
     /**
@@ -54,22 +54,22 @@ class PhpProcess extends Process
      *
      * @api
      */
-    public function setPhpBinary( $php )
+    public function setPhpBinary($php)
     {
 
-        $this->setCommandLine( $php );
+        $this->setCommandLine($php);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function start( $callback = null )
+    public function start($callback = null)
     {
 
         if (null === $this->getCommandLine()) {
-            throw new RuntimeException( 'Unable to find the PHP executable.' );
+            throw new RuntimeException('Unable to find the PHP executable.');
         }
 
-        parent::start( $callback );
+        parent::start($callback);
     }
 }

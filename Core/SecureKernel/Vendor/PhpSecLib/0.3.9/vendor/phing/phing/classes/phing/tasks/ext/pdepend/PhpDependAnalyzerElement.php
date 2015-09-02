@@ -64,7 +64,7 @@ class PhpDependAnalyzerElement
      *
      * @throws BuildException
      */
-    public function setType( $type )
+    public function setType($type)
     {
 
         $this->type = $type;
@@ -74,7 +74,7 @@ class PhpDependAnalyzerElement
                 break;
 
             default:
-                throw new BuildException( 'Analyzer "'.$this->type.'" not implemented' );
+                throw new BuildException('Analyzer "'.$this->type.'" not implemented');
         }
     }
 
@@ -94,17 +94,17 @@ class PhpDependAnalyzerElement
      *
      * @param string $value Value for the analyzer
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = array();
 
         $token = ' ,;';
-        $values = strtok( $value, $token );
+        $values = strtok($value, $token);
 
         while ($values !== false) {
             $this->value[] = $values;
-            $values = strtok( $token );
+            $values = strtok($token);
         }
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace Satooshi\Bundle\CoverallsV1Bundle\Repository;
 
-use Guzzle\Http\Client;
 use Guzzle\Http\Message\Response;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;

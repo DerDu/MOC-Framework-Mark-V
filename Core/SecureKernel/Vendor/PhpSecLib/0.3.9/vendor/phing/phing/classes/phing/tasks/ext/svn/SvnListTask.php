@@ -47,7 +47,7 @@ class SvnListTask extends SvnBaseTask
      *
      * @param $force
      */
-    public function setForceCompatible( $force )
+    public function setForceCompatible($force)
     {
     }
 
@@ -56,7 +56,7 @@ class SvnListTask extends SvnBaseTask
      *
      * @param $limit
      */
-    public function setLimit( $limit )
+    public function setLimit($limit)
     {
 
         $this->limit = (int)$limit;
@@ -67,7 +67,7 @@ class SvnListTask extends SvnBaseTask
      *
      * @param $orderDescending
      */
-    public function setOrderDescending( $orderDescending )
+    public function setOrderDescending($orderDescending)
     {
 
         $this->orderDescending = (bool)$orderDescending;
@@ -81,14 +81,14 @@ class SvnListTask extends SvnBaseTask
     public function main()
     {
 
-        $this->setup( 'list' );
+        $this->setup('list');
 
         if ($this->oldVersion) {
-            $this->svn->setOptions( array( 'fetchmode' => VERSIONCONTROL_SVN_FETCHMODE_XML ) );
-            $output = $this->run( array( '--xml' ) );
+            $this->svn->setOptions(array('fetchmode' => VERSIONCONTROL_SVN_FETCHMODE_XML));
+            $output = $this->run(array('--xml'));
 
-            if (!( $xmlObj = @simplexml_load_string( $output ) )) {
-                throw new BuildException( "Failed to parse the output of 'svn list --xml'." );
+            if (!( $xmlObj = @simplexml_load_string($output) )) {
+                throw new BuildException("Failed to parse the output of 'svn list --xml'.");
             }
 
             $objects = $xmlObj->list->entry;
@@ -105,12 +105,12 @@ class SvnListTask extends SvnBaseTask
                 );
             }
         } else {
-            $output = $this->run( array() );
+            $output = $this->run(array());
             $entries = $output['list'][0]['entry'];
         }
 
         if ($this->orderDescending) {
-            $entries = array_reverse( $entries );
+            $entries = array_reverse($entries);
         }
 
         $result = null;
@@ -127,9 +127,9 @@ class SvnListTask extends SvnBaseTask
         }
 
         if (!empty( $result )) {
-            $this->project->setProperty( $this->getPropertyName(), $result );
+            $this->project->setProperty($this->getPropertyName(), $result);
         } else {
-            throw new BuildException( "Failed to parse the output of 'svn list'." );
+            throw new BuildException("Failed to parse the output of 'svn list'.");
         }
     }
 
@@ -147,7 +147,7 @@ class SvnListTask extends SvnBaseTask
      *
      * @param $propertyName
      */
-    public function setPropertyName( $propertyName )
+    public function setPropertyName($propertyName)
     {
 
         $this->propertyName = $propertyName;

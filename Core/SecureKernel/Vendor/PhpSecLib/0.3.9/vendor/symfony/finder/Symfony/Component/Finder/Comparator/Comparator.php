@@ -38,7 +38,7 @@ class Comparator
      *
      * @param string $target The target value
      */
-    public function setTarget( $target )
+    public function setTarget($target)
     {
 
         $this->target = $target;
@@ -62,15 +62,15 @@ class Comparator
      *
      * @throws \InvalidArgumentException
      */
-    public function setOperator( $operator )
+    public function setOperator($operator)
     {
 
         if (!$operator) {
             $operator = '==';
         }
 
-        if (!in_array( $operator, array( '>', '<', '>=', '<=', '==', '!=' ) )) {
-            throw new \InvalidArgumentException( sprintf( 'Invalid operator "%s".', $operator ) );
+        if (!in_array($operator, array('>', '<', '>=', '<=', '==', '!='))) {
+            throw new \InvalidArgumentException(sprintf('Invalid operator "%s".', $operator));
         }
 
         $this->operator = $operator;
@@ -83,7 +83,7 @@ class Comparator
      *
      * @return bool
      */
-    public function test( $test )
+    public function test($test)
     {
 
         switch ($this->operator) {

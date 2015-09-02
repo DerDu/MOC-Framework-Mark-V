@@ -11,10 +11,10 @@ class Functional_Net_SSH2Test extends PhpseclibFunctionalTestCase
     public function testConstructor()
     {
 
-        $ssh = new Net_SSH2( $this->getEnv( 'SSH_HOSTNAME' ) );
+        $ssh = new Net_SSH2($this->getEnv('SSH_HOSTNAME'));
 
         $this->assertTrue(
-            is_object( $ssh ),
+            is_object($ssh),
             'Could not construct NET_SSH2 object.'
         );
 
@@ -26,7 +26,7 @@ class Functional_Net_SSH2Test extends PhpseclibFunctionalTestCase
      * @group   github408
      * @group   github412
      */
-    public function testPreLogin( $ssh )
+    public function testPreLogin($ssh)
     {
 
         $this->assertFalse(
@@ -55,13 +55,13 @@ class Functional_Net_SSH2Test extends PhpseclibFunctionalTestCase
     /**
      * @depends testPreLogin
      */
-    public function testPasswordLogin( $ssh )
+    public function testPasswordLogin($ssh)
     {
 
-        $username = $this->getEnv( 'SSH_USERNAME' );
-        $password = $this->getEnv( 'SSH_PASSWORD' );
+        $username = $this->getEnv('SSH_USERNAME');
+        $password = $this->getEnv('SSH_PASSWORD');
         $this->assertTrue(
-            $ssh->login( $username, $password ),
+            $ssh->login($username, $password),
             'SSH2 login using password failed.'
         );
 
@@ -72,22 +72,22 @@ class Functional_Net_SSH2Test extends PhpseclibFunctionalTestCase
      * @depends testPasswordLogin
      * @group   github280
      */
-    public function testExecWithMethodCallback( $ssh )
+    public function testExecWithMethodCallback($ssh)
     {
 
-        $callbackObject = $this->getMock( 'stdClass', array( 'callbackMethod' ) );
+        $callbackObject = $this->getMock('stdClass', array('callbackMethod'));
         $callbackObject
-            ->expects( $this->atLeastOnce() )
-            ->method( 'callbackMethod' )
-            ->will( $this->returnValue( true ) );
-        $ssh->exec( 'pwd', array( $callbackObject, 'callbackMethod' ) );
+            ->expects($this->atLeastOnce())
+            ->method('callbackMethod')
+            ->will($this->returnValue(true));
+        $ssh->exec('pwd', array($callbackObject, 'callbackMethod'));
     }
 
     public function testGetServerPublicHostKey()
     {
 
-        $ssh = new Net_SSH2( $this->getEnv( 'SSH_HOSTNAME' ) );
+        $ssh = new Net_SSH2($this->getEnv('SSH_HOSTNAME'));
 
-        $this->assertInternalType( 'string', $ssh->getServerPublicHostKey() );
+        $this->assertInternalType('string', $ssh->getServerPublicHostKey());
     }
 }

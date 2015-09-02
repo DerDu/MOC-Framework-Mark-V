@@ -14,7 +14,7 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
      *
      * @param string $name Name of the function
      */
-    public function __construct( $name )
+    public function __construct($name)
     {
 
         $this->name = $name;
@@ -44,11 +44,11 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Function The builder instance (for fluid interface)
      */
-    public function addParams( array $params )
+    public function addParams(array $params)
     {
 
         foreach ($params as $param) {
-            $this->addParam( $param );
+            $this->addParam($param);
         }
 
         return $this;
@@ -61,13 +61,13 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Function The builder instance (for fluid interface)
      */
-    public function addParam( $param )
+    public function addParam($param)
     {
 
-        $param = $this->normalizeNode( $param );
+        $param = $this->normalizeNode($param);
 
         if (!$param instanceof PHPParser_Node_Param) {
-            throw new LogicException( sprintf( 'Expected parameter node, got "%s"', $param->getType() ) );
+            throw new LogicException(sprintf('Expected parameter node, got "%s"', $param->getType()));
         }
 
         $this->params[] = $param;
@@ -82,11 +82,11 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Function The builder instance (for fluid interface)
      */
-    public function addStmts( array $stmts )
+    public function addStmts(array $stmts)
     {
 
         foreach ($stmts as $stmt) {
-            $this->addStmt( $stmt );
+            $this->addStmt($stmt);
         }
 
         return $this;
@@ -99,10 +99,10 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Function The builder instance (for fluid interface)
      */
-    public function addStmt( $stmt )
+    public function addStmt($stmt)
     {
 
-        $this->stmts[] = $this->normalizeNode( $stmt );
+        $this->stmts[] = $this->normalizeNode($stmt);
 
         return $this;
     }
@@ -115,10 +115,10 @@ class PHPParser_Builder_Function extends PHPParser_BuilderAbstract
     public function getNode()
     {
 
-        return new PHPParser_Node_Stmt_Function( $this->name, array(
+        return new PHPParser_Node_Stmt_Function($this->name, array(
             'byRef'  => $this->returnByRef,
             'params' => $this->params,
             'stmts'  => $this->stmts,
-        ) );
+        ));
     }
 }

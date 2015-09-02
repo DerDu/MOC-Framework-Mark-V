@@ -35,6 +35,6 @@ class WakeUpNoticesAsset extends ArrayObject
     public function __wakeup()
     {
 
-        trigger_error( 'Something went bananas while un-serializing this instance' );
+        trigger_error('Something went bananas while un-serializing this instance');
     }
 }

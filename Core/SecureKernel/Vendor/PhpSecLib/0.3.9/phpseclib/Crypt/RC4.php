@@ -65,7 +65,7 @@
  *
  * Base cipher class
  */
-if (!class_exists( 'Crypt_Base' )) {
+if (!class_exists('Crypt_Base')) {
     include_once 'Base.php';
 }
 
@@ -76,19 +76,19 @@ if (!class_exists( 'Crypt_Base' )) {
 /**
  * Toggles the internal implementation
  */
-define( 'CRYPT_RC4_MODE_INTERNAL', CRYPT_MODE_INTERNAL );
+define('CRYPT_RC4_MODE_INTERNAL', CRYPT_MODE_INTERNAL);
 /**
  * Toggles the mcrypt implementation
  */
-define( 'CRYPT_RC4_MODE_MCRYPT', CRYPT_MODE_MCRYPT );
+define('CRYPT_RC4_MODE_MCRYPT', CRYPT_MODE_MCRYPT);
 /**#@-*/
 
 /**#@+
  * @access private
  * @see    Crypt_RC4::_crypt()
  */
-define( 'CRYPT_RC4_ENCRYPT', 0 );
-define( 'CRYPT_RC4_DECRYPT', 1 );
+define('CRYPT_RC4_ENCRYPT', 0);
+define('CRYPT_RC4_DECRYPT', 1);
 /**#@-*/
 
 /**
@@ -180,7 +180,7 @@ class Crypt_RC4 extends Crypt_Base
     function Crypt_RC4()
     {
 
-        parent::Crypt_Base( CRYPT_MODE_STREAM );
+        parent::Crypt_Base(CRYPT_MODE_STREAM);
     }
 
     /**
@@ -203,7 +203,7 @@ class Crypt_RC4 extends Crypt_Base
      * @see    Crypt_RC4::setKey()
      * @access public
      */
-    function setIV( $iv )
+    function setIV($iv)
     {
     }
 
@@ -218,10 +218,10 @@ class Crypt_RC4 extends Crypt_Base
      *
      * @param String $key
      */
-    function setKey( $key )
+    function setKey($key)
     {
 
-        parent::setKey( substr( $key, 0, 256 ) );
+        parent::setKey(substr($key, 0, 256));
     }
 
     /**
@@ -235,13 +235,13 @@ class Crypt_RC4 extends Crypt_Base
      *
      * @return String $ciphertext
      */
-    function encrypt( $plaintext )
+    function encrypt($plaintext)
     {
 
         if ($this->engine == CRYPT_MODE_MCRYPT) {
-            return parent::encrypt( $plaintext );
+            return parent::encrypt($plaintext);
         }
-        return $this->_crypt( $plaintext, CRYPT_RC4_ENCRYPT );
+        return $this->_crypt($plaintext, CRYPT_RC4_ENCRYPT);
     }
 
     /**
@@ -256,7 +256,7 @@ class Crypt_RC4 extends Crypt_Base
      *
      * @return String $text
      */
-    function _crypt( $text, $mode )
+    function _crypt($text, $mode)
     {
 
         if ($this->changed) {
@@ -275,7 +275,7 @@ class Crypt_RC4 extends Crypt_Base
             $keyStream = $stream[2];
         }
 
-        $len = strlen( $text );
+        $len = strlen($text);
         for ($k = 0; $k < $len; ++$k) {
             $i = ( $i + 1 ) & 255;
             $ksi = $keyStream[$i];
@@ -284,7 +284,7 @@ class Crypt_RC4 extends Crypt_Base
 
             $keyStream[$i] = $ksj;
             $keyStream[$j] = $ksi;
-            $text[$k] = $text[$k] ^ chr( $keyStream[( $ksj + $ksi ) & 255] );
+            $text[$k] = $text[$k] ^ chr($keyStream[( $ksj + $ksi ) & 255]);
         }
 
         return $text;
@@ -304,13 +304,13 @@ class Crypt_RC4 extends Crypt_Base
      *
      * @return String $plaintext
      */
-    function decrypt( $ciphertext )
+    function decrypt($ciphertext)
     {
 
         if ($this->engine == CRYPT_MODE_MCRYPT) {
-            return parent::decrypt( $ciphertext );
+            return parent::decrypt($ciphertext);
         }
-        return $this->_crypt( $ciphertext, CRYPT_RC4_DECRYPT );
+        return $this->_crypt($ciphertext, CRYPT_RC4_DECRYPT);
     }
 
     /**
@@ -323,11 +323,11 @@ class Crypt_RC4 extends Crypt_Base
     {
 
         $key = $this->key;
-        $keyLength = strlen( $key );
-        $keyStream = range( 0, 255 );
+        $keyLength = strlen($key);
+        $keyStream = range(0, 255);
         $j = 0;
         for ($i = 0; $i < 256; $i++) {
-            $j = ( $j + $keyStream[$i] + ord( $key[$i % $keyLength] ) ) & 255;
+            $j = ( $j + $keyStream[$i] + ord($key[$i % $keyLength]) ) & 255;
             $temp = $keyStream[$i];
             $keyStream[$i] = $keyStream[$j];
             $keyStream[$j] = $temp;

@@ -47,12 +47,12 @@ class DocBlox_Parallel_Manager extends ArrayObject
         $iterator_class = "ArrayIterator"
     ) {
 
-        parent::__construct( $input, $flags, $iterator_class );
+        parent::__construct($input, $flags, $iterator_class);
 
-        if (is_readable( '/proc/cpuinfo' )) {
+        if (is_readable('/proc/cpuinfo')) {
             $processors = 0;
-            exec( "cat /proc/cpuinfo | grep processor | wc -l", $processors );
-            $this->setProcessLimit( reset( $processors ) );
+            exec("cat /proc/cpuinfo | grep processor | wc -l", $processors);
+            $this->setProcessLimit(reset($processors));
         }
     }
 
@@ -87,7 +87,7 @@ class DocBlox_Parallel_Manager extends ArrayObject
      *
      * @return void
      */
-    public function offsetSet( $index, $newval )
+    public function offsetSet($index, $newval)
     {
 
         if (!$newval instanceof DocBlox_Parallel_Worker) {
@@ -101,7 +101,7 @@ class DocBlox_Parallel_Manager extends ArrayObject
             );
         }
 
-        parent::offsetSet( $index, $newval );
+        parent::offsetSet($index, $newval);
     }
 
     /**
@@ -123,7 +123,7 @@ class DocBlox_Parallel_Manager extends ArrayObject
      *
      * @return self
      */
-    public function addWorker( DocBlox_Parallel_Worker $worker )
+    public function addWorker(DocBlox_Parallel_Worker $worker)
     {
 
         $this[] = $worker;
@@ -154,10 +154,10 @@ class DocBlox_Parallel_Manager extends ArrayObject
                 continue;
             }
 
-            $this->forkAndRun( $worker, $processes );
+            $this->forkAndRun($worker, $processes);
         }
 
-        $this->stopExecution( $processes );
+        $this->stopExecution($processes);
     }
 
     /**
@@ -195,7 +195,7 @@ class DocBlox_Parallel_Manager extends ArrayObject
     protected function checkRequirements()
     {
 
-        return (bool)( extension_loaded( 'pcntl' ) );
+        return (bool)( extension_loaded('pcntl') );
     }
 
     /**
@@ -227,14 +227,14 @@ class DocBlox_Parallel_Manager extends ArrayObject
         array &$processes
     ) {
 
-        $worker->pipe = new DocBlox_Parallel_WorkerPipe( $worker );
+        $worker->pipe = new DocBlox_Parallel_WorkerPipe($worker);
 
         // fork the process and register the PID
         $pid = pcntl_fork();
 
         switch ($pid) {
             case -1:
-                throw new RuntimeException( 'Unable to establish a fork' );
+                throw new RuntimeException('Unable to establish a fork');
             case 0: // Child process
                 $worker->execute();
 
@@ -242,13 +242,13 @@ class DocBlox_Parallel_Manager extends ArrayObject
 
                 // Kill -9 this process to prevent closing of shared file handlers.
                 // Not doing this causes, for example, MySQL connections to be cleaned.
-                posix_kill( getmypid(), SIGKILL );
+                posix_kill(getmypid(), SIGKILL);
             default: // Parent process
                 // Keep track if the worker children
                 $processes[] = $pid;
 
-                if (count( $processes ) >= $this->getProcessLimit()) {
-                    pcntl_waitpid( array_shift( $processes ), $status );
+                if (count($processes) >= $this->getProcessLimit()) {
+                    pcntl_waitpid(array_shift($processes), $status);
                 }
                 break;
         }
@@ -278,7 +278,7 @@ class DocBlox_Parallel_Manager extends ArrayObject
      *
      * @return self
      */
-    public function setProcessLimit( $process_limit )
+    public function setProcessLimit($process_limit)
     {
 
         if ($process_limit < 1) {
@@ -300,13 +300,13 @@ class DocBlox_Parallel_Manager extends ArrayObject
      *
      * @return void
      */
-    protected function stopExecution( array &$processes )
+    protected function stopExecution(array &$processes)
     {
 
         // starting of processes has ended but some processes might still be
         // running wait for them to finish
         while (!empty( $processes )) {
-            pcntl_waitpid( array_shift( $processes ), $status );
+            pcntl_waitpid(array_shift($processes), $status);
         }
 
         /** @var DocBlox_Parallel_Worker $worker */

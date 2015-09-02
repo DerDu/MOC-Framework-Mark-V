@@ -48,7 +48,7 @@ abstract class PHP_Token
      * @param PHP_Token_Stream $tokenStream
      * @param integer          $id
      */
-    public function __construct( $text, $line, PHP_Token_Stream $tokenStream, $id )
+    public function __construct($text, $line, PHP_Token_Stream $tokenStream, $id)
     {
 
         $this->text = $text;
@@ -201,7 +201,7 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
                     $tokens[$i] instanceof PHP_Token_PUBLIC )
             ) {
                 return strtolower(
-                    str_replace( 'PHP_Token_', '', get_class( $tokens[$i] ) )
+                    str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
             }
             if (isset( $tokens[$i] ) &&
@@ -239,12 +239,12 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
                     $tokens[$i] instanceof PHP_Token_ABSTRACT )
             ) {
                 $keywords[] = strtolower(
-                    str_replace( 'PHP_Token_', '', get_class( $tokens[$i] ) )
+                    str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
             }
         }
 
-        return implode( ',', $keywords );
+        return implode(',', $keywords);
     }
 }
 
@@ -280,9 +280,9 @@ abstract class PHP_Token_Includes extends PHP_Token
         $tokens = $this->tokenStream->tokens();
 
         if ($tokens[$this->id + 2] instanceof PHP_Token_CONSTANT_ENCAPSED_STRING) {
-            $this->name = trim( $tokens[$this->id + 2], "'\"" );
+            $this->name = trim($tokens[$this->id + 2], "'\"");
             $this->type = strtolower(
-                str_replace( 'PHP_Token_', '', get_class( $tokens[$this->id] ) )
+                str_replace('PHP_Token_', '', get_class($tokens[$this->id]))
             );
         }
     }
@@ -375,7 +375,7 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
         $tokens = $this->tokenStream->tokens();
 
         for ($i = $this->id; $i <= $end; $i++) {
-            switch (get_class( $tokens[$i] )) {
+            switch (get_class($tokens[$i])) {
                 case 'PHP_Token_IF':
                 case 'PHP_Token_ELSEIF':
                 case 'PHP_Token_FOR':
@@ -422,7 +422,7 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
             $this->signature .= $tokens[$i++];
         }
 
-        $this->signature = trim( $this->signature );
+        $this->signature = trim($this->signature);
 
         return $this->signature;
     }
@@ -439,7 +439,7 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
 
         $tokens = $this->tokenStream->tokens();
 
-        for ($i = $this->id + 1; $i < count( $tokens ); $i++) {
+        for ($i = $this->id + 1; $i < count($tokens); $i++) {
             if ($tokens[$i] instanceof PHP_Token_STRING) {
                 $this->name = (string)$tokens[$i];
                 break;
@@ -503,23 +503,23 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
             }
         }
 
-        if (preg_match( '/@category[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@category[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['category'] = $matches[1];
         }
 
-        if (preg_match( '/@package[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@package[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['package'] = $matches[1];
             $result['fullPackage'] = $matches[1];
         }
 
-        if (preg_match( '/@subpackage[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@subpackage[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['subpackage'] = $matches[1];
             $result['fullPackage'] .= '.'.$matches[1];
         }
 
         if (empty( $result['fullPackage'] )) {
             $result['fullPackage'] = $this->arrayToName(
-                explode( '_', str_replace( '\\', '_', $className ) ),
+                explode('_', str_replace('\\', '_', $className)),
                 '.'
             );
         }
@@ -542,15 +542,15 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
      *
      * @return string
      */
-    protected function arrayToName( array $parts, $join = '\\' )
+    protected function arrayToName(array $parts, $join = '\\')
     {
 
         $result = '';
 
-        if (count( $parts ) > 1) {
-            array_pop( $parts );
+        if (count($parts) > 1) {
+            array_pop($parts);
 
-            $result = join( $join, $parts );
+            $result = join($join, $parts);
         }
 
         return $result;

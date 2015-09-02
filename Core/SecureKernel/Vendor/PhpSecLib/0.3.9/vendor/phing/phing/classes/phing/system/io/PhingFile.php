@@ -57,7 +57,7 @@ class PhingFile
      * @throws IOException
      * @throws NullPointerException
      */
-    public function __construct( $arg1 = null, $arg2 = null )
+    public function __construct($arg1 = null, $arg2 = null)
     {
 
         if (self::$separator === null || self::$pathSeparator === null) {
@@ -67,15 +67,15 @@ class PhingFile
         }
 
         /* simulate signature identified constructors */
-        if ($arg1 instanceof PhingFile && is_string( $arg2 )) {
-            $this->_constructFileParentStringChild( $arg1, $arg2 );
-        } elseif (is_string( $arg1 ) && ( $arg2 === null )) {
-            $this->_constructPathname( $arg1 );
-        } elseif (is_string( $arg1 ) && is_string( $arg2 )) {
-            $this->_constructStringParentStringChild( $arg1, $arg2 );
+        if ($arg1 instanceof PhingFile && is_string($arg2)) {
+            $this->_constructFileParentStringChild($arg1, $arg2);
+        } elseif (is_string($arg1) && ( $arg2 === null )) {
+            $this->_constructPathname($arg1);
+        } elseif (is_string($arg1) && is_string($arg2)) {
+            $this->_constructStringParentStringChild($arg1, $arg2);
         } else {
             if ($arg1 === null) {
-                throw new NullPointerException( "Argument1 to function must not be null" );
+                throw new NullPointerException("Argument1 to function must not be null");
             }
             $this->path = (string)$arg1;
             $this->prefixLength = (int)$arg2;
@@ -91,26 +91,26 @@ class PhingFile
      *
      * @throws NullPointerException
      */
-    protected function _constructFileParentStringChild( $parent, $child = null )
+    protected function _constructFileParentStringChild($parent, $child = null)
     {
 
         // obtain ref to the filesystem layer
         $fs = FileSystem::getFileSystem();
 
         if ($child === null) {
-            throw new NullPointerException( "Argument to function must not be null" );
+            throw new NullPointerException("Argument to function must not be null");
         }
 
         if ($parent !== null) {
             if ($parent->path === "") {
-                $this->path = $fs->resolve( $fs->getDefaultParent(), $fs->normalize( $child ) );
+                $this->path = $fs->resolve($fs->getDefaultParent(), $fs->normalize($child));
             } else {
-                $this->path = $fs->resolve( $parent->path, $fs->normalize( $child ) );
+                $this->path = $fs->resolve($parent->path, $fs->normalize($child));
             }
         } else {
-            $this->path = $fs->normalize( $child );
+            $this->path = $fs->normalize($child);
         }
-        $this->prefixLength = $fs->prefixLength( $this->path );
+        $this->prefixLength = $fs->prefixLength($this->path);
     }
 
     /* -- constructors not called by signature match, so we need some helpers --*/
@@ -120,18 +120,18 @@ class PhingFile
      *
      * @throws NullPointerException
      */
-    protected function _constructPathname( $pathname )
+    protected function _constructPathname($pathname)
     {
 
         // obtain ref to the filesystem layer
         $fs = FileSystem::getFileSystem();
 
         if ($pathname === null) {
-            throw new NullPointerException( "Argument to function must not be null" );
+            throw new NullPointerException("Argument to function must not be null");
         }
 
-        $this->path = (string)$fs->normalize( $pathname );
-        $this->prefixLength = (int)$fs->prefixLength( $this->path );
+        $this->path = (string)$fs->normalize($pathname);
+        $this->prefixLength = (int)$fs->prefixLength($this->path);
     }
 
     /**
@@ -143,25 +143,25 @@ class PhingFile
      *
      * @throws NullPointerException
      */
-    protected function _constructStringParentStringChild( $parent, $child = null )
+    protected function _constructStringParentStringChild($parent, $child = null)
     {
 
         // obtain ref to the filesystem layer
         $fs = FileSystem::getFileSystem();
 
         if ($child === null) {
-            throw new NullPointerException( "Argument to function must not be null" );
+            throw new NullPointerException("Argument to function must not be null");
         }
         if ($parent !== null) {
             if ($parent === "") {
-                $this->path = $fs->resolve( $fs->getDefaultParent(), $fs->normalize( $child ) );
+                $this->path = $fs->resolve($fs->getDefaultParent(), $fs->normalize($child));
             } else {
-                $this->path = $fs->resolve( $fs->normalize( $parent ), $fs->normalize( $child ) );
+                $this->path = $fs->resolve($fs->normalize($parent), $fs->normalize($child));
             }
         } else {
-            $this->path = (string)$fs->normalize( $child );
+            $this->path = (string)$fs->normalize($child);
         }
-        $this->prefixLength = (int)$fs->prefixLength( $this->path );
+        $this->prefixLength = (int)$fs->prefixLength($this->path);
     }
 
     /**
@@ -172,7 +172,7 @@ class PhingFile
     public static function getTempDir()
     {
 
-        return Phing::getProperty( 'php.tmpdir' );
+        return Phing::getProperty('php.tmpdir');
     }
 
     /* -- Path-component accessors -- */
@@ -192,20 +192,33 @@ class PhingFile
      * @throws IOException
      * @return PhingFile
      */
-    public static function createTempFile( $prefix, $suffix, PhingFile $directory )
+    public static function createTempFile($prefix, $suffix, PhingFile $directory)
     {
 
         // quick but efficient hack to create a unique filename ;-)
         $result = null;
         do {
-            $result = new PhingFile( $directory, $prefix.substr( md5( time() ), 0, 8 ).$suffix );
-        } while (file_exists( $result->getPath() ));
+            $result = new PhingFile($directory, $prefix.substr(md5(time()), 0, 8).$suffix);
+        } while (file_exists($result->getPath()));
 
         $fs = FileSystem::getFileSystem();
-        $fs->createNewFile( $result->getPath() );
-        $fs->lock( $result );
+        $fs->createNewFile($result->getPath());
+        $fs->lock($result);
 
         return $result;
+    }
+
+    /**
+     * Converts this abstract pathname into a pathname string.  The resulting
+     * string uses the default name-separator character to separate the names
+     * in the name sequence.
+     *
+     * @return string The string form of this abstract pathname
+     */
+    public function getPath()
+    {
+
+        return (string)$this->path;
     }
 
     /**
@@ -233,12 +246,12 @@ class PhingFile
     {
 
         // that's a lastIndexOf
-        $index = ( ( ( $res = strrpos( $this->path, self::$separator ) ) === false ) ? -1 : $res );
+        $index = ( ( ( $res = strrpos($this->path, self::$separator) ) === false ) ? -1 : $res );
         if ($index < $this->prefixLength) {
-            return substr( $this->path, $this->prefixLength );
+            return substr($this->path, $this->prefixLength);
         }
 
-        return substr( $this->path, $index + 1 );
+        return substr($this->path, $index + 1);
     }
 
     /**
@@ -250,32 +263,19 @@ class PhingFile
      *
      * @uses getPath()
      */
-    public function getPathWithoutBase( $basedir )
+    public function getPathWithoutBase($basedir)
     {
 
-        if (!StringHelper::endsWith( self::$separator, $basedir )) {
+        if (!StringHelper::endsWith(self::$separator, $basedir)) {
             $basedir .= self::$separator;
         }
         $path = $this->getPath();
-        if (!substr( $path, 0, strlen( $basedir ) ) == $basedir) {
+        if (!substr($path, 0, strlen($basedir)) == $basedir) {
             //path does not begin with basedir, we don't modify it
             return $path;
         }
 
-        return substr( $path, strlen( $basedir ) );
-    }
-
-    /**
-     * Converts this abstract pathname into a pathname string.  The resulting
-     * string uses the default name-separator character to separate the names
-     * in the name sequence.
-     *
-     * @return string The string form of this abstract pathname
-     */
-    public function getPath()
-    {
-
-        return (string)$this->path;
+        return substr($path, strlen($basedir));
     }
 
     /**
@@ -303,7 +303,7 @@ class PhingFile
     public function getAbsoluteFile()
     {
 
-        return new PhingFile( (string)$this->getAbsolutePath() );
+        return new PhingFile((string)$this->getAbsolutePath());
     }
 
     /**
@@ -330,7 +330,7 @@ class PhingFile
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->resolveFile( $this );
+        return $fs->resolveFile($this);
     }
 
     /**
@@ -343,7 +343,7 @@ class PhingFile
     public function getCanonicalFile()
     {
 
-        return new PhingFile( $this->getCanonicalPath() );
+        return new PhingFile($this->getCanonicalPath());
     }
 
     /**
@@ -375,7 +375,7 @@ class PhingFile
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->canonicalize( $this->path );
+        return $fs->canonicalize($this->path);
     }
 
     /**
@@ -429,20 +429,20 @@ class PhingFile
      *
      * @return string
      */
-    public function _slashify( $path, $isDirectory )
+    public function _slashify($path, $isDirectory)
     {
 
         $p = (string)$path;
 
         if (self::$separator !== '/') {
-            $p = str_replace( self::$separator, '/', $p );
+            $p = str_replace(self::$separator, '/', $p);
         }
 
-        if (!StringHelper::startsWith( '/', $p )) {
+        if (!StringHelper::startsWith('/', $p)) {
             $p = '/'.$p;
         }
 
-        if (!StringHelper::endsWith( '/', $p ) && $isDirectory) {
+        if (!StringHelper::endsWith('/', $p) && $isDirectory) {
             $p = $p.'/';
         }
 
@@ -465,7 +465,7 @@ class PhingFile
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->checkAccess( $this, true );
+        return $fs->checkAccess($this, true);
     }
 
     /**
@@ -485,11 +485,11 @@ class PhingFile
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->path );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->path);
         }
 
-        return ( ( $fs->getBooleanAttributes( $this ) & FileSystem::BA_HIDDEN ) !== 0 );
+        return ( ( $fs->getBooleanAttributes($this) & FileSystem::BA_HIDDEN ) !== 0 );
     }
 
     /**
@@ -505,11 +505,11 @@ class PhingFile
 
         clearstatcache();
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->path );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->path);
         }
 
-        return @is_link( $this->path );
+        return @is_link($this->path);
     }
 
     /**
@@ -520,7 +520,7 @@ class PhingFile
     public function getLinkTarget()
     {
 
-        return @readlink( $this->path );
+        return @readlink($this->path);
     }
 
     /**
@@ -537,11 +537,11 @@ class PhingFile
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->path );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->path);
         }
 
-        return $fs->getLastModifiedTime( $this );
+        return $fs->getLastModifiedTime($this);
     }
 
     /**
@@ -556,11 +556,11 @@ class PhingFile
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->path."\n" );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->path."\n");
         }
 
-        return $fs->getLength( $this );
+        return $fs->getLength($this);
     }
 
     /**
@@ -574,10 +574,10 @@ class PhingFile
     {
 
         if (!$this->canRead() || !$this->isFile()) {
-            throw new IOException( "Cannot read file contents!" );
+            throw new IOException("Cannot read file contents!");
         }
 
-        return file_get_contents( $this->getAbsolutePath() );
+        return file_get_contents($this->getAbsolutePath());
     }
 
     /**
@@ -593,8 +593,8 @@ class PhingFile
 
         $fs = FileSystem::getFileSystem();
 
-        if ($fs->checkAccess( $this )) {
-            return (boolean)@is_link( $this->getAbsolutePath() ) || @is_readable( $this->getAbsolutePath() );
+        if ($fs->checkAccess($this)) {
+            return (boolean)@is_link($this->getAbsolutePath()) || @is_readable($this->getAbsolutePath());
         }
 
         return false;
@@ -615,7 +615,7 @@ class PhingFile
 
         clearstatcache();
         //$fs = FileSystem::getFileSystem();
-        return @is_file( $this->path );
+        return @is_file($this->path);
     }
 
     /**
@@ -633,10 +633,10 @@ class PhingFile
      *                     successfully created; <code>false</code> if the named file
      *                     already exists
      */
-    public function createNewFile( $parents = true, $mode = 0777 )
+    public function createNewFile($parents = true, $mode = 0777)
     {
 
-        $file = FileSystem::getFileSystem()->createNewFile( $this->path );
+        $file = FileSystem::getFileSystem()->createNewFile($this->path);
 
         return $file;
     }
@@ -655,7 +655,7 @@ class PhingFile
     {
 
         $fs = FileSystem::getFileSystem();
-        $fs->deleteOnExit( $this );
+        $fs->deleteOnExit($this);
     }
 
     /* -- File operations -- */
@@ -665,17 +665,17 @@ class PhingFile
      *
      * @return array
      */
-    public function listFiles( $filter = null )
+    public function listFiles($filter = null)
     {
 
-        $ss = $this->listDir( $filter );
+        $ss = $this->listDir($filter);
         if ($ss === null) {
             return null;
         }
-        $n = count( $ss );
+        $n = count($ss);
         $fs = array();
         for ($i = 0; $i < $n; $i++) {
-            $fs[$i] = new PhingFile( (string)$this->path, (string)$ss[$i] );
+            $fs[$i] = new PhingFile((string)$this->path, (string)$ss[$i]);
         }
 
         return $fs;
@@ -704,12 +704,12 @@ class PhingFile
      *               this abstract pathname does not denote a directory, or if an
      *               I/O error occurs.
      */
-    public function listDir( $filter = null )
+    public function listDir($filter = null)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->lister( $this, $filter );
+        return $fs->lister($this, $filter);
     }
 
     /**
@@ -725,22 +725,22 @@ class PhingFile
      *                     along with all necessary parent directories; false
      *                     otherwise
      */
-    public function mkdirs( $mode = 0755 )
+    public function mkdirs($mode = 0755)
     {
 
         if ($this->exists()) {
             return false;
         }
         try {
-            if ($this->mkdir( $mode )) {
+            if ($this->mkdir($mode)) {
                 return true;
             }
-        } catch( IOException $ioe ) {
+        } catch (IOException $ioe) {
             // IOException from mkdir() means that directory propbably didn't exist.
         }
         $parentFile = $this->getParentFile();
 
-        return ( ( $parentFile !== null ) && ( $parentFile->mkdirs( $mode ) && $this->mkdir( $mode ) ) );
+        return ( ( $parentFile !== null ) && ( $parentFile->mkdirs($mode) && $this->mkdir($mode) ) );
     }
 
     /**
@@ -754,13 +754,13 @@ class PhingFile
 
         clearstatcache();
 
-        if (is_link( $this->path )) {
+        if (is_link($this->path)) {
             return true;
         } else {
             if ($this->isDirectory()) {
                 return true;
             } else {
-                return @file_exists( $this->path ) || is_link( $this->path );
+                return @file_exists($this->path) || is_link($this->path);
             }
         }
     }
@@ -779,11 +779,11 @@ class PhingFile
 
         clearstatcache();
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->path );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->path);
         }
 
-        return @is_dir( $this->path ) && !@is_link( $this->path );
+        return @is_dir($this->path) && !@is_link($this->path);
     }
 
     /**
@@ -794,16 +794,16 @@ class PhingFile
      * @throws IOException
      * @return boolean     true if and only if the directory was created; false otherwise
      */
-    public function mkdir( $mode = 0755 )
+    public function mkdir($mode = 0755)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        if ($fs->checkAccess( new PhingFile( $this->path ), true ) !== true) {
-            throw new IOException( "No write access to ".$this->getPath() );
+        if ($fs->checkAccess(new PhingFile($this->path), true) !== true) {
+            throw new IOException("No write access to ".$this->getPath());
         }
 
-        return $fs->createDirectory( $this, $mode );
+        return $fs->createDirectory($this, $mode);
     }
 
     /**
@@ -827,7 +827,7 @@ class PhingFile
             return null;
         }
 
-        return new PhingFile( (string)$p, (int)$this->prefixLength );
+        return new PhingFile((string)$p, (int)$this->prefixLength);
     }
 
     /**
@@ -846,16 +846,16 @@ class PhingFile
     {
 
         // that's a lastIndexOf
-        $index = ( ( ( $res = strrpos( $this->path, self::$separator ) ) === false ) ? -1 : $res );
+        $index = ( ( ( $res = strrpos($this->path, self::$separator) ) === false ) ? -1 : $res );
         if ($index < $this->prefixLength) {
-            if (( $this->prefixLength > 0 ) && ( strlen( $this->path ) > $this->prefixLength )) {
-                return substr( $this->path, 0, $this->prefixLength );
+            if (( $this->prefixLength > 0 ) && ( strlen($this->path) > $this->prefixLength )) {
+                return substr($this->path, 0, $this->prefixLength);
             }
 
             return null;
         }
 
-        return substr( $this->path, 0, $index );
+        return substr($this->path, 0, $index);
     }
 
     /**
@@ -866,15 +866,15 @@ class PhingFile
      * @throws IOException
      * @return boolean   true if and only if the renaming succeeded; false otherwise
      */
-    public function renameTo( PhingFile $destFile )
+    public function renameTo(PhingFile $destFile)
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No write access to ".$this->getPath() );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No write access to ".$this->getPath());
         }
 
-        return $fs->rename( $this, $destFile );
+        return $fs->rename($this, $destFile);
     }
 
     /**
@@ -886,20 +886,20 @@ class PhingFile
      * @throws IOException
      * @return boolean   true if and only if the renaming succeeded; false otherwise
      */
-    public function copyTo( PhingFile $destFile )
+    public function copyTo(PhingFile $destFile)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        if ($fs->checkAccess( $this ) !== true) {
-            throw new IOException( "No read access to ".$this->getPath()."\n" );
+        if ($fs->checkAccess($this) !== true) {
+            throw new IOException("No read access to ".$this->getPath()."\n");
         }
 
-        if ($fs->checkAccess( $destFile, true ) !== true) {
-            throw new IOException( "File::copyTo() No write access to ".$destFile->getPath() );
+        if ($fs->checkAccess($destFile, true) !== true) {
+            throw new IOException("File::copyTo() No write access to ".$destFile->getPath());
         }
 
-        return $fs->copy( $this, $destFile );
+        return $fs->copy($this, $destFile);
     }
 
     /**
@@ -919,17 +919,17 @@ class PhingFile
      * @throws Exception
      * @return boolean true if and only if the operation succeeded; false otherwise
      */
-    public function setLastModified( $time )
+    public function setLastModified($time)
     {
 
         $time = (int)$time;
         if ($time < 0) {
-            throw new Exception( "IllegalArgumentException, Negative $time\n" );
+            throw new Exception("IllegalArgumentException, Negative $time\n");
         }
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->setLastModifiedTime( $this, $time );
+        return $fs->setLastModifiedTime($this, $time);
     }
 
     /**
@@ -946,12 +946,12 @@ class PhingFile
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->checkAccess( $this, true ) !== true) {
+        if ($fs->checkAccess($this, true) !== true) {
             // Error, no write access
-            throw new IOException( "No write access to ".$this->getPath() );
+            throw new IOException("No write access to ".$this->getPath());
         }
 
-        return $fs->setReadOnly( $this );
+        return $fs->setReadOnly($this);
     }
 
     /**
@@ -961,12 +961,12 @@ class PhingFile
      *
      * @throws IOException
      */
-    public function setUser( $user )
+    public function setUser($user)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->chown( $this->getPath(), $user );
+        return $fs->chown($this->getPath(), $user);
     }
 
     /**
@@ -977,7 +977,7 @@ class PhingFile
     public function getUser()
     {
 
-        return @fileowner( $this->getPath() );
+        return @fileowner($this->getPath());
     }
 
     /**
@@ -987,12 +987,12 @@ class PhingFile
      *
      * @throws IOException
      */
-    public function setGroup( $group )
+    public function setGroup($group)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->chgrp( $this->getPath(), $group );
+        return $fs->chgrp($this->getPath(), $group);
     }
 
     /**
@@ -1003,7 +1003,7 @@ class PhingFile
     public function getGroup()
     {
 
-        return @filegroup( $this->getPath() );
+        return @filegroup($this->getPath());
     }
 
     /**
@@ -1011,12 +1011,12 @@ class PhingFile
      *
      * @param int $mode Ocatal mode.
      */
-    public function setMode( $mode )
+    public function setMode($mode)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->chmod( $this->getPath(), $mode );
+        return $fs->chmod($this->getPath(), $mode);
     }
 
     /* -- Filesystem interface -- */
@@ -1029,7 +1029,7 @@ class PhingFile
     public function getMode()
     {
 
-        return @fileperms( $this->getPath() );
+        return @fileperms($this->getPath());
     }
 
     /* -- Tempfile management -- */
@@ -1084,7 +1084,7 @@ class PhingFile
 
         $fs = FileSystem::getFileSystem();
         // catch IO Exception
-        $fs->unlock( $this );
+        $fs->unlock($this);
         $this->delete();
     }
 
@@ -1099,15 +1099,15 @@ class PhingFile
      * @return boolean true if and only if the file or directory is
      *                 successfully deleted; false otherwise
      */
-    public function delete( $recursive = false )
+    public function delete($recursive = false)
     {
 
         $fs = FileSystem::getFileSystem();
-        if ($fs->canDelete( $this ) !== true) {
-            throw new IOException( "Cannot delete ".$this->path."\n" );
+        if ($fs->canDelete($this) !== true) {
+            throw new IOException("Cannot delete ".$this->path."\n");
         }
 
-        return $fs->delete( $this, $recursive );
+        return $fs->delete($this, $recursive);
     }
 
     /* -- Basic infrastructure -- */
@@ -1125,11 +1125,11 @@ class PhingFile
      *
      * @return boolean
      */
-    public function equals( $obj )
+    public function equals($obj)
     {
 
         if (( $obj !== null ) && ( $obj instanceof PhingFile )) {
-            return ( $this->compareTo( $obj ) === 0 );
+            return ( $this->compareTo($obj) === 0 );
         }
 
         return false;
@@ -1149,12 +1149,12 @@ class PhingFile
      *             than zero if this abstract pathname is lexicographically
      *             greater than the argument
      */
-    public function compareTo( PhingFile $file )
+    public function compareTo(PhingFile $file)
     {
 
         $fs = FileSystem::getFileSystem();
 
-        return $fs->compare( $this, $file );
+        return $fs->compare($this, $file);
     }
 
     /**

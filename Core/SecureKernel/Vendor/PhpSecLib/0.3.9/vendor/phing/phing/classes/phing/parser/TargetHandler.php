@@ -69,7 +69,7 @@ class TargetHandler extends AbstractHandler
         PhingXMLContext $context
     ) {
 
-        parent::__construct( $parser, $parentHandler );
+        parent::__construct($parser, $parentHandler);
         $this->configurator = $configurator;
         $this->context = $context;
     }
@@ -94,7 +94,7 @@ class TargetHandler extends AbstractHandler
      * @internal param the $string tag that comes in
      * @internal param attributes $array the tag carries
      */
-    public function init( $tag, $attrs )
+    public function init($tag, $attrs)
     {
 
         $name = null;
@@ -133,13 +133,13 @@ class TargetHandler extends AbstractHandler
                     $logskipped = $value;
                     break;
                 default:
-                    throw new ExpatParseException( "Unexpected attribute '$key'", $this->parser->getLocation() );
+                    throw new ExpatParseException("Unexpected attribute '$key'", $this->parser->getLocation());
             }
         }
 
         if ($name === null) {
-            throw new ExpatParseException( "target element appears without a name attribute",
-                $this->parser->getLocation() );
+            throw new ExpatParseException("target element appears without a name attribute",
+                $this->parser->getLocation());
         }
 
         // shorthand
@@ -147,19 +147,19 @@ class TargetHandler extends AbstractHandler
 
         // check to see if this target is a dup within the same file
         if (isset( $this->context->getCurrentTargets[$name] )) {
-            throw new BuildException( "Duplicate target: $name",
-                $this->parser->getLocation() );
+            throw new BuildException("Duplicate target: $name",
+                $this->parser->getLocation());
         }
 
         $this->target = new Target();
-        $this->target->setHidden( $isHidden );
-        $this->target->setIf( $ifCond );
-        $this->target->setUnless( $unlessCond );
-        $this->target->setDescription( $description );
-        $this->target->setLogSkipped( StringHelper::booleanValue( $logskipped ) );
+        $this->target->setHidden($isHidden);
+        $this->target->setIf($ifCond);
+        $this->target->setUnless($unlessCond);
+        $this->target->setDescription($description);
+        $this->target->setLogSkipped(StringHelper::booleanValue($logskipped));
         // take care of dependencies
-        if (strlen( $depends ) > 0) {
-            $this->target->setDepends( $depends );
+        if (strlen($depends) > 0) {
+            $this->target->setDepends($depends);
         }
 
         // check to see if target with same name is already defined
@@ -167,7 +167,7 @@ class TargetHandler extends AbstractHandler
         if (isset( $projectTargets[$name] )) {
             if ($this->configurator->isIgnoringProjectTag() &&
                 $this->configurator->getCurrentProjectName() != null &&
-                strlen( $this->configurator->getCurrentProjectName() ) != 0
+                strlen($this->configurator->getCurrentProjectName()) != 0
             ) {
                 // In an impored file (and not completely
                 // ignoring the project tag)
@@ -189,10 +189,10 @@ class TargetHandler extends AbstractHandler
         }
 
         if ($name != null) {
-            $this->target->setName( $name );
-            $project->addOrReplaceTarget( $name, $this->target );
+            $this->target->setName($name);
+            $project->addOrReplaceTarget($name, $this->target);
             if ($id !== null && $id !== "") {
-                $project->addReference( $id, $this->target );
+                $project->addReference($id, $this->target);
             }
         }
     }
@@ -204,15 +204,15 @@ class TargetHandler extends AbstractHandler
      * @param  string  the tag that comes in
      * @param  array   attributes the tag carries
      */
-    public function startElement( $name, $attrs )
+    public function startElement($name, $attrs)
     {
 
         // shorthands
         $project = $this->configurator->project;
         $types = $project->getDataTypeDefinitions();
 
-        $tmp = new ElementHandler( $this->parser, $this, $this->configurator, null, null, $this->target );
-        $tmp->init( $name, $attrs );
+        $tmp = new ElementHandler($this->parser, $this, $this->configurator, null, null, $this->target);
+        $tmp->init($name, $attrs);
     }
 
     /**
@@ -222,7 +222,7 @@ class TargetHandler extends AbstractHandler
     protected function finished()
     {
 
-        if (!count( $this->target->getDependencies() ) && !count( $this->target->getTasks() )) {
+        if (!count($this->target->getDependencies()) && !count($this->target->getTasks())) {
             $this->configurator->project->log(
                 "Warning: target '".$this->target->getName().
                 "' has no tasks or dependencies",

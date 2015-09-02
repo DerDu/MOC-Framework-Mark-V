@@ -12,7 +12,7 @@ class PHPParser_Error extends RuntimeException
      * @param string $message Error message
      * @param int    $line    Error line in PHP file
      */
-    public function __construct( $message, $line = -1 )
+    public function __construct($message, $line = -1)
     {
 
         $this->rawMessage = (string)$message;
@@ -51,7 +51,7 @@ class PHPParser_Error extends RuntimeException
      *
      * @param string $message Error message
      */
-    public function setRawMessage( $message )
+    public function setRawMessage($message)
     {
 
         $this->rawMessage = (string)$message;
@@ -74,7 +74,7 @@ class PHPParser_Error extends RuntimeException
      *
      * @param int $line Error line in the PHP file
      */
-    public function setRawLine( $line )
+    public function setRawLine($line)
     {
 
         $this->rawLine = (int)$line;

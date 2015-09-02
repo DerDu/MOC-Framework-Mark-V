@@ -37,7 +37,7 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
     public function register()
     {
 
-        return array( T_SEMICOLON );
+        return array(T_SEMICOLON);
 
     }//end register()
 
@@ -51,12 +51,12 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $prev = $phpcsFile->findPrevious( T_SEMICOLON, ( $stackPtr - 1 ) );
+        $prev = $phpcsFile->findPrevious(T_SEMICOLON, ( $stackPtr - 1 ));
         if ($prev === false) {
             return;
         }
@@ -78,7 +78,7 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
 
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Each PHP statement must be on a line by itself';
-            $phpcsFile->addError( $error, $stackPtr, 'SameLine' );
+            $phpcsFile->addError($error, $stackPtr, 'SameLine');
             return;
         }
 

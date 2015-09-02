@@ -35,11 +35,11 @@ class FileReader extends InputStreamReader
      *
      * @param mixed $file PhingFile or string pathname.
      */
-    public function __construct( $file )
+    public function __construct($file)
     {
 
-        $in = new FileInputStream( $file );
-        parent::__construct( $in );
+        $in = new FileInputStream($file);
+        parent::__construct($in);
     }
 
 }

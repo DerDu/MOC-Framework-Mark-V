@@ -208,41 +208,41 @@ class FileSyncTask extends Task
     {
 
         if ($this->rsyncPath === null) {
-            throw new BuildException( 'The "rsyncPath" attribute is missing or undefined.' );
+            throw new BuildException('The "rsyncPath" attribute is missing or undefined.');
         }
 
         if ($this->sourceDir === null) {
-            throw new BuildException( 'The "sourcedir" attribute is missing or undefined.' );
+            throw new BuildException('The "sourcedir" attribute is missing or undefined.');
         } else {
             if ($this->destinationDir === null) {
-                throw new BuildException( 'The "destinationdir" attribute is missing or undefined.' );
+                throw new BuildException('The "destinationdir" attribute is missing or undefined.');
             }
         }
 
-        if (strpos( $this->destinationDir, ':' )) {
-            $this->setIsRemoteConnection( true );
+        if (strpos($this->destinationDir, ':')) {
+            $this->setIsRemoteConnection(true);
         }
 
-        if (strpos( $this->sourceDir, ':' )) {
+        if (strpos($this->sourceDir, ':')) {
             if ($this->isRemoteConnection) {
-                throw new BuildException( 'The source and destination cannot both be remote.' );
+                throw new BuildException('The source and destination cannot both be remote.');
             }
-            $this->setIsRemoteConnection( true );
+            $this->setIsRemoteConnection(true);
         } else {
-            if (!( is_dir( $this->sourceDir ) && is_readable( $this->sourceDir ) )) {
-                throw new BuildException( 'No such file or directory: '.$this->sourceDir );
+            if (!( is_dir($this->sourceDir) && is_readable($this->sourceDir) )) {
+                throw new BuildException('No such file or directory: '.$this->sourceDir);
             }
         }
 
         if ($this->backupDir !== null && $this->backupDir == $this->destinationDir) {
-            throw new BuildException( "Invalid backup directory: ".$this->backupDir );
+            throw new BuildException("Invalid backup directory: ".$this->backupDir);
         }
 
         $command = $this->getCommand();
 
         $output = array();
         $return = null;
-        exec( $command, $output, $return );
+        exec($command, $output, $return);
 
         $lines = '';
         foreach ($output as $line) {
@@ -251,17 +251,17 @@ class FileSyncTask extends Task
             }
         }
 
-        $this->log( $command );
+        $this->log($command);
 
         if ($return != 0) {
-            $this->log( 'Task exited with code: '.$return, Project::MSG_ERR );
+            $this->log('Task exited with code: '.$return, Project::MSG_ERR);
             $this->log(
-                'Task exited with message: ('.$return.') '.$this->getErrorMessage( $return ),
+                'Task exited with message: ('.$return.') '.$this->getErrorMessage($return),
                 Project::MSG_ERR
             );
-            throw new BuildException( $return.': '.$this->getErrorMessage( $return ) );
+            throw new BuildException($return.': '.$this->getErrorMessage($return));
         } else {
-            $this->log( $lines, Project::MSG_INFO );
+            $this->log($lines, Project::MSG_INFO);
         }
 
         return $return;
@@ -274,7 +274,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    protected function setIsRemoteConnection( $isRemote )
+    protected function setIsRemoteConnection($isRemote)
     {
 
         $this->isRemoteConnection = $isRemote;
@@ -333,11 +333,11 @@ class FileSyncTask extends Task
             $options .= ' --exclude-from="'.$this->excludeFile.'"';
         }
 
-        $this->setOptions( $options );
+        $this->setOptions($options);
 
         $options .= ' "'.$this->sourceDir.'" "'.$this->destinationDir.'"';
 
-        escapeshellcmd( $options );
+        escapeshellcmd($options);
         $options .= ' 2>&1';
 
         return $this->rsyncPath.' '.$options;
@@ -350,7 +350,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setOptions( $options )
+    public function setOptions($options)
     {
 
         $this->options = $options;
@@ -363,7 +363,7 @@ class FileSyncTask extends Task
      *
      * @return null|string
      */
-    public function getErrorMessage( $code )
+    public function getErrorMessage($code)
     {
 
         $error[0] = 'Success';
@@ -386,7 +386,7 @@ class FileSyncTask extends Task
         $error[24] = 'Partial transfer due to vanished source files';
         $error[30] = 'Timeout in data send/receive';
 
-        if (array_key_exists( $code, $error )) {
+        if (array_key_exists($code, $error)) {
             return $error[$code];
         }
 
@@ -400,7 +400,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setRsyncPath( $path )
+    public function setRsyncPath($path)
     {
 
         $this->rsyncPath = $path;
@@ -413,7 +413,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setSourceDir( $dir )
+    public function setSourceDir($dir)
     {
 
         $this->sourceDir = $dir;
@@ -427,7 +427,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setDestinationDir( $dir )
+    public function setDestinationDir($dir)
     {
 
         $this->destinationDir = $dir;
@@ -440,7 +440,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setRemoteHost( $host )
+    public function setRemoteHost($host)
     {
 
         $this->remoteHost = $host;
@@ -454,7 +454,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setRemoteUser( $user )
+    public function setRemoteUser($user)
     {
 
         $this->remoteUser = $user;
@@ -469,7 +469,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setRemotePass( $pass )
+    public function setRemotePass($pass)
     {
 
         $this->remotePass = $pass;
@@ -485,7 +485,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setRemoteShell( $shell )
+    public function setRemoteShell($shell)
     {
 
         $this->remoteShell = $shell;
@@ -501,7 +501,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setVerbose( $verbose )
+    public function setVerbose($verbose)
     {
 
         $this->verbose = (bool)$verbose;
@@ -517,7 +517,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setChecksum( $checksum )
+    public function setChecksum($checksum)
     {
 
         $this->checksum = (bool)$checksum;
@@ -532,7 +532,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setDryRun( $dryRun )
+    public function setDryRun($dryRun)
     {
 
         $this->dryRun = (bool)$dryRun;
@@ -545,7 +545,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setItemizeChanges( $itemizeChanges )
+    public function setItemizeChanges($itemizeChanges)
     {
 
         $this->itemizeChanges = (bool)$itemizeChanges;
@@ -560,7 +560,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setDelete( $delete )
+    public function setDelete($delete)
     {
 
         $this->delete = (bool)$delete;
@@ -574,7 +574,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setExcludeFile( $file )
+    public function setExcludeFile($file)
     {
 
         $this->excludeFile = $file;
@@ -587,7 +587,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setBackupDir( $dir )
+    public function setBackupDir($dir)
     {
 
         $this->backupDir = $dir;
@@ -600,7 +600,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setIdentityFile( $identity )
+    public function setIdentityFile($identity)
     {
 
         $this->identityFile = $identity;
@@ -613,7 +613,7 @@ class FileSyncTask extends Task
      *
      * @return void
      */
-    public function setExclude( $exclude )
+    public function setExclude($exclude)
     {
 
         $this->exclude = $exclude;

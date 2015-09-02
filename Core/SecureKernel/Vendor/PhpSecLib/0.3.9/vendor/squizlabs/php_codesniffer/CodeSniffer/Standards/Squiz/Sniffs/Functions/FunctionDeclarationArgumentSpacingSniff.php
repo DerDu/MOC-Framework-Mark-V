@@ -77,7 +77,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $this->equalsSpacing = (int)$this->equalsSpacing;
@@ -86,14 +86,14 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         $tokens = $phpcsFile->getTokens();
         $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
-        $this->processBracket( $phpcsFile, $openBracket );
+        $this->processBracket($phpcsFile, $openBracket);
 
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-            $use = $phpcsFile->findNext( T_USE, ( $tokens[$openBracket]['parenthesis_closer'] + 1 ),
-                $tokens[$stackPtr]['scope_opener'] );
+            $use = $phpcsFile->findNext(T_USE, ( $tokens[$openBracket]['parenthesis_closer'] + 1 ),
+                $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
-                $openBracket = $phpcsFile->findNext( T_OPEN_PARENTHESIS, ( $use + 1 ), null );
-                $this->processBracket( $phpcsFile, $openBracket );
+                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ( $use + 1 ), null);
+                $this->processBracket($phpcsFile, $openBracket);
             }
         }
 
@@ -109,7 +109,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      *
      * @return void
      */
-    public function processBracket( PHP_CodeSniffer_File $phpcsFile, $openBracket )
+    public function processBracket(PHP_CodeSniffer_File $phpcsFile, $openBracket)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -118,9 +118,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         $nextParam = $openBracket;
         $params = array();
-        while (( $nextParam = $phpcsFile->findNext( T_VARIABLE, ( $nextParam + 1 ), $closeBracket ) ) !== false) {
+        while (( $nextParam = $phpcsFile->findNext(T_VARIABLE, ( $nextParam + 1 ), $closeBracket) ) !== false) {
 
-            $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $nextParam + 1 ), ( $closeBracket + 1 ), true );
+            $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $nextParam + 1 ), ( $closeBracket + 1 ), true);
             if ($nextToken === false) {
                 break;
             }
@@ -131,7 +131,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 // Check parameter default spacing.
                 $spacesBefore = 0;
                 if (( $nextToken - $nextParam ) > 1) {
-                    $spacesBefore = strlen( $tokens[( $nextParam + 1 )]['content'] );
+                    $spacesBefore = strlen($tokens[( $nextParam + 1 )]['content']);
                 }
 
                 if ($spacesBefore !== $this->equalsSpacing) {
@@ -140,12 +140,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $tokens[$nextParam]['content'],
                         $spacesBefore,
                     );
-                    $phpcsFile->addError( $error, $nextToken, 'SpaceBeforeEquals', $data );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeEquals', $data);
                 }
 
                 $spacesAfter = 0;
                 if ($tokens[( $nextToken + 1 )]['code'] === T_WHITESPACE) {
-                    $spacesAfter = strlen( $tokens[( $nextToken + 1 )]['content'] );
+                    $spacesAfter = strlen($tokens[( $nextToken + 1 )]['content']);
                 }
 
                 if ($spacesAfter !== $this->equalsSpacing) {
@@ -154,21 +154,21 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $tokens[$nextParam]['content'],
                         $spacesAfter,
                     );
-                    $phpcsFile->addError( $error, $nextToken, 'SpaceAfterDefault', $data );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceAfterDefault', $data);
                 }
             }//end if
 
             // Find and check the comma (if there is one).
-            $nextComma = $phpcsFile->findNext( T_COMMA, ( $nextParam + 1 ), $closeBracket );
+            $nextComma = $phpcsFile->findNext(T_COMMA, ( $nextParam + 1 ), $closeBracket);
             if ($nextComma !== false) {
                 // Comma found.
                 if ($tokens[( $nextComma - 1 )]['code'] === T_WHITESPACE) {
                     $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
                     $data = array(
                         $tokens[$nextParam]['content'],
-                        strlen( $tokens[( $nextComma - 1 )]['content'] ),
+                        strlen($tokens[( $nextComma - 1 )]['content']),
                     );
-                    $phpcsFile->addError( $error, $nextToken, 'SpaceBeforeComma', $data );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeComma', $data);
                 }
             }
 
@@ -179,7 +179,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 $checkToken--;
             }
 
-            if ($phpcsFile->isReference( $checkToken ) === true) {
+            if ($phpcsFile->isReference($checkToken) === true) {
                 $whitespace = ( $checkToken - 1 );
             } else {
                 $whitespace = $checkToken;
@@ -190,12 +190,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 $arg = $tokens[$nextParam]['content'];
 
                 if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = strlen( $tokens[$whitespace]['content'] );
+                    $gap = strlen($tokens[$whitespace]['content']);
 
                     // Before we throw an error, make sure there is no type hint.
-                    $comma = $phpcsFile->findPrevious( T_COMMA, ( $nextParam - 1 ) );
-                    $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $comma + 1 ), null, true );
-                    if ($phpcsFile->isReference( $nextToken ) === true) {
+                    $comma = $phpcsFile->findPrevious(T_COMMA, ( $nextParam - 1 ));
+                    $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $comma + 1 ), null, true);
+                    if ($phpcsFile->isReference($nextToken) === true) {
                         $nextToken++;
                     }
 
@@ -210,23 +210,23 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                 $arg,
                                 $gap,
                             );
-                            $phpcsFile->addError( $error, $nextToken, 'SpacingAfterHint', $data );
+                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
                         }
 
                         if ($multiLine === false) {
                             if ($tokens[( $comma + 1 )]['code'] !== T_WHITESPACE) {
                                 $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
-                                $data = array( $hint );
-                                $phpcsFile->addError( $error, $nextToken, 'NoSpaceBeforeHint', $data );
+                                $data = array($hint);
+                                $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeHint', $data);
                             } else {
-                                $gap = strlen( $tokens[( $comma + 1 )]['content'] );
+                                $gap = strlen($tokens[( $comma + 1 )]['content']);
                                 if ($gap !== 1) {
                                     $error = 'Expected 1 space between comma and type hint "%s"; %s found';
                                     $data = array(
                                         $hint,
                                         $gap,
                                     );
-                                    $phpcsFile->addError( $error, $nextToken, 'SpacingBeforeHint', $data );
+                                    $phpcsFile->addError($error, $nextToken, 'SpacingBeforeHint', $data);
                                 }
                             }
                         }
@@ -239,27 +239,27 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                     $arg,
                                     $gap,
                                 );
-                                $phpcsFile->addError( $error, $nextToken, 'SpacingBeforeArg', $data );
+                                $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
                             }
                         }
                     }//end if
                 } else {
                     $error = 'Expected 1 space between comma and argument "%s"; 0 found';
-                    $data = array( $arg );
-                    $phpcsFile->addError( $error, $nextToken, 'NoSpaceBeforeArg', $data );
+                    $data = array($arg);
+                    $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeArg', $data);
                 }//end if
             } else {
                 $gap = 0;
                 if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = strlen( $tokens[$whitespace]['content'] );
+                    $gap = strlen($tokens[$whitespace]['content']);
                 }
 
                 $arg = $tokens[$nextParam]['content'];
 
                 // Before we throw an error, make sure there is no type hint.
-                $bracket = $phpcsFile->findPrevious( T_OPEN_PARENTHESIS, ( $nextParam - 1 ) );
-                $nextToken = $phpcsFile->findNext( T_WHITESPACE, ( $bracket + 1 ), null, true );
-                if ($phpcsFile->isReference( $nextToken ) === true) {
+                $bracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ( $nextParam - 1 ));
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ( $bracket + 1 ), null, true);
+                if ($phpcsFile->isReference($nextToken) === true) {
                     $nextToken++;
                 }
 
@@ -274,12 +274,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             $arg,
                             $gap,
                         );
-                        $phpcsFile->addError( $error, $nextToken, 'SpacingAfterHint', $data );
+                        $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
                     }
 
                     $spaceAfterOpen = 0;
                     if ($multiLine === false && $tokens[( $bracket + 1 )]['code'] === T_WHITESPACE) {
-                        $spaceAfterOpen = strlen( $tokens[( $bracket + 1 )]['content'] );
+                        $spaceAfterOpen = strlen($tokens[( $bracket + 1 )]['content']);
                     }
 
                     if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
@@ -289,7 +289,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             $hint,
                             $spaceAfterOpen,
                         );
-                        $phpcsFile->addError( $error, $nextToken, 'SpacingAfterOpenHint', $data );
+                        $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpenHint', $data);
                     }
                 } else {
                     if ($multiLine === false && $gap !== $this->requiredSpacesAfterOpen) {
@@ -299,7 +299,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             $arg,
                             $gap,
                         );
-                        $phpcsFile->addError( $error, $nextToken, 'SpacingAfterOpen', $data );
+                        $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
                     }
                 }//end if
             }//end if
@@ -310,26 +310,26 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         $gap = 0;
         if ($tokens[( $closeBracket - 1 )]['code'] === T_WHITESPACE) {
-            $gap = strlen( $tokens[( $closeBracket - 1 )]['content'] );
+            $gap = strlen($tokens[( $closeBracket - 1 )]['content']);
         }
 
         if (empty( $params ) === true) {
             // There are no parameters for this function.
             if (( $closeBracket - $openBracket ) !== 1) {
                 $error = 'Expected 0 spaces between brackets of function declaration; %s found';
-                $data = array( $gap );
-                $phpcsFile->addError( $error, $openBracket, 'SpacingBetween', $data );
+                $data = array($gap);
+                $phpcsFile->addError($error, $openBracket, 'SpacingBetween', $data);
             }
         } else {
             if ($multiLine === false && $gap !== $this->requiredSpacesBeforeClose) {
-                $lastParam = array_pop( $params );
+                $lastParam = array_pop($params);
                 $error = 'Expected %s spaces between argument "%s" and closing bracket; %s found';
                 $data = array(
                     $this->requiredSpacesBeforeClose,
                     $tokens[$lastParam]['content'],
                     $gap,
                 );
-                $phpcsFile->addError( $error, $closeBracket, 'SpacingBeforeClose', $data );
+                $phpcsFile->addError($error, $closeBracket, 'SpacingBeforeClose', $data);
             }
         }
 

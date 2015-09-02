@@ -59,7 +59,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      *
      * @see generate()
      */
-    public function __construct( $standard, array $sniffs = array() )
+    public function __construct($standard, array $sniffs = array())
     {
 
         $this->_standard = $standard;
@@ -84,9 +84,9 @@ class PHP_CodeSniffer_DocGenerators_Generator
 
         foreach ($standardFiles as $standard) {
             $doc = new DOMDocument();
-            $doc->load( $standard );
-            $documentation = $doc->getElementsByTagName( 'documentation' )->item( 0 );
-            $this->processSniff( $documentation );
+            $doc->load($standard);
+            $documentation = $doc->getElementsByTagName('documentation')->item(0);
+            $this->processSniff($documentation);
         }
 
     }//end getTitle()
@@ -105,19 +105,19 @@ class PHP_CodeSniffer_DocGenerators_Generator
     {
 
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process( array(), $this->_standard );
+        $phpcs->process(array(), $this->_standard);
         $sniffs = $phpcs->getSniffs();
 
         $standardFiles = array();
         foreach ($sniffs as $className => $sniffClass) {
-            $object = new ReflectionObject( $sniffClass );
+            $object = new ReflectionObject($sniffClass);
             $sniff = $object->getFilename();
             if (empty( $this->_sniffs ) === false) {
                 // We are limiting the docs to certain sniffs only, so filter
                 // out any unwanted sniffs.
-                $parts = explode( '_', $className );
-                $sniffName = $parts[0].'.'.$parts[2].'.'.substr( $parts[3], 0, -5 );
-                if (in_array( $sniffName, $this->_sniffs ) === false) {
+                $parts = explode('_', $className);
+                $sniffName = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
+                if (in_array($sniffName, $this->_sniffs) === false) {
                     continue;
                 }
             }
@@ -127,9 +127,9 @@ class PHP_CodeSniffer_DocGenerators_Generator
                 DIRECTORY_SEPARATOR.'Docs'.DIRECTORY_SEPARATOR,
                 $sniff
             );
-            $standardFile = str_replace( 'Sniff.php', 'Standard.xml', $standardFile );
+            $standardFile = str_replace('Sniff.php', 'Standard.xml', $standardFile);
 
-            if (is_file( $standardFile ) === true) {
+            if (is_file($standardFile) === true) {
                 $standardFiles[] = $standardFile;
             }
         }//end foreach
@@ -150,7 +150,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      * @return void
      * @see generate()
      */
-    protected function processSniff( DOMNode $doc )
+    protected function processSniff(DOMNode $doc)
     {
 
     }//end generate()
@@ -164,10 +164,10 @@ class PHP_CodeSniffer_DocGenerators_Generator
      *
      * @return string
      */
-    protected function getTitle( DOMNode $doc )
+    protected function getTitle(DOMNode $doc)
     {
 
-        return $doc->getAttribute( 'title' );
+        return $doc->getAttribute('title');
 
     }//end getStandardFiles()
 

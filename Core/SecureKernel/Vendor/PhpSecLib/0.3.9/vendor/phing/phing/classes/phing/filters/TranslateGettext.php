@@ -74,18 +74,18 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      * @return mixed the filtered stream, or -1 if the end of the resulting stream has been reached.
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
         // Make sure correct params/attribs have been set
         $this->checkAttributes();
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
         if ($buffer === -1) {
             return -1;
         }
@@ -104,12 +104,12 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
 
         $buffer = preg_replace_callback(
             '/([^\w]|^)_\("((\\\"|[^"])*)"\)/',
-            array( $this, 'xlateStringCallback' ),
+            array($this, 'xlateStringCallback'),
             $buffer
         );
         $buffer = preg_replace_callback(
             '/([^\w]|^)gettext\("((\\\"|[^"])*)"\)/',
-            array( $this, 'xlateStringCallback' ),
+            array($this, 'xlateStringCallback'),
             $buffer
         );
 
@@ -118,8 +118,8 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
         // Check to see if there are any unmatched gettext() calls -- and flag an error
 
         $matches = array();
-        if (preg_match( '/([^\w]|^)(gettext\([^\)]+\))/', $buffer, $matches )) {
-            $this->log( "Unable to perform translation on: ".$matches[2], Project::MSG_WARN );
+        if (preg_match('/([^\w]|^)(gettext\([^\)]+\))/', $buffer, $matches)) {
+            $this->log("Unable to perform translation on: ".$matches[2], Project::MSG_WARN);
         }
 
         $this->restoreEnvironment();
@@ -138,14 +138,14 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
             foreach ($params as $param) {
                 switch ($param->getType()) {
                     case self::DOMAIN_KEY:
-                        $this->setDomain( $param->getValue() );
+                        $this->setDomain($param->getValue());
                         break;
                     case self::DIR_KEY:
-                        $this->setDir( $this->project->resolveFile( $param->getValue() ) );
+                        $this->setDir($this->project->resolveFile($param->getValue()));
                         break;
 
                     case self::LOCALE_KEY:
-                        $this->setLocale( $param->getValue() );
+                        $this->setLocale($param->getValue());
                         break;
                 } // switch
             }
@@ -161,7 +161,7 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
     {
 
         if (!$this->domain || !$this->locale || !$this->dir) {
-            throw new BuildException( "You must specify values for domain, locale, and dir attributes." );
+            throw new BuildException("You must specify values for domain, locale, and dir attributes.");
         }
     }
 
@@ -177,21 +177,21 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
     protected function initEnvironment()
     {
 
-        $this->storedLocale = getenv( "LANG" );
+        $this->storedLocale = getenv("LANG");
 
-        $this->log( "Setting locale to ".$this->locale, Project::MSG_DEBUG );
-        putenv( "LANG=".$this->locale );
-        $ret = setlocale( LC_ALL, $this->locale );
+        $this->log("Setting locale to ".$this->locale, Project::MSG_DEBUG);
+        putenv("LANG=".$this->locale);
+        $ret = setlocale(LC_ALL, $this->locale);
         if ($ret === false) {
             $msg = "Could not set locale to ".$this->locale
                 .". You may need to use fully qualified name"
                 ." (e.g. en_US instead of en).";
-            throw new BuildException( $msg );
+            throw new BuildException($msg);
         }
 
-        $this->log( "Binding domain '".$this->domain."' to ".$this->dir, Project::MSG_DEBUG );
-        bindtextdomain( $this->domain, $this->dir->getAbsolutePath() );
-        textdomain( $this->domain );
+        $this->log("Binding domain '".$this->domain."' to ".$this->dir, Project::MSG_DEBUG);
+        bindtextdomain($this->domain, $this->dir->getAbsolutePath());
+        textdomain($this->domain);
     }
 
     /**
@@ -204,8 +204,8 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
     protected function restoreEnvironment()
     {
 
-        putenv( "LANG=".$this->storedLocale );
-        setlocale( LC_ALL, $this->storedLocale );
+        putenv("LANG=".$this->storedLocale);
+        setlocale(LC_ALL, $this->storedLocale);
     }
 
     /**
@@ -218,14 +218,14 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      * @return TranslateGettext A new filter based on this configuration, but filtering
      *                          the specified reader
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new TranslateGettext( $reader );
-        $newFilter->setProject( $this->getProject() );
-        $newFilter->setDomain( $this->getDomain() );
-        $newFilter->setLocale( $this->getLocale() );
-        $newFilter->setDir( $this->getDir() );
+        $newFilter = new TranslateGettext($reader);
+        $newFilter->setProject($this->getProject());
+        $newFilter->setDomain($this->getDomain());
+        $newFilter->setLocale($this->getLocale());
+        $newFilter->setDir($this->getDir());
 
         return $newFilter;
     }
@@ -249,7 +249,7 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      *
      * @param string $domain
      */
-    public function setDomain( $domain )
+    public function setDomain($domain)
     {
 
         $this->domain = $domain;
@@ -274,7 +274,7 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      *
      * @param string $locale
      */
-    public function setLocale( $locale )
+    public function setLocale($locale)
     {
 
         $this->locale = $locale;
@@ -296,7 +296,7 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      *
      * @param PhingFile $dir
      */
-    public function setDir( PhingFile $dir )
+    public function setDir(PhingFile $dir)
     {
 
         $this->dir = $dir;
@@ -313,13 +313,13 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader
      *
      * @return string Translated text
      */
-    private function xlateStringCallback( $matches )
+    private function xlateStringCallback($matches)
     {
 
         $charbefore = $matches[1];
         $msgid = $matches[2];
-        $translated = gettext( $msgid );
-        $this->log( "Translating \"$msgid\" => \"$translated\"", Project::MSG_DEBUG );
+        $translated = gettext($msgid);
+        $this->log("Translating \"$msgid\" => \"$translated\"", Project::MSG_DEBUG);
 
         return $charbefore.'"'.$translated.'"';
     }

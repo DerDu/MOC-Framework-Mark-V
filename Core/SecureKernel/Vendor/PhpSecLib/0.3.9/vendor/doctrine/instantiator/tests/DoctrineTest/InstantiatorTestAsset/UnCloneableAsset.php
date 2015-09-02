@@ -37,7 +37,7 @@ class UnCloneableAsset
     public function __construct()
     {
 
-        throw new BadMethodCallException( 'Not supposed to be called!' );
+        throw new BadMethodCallException('Not supposed to be called!');
     }
 
     /**
@@ -48,6 +48,6 @@ class UnCloneableAsset
     public function __clone()
     {
 
-        throw new BadMethodCallException( 'Not supposed to be called!' );
+        throw new BadMethodCallException('Not supposed to be called!');
     }
 }

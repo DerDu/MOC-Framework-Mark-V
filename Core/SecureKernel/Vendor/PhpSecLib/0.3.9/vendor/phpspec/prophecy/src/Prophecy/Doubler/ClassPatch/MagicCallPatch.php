@@ -30,7 +30,7 @@ class MagicCallPatch implements ClassPatchInterface
      *
      * @return boolean
      */
-    public function supports( ClassNode $node )
+    public function supports(ClassNode $node)
     {
 
         return true;
@@ -41,24 +41,24 @@ class MagicCallPatch implements ClassPatchInterface
      *
      * @param ClassNode $node
      */
-    public function apply( ClassNode $node )
+    public function apply(ClassNode $node)
     {
 
         $parentClass = $node->getParentClass();
-        $reflectionClass = new \ReflectionClass( $parentClass );
+        $reflectionClass = new \ReflectionClass($parentClass);
 
-        $phpdoc = new DocBlock( $reflectionClass->getDocComment() );
+        $phpdoc = new DocBlock($reflectionClass->getDocComment());
 
-        $tagList = $phpdoc->getTagsByName( 'method' );
+        $tagList = $phpdoc->getTagsByName('method');
 
         foreach ($tagList as $tag) {
             $methodName = $tag->getMethodName();
 
-            if (!$reflectionClass->hasMethod( $methodName )) {
-                $methodNode = new MethodNode( $tag->getMethodName() );
-                $methodNode->setStatic( $tag->isStatic() );
+            if (!$reflectionClass->hasMethod($methodName)) {
+                $methodNode = new MethodNode($tag->getMethodName());
+                $methodNode->setStatic($tag->isStatic());
 
-                $node->addMethod( $methodNode );
+                $node->addMethod($methodNode);
             }
         }
     }

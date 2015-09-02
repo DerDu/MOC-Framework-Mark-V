@@ -63,16 +63,16 @@ class FileHashTask extends Task
      *
      * @param integer $type 0=MD5, 1=SHA1
      */
-    public function setHashtype( $type )
+    public function setHashtype($type)
     {
 
         $this->hashtype = $type;
     }
 
-    public function setAlgorithm( $type )
+    public function setAlgorithm($type)
     {
 
-        $this->algorithm = strtolower( $type );
+        $this->algorithm = strtolower($type);
     }
 
     /**
@@ -80,7 +80,7 @@ class FileHashTask extends Task
      *
      * @param PhingFile $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
         $this->file = $file;
@@ -93,7 +93,7 @@ class FileHashTask extends Task
      *
      * @return void
      */
-    public function setPropertyName( $property )
+    public function setPropertyName($property)
     {
 
         $this->propertyName = $property;
@@ -112,22 +112,22 @@ class FileHashTask extends Task
         $this->checkPropertyName();
 
         // read file
-        if ($this->algorithm !== '' && in_array( $this->algorithm, hash_algos() )) {
-            $this->log( "Calculating $this->algorithm hash from: ".$this->file );
-            $hashValue = hash_file( $this->algorithm, $this->file );
+        if ($this->algorithm !== '' && in_array($this->algorithm, hash_algos())) {
+            $this->log("Calculating $this->algorithm hash from: ".$this->file);
+            $hashValue = hash_file($this->algorithm, $this->file);
         } elseif ((int)$this->hashtype === 0) {
-            $this->log( "Calculating MD5 hash from: ".$this->file );
-            $hashValue = md5_file( $this->file, false );
+            $this->log("Calculating MD5 hash from: ".$this->file);
+            $hashValue = md5_file($this->file, false);
         } elseif ((int)$this->hashtype === 1) {
-            $this->log( "Calculating SHA1 hash from: ".$this->file );
-            $hashValue = sha1_file( $this->file, false );
+            $this->log("Calculating SHA1 hash from: ".$this->file);
+            $hashValue = sha1_file($this->file, false);
         } else {
             if ($this->algorithm !== '') {
                 throw new BuildException(
                     sprintf(
                         '[FileHash] Unknown algorithm specified %d. Must be one of %s',
                         $this->algorithm,
-                        implode( ', ', hash_algos() )
+                        implode(', ', hash_algos())
                     )
                 );
             } else {
@@ -135,12 +135,12 @@ class FileHashTask extends Task
                     sprintf(
                         '[FileHash] Unknown hashtype specified %d. Must be either 0 (=MD5) or 1 (=SHA1)',
                         $this->hashtype
-                    ) );
+                    ));
             }
         }
 
         // publish hash value
-        $this->project->setProperty( $this->propertyName, $hashValue );
+        $this->project->setProperty($this->propertyName, $hashValue);
     }
 
     /**
@@ -154,12 +154,12 @@ class FileHashTask extends Task
 
         // check File
         if ($this->file === null ||
-            strlen( $this->file ) == 0
+            strlen($this->file) == 0
         ) {
-            throw new BuildException( '[FileHash] You must specify an input file.', $this->file );
+            throw new BuildException('[FileHash] You must specify an input file.', $this->file);
         }
 
-        if (!is_readable( $this->file )) {
+        if (!is_readable($this->file)) {
             throw new BuildException(
                 sprintf(
                     '[FileHash] Input file does not exist or is not readable: %s',
@@ -178,10 +178,10 @@ class FileHashTask extends Task
     private function checkPropertyName()
     {
 
-        if (is_null( $this->propertyName ) ||
-            strlen( $this->propertyName ) === 0
+        if (is_null($this->propertyName) ||
+            strlen($this->propertyName) === 0
         ) {
-            throw new BuildException( 'Property name for publishing hashvalue is not set' );
+            throw new BuildException('Property name for publishing hashvalue is not set');
         }
     }
 }

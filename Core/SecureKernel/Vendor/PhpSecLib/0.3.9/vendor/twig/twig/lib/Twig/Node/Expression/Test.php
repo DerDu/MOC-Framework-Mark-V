@@ -12,25 +12,25 @@
 class Twig_Node_Expression_Test extends Twig_Node_Expression_Call
 {
 
-    public function __construct( Twig_NodeInterface $node, $name, Twig_NodeInterface $arguments = null, $lineno )
+    public function __construct(Twig_NodeInterface $node, $name, Twig_NodeInterface $arguments = null, $lineno)
     {
 
-        parent::__construct( array( 'node' => $node, 'arguments' => $arguments ), array( 'name' => $name ), $lineno );
+        parent::__construct(array('node' => $node, 'arguments' => $arguments), array('name' => $name), $lineno);
     }
 
-    public function compile( Twig_Compiler $compiler )
+    public function compile(Twig_Compiler $compiler)
     {
 
-        $name = $this->getAttribute( 'name' );
-        $test = $compiler->getEnvironment()->getTest( $name );
+        $name = $this->getAttribute('name');
+        $test = $compiler->getEnvironment()->getTest($name);
 
-        $this->setAttribute( 'name', $name );
-        $this->setAttribute( 'type', 'test' );
-        $this->setAttribute( 'thing', $test );
+        $this->setAttribute('name', $name);
+        $this->setAttribute('type', 'test');
+        $this->setAttribute('thing', $test);
         if ($test instanceof Twig_TestCallableInterface || $test instanceof Twig_SimpleTest) {
-            $this->setAttribute( 'callable', $test->getCallable() );
+            $this->setAttribute('callable', $test->getCallable());
         }
 
-        $this->compileCallable( $compiler );
+        $this->compileCallable($compiler);
     }
 }

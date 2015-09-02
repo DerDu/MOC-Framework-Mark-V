@@ -36,6 +36,6 @@ class LiquibaseChangeLogTask extends AbstractLiquibaseTask
     {
 
         $this->checkParams();
-        $this->execute( 'generateChangeLog' );
+        $this->execute('generateChangeLog');
     }
 }

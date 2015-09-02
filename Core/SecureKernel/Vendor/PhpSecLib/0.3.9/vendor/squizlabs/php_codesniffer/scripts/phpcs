@@ -15,18 +15,18 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-error_reporting( E_ALL | E_STRICT );
+error_reporting(E_ALL | E_STRICT);
 
 // Optionally use PHP_Timer to print time/memory stats for the run.
 // Note that the reports are the ones who actually print the data
 // as they decide if it is ok to print this data to screen.
 @include_once 'PHP/Timer.php';
-if (class_exists( 'PHP_Timer', false ) === true) {
+if (class_exists('PHP_Timer', false) === true) {
     PHP_Timer::start();
 }
 
-if (is_file( dirname( __FILE__ ).'/../CodeSniffer/CLI.php' ) === true) {
-    include_once dirname( __FILE__ ).'/../CodeSniffer/CLI.php';
+if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
 }

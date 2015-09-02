@@ -1,6 +1,8 @@
 <?php
+
 class Issue523Test extends PHPUnit_Framework_TestCase
 {
+
     public function testAttributeEquals()
     {
 
@@ -12,5 +14,6 @@ class Issue523Test extends PHPUnit_Framework_TestCase
 
 class Issue523 extends ArrayIterator
 {
+
     protected $field = 'foo';
 }

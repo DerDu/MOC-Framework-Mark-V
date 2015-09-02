@@ -35,7 +35,7 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        return array( T_VARIABLE );
+        return array(T_VARIABLE);
 
     }//end register()
 
@@ -49,7 +49,7 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -68,9 +68,9 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
         $inClass = false;
         foreach ($tokens[$stackPtr]['conditions'] as $i => $type) {
             if ($tokens[$i]['code'] === T_CLASS) {
-                $className = $phpcsFile->findNext( T_STRING, $i );
+                $className = $phpcsFile->findNext(T_STRING, $i);
                 $className = $tokens[$className]['content'];
-                if (strtolower( $className ) === 'security') {
+                if (strtolower($className) === 'security') {
                     $inClass = true;
                 } else {
                     // We don't have nested classes.
@@ -78,9 +78,9 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
                 }
             } else {
                 if ($inClass === true && $tokens[$i]['code'] === T_FUNCTION) {
-                    $funcName = $phpcsFile->findNext( T_STRING, $i );
+                    $funcName = $phpcsFile->findNext(T_STRING, $i);
                     $funcName = $tokens[$funcName]['content'];
-                    if (strtolower( $funcName ) === 'getrequestdata') {
+                    if (strtolower($funcName) === 'getrequestdata') {
                         // This is valid.
                         return;
                     } else {
@@ -93,18 +93,18 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
 
         // If we get to here, the super global was used incorrectly.
         // First find out how it is being used.
-        $globalName = strtolower( substr( $varName, 2 ) );
+        $globalName = strtolower(substr($varName, 2));
         $usedVar = '';
 
-        $openBracket = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $openBracket = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($tokens[$openBracket]['code'] === T_OPEN_SQUARE_BRACKET) {
             $closeBracket = $tokens[$openBracket]['bracket_closer'];
-            $usedVar = $phpcsFile->getTokensAsString( ( $openBracket + 1 ), ( $closeBracket - $openBracket - 1 ) );
+            $usedVar = $phpcsFile->getTokensAsString(( $openBracket + 1 ), ( $closeBracket - $openBracket - 1 ));
         }
 
         $type = 'SuperglobalAccessed';
         $error = 'The %s super global must not be accessed directly; use Security::getRequestData(';
-        $data = array( $varName );
+        $data = array($varName);
         if ($usedVar !== '') {
             $type .= 'WithVar';
             $error .= '%s, \'%s\'';
@@ -113,7 +113,7 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
         }
 
         $error .= ') instead';
-        $phpcsFile->addError( $error, $stackPtr, $type, $data );
+        $phpcsFile->addError($error, $stackPtr, $type, $data);
 
     }//end process()
 

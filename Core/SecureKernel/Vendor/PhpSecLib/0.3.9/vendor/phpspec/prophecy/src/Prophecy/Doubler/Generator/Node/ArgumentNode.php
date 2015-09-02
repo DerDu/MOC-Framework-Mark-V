@@ -28,7 +28,7 @@ class ArgumentNode
     /**
      * @param string $name
      */
-    public function __construct( $name )
+    public function __construct($name)
     {
 
         $this->name = $name;
@@ -46,7 +46,7 @@ class ArgumentNode
         return $this->typeHint;
     }
 
-    public function setTypeHint( $typeHint = null )
+    public function setTypeHint($typeHint = null)
     {
 
         $this->typeHint = $typeHint;
@@ -58,7 +58,7 @@ class ArgumentNode
         return $this->default;
     }
 
-    public function setDefault( $default = null )
+    public function setDefault($default = null)
     {
 
         $this->optional = true;
@@ -71,7 +71,7 @@ class ArgumentNode
         return $this->optional;
     }
 
-    public function setAsPassedByReference( $byReference = true )
+    public function setAsPassedByReference($byReference = true)
     {
 
         $this->byReference = $byReference;

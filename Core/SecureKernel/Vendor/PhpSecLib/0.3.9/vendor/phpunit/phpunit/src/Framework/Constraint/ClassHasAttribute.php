@@ -27,7 +27,7 @@ class PHPUnit_Framework_Constraint_ClassHasAttribute extends PHPUnit_Framework_C
     /**
      * @param string $attributeName
      */
-    public function __construct( $attributeName )
+    public function __construct($attributeName)
     {
 
         parent::__construct();
@@ -42,12 +42,12 @@ class PHPUnit_Framework_Constraint_ClassHasAttribute extends PHPUnit_Framework_C
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $class = new ReflectionClass( $other );
+        $class = new ReflectionClass($other);
 
-        return $class->hasProperty( $this->attributeName );
+        return $class->hasProperty($this->attributeName);
     }
 
     /**
@@ -60,13 +60,13 @@ class PHPUnit_Framework_Constraint_ClassHasAttribute extends PHPUnit_Framework_C
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
         return sprintf(
             '%sclass "%s" %s',
-            is_object( $other ) ? 'object of ' : '',
-            is_object( $other ) ? get_class( $other ) : $other,
+            is_object($other) ? 'object of ' : '',
+            is_object($other) ? get_class($other) : $other,
             $this->toString()
         );
     }

@@ -64,10 +64,10 @@ class PregEngine implements RegexpEngine
      *
      * @return boolean Success of matching operation.
      */
-    public function match( $pattern, $source, &$matches )
+    public function match($pattern, $source, &$matches)
     {
 
-        return preg_match( $this->preparePattern( $pattern ), $source, $matches );
+        return preg_match($this->preparePattern($pattern), $source, $matches);
     }
 
     /**
@@ -77,24 +77,24 @@ class PregEngine implements RegexpEngine
      *
      * @return string prepared pattern.
      */
-    private function preparePattern( $pattern )
+    private function preparePattern($pattern)
     {
 
         $delimiterPattern = '/\\\\*'.self::DELIMITER.'/';
 
         // The following block escapes usages of the delimiter in the pattern if it's not already escaped.
-        if (preg_match_all( $delimiterPattern, $pattern, $matches, PREG_OFFSET_CAPTURE )) {
+        if (preg_match_all($delimiterPattern, $pattern, $matches, PREG_OFFSET_CAPTURE)) {
             $diffOffset = 0;
 
             foreach ($matches[0] as $match) {
                 $str = $match[0];
                 $offset = $match[1] + $diffOffset;
 
-                $escStr = ( strlen( $str ) % 2 ) ? '\\'.$str : $str; // This will increase an even number of backslashes, before a forward slash, to an odd number.  I.e. '\\/' becomes '\\\/'.
+                $escStr = ( strlen($str) % 2 ) ? '\\'.$str : $str; // This will increase an even number of backslashes, before a forward slash, to an odd number.  I.e. '\\/' becomes '\\\/'.
 
-                $diffOffset += strlen( $escStr ) - strlen( $str );
+                $diffOffset += strlen($escStr) - strlen($str);
 
-                $pattern = substr_replace( $pattern, $escStr, $offset, strlen( $str ) );
+                $pattern = substr_replace($pattern, $escStr, $offset, strlen($str));
             }
         }
 
@@ -113,16 +113,16 @@ class PregEngine implements RegexpEngine
         if ($this->getIgnoreCase()) {
             $mods .= 'i';
         } elseif ($this->getIgnoreCase() === false) {
-            $mods = str_replace( 'i', '', $mods );
+            $mods = str_replace('i', '', $mods);
         }
         if ($this->getMultiline()) {
             $mods .= 's';
         } elseif ($this->getMultiline() === false) {
-            $mods = str_replace( 's', '', $mods );
+            $mods = str_replace('s', '', $mods);
         }
         // filter out duplicates
-        $mods = preg_split( '//', $mods, -1, PREG_SPLIT_NO_EMPTY );
-        $mods = implode( '', array_unique( $mods ) );
+        $mods = preg_split('//', $mods, -1, PREG_SPLIT_NO_EMPTY);
+        $mods = implode('', array_unique($mods));
 
         return $mods;
     }
@@ -134,7 +134,7 @@ class PregEngine implements RegexpEngine
      *
      * @return void
      */
-    public function setModifiers( $mods )
+    public function setModifiers($mods)
     {
 
         $this->modifiers = (string)$mods;
@@ -158,7 +158,7 @@ class PregEngine implements RegexpEngine
      *
      * @return void
      */
-    public function setIgnoreCase( $bit )
+    public function setIgnoreCase($bit)
     {
 
         $this->ignoreCase = (boolean)$bit;
@@ -180,7 +180,7 @@ class PregEngine implements RegexpEngine
      *
      * @param boolean $bit
      */
-    public function setMultiline( $bit )
+    public function setMultiline($bit)
     {
 
         $this->multiline = $bit;
@@ -195,10 +195,10 @@ class PregEngine implements RegexpEngine
      *
      * @return boolean Success of matching operation.
      */
-    public function matchAll( $pattern, $source, &$matches )
+    public function matchAll($pattern, $source, &$matches)
     {
 
-        return preg_match_all( $this->preparePattern( $pattern ), $source, $matches );
+        return preg_match_all($this->preparePattern($pattern), $source, $matches);
     }
 
     /**
@@ -212,14 +212,14 @@ class PregEngine implements RegexpEngine
      *
      * @return string The replaced source string.
      */
-    public function replace( $pattern, $replace, $source )
+    public function replace($pattern, $replace, $source)
     {
 
         // convert \1 -> $1, because we want to use the more generic \1 in the XML
         // but PREG prefers $1 syntax.
-        $replace = preg_replace( '/\\\(\d+)/', '\$$1', $replace );
+        $replace = preg_replace('/\\\(\d+)/', '\$$1', $replace);
 
-        return preg_replace( $this->preparePattern( $pattern ), $replace, $source );
+        return preg_replace($this->preparePattern($pattern), $replace, $source);
     }
 
 }

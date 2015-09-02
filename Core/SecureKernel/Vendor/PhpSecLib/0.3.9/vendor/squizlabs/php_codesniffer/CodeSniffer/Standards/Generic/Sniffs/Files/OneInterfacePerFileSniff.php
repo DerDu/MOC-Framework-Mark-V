@@ -36,13 +36,13 @@ class Generic_Sniffs_Files_OneInterfacePerFileSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $nextInterface = $phpcsFile->findNext( $this->register(), ( $stackPtr + 1 ) );
+        $nextInterface = $phpcsFile->findNext($this->register(), ( $stackPtr + 1 ));
         if ($nextInterface !== false) {
             $error = 'Only one interface is allowed in a file';
-            $phpcsFile->addError( $error, $nextInterface, 'MultipleFound' );
+            $phpcsFile->addError($error, $nextInterface, 'MultipleFound');
         }
 
     }//end register()
@@ -55,7 +55,7 @@ class Generic_Sniffs_Files_OneInterfacePerFileSniff implements PHP_CodeSniffer_S
     public function register()
     {
 
-        return array( T_INTERFACE );
+        return array(T_INTERFACE);
 
     }//end process()
 

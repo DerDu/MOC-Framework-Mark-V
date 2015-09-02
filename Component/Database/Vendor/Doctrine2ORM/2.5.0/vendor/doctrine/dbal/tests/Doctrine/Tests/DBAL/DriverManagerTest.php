@@ -242,11 +242,12 @@ class DriverManagerTest extends \Doctrine\Tests\DbalTestCase
             ),
             'simple URL with fallthrough scheme containing dashes works'      => array(
                 'drizzle-pdo-mysql://foo:bar@localhost/baz',
-                array('user'     => 'foo',
-                      'password' => 'bar',
-                      'host'     => 'localhost',
-                      'dbname'   => 'baz',
-                      'driver'   => 'Doctrine\DBAL\Driver\DrizzlePDOMySql\Driver'
+                array(
+                    'user'     => 'foo',
+                    'password' => 'bar',
+                    'host'     => 'localhost',
+                    'dbname'   => 'baz',
+                    'driver'   => 'Doctrine\DBAL\Driver\DrizzlePDOMySql\Driver'
                 ),
             ),
         );

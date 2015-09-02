@@ -22,12 +22,12 @@ class Twig_SimpleFilter
     protected $options;
     protected $arguments = array();
 
-    public function __construct( $name, $callable, array $options = array() )
+    public function __construct($name, $callable, array $options = array())
     {
 
         $this->name = $name;
         $this->callable = $callable;
-        $this->options = array_merge( array(
+        $this->options = array_merge(array(
             'needs_environment' => false,
             'needs_context'     => false,
             'is_safe'           => null,
@@ -35,7 +35,7 @@ class Twig_SimpleFilter
             'pre_escape'        => null,
             'preserves_safety'  => null,
             'node_class'        => 'Twig_Node_Expression_Filter',
-        ), $options );
+        ), $options);
     }
 
     public function getName()
@@ -62,7 +62,7 @@ class Twig_SimpleFilter
         return $this->arguments;
     }
 
-    public function setArguments( $arguments )
+    public function setArguments($arguments)
     {
 
         $this->arguments = $arguments;
@@ -80,7 +80,7 @@ class Twig_SimpleFilter
         return $this->options['needs_context'];
     }
 
-    public function getSafe( Twig_Node $filterArgs )
+    public function getSafe(Twig_Node $filterArgs)
     {
 
         if (null !== $this->options['is_safe']) {
@@ -88,7 +88,7 @@ class Twig_SimpleFilter
         }
 
         if (null !== $this->options['is_safe_callback']) {
-            return call_user_func( $this->options['is_safe_callback'], $filterArgs );
+            return call_user_func($this->options['is_safe_callback'], $filterArgs);
         }
     }
 

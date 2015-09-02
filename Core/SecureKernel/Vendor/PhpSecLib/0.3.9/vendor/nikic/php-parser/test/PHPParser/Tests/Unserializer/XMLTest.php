@@ -29,14 +29,14 @@ XML;
 
         $unserializer = new PHPParser_Unserializer_XML;
         $this->assertEquals(
-            new PHPParser_Node_Scalar_String( 'Test', array(
+            new PHPParser_Node_Scalar_String('Test', array(
                 'startLine' => 1,
                 'comments'  => array(
-                    new PHPParser_Comment( '// comment'."\n", 2 ),
-                    new PHPParser_Comment_Doc( '/** doc comment */', 3 ),
+                    new PHPParser_Comment('// comment'."\n", 2),
+                    new PHPParser_Comment_Doc('/** doc comment */', 3),
                 ),
-            ) ),
-            $unserializer->unserialize( $xml )
+            )),
+            $unserializer->unserialize($xml)
         );
     }
 
@@ -54,7 +54,7 @@ XML;
 
         $this->assertEquals(
             new PHPParser_Node_Scalar_ClassConst,
-            $unserializer->unserialize( $xml )
+            $unserializer->unserialize($xml)
         );
     }
 
@@ -94,7 +94,7 @@ XML;
         );
 
         $unserializer = new PHPParser_Unserializer_XML;
-        $this->assertEquals( $result, $unserializer->unserialize( $xml ) );
+        $this->assertEquals($result, $unserializer->unserialize($xml));
     }
 
     /**
@@ -110,16 +110,16 @@ XML;
 XML;
 
         $unserializer = new PHPParser_Unserializer_XML;
-        $unserializer->unserialize( $xml );
+        $unserializer->unserialize($xml);
     }
 
     /**
      * @dataProvider             provideTestErrors
      */
-    public function testErrors( $xml, $errorMsg )
+    public function testErrors($xml, $errorMsg)
     {
 
-        $this->setExpectedException( 'DomainException', $errorMsg );
+        $this->setExpectedException('DomainException', $errorMsg);
 
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -132,21 +132,21 @@ XML;
 XML;
 
         $unserializer = new PHPParser_Unserializer_XML;
-        $unserializer->unserialize( $xml );
+        $unserializer->unserialize($xml);
     }
 
     public function provideTestErrors()
     {
 
         return array(
-            array( '<scalar:true>test</scalar:true>', '"true" scalar must be empty' ),
-            array( '<scalar:false>test</scalar:false>', '"false" scalar must be empty' ),
-            array( '<scalar:null>test</scalar:null>', '"null" scalar must be empty' ),
-            array( '<scalar:foo>bar</scalar:foo>', 'Unknown scalar type "foo"' ),
-            array( '<scalar:int>x</scalar:int>', '"x" is not a valid int' ),
-            array( '<scalar:float>x</scalar:float>', '"x" is not a valid float' ),
-            array( '', 'Expected node or scalar' ),
-            array( '<foo:bar>test</foo:bar>', 'Unexpected node of type "foo:bar"' ),
+            array('<scalar:true>test</scalar:true>', '"true" scalar must be empty'),
+            array('<scalar:false>test</scalar:false>', '"false" scalar must be empty'),
+            array('<scalar:null>test</scalar:null>', '"null" scalar must be empty'),
+            array('<scalar:foo>bar</scalar:foo>', 'Unknown scalar type "foo"'),
+            array('<scalar:int>x</scalar:int>', '"x" is not a valid int'),
+            array('<scalar:float>x</scalar:float>', '"x" is not a valid float'),
+            array('', 'Expected node or scalar'),
+            array('<foo:bar>test</foo:bar>', 'Unexpected node of type "foo:bar"'),
             array(
                 '<node:Scalar_String><foo:bar>test</foo:bar></node:Scalar_String>',
                 'Expected sub node or attribute, got node of type "foo:bar"'

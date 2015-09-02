@@ -50,15 +50,15 @@ class Arg extends DataType
         $value = "";
         $quote = $this->getQuotes() ? '"' : '';
 
-        if (!is_null( $this->getValue() )) {
+        if (!is_null($this->getValue())) {
             $value = $quote.$this->getValue().$quote;
         }
 
-        if (!is_null( $this->getName() )) {
+        if (!is_null($this->getName())) {
             $name = '--'.$this->getName();
         }
 
-        if (strlen( $name ) > 0 && strlen( $value ) > 0) {
+        if (strlen($name) > 0 && strlen($value) > 0) {
             $value = '='.$value;
         }
 
@@ -81,7 +81,7 @@ class Arg extends DataType
      *
      * @param boolean $quotes
      */
-    public function setQuotes( $quotes )
+    public function setQuotes($quotes)
     {
 
         $this->quotes = $quotes;
@@ -103,7 +103,7 @@ class Arg extends DataType
      *
      * @param String $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = $value;
@@ -125,7 +125,7 @@ class Arg extends DataType
      *
      * @param String $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;

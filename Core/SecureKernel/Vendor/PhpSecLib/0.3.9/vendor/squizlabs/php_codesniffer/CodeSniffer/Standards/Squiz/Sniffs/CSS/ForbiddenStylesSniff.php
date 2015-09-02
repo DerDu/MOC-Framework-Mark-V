@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
@@ -79,7 +79,7 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
 
-        $this->forbiddenStyleNames = array_keys( $this->forbiddenStyles );
+        $this->forbiddenStyleNames = array_keys($this->forbiddenStyles);
 
         if ($this->patternMatch === true) {
             foreach ($this->forbiddenStyleNames as $i => $name) {
@@ -87,7 +87,7 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        return array( T_STYLE );
+        return array(T_STYLE);
 
     }//end register()
 
@@ -101,11 +101,11 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
-        $style = strtolower( $tokens[$stackPtr]['content'] );
+        $style = strtolower($tokens[$stackPtr]['content']);
         $pattern = null;
 
         if ($this->patternMatch === true) {
@@ -123,14 +123,14 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Remove the pattern delimiters and modifier.
-            $pattern = substr( $pattern, 1, -2 );
+            $pattern = substr($pattern, 1, -2);
         } else {
-            if (in_array( $style, $this->forbiddenStyleNames ) === false) {
+            if (in_array($style, $this->forbiddenStyleNames) === false) {
                 return;
             }
         }
 
-        $this->addError( $phpcsFile, $stackPtr, $style, $pattern );
+        $this->addError($phpcsFile, $stackPtr, $style, $pattern);
 
     }//end process()
 
@@ -146,10 +146,10 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function addError( $phpcsFile, $stackPtr, $style, $pattern = null )
+    protected function addError($phpcsFile, $stackPtr, $style, $pattern = null)
     {
 
-        $data = array( $style );
+        $data = array($style);
         $error = 'The use of style %s is ';
         if ($this->error === true) {
             $type = 'Found';
@@ -170,9 +170,9 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
         }
 
         if ($this->error === true) {
-            $phpcsFile->addError( $error, $stackPtr, $type, $data );
+            $phpcsFile->addError($error, $stackPtr, $type, $data);
         } else {
-            $phpcsFile->addWarning( $error, $stackPtr, $type, $data );
+            $phpcsFile->addWarning($error, $stackPtr, $type, $data);
         }
 
     }//end addError()

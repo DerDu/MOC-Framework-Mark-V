@@ -33,7 +33,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
      *
      * @var array
      */
-    public $supportedTokenizers = array( 'CSS' );
+    public $supportedTokenizers = array('CSS');
 
 
     /**
@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
     public function register()
     {
 
-        return array( T_CLOSE_CURLY_BRACKET );
+        return array(T_CLOSE_CURLY_BRACKET);
 
     }//end register()
 
@@ -58,12 +58,12 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
 
-        $next = $phpcsFile->findNext( T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+        $next = $phpcsFile->findNext(T_WHITESPACE, ( $stackPtr + 1 ), null, true);
         if ($next === false) {
             return;
         }
@@ -72,8 +72,8 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
             $found = ( ( $tokens[$next]['line'] - $tokens[$stackPtr]['line'] ) - 1 );
             if ($found !== 1) {
                 $error = 'Expected one blank line after closing brace of class definition; %s found';
-                $data = array( $found );
-                $phpcsFile->addError( $error, $stackPtr, 'SpacingAfterClose', $data );
+                $data = array($found);
+                $phpcsFile->addError($error, $stackPtr, 'SpacingAfterClose', $data);
             }
         }
 
@@ -89,12 +89,12 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
             return;
         }
 
-        $prev = $phpcsFile->findPrevious( PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true);
         if ($prev !== false && $tokens[$prev]['line'] !== ( $tokens[$stackPtr]['line'] - 1 )) {
             $num = ( $tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1 );
             $error = 'Expected 0 blank lines before closing brace of class definition; %s found';
-            $data = array( $num );
-            $phpcsFile->addError( $error, $stackPtr, 'SpacingBeforeClose', $data );
+            $data = array($num);
+            $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose', $data);
         }
 
     }//end process()

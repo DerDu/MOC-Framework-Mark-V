@@ -7,26 +7,26 @@ class PHPParser_Tests_TemplateLoaderTest extends PHPUnit_Framework_TestCase
     {
 
         $templateLoader = new PHPParser_TemplateLoader(
-            new PHPParser_Parser( new PHPParser_Lexer ),
-            dirname( __FILE__ )
+            new PHPParser_Parser(new PHPParser_Lexer),
+            dirname(__FILE__)
         );
 
         // load this file as a template, as we don't really care about the contents
-        $template = $templateLoader->load( 'TemplateLoaderTest.php' );
-        $this->assertInstanceOf( 'PHPParser_Template', $template );
+        $template = $templateLoader->load('TemplateLoaderTest.php');
+        $this->assertInstanceOf('PHPParser_Template', $template);
     }
 
     public function testLoadWithSuffix()
     {
 
         $templateLoader = new PHPParser_TemplateLoader(
-            new PHPParser_Parser( new PHPParser_Lexer ),
-            dirname( __FILE__ ), '.php'
+            new PHPParser_Parser(new PHPParser_Lexer),
+            dirname(__FILE__), '.php'
         );
 
         // load this file as a template, as we don't really care about the contents
-        $template = $templateLoader->load( 'TemplateLoaderTest' );
-        $this->assertInstanceOf( 'PHPParser_Template', $template );
+        $template = $templateLoader->load('TemplateLoaderTest');
+        $this->assertInstanceOf('PHPParser_Template', $template);
     }
 
     /**
@@ -36,8 +36,8 @@ class PHPParser_Tests_TemplateLoaderTest extends PHPUnit_Framework_TestCase
     {
 
         new PHPParser_TemplateLoader(
-            new PHPParser_Parser( new PHPParser_Lexer ),
-            dirname( __FILE__ ).'/someDirectoryThatDoesNotExist'
+            new PHPParser_Parser(new PHPParser_Lexer),
+            dirname(__FILE__).'/someDirectoryThatDoesNotExist'
         );
     }
 
@@ -48,10 +48,10 @@ class PHPParser_Tests_TemplateLoaderTest extends PHPUnit_Framework_TestCase
     {
 
         $templateLoader = new PHPParser_TemplateLoader(
-            new PHPParser_Parser( new PHPParser_Lexer ),
-            dirname( __FILE__ )
+            new PHPParser_Parser(new PHPParser_Lexer),
+            dirname(__FILE__)
         );
 
-        $templateLoader->load( 'SomeTemplateThatDoesNotExist' );
+        $templateLoader->load('SomeTemplateThatDoesNotExist');
     }
 }

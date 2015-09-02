@@ -13,9 +13,11 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Doctrine\DBAL\Sharding\ShardingException',
             'SQLAzure requires a federation name to be set during sharding configuration.');
 
-        $conn = $this->createConnection(array('sharding' => array('distributionKey'  => 'abc',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'distributionKey'  => 'abc',
+                'distributionType' => 'integer'
+            )
         ));
         $sm = new SQLAzureShardManager($conn);
     }
@@ -35,9 +37,11 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Doctrine\DBAL\Sharding\ShardingException',
             'SQLAzure requires a distribution key to be set during sharding configuration.');
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionType' => 'integer'
+            )
         ));
         $sm = new SQLAzureShardManager($conn);
     }
@@ -47,9 +51,11 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('Doctrine\DBAL\Sharding\ShardingException');
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'  => 'abc',
-                                                                  'distributionKey' => 'foo'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'  => 'abc',
+                'distributionKey' => 'foo'
+            )
         ));
         $sm = new SQLAzureShardManager($conn);
     }
@@ -57,10 +63,12 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultDistributionValue()
     {
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionKey'  => 'foo',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionKey'  => 'foo',
+                'distributionType' => 'integer'
+            )
         ));
 
         $sm = new SQLAzureShardManager($conn);
@@ -70,10 +78,12 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
     public function testSelectGlobalTransactionActive()
     {
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionKey'  => 'foo',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionKey'  => 'foo',
+                'distributionType' => 'integer'
+            )
         ));
         $conn->expects($this->at(1))->method('isTransactionActive')->will($this->returnValue(true));
 
@@ -87,10 +97,12 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
     public function testSelectGlobal()
     {
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionKey'  => 'foo',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionKey'  => 'foo',
+                'distributionType' => 'integer'
+            )
         ));
         $conn->expects($this->at(1))->method('isTransactionActive')->will($this->returnValue(false));
         $conn->expects($this->at(2))->method('exec')->with($this->equalTo('USE FEDERATION ROOT WITH RESET'));
@@ -102,10 +114,12 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
     public function testSelectShard()
     {
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionKey'  => 'foo',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionKey'  => 'foo',
+                'distributionType' => 'integer'
+            )
         ));
         $conn->expects($this->at(1))->method('isTransactionActive')->will($this->returnValue(true));
 
@@ -121,10 +135,12 @@ class SQLAzureShardManagerTest extends \PHPUnit_Framework_TestCase
     public function testSelectShardNoDistriubtionValue()
     {
 
-        $conn = $this->createConnection(array('sharding' => array('federationName'   => 'abc',
-                                                                  'distributionKey'  => 'foo',
-                                                                  'distributionType' => 'integer'
-        )
+        $conn = $this->createConnection(array(
+            'sharding' => array(
+                'federationName'   => 'abc',
+                'distributionKey'  => 'foo',
+                'distributionType' => 'integer'
+            )
         ));
         $conn->expects($this->at(1))->method('isTransactionActive')->will($this->returnValue(false));
 

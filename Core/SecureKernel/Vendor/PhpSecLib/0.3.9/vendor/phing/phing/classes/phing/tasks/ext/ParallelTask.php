@@ -48,7 +48,7 @@ class ParallelTask extends SequentialTask
      *
      * @param int $threadCount
      */
-    public function setThreadCount( $threadCount )
+    public function setThreadCount($threadCount)
     {
 
         $this->threadCount = $threadCount;
@@ -64,7 +64,7 @@ class ParallelTask extends SequentialTask
         @include_once 'phing/contrib/DocBlox/Parallel/Manager.php';
         @include_once 'phing/contrib/DocBlox/Parallel/Worker.php';
         @include_once 'phing/contrib/DocBlox/Parallel/WorkerPipe.php';
-        if (!class_exists( 'DocBlox_Parallel_Worker' )) {
+        if (!class_exists('DocBlox_Parallel_Worker')) {
             throw new BuildException(
                 'ParallelTask depends on DocBlox being installed and on include_path.',
                 $this->getLocation()
@@ -72,15 +72,15 @@ class ParallelTask extends SequentialTask
         }
 
         $mgr = new DocBlox_Parallel_Manager();
-        $mgr->setProcessLimit( $this->threadCount );
+        $mgr->setProcessLimit($this->threadCount);
 
         foreach ($this->nestedTasks as $task) {
             $worker = new DocBlox_Parallel_Worker(
-                array( $task, 'perform' ),
-                array( $task )
+                array($task, 'perform'),
+                array($task)
             );
 
-            $mgr->addWorker( $worker );
+            $mgr->addWorker($worker);
         }
 
         $mgr->execute();
@@ -91,7 +91,7 @@ class ParallelTask extends SequentialTask
                 continue;
             }
 
-            throw new BuildException( $nestedTask->getError() );
+            throw new BuildException($nestedTask->getError());
         }
     }
 }

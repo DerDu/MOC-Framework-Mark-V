@@ -37,5 +37,5 @@ abstract class PHPCPDResultFormatter
      * @param boolean        $useFile
      * @param PhingFile|null $outFile
      */
-    abstract public function processClones( $clones, Project $project, $useFile = false, $outFile = null );
+    abstract public function processClones($clones, Project $project, $useFile = false, $outFile = null);
 }

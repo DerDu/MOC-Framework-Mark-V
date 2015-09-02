@@ -74,14 +74,14 @@ class PHPCPDTask extends Task
      *
      * @var array
      */
-    protected $allowedFileExtensions = array( 'php' );
+    protected $allowedFileExtensions = array('php');
 
     /**
      * List of exclude directory patterns.
      *
      * @var array
      */
-    protected $ignorePatterns = array( '.git', '.svn', 'CVS', '.bzr', '.hg' );
+    protected $ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg');
 
     /**
      * The format for the report
@@ -112,7 +112,7 @@ class PHPCPDTask extends Task
      *
      * @param PhingFile $file The input source file or directory.
      */
-    public function setFile( PhingFile $file )
+    public function setFile(PhingFile $file)
     {
 
         $this->file = $file;
@@ -123,7 +123,7 @@ class PHPCPDTask extends Task
      *
      * @param FileSet $fs List of files to scan
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -134,7 +134,7 @@ class PHPCPDTask extends Task
      *
      * @param integer $minLines Minimum number of identical lines
      */
-    public function setMinLines( $minLines )
+    public function setMinLines($minLines)
     {
 
         $this->minLines = $minLines;
@@ -145,7 +145,7 @@ class PHPCPDTask extends Task
      *
      * @param integer $minTokens Minimum number of identical tokens
      */
-    public function setMinTokens( $minTokens )
+    public function setMinTokens($minTokens)
     {
 
         $this->minTokens = $minTokens;
@@ -156,7 +156,7 @@ class PHPCPDTask extends Task
      *
      * @param boolean $fuzzy fuzzy match
      */
-    public function setFuzzy( $fuzzy )
+    public function setFuzzy($fuzzy)
     {
 
         $this->fuzzy = $fuzzy;
@@ -167,17 +167,17 @@ class PHPCPDTask extends Task
      *
      * @param string $fileExtensions List of valid file extensions.
      */
-    public function setAllowedFileExtensions( $fileExtensions )
+    public function setAllowedFileExtensions($fileExtensions)
     {
 
         $this->allowedFileExtensions = array();
 
         $token = ' ,;';
-        $ext = strtok( $fileExtensions, $token );
+        $ext = strtok($fileExtensions, $token);
 
         while ($ext !== false) {
             $this->allowedFileExtensions[] = $ext;
-            $ext = strtok( $token );
+            $ext = strtok($token);
         }
     }
 
@@ -186,17 +186,17 @@ class PHPCPDTask extends Task
      *
      * @param string $ignorePatterns List of ignore patterns.
      */
-    public function setIgnorePatterns( $ignorePatterns )
+    public function setIgnorePatterns($ignorePatterns)
     {
 
         $this->ignorePatterns = array();
 
         $token = ' ,;';
-        $pattern = strtok( $ignorePatterns, $token );
+        $pattern = strtok($ignorePatterns, $token);
 
         while ($pattern !== false) {
             $this->ignorePatterns[] = $pattern;
-            $pattern = strtok( $token );
+            $pattern = strtok($token);
         }
     }
 
@@ -205,7 +205,7 @@ class PHPCPDTask extends Task
      *
      * @param string $format Format of the report
      */
-    public function setFormat( $format )
+    public function setFormat($format)
     {
 
         $this->format = $format;
@@ -219,7 +219,7 @@ class PHPCPDTask extends Task
     public function createFormatter()
     {
 
-        $num = array_push( $this->formatters, new PHPCPDFormatterElement( $this ) );
+        $num = array_push($this->formatters, new PHPCPDFormatterElement($this));
 
         return $this->formatters[$num - 1];
     }
@@ -227,7 +227,7 @@ class PHPCPDTask extends Task
     /**
      * @param string $pharLocation
      */
-    public function setPharLocation( $pharLocation )
+    public function setPharLocation($pharLocation)
     {
 
         $this->pharLocation = $pharLocation;
@@ -243,15 +243,15 @@ class PHPCPDTask extends Task
 
         $this->loadDependencies();
 
-        if (!isset( $this->file ) && count( $this->filesets ) == 0) {
-            throw new BuildException( 'Missing either a nested fileset or attribute "file" set' );
+        if (!isset( $this->file ) && count($this->filesets) == 0) {
+            throw new BuildException('Missing either a nested fileset or attribute "file" set');
         }
 
-        if (count( $this->formatters ) == 0) {
+        if (count($this->formatters) == 0) {
             // turn legacy format attribute into formatter
-            $fmt = new PHPCPDFormatterElement( $this );
-            $fmt->setType( $this->format );
-            $fmt->setUseFile( false );
+            $fmt = new PHPCPDFormatterElement($this);
+            $fmt->setType($this->format);
+            $fmt->setUseFile(false);
 
             $this->formatters[] = $fmt;
         }
@@ -265,16 +265,16 @@ class PHPCPDTask extends Task
         } else {
             // append any files in filesets
             foreach ($this->filesets as $fs) {
-                $files = $fs->getDirectoryScanner( $this->project )->getIncludedFiles();
+                $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
 
                 foreach ($files as $filename) {
-                    $f = new PhingFile( $fs->getDir( $this->project ), $filename );
+                    $f = new PhingFile($fs->getDir($this->project), $filename);
                     $filesToParse[] = $f->getAbsolutePath();
                 }
             }
         }
 
-        $this->log( 'Processing files...' );
+        $this->log('Processing files...');
 
         if ($this->oldVersion) {
             $detectorClass = 'PHPCPD_Detector';
@@ -284,7 +284,7 @@ class PHPCPDTask extends Task
             $strategyClass = '\\SebastianBergmann\\PHPCPD\\Detector\\Strategy\\DefaultStrategy';
         }
 
-        $detector = new $detectorClass( new $strategyClass() );
+        $detector = new $detectorClass(new $strategyClass());
         $clones = $detector->copyPasteDetection(
             $filesToParse,
             $this->minLines,
@@ -292,7 +292,7 @@ class PHPCPDTask extends Task
             $this->fuzzy
         );
 
-        $this->log( 'Finished copy/paste detection' );
+        $this->log('Finished copy/paste detection');
 
         foreach ($this->formatters as $fe) {
             $formatter = $fe->getFormatter();
@@ -323,31 +323,31 @@ class Application
             include $this->pharLocation;
             ob_end_clean();
 
-            if (class_exists( '\\SebastianBergmann\\PHPCPD\\Detector\\Strategy\\DefaultStrategy' )) {
+            if (class_exists('\\SebastianBergmann\\PHPCPD\\Detector\\Strategy\\DefaultStrategy')) {
                 return;
             }
         }
 
-        if (class_exists( 'Composer\\Autoload\\ClassLoader', false ) && class_exists(
+        if (class_exists('Composer\\Autoload\\ClassLoader', false) && class_exists(
                 '\\SebastianBergmann\\PHPCPD\\Detector\\Strategy\\DefaultStrategy'
             )
         ) {
             return;
         }
 
-        if ($handler = @fopen( 'SebastianBergmann/PHPCPD/autoload.php', 'r', true )) {
-            fclose( $handler );
+        if ($handler = @fopen('SebastianBergmann/PHPCPD/autoload.php', 'r', true)) {
+            fclose($handler);
             @include_once 'SebastianBergmann/PHPCPD/autoload.php';
 
-            if (version_compare( PHP_VERSION, '5.3.0' ) < 0) {
-                throw new BuildException( 'The PHPCPD task now requires PHP 5.3+' );
+            if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+                throw new BuildException('The PHPCPD task now requires PHP 5.3+');
             }
 
             return;
         }
 
-        if ($handler = @fopen( 'PHPCPD/Autoload.php', 'r', true )) {
-            fclose( $handler );
+        if ($handler = @fopen('PHPCPD/Autoload.php', 'r', true)) {
+            fclose($handler);
             @include_once 'PHPCPD/Autoload.php';
 
             $this->oldVersion = true;
@@ -371,11 +371,11 @@ class Application
 
         foreach ($this->formatters as $fe) {
             if ($fe->getType() == '') {
-                throw new BuildException( 'Formatter missing required "type" attribute.' );
+                throw new BuildException('Formatter missing required "type" attribute.');
             }
 
             if ($fe->getUsefile() && $fe->getOutfile() === null) {
-                throw new BuildException( 'Formatter requires "outfile" attribute when "useFile" is true.' );
+                throw new BuildException('Formatter requires "outfile" attribute when "useFile" is true.');
             }
         }
     }

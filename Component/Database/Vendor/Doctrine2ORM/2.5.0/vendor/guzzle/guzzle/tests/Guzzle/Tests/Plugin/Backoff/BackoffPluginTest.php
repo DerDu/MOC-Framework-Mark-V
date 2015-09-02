@@ -4,7 +4,6 @@ namespace Guzzle\Tests\Plugin\Backoff;
 
 use Guzzle\Common\Event;
 use Guzzle\Http\Client;
-use Guzzle\Http\Curl\CurlMulti;
 use Guzzle\Http\Curl\CurlMultiInterface;
 use Guzzle\Http\Exception\CurlException;
 use Guzzle\Http\Message\EntityEnclosingRequest;

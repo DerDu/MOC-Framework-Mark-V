@@ -38,13 +38,13 @@ class DocBlox_Parallel_WorkerPipe
      *
      * @param DocBlox_Parallel_Worker $worker Associated worker.
      */
-    public function __construct( DocBlox_Parallel_Worker $worker )
+    public function __construct(DocBlox_Parallel_Worker $worker)
     {
 
         $this->worker = $worker;
 
-        $this->path = tempnam( sys_get_temp_dir(), 'dpm_' );
-        posix_mkfifo( $this->path, 0750 );
+        $this->path = tempnam(sys_get_temp_dir(), 'dpm_');
+        posix_mkfifo($this->path, 0750);
     }
 
     /**
@@ -53,7 +53,7 @@ class DocBlox_Parallel_WorkerPipe
     public function __destruct()
     {
 
-        if (file_exists( $this->path )) {
+        if (file_exists($this->path)) {
             $this->release();
         }
     }
@@ -66,7 +66,7 @@ class DocBlox_Parallel_WorkerPipe
     protected function release()
     {
 
-        unlink( $this->path );
+        unlink($this->path);
     }
 
     /**
@@ -89,7 +89,7 @@ class DocBlox_Parallel_WorkerPipe
     {
 
         // push the gathered data onto a name pipe
-        $pipe = fopen( $this->path, 'w' );
+        $pipe = fopen($this->path, 'w');
         fwrite(
             $pipe,
             serialize(
@@ -100,7 +100,7 @@ class DocBlox_Parallel_WorkerPipe
                 )
             )
         );
-        fclose( $pipe );
+        fclose($pipe);
     }
 
     /**
@@ -114,9 +114,9 @@ class DocBlox_Parallel_WorkerPipe
         list( $result, $error, $return_code ) = $this->readPipeContents();
         $this->release();
 
-        $this->worker->setResult( $result );
-        $this->worker->setError( $error );
-        $this->worker->setReturnCode( $return_code );
+        $this->worker->setResult($result);
+        $this->worker->setError($error);
+        $this->worker->setReturnCode($return_code);
     }
 
     /**
@@ -127,9 +127,9 @@ class DocBlox_Parallel_WorkerPipe
     protected function readPipeContents()
     {
 
-        $pipe = fopen( $this->path, 'r+' );
-        $result = unserialize( fread( $pipe, filesize( $this->path ) ) );
-        fclose( $pipe );
+        $pipe = fopen($this->path, 'r+');
+        $result = unserialize(fread($pipe, filesize($this->path)));
+        fclose($pipe);
 
         return $result;
     }

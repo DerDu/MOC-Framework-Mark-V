@@ -34,10 +34,10 @@ class DirSet extends AbstractFileSet
     /**
      * @param null $dirset
      */
-    public function __construct( $dirset = null )
+    public function __construct($dirset = null)
     {
 
-        parent::__construct( $dirset );
+        parent::__construct($dirset);
     }
 
     /**
@@ -48,9 +48,9 @@ class DirSet extends AbstractFileSet
     {
 
         if ($this->isReference()) {
-            return new DirSet( $this->getRef( $this->getProject() ) );
+            return new DirSet($this->getRef($this->getProject()));
         } else {
-            return new DirSet( $this );
+            return new DirSet($this);
         }
     }
 

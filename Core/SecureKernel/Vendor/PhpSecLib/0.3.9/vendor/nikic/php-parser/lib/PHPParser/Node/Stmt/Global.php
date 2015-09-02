@@ -12,7 +12,7 @@ class PHPParser_Node_Stmt_Global extends PHPParser_Node_Stmt
      * @param PHPParser_Node_Expr[] $vars       Variables to unset
      * @param array                 $attributes Additional attributes
      */
-    public function __construct( array $vars, array $attributes = array() )
+    public function __construct(array $vars, array $attributes = array())
     {
 
         parent::__construct(

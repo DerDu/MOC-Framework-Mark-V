@@ -215,8 +215,8 @@ class File_ANSI
     function File_ANSI()
     {
 
-        $this->setHistory( 200 );
-        $this->setDimensions( 80, 24 );
+        $this->setHistory(200);
+        $this->setDimensions(80, 24);
     }
 
     /**
@@ -229,16 +229,16 @@ class File_ANSI
      *
      * @access public
      */
-    function setDimensions( $x, $y )
+    function setDimensions($x, $y)
     {
 
         $this->max_x = $x - 1;
         $this->max_y = $y - 1;
         $this->x = $this->y = 0;
         $this->history = $this->history_attrs = array();
-        $this->attr_row = array_fill( 0, $this->max_x + 1, '' );
-        $this->screen = array_fill( 0, $this->max_y + 1, '' );
-        $this->attrs = array_fill( 0, $this->max_y + 1, $this->attr_row );
+        $this->attr_row = array_fill(0, $this->max_x + 1, '');
+        $this->screen = array_fill(0, $this->max_y + 1, '');
+        $this->attrs = array_fill(0, $this->max_y + 1, $this->attr_row);
         $this->foreground = 'white';
         $this->background = 'black';
         $this->bold = false;
@@ -257,11 +257,11 @@ class File_ANSI
      *
      * @access public
      */
-    function loadString( $source )
+    function loadString($source)
     {
 
-        $this->setDimensions( $this->max_x + 1, $this->max_y + 1 );
-        $this->appendString( $source );
+        $this->setDimensions($this->max_x + 1, $this->max_y + 1);
+        $this->appendString($source);
     }
 
     /**
@@ -271,21 +271,21 @@ class File_ANSI
      *
      * @access public
      */
-    function appendString( $source )
+    function appendString($source)
     {
 
-        for ($i = 0; $i < strlen( $source ); $i++) {
-            if (strlen( $this->ansi )) {
+        for ($i = 0; $i < strlen($source); $i++) {
+            if (strlen($this->ansi)) {
                 $this->ansi .= $source[$i];
-                $chr = ord( $source[$i] );
+                $chr = ord($source[$i]);
                 // http://en.wikipedia.org/wiki/ANSI_escape_code#Sequence_elements
                 // single character CSI's not currently supported
                 switch (true) {
                     case $this->ansi == "\x1B=":
                         $this->ansi = '';
                         continue 2;
-                    case strlen( $this->ansi ) == 2 && $chr >= 64 && $chr <= 95 && $chr != ord( '[' ):
-                    case strlen( $this->ansi ) > 2 && $chr >= 64 && $chr <= 126:
+                    case strlen($this->ansi) == 2 && $chr >= 64 && $chr <= 95 && $chr != ord('['):
+                    case strlen($this->ansi) > 2 && $chr >= 64 && $chr <= 126:
                         break;
                     default:
                         continue 2;
@@ -298,26 +298,26 @@ class File_ANSI
                         $this->x = $this->y = 0;
                         break;
                     case "\x1B[J": // Clear screen from cursor down
-                        $this->history = array_merge( $this->history,
-                            array_slice( array_splice( $this->screen, $this->y + 1 ), 0, $this->old_y ) );
-                        $this->screen = array_merge( $this->screen, array_fill( $this->y, $this->max_y, '' ) );
+                        $this->history = array_merge($this->history,
+                            array_slice(array_splice($this->screen, $this->y + 1), 0, $this->old_y));
+                        $this->screen = array_merge($this->screen, array_fill($this->y, $this->max_y, ''));
 
-                        $this->history_attrs = array_merge( $this->history_attrs,
-                            array_slice( array_splice( $this->attrs, $this->y + 1 ), 0, $this->old_y ) );
-                        $this->attrs = array_merge( $this->attrs,
-                            array_fill( $this->y, $this->max_y, $this->attr_row ) );
+                        $this->history_attrs = array_merge($this->history_attrs,
+                            array_slice(array_splice($this->attrs, $this->y + 1), 0, $this->old_y));
+                        $this->attrs = array_merge($this->attrs,
+                            array_fill($this->y, $this->max_y, $this->attr_row));
 
-                        if (count( $this->history ) == $this->max_history) {
-                            array_shift( $this->history );
-                            array_shift( $this->history_attrs );
+                        if (count($this->history) == $this->max_history) {
+                            array_shift($this->history);
+                            array_shift($this->history_attrs);
                         }
                     case "\x1B[K": // Clear screen from cursor right
-                        $this->screen[$this->y] = substr( $this->screen[$this->y], 0, $this->x );
+                        $this->screen[$this->y] = substr($this->screen[$this->y], 0, $this->x);
 
-                        array_splice( $this->attrs[$this->y], $this->x + 1 );
+                        array_splice($this->attrs[$this->y], $this->x + 1);
                         break;
                     case "\x1B[2K": // Clear entire line
-                        $this->screen[$this->y] = str_repeat( ' ', $this->x );
+                        $this->screen[$this->y] = str_repeat(' ', $this->x);
                         $this->attrs[$this->y] = $this->attr_row;
                         break;
                     case "\x1B[?1h": // set cursor key to application
@@ -329,22 +329,22 @@ class File_ANSI
                         break;
                     default:
                         switch (true) {
-                            case preg_match( '#\x1B\[(\d+);(\d+)H#', $this->ansi,
-                                $match ): // Move cursor to screen location v,h
+                            case preg_match('#\x1B\[(\d+);(\d+)H#', $this->ansi,
+                                $match): // Move cursor to screen location v,h
                                 $this->old_x = $this->x;
                                 $this->old_y = $this->y;
                                 $this->x = $match[2] - 1;
                                 $this->y = $match[1] - 1;
                                 break;
-                            case preg_match( '#\x1B\[(\d+)C#', $this->ansi, $match ): // Move cursor right n lines
+                            case preg_match('#\x1B\[(\d+)C#', $this->ansi, $match): // Move cursor right n lines
                                 $this->old_x = $this->x;
                                 $x = $match[1] - 1;
                                 break;
-                            case preg_match( '#\x1B\[(\d+);(\d+)r#', $this->ansi,
-                                $match ): // Set top and bottom lines of a window
+                            case preg_match('#\x1B\[(\d+);(\d+)r#', $this->ansi,
+                                $match): // Set top and bottom lines of a window
                                 break;
-                            case preg_match( '#\x1B\[(\d*(?:;\d*)*)m#', $this->ansi, $match ): // character attributes
-                                $mods = explode( ';', $match[1] );
+                            case preg_match('#\x1B\[(\d*(?:;\d*)*)m#', $this->ansi, $match): // character attributes
+                                $mods = explode(';', $match[1]);
                                 foreach ($mods as $mod) {
                                     switch ($mod) {
                                         case 0: // Turn off character attributes
@@ -457,7 +457,7 @@ class File_ANSI
                                                     break;
 
                                                 default:
-                                                    user_error( 'Unsupported attribute: '.$mod );
+                                                    user_error('Unsupported attribute: '.$mod);
                                                     $this->ansi = '';
                                                     break 2;
                                             }
@@ -472,7 +472,7 @@ class File_ANSI
                                 }
                                 break;
                             default:
-                                user_error( "{$this->ansi} unsupported\r\n" );
+                                user_error("{$this->ansi} unsupported\r\n");
                         }
                 }
                 $this->ansi = '';
@@ -524,15 +524,15 @@ class File_ANSI
         //}
 
         while ($this->y >= $this->max_y) {
-            $this->history = array_merge( $this->history, array( array_shift( $this->screen ) ) );
+            $this->history = array_merge($this->history, array(array_shift($this->screen)));
             $this->screen[] = '';
 
-            $this->history_attrs = array_merge( $this->history_attrs, array( array_shift( $this->attrs ) ) );
+            $this->history_attrs = array_merge($this->history_attrs, array(array_shift($this->attrs)));
             $this->attrs[] = $this->attr_row;
 
-            if (count( $this->history ) >= $this->max_history) {
-                array_shift( $this->history );
-                array_shift( $this->history_attrs );
+            if (count($this->history) >= $this->max_history) {
+                array_shift($this->history);
+                array_shift($this->history_attrs);
             }
 
             $this->y--;
@@ -550,13 +550,13 @@ class File_ANSI
     {
 
         $scrollback = '';
-        for ($i = 0; $i < count( $this->history ); $i++) {
+        for ($i = 0; $i < count($this->history); $i++) {
             for ($j = 0; $j <= $this->max_x + 1; $j++) {
                 if (isset( $this->history_attrs[$i][$j] )) {
                     $scrollback .= $this->history_attrs[$i][$j];
                 }
                 if (isset( $this->history[$i][$j] )) {
-                    $scrollback .= htmlspecialchars( $this->history[$i][$j] );
+                    $scrollback .= htmlspecialchars($this->history[$i][$j]);
                 }
             }
             $scrollback .= "\r\n";
@@ -574,7 +574,7 @@ class File_ANSI
      *
      * @access public
      */
-    function setHistory( $history )
+    function setHistory($history)
     {
 
         $this->max_history = $history;
@@ -596,12 +596,12 @@ class File_ANSI
                     $output .= $this->attrs[$i][$j];
                 }
                 if (isset( $this->screen[$i][$j] )) {
-                    $output .= htmlspecialchars( $this->screen[$i][$j] );
+                    $output .= htmlspecialchars($this->screen[$i][$j]);
                 }
             }
             $output .= "\r\n";
         }
-        return rtrim( $output );
+        return rtrim($output);
     }
 
     /**

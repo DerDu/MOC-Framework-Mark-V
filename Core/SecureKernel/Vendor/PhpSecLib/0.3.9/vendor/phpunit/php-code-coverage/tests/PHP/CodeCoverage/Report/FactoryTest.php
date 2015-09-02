@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-if (!defined( 'TEST_FILES_PATH' )) {
+if (!defined('TEST_FILES_PATH')) {
     define(
     'TEST_FILES_PATH',
-        dirname( dirname( dirname( dirname( __FILE__ ) ) ) ).DIRECTORY_SEPARATOR.
+        dirname(dirname(dirname(dirname(__FILE__)))).DIRECTORY_SEPARATOR.
         '_files'.DIRECTORY_SEPARATOR
     );
 }
@@ -33,22 +33,22 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
 
         $root = $this->getCoverageForBankAccount()->getReport();
 
-        $expectedPath = rtrim( TEST_FILES_PATH, DIRECTORY_SEPARATOR );
-        $this->assertEquals( $expectedPath, $root->getName() );
-        $this->assertEquals( $expectedPath, $root->getPath() );
-        $this->assertEquals( 10, $root->getNumExecutableLines() );
-        $this->assertEquals( 5, $root->getNumExecutedLines() );
-        $this->assertEquals( 1, $root->getNumClasses() );
-        $this->assertEquals( 0, $root->getNumTestedClasses() );
-        $this->assertEquals( 4, $root->getNumMethods() );
-        $this->assertEquals( 3, $root->getNumTestedMethods() );
-        $this->assertEquals( '0.00%', $root->getTestedClassesPercent() );
-        $this->assertEquals( '75.00%', $root->getTestedMethodsPercent() );
-        $this->assertEquals( '50.00%', $root->getLineExecutedPercent() );
-        $this->assertEquals( 0, $root->getNumFunctions() );
-        $this->assertEquals( 0, $root->getNumTestedFunctions() );
-        $this->assertNull( $root->getParent() );
-        $this->assertEquals( array(), $root->getDirectories() );
+        $expectedPath = rtrim(TEST_FILES_PATH, DIRECTORY_SEPARATOR);
+        $this->assertEquals($expectedPath, $root->getName());
+        $this->assertEquals($expectedPath, $root->getPath());
+        $this->assertEquals(10, $root->getNumExecutableLines());
+        $this->assertEquals(5, $root->getNumExecutedLines());
+        $this->assertEquals(1, $root->getNumClasses());
+        $this->assertEquals(0, $root->getNumTestedClasses());
+        $this->assertEquals(4, $root->getNumMethods());
+        $this->assertEquals(3, $root->getNumTestedMethods());
+        $this->assertEquals('0.00%', $root->getTestedClassesPercent());
+        $this->assertEquals('75.00%', $root->getTestedMethodsPercent());
+        $this->assertEquals('50.00%', $root->getLineExecutedPercent());
+        $this->assertEquals(0, $root->getNumFunctions());
+        $this->assertEquals(0, $root->getNumTestedFunctions());
+        $this->assertNull($root->getParent());
+        $this->assertEquals(array(), $root->getDirectories());
         #$this->assertEquals(array(), $root->getFiles());
         #$this->assertEquals(array(), $root->getChildNodes());
 
@@ -125,7 +125,7 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
             $root->getClasses()
         );
 
-        $this->assertEquals( array(), $root->getFunctions() );
+        $this->assertEquals(array(), $root->getFunctions());
     }
 
     /**
@@ -139,7 +139,7 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
             'buildDirectoryStructure'
         );
 
-        $method->setAccessible( true );
+        $method->setAccessible(true);
 
         $this->assertEquals(
             array(
@@ -150,7 +150,7 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
             ),
             $method->invoke(
                 $this->factory,
-                array( 'src/Money.php' => array(), 'src/MoneyBag.php' => array() )
+                array('src/Money.php' => array(), 'src/MoneyBag.php' => array())
             )
         );
     }
@@ -159,7 +159,7 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
      * @covers       PHP_CodeCoverage_Report_Factory::reducePaths
      * @dataProvider reducePathsProvider
      */
-    public function testReducePaths( $reducedPaths, $commonPath, $paths )
+    public function testReducePaths($reducedPaths, $commonPath, $paths)
     {
 
         $method = new ReflectionMethod(
@@ -167,12 +167,12 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
             'reducePaths'
         );
 
-        $method->setAccessible( true );
+        $method->setAccessible(true);
 
-        $_commonPath = $method->invokeArgs( $this->factory, array( &$paths ) );
+        $_commonPath = $method->invokeArgs($this->factory, array(&$paths));
 
-        $this->assertEquals( $reducedPaths, $paths );
-        $this->assertEquals( $commonPath, $_commonPath );
+        $this->assertEquals($reducedPaths, $paths);
+        $this->assertEquals($commonPath, $_commonPath);
     }
 
     public function reducePathsProvider()

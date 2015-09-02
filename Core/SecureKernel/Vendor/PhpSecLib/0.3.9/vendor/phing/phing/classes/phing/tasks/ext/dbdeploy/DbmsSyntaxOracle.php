@@ -32,10 +32,10 @@ class DbmsSyntaxOracle extends DbmsSyntax
     /**
      * @param $db
      */
-    public function applyAttributes( $db )
+    public function applyAttributes($db)
     {
 
-        $db->setAttribute( PDO::ATTR_CASE, PDO::CASE_LOWER );
+        $db->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
     }
 
     /**

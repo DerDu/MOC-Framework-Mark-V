@@ -3,7 +3,6 @@
 namespace Guzzle\Tests\Service\Description;
 
 use Guzzle\Service\Description\ServiceDescription;
-use Guzzle\Service\Description\ServiceDescriptionLoader;
 
 /**
  * @covers Guzzle\Service\Description\ServiceDescriptionLoader

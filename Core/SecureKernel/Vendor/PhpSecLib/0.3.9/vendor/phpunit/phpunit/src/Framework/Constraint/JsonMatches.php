@@ -26,7 +26,7 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      *
      * @param string $value
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
 
         parent::__construct();
@@ -57,15 +57,15 @@ class PHPUnit_Framework_Constraint_JsonMatches extends PHPUnit_Framework_Constra
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        $decodedOther = json_decode( $other );
+        $decodedOther = json_decode($other);
         if (json_last_error()) {
             return false;
         }
 
-        $decodedValue = json_decode( $this->value );
+        $decodedValue = json_decode($this->value);
         if (json_last_error()) {
             return false;
         }

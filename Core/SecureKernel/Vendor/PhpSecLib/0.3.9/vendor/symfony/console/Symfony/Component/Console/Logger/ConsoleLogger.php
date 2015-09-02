@@ -79,11 +79,11 @@ class ConsoleLogger extends AbstractLogger
     /**
      * {@inheritdoc}
      */
-    public function log( $level, $message, array $context = array() )
+    public function log($level, $message, array $context = array())
     {
 
         if (!isset( $this->verbosityLevelMap[$level] )) {
-            throw new InvalidArgumentException( sprintf( 'The log level "%s" does not exist.', $level ) );
+            throw new InvalidArgumentException(sprintf('The log level "%s" does not exist.', $level));
         }
 
         // Write to the error output if necessary and available
@@ -94,8 +94,8 @@ class ConsoleLogger extends AbstractLogger
         }
 
         if ($output->getVerbosity() >= $this->verbosityLevelMap[$level]) {
-            $output->writeln( sprintf( '<%1$s>[%2$s] %3$s</%1$s>', $this->formatLevelMap[$level], $level,
-                $this->interpolate( $message, $context ) ) );
+            $output->writeln(sprintf('<%1$s>[%2$s] %3$s</%1$s>', $this->formatLevelMap[$level], $level,
+                $this->interpolate($message, $context)));
         }
     }
 
@@ -109,18 +109,18 @@ class ConsoleLogger extends AbstractLogger
      *
      * @return string
      */
-    private function interpolate( $message, array $context )
+    private function interpolate($message, array $context)
     {
 
         // build a replacement array with braces around the context keys
         $replace = array();
         foreach ($context as $key => $val) {
-            if (!is_array( $val ) && ( !is_object( $val ) || method_exists( $val, '__toString' ) )) {
-                $replace[sprintf( '{%s}', $key )] = $val;
+            if (!is_array($val) && ( !is_object($val) || method_exists($val, '__toString') )) {
+                $replace[sprintf('{%s}', $key)] = $val;
             }
         }
 
         // interpolate replacement values into the message and return
-        return strtr( $message, $replace );
+        return strtr($message, $replace);
     }
 }

@@ -54,10 +54,10 @@ abstract class zsdtBaseTask extends Task
      *
      * @return void
      */
-    public function setDescriptor( $descriptor )
+    public function setDescriptor($descriptor)
     {
 
-        $this->descriptor = escapeshellarg( $descriptor );
+        $this->descriptor = escapeshellarg($descriptor);
     }
 
     /**
@@ -67,10 +67,10 @@ abstract class zsdtBaseTask extends Task
      *
      * @return void
      */
-    public function setSchema( $schema )
+    public function setSchema($schema)
     {
 
-        $this->schema = escapeshellarg( $schema );
+        $this->schema = escapeshellarg($schema);
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class zsdtBaseTask extends Task
      *
      * @return void
      */
-    public function setPath( $path )
+    public function setPath($path)
     {
 
         $this->path['USR'] = $path;
@@ -95,17 +95,17 @@ abstract class zsdtBaseTask extends Task
         $command = '';
         if ($this->path['USR'] !== '') {
             $command .= $this->path['USR'];
-        } elseif (strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN') {
-            $command .= escapeshellarg( $this->path['WIN'] );
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $command .= escapeshellarg($this->path['WIN']);
         } else {
             $command .= $this->path['NIX'];
         }
 
-        $commandString = sprintf( '%s %s %s', $command, $this->action, $this->arguments );
-        $msg = exec( $commandString.' 2>&1', $output, $code );
+        $commandString = sprintf('%s %s %s', $command, $this->action, $this->arguments);
+        $msg = exec($commandString.' 2>&1', $output, $code);
 
         if ($code !== 0) {
-            throw new BuildException( "Build package failed. \n Msg: ".$msg." \n Pack command: ".$commandString );
+            throw new BuildException("Build package failed. \n Msg: ".$msg." \n Pack command: ".$commandString);
         }
     }
 

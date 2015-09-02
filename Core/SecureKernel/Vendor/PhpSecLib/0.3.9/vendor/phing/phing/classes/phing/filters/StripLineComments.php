@@ -72,29 +72,29 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
      *               if the end of the resulting stream has been reached.
      *
      */
-    public function read( $len = null )
+    public function read($len = null)
     {
 
         if (!$this->getInitialized()) {
             $this->_initialize();
-            $this->setInitialized( true );
+            $this->setInitialized(true);
         }
 
-        $buffer = $this->in->read( $len );
+        $buffer = $this->in->read($len);
 
         if ($buffer === -1) {
             return -1;
         }
 
-        $lines = explode( "\n", $buffer );
+        $lines = explode("\n", $buffer);
         $filtered = array();
 
-        $commentsSize = count( $this->_comments );
+        $commentsSize = count($this->_comments);
 
         foreach ($lines as $line) {
             for ($i = 0; $i < $commentsSize; $i++) {
                 $comment = $this->_comments[$i]->getValue();
-                if (StringHelper::startsWith( $comment, ltrim( $line ) )) {
+                if (StringHelper::startsWith($comment, ltrim($line))) {
                     $line = null;
                     break;
                 }
@@ -104,7 +104,7 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
             }
         }
 
-        $filtered_buffer = implode( "\n", $filtered );
+        $filtered_buffer = implode("\n", $filtered);
 
         return $filtered_buffer;
     }
@@ -121,11 +121,11 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
 
         $params = $this->getParameters();
         if ($params !== null) {
-            for ($i = 0; $i < count( $params ); $i++) {
+            for ($i = 0; $i < count($params); $i++) {
                 if (self::COMMENTS_KEY === $params[$i]->getType()) {
                     $comment = new Comment();
-                    $comment->setValue( $params[$i]->getValue() );
-                    array_push( $this->_comments, $comment );
+                    $comment->setValue($params[$i]->getValue());
+                    array_push($this->_comments, $comment);
                 }
             }
         }
@@ -141,7 +141,7 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
     public function createComment()
     {
 
-        $num = array_push( $this->_comments, new Comment() );
+        $num = array_push($this->_comments, new Comment());
 
         return $this->_comments[$num - 1];
     }
@@ -158,13 +158,13 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
      * @return StripLineComments
      * @throws Exception
      */
-    public function chain( Reader $reader )
+    public function chain(Reader $reader)
     {
 
-        $newFilter = new StripLineComments( $reader );
-        $newFilter->setComments( $this->getComments() );
-        $newFilter->setInitialized( true );
-        $newFilter->setProject( $this->getProject() );
+        $newFilter = new StripLineComments($reader);
+        $newFilter->setComments($this->getComments());
+        $newFilter->setInitialized(true);
+        $newFilter->setProject($this->getProject());
 
         return $newFilter;
     }
@@ -198,11 +198,11 @@ class StripLineComments extends BaseParamFilterReader implements ChainableReader
      *
      * @throws Exception
      */
-    public function setComments( $lineBreaks )
+    public function setComments($lineBreaks)
     {
 
-        if (!is_array( $lineBreaks )) {
-            throw new Exception( "Excpected 'array', got something else" );
+        if (!is_array($lineBreaks)) {
+            throw new Exception("Excpected 'array', got something else");
         }
         $this->_comments = $lineBreaks;
     }
@@ -241,7 +241,7 @@ class Comment
     /**
      * @param $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->_value = (string)$value;

@@ -104,59 +104,59 @@ class GitBranchTask extends GitBaseTask
     {
 
         if (null === $this->getRepository()) {
-            throw new BuildException( '"repository" is required parameter' );
+            throw new BuildException('"repository" is required parameter');
         }
         if (null === $this->getBranchname()) {
-            throw new BuildException( '"branchname" is required parameter' );
+            throw new BuildException('"branchname" is required parameter');
         }
 
         // if we are moving branch, we need to know new name
         if ($this->isMove() || $this->isForceMove()) {
             if (null === $this->getNewbranch()) {
-                throw new BuildException( '"newbranch" is required parameter' );
+                throw new BuildException('"newbranch" is required parameter');
             }
         }
 
-        $client = $this->getGitClient( false, $this->getRepository() );
-        $command = $client->getCommand( 'branch' );
+        $client = $this->getGitClient(false, $this->getRepository());
+        $command = $client->getCommand('branch');
         $command
-            ->setOption( 'set-upstream', $this->isSetUpstream() )
-            ->setOption( 'no-track', $this->isNoTrack() )
-            ->setOption( 'force', $this->isForce() );
+            ->setOption('set-upstream', $this->isSetUpstream())
+            ->setOption('no-track', $this->isNoTrack())
+            ->setOption('force', $this->isForce());
         if ($this->isNoTrack() == false) {
-            $command->setOption( 'track', $this->getTrack() );
+            $command->setOption('track', $this->getTrack());
         }
 
         // check extra options (delete, move)
         foreach ($this->extraOptions as $option => $flag) {
             if ($flag) {
-                $command->setOption( $option, true );
+                $command->setOption($option, true);
             }
         }
 
-        $command->addArgument( $this->getBranchname() );
+        $command->addArgument($this->getBranchname());
 
         if (null !== $this->getStartPoint()) {
-            $command->addArgument( $this->getStartPoint() );
+            $command->addArgument($this->getStartPoint());
         }
 
         if (null !== $this->getNewbranch()) {
-            $command->addArgument( $this->getNewbranch() );
+            $command->addArgument($this->getNewbranch());
         }
 
-        $this->log( 'git-branch command: '.$command->createCommandString(), Project::MSG_INFO );
+        $this->log('git-branch command: '.$command->createCommandString(), Project::MSG_INFO);
 
         try {
             $output = $command->execute();
-        } catch( Exception $e ) {
-            throw new BuildException( 'Task execution failed.', $e );
+        } catch (Exception $e) {
+            throw new BuildException('Task execution failed.', $e);
         }
 
         $this->log(
-            sprintf( 'git-branch: branch "%s" repository', $this->getRepository() ),
+            sprintf('git-branch: branch "%s" repository', $this->getRepository()),
             Project::MSG_INFO
         );
-        $this->log( 'git-branch output: '.trim( $output ), Project::MSG_INFO );
+        $this->log('git-branch output: '.trim($output), Project::MSG_INFO);
     }
 
     /**
@@ -171,7 +171,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $branchname
      */
-    public function setBranchname( $branchname )
+    public function setBranchname($branchname)
     {
 
         $this->branchname = $branchname;
@@ -213,7 +213,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $name
      */
-    public function setNewBranch( $name )
+    public function setNewBranch($name)
     {
 
         $this->newbranch = $name;
@@ -240,7 +240,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setTrack( $flag )
+    public function setTrack($flag)
     {
 
         $this->track = $flag;
@@ -258,7 +258,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $startPoint
      */
-    public function setStartPoint( $startPoint )
+    public function setStartPoint($startPoint)
     {
 
         $this->startPoint = $startPoint;
@@ -285,7 +285,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setSetUpstream( $flag )
+    public function setSetUpstream($flag)
     {
 
         $this->setUpstream = $flag;
@@ -312,7 +312,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setNoTrack( $flag )
+    public function setNoTrack($flag)
     {
 
         $this->noTrack = $flag;
@@ -339,7 +339,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForce( $flag )
+    public function setForce($flag)
     {
 
         $this->force = $flag;
@@ -348,7 +348,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setDelete( $flag )
+    public function setDelete($flag)
     {
 
         $this->extraOptions['d'] = $flag;
@@ -369,7 +369,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForceDelete( $flag )
+    public function setForceDelete($flag)
     {
 
         $this->extraOptions['D'] = $flag;
@@ -384,7 +384,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setMove( $flag )
+    public function setMove($flag)
     {
 
         $this->extraOptions['m'] = $flag;
@@ -393,7 +393,7 @@ class GitBranchTask extends GitBaseTask
     /**
      * @param $flag
      */
-    public function setForceMove( $flag )
+    public function setForceMove($flag)
     {
 
         $this->extraOptions['M'] = $flag;

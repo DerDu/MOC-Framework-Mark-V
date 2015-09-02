@@ -70,7 +70,7 @@ class JsMinTask extends Task
      *
      * @return void
      */
-    public function addFileSet( FileSet $fs )
+    public function addFileSet(FileSet $fs)
     {
 
         $this->filesets[] = $fs;
@@ -81,7 +81,7 @@ class JsMinTask extends Task
      *
      * @param boolean $value
      */
-    public function setFailonerror( $value )
+    public function setFailonerror($value)
     {
 
         $this->failonerror = $value;
@@ -92,7 +92,7 @@ class JsMinTask extends Task
      *
      * @param string $value
      */
-    public function setSuffix( $value )
+    public function setSuffix($value)
     {
 
         $this->suffix = $value;
@@ -103,7 +103,7 @@ class JsMinTask extends Task
      *
      * @param string $targetDir
      */
-    public function setTargetDir( $targetDir )
+    public function setTargetDir($targetDir)
     {
 
         $this->targetDir = $targetDir;
@@ -126,30 +126,30 @@ class JsMinTask extends Task
 
         // if composer autoloader is not yet loaded, load it here
         @include_once 'vendor/autoload.php';
-        if (!class_exists( '\\JShrink\\Minifier' )) {
+        if (!class_exists('\\JShrink\\Minifier')) {
             throw new BuildException(
                 'JsMinTask depends on JShrink being installed and on include_path.',
                 $this->getLocation()
             );
         }
 
-        if (version_compare( PHP_VERSION, '5.3.0' ) < 0) {
-            throw new BuildException( 'JsMinTask requires PHP 5.3+' );
+        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+            throw new BuildException('JsMinTask requires PHP 5.3+');
         }
 
         if (empty( $this->targetDir )) {
-            throw new BuildException( 'Attribute "targetDir" is required' );
+            throw new BuildException('Attribute "targetDir" is required');
         }
 
         foreach ($this->filesets as $fs) {
             try {
-                $this->processFileSet( $fs );
-            } catch( BuildException $be ) {
+                $this->processFileSet($fs);
+            } catch (BuildException $be) {
                 // directory doesn't exist or is not readable
                 if ($this->failonerror) {
                     throw $be;
                 } else {
-                    $this->log( $be->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN );
+                    $this->log($be->getMessage(), $this->quiet ? Project::MSG_VERBOSE : Project::MSG_WARN);
                 }
             }
         }
@@ -160,31 +160,31 @@ class JsMinTask extends Task
      *
      * @throws BuildException
      */
-    protected function processFileSet( FileSet $fs )
+    protected function processFileSet(FileSet $fs)
     {
 
-        $files = $fs->getDirectoryScanner( $this->project )->getIncludedFiles();
-        $fullPath = realpath( $fs->getDir( $this->project ) );
+        $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
+        $fullPath = realpath($fs->getDir($this->project));
         foreach ($files as $file) {
-            $this->log( 'Minifying file '.$file );
+            $this->log('Minifying file '.$file);
             try {
                 $target = $this->targetDir.'/'.str_replace(
                         $fullPath,
                         '',
-                        str_replace( '.js', $this->suffix.'.js', $file )
+                        str_replace('.js', $this->suffix.'.js', $file)
                     );
-                if (file_exists( dirname( $target ) ) === false) {
-                    mkdir( dirname( $target ), 0777 - umask(), true );
+                if (file_exists(dirname($target)) === false) {
+                    mkdir(dirname($target), 0777 - umask(), true);
                 }
 
-                $contents = file_get_contents( $fullPath.'/'.$file );
+                $contents = file_get_contents($fullPath.'/'.$file);
 
                 // nasty hack to not trip PHP 5.2 parser
-                $minified = forward_static_call( array( '\\JShrink\\Minifier', 'minify' ), $contents );
+                $minified = forward_static_call(array('\\JShrink\\Minifier', 'minify'), $contents);
 
-                file_put_contents( $target, $minified );
-            } catch( Exception $jsme ) {
-                $this->log( "Could not minify file $file: ".$jsme->getMessage(), Project::MSG_ERR );
+                file_put_contents($target, $minified);
+            } catch (Exception $jsme) {
+                $this->log("Could not minify file $file: ".$jsme->getMessage(), Project::MSG_ERR);
             }
         }
     }

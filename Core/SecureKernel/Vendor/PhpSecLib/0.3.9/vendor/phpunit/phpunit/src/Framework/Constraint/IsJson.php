@@ -35,10 +35,10 @@ class PHPUnit_Framework_Constraint_IsJson extends PHPUnit_Framework_Constraint
      *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        json_decode( $other );
+        json_decode($other);
         if (json_last_error()) {
             return false;
         }
@@ -56,17 +56,17 @@ class PHPUnit_Framework_Constraint_IsJson extends PHPUnit_Framework_Constraint
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        json_decode( $other );
+        json_decode($other);
         $error = PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError(
             json_last_error()
         );
 
         return sprintf(
             '%s is valid JSON (%s)',
-            $this->exporter->shortenedExport( $other ),
+            $this->exporter->shortenedExport($other),
             $error
         );
     }

@@ -53,7 +53,7 @@ class ConfigurationException extends Exception
      * @param Exception|string $p1
      * @param Exception|null   $p2
      */
-    public function __construct( $p1, $p2 = null )
+    public function __construct($p1, $p2 = null)
     {
 
         $cause = null;
@@ -70,7 +70,7 @@ class ConfigurationException extends Exception
             $msg = $p1;
         }
 
-        parent::__construct( $msg );
+        parent::__construct($msg);
 
         if ($cause !== null) {
             $this->cause = $cause;

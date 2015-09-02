@@ -27,7 +27,7 @@ class DummyAdapter extends AbstractAdapter
     /**
      * @param \Iterator $iterator
      */
-    public function __construct( \Iterator $iterator )
+    public function __construct(\Iterator $iterator)
     {
 
         $this->iterator = $iterator;
@@ -36,7 +36,7 @@ class DummyAdapter extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    public function searchInDirectory( $dir )
+    public function searchInDirectory($dir)
     {
 
         return $this->iterator;

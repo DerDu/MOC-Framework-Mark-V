@@ -55,7 +55,7 @@ class DataTypeHandler extends AbstractHandler
         ProjectConfigurator $configurator,
         $target = null
     ) { // FIXME b2 typehinting
-        parent::__construct( $parser, $parentHandler );
+        parent::__construct($parser, $parentHandler);
         $this->target = $target;
         $this->configurator = $configurator;
     }
@@ -77,7 +77,7 @@ class DataTypeHandler extends AbstractHandler
      *
      * @throws ExpatParseException if attributes are incomplete or invalid
      */
-    public function init( $propType, $attrs )
+    public function init($propType, $attrs)
     {
 
         // shorthands
@@ -85,23 +85,23 @@ class DataTypeHandler extends AbstractHandler
         $configurator = $this->configurator;
 
         try { //try
-            $this->element = $project->createDataType( $propType );
+            $this->element = $project->createDataType($propType);
 
             if ($this->element === null) {
-                throw new BuildException( "Unknown data type $propType" );
+                throw new BuildException("Unknown data type $propType");
             }
 
             if ($this->target !== null) {
-                $this->wrapper = new RuntimeConfigurable( $this->element, $propType );
-                $this->wrapper->setAttributes( $attrs );
-                $this->target->addDataType( $this->wrapper );
+                $this->wrapper = new RuntimeConfigurable($this->element, $propType);
+                $this->wrapper->setAttributes($attrs);
+                $this->target->addDataType($this->wrapper);
             } else {
-                $configurator->configure( $this->element, $attrs, $project );
-                $configurator->configureId( $this->element, $attrs );
+                $configurator->configure($this->element, $attrs, $project);
+                $configurator->configureId($this->element, $attrs);
             }
 
-        } catch( BuildException $exc ) {
-            throw new ExpatParseException( $exc, $this->parser->getLocation() );
+        } catch (BuildException $exc) {
+            throw new ExpatParseException($exc, $this->parser->getLocation());
         }
     }
 
@@ -113,14 +113,14 @@ class DataTypeHandler extends AbstractHandler
      * @throws ExpatParseException
      * @internal param the $string CDATA that comes in
      */
-    public function characters( $data )
+    public function characters($data)
     {
 
         $project = $this->configurator->project;
         try { //try
-            $this->configurator->addText( $project, $this->element, $data );
-        } catch( BuildException $exc ) {
-            throw new ExpatParseException( $exc->getMessage(), $this->parser->getLocation() );
+            $this->configurator->addText($project, $this->element, $data);
+        } catch (BuildException $exc) {
+            throw new ExpatParseException($exc->getMessage(), $this->parser->getLocation());
         }
     }
 
@@ -131,12 +131,12 @@ class DataTypeHandler extends AbstractHandler
      * @param  string  the tag that comes in
      * @param  array   attributes the tag carries
      */
-    public function startElement( $name, $attrs )
+    public function startElement($name, $attrs)
     {
 
-        $nef = new NestedElementHandler( $this->parser, $this, $this->configurator, $this->element, $this->wrapper,
-            $this->target );
-        $nef->init( $name, $attrs );
+        $nef = new NestedElementHandler($this->parser, $this, $this->configurator, $this->element, $this->wrapper,
+            $this->target);
+        $nef->init($name, $attrs);
     }
 
     /**
@@ -149,11 +149,11 @@ class DataTypeHandler extends AbstractHandler
      *
      * @return void
      */
-    public function endElement( $name )
+    public function endElement($name)
     {
 
         $this->element->parsingComplete();
-        parent::endElement( $name );
+        parent::endElement($name);
     }
 
 }

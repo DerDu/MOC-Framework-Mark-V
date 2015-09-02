@@ -14,17 +14,17 @@ namespace Sami\Version;
 class SingleVersionCollection extends VersionCollection
 {
 
-    public function add( $version, $longname = null )
+    public function add($version, $longname = null)
     {
 
-        if (count( $this->versions )) {
-            throw new \LogicException( 'A SingleVersionCollection can only contain one Version' );
+        if (count($this->versions)) {
+            throw new \LogicException('A SingleVersionCollection can only contain one Version');
         }
 
-        parent::add( $version, $longname );
+        parent::add($version, $longname);
     }
 
-    protected function switchVersion( Version $version )
+    protected function switchVersion(Version $version)
     {
     }
 }

@@ -19,7 +19,7 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt
      *                                        'else'    => null   : Else clause
      * @param array               $attributes Additional attributes
      */
-    public function __construct( PHPParser_Node_Expr $cond, array $subNodes = array(), array $attributes = array() )
+    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), array $attributes = array())
     {
 
         parent::__construct(

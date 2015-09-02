@@ -26,8 +26,8 @@ v5RwaQHmQEzHofTzF7I+
 
         $x509 = new File_X509();
 
-        $spkac = $x509->loadCSR( $test );
+        $spkac = $x509->loadCSR($test);
 
-        $this->assertInternalType( 'array', $spkac );
+        $this->assertInternalType('array', $spkac);
     }
 }

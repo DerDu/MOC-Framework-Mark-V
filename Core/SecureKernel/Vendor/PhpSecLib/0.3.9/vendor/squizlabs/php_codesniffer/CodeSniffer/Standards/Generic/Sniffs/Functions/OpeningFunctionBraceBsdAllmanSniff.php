@@ -40,7 +40,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
     public function register()
     {
 
-        return array( T_FUNCTION );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -54,7 +54,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -75,14 +75,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
 
         if ($lineDifference === 0) {
             $error = 'Opening brace should be on a new line';
-            $phpcsFile->addError( $error, $openingBrace, 'BraceOnSameLine' );
+            $phpcsFile->addError($error, $openingBrace, 'BraceOnSameLine');
             return;
         }
 
         if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
-            $data = array( ( $lineDifference - 1 ) );
-            $phpcsFile->addError( $error, $openingBrace, 'BraceSpacing', $data );
+            $data = array(( $lineDifference - 1 ));
+            $phpcsFile->addError($error, $openingBrace, 'BraceSpacing', $data);
             return;
         }
 
@@ -91,16 +91,16 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
         $lineStart = $stackPtr;
-        while (( $lineStart = $phpcsFile->findPrevious( array( T_WHITESPACE ), ( $lineStart - 1 ), null,
-                false ) ) !== false) {
-            if (strpos( $tokens[$lineStart]['content'], $phpcsFile->eolChar ) !== false) {
+        while (( $lineStart = $phpcsFile->findPrevious(array(T_WHITESPACE), ( $lineStart - 1 ), null,
+                false) ) !== false) {
+            if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
                 break;
             }
         }
 
         // We found a new line, now go forward and find the first non-whitespace
         // token.
-        $lineStart = $phpcsFile->findNext( array( T_WHITESPACE ), $lineStart, null, true );
+        $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), $lineStart, null, true);
 
         // The opening brace is on the correct line, now it needs to be
         // checked to be correctly indented.
@@ -113,7 +113,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                 ( $startColumn - 1 ),
                 ( $braceIndent - 1 ),
             );
-            $phpcsFile->addError( $error, $openingBrace, 'BraceIndent', $data );
+            $phpcsFile->addError($error, $openingBrace, 'BraceIndent', $data);
         }
 
     }//end process()

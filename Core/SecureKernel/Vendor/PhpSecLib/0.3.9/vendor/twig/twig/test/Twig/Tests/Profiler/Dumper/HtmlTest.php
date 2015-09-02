@@ -16,7 +16,7 @@ class Twig_Tests_Profiler_Dumper_HtmlTest extends Twig_Tests_Profiler_Dumper_Abs
     {
 
         $dumper = new Twig_Profiler_Dumper_Html();
-        $this->assertStringMatchesFormat( <<<EOF
+        $this->assertStringMatchesFormat(<<<EOF
 <pre>main <span style="color: #d44">%d.%dms/%d%</span>
 └ <span style="background-color: #ffd">index.twig</span> <span style="color: #d44">%d.%dms/%d%</span>
   └ embedded.twig::block(<span style="background-color: #dfd">body</span>)
@@ -27,6 +27,6 @@ class Twig_Tests_Profiler_Dumper_HtmlTest extends Twig_Tests_Profiler_Dumper_Abs
     └ <span style="background-color: #ffd">included.twig</span>
 </pre>
 EOF
-            , $dumper->dump( $this->getProfile() ) );
+            , $dumper->dump($this->getProfile()));
     }
 }

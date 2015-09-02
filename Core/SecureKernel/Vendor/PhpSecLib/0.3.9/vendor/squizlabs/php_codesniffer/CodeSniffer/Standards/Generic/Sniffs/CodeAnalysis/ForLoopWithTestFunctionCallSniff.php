@@ -52,7 +52,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff implements PH
     public function register()
     {
 
-        return array( T_FOR );
+        return array(T_FOR);
 
     }//end register()
 
@@ -66,7 +66,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff implements PH
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -102,11 +102,11 @@ class Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff implements PH
 
             // Find next non empty token, if it is a open curly brace we have a
             // function call.
-            $index = $phpcsFile->findNext( PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true );
+            $index = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ( $next + 1 ), null, true);
 
             if ($tokens[$index]['code'] === T_OPEN_PARENTHESIS) {
                 $error = 'Avoid function calls in a FOR loop test part';
-                $phpcsFile->addWarning( $error, $stackPtr, 'NotAllowed' );
+                $phpcsFile->addWarning($error, $stackPtr, 'NotAllowed');
                 break;
             }
         }//end for

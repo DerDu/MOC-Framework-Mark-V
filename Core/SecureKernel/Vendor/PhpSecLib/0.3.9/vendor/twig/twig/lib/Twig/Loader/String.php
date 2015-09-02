@@ -29,7 +29,7 @@ class Twig_Loader_String implements Twig_LoaderInterface, Twig_ExistsLoaderInter
     /**
      * {@inheritdoc}
      */
-    public function getSource( $name )
+    public function getSource($name)
     {
 
         return $name;
@@ -38,7 +38,7 @@ class Twig_Loader_String implements Twig_LoaderInterface, Twig_ExistsLoaderInter
     /**
      * {@inheritdoc}
      */
-    public function exists( $name )
+    public function exists($name)
     {
 
         return true;
@@ -47,7 +47,7 @@ class Twig_Loader_String implements Twig_LoaderInterface, Twig_ExistsLoaderInter
     /**
      * {@inheritdoc}
      */
-    public function getCacheKey( $name )
+    public function getCacheKey($name)
     {
 
         return $name;
@@ -56,7 +56,7 @@ class Twig_Loader_String implements Twig_LoaderInterface, Twig_ExistsLoaderInter
     /**
      * {@inheritdoc}
      */
-    public function isFresh( $name, $time )
+    public function isFresh($name, $time)
     {
 
         return true;

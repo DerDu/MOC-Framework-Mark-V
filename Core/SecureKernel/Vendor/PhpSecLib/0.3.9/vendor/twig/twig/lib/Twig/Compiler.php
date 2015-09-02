@@ -32,7 +32,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @param Twig_Environment $env The twig environment instance
      */
-    public function __construct( Twig_Environment $env )
+    public function __construct(Twig_Environment $env)
     {
 
         $this->env = $env;
@@ -75,7 +75,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function compile( Twig_NodeInterface $node, $indentation = 0 )
+    public function compile(Twig_NodeInterface $node, $indentation = 0)
     {
 
         $this->lastLine = null;
@@ -87,22 +87,22 @@ class Twig_Compiler implements Twig_CompilerInterface
         $this->indentation = $indentation;
 
         if ($node instanceof Twig_Node_Module) {
-            $this->filename = $node->getAttribute( 'filename' );
+            $this->filename = $node->getAttribute('filename');
         }
 
-        $node->compile( $this );
+        $node->compile($this);
 
         return $this;
     }
 
-    public function subcompile( Twig_NodeInterface $node, $raw = true )
+    public function subcompile(Twig_NodeInterface $node, $raw = true)
     {
 
         if (false === $raw) {
             $this->addIndentation();
         }
 
-        $node->compile( $this );
+        $node->compile($this);
 
         return $this;
     }
@@ -115,7 +115,7 @@ class Twig_Compiler implements Twig_CompilerInterface
     public function addIndentation()
     {
 
-        $this->source .= str_repeat( ' ', $this->indentation * 4 );
+        $this->source .= str_repeat(' ', $this->indentation * 4);
 
         return $this;
     }
@@ -127,38 +127,38 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function repr( $value )
+    public function repr($value)
     {
 
-        if (is_int( $value ) || is_float( $value )) {
-            if (false !== $locale = setlocale( LC_NUMERIC, 0 )) {
-                setlocale( LC_NUMERIC, 'C' );
+        if (is_int($value) || is_float($value)) {
+            if (false !== $locale = setlocale(LC_NUMERIC, 0)) {
+                setlocale(LC_NUMERIC, 'C');
             }
 
-            $this->raw( $value );
+            $this->raw($value);
 
             if (false !== $locale) {
-                setlocale( LC_NUMERIC, $locale );
+                setlocale(LC_NUMERIC, $locale);
             }
         } elseif (null === $value) {
-            $this->raw( 'null' );
-        } elseif (is_bool( $value )) {
-            $this->raw( $value ? 'true' : 'false' );
-        } elseif (is_array( $value )) {
-            $this->raw( 'array(' );
+            $this->raw('null');
+        } elseif (is_bool($value)) {
+            $this->raw($value ? 'true' : 'false');
+        } elseif (is_array($value)) {
+            $this->raw('array(');
             $first = true;
             foreach ($value as $key => $v) {
                 if (!$first) {
-                    $this->raw( ', ' );
+                    $this->raw(', ');
                 }
                 $first = false;
-                $this->repr( $key );
-                $this->raw( ' => ' );
-                $this->repr( $v );
+                $this->repr($key);
+                $this->raw(' => ');
+                $this->repr($v);
             }
-            $this->raw( ')' );
+            $this->raw(')');
         } else {
-            $this->string( $value );
+            $this->string($value);
         }
 
         return $this;
@@ -171,7 +171,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function raw( $string )
+    public function raw($string)
     {
 
         $this->source .= $string;
@@ -186,10 +186,10 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function string( $value )
+    public function string($value)
     {
 
-        $this->source .= sprintf( '"%s"', addcslashes( $value, "\0\t\"\$\\" ) );
+        $this->source .= sprintf('"%s"', addcslashes($value, "\0\t\"\$\\"));
 
         return $this;
     }
@@ -201,22 +201,22 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function addDebugInfo( Twig_NodeInterface $node )
+    public function addDebugInfo(Twig_NodeInterface $node)
     {
 
         if ($node->getLine() != $this->lastLine) {
-            $this->write( sprintf( "// line %d\n", $node->getLine() ) );
+            $this->write(sprintf("// line %d\n", $node->getLine()));
 
             // when mbstring.func_overload is set to 2
             // mb_substr_count() replaces substr_count()
             // but they have different signatures!
-            if (( (int)ini_get( 'mbstring.func_overload' ) ) & 2) {
+            if (( (int)ini_get('mbstring.func_overload') ) & 2) {
                 // this is much slower than the "right" version
-                $this->sourceLine += mb_substr_count( mb_substr( $this->source, $this->sourceOffset ), "\n" );
+                $this->sourceLine += mb_substr_count(mb_substr($this->source, $this->sourceOffset), "\n");
             } else {
-                $this->sourceLine += substr_count( $this->source, "\n", $this->sourceOffset );
+                $this->sourceLine += substr_count($this->source, "\n", $this->sourceOffset);
             }
-            $this->sourceOffset = strlen( $this->source );
+            $this->sourceOffset = strlen($this->source);
             $this->debugInfo[$this->sourceLine] = $node->getLine();
 
             $this->lastLine = $node->getLine();
@@ -245,7 +245,7 @@ class Twig_Compiler implements Twig_CompilerInterface
     public function getDebugInfo()
     {
 
-        ksort( $this->debugInfo );
+        ksort($this->debugInfo);
 
         return $this->debugInfo;
     }
@@ -257,7 +257,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function indent( $step = 1 )
+    public function indent($step = 1)
     {
 
         $this->indentation += $step;
@@ -274,12 +274,12 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @throws LogicException When trying to outdent too much so the indentation would become negative
      */
-    public function outdent( $step = 1 )
+    public function outdent($step = 1)
     {
 
         // can't outdent by more steps than the current indentation level
         if ($this->indentation < $step) {
-            throw new LogicException( 'Unable to call outdent() as the indentation would become negative' );
+            throw new LogicException('Unable to call outdent() as the indentation would become negative');
         }
 
         $this->indentation -= $step;
@@ -290,6 +290,6 @@ class Twig_Compiler implements Twig_CompilerInterface
     public function getVarName()
     {
 
-        return sprintf( '__internal_%s', hash( 'sha256', uniqid( mt_rand(), true ), false ) );
+        return sprintf('__internal_%s', hash('sha256', uniqid(mt_rand(), true), false));
     }
 }

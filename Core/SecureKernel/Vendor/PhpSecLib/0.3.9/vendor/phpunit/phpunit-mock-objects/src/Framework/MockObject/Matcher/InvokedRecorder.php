@@ -19,6 +19,7 @@
  */
 abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements PHPUnit_Framework_MockObject_Matcher_Invocation
 {
+
     /**
      * @var PHPUnit_Framework_MockObject_Invocation[]
      */
@@ -38,6 +39,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function getInvocations()
     {
+
         return $this->invocations;
     }
 
@@ -55,6 +57,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
+
         $this->invocations[] = $invocation;
     }
 
@@ -65,6 +68,7 @@ abstract class PHPUnit_Framework_MockObject_Matcher_InvokedRecorder implements P
      */
     public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
+
         return true;
     }
 }

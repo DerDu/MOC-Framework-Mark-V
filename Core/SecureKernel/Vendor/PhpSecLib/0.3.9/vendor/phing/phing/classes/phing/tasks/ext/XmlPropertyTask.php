@@ -43,11 +43,11 @@ class XmlPropertyTask extends PropertyTask
      *
      * @param $file
      */
-    public function setFile( $file )
+    public function setFile($file)
     {
 
-        if (is_string( $file )) {
-            $file = new PhingFile( $file );
+        if (is_string($file)) {
+            $file = new PhingFile($file);
         }
         $this->file = $file;
     }
@@ -68,11 +68,11 @@ class XmlPropertyTask extends PropertyTask
      * @return void
      * @since 2.0
      */
-    public function setPrefix( $prefix )
+    public function setPrefix($prefix)
     {
 
         $this->prefix = $prefix;
-        if (!StringHelper::endsWith( ".", $prefix )) {
+        if (!StringHelper::endsWith(".", $prefix)) {
             $this->prefix .= ".";
         }
     }
@@ -101,7 +101,7 @@ class XmlPropertyTask extends PropertyTask
      *
      * @param bool $yesNo
      */
-    public function setKeepRoot( $yesNo )
+    public function setKeepRoot($yesNo)
     {
 
         $this->_keepRoot = (bool)$yesNo;
@@ -112,7 +112,7 @@ class XmlPropertyTask extends PropertyTask
      *
      * @param bool $yesNo
      */
-    public function setCollapseAttributes( $yesNo )
+    public function setCollapseAttributes($yesNo)
     {
 
         $this->_collapseAttr = (bool)$yesNo;
@@ -141,7 +141,7 @@ class XmlPropertyTask extends PropertyTask
      *
      * @param string $d
      */
-    public function setDelimiter( $d )
+    public function setDelimiter($d)
     {
 
         $this->_delimiter = $d;
@@ -156,11 +156,11 @@ class XmlPropertyTask extends PropertyTask
     {
 
         if ($this->file === null) {
-            throw new BuildException( "You must specify file to load properties from", $this->getLocation() );
+            throw new BuildException("You must specify file to load properties from", $this->getLocation());
         }
 
-        $props = $this->loadFile( $this->file );
-        $this->addProperties( $props );
+        $props = $this->loadFile($this->file);
+        $this->addProperties($props);
     }
 
     /**
@@ -171,18 +171,18 @@ class XmlPropertyTask extends PropertyTask
      * @throws BuildException
      * @return Properties
      */
-    protected function loadFile( PhingFile $file )
+    protected function loadFile(PhingFile $file)
     {
 
         $props = new Properties();
-        $this->log( "Loading ".$file->getAbsolutePath(), Project::MSG_INFO );
+        $this->log("Loading ".$file->getAbsolutePath(), Project::MSG_INFO);
         try { // try to load file
             if ($file->exists()) {
-                return $this->_getProperties( $file );
+                return $this->_getProperties($file);
 
             } else {
                 if ($this->getRequired()) {
-                    throw new BuildException( "Could not load required properties file.", $ioe );
+                    throw new BuildException("Could not load required properties file.", $ioe);
                 } else {
                     $this->log(
                         "Unable to find property file: ".$file->getAbsolutePath()."... skipped",
@@ -190,8 +190,8 @@ class XmlPropertyTask extends PropertyTask
                     );
                 }
             }
-        } catch( IOException $ioe ) {
-            throw new BuildException( "Could not load properties from file.", $ioe );
+        } catch (IOException $ioe) {
+            throw new BuildException("Could not load properties from file.", $ioe);
         }
     }
 
@@ -203,31 +203,31 @@ class XmlPropertyTask extends PropertyTask
      * @throws IOException
      * @return Properties
      */
-    protected function _getProperties( $filePath )
+    protected function _getProperties($filePath)
     {
 
         // load() already made sure that file is readable
         // but we'll double check that when reading the file into
         // an array
 
-        if (( $lines = @file( $filePath ) ) === false) {
-            throw new IOException( "Unable to parse contents of $filePath" );
+        if (( $lines = @file($filePath) ) === false) {
+            throw new IOException("Unable to parse contents of $filePath");
         }
 
         $prop = new Properties();
 
-        $xml = simplexml_load_file( $filePath );
+        $xml = simplexml_load_file($filePath);
 
         if ($xml === false) {
-            throw new IOException( "Unable to parse XML file $filePath" );
+            throw new IOException("Unable to parse XML file $filePath");
         }
 
         $path = array();
 
         if ($this->_keepRoot) {
-            $path[] = dom_import_simplexml( $xml )->tagName;
+            $path[] = dom_import_simplexml($xml)->tagName;
 
-            $prefix = implode( '.', $path );
+            $prefix = implode('.', $path);
 
             if (!empty( $prefix )) {
                 $prefix .= '.';
@@ -236,14 +236,14 @@ class XmlPropertyTask extends PropertyTask
             // Check for attributes
             foreach ($xml->attributes() as $attribute => $val) {
                 if ($this->_collapseAttr) {
-                    $prop->setProperty( $prefix."$attribute", (string)$val );
+                    $prop->setProperty($prefix."$attribute", (string)$val);
                 } else {
-                    $prop->setProperty( $prefix."($attribute)", (string)$val );
+                    $prop->setProperty($prefix."($attribute)", (string)$val);
                 }
             }
         }
 
-        $this->_addNode( $xml, $path, $prop );
+        $this->_addNode($xml, $path, $prop);
 
         return $prop;
     }
@@ -257,12 +257,12 @@ class XmlPropertyTask extends PropertyTask
      *
      * @return void
      */
-    protected function _addNode( $node, $path, $prop )
+    protected function _addNode($node, $path, $prop)
     {
 
         foreach ($node as $tag => $value) {
 
-            $prefix = implode( '.', $path );
+            $prefix = implode('.', $path);
 
             if (!empty( $prefix ) > 0) {
                 $prefix .= '.';
@@ -271,15 +271,15 @@ class XmlPropertyTask extends PropertyTask
             // Check for attributes
             foreach ($value->attributes() as $attribute => $val) {
                 if ($this->_collapseAttr) {
-                    $prop->setProperty( $prefix."$tag.$attribute", (string)$val );
+                    $prop->setProperty($prefix."$tag.$attribute", (string)$val);
                 } else {
-                    $prop->setProperty( $prefix."$tag($attribute)", (string)$val );
+                    $prop->setProperty($prefix."$tag($attribute)", (string)$val);
                 }
             }
 
             // Add tag
-            if (count( $value->children() )) {
-                $this->_addNode( $value, array_merge( $path, array( $tag ) ), $prop );
+            if (count($value->children())) {
+                $this->_addNode($value, array_merge($path, array($tag)), $prop);
             } else {
                 $val = (string)$value;
 
@@ -295,7 +295,7 @@ class XmlPropertyTask extends PropertyTask
                 //
                 // Would be come project.exclude = file/a.php,file/a.php
                 $p = empty( $prefix ) ? $tag : $prefix.$tag;
-                $prop->append( $p, (string)$val, $this->_delimiter );
+                $prop->append($p, (string)$val, $this->_delimiter);
             }
         }
     }
@@ -314,7 +314,7 @@ class XmlPropertyTask extends PropertyTask
      *
      * @param string $d
      */
-    public function setRequired( $d )
+    public function setRequired($d)
     {
 
         $this->_required = $d;

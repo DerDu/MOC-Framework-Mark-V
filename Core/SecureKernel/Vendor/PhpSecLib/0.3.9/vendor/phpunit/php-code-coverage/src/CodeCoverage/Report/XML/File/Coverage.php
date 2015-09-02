@@ -29,26 +29,26 @@ class PHP_CodeCoverage_Report_XML_File_Coverage
      */
     private $finalized = false;
 
-    public function __construct( DOMElement $context, $line )
+    public function __construct(DOMElement $context, $line)
     {
 
         $this->contextNode = $context;
 
         $this->writer = new XMLWriter();
         $this->writer->openMemory();
-        $this->writer->startElementNs( null, $context->nodeName, 'http://schema.phpunit.de/coverage/1.0' );
-        $this->writer->writeAttribute( 'nr', $line );
+        $this->writer->startElementNs(null, $context->nodeName, 'http://schema.phpunit.de/coverage/1.0');
+        $this->writer->writeAttribute('nr', $line);
     }
 
-    public function addTest( $test )
+    public function addTest($test)
     {
 
         if ($this->finalized) {
-            throw new PHP_CodeCoverage_Exception( 'Coverage Report already finalized' );
+            throw new PHP_CodeCoverage_Exception('Coverage Report already finalized');
         }
 
-        $this->writer->startElement( 'covered' );
-        $this->writer->writeAttribute( 'by', $test );
+        $this->writer->startElement('covered');
+        $this->writer->writeAttribute('by', $test);
         $this->writer->endElement();
     }
 
@@ -58,7 +58,7 @@ class PHP_CodeCoverage_Report_XML_File_Coverage
         $this->writer->endElement();
 
         $fragment = $this->contextNode->ownerDocument->createDocumentFragment();
-        $fragment->appendXML( $this->writer->outputMemory() );
+        $fragment->appendXML($this->writer->outputMemory());
 
         $this->contextNode->parentNode->replaceChild(
             $fragment,

@@ -14,7 +14,7 @@ class PHPParser_Builder_Param extends PHPParser_BuilderAbstract
      *
      * @param string $name Name of the parameter
      */
-    public function __construct( $name )
+    public function __construct($name)
     {
 
         $this->name = $name;
@@ -31,10 +31,10 @@ class PHPParser_Builder_Param extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Param The builder instance (for fluid interface)
      */
-    public function setDefault( $value )
+    public function setDefault($value)
     {
 
-        $this->default = $this->normalizeValue( $value );
+        $this->default = $this->normalizeValue($value);
 
         return $this;
     }
@@ -46,13 +46,13 @@ class PHPParser_Builder_Param extends PHPParser_BuilderAbstract
      *
      * @return PHPParser_Builder_Param The builder instance (for fluid interface)
      */
-    public function setTypeHint( $type )
+    public function setTypeHint($type)
     {
 
         if ($type === 'array' || $type === 'callable') {
             $this->type = $type;
         } else {
-            $this->type = $this->normalizeName( $type );
+            $this->type = $this->normalizeName($type);
         }
 
         return $this;

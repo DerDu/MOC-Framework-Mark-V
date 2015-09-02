@@ -74,7 +74,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param string the absolute path to the liquibase jar.
      */
-    public function setJar( $jar )
+    public function setJar($jar)
     {
 
         $this->jar = $jar;
@@ -85,7 +85,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param string the absolute path to the changelog file
      */
-    public function setChangeLogFile( $changelogFile )
+    public function setChangeLogFile($changelogFile)
     {
 
         $this->changeLogFile = $changelogFile;
@@ -96,7 +96,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param string the username
      */
-    public function setUsername( $username )
+    public function setUsername($username)
     {
 
         $this->username = $username;
@@ -107,7 +107,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param string the password
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
 
         $this->password = $password;
@@ -121,7 +121,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param string jdbc connection string
      */
-    public function setUrl( $url )
+    public function setUrl($url)
     {
 
         $this->url = $url;
@@ -133,7 +133,7 @@ abstract class AbstractLiquibaseTask extends Task
      * @param string      A reference to the classpath that contains the database
      *                    driver, liquibase.jar, and the changelog.xml file
      */
-    public function setclasspathref( $classpathref )
+    public function setclasspathref($classpathref)
     {
 
         $this->classpathref = $classpathref;
@@ -144,10 +144,10 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param boolean $display
      */
-    public function setDisplay( $display )
+    public function setDisplay($display)
     {
 
-        $this->display = StringHelper::booleanValue( $display );
+        $this->display = StringHelper::booleanValue($display);
     }
 
     /**
@@ -155,10 +155,10 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @param boolean $checkreturn
      */
-    public function setCheckreturn( $checkreturn )
+    public function setCheckreturn($checkreturn)
     {
 
-        $this->checkreturn = StringHelper::booleanValue( $checkreturn );
+        $this->checkreturn = StringHelper::booleanValue($checkreturn);
     }
 
     /**
@@ -168,10 +168,10 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @internal param bool $checkreturn
      */
-    public function setPassthru( $passthru )
+    public function setPassthru($passthru)
     {
 
-        $this->passthru = StringHelper::booleanValue( $passthru );
+        $this->passthru = StringHelper::booleanValue($passthru);
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class AbstractLiquibaseTask extends Task
      *
      * @return void
      */
-    public function setOutputProperty( $prop )
+    public function setOutputProperty($prop)
     {
 
         $this->outputProperty = $prop;
@@ -224,7 +224,7 @@ abstract class AbstractLiquibaseTask extends Task
     protected function checkParams()
     {
 
-        if (( null === $this->jar ) or !file_exists( $this->jar )) {
+        if (( null === $this->jar ) or !file_exists($this->jar)) {
             throw new BuildException(
                 sprintf(
                     'Specify the name of the LiquiBase.jar. "%s" does not exist!',
@@ -233,7 +233,7 @@ abstract class AbstractLiquibaseTask extends Task
             );
         }
 
-        if (( null === $this->changeLogFile ) or !file_exists( $this->changeLogFile )) {
+        if (( null === $this->changeLogFile ) or !file_exists($this->changeLogFile)) {
             throw new BuildException(
                 sprintf(
                     'Specify the name of the Changelog file. "%s" does not exist!',
@@ -243,19 +243,19 @@ abstract class AbstractLiquibaseTask extends Task
         }
 
         if (null === $this->classpathref) {
-            throw new BuildException( 'Please provide a classpath!' );
+            throw new BuildException('Please provide a classpath!');
         }
 
         if (null === $this->username) {
-            throw new BuildException( 'Please provide a username for database acccess!' );
+            throw new BuildException('Please provide a username for database acccess!');
         }
 
         if (null === $this->password) {
-            throw new BuildException( 'Please provide a password for database acccess!' );
+            throw new BuildException('Please provide a password for database acccess!');
         }
 
         if (null === $this->url) {
-            throw new BuildException( 'Please provide a url for database acccess!' );
+            throw new BuildException('Please provide a url for database acccess!');
         }
     }
 
@@ -268,50 +268,50 @@ abstract class AbstractLiquibaseTask extends Task
      * @throws BuildException
      * @return string the output of the executed command
      */
-    protected function execute( $lbcommand, $lbparams = '' )
+    protected function execute($lbcommand, $lbparams = '')
     {
 
         $nestedparams = "";
         foreach ($this->parameters as $p) {
-            $nestedparams .= $p->getCommandline( $this->project ).' ';
+            $nestedparams .= $p->getCommandline($this->project).' ';
         }
         $nestedprops = "";
         foreach ($this->properties as $p) {
-            $nestedprops .= $p->getCommandline( $this->project ).' ';
+            $nestedprops .= $p->getCommandline($this->project).' ';
         }
 
         $command = sprintf(
             'java -jar %s --changeLogFile=%s --url=%s --username=%s --password=%s --classpath=%s %s %s %s %s 2>&1',
-            escapeshellarg( $this->jar ),
-            escapeshellarg( $this->changeLogFile ),
-            escapeshellarg( $this->url ),
-            escapeshellarg( $this->username ),
-            escapeshellarg( $this->password ),
-            escapeshellarg( $this->classpathref ),
+            escapeshellarg($this->jar),
+            escapeshellarg($this->changeLogFile),
+            escapeshellarg($this->url),
+            escapeshellarg($this->username),
+            escapeshellarg($this->password),
+            escapeshellarg($this->classpathref),
             $nestedparams,
-            escapeshellarg( $lbcommand ),
+            escapeshellarg($lbcommand),
             $lbparams,
             $nestedprops
         );
 
         if ($this->passthru) {
-            passthru( $command );
+            passthru($command);
         } else {
             $output = array();
             $return = null;
-            exec( $command, $output, $return );
-            $output = implode( PHP_EOL, $output );
+            exec($command, $output, $return);
+            $output = implode(PHP_EOL, $output);
 
             if ($this->display) {
                 print $output;
             }
 
             if (!empty( $this->outputProperty )) {
-                $this->project->setProperty( $this->outputProperty, $output );
+                $this->project->setProperty($this->outputProperty, $output);
             }
 
             if ($this->checkreturn && $return != 0) {
-                throw new BuildException( "Liquibase exited with code $return" );
+                throw new BuildException("Liquibase exited with code $return");
             }
         }
 
@@ -334,7 +334,7 @@ class LiquibaseParameter extends DataType
     /**
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -343,7 +343,7 @@ class LiquibaseParameter extends DataType
     /**
      * @param $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = $value;
@@ -355,14 +355,14 @@ class LiquibaseParameter extends DataType
      * @return string
      * @throws BuildException
      */
-    public function getCommandline( Project $p )
+    public function getCommandline(Project $p)
     {
 
         if ($this->isReference()) {
-            return $this->getRef( $p )->getCommandline( $p );
+            return $this->getRef($p)->getCommandline($p);
         }
 
-        return sprintf( "--%s=%s", $this->name, escapeshellarg( $this->value ) );
+        return sprintf("--%s=%s", $this->name, escapeshellarg($this->value));
     }
 
     /**
@@ -371,18 +371,18 @@ class LiquibaseParameter extends DataType
      * @return mixed
      * @throws BuildException
      */
-    public function getRef( Project $p )
+    public function getRef(Project $p)
     {
 
         if (!$this->checked) {
             $stk = array();
-            array_push( $stk, $this );
-            $this->dieOnCircularReference( $stk, $p );
+            array_push($stk, $this);
+            $this->dieOnCircularReference($stk, $p);
         }
 
-        $o = $this->ref->getReferencedObject( $p );
+        $o = $this->ref->getReferencedObject($p);
         if (!( $o instanceof LiquibaseParameter )) {
-            throw new BuildException( $this->ref->getRefId()." doesn't denote a LiquibaseParameter" );
+            throw new BuildException($this->ref->getRefId()." doesn't denote a LiquibaseParameter");
         } else {
             return $o;
         }
@@ -405,7 +405,7 @@ class LiquibaseProperty extends DataType
     /**
      * @param $name
      */
-    public function setName( $name )
+    public function setName($name)
     {
 
         $this->name = $name;
@@ -414,7 +414,7 @@ class LiquibaseProperty extends DataType
     /**
      * @param $value
      */
-    public function setValue( $value )
+    public function setValue($value)
     {
 
         $this->value = $value;
@@ -426,14 +426,14 @@ class LiquibaseProperty extends DataType
      * @return string
      * @throws BuildException
      */
-    public function getCommandline( Project $p )
+    public function getCommandline(Project $p)
     {
 
         if ($this->isReference()) {
-            return $this->getRef( $p )->getCommandline( $p );
+            return $this->getRef($p)->getCommandline($p);
         }
 
-        return sprintf( "-D%s=%s", $this->name, escapeshellarg( $this->value ) );
+        return sprintf("-D%s=%s", $this->name, escapeshellarg($this->value));
     }
 
     /**
@@ -442,17 +442,17 @@ class LiquibaseProperty extends DataType
      * @return mixed
      * @throws BuildException
      */
-    public function getRef( Project $p )
+    public function getRef(Project $p)
     {
 
         if (!$this->checked) {
             $stk = array();
-            array_push( $stk, $this );
-            $this->dieOnCircularReference( $stk, $p );
+            array_push($stk, $this);
+            $this->dieOnCircularReference($stk, $p);
         }
-        $o = $this->ref->getReferencedObject( $p );
+        $o = $this->ref->getReferencedObject($p);
         if (!( $o instanceof LiquibaseProperty )) {
-            throw new BuildException( $this->ref->getRefId()." doesn't denote a LiquibaseProperty" );
+            throw new BuildException($this->ref->getRefId()." doesn't denote a LiquibaseProperty");
         } else {
             return $o;
         }

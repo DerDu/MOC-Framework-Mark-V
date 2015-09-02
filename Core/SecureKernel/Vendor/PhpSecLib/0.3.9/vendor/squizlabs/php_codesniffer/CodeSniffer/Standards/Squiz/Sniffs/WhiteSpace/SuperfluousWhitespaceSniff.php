@@ -80,7 +80,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
         $tokens = $phpcsFile->getTokens();
@@ -112,14 +112,14 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     }
 
                     // If we have ended up with inline html make sure it isn't just whitespace.
-                    $tokenContent = trim( $tokens[$i]['content'] );
+                    $tokenContent = trim($tokens[$i]['content']);
                     if ($tokenContent !== '') {
                         return;
                     }
                 }
             }//end if
 
-            $phpcsFile->addError( 'Additional whitespace found at start of file', $stackPtr, 'StartFile' );
+            $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
 
         } else {
             if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
@@ -159,7 +159,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
                         // If we have ended up with inline html make sure it
                         // isn't just whitespace.
-                        $tokenContent = trim( $tokens[$i]['content'] );
+                        $tokenContent = trim($tokens[$i]['content']);
                         if (empty( $tokenContent ) === false) {
                             return;
                         }
@@ -180,7 +180,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
                 }
 
-                $phpcsFile->addError( 'Additional whitespace found at end of file', $stackPtr, 'EndFile' );
+                $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
 
             } else {
 
@@ -189,7 +189,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 */
 
                 // Ignore whitespace that is not at the end of a line.
-                if (strpos( $tokens[$stackPtr]['content'], $phpcsFile->eolChar ) === false) {
+                if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
                     return;
                 }
 
@@ -200,10 +200,10 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     return;
                 }
 
-                $tokenContent = rtrim( $tokens[$stackPtr]['content'], $phpcsFile->eolChar );
+                $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
                 if (empty( $tokenContent ) === false) {
-                    if ($tokenContent !== rtrim( $tokenContent )) {
-                        $phpcsFile->addError( 'Whitespace found at end of line', $stackPtr, 'EndLine' );
+                    if ($tokenContent !== rtrim($tokenContent)) {
+                        $phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
                     }
                 }
 
@@ -211,17 +211,17 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     Check for multiple blanks lines in a function.
                 */
 
-                if ($phpcsFile->hasCondition( $stackPtr, T_FUNCTION ) === true) {
+                if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
                     if ($tokens[( $stackPtr - 1 )]['line'] < $tokens[$stackPtr]['line'] && $tokens[( $stackPtr - 2 )]['line'] === $tokens[( $stackPtr - 1 )]['line']) {
                         // This is an empty line and the line before this one is not
                         //  empty, so this could be the start of a multiple empty
                         // line block.
-                        $next = $phpcsFile->findNext( T_WHITESPACE, $stackPtr, null, true );
+                        $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
                         $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
                         if ($lines > 1) {
                             $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
-                            $data = array( $lines );
-                            $phpcsFile->addError( $error, $stackPtr, 'EmptyLines', $data );
+                            $data = array($lines);
+                            $phpcsFile->addError($error, $stackPtr, 'EmptyLines', $data);
                         }
                     }
                 }

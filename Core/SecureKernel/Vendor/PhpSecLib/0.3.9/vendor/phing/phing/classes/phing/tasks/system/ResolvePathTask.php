@@ -66,7 +66,7 @@ class ResolvePathTask extends Task
      *
      * @return void
      */
-    public function setPropertyName( $v )
+    public function setPropertyName($v)
     {
 
         $this->propertyName = $v;
@@ -77,7 +77,7 @@ class ResolvePathTask extends Task
      *
      * @param PhingFile $d
      */
-    public function setDir( PhingFile $d )
+    public function setDir(PhingFile $d)
     {
 
         $this->dir = $d;
@@ -92,7 +92,7 @@ class ResolvePathTask extends Task
      *
      * @see setFile()
      */
-    public function setPath( $f )
+    public function setPath($f)
     {
 
         $this->file = $f;
@@ -103,7 +103,7 @@ class ResolvePathTask extends Task
      *
      * @param string $f
      */
-    public function setFile( $f )
+    public function setFile($f)
     {
 
         $this->file = $f;
@@ -117,7 +117,7 @@ class ResolvePathTask extends Task
      * @throws BuildException
      * @return void
      */
-    public function setLevel( $level )
+    public function setLevel($level)
     {
 
         switch ($level) {
@@ -138,7 +138,7 @@ class ResolvePathTask extends Task
                 break;
             default:
                 throw new BuildException(
-                    sprintf( 'Unknown log level "%s"', $level )
+                    sprintf('Unknown log level "%s"', $level)
                 );
         }
     }
@@ -150,12 +150,12 @@ class ResolvePathTask extends Task
     {
 
         if (!$this->propertyName) {
-            throw new BuildException( "You must specify the propertyName attribute", $this->getLocation() );
+            throw new BuildException("You must specify the propertyName attribute", $this->getLocation());
         }
 
         // Currently only files are supported
         if ($this->file === null) {
-            throw new BuildException( "You must specify a path to resolve", $this->getLocation() );
+            throw new BuildException("You must specify a path to resolve", $this->getLocation());
         }
 
         $fs = FileSystem::getFileSystem();
@@ -163,15 +163,15 @@ class ResolvePathTask extends Task
         // if dir attribute was specified then we should
         // use that as basedir to which file was relative.
         // -- unless the file specified is an absolute path
-        if ($this->dir !== null && !$fs->isAbsolute( new PhingFile( $this->file ) )) {
-            $resolved = new PhingFile( $this->dir->getPath(), $this->file );
+        if ($this->dir !== null && !$fs->isAbsolute(new PhingFile($this->file))) {
+            $resolved = new PhingFile($this->dir->getPath(), $this->file);
         } else {
             // otherwise just resolve it relative to project basedir
-            $resolved = $this->project->resolveFile( $this->file );
+            $resolved = $this->project->resolveFile($this->file);
         }
 
-        $this->log( "Resolved ".$this->file." to ".$resolved->getAbsolutePath(), $this->logLevel );
-        $this->project->setProperty( $this->propertyName, $resolved->getAbsolutePath() );
+        $this->log("Resolved ".$this->file." to ".$resolved->getAbsolutePath(), $this->logLevel);
+        $this->project->setProperty($this->propertyName, $resolved->getAbsolutePath());
     }
 
 }

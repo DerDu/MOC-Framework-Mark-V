@@ -64,11 +64,11 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @param Project $project
      */
-    public function setProject( $project )
+    public function setProject($project)
     {
 
-        parent::setProject( $project );
-        $this->fileset->setProject( $project );
+        parent::setProject($project);
+        $this->fileset->setProject($project);
     }
 
     /**
@@ -134,10 +134,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function setIncludes( $includes )
+    public function setIncludes($includes)
     {
 
-        $this->fileset->setIncludes( $includes );
+        $this->fileset->setIncludes($includes);
     }
 
     /**
@@ -146,10 +146,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @param string $excludes the string containing the exclude patterns
      */
-    public function setExcludes( $excludes )
+    public function setExcludes($excludes)
     {
 
-        $this->fileset->setExcludes( $excludes );
+        $this->fileset->setExcludes($excludes);
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *                                    should be used, "false"|"off"|"no" when they
      *                                    shouldn't be used.
      */
-    public function setDefaultexcludes( $useDefaultExcludes )
+    public function setDefaultexcludes($useDefaultExcludes)
     {
 
         $this->useDefaultExcludes = (boolean)$useDefaultExcludes;
@@ -173,10 +173,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function setIncludesfile( PhingFile $includesfile )
+    public function setIncludesfile(PhingFile $includesfile)
     {
 
-        $this->fileset->setIncludesfile( $includesfile );
+        $this->fileset->setIncludesfile($includesfile);
     }
 
     /**
@@ -187,10 +187,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function setExcludesfile( PhingFile $excludesfile )
+    public function setExcludesfile(PhingFile $excludesfile)
     {
 
-        $this->fileset->setExcludesfile( $excludesfile );
+        $this->fileset->setExcludesfile($excludesfile);
     }
 
     /**
@@ -201,10 +201,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function setCaseSensitive( $isCaseSensitive )
+    public function setCaseSensitive($isCaseSensitive)
     {
 
-        $this->fileset->setCaseSensitive( $isCaseSensitive );
+        $this->fileset->setCaseSensitive($isCaseSensitive);
     }
 
     /**
@@ -214,10 +214,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function setFollowSymlinks( $followSymlinks )
+    public function setFollowSymlinks($followSymlinks)
     {
 
-        $this->fileset->setFollowSymlinks( $followSymlinks );
+        $this->fileset->setFollowSymlinks($followSymlinks);
     }
 
     /**
@@ -249,10 +249,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return array FileSelector[] An array of selectors in this container
      */
-    public function getSelectors( Project $p )
+    public function getSelectors(Project $p)
     {
 
-        return $this->fileset->getSelectors( $p );
+        return $this->fileset->getSelectors($p);
     }
 
     /**
@@ -273,10 +273,10 @@ abstract class MatchingTask extends Task implements SelectorContainer
      *
      * @return void
      */
-    public function appendSelector( FileSelector $selector )
+    public function appendSelector(FileSelector $selector)
     {
 
-        $this->fileset->appendSelector( $selector );
+        $this->fileset->appendSelector($selector);
     }
 
     /**
@@ -443,13 +443,13 @@ abstract class MatchingTask extends Task implements SelectorContainer
      * @throws BuildException
      * @return DirectoryScanner
      */
-    protected function getDirectoryScanner( PhingFile $baseDir )
+    protected function getDirectoryScanner(PhingFile $baseDir)
     {
 
-        $this->fileset->setDir( $baseDir );
-        $this->fileset->setDefaultexcludes( $this->useDefaultExcludes );
+        $this->fileset->setDir($baseDir);
+        $this->fileset->setDefaultexcludes($this->useDefaultExcludes);
 
-        return $this->fileset->getDirectoryScanner( $this->project );
+        return $this->fileset->getDirectoryScanner($this->project);
     }
 
     /**

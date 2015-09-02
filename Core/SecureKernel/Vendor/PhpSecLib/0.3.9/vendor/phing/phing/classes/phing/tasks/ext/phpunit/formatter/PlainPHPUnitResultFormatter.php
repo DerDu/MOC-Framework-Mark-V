@@ -55,10 +55,10 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    public function startTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
 
-        parent::startTestSuite( $suite );
+        parent::startTestSuite($suite);
 
         $this->inner = "";
     }
@@ -66,7 +66,7 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
     /**
      * @param PHPUnit_Framework_TestSuite $suite
      */
-    public function endTestSuite( PHPUnit_Framework_TestSuite $suite )
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
 
         if ($suite->getName() == 'AllTests') {
@@ -79,14 +79,14 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
         $sb .= ", Errors: ".$this->getErrorCount();
         $sb .= ", Incomplete: ".$this->getIncompleteCount();
         $sb .= ", Skipped: ".$this->getSkippedCount();
-        $sb .= ", Time elapsed: ".sprintf( '%0.5f', $this->getElapsedTime() )." s\n";
+        $sb .= ", Time elapsed: ".sprintf('%0.5f', $this->getElapsedTime())." s\n";
 
         if ($this->out != null) {
-            $this->out->write( $sb );
-            $this->out->write( $this->inner );
+            $this->out->write($sb);
+            $this->out->write($this->inner);
         }
 
-        parent::endTestSuite( $suite );
+        parent::endTestSuite($suite);
     }
 
     /**
@@ -94,12 +94,12 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param Exception              $e
      * @param float                  $time
      */
-    public function addError( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
-        parent::addError( $test, $e, $time );
+        parent::addError($test, $e, $time);
 
-        $this->formatError( "ERROR", $test, $e );
+        $this->formatError("ERROR", $test, $e);
     }
 
     /**
@@ -107,11 +107,11 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param PHPUnit_Framework_Test $test
      * @param Exception              $e
      */
-    private function formatError( $type, PHPUnit_Framework_Test $test, Exception $e = null )
+    private function formatError($type, PHPUnit_Framework_Test $test, Exception $e = null)
     {
 
         if ($test != null) {
-            $this->endTest( $test, time() );
+            $this->endTest($test, time());
         }
 
         $this->inner .= $test->getName()." ".$type."\n";
@@ -127,11 +127,11 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param PHPUnit_Framework_AssertionFailedError $e
      * @param float                                  $time
      */
-    public function addFailure( PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time )
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
 
-        parent::addFailure( $test, $e, $time );
-        $this->formatError( "FAILED", $test, $e );
+        parent::addFailure($test, $e, $time);
+        $this->formatError("FAILED", $test, $e);
     }
 
     /**
@@ -139,12 +139,12 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param Exception              $e
      * @param float                  $time
      */
-    public function addIncompleteTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
-        parent::addIncompleteTest( $test, $e, $time );
+        parent::addIncompleteTest($test, $e, $time);
 
-        $this->formatError( "INCOMPLETE", $test );
+        $this->formatError("INCOMPLETE", $test);
     }
 
     /**
@@ -152,11 +152,11 @@ class PlainPHPUnitResultFormatter extends PHPUnitResultFormatter
      * @param Exception              $e
      * @param float                  $time
      */
-    public function addSkippedTest( PHPUnit_Framework_Test $test, Exception $e, $time )
+    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
 
-        parent::addSkippedTest( $test, $e, $time );
-        $this->formatError( "SKIPPED", $test );
+        parent::addSkippedTest($test, $e, $time);
+        $this->formatError("SKIPPED", $test);
     }
 
     public function endTestRun()
