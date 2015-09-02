@@ -28,5 +28,4 @@ use Doctrine\Common\Inflector\Inflector as BaseInflector;
  */
 class Inflector extends BaseInflector
 {
-
 }

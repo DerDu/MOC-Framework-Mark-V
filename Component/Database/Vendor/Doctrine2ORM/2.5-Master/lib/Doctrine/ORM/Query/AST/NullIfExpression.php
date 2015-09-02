@@ -32,7 +32,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class NullIfExpression extends Node
 {
-
     /**
      * @var mixed
      */
@@ -47,7 +46,7 @@ class NullIfExpression extends Node
      * @param mixed $firstExpression
      * @param mixed $secondExpression
      */
-    public function __construct( $firstExpression, $secondExpression )
+    public function __construct($firstExpression, $secondExpression)
     {
 
         $this->firstExpression = $firstExpression;
@@ -57,9 +56,9 @@ class NullIfExpression extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkNullIfExpression( $this );
+        return $sqlWalker->walkNullIfExpression($this);
     }
 }

@@ -10,7 +10,6 @@ use Guzzle\Http\Message\Header\HeaderInterface;
  */
 class Header implements HeaderInterface
 {
-
     protected $values = array();
     protected $header;
     protected $glue;
@@ -20,10 +19,10 @@ class Header implements HeaderInterface
      * @param array|string $values Values of the header as an array or a scalar
      * @param string       $glue   Glue used to combine multiple values into a string
      */
-    public function __construct( $header, $values = array(), $glue = ',' )
+    public function __construct($header, $values = array(), $glue = ',')
     {
 
-        $this->header = trim( $header );
+        $this->header = trim($header);
         $this->glue = $glue;
 
         foreach ((array)$values as $value) {
@@ -36,18 +35,16 @@ class Header implements HeaderInterface
     public function __toString()
     {
 
-        return implode( $this->glue.' ', $this->toArray() );
+        return implode($this->glue.' ', $this->toArray());
     }
 
     public function toArray()
     {
-
         return $this->values;
     }
 
-    public function add( $value )
+    public function add($value)
     {
-
         $this->values[] = $value;
 
         return $this;
@@ -55,13 +52,11 @@ class Header implements HeaderInterface
 
     public function getName()
     {
-
         return $this->header;
     }
 
-    public function setName( $name )
+    public function setName($name)
     {
-
         $this->header = $name;
 
         return $this;
@@ -69,31 +64,28 @@ class Header implements HeaderInterface
 
     public function getGlue()
     {
-
         return $this->glue;
     }
 
-    public function setGlue( $glue )
+    public function setGlue($glue)
     {
-
         $this->glue = $glue;
 
         return $this;
     }
 
-    public function hasValue( $searchValue )
+    public function hasValue($searchValue)
     {
 
-        return in_array( $searchValue, $this->toArray() );
+        return in_array($searchValue, $this->toArray());
     }
 
-    public function removeValue( $searchValue )
+    public function removeValue($searchValue)
     {
 
-        $this->values = array_values( array_filter( $this->values, function ( $value ) use ( $searchValue ) {
-
+        $this->values = array_values(array_filter($this->values, function ($value) use ($searchValue) {
             return $value != $searchValue;
-        } ) );
+        }));
 
         return $this;
     }
@@ -101,29 +93,28 @@ class Header implements HeaderInterface
     public function count()
     {
 
-        return count( $this->toArray() );
+        return count($this->toArray());
     }
 
     public function getIterator()
     {
 
-        return new \ArrayIterator( $this->toArray() );
+        return new \ArrayIterator($this->toArray());
     }
 
     public function parseParams()
     {
-
         $params = $matches = array();
-        $callback = array( $this, 'trimHeader' );
+        $callback = array($this, 'trimHeader');
 
         // Normalize the header into a single array and iterate over all values
         foreach ($this->normalize()->toArray() as $val) {
             $part = array();
-            foreach (preg_split( '/;(?=([^"]*"[^"]*")*[^"]*$)/', $val ) as $kvp) {
-                if (!preg_match_all( '/<[^>]+>|[^=]+/', $kvp, $matches )) {
+            foreach (preg_split('/;(?=([^"]*"[^"]*")*[^"]*$)/', $val) as $kvp) {
+                if (!preg_match_all('/<[^>]+>|[^=]+/', $kvp, $matches)) {
                     continue;
                 }
-                $pieces = array_map( $callback, $matches[0] );
+                $pieces = array_map($callback, $matches[0]);
                 $part[$pieces[0]] = isset( $pieces[1] ) ? $pieces[1] : '';
             }
             if ($part) {
@@ -144,20 +135,19 @@ class Header implements HeaderInterface
      */
     public function normalize()
     {
-
         $values = $this->toArray();
 
-        for ($i = 0, $total = count( $values ); $i < $total; $i++) {
-            if (strpos( $values[$i], $this->glue ) !== false) {
+        for ($i = 0, $total = count($values); $i < $total; $i++) {
+            if (strpos($values[$i], $this->glue) !== false) {
                 // Explode on glue when the glue is not inside of a comma
-                foreach (preg_split( '/'.preg_quote( $this->glue ).'(?=([^"]*"[^"]*")*[^"]*$)/', $values[$i] ) as $v) {
-                    $values[] = trim( $v );
+                foreach (preg_split('/'.preg_quote($this->glue).'(?=([^"]*"[^"]*")*[^"]*$)/', $values[$i]) as $v) {
+                    $values[] = trim($v);
                 }
                 unset( $values[$i] );
             }
         }
 
-        $this->values = array_values( $values );
+        $this->values = array_values($values);
 
         return $this;
     }
@@ -166,10 +156,10 @@ class Header implements HeaderInterface
      * @deprecated
      * @codeCoverageIgnore
      */
-    public function hasExactHeader( $header )
+    public function hasExactHeader($header)
     {
 
-        Version::warn( __METHOD__.' is deprecated' );
+        Version::warn(__METHOD__.' is deprecated');
         return $this->header == $header;
     }
 
@@ -180,7 +170,7 @@ class Header implements HeaderInterface
     public function raw()
     {
 
-        Version::warn( __METHOD__.' is deprecated. Use toArray()' );
+        Version::warn(__METHOD__.' is deprecated. Use toArray()');
         return $this->toArray();
     }
 
@@ -191,11 +181,10 @@ class Header implements HeaderInterface
      *
      * @return string
      */
-    protected function trimHeader( $str )
+    protected function trimHeader($str)
     {
-
         static $trimmed = "\"'  \n\t";
 
-        return trim( $str, $trimmed );
+        return trim($str, $trimmed);
     }
 }

@@ -54,9 +54,8 @@ class ListenersInvoker
      *
      * @param EntityManagerInterface $em
      */
-    public function __construct( EntityManagerInterface $em )
+    public function __construct(EntityManagerInterface $em)
     {
-
         $this->eventManager = $em->getEventManager();
         $this->resolver = $em->getConfiguration()->getEntityListenerResolver();
     }
@@ -69,9 +68,8 @@ class ListenersInvoker
      *
      * @return integer Bitmask of subscribed event systems.
      */
-    public function getSubscribedSystems( ClassMetadata $metadata, $eventName )
+    public function getSubscribedSystems(ClassMetadata $metadata, $eventName)
     {
-
         $invoke = self::INVOKE_NONE;
 
         if (isset( $metadata->lifecycleCallbacks[$eventName] )) {
@@ -82,7 +80,7 @@ class ListenersInvoker
             $invoke |= self::INVOKE_LISTENERS;
         }
 
-        if ($this->eventManager->hasListeners( $eventName )) {
+        if ($this->eventManager->hasListeners($eventName)) {
             $invoke |= self::INVOKE_MANAGER;
         }
 
@@ -98,12 +96,12 @@ class ListenersInvoker
      * @param \Doctrine\Common\EventArgs          $event     The Event args.
      * @param integer                             $invoke    Bitmask to invoke listeners.
      */
-    public function invoke( ClassMetadata $metadata, $eventName, $entity, EventArgs $event, $invoke )
+    public function invoke(ClassMetadata $metadata, $eventName, $entity, EventArgs $event, $invoke)
     {
 
         if ($invoke & self::INVOKE_CALLBACKS) {
             foreach ($metadata->lifecycleCallbacks[$eventName] as $callback) {
-                $entity->$callback( $event );
+                $entity->$callback($event);
             }
         }
 
@@ -111,14 +109,14 @@ class ListenersInvoker
             foreach ($metadata->entityListeners[$eventName] as $listener) {
                 $class = $listener['class'];
                 $method = $listener['method'];
-                $instance = $this->resolver->resolve( $class );
+                $instance = $this->resolver->resolve($class);
 
-                $instance->$method( $entity, $event );
+                $instance->$method($entity, $event);
             }
         }
 
         if ($invoke & self::INVOKE_MANAGER) {
-            $this->eventManager->dispatchEvent( $eventName, $event );
+            $this->eventManager->dispatchEvent($eventName, $event);
         }
     }
 }

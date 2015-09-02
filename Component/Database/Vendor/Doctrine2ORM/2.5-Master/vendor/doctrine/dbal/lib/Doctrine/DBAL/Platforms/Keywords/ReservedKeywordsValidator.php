@@ -29,7 +29,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
 
 class ReservedKeywordsValidator implements Visitor
 {
-
     /**
      * @var KeywordList[]
      */
@@ -43,9 +42,8 @@ class ReservedKeywordsValidator implements Visitor
     /**
      * @param \Doctrine\DBAL\Platforms\Keywords\KeywordList[] $keywordLists
      */
-    public function __construct( array $keywordLists )
+    public function __construct(array $keywordLists)
     {
-
         $this->keywordLists = $keywordLists;
     }
 
@@ -54,19 +52,17 @@ class ReservedKeywordsValidator implements Visitor
      */
     public function getViolations()
     {
-
         return $this->violations;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptColumn( Table $table, Column $column )
+    public function acceptColumn(Table $table, Column $column)
     {
-
         $this->addViolation(
             'Table '.$table->getName().' column '.$column->getName(),
-            $this->isReservedWord( $column->getName() )
+            $this->isReservedWord($column->getName())
         );
     }
 
@@ -76,14 +72,14 @@ class ReservedKeywordsValidator implements Visitor
      *
      * @return void
      */
-    private function addViolation( $asset, $violatedPlatforms )
+    private function addViolation($asset, $violatedPlatforms)
     {
 
         if (!$violatedPlatforms) {
             return;
         }
 
-        $this->violations[] = $asset.' keyword violations: '.implode( ', ', $violatedPlatforms );
+        $this->violations[] = $asset.' keyword violations: '.implode(', ', $violatedPlatforms);
     }
 
     /**
@@ -91,16 +87,15 @@ class ReservedKeywordsValidator implements Visitor
      *
      * @return array
      */
-    private function isReservedWord( $word )
+    private function isReservedWord($word)
     {
-
         if ($word[0] == "`") {
-            $word = str_replace( '`', '', $word );
+            $word = str_replace('`', '', $word);
         }
 
         $keywordLists = array();
         foreach ($this->keywordLists as $keywordList) {
-            if ($keywordList->isKeyword( $word )) {
+            if ($keywordList->isKeyword($word)) {
                 $keywordLists[] = $keywordList->getName();
             }
         }
@@ -111,40 +106,39 @@ class ReservedKeywordsValidator implements Visitor
     /**
      * {@inheritdoc}
      */
-    public function acceptForeignKey( Table $localTable, ForeignKeyConstraint $fkConstraint )
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptIndex( Table $table, Index $index )
+    public function acceptIndex(Table $table, Index $index)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSchema( Schema $schema )
+    public function acceptSchema(Schema $schema)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSequence( Sequence $sequence )
+    public function acceptSequence(Sequence $sequence)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptTable( Table $table )
+    public function acceptTable(Table $table)
     {
-
         $this->addViolation(
             'Table '.$table->getName(),
-            $this->isReservedWord( $table->getName() )
+            $this->isReservedWord($table->getName())
         );
     }
 }

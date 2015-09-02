@@ -11,20 +11,13 @@ use Guzzle\Http\Message\Response;
  */
 class ReasonPhraseBackoffStrategy extends AbstractErrorCodeBackoffStrategy
 {
-
     public function makesDecision()
     {
-
         return true;
     }
 
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-
+    protected function getDelay($retries, RequestInterface $request, Response $response = null, HttpException $e = null)
+    {
         if ($response) {
             return isset( $this->errorCodes[$response->getReasonPhrase()] ) ? true : null;
         }

@@ -20,14 +20,14 @@
 use Doctrine\DBAL\Tools\Console\ConsoleRunner;
 use Symfony\Component\Console\Helper\HelperSet;
 
-$files = array( __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php' );
+$files = array(__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php');
 $loader = null;
 $cwd = getcwd();
-$directories = array( $cwd, $cwd.DIRECTORY_SEPARATOR.'config' );
+$directories = array($cwd, $cwd.DIRECTORY_SEPARATOR.'config');
 $configFile = null;
 
 foreach ($files as $file) {
-    if (file_exists( $file )) {
+    if (file_exists($file)) {
         $loader = require $file;
 
         break;
@@ -35,24 +35,24 @@ foreach ($files as $file) {
 }
 
 if (!$loader) {
-    throw new RuntimeException( 'vendor/autoload.php could not be found. Did you run `php composer.phar install`?' );
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
 }
 
 foreach ($directories as $directory) {
     $configFile = $directory.DIRECTORY_SEPARATOR.'cli-config.php';
 
-    if (file_exists( $configFile )) {
+    if (file_exists($configFile)) {
         break;
     }
 }
 
-if (!file_exists( $configFile )) {
+if (!file_exists($configFile)) {
     ConsoleRunner::printCliConfigTemplate();
 
     exit( 1 );
 }
 
-if (!is_readable( $configFile )) {
+if (!is_readable($configFile)) {
     echo 'Configuration file ['.$configFile.'] does not have read permission.'.PHP_EOL;
 
     exit( 1 );
@@ -71,4 +71,4 @@ if (!$helperSet instanceof HelperSet) {
     }
 }
 
-ConsoleRunner::run( $helperSet, $commands );
+ConsoleRunner::run($helperSet, $commands);

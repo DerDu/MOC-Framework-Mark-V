@@ -19,7 +19,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class LogPlugin implements EventSubscriberInterface
 {
-
     /** @var LogAdapterInterface Adapter responsible for writing log data */
     protected $logAdapter;
 
@@ -40,9 +39,8 @@ class LogPlugin implements EventSubscriberInterface
         $formatter = null,
         $wireBodies = false
     ) {
-
         $this->logAdapter = $logAdapter;
-        $this->formatter = $formatter instanceof MessageFormatter ? $formatter : new MessageFormatter( $formatter );
+        $this->formatter = $formatter instanceof MessageFormatter ? $formatter : new MessageFormatter($formatter);
         $this->wireBodies = $wireBodies;
     }
 
@@ -54,31 +52,29 @@ class LogPlugin implements EventSubscriberInterface
      *
      * @return self
      */
-    public static function getDebugPlugin( $wireBodies = true, $stream = null )
+    public static function getDebugPlugin($wireBodies = true, $stream = null)
     {
-
         if ($stream === null) {
-            if (defined( 'STDERR' )) {
+            if (defined('STDERR')) {
                 $stream = STDERR;
             } else {
-                $stream = fopen( 'php://output', 'w' );
+                $stream = fopen('php://output', 'w');
             }
         }
 
-        return new self( new ClosureLogAdapter( function ( $m ) use ( $stream ) {
+        return new self(new ClosureLogAdapter(function ($m) use ($stream) {
 
-            fwrite( $stream, $m.PHP_EOL );
-        } ), "# Request:\n{request}\n\n# Response:\n{response}\n\n# Errors: {curl_code} {curl_error}", $wireBodies );
+            fwrite($stream, $m.PHP_EOL);
+        }), "# Request:\n{request}\n\n# Response:\n{response}\n\n# Errors: {curl_code} {curl_error}", $wireBodies);
     }
 
     public static function getSubscribedEvents()
     {
-
         return array(
-            'curl.callback.write' => array( 'onCurlWrite', 255 ),
-            'curl.callback.read'  => array( 'onCurlRead', 255 ),
-            'request.before_send' => array( 'onRequestBeforeSend', 255 ),
-            'request.sent'        => array( 'onRequestSent', 255 )
+            'curl.callback.write' => array('onCurlWrite', 255),
+            'curl.callback.read'  => array('onCurlRead', 255),
+            'request.before_send' => array('onRequestBeforeSend', 255),
+            'request.sent'        => array('onRequestSent', 255)
         );
     }
 
@@ -87,12 +83,11 @@ class LogPlugin implements EventSubscriberInterface
      *
      * @param Event $event
      */
-    public function onCurlRead( Event $event )
+    public function onCurlRead(Event $event)
     {
-
         // Stream the request body to the log if the body is not repeatable
-        if ($wire = $event['request']->getParams()->get( 'request_wire' )) {
-            $wire->write( $event['read'] );
+        if ($wire = $event['request']->getParams()->get('request_wire')) {
+            $wire->write($event['read']);
         }
     }
 
@@ -101,12 +96,11 @@ class LogPlugin implements EventSubscriberInterface
      *
      * @param Event $event
      */
-    public function onCurlWrite( Event $event )
+    public function onCurlWrite(Event $event)
     {
-
         // Stream the response body to the log if the body is not repeatable
-        if ($wire = $event['request']->getParams()->get( 'response_wire' )) {
-            $wire->write( $event['write'] );
+        if ($wire = $event['request']->getParams()->get('response_wire')) {
+            $wire->write($event['write']);
         }
     }
 
@@ -115,23 +109,22 @@ class LogPlugin implements EventSubscriberInterface
      *
      * @param Event $event
      */
-    public function onRequestBeforeSend( Event $event )
+    public function onRequestBeforeSend(Event $event)
     {
-
         if ($this->wireBodies) {
             $request = $event['request'];
             // Ensure that curl IO events are emitted
-            $request->getCurlOptions()->set( 'emit_io', true );
+            $request->getCurlOptions()->set('emit_io', true);
             // We need to make special handling for content wiring and non-repeatable streams.
             if ($request instanceof EntityEnclosingRequestInterface && $request->getBody()
                 && ( !$request->getBody()->isSeekable() || !$request->getBody()->isReadable() )
             ) {
                 // The body of the request cannot be recalled so logging the body will require us to buffer it
-                $request->getParams()->set( 'request_wire', EntityBody::factory() );
+                $request->getParams()->set('request_wire', EntityBody::factory());
             }
             if (!$request->getResponseBody()->isRepeatable()) {
                 // The body of the response cannot be recalled so logging the body will require us to buffer it
-                $request->getParams()->set( 'response_wire', EntityBody::factory() );
+                $request->getParams()->set('response_wire', EntityBody::factory());
             }
         }
     }
@@ -141,30 +134,29 @@ class LogPlugin implements EventSubscriberInterface
      *
      * @param Event $event
      */
-    public function onRequestSent( Event $event )
+    public function onRequestSent(Event $event)
     {
-
         $request = $event['request'];
         $response = $event['response'];
         $handle = $event['handle'];
 
-        if ($wire = $request->getParams()->get( 'request_wire' )) {
+        if ($wire = $request->getParams()->get('request_wire')) {
             $request = clone $request;
-            $request->setBody( $wire );
+            $request->setBody($wire);
         }
 
-        if ($wire = $request->getParams()->get( 'response_wire' )) {
+        if ($wire = $request->getParams()->get('response_wire')) {
             $response = clone $response;
-            $response->setBody( $wire );
+            $response->setBody($wire);
         }
 
         // Send the log message to the adapter, adding a category and host
         $priority = $response && $response->isError() ? LOG_ERR : LOG_DEBUG;
-        $message = $this->formatter->format( $request, $response, $handle );
-        $this->logAdapter->log( $message, $priority, array(
+        $message = $this->formatter->format($request, $response, $handle);
+        $this->logAdapter->log($message, $priority, array(
             'request'  => $request,
             'response' => $response,
             'handle'   => $handle
-        ) );
+        ));
     }
 }

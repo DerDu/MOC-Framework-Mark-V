@@ -22,7 +22,6 @@ use Symfony\Component\Config\FileLocatorInterface;
  */
 abstract class FileLoader extends Loader
 {
-
     /**
      * @var array
      */
@@ -40,9 +39,8 @@ abstract class FileLoader extends Loader
      *
      * @param FileLocatorInterface $locator A FileLocatorInterface instance
      */
-    public function __construct( FileLocatorInterface $locator )
+    public function __construct(FileLocatorInterface $locator)
     {
-
         $this->locator = $locator;
     }
 
@@ -51,9 +49,8 @@ abstract class FileLoader extends Loader
      *
      * @param string $dir
      */
-    public function setCurrentDir( $dir )
+    public function setCurrentDir($dir)
     {
-
         $this->currentDir = $dir;
     }
 
@@ -70,25 +67,30 @@ abstract class FileLoader extends Loader
      * @throws FileLoaderLoadException
      * @throws FileLoaderImportCircularReferenceException
      */
-    public function import( $resource, $type = null, $ignoreErrors = false, $sourceResource = null )
+    public function import($resource, $type = null, $ignoreErrors = false, $sourceResource = null)
     {
-
         try {
-            $loader = $this->resolve( $resource, $type );
+            $loader = $this->resolve($resource, $type);
 
             if ($loader instanceof self && null !== $this->currentDir) {
                 // we fallback to the current locator to keep BC
                 // as some some loaders do not call the parent __construct()
                 // @deprecated should be removed in 3.0
-                $locator = $loader->getLocator() ?: $this->locator;
-                $resource = $locator->locate( $resource, $this->currentDir, false );
+                $locator = $loader->getLocator();
+                if (null === $locator) {
+                    @trigger_error('Not calling the parent constructor in '.get_class($loader).' which extends '.__CLASS__.' is deprecated since version 2.7 and will not be supported anymore in 3.0.',
+                        E_USER_DEPRECATED);
+                    $locator = $this->locator;
+                }
+
+                $resource = $locator->locate($resource, $this->currentDir, false);
             }
 
-            $resources = is_array( $resource ) ? $resource : array( $resource );
-            for ($i = 0; $i < $resourcesCount = count( $resources ); $i++) {
+            $resources = is_array($resource) ? $resource : array($resource);
+            for ($i = 0; $i < $resourcesCount = count($resources); ++$i) {
                 if (isset( self::$loading[$resources[$i]] )) {
                     if ($i == $resourcesCount - 1) {
-                        throw new FileLoaderImportCircularReferenceException( array_keys( self::$loading ) );
+                        throw new FileLoaderImportCircularReferenceException(array_keys(self::$loading));
                     }
                 } else {
                     $resource = $resources[$i];
@@ -98,8 +100,8 @@ abstract class FileLoader extends Loader
             self::$loading[$resource] = true;
 
             try {
-                $ret = $loader->load( $resource, $type );
-            } catch( \Exception $e ) {
+                $ret = $loader->load($resource, $type);
+            } catch (\Exception $e) {
                 unset( self::$loading[$resource] );
                 throw $e;
             }
@@ -107,16 +109,16 @@ abstract class FileLoader extends Loader
             unset( self::$loading[$resource] );
 
             return $ret;
-        } catch( FileLoaderImportCircularReferenceException $e ) {
+        } catch (FileLoaderImportCircularReferenceException $e) {
             throw $e;
-        } catch( \Exception $e ) {
+        } catch (\Exception $e) {
             if (!$ignoreErrors) {
                 // prevent embedded imports from nesting multiple exceptions
                 if ($e instanceof FileLoaderLoadException) {
                     throw $e;
                 }
 
-                throw new FileLoaderLoadException( $resource, $sourceResource, null, $e );
+                throw new FileLoaderLoadException($resource, $sourceResource, null, $e);
             }
         }
     }
@@ -128,7 +130,6 @@ abstract class FileLoader extends Loader
      */
     public function getLocator()
     {
-
         return $this->locator;
     }
 }

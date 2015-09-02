@@ -26,11 +26,10 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 class NullOutput implements OutputInterface
 {
-
     /**
      * {@inheritdoc}
      */
-    public function setFormatter( OutputFormatterInterface $formatter )
+    public function setFormatter(OutputFormatterInterface $formatter)
     {
         // do nothing
     }
@@ -40,7 +39,6 @@ class NullOutput implements OutputInterface
      */
     public function getFormatter()
     {
-
         // to comply with the interface we must return a OutputFormatterInterface
         return new OutputFormatter();
     }
@@ -48,7 +46,7 @@ class NullOutput implements OutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setDecorated( $decorated )
+    public function setDecorated($decorated)
     {
         // do nothing
     }
@@ -58,14 +56,13 @@ class NullOutput implements OutputInterface
      */
     public function isDecorated()
     {
-
         return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity( $level )
+    public function setVerbosity($level)
     {
         // do nothing
     }
@@ -75,38 +72,33 @@ class NullOutput implements OutputInterface
      */
     public function getVerbosity()
     {
-
         return self::VERBOSITY_QUIET;
     }
 
     public function isQuiet()
     {
-
         return true;
     }
 
     public function isVerbose()
     {
-
         return false;
     }
 
     public function isVeryVerbose()
     {
-
         return false;
     }
 
     public function isDebug()
     {
-
         return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function writeln( $messages, $type = self::OUTPUT_NORMAL )
+    public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
         // do nothing
     }
@@ -114,7 +106,7 @@ class NullOutput implements OutputInterface
     /**
      * {@inheritdoc}
      */
-    public function write( $messages, $newline = false, $type = self::OUTPUT_NORMAL )
+    public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
         // do nothing
     }

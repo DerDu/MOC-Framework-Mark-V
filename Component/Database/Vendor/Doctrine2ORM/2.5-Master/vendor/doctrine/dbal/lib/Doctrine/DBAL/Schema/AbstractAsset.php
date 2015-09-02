@@ -33,7 +33,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 abstract class AbstractAsset
 {
-
     /**
      * @var string
      */
@@ -58,9 +57,8 @@ abstract class AbstractAsset
      *
      * @return boolean
      */
-    public function isInDefaultNamespace( $defaultNamespaceName )
+    public function isInDefaultNamespace($defaultNamespaceName)
     {
-
         return $this->_namespace == $defaultNamespaceName || $this->_namespace === null;
     }
 
@@ -73,7 +71,6 @@ abstract class AbstractAsset
      */
     public function getNamespaceName()
     {
-
         return $this->_namespace;
     }
 
@@ -85,15 +82,14 @@ abstract class AbstractAsset
      *
      * @return string
      */
-    public function getShortestName( $defaultNamespaceName )
+    public function getShortestName($defaultNamespaceName)
     {
-
         $shortestName = $this->getName();
         if ($this->_namespace == $defaultNamespaceName) {
             $shortestName = $this->_name;
         }
 
-        return strtolower( $shortestName );
+        return strtolower($shortestName);
     }
 
     /**
@@ -103,7 +99,6 @@ abstract class AbstractAsset
      */
     public function getName()
     {
-
         if ($this->_namespace) {
             return $this->_namespace.".".$this->_name;
         }
@@ -118,15 +113,15 @@ abstract class AbstractAsset
      *
      * @return void
      */
-    protected function _setName( $name )
+    protected function _setName($name)
     {
 
-        if ($this->isIdentifierQuoted( $name )) {
+        if ($this->isIdentifierQuoted($name)) {
             $this->_quoted = true;
-            $name = $this->trimQuotes( $name );
+            $name = $this->trimQuotes($name);
         }
-        if (strpos( $name, "." ) !== false) {
-            $parts = explode( ".", $name );
+        if (strpos($name, ".") !== false) {
+            $parts = explode(".", $name);
             $this->_namespace = $parts[0];
             $name = $parts[1];
         }
@@ -140,7 +135,7 @@ abstract class AbstractAsset
      *
      * @return boolean
      */
-    protected function isIdentifierQuoted( $identifier )
+    protected function isIdentifierQuoted($identifier)
     {
 
         return ( isset( $identifier[0] ) && ( $identifier[0] == '`' || $identifier[0] == '"' || $identifier[0] == '[' ) );
@@ -153,10 +148,10 @@ abstract class AbstractAsset
      *
      * @return string
      */
-    protected function trimQuotes( $identifier )
+    protected function trimQuotes($identifier)
     {
 
-        return str_replace( array( '`', '"', '[', ']' ), '', $identifier );
+        return str_replace(array('`', '"', '[', ']'), '', $identifier);
     }
 
     /**
@@ -172,15 +167,14 @@ abstract class AbstractAsset
      *
      * @return string
      */
-    public function getFullQualifiedName( $defaultNamespaceName )
+    public function getFullQualifiedName($defaultNamespaceName)
     {
-
         $name = $this->getName();
         if (!$this->_namespace) {
             $name = $defaultNamespaceName.".".$name;
         }
 
-        return strtolower( $name );
+        return strtolower($name);
     }
 
     /**
@@ -190,7 +184,6 @@ abstract class AbstractAsset
      */
     public function isQuoted()
     {
-
         return $this->_quoted;
     }
 
@@ -202,16 +195,15 @@ abstract class AbstractAsset
      *
      * @return string
      */
-    public function getQuotedName( AbstractPlatform $platform )
+    public function getQuotedName(AbstractPlatform $platform)
     {
-
         $keywords = $platform->getReservedKeywordsList();
-        $parts = explode( ".", $this->getName() );
+        $parts = explode(".", $this->getName());
         foreach ($parts as $k => $v) {
-            $parts[$k] = ( $this->_quoted || $keywords->isKeyword( $v ) ) ? $platform->quoteIdentifier( $v ) : $v;
+            $parts[$k] = ( $this->_quoted || $keywords->isKeyword($v) ) ? $platform->quoteIdentifier($v) : $v;
         }
 
-        return implode( ".", $parts );
+        return implode(".", $parts);
     }
 
     /**
@@ -227,14 +219,14 @@ abstract class AbstractAsset
      *
      * @return string
      */
-    protected function _generateIdentifierName( $columnNames, $prefix = '', $maxSize = 30 )
+    protected function _generateIdentifierName($columnNames, $prefix = '', $maxSize = 30)
     {
 
-        $hash = implode( "", array_map( function ( $column ) {
+        $hash = implode("", array_map(function ($column) {
 
-            return dechex( crc32( $column ) );
-        }, $columnNames ) );
+            return dechex(crc32($column));
+        }, $columnNames));
 
-        return substr( strtoupper( $prefix."_".$hash ), 0, $maxSize );
+        return substr(strtoupper($prefix."_".$hash), 0, $maxSize);
     }
 }

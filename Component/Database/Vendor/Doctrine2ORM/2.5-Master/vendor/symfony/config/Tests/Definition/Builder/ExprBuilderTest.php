@@ -15,15 +15,13 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class ExprBuilderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testAlwaysExpression()
     {
-
         $test = $this->getTestBuilder()
-            ->always( $this->returnClosure( 'new_value' ) )
+            ->always($this->returnClosure('new_value'))
             ->end();
 
-        $this->assertFinalizedValueIs( 'new_value', $test );
+        $this->assertFinalizedValueIs('new_value', $test);
     }
 
     /**
@@ -33,13 +31,12 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTestBuilder()
     {
-
         $builder = new TreeBuilder();
 
         return $builder
-            ->root( 'test' )
+            ->root('test')
             ->children()
-            ->variableNode( 'key' )
+            ->variableNode('key')
             ->validate();
     }
 
@@ -50,11 +47,10 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
      *
      * @return \Closure
      */
-    protected function returnClosure( $val )
+    protected function returnClosure($val)
     {
 
-        return function ( $v ) use ( $val ) {
-
+        return function ($v) use ($val) {
             return $val;
         };
     }
@@ -66,10 +62,10 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
      * @param TreeBuilder $treeBuilder The tree builder to finalize
      * @param mixed       $config      The config values that new to be finalized
      */
-    protected function assertFinalizedValueIs( $value, $treeBuilder, $config = null )
+    protected function assertFinalizedValueIs($value, $treeBuilder, $config = null)
     {
 
-        $this->assertEquals( array( 'key' => $value ), $this->finalizeTestBuilder( $treeBuilder, $config ) );
+        $this->assertEquals(array('key' => $value), $this->finalizeTestBuilder($treeBuilder, $config));
     }
 
     /**
@@ -81,133 +77,125 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
      *
      * @return array The finalized config values
      */
-    protected function finalizeTestBuilder( $testBuilder, $config = null )
+    protected function finalizeTestBuilder($testBuilder, $config = null)
     {
-
         return $testBuilder
             ->end()
             ->end()
             ->end()
             ->buildTree()
-            ->finalize( null === $config ? array( 'key' => 'value' ) : $config );
+            ->finalize(null === $config ? array('key' => 'value') : $config);
     }
 
     public function testIfTrueExpression()
     {
-
         $test = $this->getTestBuilder()
             ->ifTrue()
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test, array( 'key' => true ) );
+        $this->assertFinalizedValueIs('new_value', $test, array('key' => true));
 
         $test = $this->getTestBuilder()
-            ->ifTrue( function ( $v ) {
+            ->ifTrue(function ($v) {
 
                 return true;
-            } )
-            ->then( $this->returnClosure( 'new_value' ) )
+            })
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test );
+        $this->assertFinalizedValueIs('new_value', $test);
 
         $test = $this->getTestBuilder()
-            ->ifTrue( function ( $v ) {
+            ->ifTrue(function ($v) {
 
                 return false;
-            } )
-            ->then( $this->returnClosure( 'new_value' ) )
+            })
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'value', $test );
+        $this->assertFinalizedValueIs('value', $test);
     }
 
     public function testIfStringExpression()
     {
+        $test = $this->getTestBuilder()
+            ->ifString()
+            ->then($this->returnClosure('new_value'))
+            ->end();
+        $this->assertFinalizedValueIs('new_value', $test);
 
         $test = $this->getTestBuilder()
             ->ifString()
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test );
-
-        $test = $this->getTestBuilder()
-            ->ifString()
-            ->then( $this->returnClosure( 'new_value' ) )
-            ->end();
-        $this->assertFinalizedValueIs( 45, $test, array( 'key' => 45 ) );
+        $this->assertFinalizedValueIs(45, $test, array('key' => 45));
     }
 
     public function testIfNullExpression()
     {
+        $test = $this->getTestBuilder()
+            ->ifNull()
+            ->then($this->returnClosure('new_value'))
+            ->end();
+        $this->assertFinalizedValueIs('new_value', $test, array('key' => null));
 
         $test = $this->getTestBuilder()
             ->ifNull()
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test, array( 'key' => null ) );
-
-        $test = $this->getTestBuilder()
-            ->ifNull()
-            ->then( $this->returnClosure( 'new_value' ) )
-            ->end();
-        $this->assertFinalizedValueIs( 'value', $test );
+        $this->assertFinalizedValueIs('value', $test);
     }
 
     public function testIfArrayExpression()
     {
+        $test = $this->getTestBuilder()
+            ->ifArray()
+            ->then($this->returnClosure('new_value'))
+            ->end();
+        $this->assertFinalizedValueIs('new_value', $test, array('key' => array()));
 
         $test = $this->getTestBuilder()
             ->ifArray()
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test, array( 'key' => array() ) );
-
-        $test = $this->getTestBuilder()
-            ->ifArray()
-            ->then( $this->returnClosure( 'new_value' ) )
-            ->end();
-        $this->assertFinalizedValueIs( 'value', $test );
+        $this->assertFinalizedValueIs('value', $test);
     }
 
     public function testIfInArrayExpression()
     {
+        $test = $this->getTestBuilder()
+            ->ifInArray(array('foo', 'bar', 'value'))
+            ->then($this->returnClosure('new_value'))
+            ->end();
+        $this->assertFinalizedValueIs('new_value', $test);
 
         $test = $this->getTestBuilder()
-            ->ifInArray( array( 'foo', 'bar', 'value' ) )
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->ifInArray(array('foo', 'bar'))
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test );
-
-        $test = $this->getTestBuilder()
-            ->ifInArray( array( 'foo', 'bar' ) )
-            ->then( $this->returnClosure( 'new_value' ) )
-            ->end();
-        $this->assertFinalizedValueIs( 'value', $test );
+        $this->assertFinalizedValueIs('value', $test);
     }
 
     public function testIfNotInArrayExpression()
     {
+        $test = $this->getTestBuilder()
+            ->ifNotInArray(array('foo', 'bar'))
+            ->then($this->returnClosure('new_value'))
+            ->end();
+        $this->assertFinalizedValueIs('new_value', $test);
 
         $test = $this->getTestBuilder()
-            ->ifNotInArray( array( 'foo', 'bar' ) )
-            ->then( $this->returnClosure( 'new_value' ) )
+            ->ifNotInArray(array('foo', 'bar', 'value_from_config'))
+            ->then($this->returnClosure('new_value'))
             ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test );
-
-        $test = $this->getTestBuilder()
-            ->ifNotInArray( array( 'foo', 'bar', 'value_from_config' ) )
-            ->then( $this->returnClosure( 'new_value' ) )
-            ->end();
-        $this->assertFinalizedValueIs( 'new_value', $test );
+        $this->assertFinalizedValueIs('new_value', $test);
     }
 
     public function testThenEmptyArrayExpression()
     {
-
         $test = $this->getTestBuilder()
             ->ifString()
             ->thenEmptyArray()
             ->end();
-        $this->assertFinalizedValueIs( array(), $test );
+        $this->assertFinalizedValueIs(array(), $test);
     }
 
     /**
@@ -215,21 +203,19 @@ class ExprBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThenInvalid()
     {
-
         $test = $this->getTestBuilder()
             ->ifString()
-            ->thenInvalid( 'Invalid value' )
+            ->thenInvalid('Invalid value')
             ->end();
-        $this->finalizeTestBuilder( $test );
+        $this->finalizeTestBuilder($test);
     }
 
     public function testThenUnsetExpression()
     {
-
         $test = $this->getTestBuilder()
             ->ifString()
             ->thenUnset()
             ->end();
-        $this->assertEquals( array(), $this->finalizeTestBuilder( $test ) );
+        $this->assertEquals(array(), $this->finalizeTestBuilder($test));
     }
 }

@@ -7,18 +7,16 @@ use Guzzle\Service\Command\ResponseClassInterface;
 
 class CustomResponseModel implements ResponseClassInterface
 {
-
     public $command;
 
-    public function __construct( $command )
+    public function __construct($command)
     {
-
         $this->command = $command;
     }
 
-    public static function fromCommand( OperationCommand $command )
+    public static function fromCommand(OperationCommand $command)
     {
 
-        return new self( $command );
+        return new self($command);
     }
 }

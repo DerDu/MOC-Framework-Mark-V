@@ -16,7 +16,6 @@ use Guzzle\Service\Exception\CommandException;
  */
 interface CommandInterface extends \ArrayAccess, ToArrayInterface
 {
-
     /**
      * Get the short form name of the command
      *
@@ -53,7 +52,7 @@ interface CommandInterface extends \ArrayAccess, ToArrayInterface
      *
      * @return self
      */
-    public function setClient( ClientInterface $client );
+    public function setClient(ClientInterface $client);
 
     /**
      * Get the request object associated with the command
@@ -86,7 +85,7 @@ interface CommandInterface extends \ArrayAccess, ToArrayInterface
      *
      * @return self
      */
-    public function setResult( $result );
+    public function setResult($result);
 
     /**
      * Returns TRUE if the command has been prepared for executing
@@ -122,9 +121,8 @@ interface CommandInterface extends \ArrayAccess, ToArrayInterface
      *
      * @param mixed $callable Callable to execute when the command completes. The callable must accept a
      *                        {@see CommandInterface} object as the only argument.
-     *
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setOnComplete( $callable );
+    public function setOnComplete($callable);
 }

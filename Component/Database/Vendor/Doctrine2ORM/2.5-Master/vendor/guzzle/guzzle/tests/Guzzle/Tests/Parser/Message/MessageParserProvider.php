@@ -4,16 +4,16 @@ namespace Guzzle\Tests\Parser\Message;
 
 class MessageParserProvider extends \Guzzle\Tests\GuzzleTestCase
 {
-
     public function requestProvider()
     {
 
-        $auth = base64_encode( 'michael:foo' );
+        $auth = base64_encode('michael:foo');
 
         return array(
 
             // Empty request
-            array( '', false ),
+            array('', false),
+
             // Converts casing of request. Does not require host header.
             array(
                 "GET / HTTP/1.1\r\n\r\n",
@@ -48,7 +48,7 @@ class MessageParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     ),
                     'headers'     => array(
                         'Host'  => 'example.com',
-                        'X-Foo' => array( 'foo', 'foo', 'Baz' ),
+                        'X-Foo' => array('foo', 'foo', 'Baz'),
                         'x-foo' => 'Bar'
                     ),
                     'body'        => ''
@@ -122,10 +122,9 @@ class MessageParserProvider extends \Guzzle\Tests\GuzzleTestCase
 
     public function responseProvider()
     {
-
         return array(
             // Empty request
-            array( '', false ),
+            array('', false),
             array(
                 "HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n",
                 array(
@@ -171,7 +170,7 @@ class MessageParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     'code'          => '204',
                     'reason_phrase' => 'No Content',
                     'headers'       => array(
-                        'X-Foo' => array( 'foo', 'foo' ),
+                        'X-Foo' => array('foo', 'foo'),
                         'x-foo' => 'Bar'
                     ),
                     'body'          => ''
@@ -193,68 +192,64 @@ class MessageParserProvider extends \Guzzle\Tests\GuzzleTestCase
         );
     }
 
-    public function compareRequestResults( $result, $expected )
+    public function compareRequestResults($result, $expected)
     {
-
         if (!$result) {
-            $this->assertFalse( $expected );
+            $this->assertFalse($expected);
             return;
         }
 
-        $this->assertEquals( $result['method'], $expected['method'] );
-        $this->assertEquals( $result['protocol'], $expected['protocol'] );
-        $this->assertEquals( $result['version'], $expected['version'] );
-        $this->assertEquals( $result['request_url'], $expected['request_url'] );
-        $this->assertEquals( $result['body'], $expected['body'] );
-        $this->compareHttpHeaders( $result['headers'], $expected['headers'] );
+        $this->assertEquals($result['method'], $expected['method']);
+        $this->assertEquals($result['protocol'], $expected['protocol']);
+        $this->assertEquals($result['version'], $expected['version']);
+        $this->assertEquals($result['request_url'], $expected['request_url']);
+        $this->assertEquals($result['body'], $expected['body']);
+        $this->compareHttpHeaders($result['headers'], $expected['headers']);
     }
 
-    public function compareHttpHeaders( $result, $expected )
+    public function compareHttpHeaders($result, $expected)
     {
-
         // Aggregate all headers case-insensitively
-        $result = $this->normalizeHeaders( $result );
-        $expected = $this->normalizeHeaders( $expected );
-        $this->assertEquals( $result, $expected );
+        $result = $this->normalizeHeaders($result);
+        $expected = $this->normalizeHeaders($expected);
+        $this->assertEquals($result, $expected);
     }
 
-    protected function normalizeHeaders( $headers )
+    protected function normalizeHeaders($headers)
     {
-
         $normalized = array();
         foreach ($headers as $key => $value) {
-            $key = strtolower( $key );
+            $key = strtolower($key);
             if (!isset( $normalized[$key] )) {
                 $normalized[$key] = $value;
-            } elseif (!is_array( $normalized[$key] )) {
-                $normalized[$key] = array( $value );
+            } elseif (!is_array($normalized[$key])) {
+                $normalized[$key] = array($value);
             } else {
                 $normalized[$key][] = $value;
             }
         }
 
         foreach ($normalized as $key => &$value) {
-            if (is_array( $value )) {
-                sort( $value );
+            if (is_array($value)) {
+                sort($value);
             }
         }
 
         return $normalized;
     }
 
-    public function compareResponseResults( $result, $expected )
+    public function compareResponseResults($result, $expected)
     {
-
         if (!$result) {
-            $this->assertFalse( $expected );
+            $this->assertFalse($expected);
             return;
         }
 
-        $this->assertEquals( $result['protocol'], $expected['protocol'] );
-        $this->assertEquals( $result['version'], $expected['version'] );
-        $this->assertEquals( $result['code'], $expected['code'] );
-        $this->assertEquals( $result['reason_phrase'], $expected['reason_phrase'] );
-        $this->assertEquals( $result['body'], $expected['body'] );
-        $this->compareHttpHeaders( $result['headers'], $expected['headers'] );
+        $this->assertEquals($result['protocol'], $expected['protocol']);
+        $this->assertEquals($result['version'], $expected['version']);
+        $this->assertEquals($result['code'], $expected['code']);
+        $this->assertEquals($result['reason_phrase'], $expected['reason_phrase']);
+        $this->assertEquals($result['body'], $expected['body']);
+        $this->compareHttpHeaders($result['headers'], $expected['headers']);
     }
 }

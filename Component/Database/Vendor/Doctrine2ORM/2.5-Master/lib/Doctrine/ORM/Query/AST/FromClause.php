@@ -31,7 +31,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class FromClause extends Node
 {
-
     /**
      * @var array
      */
@@ -40,18 +39,17 @@ class FromClause extends Node
     /**
      * @param array $identificationVariableDeclarations
      */
-    public function __construct( array $identificationVariableDeclarations )
+    public function __construct(array $identificationVariableDeclarations)
     {
-
         $this->identificationVariableDeclarations = $identificationVariableDeclarations;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkFromClause( $this );
+        return $sqlWalker->walkFromClause($this);
     }
 }

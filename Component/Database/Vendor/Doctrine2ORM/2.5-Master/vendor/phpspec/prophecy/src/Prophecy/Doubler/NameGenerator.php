@@ -21,7 +21,6 @@ use ReflectionClass;
  */
 class NameGenerator
 {
-
     private static $counter = 1;
 
     /**
@@ -32,9 +31,8 @@ class NameGenerator
      *
      * @return string
      */
-    public function name( ReflectionClass $class = null, array $interfaces )
+    public function name(ReflectionClass $class = null, array $interfaces)
     {
-
         $parts = array();
 
         if (null !== $class) {
@@ -45,10 +43,10 @@ class NameGenerator
             }
         }
 
-        if (!count( $parts )) {
+        if (!count($parts)) {
             $parts[] = 'stdClass';
         }
 
-        return sprintf( 'Double\%s\P%d', implode( '\\', $parts ), self::$counter++ );
+        return sprintf('Double\%s\P%d', implode('\\', $parts), self::$counter++);
     }
 }

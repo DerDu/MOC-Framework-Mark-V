@@ -28,7 +28,6 @@ use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
  */
 class Autoloader
 {
-
     /**
      * Registers and returns autoloader callback for the given proxy dir and namespace.
      *
@@ -40,29 +39,29 @@ class Autoloader
      *
      * @throws InvalidArgumentException
      */
-    public static function register( $proxyDir, $proxyNamespace, $notFoundCallback = null )
+    public static function register($proxyDir, $proxyNamespace, $notFoundCallback = null)
     {
 
-        $proxyNamespace = ltrim( $proxyNamespace, '\\' );
+        $proxyNamespace = ltrim($proxyNamespace, '\\');
 
-        if (!( null === $notFoundCallback || is_callable( $notFoundCallback ) )) {
-            throw InvalidArgumentException::invalidClassNotFoundCallback( $notFoundCallback );
+        if (!( null === $notFoundCallback || is_callable($notFoundCallback) )) {
+            throw InvalidArgumentException::invalidClassNotFoundCallback($notFoundCallback);
         }
 
-        $autoloader = function ( $className ) use ( $proxyDir, $proxyNamespace, $notFoundCallback ) {
+        $autoloader = function ($className) use ($proxyDir, $proxyNamespace, $notFoundCallback) {
 
-            if (0 === strpos( $className, $proxyNamespace )) {
-                $file = Autoloader::resolveFile( $proxyDir, $proxyNamespace, $className );
+            if (0 === strpos($className, $proxyNamespace)) {
+                $file = Autoloader::resolveFile($proxyDir, $proxyNamespace, $className);
 
-                if ($notFoundCallback && !file_exists( $file )) {
-                    call_user_func( $notFoundCallback, $proxyDir, $proxyNamespace, $className );
+                if ($notFoundCallback && !file_exists($file)) {
+                    call_user_func($notFoundCallback, $proxyDir, $proxyNamespace, $className);
                 }
 
                 require $file;
             }
         };
 
-        spl_autoload_register( $autoloader );
+        spl_autoload_register($autoloader);
 
         return $autoloader;
     }
@@ -82,14 +81,14 @@ class Autoloader
      *
      * @throws InvalidArgumentException
      */
-    public static function resolveFile( $proxyDir, $proxyNamespace, $className )
+    public static function resolveFile($proxyDir, $proxyNamespace, $className)
     {
 
-        if (0 !== strpos( $className, $proxyNamespace )) {
-            throw InvalidArgumentException::notProxyClass( $className, $proxyNamespace );
+        if (0 !== strpos($className, $proxyNamespace)) {
+            throw InvalidArgumentException::notProxyClass($className, $proxyNamespace);
         }
 
-        $className = str_replace( '\\', '', substr( $className, strlen( $proxyNamespace ) + 1 ) );
+        $className = str_replace('\\', '', substr($className, strlen($proxyNamespace) + 1));
 
         return $proxyDir.DIRECTORY_SEPARATOR.$className.'.php';
     }

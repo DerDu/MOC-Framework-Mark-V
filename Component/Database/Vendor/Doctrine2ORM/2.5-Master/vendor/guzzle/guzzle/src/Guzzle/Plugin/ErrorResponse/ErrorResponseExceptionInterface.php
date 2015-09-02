@@ -10,7 +10,6 @@ use Guzzle\Service\Command\CommandInterface;
  */
 interface ErrorResponseExceptionInterface
 {
-
     /**
      * Create an exception for a command based on a command and an error response definition
      *
@@ -19,5 +18,5 @@ interface ErrorResponseExceptionInterface
      *
      * @return self
      */
-    public static function fromCommand( CommandInterface $command, Response $response );
+    public static function fromCommand(CommandInterface $command, Response $response);
 }

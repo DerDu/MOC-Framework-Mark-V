@@ -35,7 +35,6 @@ namespace Doctrine\Common\Inflector;
  */
 class Inflector
 {
-
     /**
      * Plural inflector rules.
      *
@@ -43,28 +42,28 @@ class Inflector
      */
     private static $plural = array(
         'rules'       => array(
-            '/(s)tatus$/i'               => '\1\2tatuses',
-            '/(quiz)$/i'                 => '\1zes',
-            '/^(ox)$/i'                  => '\1\2en',
-            '/([m|l])ouse$/i'            => '\1ice',
+            '/(s)tatus$/i'             => '\1\2tatuses',
+            '/(quiz)$/i'               => '\1zes',
+            '/^(ox)$/i'                => '\1\2en',
+            '/([m|l])ouse$/i'          => '\1ice',
             '/(matr|vert|ind)(ix|ex)$/i' => '\1ices',
-            '/(x|ch|ss|sh)$/i'           => '\1es',
-            '/([^aeiouy]|qu)y$/i'        => '\1ies',
-            '/(hive)$/i'                 => '\1s',
-            '/(?:([^f])fe|([lr])f)$/i'   => '\1\2ves',
-            '/sis$/i'                    => 'ses',
-            '/([ti])um$/i'               => '\1a',
-            '/(p)erson$/i'               => '\1eople',
-            '/(m)an$/i'                  => '\1en',
-            '/(c)hild$/i'                => '\1hildren',
-            '/(buffal|tomat)o$/i'        => '\1\2oes',
+            '/(x|ch|ss|sh)$/i'         => '\1es',
+            '/([^aeiouy]|qu)y$/i'      => '\1ies',
+            '/(hive)$/i'               => '\1s',
+            '/(?:([^f])fe|([lr])f)$/i' => '\1\2ves',
+            '/sis$/i'                  => 'ses',
+            '/([ti])um$/i'             => '\1a',
+            '/(p)erson$/i'             => '\1eople',
+            '/(m)an$/i'                => '\1en',
+            '/(c)hild$/i'              => '\1hildren',
+            '/(buffal|tomat|her)o$/i'  => '\1\2oes',
             '/(alumn|bacill|cact|foc|fung|nucle|radi|stimul|syllab|termin|vir)us$/i' => '\1i',
-            '/us$/i'                     => 'uses',
-            '/(alias)$/i'                => '\1es',
-            '/(ax|cris|test)is$/i'       => '\1es',
-            '/s$/'                       => 's',
-            '/^$/'                       => '',
-            '/$/'                        => 's',
+            '/us$/i'                   => 'uses',
+            '/(alias)$/i'              => '\1es',
+            '/(ax|cris|test)is$/i'     => '\1es',
+            '/s$/'                     => 's',
+            '/^$/'                     => '',
+            '/$/'                      => 's',
         ),
         'uninflected' => array(
             '.*[nrlm]ese',
@@ -78,40 +77,40 @@ class Inflector
             'cookie'
         ),
         'irregular'   => array(
-            'atlas'    => 'atlases',
-            'beef'     => 'beefs',
-            'brother'  => 'brothers',
-            'cafe'     => 'cafes',
-            'child'    => 'children',
-            'cookie'   => 'cookies',
-            'corpus'   => 'corpuses',
-            'cow'      => 'cows',
+            'atlas'   => 'atlases',
+            'beef'    => 'beefs',
+            'brother' => 'brothers',
+            'cafe'    => 'cafes',
+            'child'   => 'children',
+            'cookie'  => 'cookies',
+            'corpus'  => 'corpuses',
+            'cow'     => 'cows',
             'criterion' => 'criteria',
             'ganglion' => 'ganglions',
-            'genie'    => 'genies',
-            'genus'    => 'genera',
+            'genie'   => 'genies',
+            'genus'   => 'genera',
             'graffito' => 'graffiti',
-            'hoof'     => 'hoofs',
-            'human'    => 'humans',
-            'loaf'     => 'loaves',
-            'man'      => 'men',
-            'money'    => 'monies',
+            'hoof'    => 'hoofs',
+            'human'   => 'humans',
+            'loaf'    => 'loaves',
+            'man'     => 'men',
+            'money'   => 'monies',
             'mongoose' => 'mongooses',
-            'move'     => 'moves',
-            'mythos'   => 'mythoi',
-            'niche'    => 'niches',
-            'numen'    => 'numina',
-            'occiput'  => 'occiputs',
-            'octopus'  => 'octopuses',
-            'opus'     => 'opuses',
-            'ox'       => 'oxen',
-            'penis'    => 'penises',
-            'person'   => 'people',
-            'sex'      => 'sexes',
+            'move'    => 'moves',
+            'mythos'  => 'mythoi',
+            'niche'   => 'niches',
+            'numen'   => 'numina',
+            'occiput' => 'occiputs',
+            'octopus' => 'octopuses',
+            'opus'    => 'opuses',
+            'ox'      => 'oxen',
+            'penis'   => 'penises',
+            'person'  => 'people',
+            'sex'     => 'sexes',
             'soliloquy' => 'soliloquies',
-            'testis'   => 'testes',
-            'trilby'   => 'trilbys',
-            'turf'     => 'turfs',
+            'testis'  => 'testes',
+            'trilby'  => 'trilbys',
+            'turf'    => 'turfs',
         )
     );
 
@@ -122,40 +121,40 @@ class Inflector
      */
     private static $singular = array(
         'rules'     => array(
-            '/(s)tatuses$/i'                                              => '\1\2tatus',
-            '/^(.*)(menu)s$/i'                                            => '\1\2',
-            '/(quiz)zes$/i'                                               => '\\1',
-            '/(matr)ices$/i'                                              => '\1ix',
-            '/(vert|ind)ices$/i'                                          => '\1ex',
-            '/^(ox)en/i'                                                  => '\1',
-            '/(alias)(es)*$/i'                                            => '\1',
+            '/(s)tatuses$/i'        => '\1\2tatus',
+            '/^(.*)(menu)s$/i'      => '\1\2',
+            '/(quiz)zes$/i'         => '\\1',
+            '/(matr)ices$/i'        => '\1ix',
+            '/(vert|ind)ices$/i'    => '\1ex',
+            '/^(ox)en/i'            => '\1',
+            '/(alias)(es)*$/i'      => '\1',
             '/(alumn|bacill|cact|foc|fung|nucle|radi|stimul|syllab|termin|viri?)i$/i' => '\1us',
-            '/([ftw]ax)es/i'                                              => '\1',
-            '/(cris|ax|test)es$/i'                                        => '\1is',
-            '/(shoe|slave)s$/i'                                           => '\1',
-            '/(o)es$/i'                                                   => '\1',
-            '/ouses$/'                                                    => 'ouse',
-            '/([^a])uses$/'                                               => '\1us',
-            '/([m|l])ice$/i'                                              => '\1ouse',
-            '/(x|ch|ss|sh)es$/i'                                          => '\1',
-            '/(m)ovies$/i'                                                => '\1\2ovie',
-            '/(s)eries$/i'                                                => '\1\2eries',
-            '/([^aeiouy]|qu)ies$/i'                                       => '\1y',
-            '/([lr])ves$/i'                                               => '\1f',
-            '/(tive)s$/i'                                                 => '\1',
-            '/(hive)s$/i'                                                 => '\1',
-            '/(drive)s$/i'                                                => '\1',
-            '/([^fo])ves$/i'                                              => '\1fe',
-            '/(^analy)ses$/i'                                             => '\1sis',
+            '/([ftw]ax)es/i'        => '\1',
+            '/(cris|ax|test)es$/i'  => '\1is',
+            '/(shoe|slave)s$/i'     => '\1',
+            '/(o)es$/i'             => '\1',
+            '/ouses$/'              => 'ouse',
+            '/([^a])uses$/'         => '\1us',
+            '/([m|l])ice$/i'        => '\1ouse',
+            '/(x|ch|ss|sh)es$/i'    => '\1',
+            '/(m)ovies$/i'          => '\1\2ovie',
+            '/(s)eries$/i'          => '\1\2eries',
+            '/([^aeiouy]|qu)ies$/i' => '\1y',
+            '/([lr])ves$/i'         => '\1f',
+            '/(tive)s$/i'           => '\1',
+            '/(hive)s$/i'           => '\1',
+            '/(drive)s$/i'          => '\1',
+            '/([^fo])ves$/i'        => '\1fe',
+            '/(^analy)ses$/i'       => '\1sis',
             '/(analy|diagno|^ba|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i' => '\1\2sis',
-            '/([ti])a$/i'                                                 => '\1um',
-            '/(p)eople$/i'                                                => '\1\2erson',
-            '/(m)en$/i'                                                   => '\1an',
-            '/(c)hildren$/i'                                              => '\1\2hild',
-            '/(n)ews$/i'                                                  => '\1\2ews',
-            '/eaus$/'                                                     => 'eau',
-            '/^(.*us)$/'                                                  => '\\1',
-            '/s$/i'                                                       => '',
+            '/([ti])a$/i'           => '\1um',
+            '/(p)eople$/i'          => '\1\2erson',
+            '/(m)en$/i'             => '\1an',
+            '/(c)hildren$/i'        => '\1\2hild',
+            '/(n)ews$/i'            => '\1\2ews',
+            '/eaus$/'               => 'eau',
+            '/^(.*us)$/'            => '\\1',
+            '/s$/i'                 => '',
         ),
         'uninflected' => array(
             '.*[nrlm]ese',
@@ -170,8 +169,8 @@ class Inflector
         'irregular' => array(
             'criterion' => 'criteria',
             'curves' => 'curve',
-            'foes'   => 'foe',
-            'waves'  => 'wave',
+            'foes'  => 'foe',
+            'waves' => 'wave',
         )
     );
 
@@ -284,10 +283,10 @@ class Inflector
      *
      * @return string The tableized word.
      */
-    public static function tableize( $word )
+    public static function tableize($word)
     {
 
-        return strtolower( preg_replace( '~(?<=\\w)([A-Z])~', '_$1', $word ) );
+        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $word));
     }
 
     /**
@@ -297,10 +296,10 @@ class Inflector
      *
      * @return string The camelized word.
      */
-    public static function camelize( $word )
+    public static function camelize($word)
     {
 
-        return lcfirst( self::classify( $word ) );
+        return lcfirst(self::classify($word));
     }
 
     /**
@@ -310,10 +309,10 @@ class Inflector
      *
      * @return string The classified word.
      */
-    public static function classify( $word )
+    public static function classify($word)
     {
 
-        return str_replace( " ", "", ucwords( strtr( $word, "_-", "  " ) ) );
+        return str_replace(" ", "", ucwords(strtr($word, "_-", "  ")));
     }
 
     /**
@@ -326,7 +325,7 @@ class Inflector
     {
 
         if (empty( self::$initialState )) {
-            self::$initialState = get_class_vars( 'Inflector' );
+            self::$initialState = get_class_vars('Inflector');
 
             return;
         }
@@ -359,11 +358,10 @@ class Inflector
      *
      * @return void
      */
-    public static function rules( $type, $rules, $reset = false )
+    public static function rules($type, $rules, $reset = false)
     {
-
         foreach ($rules as $rule => $pattern) {
-            if (!is_array( $pattern )) {
+            if (!is_array($pattern)) {
                 continue;
             }
 
@@ -371,11 +369,11 @@ class Inflector
                 self::${$type}[$rule] = $pattern;
             } else {
                 self::${$type}[$rule] = ( $rule === 'uninflected' )
-                    ? array_merge( $pattern, self::${$type}[$rule] )
+                    ? array_merge($pattern, self::${$type}[$rule])
                     : $pattern + self::${$type}[$rule];
             }
 
-            unset( $rules[$rule], self::${$type}['cache'.ucfirst( $rule )] );
+            unset( $rules[$rule], self::${$type}['cache'.ucfirst($rule)] );
 
             if (isset( self::${$type}['merged'][$rule] )) {
                 unset( self::${$type}['merged'][$rule] );
@@ -398,7 +396,7 @@ class Inflector
      *
      * @return string The word in plural form.
      */
-    public static function pluralize( $word )
+    public static function pluralize($word)
     {
 
         if (isset( self::$cache['pluralize'][$word] )) {
@@ -410,31 +408,30 @@ class Inflector
         }
 
         if (!isset( self::$plural['merged']['uninflected'] )) {
-            self::$plural['merged']['uninflected'] = array_merge( self::$plural['uninflected'], self::$uninflected );
+            self::$plural['merged']['uninflected'] = array_merge(self::$plural['uninflected'], self::$uninflected);
         }
 
         if (!isset( self::$plural['cacheUninflected'] ) || !isset( self::$plural['cacheIrregular'] )) {
-            self::$plural['cacheUninflected'] = '(?:'.implode( '|', self::$plural['merged']['uninflected'] ).')';
-            self::$plural['cacheIrregular'] = '(?:'.implode( '|',
-                    array_keys( self::$plural['merged']['irregular'] ) ).')';
+            self::$plural['cacheUninflected'] = '(?:'.implode('|', self::$plural['merged']['uninflected']).')';
+            self::$plural['cacheIrregular'] = '(?:'.implode('|', array_keys(self::$plural['merged']['irregular'])).')';
         }
 
-        if (preg_match( '/(.*)\\b('.self::$plural['cacheIrregular'].')$/i', $word, $regs )) {
-            self::$cache['pluralize'][$word] = $regs[1].substr( $word, 0,
-                    1 ).substr( self::$plural['merged']['irregular'][strtolower( $regs[2] )], 1 );
+        if (preg_match('/(.*)\\b('.self::$plural['cacheIrregular'].')$/i', $word, $regs)) {
+            self::$cache['pluralize'][$word] = $regs[1].substr($word, 0,
+                    1).substr(self::$plural['merged']['irregular'][strtolower($regs[2])], 1);
 
             return self::$cache['pluralize'][$word];
         }
 
-        if (preg_match( '/^('.self::$plural['cacheUninflected'].')$/i', $word, $regs )) {
+        if (preg_match('/^('.self::$plural['cacheUninflected'].')$/i', $word, $regs)) {
             self::$cache['pluralize'][$word] = $word;
 
             return $word;
         }
 
         foreach (self::$plural['rules'] as $rule => $replacement) {
-            if (preg_match( $rule, $word )) {
-                self::$cache['pluralize'][$word] = preg_replace( $rule, $replacement, $word );
+            if (preg_match($rule, $word)) {
+                self::$cache['pluralize'][$word] = preg_replace($rule, $replacement, $word);
 
                 return self::$cache['pluralize'][$word];
             }
@@ -448,7 +445,7 @@ class Inflector
      *
      * @return string The word in singular form.
      */
-    public static function singularize( $word )
+    public static function singularize($word)
     {
 
         if (isset( self::$cache['singularize'][$word] )) {
@@ -465,32 +462,31 @@ class Inflector
         if (!isset( self::$singular['merged']['irregular'] )) {
             self::$singular['merged']['irregular'] = array_merge(
                 self::$singular['irregular'],
-                array_flip( self::$plural['irregular'] )
+                array_flip(self::$plural['irregular'])
             );
         }
 
         if (!isset( self::$singular['cacheUninflected'] ) || !isset( self::$singular['cacheIrregular'] )) {
-            self::$singular['cacheUninflected'] = '(?:'.join( '|', self::$singular['merged']['uninflected'] ).')';
-            self::$singular['cacheIrregular'] = '(?:'.join( '|',
-                    array_keys( self::$singular['merged']['irregular'] ) ).')';
+            self::$singular['cacheUninflected'] = '(?:'.join('|', self::$singular['merged']['uninflected']).')';
+            self::$singular['cacheIrregular'] = '(?:'.join('|', array_keys(self::$singular['merged']['irregular'])).')';
         }
 
-        if (preg_match( '/(.*)\\b('.self::$singular['cacheIrregular'].')$/i', $word, $regs )) {
-            self::$cache['singularize'][$word] = $regs[1].substr( $word, 0,
-                    1 ).substr( self::$singular['merged']['irregular'][strtolower( $regs[2] )], 1 );
+        if (preg_match('/(.*)\\b('.self::$singular['cacheIrregular'].')$/i', $word, $regs)) {
+            self::$cache['singularize'][$word] = $regs[1].substr($word, 0,
+                    1).substr(self::$singular['merged']['irregular'][strtolower($regs[2])], 1);
 
             return self::$cache['singularize'][$word];
         }
 
-        if (preg_match( '/^('.self::$singular['cacheUninflected'].')$/i', $word, $regs )) {
+        if (preg_match('/^('.self::$singular['cacheUninflected'].')$/i', $word, $regs)) {
             self::$cache['singularize'][$word] = $word;
 
             return $word;
         }
 
         foreach (self::$singular['rules'] as $rule => $replacement) {
-            if (preg_match( $rule, $word )) {
-                self::$cache['singularize'][$word] = preg_replace( $rule, $replacement, $word );
+            if (preg_match($rule, $word)) {
+                self::$cache['singularize'][$word] = preg_replace($rule, $replacement, $word);
 
                 return self::$cache['singularize'][$word];
             }

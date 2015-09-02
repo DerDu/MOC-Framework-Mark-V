@@ -2,7 +2,6 @@
 
 class SingletonClass
 {
-
     protected function __construct()
     {
     }

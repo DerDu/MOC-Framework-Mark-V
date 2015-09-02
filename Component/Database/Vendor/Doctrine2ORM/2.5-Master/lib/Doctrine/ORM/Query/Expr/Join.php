@@ -97,7 +97,6 @@ class Join
      */
     public function getJoinType()
     {
-
         return $this->joinType;
     }
 
@@ -106,7 +105,6 @@ class Join
      */
     public function getJoin()
     {
-
         return $this->join;
     }
 
@@ -115,7 +113,6 @@ class Join
      */
     public function getAlias()
     {
-
         return $this->alias;
     }
 
@@ -124,7 +121,6 @@ class Join
      */
     public function getConditionType()
     {
-
         return $this->conditionType;
     }
 
@@ -133,7 +129,6 @@ class Join
      */
     public function getCondition()
     {
-
         return $this->condition;
     }
 
@@ -142,7 +137,6 @@ class Join
      */
     public function getIndexBy()
     {
-
         return $this->indexBy;
     }
 
@@ -152,9 +146,9 @@ class Join
     public function __toString()
     {
 
-        return strtoupper( $this->joinType ).' JOIN '.$this->join
+        return strtoupper($this->joinType).' JOIN '.$this->join
         .( $this->alias ? ' '.$this->alias : '' )
         .( $this->indexBy ? ' INDEX BY '.$this->indexBy : '' )
-        .( $this->condition ? ' '.strtoupper( $this->conditionType ).' '.$this->condition : '' );
+        .( $this->condition ? ' '.strtoupper($this->conditionType).' '.$this->condition : '' );
     }
 }

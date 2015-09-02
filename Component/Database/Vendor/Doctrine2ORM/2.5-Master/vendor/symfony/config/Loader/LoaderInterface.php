@@ -18,7 +18,6 @@ namespace Symfony\Component\Config\Loader;
  */
 interface LoaderInterface
 {
-
     /**
      * Loads a resource.
      *
@@ -27,7 +26,7 @@ interface LoaderInterface
      *
      * @throws \Exception If something went wrong
      */
-    public function load( $resource, $type = null );
+    public function load($resource, $type = null);
 
     /**
      * Returns whether this class supports the given resource.
@@ -37,7 +36,7 @@ interface LoaderInterface
      *
      * @return bool True if this class supports the given resource, false otherwise
      */
-    public function supports( $resource, $type = null );
+    public function supports($resource, $type = null);
 
     /**
      * Gets the loader resolver.
@@ -51,5 +50,5 @@ interface LoaderInterface
      *
      * @param LoaderResolverInterface $resolver A LoaderResolverInterface instance
      */
-    public function setResolver( LoaderResolverInterface $resolver );
+    public function setResolver(LoaderResolverInterface $resolver);
 }

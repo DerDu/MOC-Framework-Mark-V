@@ -30,7 +30,6 @@ use Redis;
  */
 class RedisCache extends CacheProvider
 {
-
     /**
      * @var Redis|null
      */
@@ -43,7 +42,6 @@ class RedisCache extends CacheProvider
      */
     public function getRedis()
     {
-
         return $this->redis;
     }
 
@@ -54,10 +52,10 @@ class RedisCache extends CacheProvider
      *
      * @return void
      */
-    public function setRedis( Redis $redis )
+    public function setRedis(Redis $redis)
     {
 
-        $redis->setOption( Redis::OPT_SERIALIZER, $this->getSerializerValue() );
+        $redis->setOption(Redis::OPT_SERIALIZER, $this->getSerializerValue());
         $this->redis = $redis;
     }
 
@@ -71,67 +69,58 @@ class RedisCache extends CacheProvider
     protected function getSerializerValue()
     {
 
-        if (defined( 'HHVM_VERSION' )) {
+        if (defined('HHVM_VERSION')) {
             return Redis::SERIALIZER_PHP;
         }
-        return defined( 'Redis::SERIALIZER_IGBINARY' ) ? Redis::SERIALIZER_IGBINARY : Redis::SERIALIZER_PHP;
+        return defined('Redis::SERIALIZER_IGBINARY') ? Redis::SERIALIZER_IGBINARY : Redis::SERIALIZER_PHP;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        return $this->redis->get( $id );
+        return $this->redis->get($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetchMultiple( array $keys )
+    protected function doFetchMultiple(array $keys)
     {
 
-        $returnValues = array();
-        $fetchedItems = $this->redis->mget( $keys );
-        foreach ($keys as $key) {
-            if (isset( $fetchedItems[$key] )) {
-                $returnValues[$key] = $fetchedItems[$key];
-            }
-        }
-
-        return $returnValues;
+        return array_filter(array_combine($keys, $this->redis->mget($keys)));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        return $this->redis->exists( $id );
+        return $this->redis->exists($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         if ($lifeTime > 0) {
-            return $this->redis->setex( $id, $lifeTime, $data );
+            return $this->redis->setex($id, $lifeTime, $data);
         }
 
-        return $this->redis->set( $id, $data );
+        return $this->redis->set($id, $data);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        return $this->redis->delete( $id ) > 0;
+        return $this->redis->delete($id) > 0;
     }
 
     /**
@@ -139,7 +128,6 @@ class RedisCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         return $this->redis->flushDB();
     }
 
@@ -148,11 +136,10 @@ class RedisCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         $info = $this->redis->info();
         return array(
-            Cache::STATS_HITS             => false,
-            Cache::STATS_MISSES           => false,
+            Cache::STATS_HITS             => $info['keyspace_hits'],
+            Cache::STATS_MISSES           => $info['keyspace_misses'],
             Cache::STATS_UPTIME           => $info['uptime_in_seconds'],
             Cache::STATS_MEMORY_USAGE     => $info['used_memory'],
             Cache::STATS_MEMORY_AVAILABLE => false

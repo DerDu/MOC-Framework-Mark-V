@@ -42,7 +42,6 @@ use Doctrine\ORM\Query\TreeWalkerAdapter;
  */
 class WhereInWalker extends TreeWalkerAdapter
 {
-
     /**
      * ID Count hint name.
      */
@@ -70,18 +69,17 @@ class WhereInWalker extends TreeWalkerAdapter
      *
      * @throws \RuntimeException
      */
-    public function walkSelectStatement( SelectStatement $AST )
+    public function walkSelectStatement(SelectStatement $AST)
     {
-
         $queryComponents = $this->_getQueryComponents();
         // Get the root entity and alias from the AST fromClause
         $from = $AST->fromClause->identificationVariableDeclarations;
 
-        if (count( $from ) > 1) {
-            throw new \RuntimeException( "Cannot count query which selects two FROM components, cannot make distinction" );
+        if (count($from) > 1) {
+            throw new \RuntimeException("Cannot count query which selects two FROM components, cannot make distinction");
         }
 
-        $fromRoot = reset( $from );
+        $fromRoot = reset($from);
         $rootAlias = $fromRoot->rangeVariableDeclaration->aliasIdentificationVariable;
         $rootClass = $queryComponents[$rootAlias]['metadata'];
         $identifierFieldName = $rootClass->getSingleIdentifierFieldName();
@@ -91,22 +89,22 @@ class WhereInWalker extends TreeWalkerAdapter
             $pathType = PathExpression::TYPE_SINGLE_VALUED_ASSOCIATION;
         }
 
-        $pathExpression = new PathExpression( PathExpression::TYPE_STATE_FIELD | PathExpression::TYPE_SINGLE_VALUED_ASSOCIATION,
-            $rootAlias, $identifierFieldName );
+        $pathExpression = new PathExpression(PathExpression::TYPE_STATE_FIELD | PathExpression::TYPE_SINGLE_VALUED_ASSOCIATION,
+            $rootAlias, $identifierFieldName);
         $pathExpression->type = $pathType;
 
-        $count = $this->_getQuery()->getHint( self::HINT_PAGINATOR_ID_COUNT );
+        $count = $this->_getQuery()->getHint(self::HINT_PAGINATOR_ID_COUNT);
 
         if ($count > 0) {
             $arithmeticExpression = new ArithmeticExpression();
             $arithmeticExpression->simpleArithmeticExpression = new SimpleArithmeticExpression(
-                array( $pathExpression )
+                array($pathExpression)
             );
-            $expression = new InExpression( $arithmeticExpression );
-            $expression->literals[] = new InputParameter( ":".self::PAGINATOR_ID_ALIAS );
+            $expression = new InExpression($arithmeticExpression);
+            $expression->literals[] = new InputParameter(":".self::PAGINATOR_ID_ALIAS);
 
         } else {
-            $expression = new NullComparisonExpression( $pathExpression );
+            $expression = new NullComparisonExpression($pathExpression);
             $expression->not = false;
         }
 
@@ -116,29 +114,29 @@ class WhereInWalker extends TreeWalkerAdapter
             if ($AST->whereClause->conditionalExpression instanceof ConditionalTerm) {
                 $AST->whereClause->conditionalExpression->conditionalFactors[] = $conditionalPrimary;
             } elseif ($AST->whereClause->conditionalExpression instanceof ConditionalPrimary) {
-                $AST->whereClause->conditionalExpression = new ConditionalExpression( array(
-                    new ConditionalTerm( array(
+                $AST->whereClause->conditionalExpression = new ConditionalExpression(array(
+                    new ConditionalTerm(array(
                         $AST->whereClause->conditionalExpression,
                         $conditionalPrimary
-                    ) )
-                ) );
+                    ))
+                ));
             } elseif ($AST->whereClause->conditionalExpression instanceof ConditionalExpression
                 || $AST->whereClause->conditionalExpression instanceof ConditionalFactor
             ) {
                 $tmpPrimary = new ConditionalPrimary;
                 $tmpPrimary->conditionalExpression = $AST->whereClause->conditionalExpression;
-                $AST->whereClause->conditionalExpression = new ConditionalTerm( array(
+                $AST->whereClause->conditionalExpression = new ConditionalTerm(array(
                     $tmpPrimary,
                     $conditionalPrimary
-                ) );
+                ));
             }
         } else {
             $AST->whereClause = new WhereClause(
-                new ConditionalExpression( array(
-                    new ConditionalTerm( array(
+                new ConditionalExpression(array(
+                    new ConditionalTerm(array(
                         $conditionalPrimary
-                    ) )
-                ) )
+                    ))
+                ))
             );
         }
     }

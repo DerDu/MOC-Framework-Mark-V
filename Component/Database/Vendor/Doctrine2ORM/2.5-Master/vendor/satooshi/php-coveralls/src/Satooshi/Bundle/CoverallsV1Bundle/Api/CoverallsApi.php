@@ -11,7 +11,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration;
  */
 abstract class CoverallsApi
 {
-
     /**
      * Configuration.
      *
@@ -32,9 +31,8 @@ abstract class CoverallsApi
      * @param Configuration       $config Configuration.
      * @param \Guzzle\Http\Client $client HTTP client.
      */
-    public function __construct( Configuration $config, Client $client = null )
+    public function __construct(Configuration $config, Client $client = null)
     {
-
         $this->config = $config;
         $this->client = $client;
     }
@@ -48,7 +46,6 @@ abstract class CoverallsApi
      */
     public function getConfiguration()
     {
-
         return $this->config;
     }
 
@@ -59,9 +56,8 @@ abstract class CoverallsApi
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Api\CoverallsApi
      */
-    public function setHttpClient( Client $client )
+    public function setHttpClient(Client $client)
     {
-
         $this->client = $client;
 
         return $this;
@@ -74,7 +70,6 @@ abstract class CoverallsApi
      */
     public function getHttpClient()
     {
-
         return $this->client;
     }
 }

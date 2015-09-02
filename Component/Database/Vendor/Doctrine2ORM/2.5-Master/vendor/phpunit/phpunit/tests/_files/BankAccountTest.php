@@ -11,16 +11,10 @@
 /**
  * Tests for the BankAccount class.
  *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.3.0
  */
 class BankAccountTest extends PHPUnit_Framework_TestCase
 {
-
     protected $ba;
 
     /**
@@ -31,7 +25,7 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
     public function testBalanceIsInitiallyZero()
     {
 
-        $this->assertEquals( 0, $this->ba->getBalance() );
+        $this->assertEquals(0, $this->ba->getBalance());
     }
 
     /**
@@ -41,11 +35,10 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative()
     {
-
         try {
-            $this->ba->withdrawMoney( 1 );
-        } catch( BankAccountException $e ) {
-            $this->assertEquals( 0, $this->ba->getBalance() );
+            $this->ba->withdrawMoney(1);
+        } catch (BankAccountException $e) {
+            $this->assertEquals(0, $this->ba->getBalance());
 
             return;
         }
@@ -60,11 +53,10 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
      */
     public function testBalanceCannotBecomeNegative2()
     {
-
         try {
-            $this->ba->depositMoney( -1 );
-        } catch( BankAccountException $e ) {
-            $this->assertEquals( 0, $this->ba->getBalance() );
+            $this->ba->depositMoney(-1);
+        } catch (BankAccountException $e) {
+            $this->assertEquals(0, $this->ba->getBalance());
 
             return;
         }
@@ -74,15 +66,14 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-
         $this->ba = new BankAccount;
     }
 
-    /**
+    /*
      * @covers BankAccount::getBalance
      * @covers BankAccount::depositMoney
      * @covers BankAccount::withdrawMoney
-     * @group  balanceCannotBecomeNegative
+     * @group balanceCannotBecomeNegative
      */
     /*
     public function testDepositingAndWithdrawingMoneyWorks()

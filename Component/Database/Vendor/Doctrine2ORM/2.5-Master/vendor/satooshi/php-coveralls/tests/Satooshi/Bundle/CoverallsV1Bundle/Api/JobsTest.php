@@ -15,39 +15,36 @@ use Satooshi\ProjectTestCase;
  */
 class JobsTest extends ProjectTestCase
 {
-
     /**
      * @test
      */
     public function shouldNotHaveJsonFileOnConstruction()
     {
-
         $object = $this->createJobsNeverSendOnDryRun();
 
-        $this->assertNull( $object->getJsonFile() );
+        $this->assertNull($object->getJsonFile());
     }
 
     protected function createJobsNeverSendOnDryRun()
     {
-
         $this->config = new Configuration();
         $this->config
-            ->setJsonPath( $this->jsonPath )
-            ->setDryRun( true );
+            ->setJsonPath($this->jsonPath)
+            ->setDryRun(true);
 
         $this->client = $this->createAdapterMockNeverCalled();
 
-        return new Jobs( $this->config, $this->client );
+        return new Jobs($this->config, $this->client);
     }
 
     protected function createAdapterMockNeverCalled()
     {
 
-        $client = $this->getMock( 'Guzzle\Http\Client', array( 'send' ) );
+        $client = $this->getMock('Guzzle\Http\Client', array('send'));
 
         $client
-            ->expects( $this->never() )
-            ->method( 'send' );
+            ->expects($this->never())
+            ->method('send');
 
         return $client;
     }
@@ -57,12 +54,11 @@ class JobsTest extends ProjectTestCase
      */
     public function shouldSetJsonFile()
     {
-
         $jsonFile = $this->collectJsonFile();
 
-        $object = $this->createJobsNeverSendOnDryRun()->setJsonFile( $jsonFile );
+        $object = $this->createJobsNeverSendOnDryRun()->setJsonFile($jsonFile);
 
-        $this->assertSame( $jsonFile, $object->getJsonFile() );
+        $this->assertSame($jsonFile, $object->getJsonFile());
     }
 
     protected function collectJsonFile()
@@ -71,20 +67,18 @@ class JobsTest extends ProjectTestCase
         $xml = $this->createCloverXml();
         $collector = new CloverXmlCoverageCollector();
 
-        return $collector->collect( $xml, $this->srcDir );
+        return $collector->collect($xml, $this->srcDir);
     }
 
     protected function createCloverXml()
     {
-
         $xml = $this->getCloverXml();
 
-        return simplexml_load_string( $xml );
+        return simplexml_load_string($xml);
     }
 
     protected function getCloverXml()
     {
-
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -127,7 +121,7 @@ class JobsTest extends ProjectTestCase
   </project>
 </coverage>
 XML;
-        return sprintf( $xml, $this->srcDir, $this->srcDir, $this->srcDir, $this->srcDir );
+        return sprintf($xml, $this->srcDir, $this->srcDir, $this->srcDir, $this->srcDir);
     }
 
     /**
@@ -135,22 +129,11 @@ XML;
      */
     public function shouldReturnConfiguration()
     {
-
         $config = $this->createConfiguration();
 
-        $object = new Jobs( $config );
+        $object = new Jobs($config);
 
-        $this->assertSame( $config, $object->getConfiguration() );
-    }
-
-    protected function createConfiguration()
-    {
-
-        $config = new Configuration();
-
-        return $config
-            ->setSrcDir( $this->srcDir )
-            ->addCloverXmlPath( $this->cloverXmlPath );
+        $this->assertSame($config, $object->getConfiguration());
     }
 
     /**
@@ -158,12 +141,11 @@ XML;
      */
     public function shouldNotHaveHttpClientOnConstructionWithoutHttpClient()
     {
-
         $config = $this->createConfiguration();
 
-        $object = new Jobs( $config );
+        $object = new Jobs($config);
 
-        $this->assertNull( $object->getHttpClient() );
+        $this->assertNull($object->getHttpClient());
     }
 
     /**
@@ -171,13 +153,12 @@ XML;
      */
     public function shouldHaveHttpClientOnConstructionWithHttpClient()
     {
-
         $config = $this->createConfiguration();
         $client = $this->createAdapterMockNeverCalled();
 
-        $object = new Jobs( $config, $client );
+        $object = new Jobs($config, $client);
 
-        $this->assertSame( $client, $object->getHttpClient() );
+        $this->assertSame($client, $object->getHttpClient());
     }
 
     /**
@@ -185,14 +166,13 @@ XML;
      */
     public function shouldSetHttpClient()
     {
-
         $config = $this->createConfiguration();
         $client = $this->createAdapterMockNeverCalled();
 
-        $object = new Jobs( $config );
-        $object->setHttpClient( $client );
+        $object = new Jobs($config);
+        $object->setHttpClient($client);
 
-        $this->assertSame( $client, $object->getHttpClient() );
+        $this->assertSame($client, $object->getHttpClient());
     }
 
     /**
@@ -201,19 +181,19 @@ XML;
     public function shouldCollectCloverXml()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
         $xml = $this->getCloverXml();
 
-        file_put_contents( $this->cloverXmlPath, $xml );
+        file_put_contents($this->cloverXmlPath, $xml);
 
         $config = $this->createConfiguration();
 
-        $object = new Jobs( $config );
+        $object = new Jobs($config);
 
         $same = $object->collectCloverXml();
 
         // return $this
-        $this->assertSame( $same, $object );
+        $this->assertSame($same, $object);
 
         return $object;
     }
@@ -222,14 +202,13 @@ XML;
      * @test
      * @depends shouldCollectCloverXml
      */
-    public function shouldHaveJsonFileAfterCollectCloverXml( Jobs $object )
+    public function shouldHaveJsonFileAfterCollectCloverXml(Jobs $object)
     {
-
         $jsonFile = $object->getJsonFile();
 
-        $this->assertNotNull( $jsonFile );
+        $this->assertNotNull($jsonFile);
         $sourceFiles = $jsonFile->getSourceFiles();
-        $this->assertCount( 4, $sourceFiles );
+        $this->assertCount(4, $sourceFiles);
 
         return $jsonFile;
     }
@@ -238,15 +217,12 @@ XML;
      * @test
      * @depends shouldHaveJsonFileAfterCollectCloverXml
      */
-    public function shouldNotHaveGitAfterCollectCloverXml( JsonFile $jsonFile )
+    public function shouldNotHaveGitAfterCollectCloverXml(JsonFile $jsonFile)
     {
-
         $git = $jsonFile->getGit();
 
-        $this->assertNull( $git );
+        $this->assertNull($git);
     }
-
-    // getJsonFile()
 
     /**
      * @test
@@ -254,87 +230,83 @@ XML;
     public function shouldCollectCloverXmlExcludingNoStatementsFiles()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
         $xml = $this->getCloverXml();
 
-        file_put_contents( $this->cloverXmlPath, $xml );
+        file_put_contents($this->cloverXmlPath, $xml);
 
-        $config = $this->createConfiguration()->setExcludeNoStatements( true );
+        $config = $this->createConfiguration()->setExcludeNoStatements(true);
 
-        $object = new Jobs( $config );
+        $object = new Jobs($config);
 
         $same = $object->collectCloverXml();
 
         // return $this
-        $this->assertSame( $same, $object );
+        $this->assertSame($same, $object);
 
         return $object;
+    }
+
+    // getJsonFile()
+
+    /**
+     * @test
+     * @depends shouldCollectCloverXmlExcludingNoStatementsFiles
+     */
+    public function shouldHaveJsonFileAfterCollectCloverXmlExcludingNoStatementsFiles(Jobs $object)
+    {
+        $jsonFile = $object->getJsonFile();
+
+        $this->assertNotNull($jsonFile);
+        $sourceFiles = $jsonFile->getSourceFiles();
+        $this->assertCount(2, $sourceFiles);
+
+        return $jsonFile;
     }
 
     // setJsonFile()
 
     /**
      * @test
-     * @depends shouldCollectCloverXmlExcludingNoStatementsFiles
+     * @depends shouldCollectCloverXml
      */
-    public function shouldHaveJsonFileAfterCollectCloverXmlExcludingNoStatementsFiles( Jobs $object )
+    public function shouldCollectGitInfo(Jobs $object)
     {
+        $same = $object->collectGitInfo();
 
-        $jsonFile = $object->getJsonFile();
+        // return $this
+        $this->assertSame($same, $object);
 
-        $this->assertNotNull( $jsonFile );
-        $sourceFiles = $jsonFile->getSourceFiles();
-        $this->assertCount( 2, $sourceFiles );
-
-        return $jsonFile;
+        return $object;
     }
 
     // getConfiguration()
 
     /**
      * @test
-     * @depends shouldCollectCloverXml
+     * @depends shouldCollectGitInfo
      */
-    public function shouldCollectGitInfo( Jobs $object )
+    public function shouldHaveJsonFileAfterCollectGitInfo(Jobs $object)
     {
+        $jsonFile = $object->getJsonFile();
 
-        $same = $object->collectGitInfo();
+        $this->assertNotNull($jsonFile);
 
-        // return $this
-        $this->assertSame( $same, $object );
-
-        return $object;
+        return $jsonFile;
     }
 
     // getHttpClient()
 
     /**
      * @test
-     * @depends shouldCollectGitInfo
-     */
-    public function shouldHaveJsonFileAfterCollectGitInfo( Jobs $object )
-    {
-
-        $jsonFile = $object->getJsonFile();
-
-        $this->assertNotNull( $jsonFile );
-
-        return $jsonFile;
-    }
-
-    /**
-     * @test
      * @depends shouldHaveJsonFileAfterCollectGitInfo
      */
-    public function shouldHaveGitAfterCollectGitInfo( JsonFile $jsonFile )
+    public function shouldHaveGitAfterCollectGitInfo(JsonFile $jsonFile)
     {
-
         $git = $jsonFile->getGit();
 
-        $this->assertNotNull( $git );
+        $this->assertNotNull($git);
     }
-
-    // setHttpClient()
 
     /**
      * @test
@@ -342,7 +314,7 @@ XML;
     public function shouldSendTravisCiJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $serviceName = 'travis-ci';
         $serviceJobId = '1.1';
@@ -355,51 +327,52 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
 
-    // collectCloverXml()
+    // setHttpClient()
 
     protected function createJobsWith()
     {
-
         $this->config = new Configuration();
 
         $this->config
-            ->setJsonPath( $this->jsonPath )
-            ->setDryRun( false );
+            ->setJsonPath($this->jsonPath)
+            ->setDryRun(false);
 
-        $this->client = $this->createAdapterMockWith( $this->url, $this->filename, $this->jsonPath );
+        $this->client = $this->createAdapterMockWith($this->url, $this->filename, $this->jsonPath);
 
-        return new Jobs( $this->config, $this->client );
+        return new Jobs($this->config, $this->client);
     }
 
-    protected function createAdapterMockWith( $url, $filename, $jsonPath )
+    // collectCloverXml()
+
+    protected function createAdapterMockWith($url, $filename, $jsonPath)
     {
 
-        $client = $this->getMock( 'Guzzle\Http\Client', array( 'post', 'addPostFiles' ) );
-        $request = $this->getMockBuilder( 'Guzzle\Http\Message\EntityEnclosingRequest' )
+        $client = $this->getMock('Guzzle\Http\Client', array('post', 'addPostFiles'));
+        $request = $this->getMockBuilder('Guzzle\Http\Message\EntityEnclosingRequest')
             ->disableOriginalConstructor()
             ->getMock();
 
         $client
-            ->expects( $this->once() )
-            ->method( 'post' )
-            ->with( $this->equalTo( $url ) )
-            ->will( $this->returnSelf() );
+            ->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo($url))
+            ->will($this->returnSelf());
 
         $client
-            ->expects( $this->once() )
-            ->method( 'addPostFiles' )
-            ->with( $this->equalTo( array( $filename => $jsonPath ) ) )
-            ->will( $this->returnValue( $request ) );
+            ->expects($this->once())
+            ->method('addPostFiles')
+            ->with($this->equalTo(array($filename => $jsonPath)))
+            ->will($this->returnValue($request));
 
         $request
-            ->expects( $this->once() )
-            ->method( 'send' )
+            ->expects($this->once())
+            ->method('send')
             ->with();
 
         return $client;
@@ -411,7 +384,7 @@ XML;
     public function shouldSendTravisProJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $serviceName = 'travis-pro';
         $serviceJobId = '1.1';
@@ -423,18 +396,18 @@ XML;
         $server['COVERALLS_REPO_TOKEN'] = $repoToken;
 
         $object = $this->createJobsWith();
-        $config = $object->getConfiguration()->setServiceName( $serviceName );
+        $config = $object->getConfiguration()->setServiceName($serviceName);
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
 
-        $this->assertEquals( $serviceName, $jsonFile->getServiceName() );
-        $this->assertEquals( $serviceJobId, $jsonFile->getServiceJobId() );
-        $this->assertEquals( $repoToken, $jsonFile->getRepoToken() );
+        $this->assertEquals($serviceName, $jsonFile->getServiceName());
+        $this->assertEquals($serviceJobId, $jsonFile->getServiceJobId());
+        $this->assertEquals($repoToken, $jsonFile->getRepoToken());
     }
 
     /**
@@ -443,7 +416,7 @@ XML;
     public function shouldSendCircleCiJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $serviceName = 'circleci';
         $serviceNumber = '123';
@@ -458,8 +431,8 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
@@ -470,7 +443,7 @@ XML;
     public function shouldSendJenkinsJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $serviceName = 'jenkins';
         $serviceNumber = '123';
@@ -485,8 +458,33 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
+            ->dumpJsonFile()
+            ->send();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSendLocalJob()
+    {
+
+        $this->makeProjectDir(null, $this->logsDir);
+
+        $serviceName = 'php-coveralls';
+        $serviceEventType = 'manual';
+
+        $server = array();
+        $server['COVERALLS_RUN_LOCALLY'] = '1';
+
+        $object = $this->createJobsWith();
+        $config = $object->getConfiguration()->setRepoToken('token');
+        $jsonFile = $this->collectJsonFile();
+
+        $object
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
@@ -496,35 +494,10 @@ XML;
     /**
      * @test
      */
-    public function shouldSendLocalJob()
-    {
-
-        $this->makeProjectDir( null, $this->logsDir );
-
-        $serviceName = 'php-coveralls';
-        $serviceEventType = 'manual';
-
-        $server = array();
-        $server['COVERALLS_RUN_LOCALLY'] = '1';
-
-        $object = $this->createJobsWith();
-        $config = $object->getConfiguration()->setRepoToken( 'token' );
-        $jsonFile = $this->collectJsonFile();
-
-        $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
-            ->dumpJsonFile()
-            ->send();
-    }
-
-    /**
-     * @test
-     */
     public function shouldSendUnsupportedJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $server = array();
         $server['COVERALLS_REPO_TOKEN'] = 'token';
@@ -533,8 +506,8 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
@@ -545,7 +518,7 @@ XML;
     public function shouldSendUnsupportedGitJob()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
 
         $server = array();
         $server['COVERALLS_REPO_TOKEN'] = 'token';
@@ -555,8 +528,31 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
+            ->dumpJsonFile()
+            ->send();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotSendJobIfTestEnv()
+    {
+
+        $this->makeProjectDir(null, $this->logsDir);
+
+        $server = array();
+        $server['TRAVIS'] = true;
+        $server['TRAVIS_JOB_ID'] = '1.1';
+
+        $object = $this->createJobsNeverSendOnDryRun();
+        $config = $object->getConfiguration()->setEnv('test');
+        $jsonFile = $this->collectJsonFile();
+
+        $object
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
@@ -565,57 +561,32 @@ XML;
 
     /**
      * @test
-     */
-    public function shouldNotSendJobIfTestEnv()
-    {
-
-        $this->makeProjectDir( null, $this->logsDir );
-
-        $server = array();
-        $server['TRAVIS'] = true;
-        $server['TRAVIS_JOB_ID'] = '1.1';
-
-        $object = $this->createJobsNeverSendOnDryRun();
-        $config = $object->getConfiguration()->setEnv( 'test' );
-        $jsonFile = $this->collectJsonFile();
-
-        $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
-            ->dumpJsonFile()
-            ->send();
-    }
-
-    /**
-     * @test
      * @expectedException RuntimeException
      */
     public function throwRuntimeExceptionIfInvalidEnv()
     {
-
         $server = array();
 
         $object = $this->createJobsNeverSend();
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
 
     protected function createJobsNeverSend()
     {
-
         $this->config = new Configuration();
         $this->config
-            ->setJsonPath( $this->jsonPath )
-            ->setDryRun( false );
+            ->setJsonPath($this->jsonPath)
+            ->setDryRun(false);
 
         $this->client = $this->createAdapterMockNeverCalled();
 
-        return new Jobs( $this->config, $this->client );
+        return new Jobs($this->config, $this->client);
     }
 
     /**
@@ -624,7 +595,6 @@ XML;
      */
     public function throwRuntimeExceptionIfNoSourceFiles()
     {
-
         $server = array();
         $server['TRAVIS'] = true;
         $server['TRAVIS_JOB_ID'] = '1.1';
@@ -635,8 +605,8 @@ XML;
         $jsonFile = $this->collectJsonFile();
 
         $object
-            ->setJsonFile( $jsonFile )
-            ->collectEnvVars( $server )
+            ->setJsonFile($jsonFile)
+            ->collectEnvVars($server)
             ->dumpJsonFile()
             ->send();
     }
@@ -644,18 +614,18 @@ XML;
     protected function setUp()
     {
 
-        $this->projectDir = realpath( __DIR__.'/../../../..' );
+        $this->projectDir = realpath(__DIR__.'/../../../..');
 
-        $this->setUpDir( $this->projectDir );
+        $this->setUpDir($this->projectDir);
     }
 
     protected function tearDown()
     {
 
-        $this->rmFile( $this->jsonPath );
-        $this->rmFile( $this->cloverXmlPath );
-        $this->rmDir( $this->logsDir );
-        $this->rmDir( $this->buildDir );
+        $this->rmFile($this->jsonPath);
+        $this->rmFile($this->cloverXmlPath);
+        $this->rmDir($this->logsDir);
+        $this->rmDir($this->buildDir);
     }
 
     protected function collectJsonFileWithoutSourceFiles()
@@ -664,20 +634,18 @@ XML;
         $xml = $this->createNoSourceCloverXml();
         $collector = new CloverXmlCoverageCollector();
 
-        return $collector->collect( $xml, $this->srcDir );
+        return $collector->collect($xml, $this->srcDir);
     }
 
     protected function createNoSourceCloverXml()
     {
-
         $xml = $this->getNoSourceCloverXml();
 
-        return simplexml_load_string( $xml );
+        return simplexml_load_string($xml);
     }
 
     protected function getNoSourceCloverXml()
     {
-
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -694,13 +662,22 @@ XML;
 XML;
     }
 
-    protected function createCiEnvVarsCollector( $config = null )
+    protected function createCiEnvVarsCollector($config = null)
     {
-
         if ($config === null) {
             $config = $this->createConfiguration();
         }
 
-        return new CiEnvVarsCollector( $config );
+        return new CiEnvVarsCollector($config);
+    }
+
+    protected function createConfiguration()
+    {
+
+        $config = new Configuration();
+
+        return $config
+            ->setSrcDir($this->srcDir)
+            ->addCloverXmlPath($this->cloverXmlPath);
     }
 }

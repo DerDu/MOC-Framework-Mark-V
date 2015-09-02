@@ -28,7 +28,6 @@ namespace Doctrine\ORM\Cache;
  */
 class Lock
 {
-
     /**
      * @var string
      */
@@ -43,9 +42,8 @@ class Lock
      * @param string  $value
      * @param integer $time
      */
-    public function __construct( $value, $time = null )
+    public function __construct($value, $time = null)
     {
-
         $this->value = $value;
         $this->time = $time ?: time();
     }
@@ -56,6 +54,6 @@ class Lock
     public static function createLockRead()
     {
 
-        return new self( uniqid( time() ) );
+        return new self(uniqid(time()));
     }
 }

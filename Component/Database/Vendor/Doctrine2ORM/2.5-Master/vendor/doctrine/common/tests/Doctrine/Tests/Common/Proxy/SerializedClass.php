@@ -7,7 +7,6 @@ namespace Doctrine\Tests\Common\Proxy;
  */
 class SerializedClass
 {
-
     /**
      * @var mixed
      */
@@ -26,16 +25,14 @@ class SerializedClass
      */
     public function getFoo()
     {
-
         return $this->foo;
     }
 
     /**
      * @param mixed $foo
      */
-    public function setFoo( $foo )
+    public function setFoo($foo)
     {
-
         $this->foo = $foo;
     }
 
@@ -44,16 +41,14 @@ class SerializedClass
      */
     public function getBar()
     {
-
         return $this->bar;
     }
 
     /**
      * @param $bar
      */
-    public function setBar( $bar )
+    public function setBar($bar)
     {
-
         $this->bar = $bar;
     }
 
@@ -62,16 +57,14 @@ class SerializedClass
      */
     public function getBaz()
     {
-
         return $this->baz;
     }
 
     /**
      * @param $baz
      */
-    public function setBaz( $baz )
+    public function setBaz($baz)
     {
-
         $this->baz = $baz;
     }
 }

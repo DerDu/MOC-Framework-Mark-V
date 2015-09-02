@@ -9,7 +9,6 @@ use Guzzle\Common\Exception\InvalidArgumentException;
  */
 class Operation implements OperationInterface
 {
-
     /** @var string Default command class to use when none is specified */
     const DEFAULT_COMMAND_CLASS = 'Guzzle\\Service\\Command\\OperationCommand';
 
@@ -108,13 +107,12 @@ class Operation implements OperationInterface
      * @param array                       $config      Array of configuration data
      * @param ServiceDescriptionInterface $description Service description used to resolve models if $ref tags are found
      */
-    public function __construct( array $config = array(), ServiceDescriptionInterface $description = null )
+    public function __construct(array $config = array(), ServiceDescriptionInterface $description = null)
     {
-
         $this->description = $description;
 
         // Get the intersection of the available properties and properties set on the operation
-        foreach (array_intersect_key( $config, self::$properties ) as $key => $value) {
+        foreach (array_intersect_key($config, self::$properties) as $key => $value) {
             $this->{$key} = $value;
         }
 
@@ -128,7 +126,7 @@ class Operation implements OperationInterface
             $this->responseType = 'primitive';
         } elseif ($this->responseType) {
             // Set the response type to perform validation
-            $this->setResponseType( $this->responseType );
+            $this->setResponseType($this->responseType);
         } else {
             // A response class was set and no response type was set, so guess what the type is
             $this->inferResponseType();
@@ -138,19 +136,19 @@ class Operation implements OperationInterface
         if ($this->parameters) {
             foreach ($this->parameters as $name => $param) {
                 if ($param instanceof Parameter) {
-                    $param->setName( $name )->setParent( $this );
-                } elseif (is_array( $param )) {
+                    $param->setName($name)->setParent($this);
+                } elseif (is_array($param)) {
                     $param['name'] = $name;
-                    $this->addParam( new Parameter( $param, $this->description ) );
+                    $this->addParam(new Parameter($param, $this->description));
                 }
             }
         }
 
         if ($this->additionalParameters) {
             if ($this->additionalParameters instanceof Parameter) {
-                $this->additionalParameters->setParent( $this );
-            } elseif (is_array( $this->additionalParameters )) {
-                $this->setadditionalParameters( new Parameter( $this->additionalParameters, $this->description ) );
+                $this->additionalParameters->setParent($this);
+            } elseif (is_array($this->additionalParameters)) {
+                $this->setadditionalParameters(new Parameter($this->additionalParameters, $this->description));
             }
         }
     }
@@ -161,10 +159,10 @@ class Operation implements OperationInterface
     protected function inferResponseType()
     {
 
-        static $primitives = array( 'array' => 1, 'boolean' => 1, 'string' => 1, 'integer' => 1, '' => 1 );
+        static $primitives = array('array' => 1, 'boolean' => 1, 'string' => 1, 'integer' => 1, '' => 1);
         if (isset( $primitives[$this->responseClass] )) {
             $this->responseType = self::TYPE_PRIMITIVE;
-        } elseif ($this->description && $this->description->hasModel( $this->responseClass )) {
+        } elseif ($this->description && $this->description->hasModel($this->responseClass)) {
             $this->responseType = self::TYPE_MODEL;
         } else {
             $this->responseType = self::TYPE_CLASS;
@@ -178,21 +176,19 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function addParam( Parameter $param )
+    public function addParam(Parameter $param)
     {
-
         $this->parameters[$param->getName()] = $param;
-        $param->setParent( $this );
+        $param->setParent($this);
 
         return $this;
     }
 
     public function toArray()
     {
-
         $result = array();
         // Grab valid properties and filter out values that weren't set
-        foreach (array_keys( self::$properties ) as $check) {
+        foreach (array_keys(self::$properties) as $check) {
             if ($value = $this->{$check}) {
                 $result[$check] = $value;
             }
@@ -214,13 +210,11 @@ class Operation implements OperationInterface
 
     public function getServiceDescription()
     {
-
         return $this->description;
     }
 
-    public function setServiceDescription( ServiceDescriptionInterface $description )
+    public function setServiceDescription(ServiceDescriptionInterface $description)
     {
-
         $this->description = $description;
 
         return $this;
@@ -228,23 +222,22 @@ class Operation implements OperationInterface
 
     public function getParams()
     {
-
         return $this->parameters;
     }
 
     public function getParamNames()
     {
 
-        return array_keys( $this->parameters );
+        return array_keys($this->parameters);
     }
 
-    public function hasParam( $name )
+    public function hasParam($name)
     {
 
         return isset( $this->parameters[$name] );
     }
 
-    public function getParam( $param )
+    public function getParam($param)
     {
 
         return isset( $this->parameters[$param] ) ? $this->parameters[$param] : null;
@@ -257,7 +250,7 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function removeParam( $name )
+    public function removeParam($name)
     {
 
         unset( $this->parameters[$name] );
@@ -267,7 +260,6 @@ class Operation implements OperationInterface
 
     public function getHttpMethod()
     {
-
         return $this->httpMethod;
     }
 
@@ -278,9 +270,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setHttpMethod( $httpMethod )
+    public function setHttpMethod($httpMethod)
     {
-
         $this->httpMethod = $httpMethod;
 
         return $this;
@@ -288,7 +279,6 @@ class Operation implements OperationInterface
 
     public function getClass()
     {
-
         return $this->class;
     }
 
@@ -299,9 +289,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setClass( $className )
+    public function setClass($className)
     {
-
         $this->class = $className;
 
         return $this;
@@ -309,7 +298,6 @@ class Operation implements OperationInterface
 
     public function getName()
     {
-
         return $this->name;
     }
 
@@ -320,9 +308,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setName( $name )
+    public function setName($name)
     {
-
         $this->name = $name;
 
         return $this;
@@ -330,7 +317,6 @@ class Operation implements OperationInterface
 
     public function getSummary()
     {
-
         return $this->summary;
     }
 
@@ -341,9 +327,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setSummary( $summary )
+    public function setSummary($summary)
     {
-
         $this->summary = $summary;
 
         return $this;
@@ -351,7 +336,6 @@ class Operation implements OperationInterface
 
     public function getNotes()
     {
-
         return $this->notes;
     }
 
@@ -362,9 +346,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setNotes( $notes )
+    public function setNotes($notes)
     {
-
         $this->notes = $notes;
 
         return $this;
@@ -372,7 +355,6 @@ class Operation implements OperationInterface
 
     public function getDocumentationUrl()
     {
-
         return $this->documentationUrl;
     }
 
@@ -383,9 +365,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setDocumentationUrl( $docUrl )
+    public function setDocumentationUrl($docUrl)
     {
-
         $this->documentationUrl = $docUrl;
 
         return $this;
@@ -393,7 +374,6 @@ class Operation implements OperationInterface
 
     public function getResponseClass()
     {
-
         return $this->responseClass;
     }
 
@@ -405,9 +385,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setResponseClass( $responseClass )
+    public function setResponseClass($responseClass)
     {
-
         $this->responseClass = $responseClass;
         $this->inferResponseType();
 
@@ -416,7 +395,6 @@ class Operation implements OperationInterface
 
     public function getResponseType()
     {
-
         return $this->responseType;
     }
 
@@ -428,17 +406,16 @@ class Operation implements OperationInterface
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setResponseType( $responseType )
+    public function setResponseType($responseType)
     {
-
         static $types = array(
             self::TYPE_PRIMITIVE => true,
-            self::TYPE_CLASS     => true,
-            self::TYPE_MODEL     => true,
+            self::TYPE_CLASS => true,
+            self::TYPE_MODEL => true,
             self::TYPE_DOCUMENTATION => true
         );
         if (!isset( $types[$responseType] )) {
-            throw new InvalidArgumentException( 'responseType must be one of '.implode( ', ', array_keys( $types ) ) );
+            throw new InvalidArgumentException('responseType must be one of '.implode(', ', array_keys($types)));
         }
 
         $this->responseType = $responseType;
@@ -448,7 +425,6 @@ class Operation implements OperationInterface
 
     public function getResponseNotes()
     {
-
         return $this->responseNotes;
     }
 
@@ -459,9 +435,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setResponseNotes( $notes )
+    public function setResponseNotes($notes)
     {
-
         $this->responseNotes = $notes;
 
         return $this;
@@ -469,7 +444,6 @@ class Operation implements OperationInterface
 
     public function getDeprecated()
     {
-
         return $this->deprecated;
     }
 
@@ -480,9 +454,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setDeprecated( $isDeprecated )
+    public function setDeprecated($isDeprecated)
     {
-
         $this->deprecated = $isDeprecated;
 
         return $this;
@@ -490,7 +463,6 @@ class Operation implements OperationInterface
 
     public function getUri()
     {
-
         return $this->uri;
     }
 
@@ -501,9 +473,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setUri( $uri )
+    public function setUri($uri)
     {
-
         $this->uri = $uri;
 
         return $this;
@@ -511,7 +482,6 @@ class Operation implements OperationInterface
 
     public function getErrorResponses()
     {
-
         return $this->errorResponses;
     }
 
@@ -522,9 +492,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setErrorResponses( array $errorResponses )
+    public function setErrorResponses(array $errorResponses)
     {
-
         $this->errorResponses = $errorResponses;
 
         return $this;
@@ -539,15 +508,15 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function addErrorResponse( $code, $reason, $class )
+    public function addErrorResponse($code, $reason, $class)
     {
 
-        $this->errorResponses[] = array( 'code' => $code, 'reason' => $reason, 'class' => $class );
+        $this->errorResponses[] = array('code' => $code, 'reason' => $reason, 'class' => $class);
 
         return $this;
     }
 
-    public function getData( $name )
+    public function getData($name)
     {
 
         return isset( $this->data[$name] ) ? $this->data[$name] : null;
@@ -561,9 +530,8 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setData( $name, $value )
+    public function setData($name, $value)
     {
-
         $this->data[$name] = $value;
 
         return $this;
@@ -576,7 +544,6 @@ class Operation implements OperationInterface
      */
     public function getAdditionalParameters()
     {
-
         return $this->additionalParameters;
     }
 
@@ -587,11 +554,10 @@ class Operation implements OperationInterface
      *
      * @return self
      */
-    public function setAdditionalParameters( $parameter )
+    public function setAdditionalParameters($parameter)
     {
-
         if ($this->additionalParameters = $parameter) {
-            $this->additionalParameters->setParent( $this );
+            $this->additionalParameters->setParent($this);
         }
 
         return $this;

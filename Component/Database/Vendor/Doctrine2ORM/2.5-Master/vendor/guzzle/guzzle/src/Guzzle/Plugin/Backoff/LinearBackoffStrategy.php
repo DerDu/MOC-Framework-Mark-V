@@ -13,32 +13,24 @@ use Guzzle\Http\Message\Response;
  */
 class LinearBackoffStrategy extends AbstractBackoffStrategy
 {
-
     /** @var int Amount of time to progress each delay */
     protected $step;
 
     /**
      * @param int $step Amount of time to increase the delay each additional backoff
      */
-    public function __construct( $step = 1 )
+    public function __construct($step = 1)
     {
-
         $this->step = $step;
     }
 
     public function makesDecision()
     {
-
         return false;
     }
 
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-
+    protected function getDelay($retries, RequestInterface $request, Response $response = null, HttpException $e = null)
+    {
         return $retries * $this->step;
     }
 }

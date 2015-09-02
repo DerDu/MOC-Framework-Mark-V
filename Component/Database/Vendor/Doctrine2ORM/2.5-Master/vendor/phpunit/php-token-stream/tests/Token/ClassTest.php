@@ -22,7 +22,6 @@
  */
 class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
 {
-
     protected $class;
     protected $function;
 
@@ -32,7 +31,7 @@ class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
     public function testGetClassKeywords()
     {
 
-        $this->assertEquals( 'abstract', $this->class->getKeywords() );
+        $this->assertEquals('abstract', $this->class->getKeywords());
     }
 
     /**
@@ -41,7 +40,7 @@ class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
     public function testGetFunctionKeywords()
     {
 
-        $this->assertEquals( 'abstract,static', $this->function->getKeywords() );
+        $this->assertEquals('abstract,static', $this->function->getKeywords());
     }
 
     /**
@@ -50,17 +49,17 @@ class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
     public function testGetFunctionVisibility()
     {
 
-        $this->assertEquals( 'public', $this->function->getVisibility() );
+        $this->assertEquals('public', $this->function->getVisibility());
     }
 
     public function testIssue19()
     {
 
-        $ts = new PHP_Token_Stream( TEST_FILES_PATH.'issue19.php' );
+        $ts = new PHP_Token_Stream(TEST_FILES_PATH.'issue19.php');
 
         foreach ($ts as $token) {
             if ($token instanceof PHP_Token_CLASS) {
-                $this->assertFalse( $token->hasInterfaces() );
+                $this->assertFalse($token->hasInterfaces());
             }
         }
     }
@@ -68,14 +67,14 @@ class PHP_Token_ClassTest extends PHPUnit_Framework_TestCase
     public function testIssue30()
     {
 
-        $ts = new PHP_Token_Stream( TEST_FILES_PATH.'issue30.php' );
-        $this->assertCount( 1, $ts->getClasses() );
+        $ts = new PHP_Token_Stream(TEST_FILES_PATH.'issue30.php');
+        $this->assertCount(1, $ts->getClasses());
     }
 
     protected function setUp()
     {
 
-        $ts = new PHP_Token_Stream( TEST_FILES_PATH.'source2.php' );
+        $ts = new PHP_Token_Stream(TEST_FILES_PATH.'source2.php');
 
         foreach ($ts as $token) {
             if ($token instanceof PHP_Token_CLASS) {

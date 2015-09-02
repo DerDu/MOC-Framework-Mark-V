@@ -33,7 +33,6 @@ namespace Doctrine\Common;
  */
 interface EventSubscriber
 {
-
     /**
      * Returns an array of events this subscriber wants to listen to.
      *

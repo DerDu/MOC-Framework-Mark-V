@@ -17,7 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class RedirectPlugin implements EventSubscriberInterface
 {
-
     const REDIRECT_COUNT = 'redirect.count';
     const MAX_REDIRECTS = 'redirect.max';
     const STRICT_REDIRECTS = 'redirect.strict';
@@ -31,9 +30,8 @@ class RedirectPlugin implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-
         return array(
-            'request.sent' => array( 'onRequestSent', 100 ),
+            'request.sent' => array('onRequestSent', 100),
             'request.clone'       => 'cleanupRequest',
             'request.before_send' => 'cleanupRequest'
         );
@@ -44,9 +42,8 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @param Event $event Event emitted
      */
-    public function cleanupRequest( Event $event )
+    public function cleanupRequest(Event $event)
     {
-
         $params = $event['request']->getParams();
         unset( $params[self::REDIRECT_COUNT] );
         unset( $params[self::PARENT_REQUEST] );
@@ -57,33 +54,31 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @param Event $event Event emitted
      */
-    public function onRequestSent( Event $event )
+    public function onRequestSent(Event $event)
     {
-
         $response = $event['response'];
         $request = $event['request'];
 
         // Only act on redirect requests with Location headers
-        if (!$response || $request->getParams()->get( self::DISABLE )) {
+        if (!$response || $request->getParams()->get(self::DISABLE)) {
             return;
         }
 
         // Trace the original request based on parameter history
-        $original = $this->getOriginalRequest( $request );
+        $original = $this->getOriginalRequest($request);
 
         // Terminating condition to set the effective response on the original request
-        if (!$response->isRedirect() || !$response->hasHeader( 'Location' )) {
+        if (!$response->isRedirect() || !$response->hasHeader('Location')) {
             if ($request !== $original) {
                 // This is a terminating redirect response, so set it on the original request
-                $response->getParams()->set( self::REDIRECT_COUNT,
-                    $original->getParams()->get( self::REDIRECT_COUNT ) );
-                $original->setResponse( $response );
-                $response->setEffectiveUrl( $request->getUrl() );
+                $response->getParams()->set(self::REDIRECT_COUNT, $original->getParams()->get(self::REDIRECT_COUNT));
+                $original->setResponse($response);
+                $response->setEffectiveUrl($request->getUrl());
             }
             return;
         }
 
-        $this->sendRedirectRequest( $original, $request, $response );
+        $this->sendRedirectRequest($original, $request, $response);
     }
 
     /**
@@ -93,12 +88,11 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @return RequestInterface
      */
-    protected function getOriginalRequest( RequestInterface $request )
+    protected function getOriginalRequest(RequestInterface $request)
     {
-
         $original = $request;
         // The number of redirects is held on the original request, so determine which request that is
-        while ($parent = $original->getParams()->get( self::PARENT_REQUEST )) {
+        while ($parent = $original->getParams()->get(self::PARENT_REQUEST)) {
             $original = $parent;
         }
 
@@ -114,14 +108,13 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @throws BadResponseException|\Exception
      */
-    protected function sendRedirectRequest( RequestInterface $original, RequestInterface $request, Response $response )
+    protected function sendRedirectRequest(RequestInterface $original, RequestInterface $request, Response $response)
     {
-
         // Validate and create a redirect request based on the original request and current response
-        if ($redirectRequest = $this->prepareRedirection( $original, $request, $response )) {
+        if ($redirectRequest = $this->prepareRedirection($original, $request, $response)) {
             try {
                 $redirectRequest->send();
-            } catch( BadResponseException $e ) {
+            } catch (BadResponseException $e) {
                 $e->getResponse();
                 if (!$e->getResponse()) {
                     throw $e;
@@ -139,9 +132,8 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @return RequestInterface
      */
-    protected function prepareRedirection( RequestInterface $original, RequestInterface $request, Response $response )
+    protected function prepareRedirection(RequestInterface $original, RequestInterface $request, Response $response)
     {
-
         $params = $original->getParams();
         // This is a new redirect, so increment the redirect counter
         $current = $params[self::REDIRECT_COUNT] + 1;
@@ -151,14 +143,14 @@ class RedirectPlugin implements EventSubscriberInterface
 
         // Throw an exception if the redirect count is exceeded
         if ($current > $max) {
-            $this->throwTooManyRedirectsException( $original, $max );
+            $this->throwTooManyRedirectsException($original, $max);
             return false;
         } else {
             // Create a redirect request based on the redirect rules set on the request
             return $this->createRedirectRequest(
                 $request,
                 $response->getStatusCode(),
-                trim( $response->getLocation() ),
+                trim($response->getLocation()),
                 $original
             );
         }
@@ -172,16 +164,15 @@ class RedirectPlugin implements EventSubscriberInterface
      *
      * @throws TooManyRedirectsException when too many redirects have been issued
      */
-    protected function throwTooManyRedirectsException( RequestInterface $original, $max )
+    protected function throwTooManyRedirectsException(RequestInterface $original, $max)
     {
-
         $original->getEventDispatcher()->addListener(
             'request.complete',
-            $func = function ( $e ) use ( &$func, $original, $max ) {
+            $func = function ($e) use (&$func, $original, $max) {
 
-                $original->getEventDispatcher()->removeListener( 'request.complete', $func );
+                $original->getEventDispatcher()->removeListener('request.complete', $func);
                 $str = "{$max} redirects were issued for this request:\n".$e['request']->getRawHeaders();
-                throw new TooManyRedirectsException( $str );
+                throw new TooManyRedirectsException($str);
             }
         );
     }
@@ -206,40 +197,39 @@ class RedirectPlugin implements EventSubscriberInterface
         $location,
         RequestInterface $original
     ) {
-
         $redirectRequest = null;
-        $strict = $original->getParams()->get( self::STRICT_REDIRECTS );
+        $strict = $original->getParams()->get(self::STRICT_REDIRECTS);
 
         // Switch method to GET for 303 redirects.  301 and 302 redirects also switch to GET unless we are forcing RFC
         // compliance to emulate what most browsers do.  NOTE: IE only switches methods on 301/302 when coming from a POST.
         if ($request instanceof EntityEnclosingRequestInterface && ( $statusCode == 303 || ( !$strict && $statusCode <= 302 ) )) {
-            $redirectRequest = RequestFactory::getInstance()->cloneRequestWithMethod( $request, 'GET' );
+            $redirectRequest = RequestFactory::getInstance()->cloneRequestWithMethod($request, 'GET');
         } else {
             $redirectRequest = clone $request;
         }
 
-        $redirectRequest->setIsRedirect( true );
+        $redirectRequest->setIsRedirect(true);
         // Always use the same response body when redirecting
-        $redirectRequest->setResponseBody( $request->getResponseBody() );
+        $redirectRequest->setResponseBody($request->getResponseBody());
 
-        $location = Url::factory( $location );
+        $location = Url::factory($location);
         // If the location is not absolute, then combine it with the original URL
         if (!$location->isAbsolute()) {
-            $originalUrl = $redirectRequest->getUrl( true );
+            $originalUrl = $redirectRequest->getUrl(true);
             // Remove query string parameters and just take what is present on the redirect Location header
             $originalUrl->getQuery()->clear();
-            $location = $originalUrl->combine( (string)$location, true );
+            $location = $originalUrl->combine((string)$location, true);
         }
 
-        $redirectRequest->setUrl( $location );
+        $redirectRequest->setUrl($location);
 
         // Add the parent request to the request before it sends (make sure it's before the onRequestClone event too)
         $redirectRequest->getEventDispatcher()->addListener(
             'request.before_send',
-            $func = function ( $e ) use ( &$func, $request, $redirectRequest ) {
+            $func = function ($e) use (&$func, $request, $redirectRequest) {
 
-                $redirectRequest->getEventDispatcher()->removeListener( 'request.before_send', $func );
-                $e['request']->getParams()->set( RedirectPlugin::PARENT_REQUEST, $request );
+                $redirectRequest->getEventDispatcher()->removeListener('request.before_send', $func);
+                $e['request']->getParams()->set(RedirectPlugin::PARENT_REQUEST, $request);
             }
         );
 

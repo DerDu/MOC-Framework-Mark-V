@@ -30,7 +30,6 @@ use ReflectionClass;
  */
 class LazyLoadableObjectClassMetadata implements ClassMetadata
 {
-
     /**
      * @var ReflectionClass
      */
@@ -67,7 +66,6 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
      */
     public function getName()
     {
-
         return $this->getReflectionClass()->getName();
     }
 
@@ -76,9 +74,8 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
      */
     public function getReflectionClass()
     {
-
         if (null === $this->reflectionClass) {
-            $this->reflectionClass = new \ReflectionClass( __NAMESPACE__.'\LazyLoadableObject' );
+            $this->reflectionClass = new \ReflectionClass(__NAMESPACE__.'\LazyLoadableObject');
         }
 
         return $this->reflectionClass;
@@ -87,7 +84,7 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     /**
      * {@inheritDoc}
      */
-    public function isIdentifier( $fieldName )
+    public function isIdentifier($fieldName)
     {
 
         return isset( $this->identifier[$fieldName] );
@@ -96,7 +93,7 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     /**
      * {@inheritDoc}
      */
-    public function hasField( $fieldName )
+    public function hasField($fieldName)
     {
 
         return isset( $this->fields[$fieldName] );
@@ -105,7 +102,7 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     /**
      * {@inheritDoc}
      */
-    public function hasAssociation( $fieldName )
+    public function hasAssociation($fieldName)
     {
 
         return isset( $this->associations[$fieldName] );
@@ -114,19 +111,19 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     /**
      * {@inheritDoc}
      */
-    public function isSingleValuedAssociation( $fieldName )
+    public function isSingleValuedAssociation($fieldName)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isCollectionValuedAssociation( $fieldName )
+    public function isCollectionValuedAssociation($fieldName)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 
     /**
@@ -135,7 +132,7 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     public function getFieldNames()
     {
 
-        return array_keys( $this->fields );
+        return array_keys($this->fields);
     }
 
     /**
@@ -143,7 +140,6 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
      */
     public function getIdentifierFieldNames()
     {
-
         return $this->getIdentifier();
     }
 
@@ -153,7 +149,7 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     public function getIdentifier()
     {
 
-        return array_keys( $this->identifier );
+        return array_keys($this->identifier);
     }
 
     /**
@@ -162,51 +158,50 @@ class LazyLoadableObjectClassMetadata implements ClassMetadata
     public function getAssociationNames()
     {
 
-        return array_keys( $this->associations );
+        return array_keys($this->associations);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getTypeOfField( $fieldName )
+    public function getTypeOfField($fieldName)
     {
-
         return 'string';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAssociationTargetClass( $assocName )
+    public function getAssociationTargetClass($assocName)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isAssociationInverseSide( $assocName )
+    public function isAssociationInverseSide($assocName)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAssociationMappedByTargetField( $assocName )
+    public function getAssociationMappedByTargetField($assocName)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getIdentifierValues( $object )
+    public function getIdentifierValues($object)
     {
 
-        throw new \BadMethodCallException( 'not implemented' );
+        throw new \BadMethodCallException('not implemented');
     }
 }

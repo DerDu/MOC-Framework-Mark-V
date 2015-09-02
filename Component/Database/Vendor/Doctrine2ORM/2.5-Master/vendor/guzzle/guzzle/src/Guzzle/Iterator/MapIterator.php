@@ -9,7 +9,6 @@ use Guzzle\Common\Exception\InvalidArgumentException;
  */
 class MapIterator extends \IteratorIterator
 {
-
     /** @var mixed Callback */
     protected $callback;
 
@@ -19,12 +18,12 @@ class MapIterator extends \IteratorIterator
      *
      * @throws InvalidArgumentException if the callback if not callable
      */
-    public function __construct( \Traversable $iterator, $callback )
+    public function __construct(\Traversable $iterator, $callback)
     {
 
-        parent::__construct( $iterator );
-        if (!is_callable( $callback )) {
-            throw new InvalidArgumentException( 'The callback must be callable' );
+        parent::__construct($iterator);
+        if (!is_callable($callback)) {
+            throw new InvalidArgumentException('The callback must be callable');
         }
         $this->callback = $callback;
     }
@@ -32,6 +31,6 @@ class MapIterator extends \IteratorIterator
     public function current()
     {
 
-        return call_user_func( $this->callback, parent::current() );
+        return call_user_func($this->callback, parent::current());
     }
 }

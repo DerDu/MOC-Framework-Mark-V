@@ -23,7 +23,6 @@ use Doctrine\DBAL\Driver\Statement;
 
 class DB2Statement implements \IteratorAggregate, Statement
 {
-
     /**
      * DB2_BINARY, DB2_CHAR, DB2_DOUBLE, or DB2_LONG
      *
@@ -57,27 +56,25 @@ class DB2Statement implements \IteratorAggregate, Statement
     /**
      * @param resource $stmt
      */
-    public function __construct( $stmt )
+    public function __construct($stmt)
     {
-
         $this->_stmt = $stmt;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindValue( $param, $value, $type = null )
+    public function bindValue($param, $value, $type = null)
     {
 
-        return $this->bindParam( $param, $value, $type );
+        return $this->bindParam($param, $value, $type);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindParam( $column, &$variable, $type = null, $length = null )
+    public function bindParam($column, &$variable, $type = null, $length = null)
     {
-
         $this->_bindParam[$column] =& $variable;
 
         if ($type && isset( self::$_typeMap[$type] )) {
@@ -86,8 +83,8 @@ class DB2Statement implements \IteratorAggregate, Statement
             $type = DB2_CHAR;
         }
 
-        if (!db2_bind_param( $this->_stmt, $column, "variable", DB2_PARAM_IN, $type )) {
-            throw new DB2Exception( db2_stmt_errormsg() );
+        if (!db2_bind_param($this->_stmt, $column, "variable", DB2_PARAM_IN, $type)) {
+            throw new DB2Exception(db2_stmt_errormsg());
         }
 
         return true;
@@ -104,8 +101,8 @@ class DB2Statement implements \IteratorAggregate, Statement
         }
 
         $this->_bindParam = array();
-        db2_free_result( $this->_stmt );
-        $ret = db2_free_stmt( $this->_stmt );
+        db2_free_result($this->_stmt);
+        $ret = db2_free_stmt($this->_stmt);
         $this->_stmt = false;
 
         return $ret;
@@ -121,7 +118,7 @@ class DB2Statement implements \IteratorAggregate, Statement
             return false;
         }
 
-        return db2_num_fields( $this->_stmt );
+        return db2_num_fields($this->_stmt);
     }
 
     /**
@@ -129,7 +126,6 @@ class DB2Statement implements \IteratorAggregate, Statement
      */
     public function errorCode()
     {
-
         return db2_stmt_error();
     }
 
@@ -138,7 +134,6 @@ class DB2Statement implements \IteratorAggregate, Statement
      */
     public function errorInfo()
     {
-
         return array(
             0 => db2_stmt_errormsg(),
             1 => db2_stmt_error(),
@@ -148,7 +143,7 @@ class DB2Statement implements \IteratorAggregate, Statement
     /**
      * {@inheritdoc}
      */
-    public function execute( $params = null )
+    public function execute($params = null)
     {
 
         if (!$this->_stmt) {
@@ -162,13 +157,13 @@ class DB2Statement implements \IteratorAggregate, Statement
             $retval = @db2_execute($this->_stmt);
         }*/
         if ($params === null) {
-            ksort( $this->_bindParam );
-            $params = array_values( $this->_bindParam );
+            ksort($this->_bindParam);
+            $params = array_values($this->_bindParam);
         }
-        $retval = @db2_execute( $this->_stmt, $params );
+        $retval = @db2_execute($this->_stmt, $params);
 
         if ($retval === false) {
-            throw new DB2Exception( db2_stmt_errormsg() );
+            throw new DB2Exception(db2_stmt_errormsg());
         }
 
         return $retval;
@@ -177,7 +172,7 @@ class DB2Statement implements \IteratorAggregate, Statement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode( $fetchMode, $arg2 = null, $arg3 = null )
+    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
     {
 
         $this->_defaultFetchMode = $fetchMode;
@@ -192,23 +187,21 @@ class DB2Statement implements \IteratorAggregate, Statement
      */
     public function getIterator()
     {
-
         $data = $this->fetchAll();
 
-        return new \ArrayIterator( $data );
+        return new \ArrayIterator($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchAll( $fetchMode = null )
+    public function fetchAll($fetchMode = null)
     {
-
         $rows = array();
 
         switch ($fetchMode) {
             case \PDO::FETCH_CLASS:
-                while ($row = call_user_func_array( array( $this, 'fetch' ), func_get_args() )) {
+                while ($row = call_user_func_array(array($this, 'fetch'), func_get_args())) {
                     $rows[] = $row;
                 }
                 break;
@@ -218,7 +211,7 @@ class DB2Statement implements \IteratorAggregate, Statement
                 }
                 break;
             default:
-                while ($row = $this->fetch( $fetchMode )) {
+                while ($row = $this->fetch($fetchMode)) {
                     $rows[] = $row;
                 }
         }
@@ -229,10 +222,10 @@ class DB2Statement implements \IteratorAggregate, Statement
     /**
      * {@inheritdoc}
      */
-    public function fetchColumn( $columnIndex = 0 )
+    public function fetchColumn($columnIndex = 0)
     {
 
-        $row = $this->fetch( \PDO::FETCH_NUM );
+        $row = $this->fetch(\PDO::FETCH_NUM);
 
         if (false === $row) {
             return false;
@@ -244,15 +237,14 @@ class DB2Statement implements \IteratorAggregate, Statement
     /**
      * {@inheritdoc}
      */
-    public function fetch( $fetchMode = null )
+    public function fetch($fetchMode = null)
     {
-
         $fetchMode = $fetchMode ?: $this->_defaultFetchMode;
         switch ($fetchMode) {
             case \PDO::FETCH_BOTH:
-                return db2_fetch_both( $this->_stmt );
+                return db2_fetch_both($this->_stmt);
             case \PDO::FETCH_ASSOC:
-                return db2_fetch_assoc( $this->_stmt );
+                return db2_fetch_assoc($this->_stmt);
             case \PDO::FETCH_CLASS:
                 $className = $this->defaultFetchClass;
                 $ctorArgs = $this->defaultFetchClassCtorArgs;
@@ -263,19 +255,19 @@ class DB2Statement implements \IteratorAggregate, Statement
                     $ctorArgs = isset( $args[2] ) ? $args[2] : array();
                 }
 
-                $result = db2_fetch_object( $this->_stmt );
+                $result = db2_fetch_object($this->_stmt);
 
                 if ($result instanceof \stdClass) {
-                    $result = $this->castObject( $result, $className, $ctorArgs );
+                    $result = $this->castObject($result, $className, $ctorArgs);
                 }
 
                 return $result;
             case \PDO::FETCH_NUM:
-                return db2_fetch_array( $this->_stmt );
+                return db2_fetch_array($this->_stmt);
             case \PDO::FETCH_OBJ:
-                return db2_fetch_object( $this->_stmt );
+                return db2_fetch_object($this->_stmt);
             default:
-                throw new DB2Exception( "Given Fetch-Style ".$fetchMode." is not supported." );
+                throw new DB2Exception("Given Fetch-Style ".$fetchMode." is not supported.");
         }
     }
 
@@ -290,50 +282,50 @@ class DB2Statement implements \IteratorAggregate, Statement
      *
      * @throws DB2Exception
      */
-    private function castObject( \stdClass $sourceObject, $destinationClass, array $ctorArgs = array() )
+    private function castObject(\stdClass $sourceObject, $destinationClass, array $ctorArgs = array())
     {
 
-        if (!is_string( $destinationClass )) {
-            if (!is_object( $destinationClass )) {
-                throw new DB2Exception( sprintf(
-                    'Destination class has to be of type string or object, %s given.', gettype( $destinationClass )
-                ) );
+        if (!is_string($destinationClass)) {
+            if (!is_object($destinationClass)) {
+                throw new DB2Exception(sprintf(
+                    'Destination class has to be of type string or object, %s given.', gettype($destinationClass)
+                ));
             }
         } else {
-            $destinationClass = new \ReflectionClass( $destinationClass );
-            $destinationClass = $destinationClass->newInstanceArgs( $ctorArgs );
+            $destinationClass = new \ReflectionClass($destinationClass);
+            $destinationClass = $destinationClass->newInstanceArgs($ctorArgs);
         }
 
-        $sourceReflection = new \ReflectionObject( $sourceObject );
-        $destinationClassReflection = new \ReflectionObject( $destinationClass );
+        $sourceReflection = new \ReflectionObject($sourceObject);
+        $destinationClassReflection = new \ReflectionObject($destinationClass);
         /** @var \ReflectionProperty[] $destinationProperties */
-        $destinationProperties = array_change_key_case( $destinationClassReflection->getProperties(), \CASE_LOWER );
+        $destinationProperties = array_change_key_case($destinationClassReflection->getProperties(), \CASE_LOWER);
 
         foreach ($sourceReflection->getProperties() as $sourceProperty) {
-            $sourceProperty->setAccessible( true );
+            $sourceProperty->setAccessible(true);
 
             $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue( $sourceObject );
+            $value = $sourceProperty->getValue($sourceObject);
 
             // Try to find a case-matching property.
-            if ($destinationClassReflection->hasProperty( $name )) {
-                $destinationProperty = $destinationClassReflection->getProperty( $name );
+            if ($destinationClassReflection->hasProperty($name)) {
+                $destinationProperty = $destinationClassReflection->getProperty($name);
 
-                $destinationProperty->setAccessible( true );
-                $destinationProperty->setValue( $destinationClass, $value );
+                $destinationProperty->setAccessible(true);
+                $destinationProperty->setValue($destinationClass, $value);
 
                 continue;
             }
 
-            $name = strtolower( $name );
+            $name = strtolower($name);
 
             // Try to find a property without matching case.
             // Fallback for the driver returning either all uppercase or all lowercase column names.
             if (isset( $destinationProperties[$name] )) {
                 $destinationProperty = $destinationProperties[$name];
 
-                $destinationProperty->setAccessible( true );
-                $destinationProperty->setValue( $destinationClass, $value );
+                $destinationProperty->setAccessible(true);
+                $destinationProperty->setValue($destinationClass, $value);
 
                 continue;
             }
@@ -350,6 +342,6 @@ class DB2Statement implements \IteratorAggregate, Statement
     public function rowCount()
     {
 
-        return ( @db2_num_rows( $this->_stmt ) ) ?: 0;
+        return ( @db2_num_rows($this->_stmt) ) ?: 0;
     }
 }

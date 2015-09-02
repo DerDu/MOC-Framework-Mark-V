@@ -30,7 +30,6 @@ namespace Doctrine\Common\Persistence;
  */
 interface ManagerRegistry extends ConnectionRegistry
 {
-
     /**
      * Gets the default object manager name.
      *
@@ -45,7 +44,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return \Doctrine\Common\Persistence\ObjectManager
      */
-    public function getManager( $name = null );
+    public function getManager($name = null);
 
     /**
      * Gets an array of all registered object managers.
@@ -71,7 +70,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return \Doctrine\Common\Persistence\ObjectManager
      */
-    public function resetManager( $name = null );
+    public function resetManager($name = null);
 
     /**
      * Resolves a registered namespace alias to the full namespace.
@@ -82,7 +81,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return string The full namespace.
      */
-    public function getAliasNamespace( $alias );
+    public function getAliasNamespace($alias);
 
     /**
      * Gets all connection names.
@@ -99,7 +98,7 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getRepository( $persistentObject, $persistentManagerName = null );
+    public function getRepository($persistentObject, $persistentManagerName = null);
 
     /**
      * Gets the object manager associated with a given class.
@@ -108,5 +107,5 @@ interface ManagerRegistry extends ConnectionRegistry
      *
      * @return \Doctrine\Common\Persistence\ObjectManager|null
      */
-    public function getManagerForClass( $class );
+    public function getManagerForClass($class);
 }

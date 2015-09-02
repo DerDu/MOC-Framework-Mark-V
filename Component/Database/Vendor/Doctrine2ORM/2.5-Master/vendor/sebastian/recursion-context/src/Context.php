@@ -13,16 +13,9 @@ namespace SebastianBergmann\RecursionContext;
 /**
  * A context containing previously processed arrays and objects
  * when recursively processing a value.
- *
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Adam Harvey <aharvey@php.net>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       https://github.com/sebastianbergmann/recursion-context
  */
 final class Context
 {
-
     /**
      * @var array[]
      */
@@ -48,20 +41,18 @@ final class Context
      *
      * @param  array|object $value The value to add.
      *
-     * @return integer|string           The ID of the stored value, either as
-     *                                  a string or integer.
+     * @return int|string               The ID of the stored value, either as
+     *                                        a string or integer.
      * @throws InvalidArgumentException Thrown if $value is not an array or
-     *                                  object
+     *                                        object
      */
-    public function add( &$value )
+    public function add(&$value)
     {
 
-        if (is_array( $value )) {
-            return $this->addArray( $value );
-        } else {
-            if (is_object( $value )) {
-                return $this->addObject( $value );
-            }
+        if (is_array($value)) {
+            return $this->addArray($value);
+        } else if (is_object($value)) {
+            return $this->addObject($value);
         }
 
         throw new InvalidArgumentException(
@@ -72,12 +63,12 @@ final class Context
     /**
      * @param  array $array
      *
-     * @return bool|int
+*@return bool|int
      */
-    private function addArray( array &$array )
+    private function addArray(array &$array)
     {
 
-        $key = $this->containsArray( $array );
+        $key = $this->containsArray($array);
 
         if ($key !== false) {
             return $key;
@@ -85,29 +76,30 @@ final class Context
 
         $this->arrays[] = &$array;
 
-        return count( $this->arrays ) - 1;
+        return count($this->arrays) - 1;
     }
 
     /**
      * @param  array $array
      *
-     * @return integer|false
+     * @return int|false
      */
-    private function containsArray( array &$array )
+    private function containsArray(array &$array)
     {
 
-        $keys = array_keys( $this->arrays, $array, true );
-        $hash = '_Key_'.hash( 'sha512', microtime( true ) );
+        $keys = array_keys($this->arrays, $array, true);
+        $hash = '_Key_'.hash('sha512', microtime(true));
 
         foreach ($keys as $key) {
             $this->arrays[$key][$hash] = $hash;
 
             if (isset( $array[$hash] ) && $array[$hash] === $hash) {
-                unset( $this->arrays[$key][$hash] );
+                unset( $this->arrays[$key][$hash]);
+
                 return $key;
             }
 
-            unset( $this->arrays[$key][$hash] );
+            unset( $this->arrays[$key][$hash]);
         }
 
         return false;
@@ -115,17 +107,16 @@ final class Context
 
     /**
      * @param  object $object
-     *
      * @return string
      */
-    private function addObject( $object )
+    private function addObject($object)
     {
 
-        if (!$this->objects->contains( $object )) {
-            $this->objects->attach( $object );
+        if (!$this->objects->contains($object)) {
+            $this->objects->attach($object);
         }
 
-        return spl_object_hash( $object );
+        return spl_object_hash($object);
     }
 
     /**
@@ -133,21 +124,19 @@ final class Context
      *
      * @param  array|object $value The value to check.
      *
-     * @return integer|string|false The string or integer ID of the stored
-     *                              value if it has already been seen, or
-     *                              false if the value is not stored.
+     * @return int|string|false         The string or integer ID of the stored
+     *                                        value if it has already been seen, or
+     *                                        false if the value is not stored.
      * @throws InvalidArgumentException Thrown if $value is not an array or
-     *                                  object
+     *                                        object
      */
-    public function contains( &$value )
+    public function contains(&$value)
     {
 
-        if (is_array( $value )) {
-            return $this->containsArray( $value );
-        } else {
-            if (is_object( $value )) {
-                return $this->containsObject( $value );
-            }
+        if (is_array($value)) {
+            return $this->containsArray($value);
+        } else if (is_object($value)) {
+            return $this->containsObject($value);
         }
 
         throw new InvalidArgumentException(
@@ -157,14 +146,13 @@ final class Context
 
     /**
      * @param  object $value
-     *
      * @return string|false
      */
-    private function containsObject( $value )
+    private function containsObject($value)
     {
 
-        if ($this->objects->contains( $value )) {
-            return spl_object_hash( $value );
+        if ($this->objects->contains($value)) {
+            return spl_object_hash($value);
         }
 
         return false;

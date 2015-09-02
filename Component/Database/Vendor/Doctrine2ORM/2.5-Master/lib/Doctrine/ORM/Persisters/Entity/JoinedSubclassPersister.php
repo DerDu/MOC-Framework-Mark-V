@@ -32,12 +32,11 @@ use Doctrine\ORM\Utility\PersisterHelper;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @author Alexander <iam.asm89@gmail.com>
- * @since  2.0
- * @see    http://martinfowler.com/eaaCatalog/classTableInheritance.html
+ * @since 2.0
+ * @see   http://martinfowler.com/eaaCatalog/classTableInheritance.html
  */
 class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 {
-
     /**
      * Map that maps column names to the table names that own them.
      * This is mainly a temporary cache, used during a single request.
@@ -62,7 +61,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
      *
      * @override
      */
-    public function getOwningTable( $fieldName )
+    public function getOwningTable($fieldName)
     {
 
         if (isset( $this->owningTableMap[$fieldName] )) {
@@ -71,11 +70,11 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
         switch (true) {
             case isset( $this->class->associationMappings[$fieldName]['inherited'] ):
-                $cm = $this->em->getClassMetadata( $this->class->associationMappings[$fieldName]['inherited'] );
+                $cm = $this->em->getClassMetadata($this->class->associationMappings[$fieldName]['inherited']);
                 break;
 
             case isset( $this->class->fieldMappings[$fieldName]['inherited'] ):
-                $cm = $this->em->getClassMetadata( $this->class->fieldMappings[$fieldName]['inherited'] );
+                $cm = $this->em->getClassMetadata($this->class->fieldMappings[$fieldName]['inherited']);
                 break;
 
             default:
@@ -84,7 +83,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         }
 
         $tableName = $cm->getTableName();
-        $quotedTableName = $this->quoteStrategy->getTableName( $cm, $this->platform );
+        $quotedTableName = $this->quoteStrategy->getTableName($cm, $this->platform);
 
         $this->owningTableMap[$fieldName] = $tableName;
         $this->quotedTableMap[$tableName] = $quotedTableName;
@@ -106,28 +105,28 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         $idGenerator = $this->class->idGenerator;
         $isPostInsertId = $idGenerator->isPostInsertGenerator();
         $rootClass = ( $this->class->name !== $this->class->rootEntityName )
-            ? $this->em->getClassMetadata( $this->class->rootEntityName )
+            ? $this->em->getClassMetadata($this->class->rootEntityName)
             : $this->class;
 
         // Prepare statement for the root table
-        $rootPersister = $this->em->getUnitOfWork()->getEntityPersister( $rootClass->name );
+        $rootPersister = $this->em->getUnitOfWork()->getEntityPersister($rootClass->name);
         $rootTableName = $rootClass->getTableName();
-        $rootTableStmt = $this->conn->prepare( $rootPersister->getInsertSQL() );
+        $rootTableStmt = $this->conn->prepare($rootPersister->getInsertSQL());
 
         // Prepare statements for sub tables.
         $subTableStmts = array();
 
         if ($rootClass !== $this->class) {
-            $subTableStmts[$this->class->getTableName()] = $this->conn->prepare( $this->getInsertSQL() );
+            $subTableStmts[$this->class->getTableName()] = $this->conn->prepare($this->getInsertSQL());
         }
 
         foreach ($this->class->parentClasses as $parentClassName) {
-            $parentClass = $this->em->getClassMetadata( $parentClassName );
+            $parentClass = $this->em->getClassMetadata($parentClassName);
             $parentTableName = $parentClass->getTableName();
 
             if ($parentClass !== $rootClass) {
-                $parentPersister = $this->em->getUnitOfWork()->getEntityPersister( $parentClassName );
-                $subTableStmts[$parentTableName] = $this->conn->prepare( $parentPersister->getInsertSQL() );
+                $parentPersister = $this->em->getUnitOfWork()->getEntityPersister($parentClassName);
+                $subTableStmts[$parentTableName] = $this->conn->prepare($parentPersister->getInsertSQL());
             }
         }
 
@@ -135,19 +134,19 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         // 1) Insert on root table
         // 2) Insert on sub tables
         foreach ($this->queuedInserts as $entity) {
-            $insertData = $this->prepareInsertData( $entity );
+            $insertData = $this->prepareInsertData($entity);
 
             // Execute insert on root table
             $paramIndex = 1;
 
             foreach ($insertData[$rootTableName] as $columnName => $value) {
-                $rootTableStmt->bindValue( $paramIndex++, $value, $this->columnTypes[$columnName] );
+                $rootTableStmt->bindValue($paramIndex++, $value, $this->columnTypes[$columnName]);
             }
 
             $rootTableStmt->execute();
 
             if ($isPostInsertId) {
-                $generatedId = $idGenerator->generate( $this->em, $entity );
+                $generatedId = $idGenerator->generate($this->em, $entity);
                 $id = array(
                     $this->class->identifier[0] => $generatedId
                 );
@@ -156,11 +155,11 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                     'entity' => $entity,
                 );
             } else {
-                $id = $this->em->getUnitOfWork()->getEntityIdentifier( $entity );
+                $id = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
             }
 
             if ($this->class->isVersioned) {
-                $this->assignDefaultVersionValue( $entity, $id );
+                $this->assignDefaultVersionValue($entity, $id);
             }
 
             // Execute inserts on subtables.
@@ -175,12 +174,12 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                 foreach ((array)$id as $idName => $idVal) {
                     $type = isset( $this->columnTypes[$idName] ) ? $this->columnTypes[$idName] : Type::STRING;
 
-                    $stmt->bindValue( $paramIndex++, $idVal, $type );
+                    $stmt->bindValue($paramIndex++, $idVal, $type);
                 }
 
                 foreach ($data as $columnName => $value) {
-                    if (!is_array( $id ) || !isset( $id[$columnName] )) {
-                        $stmt->bindValue( $paramIndex++, $value, $this->columnTypes[$columnName] );
+                    if (!is_array($id) || !isset( $id[$columnName] )) {
+                        $stmt->bindValue($paramIndex++, $value, $this->columnTypes[$columnName]);
                     }
                 }
 
@@ -202,11 +201,11 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     /**
      * {@inheritdoc}
      */
-    protected function assignDefaultVersionValue( $entity, array $id )
+    protected function assignDefaultVersionValue($entity, array $id)
     {
 
-        $value = $this->fetchVersionValue( $this->getVersionedClassMetadata(), $id );
-        $this->class->setFieldValue( $entity, $this->class->versionField, $value );
+        $value = $this->fetchVersionValue($this->getVersionedClassMetadata(), $id);
+        $this->class->setFieldValue($entity, $this->class->versionField, $value);
     }
 
     /**
@@ -221,7 +220,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         if (isset( $this->class->fieldMappings[$this->class->versionField]['inherited'] )) {
             $definingClassName = $this->class->fieldMappings[$this->class->versionField]['inherited'];
 
-            return $this->em->getClassMetadata( $definingClassName );
+            return $this->em->getClassMetadata($definingClassName);
         }
 
         return $this->class;
@@ -230,10 +229,10 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     /**
      * {@inheritdoc}
      */
-    public function update( $entity )
+    public function update($entity)
     {
 
-        $updateData = $this->prepareUpdateData( $entity );
+        $updateData = $this->prepareUpdateData($entity);
 
         if (!$updateData) {
             return;
@@ -250,52 +249,52 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
             $tableName = $this->quotedTableMap[$tableName];
             $versioned = $isVersioned && $versionedTable === $tableName;
 
-            $this->updateTable( $entity, $tableName, $data, $versioned );
+            $this->updateTable($entity, $tableName, $data, $versioned);
         }
 
         // Make sure the table with the version column is updated even if no columns on that
         // table were affected.
         if ($isVersioned) {
             if (!isset( $updateData[$versionedTable] )) {
-                $tableName = $this->quoteStrategy->getTableName( $versionedClass, $this->platform );
-                $this->updateTable( $entity, $tableName, array(), true );
+                $tableName = $this->quoteStrategy->getTableName($versionedClass, $this->platform);
+                $this->updateTable($entity, $tableName, array(), true);
             }
 
-            $identifiers = $this->em->getUnitOfWork()->getEntityIdentifier( $entity );
-            $this->assignDefaultVersionValue( $entity, $identifiers );
+            $identifiers = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
+            $this->assignDefaultVersionValue($entity, $identifiers);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete( $entity )
+    public function delete($entity)
     {
 
-        $identifier = $this->em->getUnitOfWork()->getEntityIdentifier( $entity );
-        $id = array_combine( $this->class->getIdentifierColumnNames(), $identifier );
+        $identifier = $this->em->getUnitOfWork()->getEntityIdentifier($entity);
+        $id = array_combine($this->class->getIdentifierColumnNames(), $identifier);
 
-        $this->deleteJoinTableRecords( $identifier );
+        $this->deleteJoinTableRecords($identifier);
 
         // If the database platform supports FKs, just
         // delete the row from the root table. Cascades do the rest.
         if ($this->platform->supportsForeignKeyConstraints()) {
-            $rootClass = $this->em->getClassMetadata( $this->class->rootEntityName );
-            $rootTable = $this->quoteStrategy->getTableName( $rootClass, $this->platform );
+            $rootClass = $this->em->getClassMetadata($this->class->rootEntityName);
+            $rootTable = $this->quoteStrategy->getTableName($rootClass, $this->platform);
 
-            return (bool)$this->conn->delete( $rootTable, $id );
+            return (bool)$this->conn->delete($rootTable, $id);
         }
 
         // Delete from all tables individually, starting from this class' table up to the root table.
-        $rootTable = $this->quoteStrategy->getTableName( $this->class, $this->platform );
+        $rootTable = $this->quoteStrategy->getTableName($this->class, $this->platform);
 
-        $affectedRows = $this->conn->delete( $rootTable, $id );
+        $affectedRows = $this->conn->delete($rootTable, $id);
 
         foreach ($this->class->parentClasses as $parentClass) {
-            $parentMetadata = $this->em->getClassMetadata( $parentClass );
-            $parentTable = $this->quoteStrategy->getTableName( $parentMetadata, $this->platform );
+            $parentMetadata = $this->em->getClassMetadata($parentClass);
+            $parentTable = $this->quoteStrategy->getTableName($parentMetadata, $this->platform);
 
-            $this->conn->delete( $parentTable, $id );
+            $this->conn->delete($parentTable, $id);
         }
 
         return (bool)$affectedRows;
@@ -313,22 +312,22 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         array $orderBy = null
     ) {
 
-        $this->switchPersisterContext( $offset, $limit );
+        $this->switchPersisterContext($offset, $limit);
 
-        $baseTableAlias = $this->getSQLTableAlias( $this->class->name );
-        $joinSql = $this->getJoinSql( $baseTableAlias );
+        $baseTableAlias = $this->getSQLTableAlias($this->class->name);
+        $joinSql = $this->getJoinSql($baseTableAlias);
 
         if ($assoc != null && $assoc['type'] == ClassMetadata::MANY_TO_MANY) {
-            $joinSql .= $this->getSelectManyToManyJoinSQL( $assoc );
+            $joinSql .= $this->getSelectManyToManyJoinSQL($assoc);
         }
 
         $conditionSql = ( $criteria instanceof Criteria )
-            ? $this->getSelectConditionCriteriaSQL( $criteria )
-            : $this->getSelectConditionSQL( $criteria, $assoc );
+            ? $this->getSelectConditionCriteriaSQL($criteria)
+            : $this->getSelectConditionSQL($criteria, $assoc);
 
         // If the current class in the root entity, add the filters
-        if ($filterSql = $this->generateFilterConditionSQL( $this->em->getClassMetadata( $this->class->rootEntityName ),
-            $this->getSQLTableAlias( $this->class->rootEntityName ) )
+        if ($filterSql = $this->generateFilterConditionSQL($this->em->getClassMetadata($this->class->rootEntityName),
+            $this->getSQLTableAlias($this->class->rootEntityName))
         ) {
             $conditionSql .= $conditionSql
                 ? ' AND '.$filterSql
@@ -342,7 +341,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         }
 
         if ($orderBy) {
-            $orderBySql = $this->getOrderBySQL( $orderBy, $baseTableAlias );
+            $orderBySql = $this->getOrderBySQL($orderBy, $baseTableAlias);
         }
 
         $lockSql = '';
@@ -361,10 +360,10 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                 break;
         }
 
-        $tableName = $this->quoteStrategy->getTableName( $this->class, $this->platform );
+        $tableName = $this->quoteStrategy->getTableName($this->class, $this->platform);
         $from = ' FROM '.$tableName.' '.$baseTableAlias;
         $where = $conditionSql != '' ? ' WHERE '.$conditionSql : '';
-        $lock = $this->platform->appendLockHint( $from, $lockMode );
+        $lock = $this->platform->appendLockHint($from, $lockMode);
         $columnList = $this->getSelectColumnsSQL();
         $query = 'SELECT '.$columnList
             .$lock
@@ -372,15 +371,14 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
             .$where
             .$orderBySql;
 
-        return $this->platform->modifyLimitQuery( $query, $limit, $offset ).$lockSql;
+        return $this->platform->modifyLimitQuery($query, $limit, $offset).$lockSql;
     }
 
     /**
      * @param  string $baseTableAlias
-     *
      * @return string
      */
-    private function getJoinSql( $baseTableAlias )
+    private function getJoinSql($baseTableAlias)
     {
 
         $joinSql = '';
@@ -389,31 +387,32 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         // INNER JOIN parent tables
         foreach ($this->class->parentClasses as $parentClassName) {
             $conditions = array();
-            $parentClass = $this->em->getClassMetadata( $parentClassName );
-            $tableAlias = $this->getSQLTableAlias( $parentClassName );
-            $joinSql .= ' INNER JOIN '.$this->quoteStrategy->getTableName( $parentClass,
-                    $this->platform ).' '.$tableAlias.' ON ';
+            $parentClass = $this->em->getClassMetadata($parentClassName);
+            $tableAlias = $this->getSQLTableAlias($parentClassName);
+            $joinSql .= ' INNER JOIN '.$this->quoteStrategy->getTableName($parentClass,
+                    $this->platform).' '.$tableAlias.' ON ';
+
 
             foreach ($identifierColumn as $idColumn) {
                 $conditions[] = $baseTableAlias.'.'.$idColumn.' = '.$tableAlias.'.'.$idColumn;
             }
 
-            $joinSql .= implode( ' AND ', $conditions );
+            $joinSql .= implode(' AND ', $conditions);
         }
 
         // OUTER JOIN sub tables
         foreach ($this->class->subClasses as $subClassName) {
             $conditions = array();
-            $subClass = $this->em->getClassMetadata( $subClassName );
-            $tableAlias = $this->getSQLTableAlias( $subClassName );
-            $joinSql .= ' LEFT JOIN '.$this->quoteStrategy->getTableName( $subClass,
-                    $this->platform ).' '.$tableAlias.' ON ';
+            $subClass = $this->em->getClassMetadata($subClassName);
+            $tableAlias = $this->getSQLTableAlias($subClassName);
+            $joinSql .= ' LEFT JOIN '.$this->quoteStrategy->getTableName($subClass,
+                    $this->platform).' '.$tableAlias.' ON ';
 
             foreach ($identifierColumn as $idColumn) {
                 $conditions[] = $baseTableAlias.'.'.$idColumn.' = '.$tableAlias.'.'.$idColumn;
             }
 
-            $joinSql .= implode( ' AND ', $conditions );
+            $joinSql .= implode(' AND ', $conditions);
         }
 
         return $joinSql;
@@ -426,7 +425,6 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
      */
     protected function getSelectColumnsSQL()
     {
-
         // Create the column list fragment only once
         if ($this->currentPersisterContext->selectColumnListSql !== null) {
             return $this->currentPersisterContext->selectColumnListSql;
@@ -434,20 +432,20 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
         $columnList = array();
         $discrColumn = $this->class->discriminatorColumn['name'];
-        $baseTableAlias = $this->getSQLTableAlias( $this->class->name );
-        $resultColumnName = $this->platform->getSQLResultCasing( $discrColumn );
+        $baseTableAlias = $this->getSQLTableAlias($this->class->name);
+        $resultColumnName = $this->platform->getSQLResultCasing($discrColumn);
 
-        $this->currentPersisterContext->rsm->addEntityResult( $this->class->name, 'r' );
-        $this->currentPersisterContext->rsm->setDiscriminatorColumn( 'r', $resultColumnName );
-        $this->currentPersisterContext->rsm->addMetaResult( 'r', $resultColumnName, $discrColumn );
+        $this->currentPersisterContext->rsm->addEntityResult($this->class->name, 'r');
+        $this->currentPersisterContext->rsm->setDiscriminatorColumn('r', $resultColumnName);
+        $this->currentPersisterContext->rsm->addMetaResult('r', $resultColumnName, $discrColumn);
 
         // Add regular columns
         foreach ($this->class->fieldMappings as $fieldName => $mapping) {
             $class = isset( $mapping['inherited'] )
-                ? $this->em->getClassMetadata( $mapping['inherited'] )
+                ? $this->em->getClassMetadata($mapping['inherited'])
                 : $this->class;
 
-            $columnList[] = $this->getSelectColumnSQL( $fieldName, $class );
+            $columnList[] = $this->getSelectColumnSQL($fieldName, $class);
         }
 
         // Add foreign key columns
@@ -457,7 +455,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
             }
 
             $tableAlias = isset( $mapping['inherited'] )
-                ? $this->getSQLTableAlias( $mapping['inherited'] )
+                ? $this->getSQLTableAlias($mapping['inherited'])
                 : $baseTableAlias;
 
             foreach ($mapping['targetToSourceKeyColumns'] as $srcColumn) {
@@ -465,7 +463,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                     ? $mapping['inherited']
                     : $this->class->name;
 
-                $targetClass = $this->em->getClassMetadata( $mapping['targetEntity'] );
+                $targetClass = $this->em->getClassMetadata($mapping['targetEntity']);
 
                 $columnList[] = $this->getSelectJoinColumnSQL(
                     $tableAlias,
@@ -483,14 +481,14 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
         // Add discriminator column (DO NOT ALIAS, see AbstractEntityInheritancePersister#processSQLResult).
         $tableAlias = ( $this->class->rootEntityName == $this->class->name )
             ? $baseTableAlias
-            : $this->getSQLTableAlias( $this->class->rootEntityName );
+            : $this->getSQLTableAlias($this->class->rootEntityName);
 
         $columnList[] = $tableAlias.'.'.$discrColumn;
 
         // sub tables
         foreach ($this->class->subClasses as $subClassName) {
-            $subClass = $this->em->getClassMetadata( $subClassName );
-            $tableAlias = $this->getSQLTableAlias( $subClassName );
+            $subClass = $this->em->getClassMetadata($subClassName);
+            $tableAlias = $this->getSQLTableAlias($subClassName);
 
             // Add subclass columns
             foreach ($subClass->fieldMappings as $fieldName => $mapping) {
@@ -498,7 +496,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                     continue;
                 }
 
-                $columnList[] = $this->getSelectColumnSQL( $fieldName, $subClass );
+                $columnList[] = $this->getSelectColumnSQL($fieldName, $subClass);
             }
 
             // Add join columns (foreign keys)
@@ -515,7 +513,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                         ? $mapping['inherited']
                         : $subClass->name;
 
-                    $targetClass = $this->em->getClassMetadata( $mapping['targetEntity'] );
+                    $targetClass = $this->em->getClassMetadata($mapping['targetEntity']);
 
                     $columnList[] = $this->getSelectJoinColumnSQL(
                         $tableAlias,
@@ -531,7 +529,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
             }
         }
 
-        $this->currentPersisterContext->selectColumnListSql = implode( ', ', $columnList );
+        $this->currentPersisterContext->selectColumnListSql = implode(', ', $columnList);
 
         return $this->currentPersisterContext->selectColumnListSql;
     }
@@ -539,19 +537,19 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     /**
      * {@inheritDoc}
      */
-    public function getCountSQL( $criteria = array() )
+    public function getCountSQL($criteria = array())
     {
 
-        $tableName = $this->quoteStrategy->getTableName( $this->class, $this->platform );
-        $baseTableAlias = $this->getSQLTableAlias( $this->class->name );
-        $joinSql = $this->getJoinSql( $baseTableAlias );
+        $tableName = $this->quoteStrategy->getTableName($this->class, $this->platform);
+        $baseTableAlias = $this->getSQLTableAlias($this->class->name);
+        $joinSql = $this->getJoinSql($baseTableAlias);
 
         $conditionSql = ( $criteria instanceof Criteria )
-            ? $this->getSelectConditionCriteriaSQL( $criteria )
-            : $this->getSelectConditionSQL( $criteria );
+            ? $this->getSelectConditionCriteriaSQL($criteria)
+            : $this->getSelectConditionSQL($criteria);
 
-        $filterSql = $this->generateFilterConditionSQL( $this->em->getClassMetadata( $this->class->rootEntityName ),
-            $this->getSQLTableAlias( $this->class->rootEntityName ) );
+        $filterSql = $this->generateFilterConditionSQL($this->em->getClassMetadata($this->class->rootEntityName),
+            $this->getSQLTableAlias($this->class->rootEntityName));
 
         if ('' !== $filterSql) {
             $conditionSql = $conditionSql
@@ -574,7 +572,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     {
 
         $class = ( $this->class->name !== $this->class->rootEntityName )
-            ? $this->em->getClassMetadata( $this->class->rootEntityName )
+            ? $this->em->getClassMetadata($this->class->rootEntityName)
             : $this->class;
 
         return $class->getTableName();
@@ -583,29 +581,29 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     /**
      * {@inheritdoc}
      */
-    protected function getLockTablesSql( $lockMode )
+    protected function getLockTablesSql($lockMode)
     {
 
         $joinSql = '';
         $identifierColumns = $this->class->getIdentifierColumnNames();
-        $baseTableAlias = $this->getSQLTableAlias( $this->class->name );
+        $baseTableAlias = $this->getSQLTableAlias($this->class->name);
 
         // INNER JOIN parent tables
         foreach ($this->class->parentClasses as $parentClassName) {
             $conditions = array();
-            $tableAlias = $this->getSQLTableAlias( $parentClassName );
-            $parentClass = $this->em->getClassMetadata( $parentClassName );
-            $joinSql .= ' INNER JOIN '.$this->quoteStrategy->getTableName( $parentClass,
-                    $this->platform ).' '.$tableAlias.' ON ';
+            $tableAlias = $this->getSQLTableAlias($parentClassName);
+            $parentClass = $this->em->getClassMetadata($parentClassName);
+            $joinSql .= ' INNER JOIN '.$this->quoteStrategy->getTableName($parentClass,
+                    $this->platform).' '.$tableAlias.' ON ';
 
             foreach ($identifierColumns as $idColumn) {
                 $conditions[] = $baseTableAlias.'.'.$idColumn.' = '.$tableAlias.'.'.$idColumn;
             }
 
-            $joinSql .= implode( ' AND ', $conditions );
+            $joinSql .= implode(' AND ', $conditions);
         }
 
-        return parent::getLockTablesSql( $lockMode ).$joinSql;
+        return parent::getLockTablesSql($lockMode).$joinSql;
     }
 
     /**
@@ -613,7 +611,6 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
      */
     protected function getInsertColumnList()
     {
-
         // Identifier columns must always come first in the column list of subclasses.
         $columns = $this->class->parentClasses
             ? $this->class->getIdentifierColumnNames()
@@ -636,13 +633,11 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
                         $columns[] = $sourceCol;
                     }
                 }
-            } else {
-                if ($this->class->name != $this->class->rootEntityName ||
-                    !$this->class->isIdGeneratorIdentity() || $this->class->identifier[0] != $name
-                ) {
-                    $columns[] = $this->quoteStrategy->getColumnName( $name, $this->class, $this->platform );
-                    $this->columnTypes[$name] = $this->class->fieldMappings[$name]['type'];
-                }
+            } else if ($this->class->name != $this->class->rootEntityName ||
+                !$this->class->isIdGeneratorIdentity() || $this->class->identifier[0] != $name
+            ) {
+                $columns[] = $this->quoteStrategy->getColumnName($name, $this->class, $this->platform);
+                $this->columnTypes[$name] = $this->class->fieldMappings[$name]['type'];
             }
         }
 

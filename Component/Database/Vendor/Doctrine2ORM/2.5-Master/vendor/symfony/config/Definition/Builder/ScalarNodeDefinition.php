@@ -20,7 +20,6 @@ use Symfony\Component\Config\Definition\ScalarNode;
  */
 class ScalarNodeDefinition extends VariableNodeDefinition
 {
-
     /**
      * Instantiate a Node.
      *
@@ -29,6 +28,6 @@ class ScalarNodeDefinition extends VariableNodeDefinition
     protected function instantiateNode()
     {
 
-        return new ScalarNode( $this->name, $this->parent );
+        return new ScalarNode($this->name, $this->parent);
     }
 }

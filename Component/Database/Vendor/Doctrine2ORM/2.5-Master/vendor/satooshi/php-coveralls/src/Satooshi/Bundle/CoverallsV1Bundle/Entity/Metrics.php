@@ -8,7 +8,6 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity;
  */
 class Metrics
 {
-
     /**
      * Number of statements.
      *
@@ -35,7 +34,7 @@ class Metrics
      *
      * @param array $coverage Coverage data.
      */
-    public function __construct( array $coverage = array() )
+    public function __construct(array $coverage = array())
     {
 
         if (!empty( $coverage )) {
@@ -43,23 +42,21 @@ class Metrics
             // not null
             $statementsArray = array_filter(
                 $coverage,
-                function ( $line ) {
-
+                function ($line) {
                     return $line !== null;
                 }
             );
-            $this->statements = count( $statementsArray );
+            $this->statements = count($statementsArray);
 
             // coveredstatements
             // gt 0
             $coveredArray = array_filter(
                 $statementsArray,
-                function ( $line ) {
-
+                function ($line) {
                     return $line > 0;
                 }
             );
-            $this->coveredStatements = count( $coveredArray );
+            $this->coveredStatements = count($coveredArray);
         } else {
             $this->statements = 0;
             $this->coveredStatements = 0;
@@ -75,7 +72,7 @@ class Metrics
      *
      * @return void
      */
-    public function merge( Metrics $that )
+    public function merge(Metrics $that)
     {
 
         $this->statements += $that->statements;
@@ -92,7 +89,6 @@ class Metrics
      */
     public function hasStatements()
     {
-
         return $this->statements !== 0;
     }
 
@@ -105,7 +101,6 @@ class Metrics
      */
     public function getStatements()
     {
-
         return $this->statements;
     }
 
@@ -116,7 +111,6 @@ class Metrics
      */
     public function getCoveredStatements()
     {
-
         return $this->coveredStatements;
     }
 
@@ -129,7 +123,7 @@ class Metrics
     {
 
         if (!isset( $this->lineCoverage )) {
-            $this->lineCoverage = $this->calculateLineCoverage( $this->statements, $this->coveredStatements );
+            $this->lineCoverage = $this->calculateLineCoverage($this->statements, $this->coveredStatements);
         }
 
         return $this->lineCoverage;
@@ -143,9 +137,8 @@ class Metrics
      *
      * @return float
      */
-    protected function calculateLineCoverage( $statements, $coveredStatements )
+    protected function calculateLineCoverage($statements, $coveredStatements)
     {
-
         if ($statements === 0) {
             return 0;
         }

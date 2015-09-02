@@ -19,28 +19,26 @@ use Guzzle\Tests\Service\Mock\Command\Sub\Sub;
  */
 class CommandTest extends AbstractCommandTest
 {
-
     public function testConstructorAddsDefaultParams()
     {
-
         $command = new MockCommand();
-        $this->assertEquals( '123', $command->get( 'test' ) );
-        $this->assertFalse( $command->isPrepared() );
-        $this->assertFalse( $command->isExecuted() );
+        $this->assertEquals('123', $command->get('test'));
+        $this->assertFalse($command->isPrepared());
+        $this->assertFalse($command->isExecuted());
     }
 
     public function testDeterminesShortName()
     {
 
-        $api = new Operation( array( 'name' => 'foobar' ) );
-        $command = new MockCommand( array(), $api );
-        $this->assertEquals( 'foobar', $command->getName() );
+        $api = new Operation(array('name' => 'foobar'));
+        $command = new MockCommand(array(), $api);
+        $this->assertEquals('foobar', $command->getName());
 
         $command = new MockCommand();
-        $this->assertEquals( 'mock_command', $command->getName() );
+        $this->assertEquals('mock_command', $command->getName());
 
         $command = new Sub();
-        $this->assertEquals( 'sub.sub', $command->getName() );
+        $this->assertEquals('sub.sub', $command->getName());
     }
 
     /**
@@ -48,7 +46,6 @@ class CommandTest extends AbstractCommandTest
      */
     public function testGetRequestThrowsExceptionBeforePreparation()
     {
-
         $command = new MockCommand();
         $command->getRequest();
     }
@@ -56,35 +53,34 @@ class CommandTest extends AbstractCommandTest
     public function testGetResponseExecutesCommandsWhenNeeded()
     {
 
-        $response = new Response( 200 );
+        $response = new Response(200);
         $client = $this->getClient();
-        $this->setMockResponse( $client, array( $response ) );
+        $this->setMockResponse($client, array($response));
         $command = new MockCommand();
-        $command->setClient( $client );
-        $this->assertSame( $response, $command->getResponse() );
-        $this->assertSame( $response, $command->getResponse() );
+        $command->setClient($client);
+        $this->assertSame($response, $command->getResponse());
+        $this->assertSame($response, $command->getResponse());
     }
 
     public function testGetResultExecutesCommandsWhenNeeded()
     {
 
-        $response = new Response( 200 );
+        $response = new Response(200);
         $client = $this->getClient();
-        $this->setMockResponse( $client, array( $response ) );
+        $this->setMockResponse($client, array($response));
         $command = new MockCommand();
-        $command->setClient( $client );
-        $this->assertSame( $response, $command->getResult() );
-        $this->assertSame( $response, $command->getResult() );
+        $command->setClient($client);
+        $this->assertSame($response, $command->getResult());
+        $this->assertSame($response, $command->getResult());
     }
 
     public function testSetClient()
     {
-
         $command = new MockCommand();
         $client = $this->getClient();
 
-        $command->setClient( $client );
-        $this->assertEquals( $client, $command->getClient() );
+        $command->setClient($client);
+        $this->assertEquals($client, $command->getClient());
 
         unset( $client );
         unset( $command );
@@ -92,50 +88,48 @@ class CommandTest extends AbstractCommandTest
         $command = new MockCommand();
         $client = $this->getClient();
 
-        $command->setClient( $client )->prepare();
-        $this->assertEquals( $client, $command->getClient() );
-        $this->assertTrue( $command->isPrepared() );
+        $command->setClient($client)->prepare();
+        $this->assertEquals($client, $command->getClient());
+        $this->assertTrue($command->isPrepared());
     }
 
     public function testExecute()
     {
-
         $client = $this->getClient();
-        $response = new Response( 200, array(
+        $response = new Response(200, array(
             'Content-Type' => 'application/xml'
-        ), '<xml><data>123</data></xml>' );
-        $this->setMockResponse( $client, array( $response ) );
+        ), '<xml><data>123</data></xml>');
+        $this->setMockResponse($client, array($response));
         $command = new MockCommand();
-        $this->assertSame( $command, $command->setClient( $client ) );
+        $this->assertSame($command, $command->setClient($client));
 
         // Returns the result of the command
-        $this->assertInstanceOf( 'SimpleXMLElement', $command->execute() );
+        $this->assertInstanceOf('SimpleXMLElement', $command->execute());
 
-        $this->assertTrue( $command->isPrepared() );
-        $this->assertTrue( $command->isExecuted() );
-        $this->assertSame( $response, $command->getResponse() );
-        $this->assertInstanceOf( 'Guzzle\\Http\\Message\\Request', $command->getRequest() );
+        $this->assertTrue($command->isPrepared());
+        $this->assertTrue($command->isExecuted());
+        $this->assertSame($response, $command->getResponse());
+        $this->assertInstanceOf('Guzzle\\Http\\Message\\Request', $command->getRequest());
         // Make sure that the result was automatically set to a SimpleXMLElement
-        $this->assertInstanceOf( 'SimpleXMLElement', $command->getResult() );
-        $this->assertEquals( '123', (string)$command->getResult()->data );
+        $this->assertInstanceOf('SimpleXMLElement', $command->getResult());
+        $this->assertEquals('123', (string)$command->getResult()->data);
     }
 
     public function testConvertsJsonResponsesToArray()
     {
-
         $client = $this->getClient();
-        $this->setMockResponse( $client, array(
-            new \Guzzle\Http\Message\Response( 200, array(
+        $this->setMockResponse($client, array(
+            new \Guzzle\Http\Message\Response(200, array(
                 'Content-Type' => 'application/json'
             ), '{ "key": "Hi!" }'
             )
-        ) );
+        ));
         $command = new MockCommand();
-        $command->setClient( $client );
+        $command->setClient($client);
         $command->execute();
-        $this->assertEquals( array(
+        $this->assertEquals(array(
             'key' => 'Hi!'
-        ), $command->getResult() );
+        ), $command->getResult());
     }
 
     /**
@@ -143,41 +137,39 @@ class CommandTest extends AbstractCommandTest
      */
     public function testConvertsInvalidJsonResponsesToArray()
     {
-
         $json = '{ "key": "Hi!" }invalid';
         // Some implementations of php-json extension are not strict enough
         // and allow to parse invalid json ignoring invalid parts
         // See https://github.com/remicollet/pecl-json-c/issues/5
-        if (json_decode( $json ) && JSON_ERROR_NONE === json_last_error()) {
-            $this->markTestSkipped( 'php-pecl-json library regression issues' );
+        if (json_decode($json) && JSON_ERROR_NONE === json_last_error()) {
+            $this->markTestSkipped('php-pecl-json library regression issues');
         }
 
         $client = $this->getClient();
-        $this->setMockResponse( $client, array(
-            new \Guzzle\Http\Message\Response( 200, array(
+        $this->setMockResponse($client, array(
+            new \Guzzle\Http\Message\Response(200, array(
                 'Content-Type' => 'application/json'
             ), $json
             )
-        ) );
+        ));
         $command = new MockCommand();
-        $command->setClient( $client );
+        $command->setClient($client);
         $command->execute();
     }
 
     public function testProcessResponseIsNotXml()
     {
-
         $client = $this->getClient();
-        $this->setMockResponse( $client, array(
-            new Response( 200, array(
+        $this->setMockResponse($client, array(
+            new Response(200, array(
                 'Content-Type' => 'application/octet-stream'
-            ), 'abc,def,ghi' )
-        ) );
+            ), 'abc,def,ghi')
+        ));
         $command = new MockCommand();
-        $client->execute( $command );
+        $client->execute($command);
 
         // Make sure that the result was not converted to XML
-        $this->assertFalse( $command->getResult() instanceof \SimpleXMLElement );
+        $this->assertFalse($command->getResult() instanceof \SimpleXMLElement);
     }
 
     /**
@@ -185,7 +177,6 @@ class CommandTest extends AbstractCommandTest
      */
     public function testExecuteThrowsExceptionWhenNoClientIsSet()
     {
-
         $command = new MockCommand();
         $command->execute();
     }
@@ -195,46 +186,43 @@ class CommandTest extends AbstractCommandTest
      */
     public function testPrepareThrowsExceptionWhenNoClientIsSet()
     {
-
         $command = new MockCommand();
         $command->prepare();
     }
 
     public function testCommandsAllowsCustomRequestHeaders()
     {
-
         $command = new MockCommand();
-        $command->getRequestHeaders()->set( 'test', '123' );
-        $this->assertInstanceOf( 'Guzzle\Common\Collection', $command->getRequestHeaders() );
-        $this->assertEquals( '123', $command->getRequestHeaders()->get( 'test' ) );
+        $command->getRequestHeaders()->set('test', '123');
+        $this->assertInstanceOf('Guzzle\Common\Collection', $command->getRequestHeaders());
+        $this->assertEquals('123', $command->getRequestHeaders()->get('test'));
 
-        $command->setClient( $this->getClient() )->prepare();
-        $this->assertEquals( '123', (string)$command->getRequest()->getHeader( 'test' ) );
+        $command->setClient($this->getClient())->prepare();
+        $this->assertEquals('123', (string)$command->getRequest()->getHeader('test'));
     }
 
     public function testCommandsAllowsCustomRequestHeadersAsArray()
     {
 
-        $command = new MockCommand( array( AbstractCommand::HEADERS_OPTION => array( 'Foo' => 'Bar' ) ) );
-        $this->assertInstanceOf( 'Guzzle\Common\Collection', $command->getRequestHeaders() );
-        $this->assertEquals( 'Bar', $command->getRequestHeaders()->get( 'Foo' ) );
+        $command = new MockCommand(array(AbstractCommand::HEADERS_OPTION => array('Foo' => 'Bar')));
+        $this->assertInstanceOf('Guzzle\Common\Collection', $command->getRequestHeaders());
+        $this->assertEquals('Bar', $command->getRequestHeaders()->get('Foo'));
     }
 
     public function testCommandsUsesOperation()
     {
-
         $api = $this->getOperation();
-        $command = new MockCommand( array(), $api );
-        $this->assertSame( $api, $command->getOperation() );
-        $command->setClient( $this->getClient() )->prepare();
-        $this->assertEquals( '123', $command->get( 'test' ) );
-        $this->assertSame( $api, $command->getOperation( $api ) );
+        $command = new MockCommand(array(), $api);
+        $this->assertSame($api, $command->getOperation());
+        $command->setClient($this->getClient())->prepare();
+        $this->assertEquals('123', $command->get('test'));
+        $this->assertSame($api, $command->getOperation($api));
     }
 
     private function getOperation()
     {
 
-        return new Operation( array(
+        return new Operation(array(
             'name'       => 'foobar',
             'httpMethod' => 'POST',
             'class'      => 'Guzzle\\Tests\\Service\\Mock\\Command\\MockCommand',
@@ -244,44 +232,41 @@ class CommandTest extends AbstractCommandTest
                     'type'    => 'string'
                 )
             )
-        ) );
+        ));
     }
 
     public function testCloneMakesNewRequest()
     {
-
         $client = $this->getClient();
-        $command = new MockCommand( array(), $this->getOperation() );
-        $command->setClient( $client );
+        $command = new MockCommand(array(), $this->getOperation());
+        $command->setClient($client);
 
         $command->prepare();
-        $this->assertTrue( $command->isPrepared() );
+        $this->assertTrue($command->isPrepared());
 
         $command2 = clone $command;
-        $this->assertFalse( $command2->isPrepared() );
+        $this->assertFalse($command2->isPrepared());
     }
 
     public function testHasOnCompleteMethod()
     {
-
         $that = $this;
         $called = 0;
 
-        $testFunction = function ( $command ) use ( &$called, $that ) {
-
+        $testFunction = function ($command) use (&$called, $that) {
             $called++;
-            $that->assertInstanceOf( 'Guzzle\Service\Command\CommandInterface', $command );
+            $that->assertInstanceOf('Guzzle\Service\Command\CommandInterface', $command);
         };
 
         $client = $this->getClient();
-        $command = new MockCommand( array(
+        $command = new MockCommand(array(
             'command.on_complete' => $testFunction
-        ), $this->getOperation() );
-        $command->setClient( $client );
+        ), $this->getOperation());
+        $command->setClient($client);
 
-        $command->prepare()->setResponse( new Response( 200 ), true );
+        $command->prepare()->setResponse(new Response(200), true);
         $command->execute();
-        $this->assertEquals( 1, $called );
+        $this->assertEquals(1, $called);
     }
 
     /**
@@ -289,120 +274,115 @@ class CommandTest extends AbstractCommandTest
      */
     public function testOnCompleteMustBeCallable()
     {
-
         $client = $this->getClient();
         $command = new MockCommand();
-        $command->setOnComplete( 'foo' );
+        $command->setOnComplete('foo');
     }
 
     public function testCanSetResultManually()
     {
-
         $client = $this->getClient();
-        $client->getEventDispatcher()->addSubscriber( new MockPlugin( array(
-            new Response( 200 )
-        ) ) );
+        $client->getEventDispatcher()->addSubscriber(new MockPlugin(array(
+            new Response(200)
+        )));
         $command = new MockCommand();
-        $client->execute( $command );
-        $command->setResult( 'foo!' );
-        $this->assertEquals( 'foo!', $command->getResult() );
+        $client->execute($command);
+        $command->setResult('foo!');
+        $this->assertEquals('foo!', $command->getResult());
     }
 
     public function testCanInitConfig()
     {
 
-        $command = $this->getMockBuilder( 'Guzzle\\Service\\Command\\AbstractCommand' )
-            ->setConstructorArgs( array(
+        $command = $this->getMockBuilder('Guzzle\\Service\\Command\\AbstractCommand')
+            ->setConstructorArgs(array(
                 array(
                     'foo' => 'bar'
                 ),
-                new Operation( array(
+                new Operation(array(
                     'parameters' => array(
-                        'baz' => new Parameter( array(
+                        'baz' => new Parameter(array(
                             'default' => 'baaar'
-                        ) )
+                        ))
                     )
-                ) )
-            ) )
+                ))
+            ))
             ->getMockForAbstractClass();
 
-        $this->assertEquals( 'bar', $command['foo'] );
-        $this->assertEquals( 'baaar', $command['baz'] );
+        $this->assertEquals('bar', $command['foo']);
+        $this->assertEquals('baaar', $command['baz']);
     }
 
     public function testAddsCurlOptionsToRequestsWhenPreparing()
     {
 
-        $command = new MockCommand( array(
+        $command = new MockCommand(array(
             'foo'          => 'bar',
-            'curl.options' => array( 'CURLOPT_PROXYPORT' => 8080 )
-        ) );
+            'curl.options' => array('CURLOPT_PROXYPORT' => 8080)
+        ));
         $client = new Client();
-        $command->setClient( $client );
+        $command->setClient($client);
         $request = $command->prepare();
-        $this->assertEquals( 8080, $request->getCurlOptions()->get( CURLOPT_PROXYPORT ) );
+        $this->assertEquals(8080, $request->getCurlOptions()->get(CURLOPT_PROXYPORT));
     }
 
     public function testIsInvokable()
     {
-
         $client = $this->getClient();
-        $response = new Response( 200 );
-        $this->setMockResponse( $client, array( $response ) );
+        $response = new Response(200);
+        $this->setMockResponse($client, array($response));
         $command = new MockCommand();
-        $command->setClient( $client );
+        $command->setClient($client);
         // Returns the result of the command
-        $this->assertSame( $response, $command() );
+        $this->assertSame($response, $command());
     }
 
     public function testCreatesDefaultOperation()
     {
 
-        $command = $this->getMockBuilder( 'Guzzle\Service\Command\AbstractCommand' )->getMockForAbstractClass();
-        $this->assertInstanceOf( 'Guzzle\Service\Description\Operation', $command->getOperation() );
+        $command = $this->getMockBuilder('Guzzle\Service\Command\AbstractCommand')->getMockForAbstractClass();
+        $this->assertInstanceOf('Guzzle\Service\Description\Operation', $command->getOperation());
     }
 
     public function testAllowsValidatorToBeInjected()
     {
 
-        $command = $this->getMockBuilder( 'Guzzle\Service\Command\AbstractCommand' )->getMockForAbstractClass();
+        $command = $this->getMockBuilder('Guzzle\Service\Command\AbstractCommand')->getMockForAbstractClass();
         $v = new SchemaValidator();
-        $command->setValidator( $v );
-        $this->assertSame( $v, $this->readAttribute( $command, 'validator' ) );
+        $command->setValidator($v);
+        $this->assertSame($v, $this->readAttribute($command, 'validator'));
     }
 
     public function testCanDisableValidation()
     {
-
         $command = new MockCommand();
-        $command->setClient( new \Guzzle\Service\Client() );
-        $v = $this->getMockBuilder( 'Guzzle\Service\Description\SchemaValidator' )
-            ->setMethods( array( 'validate' ) )
+        $command->setClient(new \Guzzle\Service\Client());
+        $v = $this->getMockBuilder('Guzzle\Service\Description\SchemaValidator')
+            ->setMethods(array('validate'))
             ->getMock();
-        $v->expects( $this->never() )->method( 'validate' );
-        $command->setValidator( $v );
-        $command->set( AbstractCommand::DISABLE_VALIDATION, true );
+        $v->expects($this->never())->method('validate');
+        $command->setValidator($v);
+        $command->set(AbstractCommand::DISABLE_VALIDATION, true);
         $command->prepare();
     }
 
     public function testValidatorDoesNotUpdateNonDefaultValues()
     {
 
-        $command = new MockCommand( array( 'test' => 123, 'foo' => 'bar' ) );
-        $command->setClient( new \Guzzle\Service\Client() );
+        $command = new MockCommand(array('test' => 123, 'foo' => 'bar'));
+        $command->setClient(new \Guzzle\Service\Client());
         $command->prepare();
-        $this->assertEquals( 123, $command->get( 'test' ) );
-        $this->assertEquals( 'bar', $command->get( 'foo' ) );
+        $this->assertEquals(123, $command->get('test'));
+        $this->assertEquals('bar', $command->get('foo'));
     }
 
     public function testValidatorUpdatesDefaultValues()
     {
-
         $command = new MockCommand();
-        $command->setClient( new \Guzzle\Service\Client() );
+        $command->setClient(new \Guzzle\Service\Client());
         $command->prepare();
-        $this->assertEquals( 123, $command->get( 'test' ) );
-        $this->assertEquals( 'abc', $command->get( '_internal' ) );
+        $this->assertEquals(123, $command->get('test'));
+        $this->assertEquals('abc', $command->get('_internal'));
     }
 
     /**
@@ -411,18 +391,14 @@ class CommandTest extends AbstractCommandTest
      */
     public function testValidatesCommandBeforeSending()
     {
-
         $command = new MockCommand();
-        $command->setClient( new \Guzzle\Service\Client() );
-        $v = $this->getMockBuilder( 'Guzzle\Service\Description\SchemaValidator' )
-            ->setMethods( array( 'validate', 'getErrors' ) )
+        $command->setClient(new \Guzzle\Service\Client());
+        $v = $this->getMockBuilder('Guzzle\Service\Description\SchemaValidator')
+            ->setMethods(array('validate', 'getErrors'))
             ->getMock();
-        $v->expects( $this->any() )->method( 'validate' )->will( $this->returnValue( false ) );
-        $v->expects( $this->any() )->method( 'getErrors' )->will( $this->returnValue( array(
-            '[Foo] Baz',
-            '[Bar] Boo'
-        ) ) );
-        $command->setValidator( $v );
+        $v->expects($this->any())->method('validate')->will($this->returnValue(false));
+        $v->expects($this->any())->method('getErrors')->will($this->returnValue(array('[Foo] Baz', '[Bar] Boo')));
+        $command->setValidator($v);
         $command->prepare();
     }
 
@@ -433,54 +409,53 @@ class CommandTest extends AbstractCommandTest
     public function testValidatesAdditionalParameters()
     {
 
-        $description = ServiceDescription::factory( array(
+        $description = ServiceDescription::factory(array(
             'operations' => array(
                 'foo' => array(
                     'parameters' => array(
-                        'baz' => array( 'type' => 'integer' )
+                        'baz' => array('type' => 'integer')
                     ),
                     'additionalParameters' => array(
                         'type' => 'string'
                     )
                 )
             )
-        ) );
+        ));
 
         $client = new Client();
-        $client->setDescription( $description );
-        $command = $client->getCommand( 'foo', array(
+        $client->setDescription($description);
+        $command = $client->getCommand('foo', array(
             'abc'             => false,
-            'command.headers' => array( 'foo' => 'bar' )
-        ) );
+            'command.headers' => array('foo' => 'bar')
+        ));
         $command->prepare();
     }
 
     public function testCanAccessValidationErrorsFromCommand()
     {
 
-        $validationErrors = array( '[Foo] Baz', '[Bar] Boo' );
+        $validationErrors = array('[Foo] Baz', '[Bar] Boo');
         $command = new MockCommand();
-        $command->setClient( new \Guzzle\Service\Client() );
+        $command->setClient(new \Guzzle\Service\Client());
 
-        $this->assertFalse( $command->getValidationErrors() );
+        $this->assertFalse($command->getValidationErrors());
 
-        $v = $this->getMockBuilder( 'Guzzle\Service\Description\SchemaValidator' )
-            ->setMethods( array( 'validate', 'getErrors' ) )
+        $v = $this->getMockBuilder('Guzzle\Service\Description\SchemaValidator')
+            ->setMethods(array('validate', 'getErrors'))
             ->getMock();
-        $v->expects( $this->any() )->method( 'getErrors' )->will( $this->returnValue( $validationErrors ) );
-        $command->setValidator( $v );
+        $v->expects($this->any())->method('getErrors')->will($this->returnValue($validationErrors));
+        $command->setValidator($v);
 
-        $this->assertEquals( $validationErrors, $command->getValidationErrors() );
+        $this->assertEquals($validationErrors, $command->getValidationErrors());
     }
 
     public function testCanChangeResponseBody()
     {
-
         $body = EntityBody::factory();
         $command = new MockCommand();
-        $command->setClient( new \Guzzle\Service\Client() );
-        $command->set( AbstractCommand::RESPONSE_BODY, $body );
+        $command->setClient(new \Guzzle\Service\Client());
+        $command->set(AbstractCommand::RESPONSE_BODY, $body);
         $request = $command->prepare();
-        $this->assertSame( $body, $this->readAttribute( $request, 'responseBody' ) );
+        $this->assertSame($body, $this->readAttribute($request, 'responseBody'));
     }
 }

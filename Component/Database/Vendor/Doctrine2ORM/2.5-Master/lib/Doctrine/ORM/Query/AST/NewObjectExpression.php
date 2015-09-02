@@ -28,7 +28,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class NewObjectExpression extends Node
 {
-
     /**
      * @var string
      */
@@ -43,9 +42,8 @@ class NewObjectExpression extends Node
      * @param string $className
      * @param array  $args
      */
-    public function __construct( $className, array $args )
+    public function __construct($className, array $args)
     {
-
         $this->className = $className;
         $this->args = $args;
     }
@@ -53,9 +51,9 @@ class NewObjectExpression extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkNewObject( $this );
+        return $sqlWalker->walkNewObject($this);
     }
 }

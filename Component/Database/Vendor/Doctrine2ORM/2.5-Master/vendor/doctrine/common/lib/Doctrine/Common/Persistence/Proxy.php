@@ -27,7 +27,6 @@ namespace Doctrine\Common\Persistence;
  */
 interface Proxy
 {
-
     /**
      * Marker for Proxy class names.
      *

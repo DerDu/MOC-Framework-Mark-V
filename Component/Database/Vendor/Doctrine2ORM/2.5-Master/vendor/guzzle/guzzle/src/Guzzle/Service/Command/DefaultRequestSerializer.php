@@ -13,7 +13,6 @@ use Guzzle\Service\Description\Parameter;
  */
 class DefaultRequestSerializer implements RequestSerializerInterface
 {
-
     /** @var self */
     protected static $instance;
     /** @var VisitorFlyweight $factory Visitor factory */
@@ -22,9 +21,8 @@ class DefaultRequestSerializer implements RequestSerializerInterface
     /**
      * @param VisitorFlyweight $factory Factory to use when creating visitors
      */
-    public function __construct( VisitorFlyweight $factory )
+    public function __construct(VisitorFlyweight $factory)
     {
-
         $this->factory = $factory;
     }
 
@@ -34,9 +32,8 @@ class DefaultRequestSerializer implements RequestSerializerInterface
      */
     public static function getInstance()
     {
-
         if (!self::$instance) {
-            self::$instance = new self( VisitorFlyweight::getInstance() );
+            self::$instance = new self(VisitorFlyweight::getInstance());
         }
 
         return self::$instance;
@@ -50,18 +47,18 @@ class DefaultRequestSerializer implements RequestSerializerInterface
      *
      * @return self
      */
-    public function addVisitor( $location, RequestVisitorInterface $visitor )
+    public function addVisitor($location, RequestVisitorInterface $visitor)
     {
 
-        $this->factory->addRequestVisitor( $location, $visitor );
+        $this->factory->addRequestVisitor($location, $visitor);
 
         return $this;
     }
 
-    public function prepare( CommandInterface $command )
+    public function prepare(CommandInterface $command)
     {
 
-        $request = $this->createRequest( $command );
+        $request = $this->createRequest($command);
         // Keep an array of visitors found in the operation
         $foundVisitors = array();
         $operation = $command->getOperation();
@@ -74,27 +71,27 @@ class DefaultRequestSerializer implements RequestSerializerInterface
             if ($location && $location != 'uri') {
                 // Instantiate visitors as they are detected in the properties
                 if (!isset( $foundVisitors[$location] )) {
-                    $foundVisitors[$location] = $this->factory->getRequestVisitor( $location );
+                    $foundVisitors[$location] = $this->factory->getRequestVisitor($location);
                 }
                 // Ensure that a value has been set for this parameter
                 $value = $command[$name];
                 if ($value !== null) {
                     // Apply the parameter value with the location visitor
-                    $foundVisitors[$location]->visit( $command, $request, $arg, $value );
+                    $foundVisitors[$location]->visit($command, $request, $arg, $value);
                 }
             }
         }
 
         // Serialize additional parameters
         if ($additional = $operation->getAdditionalParameters()) {
-            if ($visitor = $this->prepareAdditionalParameters( $operation, $command, $request, $additional )) {
+            if ($visitor = $this->prepareAdditionalParameters($operation, $command, $request, $additional)) {
                 $foundVisitors[$additional->getLocation()] = $visitor;
             }
         }
 
         // Call the after method on each visitor found in the operation
         foreach ($foundVisitors as $visitor) {
-            $visitor->after( $command, $request );
+            $visitor->after($command, $request);
         }
 
         return $request;
@@ -107,16 +104,15 @@ class DefaultRequestSerializer implements RequestSerializerInterface
      *
      * @return RequestInterface
      */
-    protected function createRequest( CommandInterface $command )
+    protected function createRequest(CommandInterface $command)
     {
-
         $operation = $command->getOperation();
         $client = $command->getClient();
         $options = $command[AbstractCommand::REQUEST_OPTIONS] ?: array();
 
         // If the command does not specify a template, then assume the base URL of the client
         if (!( $uri = $operation->getUri() )) {
-            return $client->createRequest( $operation->getHttpMethod(), $client->getBaseUrl(), null, null, $options );
+            return $client->createRequest($operation->getHttpMethod(), $client->getBaseUrl(), null, null, $options);
         }
 
         // Get the path values and use the client config settings
@@ -124,15 +120,15 @@ class DefaultRequestSerializer implements RequestSerializerInterface
         foreach ($operation->getParams() as $name => $arg) {
             if ($arg->getLocation() == 'uri') {
                 if (isset( $command[$name] )) {
-                    $variables[$name] = $arg->filter( $command[$name] );
-                    if (!is_array( $variables[$name] )) {
+                    $variables[$name] = $arg->filter($command[$name]);
+                    if (!is_array($variables[$name])) {
                         $variables[$name] = (string)$variables[$name];
                     }
                 }
             }
         }
 
-        return $client->createRequest( $operation->getHttpMethod(), array( $uri, $variables ), null, null, $options );
+        return $client->createRequest($operation->getHttpMethod(), array($uri, $variables), null, null, $options);
     }
 
     /**
@@ -156,17 +152,17 @@ class DefaultRequestSerializer implements RequestSerializerInterface
             return;
         }
 
-        $visitor = $this->factory->getRequestVisitor( $location );
+        $visitor = $this->factory->getRequestVisitor($location);
         $hidden = $command[$command::HIDDEN_PARAMS];
 
         foreach ($command->toArray() as $key => $value) {
             // Ignore values that are null or built-in command options
             if ($value !== null
-                && !in_array( $key, $hidden )
-                && !$operation->hasParam( $key )
+                && !in_array($key, $hidden)
+                && !$operation->hasParam($key)
             ) {
-                $additional->setName( $key );
-                $visitor->visit( $command, $request, $additional, $value );
+                $additional->setName($key);
+                $visitor->visit($command, $request, $additional, $value);
             }
         }
 

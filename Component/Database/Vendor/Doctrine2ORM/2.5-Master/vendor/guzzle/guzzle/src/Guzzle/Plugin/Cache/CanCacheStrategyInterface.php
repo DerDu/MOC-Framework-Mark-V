@@ -10,7 +10,6 @@ use Guzzle\Http\Message\Response;
  */
 interface CanCacheStrategyInterface
 {
-
     /**
      * Determine if a request can be cached
      *
@@ -18,7 +17,7 @@ interface CanCacheStrategyInterface
      *
      * @return bool
      */
-    public function canCacheRequest( RequestInterface $request );
+    public function canCacheRequest(RequestInterface $request);
 
     /**
      * Determine if a response can be cached
@@ -27,5 +26,5 @@ interface CanCacheStrategyInterface
      *
      * @return bool
      */
-    public function canCacheResponse( Response $response );
+    public function canCacheResponse(Response $response);
 }

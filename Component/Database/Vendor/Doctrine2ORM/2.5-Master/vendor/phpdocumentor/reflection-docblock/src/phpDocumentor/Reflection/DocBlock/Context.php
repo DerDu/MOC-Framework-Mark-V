@@ -21,7 +21,6 @@ namespace phpDocumentor\Reflection\DocBlock;
  */
 class Context
 {
-
     /** @var string The current namespace. */
     protected $namespace = '';
 
@@ -34,24 +33,25 @@ class Context
     /**
      * Cteates a new context.
      *
-     * @param string $namespace         The namespace where this DocBlock
-     *                                  resides in.
+*@param string $namespace         The namespace where this DocBlock
+     *                            resides in.
      * @param array  $namespace_aliases List of namespace aliases => Fully
-     *                                  Qualified Namespace.
+     *     Qualified Namespace.
      * @param string $lsen              Name of the structural element, within
-     *                                  the namespace.
+     *     the namespace.
      */
     public function __construct(
         $namespace = '',
         array $namespace_aliases = array(),
         $lsen = ''
-    ) {
+    )
+    {
 
         if (!empty( $namespace )) {
-            $this->setNamespace( $namespace );
+            $this->setNamespace($namespace);
         }
-        $this->setNamespaceAliases( $namespace_aliases );
-        $this->setLSEN( $lsen );
+        $this->setNamespaceAliases($namespace_aliases);
+        $this->setLSEN($lsen);
     }
 
     /**
@@ -59,7 +59,6 @@ class Context
      */
     public function getNamespace()
     {
-
         return $this->namespace;
     }
 
@@ -74,14 +73,13 @@ class Context
      *
      * @return $this
      */
-    public function setNamespace( $namespace )
+    public function setNamespace($namespace)
     {
-
         if ('global' !== $namespace
             && 'default' !== $namespace
         ) {
             // Srip leading and trailing slash
-            $this->namespace = trim( (string)$namespace, '\\' );
+            $this->namespace = trim((string)$namespace, '\\');
         } else {
             $this->namespace = '';
         }
@@ -93,7 +91,6 @@ class Context
      */
     public function getNamespaceAliases()
     {
-
         return $this->namespace_aliases;
     }
 
@@ -105,12 +102,11 @@ class Context
      *
      * @return $this
      */
-    public function setNamespaceAliases( array $namespace_aliases )
+    public function setNamespaceAliases(array $namespace_aliases)
     {
-
         $this->namespace_aliases = array();
         foreach ($namespace_aliases as $alias => $fqnn) {
-            $this->setNamespaceAlias( $alias, $fqnn );
+            $this->setNamespaceAlias($alias, $fqnn);
         }
         return $this;
     }
@@ -122,7 +118,6 @@ class Context
      */
     public function getLSEN()
     {
-
         return $this->lsen;
     }
 
@@ -137,9 +132,8 @@ class Context
      *
      * @return $this
      */
-    public function setLSEN( $lsen )
+    public function setLSEN($lsen)
     {
-
         $this->lsen = (string)$lsen;
         return $this;
     }
@@ -155,10 +149,10 @@ class Context
      *
      * @return $this
      */
-    public function setNamespaceAlias( $alias, $fqnn )
+    public function setNamespaceAlias($alias, $fqnn)
     {
 
-        $this->namespace_aliases[$alias] = '\\'.trim( (string)$fqnn, '\\' );
+        $this->namespace_aliases[$alias] = '\\'.trim((string)$fqnn, '\\');
         return $this;
     }
 }

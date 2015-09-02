@@ -9,18 +9,10 @@
  */
 
 /**
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.1.0
+ * @since Class available since Release 3.1.0
  */
 abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_Constraint
 {
-
     /**
      * @var PHPUnit_Framework_Constraint
      */
@@ -29,9 +21,8 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
     /**
      * @param PHPUnit_Framework_Constraint $innerConstraint
      */
-    public function __construct( PHPUnit_Framework_Constraint $innerConstraint )
+    public function __construct(PHPUnit_Framework_Constraint $innerConstraint)
     {
-
         parent::__construct();
         $this->innerConstraint = $innerConstraint;
     }
@@ -50,31 +41,30 @@ abstract class PHPUnit_Framework_Constraint_Composite extends PHPUnit_Framework_
      * @param  string $description  Additional information about the test
      * @param  bool   $returnResult Whether to return a result or throw an exception
      *
-     * @return mixed
+*@return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-
         try {
             return $this->innerConstraint->evaluate(
                 $other,
                 $description,
                 $returnResult
             );
-        } catch( PHPUnit_Framework_ExpectationFailedException $e ) {
-            $this->fail( $other, $description );
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->fail($other, $description);
         }
     }
 
     /**
      * Counts the number of constraint elements.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
 
-        return count( $this->innerConstraint );
+        return count($this->innerConstraint);
     }
 }

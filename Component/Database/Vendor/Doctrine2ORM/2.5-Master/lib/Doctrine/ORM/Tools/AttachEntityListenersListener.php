@@ -26,11 +26,10 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
  *
  * @author Fabio B. SIlva <fabio.bat.silva@gmail.com>
  *
- * @since  2.5
+ * @since 2.5
  */
 class AttachEntityListenersListener
 {
-
     /**
      * @var array[]
      */
@@ -46,10 +45,10 @@ class AttachEntityListenersListener
      *
      * @return void
      */
-    public function addEntityListener( $entityClass, $listenerClass, $eventName, $listenerCallback = null )
+    public function addEntityListener($entityClass, $listenerClass, $eventName, $listenerCallback = null)
     {
 
-        $this->entityListeners[ltrim( $entityClass, '\\' )][] = array(
+        $this->entityListeners[ltrim($entityClass, '\\')][] = array(
             'event'  => $eventName,
             'class'  => $listenerClass,
             'method' => $listenerCallback ?: $eventName
@@ -63,9 +62,8 @@ class AttachEntityListenersListener
      *
      * @return void
      */
-    public function loadClassMetadata( LoadClassMetadataEventArgs $event )
+    public function loadClassMetadata(LoadClassMetadataEventArgs $event)
     {
-
         /** @var $metadata \Doctrine\ORM\Mapping\ClassMetadata */
         $metadata = $event->getClassMetadata();
 
@@ -74,7 +72,7 @@ class AttachEntityListenersListener
         }
 
         foreach ($this->entityListeners[$metadata->name] as $listener) {
-            $metadata->addEntityListener( $listener['event'], $listener['class'], $listener['method'] );
+            $metadata->addEntityListener($listener['event'], $listener['class'], $listener['method']);
         }
 
         unset( $this->entityListeners[$metadata->name] );

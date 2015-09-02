@@ -28,33 +28,31 @@ namespace Doctrine\DBAL\Platforms;
  */
 class PostgreSQL91Platform extends PostgreSqlPlatform
 {
-
     /**
      * {@inheritDoc}
      */
     public function supportsColumnCollation()
     {
-
         return true;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getColumnCollationDeclarationSQL( $collation )
+    public function getColumnCollationDeclarationSQL($collation)
     {
 
-        return 'COLLATE '.$this->quoteSingleIdentifier( $collation );
+        return 'COLLATE '.$this->quoteSingleIdentifier($collation);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getListTableColumnsSQL( $table, $database = null )
+    public function getListTableColumnsSQL($table, $database = null)
     {
 
-        $sql = parent::getListTableColumnsSQL( $table, $database );
-        $parts = explode( 'AS complete_type,', $sql, 2 );
+        $sql = parent::getListTableColumnsSQL($table, $database);
+        $parts = explode('AS complete_type,', $sql, 2);
 
         return $parts[0].'AS complete_type, (SELECT tc.collcollate FROM pg_catalog.pg_collation tc WHERE tc.oid = a.attcollation) AS collation,'.$parts[1];
     }
@@ -64,7 +62,6 @@ class PostgreSQL91Platform extends PostgreSqlPlatform
      */
     protected function getReservedKeywordsClass()
     {
-
         return 'Doctrine\DBAL\Platforms\Keywords\PostgreSQL91Keywords';
     }
 }

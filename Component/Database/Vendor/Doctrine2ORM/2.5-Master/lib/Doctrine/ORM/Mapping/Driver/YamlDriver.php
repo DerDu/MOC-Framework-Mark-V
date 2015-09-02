@@ -28,7 +28,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * The YamlDriver reads the mapping metadata from yaml schema files.
  *
- * @since  2.0
+ * @since 2.0
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -36,47 +36,41 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlDriver extends FileDriver
 {
-
     const DEFAULT_FILE_EXTENSION = '.dcm.yml';
 
     /**
      * {@inheritDoc}
      */
-    public function __construct( $locator, $fileExtension = self::DEFAULT_FILE_EXTENSION )
+    public function __construct($locator, $fileExtension = self::DEFAULT_FILE_EXTENSION)
     {
 
-        parent::__construct( $locator, $fileExtension );
+        parent::__construct($locator, $fileExtension);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function loadMetadataForClass( $className, ClassMetadata $metadata )
+    public function loadMetadataForClass($className, ClassMetadata $metadata)
     {
-
         /* @var $metadata \Doctrine\ORM\Mapping\ClassMetadataInfo */
-        $element = $this->getElement( $className );
+        $element = $this->getElement($className);
 
         if ($element['type'] == 'entity') {
             if (isset( $element['repositoryClass'] )) {
-                $metadata->setCustomRepositoryClass( $element['repositoryClass'] );
+                $metadata->setCustomRepositoryClass($element['repositoryClass']);
             }
             if (isset( $element['readOnly'] ) && $element['readOnly'] == true) {
                 $metadata->markReadOnly();
             }
+        } else if ($element['type'] == 'mappedSuperclass') {
+            $metadata->setCustomRepositoryClass(
+                isset( $element['repositoryClass'] ) ? $element['repositoryClass'] : null
+            );
+            $metadata->isMappedSuperclass = true;
+        } else if ($element['type'] == 'embeddable') {
+            $metadata->isEmbeddedClass = true;
         } else {
-            if ($element['type'] == 'mappedSuperclass') {
-                $metadata->setCustomRepositoryClass(
-                    isset( $element['repositoryClass'] ) ? $element['repositoryClass'] : null
-                );
-                $metadata->isMappedSuperclass = true;
-            } else {
-                if ($element['type'] == 'embeddable') {
-                    $metadata->isEmbeddedClass = true;
-                } else {
-                    throw MappingException::classIsNotAValidEntityOrMappedSuperClass( $className );
-                }
-            }
+            throw MappingException::classIsNotAValidEntityOrMappedSuperClass($className);
         }
 
         // Evaluate root level properties
@@ -92,23 +86,23 @@ class YamlDriver extends FileDriver
 
         // Evaluate second level cache
         if (isset( $element['cache'] )) {
-            $metadata->enableCache( $this->cacheToArray( $element['cache'] ) );
+            $metadata->enableCache($this->cacheToArray($element['cache']));
         }
 
-        $metadata->setPrimaryTable( $primaryTable );
+        $metadata->setPrimaryTable($primaryTable);
 
         // Evaluate named queries
         if (isset( $element['namedQueries'] )) {
             foreach ($element['namedQueries'] as $name => $queryMapping) {
-                if (is_string( $queryMapping )) {
-                    $queryMapping = array( 'query' => $queryMapping );
+                if (is_string($queryMapping)) {
+                    $queryMapping = array('query' => $queryMapping);
                 }
 
                 if (!isset( $queryMapping['name'] )) {
                     $queryMapping['name'] = $name;
                 }
 
-                $metadata->addNamedQuery( $queryMapping );
+                $metadata->addNamedQuery($queryMapping);
             }
         }
 
@@ -118,12 +112,12 @@ class YamlDriver extends FileDriver
                 if (!isset( $mappingElement['name'] )) {
                     $mappingElement['name'] = $name;
                 }
-                $metadata->addNamedNativeQuery( array(
+                $metadata->addNamedNativeQuery(array(
                     'name'             => $mappingElement['name'],
                     'query'            => isset( $mappingElement['query'] ) ? $mappingElement['query'] : null,
                     'resultClass'      => isset( $mappingElement['resultClass'] ) ? $mappingElement['resultClass'] : null,
                     'resultSetMapping' => isset( $mappingElement['resultSetMapping'] ) ? $mappingElement['resultSetMapping'] : null,
-                ) );
+                ));
             }
         }
 
@@ -165,46 +159,43 @@ class YamlDriver extends FileDriver
                     }
                 }
 
-                $metadata->addSqlResultSetMapping( array(
+                $metadata->addSqlResultSetMapping(array(
                     'name'     => $resultSetMapping['name'],
                     'entities' => $entities,
                     'columns'  => $columns
-                ) );
+                ));
             }
         }
 
         if (isset( $element['inheritanceType'] )) {
-            $metadata->setInheritanceType( constant( 'Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_'.strtoupper( $element['inheritanceType'] ) ) );
+            $metadata->setInheritanceType(constant('Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_'.strtoupper($element['inheritanceType'])));
 
             if ($metadata->inheritanceType != \Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
                 // Evaluate discriminatorColumn
                 if (isset( $element['discriminatorColumn'] )) {
                     $discrColumn = $element['discriminatorColumn'];
-                    $metadata->setDiscriminatorColumn( array(
+                    $metadata->setDiscriminatorColumn(array(
                         'name'             => isset( $discrColumn['name'] ) ? (string)$discrColumn['name'] : null,
                         'type'             => isset( $discrColumn['type'] ) ? (string)$discrColumn['type'] : null,
                         'length'           => isset( $discrColumn['length'] ) ? (string)$discrColumn['length'] : null,
                         'columnDefinition' => isset( $discrColumn['columnDefinition'] ) ? (string)$discrColumn['columnDefinition'] : null
-                    ) );
+                    ));
                 } else {
-                    $metadata->setDiscriminatorColumn( array(
-                        'name'   => 'dtype',
-                        'type'   => 'string',
-                        'length' => 255
-                    ) );
+                    $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
 
                 // Evaluate discriminatorMap
                 if (isset( $element['discriminatorMap'] )) {
-                    $metadata->setDiscriminatorMap( $element['discriminatorMap'] );
+                    $metadata->setDiscriminatorMap($element['discriminatorMap']);
                 }
             }
         }
 
+
         // Evaluate changeTrackingPolicy
         if (isset( $element['changeTrackingPolicy'] )) {
-            $metadata->setChangeTrackingPolicy( constant( 'Doctrine\ORM\Mapping\ClassMetadata::CHANGETRACKING_'
-                .strtoupper( $element['changeTrackingPolicy'] ) ) );
+            $metadata->setChangeTrackingPolicy(constant('Doctrine\ORM\Mapping\ClassMetadata::CHANGETRACKING_'
+                .strtoupper($element['changeTrackingPolicy'])));
         }
 
         // Evaluate indexes
@@ -214,15 +205,15 @@ class YamlDriver extends FileDriver
                     $indexYml['name'] = $name;
                 }
 
-                if (is_string( $indexYml['columns'] )) {
-                    $index = array( 'columns' => array_map( 'trim', explode( ',', $indexYml['columns'] ) ) );
+                if (is_string($indexYml['columns'])) {
+                    $index = array('columns' => array_map('trim', explode(',', $indexYml['columns'])));
                 } else {
-                    $index = array( 'columns' => $indexYml['columns'] );
+                    $index = array('columns' => $indexYml['columns']);
                 }
 
                 if (isset( $indexYml['flags'] )) {
-                    if (is_string( $indexYml['flags'] )) {
-                        $index['flags'] = array_map( 'trim', explode( ',', $indexYml['flags'] ) );
+                    if (is_string($indexYml['flags'])) {
+                        $index['flags'] = array_map('trim', explode(',', $indexYml['flags']));
                     } else {
                         $index['flags'] = $indexYml['flags'];
                     }
@@ -243,10 +234,10 @@ class YamlDriver extends FileDriver
                     $uniqueYml['name'] = $name;
                 }
 
-                if (is_string( $uniqueYml['columns'] )) {
-                    $unique = array( 'columns' => array_map( 'trim', explode( ',', $uniqueYml['columns'] ) ) );
+                if (is_string($uniqueYml['columns'])) {
+                    $unique = array('columns' => array_map('trim', explode(',', $uniqueYml['columns'])));
                 } else {
-                    $unique = array( 'columns' => $uniqueYml['columns'] );
+                    $unique = array('columns' => $uniqueYml['columns']);
                 }
 
                 if (isset( $uniqueYml['options'] )) {
@@ -295,26 +286,22 @@ class YamlDriver extends FileDriver
                     $mapping['options'] = $idElement['options'];
                 }
 
-                $metadata->mapField( $mapping );
+                $metadata->mapField($mapping);
 
                 if (isset( $idElement['generator'] )) {
-                    $metadata->setIdGeneratorType( constant( 'Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
-                        .strtoupper( $idElement['generator']['strategy'] ) ) );
+                    $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
+                        .strtoupper($idElement['generator']['strategy'])));
                 }
                 // Check for SequenceGenerator/TableGenerator definition
                 if (isset( $idElement['sequenceGenerator'] )) {
-                    $metadata->setSequenceGeneratorDefinition( $idElement['sequenceGenerator'] );
-                } else {
-                    if (isset( $idElement['customIdGenerator'] )) {
-                        $customGenerator = $idElement['customIdGenerator'];
-                        $metadata->setCustomGeneratorDefinition( array(
-                            'class' => (string)$customGenerator['class']
-                        ) );
-                    } else {
-                        if (isset( $idElement['tableGenerator'] )) {
-                            throw MappingException::tableIdGeneratorNotImplemented( $className );
-                        }
-                    }
+                    $metadata->setSequenceGeneratorDefinition($idElement['sequenceGenerator']);
+                } else if (isset( $idElement['customIdGenerator'] )) {
+                    $customGenerator = $idElement['customIdGenerator'];
+                    $metadata->setCustomGeneratorDefinition(array(
+                        'class' => (string)$customGenerator['class']
+                    ));
+                } else if (isset( $idElement['tableGenerator'] )) {
+                    throw MappingException::tableIdGeneratorNotImplemented($className);
                 }
             }
         }
@@ -323,22 +310,22 @@ class YamlDriver extends FileDriver
         if (isset( $element['fields'] )) {
             foreach ($element['fields'] as $name => $fieldMapping) {
 
-                $mapping = $this->columnToArray( $name, $fieldMapping );
+                $mapping = $this->columnToArray($name, $fieldMapping);
 
                 if (isset( $fieldMapping['id'] )) {
                     $mapping['id'] = true;
                     if (isset( $fieldMapping['generator']['strategy'] )) {
-                        $metadata->setIdGeneratorType( constant( 'Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
-                            .strtoupper( $fieldMapping['generator']['strategy'] ) ) );
+                        $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
+                            .strtoupper($fieldMapping['generator']['strategy'])));
                     }
                 }
 
                 if (isset( $mapping['version'] )) {
-                    $metadata->setVersionMapping( $mapping );
+                    $metadata->setVersionMapping($mapping);
                     unset( $mapping['version'] );
                 }
 
-                $metadata->mapField( $mapping );
+                $metadata->mapField($mapping);
             }
         }
 
@@ -349,7 +336,7 @@ class YamlDriver extends FileDriver
                     'class'        => $embeddedMapping['class'],
                     'columnPrefix' => isset( $embeddedMapping['columnPrefix'] ) ? $embeddedMapping['columnPrefix'] : null,
                 );
-                $metadata->mapEmbedded( $mapping );
+                $metadata->mapEmbedded($mapping);
             }
         }
 
@@ -366,7 +353,7 @@ class YamlDriver extends FileDriver
                 }
 
                 if (isset( $oneToOneElement['fetch'] )) {
-                    $mapping['fetch'] = constant( 'Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$oneToOneElement['fetch'] );
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$oneToOneElement['fetch']);
                 }
 
                 if (isset( $oneToOneElement['mappedBy'] )) {
@@ -379,16 +366,14 @@ class YamlDriver extends FileDriver
                     $joinColumns = array();
 
                     if (isset( $oneToOneElement['joinColumn'] )) {
-                        $joinColumns[] = $this->joinColumnToArray( $oneToOneElement['joinColumn'] );
-                    } else {
-                        if (isset( $oneToOneElement['joinColumns'] )) {
-                            foreach ($oneToOneElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
-                                if (!isset( $joinColumnElement['name'] )) {
-                                    $joinColumnElement['name'] = $joinColumnName;
-                                }
-
-                                $joinColumns[] = $this->joinColumnToArray( $joinColumnElement );
+                        $joinColumns[] = $this->joinColumnToArray($oneToOneElement['joinColumn']);
+                    } else if (isset( $oneToOneElement['joinColumns'] )) {
+                        foreach ($oneToOneElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
+                            if (!isset( $joinColumnElement['name'] )) {
+                                $joinColumnElement['name'] = $joinColumnName;
                             }
+
+                            $joinColumns[] = $this->joinColumnToArray($joinColumnElement);
                         }
                     }
 
@@ -403,12 +388,12 @@ class YamlDriver extends FileDriver
                     $mapping['orphanRemoval'] = (bool)$oneToOneElement['orphanRemoval'];
                 }
 
-                $metadata->mapOneToOne( $mapping );
+                $metadata->mapOneToOne($mapping);
 
                 // Evaluate second level cache
                 if (isset( $oneToOneElement['cache'] )) {
-                    $metadata->enableAssociationCache( $mapping['fieldName'],
-                        $this->cacheToArray( $oneToOneElement['cache'] ) );
+                    $metadata->enableAssociationCache($mapping['fieldName'],
+                        $this->cacheToArray($oneToOneElement['cache']));
                 }
             }
         }
@@ -419,11 +404,11 @@ class YamlDriver extends FileDriver
                 $mapping = array(
                     'fieldName' => $name,
                     'targetEntity' => $oneToManyElement['targetEntity'],
-                    'mappedBy'  => $oneToManyElement['mappedBy']
+                    'mappedBy' => $oneToManyElement['mappedBy']
                 );
 
                 if (isset( $oneToManyElement['fetch'] )) {
-                    $mapping['fetch'] = constant( 'Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$oneToManyElement['fetch'] );
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$oneToManyElement['fetch']);
                 }
 
                 if (isset( $oneToManyElement['cascade'] )) {
@@ -442,12 +427,12 @@ class YamlDriver extends FileDriver
                     $mapping['indexBy'] = $oneToManyElement['indexBy'];
                 }
 
-                $metadata->mapOneToMany( $mapping );
+                $metadata->mapOneToMany($mapping);
 
                 // Evaluate second level cache
                 if (isset( $oneToManyElement['cache'] )) {
-                    $metadata->enableAssociationCache( $mapping['fieldName'],
-                        $this->cacheToArray( $oneToManyElement['cache'] ) );
+                    $metadata->enableAssociationCache($mapping['fieldName'],
+                        $this->cacheToArray($oneToManyElement['cache']));
                 }
             }
         }
@@ -465,7 +450,7 @@ class YamlDriver extends FileDriver
                 }
 
                 if (isset( $manyToOneElement['fetch'] )) {
-                    $mapping['fetch'] = constant( 'Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$manyToOneElement['fetch'] );
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$manyToOneElement['fetch']);
                 }
 
                 if (isset( $manyToOneElement['inversedBy'] )) {
@@ -475,16 +460,14 @@ class YamlDriver extends FileDriver
                 $joinColumns = array();
 
                 if (isset( $manyToOneElement['joinColumn'] )) {
-                    $joinColumns[] = $this->joinColumnToArray( $manyToOneElement['joinColumn'] );
-                } else {
-                    if (isset( $manyToOneElement['joinColumns'] )) {
-                        foreach ($manyToOneElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
-                            if (!isset( $joinColumnElement['name'] )) {
-                                $joinColumnElement['name'] = $joinColumnName;
-                            }
-
-                            $joinColumns[] = $this->joinColumnToArray( $joinColumnElement );
+                    $joinColumns[] = $this->joinColumnToArray($manyToOneElement['joinColumn']);
+                } else if (isset( $manyToOneElement['joinColumns'] )) {
+                    foreach ($manyToOneElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
+                        if (!isset( $joinColumnElement['name'] )) {
+                            $joinColumnElement['name'] = $joinColumnName;
                         }
+
+                        $joinColumns[] = $this->joinColumnToArray($joinColumnElement);
                     }
                 }
 
@@ -494,12 +477,12 @@ class YamlDriver extends FileDriver
                     $mapping['cascade'] = $manyToOneElement['cascade'];
                 }
 
-                $metadata->mapManyToOne( $mapping );
+                $metadata->mapManyToOne($mapping);
 
                 // Evaluate second level cache
                 if (isset( $manyToOneElement['cache'] )) {
-                    $metadata->enableAssociationCache( $mapping['fieldName'],
-                        $this->cacheToArray( $manyToOneElement['cache'] ) );
+                    $metadata->enableAssociationCache($mapping['fieldName'],
+                        $this->cacheToArray($manyToOneElement['cache']));
                 }
             }
         }
@@ -513,45 +496,43 @@ class YamlDriver extends FileDriver
                 );
 
                 if (isset( $manyToManyElement['fetch'] )) {
-                    $mapping['fetch'] = constant( 'Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$manyToManyElement['fetch'] );
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_'.$manyToManyElement['fetch']);
                 }
 
                 if (isset( $manyToManyElement['mappedBy'] )) {
                     $mapping['mappedBy'] = $manyToManyElement['mappedBy'];
-                } else {
-                    if (isset( $manyToManyElement['joinTable'] )) {
+                } else if (isset( $manyToManyElement['joinTable'] )) {
 
-                        $joinTableElement = $manyToManyElement['joinTable'];
-                        $joinTable = array(
-                            'name' => $joinTableElement['name']
-                        );
+                    $joinTableElement = $manyToManyElement['joinTable'];
+                    $joinTable = array(
+                        'name' => $joinTableElement['name']
+                    );
 
-                        if (isset( $joinTableElement['schema'] )) {
-                            $joinTable['schema'] = $joinTableElement['schema'];
-                        }
-
-                        if (isset( $joinTableElement['joinColumns'] )) {
-                            foreach ($joinTableElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
-                                if (!isset( $joinColumnElement['name'] )) {
-                                    $joinColumnElement['name'] = $joinColumnName;
-                                }
-                            }
-
-                            $joinTable['joinColumns'][] = $this->joinColumnToArray( $joinColumnElement );
-                        }
-
-                        if (isset( $joinTableElement['inverseJoinColumns'] )) {
-                            foreach ($joinTableElement['inverseJoinColumns'] as $joinColumnName => $joinColumnElement) {
-                                if (!isset( $joinColumnElement['name'] )) {
-                                    $joinColumnElement['name'] = $joinColumnName;
-                                }
-                            }
-
-                            $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray( $joinColumnElement );
-                        }
-
-                        $mapping['joinTable'] = $joinTable;
+                    if (isset( $joinTableElement['schema'] )) {
+                        $joinTable['schema'] = $joinTableElement['schema'];
                     }
+
+                    if (isset( $joinTableElement['joinColumns'] )) {
+                        foreach ($joinTableElement['joinColumns'] as $joinColumnName => $joinColumnElement) {
+                            if (!isset( $joinColumnElement['name'] )) {
+                                $joinColumnElement['name'] = $joinColumnName;
+                            }
+                        }
+
+                        $joinTable['joinColumns'][] = $this->joinColumnToArray($joinColumnElement);
+                    }
+
+                    if (isset( $joinTableElement['inverseJoinColumns'] )) {
+                        foreach ($joinTableElement['inverseJoinColumns'] as $joinColumnName => $joinColumnElement) {
+                            if (!isset( $joinColumnElement['name'] )) {
+                                $joinColumnElement['name'] = $joinColumnName;
+                            }
+                        }
+
+                        $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray($joinColumnElement);
+                    }
+
+                    $mapping['joinTable'] = $joinTable;
                 }
 
                 if (isset( $manyToManyElement['inversedBy'] )) {
@@ -574,18 +555,18 @@ class YamlDriver extends FileDriver
                     $mapping['orphanRemoval'] = (bool)$manyToManyElement['orphanRemoval'];
                 }
 
-                $metadata->mapManyToMany( $mapping );
+                $metadata->mapManyToMany($mapping);
 
                 // Evaluate second level cache
                 if (isset( $manyToManyElement['cache'] )) {
-                    $metadata->enableAssociationCache( $mapping['fieldName'],
-                        $this->cacheToArray( $manyToManyElement['cache'] ) );
+                    $metadata->enableAssociationCache($mapping['fieldName'],
+                        $this->cacheToArray($manyToManyElement['cache']));
                 }
             }
         }
 
         // Evaluate associationOverride
-        if (isset( $element['associationOverride'] ) && is_array( $element['associationOverride'] )) {
+        if (isset( $element['associationOverride'] ) && is_array($element['associationOverride'])) {
 
             foreach ($element['associationOverride'] as $fieldName => $associationOverrideElement) {
                 $override = array();
@@ -597,7 +578,7 @@ class YamlDriver extends FileDriver
                         if (!isset( $joinColumnElement['name'] )) {
                             $joinColumnElement['name'] = $name;
                         }
-                        $joinColumns[] = $this->joinColumnToArray( $joinColumnElement );
+                        $joinColumns[] = $this->joinColumnToArray($joinColumnElement);
                     }
                     $override['joinColumns'] = $joinColumns;
                 }
@@ -619,7 +600,7 @@ class YamlDriver extends FileDriver
                             $joinColumnElement['name'] = $name;
                         }
 
-                        $joinTable['joinColumns'][] = $this->joinColumnToArray( $joinColumnElement );
+                        $joinTable['joinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                     }
 
                     foreach ($joinTableElement['inverseJoinColumns'] as $name => $joinColumnElement) {
@@ -627,22 +608,22 @@ class YamlDriver extends FileDriver
                             $joinColumnElement['name'] = $name;
                         }
 
-                        $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray( $joinColumnElement );
+                        $joinTable['inverseJoinColumns'][] = $this->joinColumnToArray($joinColumnElement);
                     }
 
                     $override['joinTable'] = $joinTable;
                 }
 
-                $metadata->setAssociationOverride( $fieldName, $override );
+                $metadata->setAssociationOverride($fieldName, $override);
             }
         }
 
         // Evaluate associationOverride
-        if (isset( $element['attributeOverride'] ) && is_array( $element['attributeOverride'] )) {
+        if (isset( $element['attributeOverride'] ) && is_array($element['attributeOverride'])) {
 
             foreach ($element['attributeOverride'] as $fieldName => $attributeOverrideElement) {
-                $mapping = $this->columnToArray( $fieldName, $attributeOverrideElement );
-                $metadata->setAttributeOverride( $fieldName, $mapping );
+                $mapping = $this->columnToArray($fieldName, $attributeOverrideElement);
+                $metadata->setAttributeOverride($fieldName, $mapping);
             }
         }
 
@@ -650,7 +631,7 @@ class YamlDriver extends FileDriver
         if (isset( $element['lifecycleCallbacks'] )) {
             foreach ($element['lifecycleCallbacks'] as $type => $methods) {
                 foreach ($methods as $method) {
-                    $metadata->addLifecycleCallback( $method, constant( 'Doctrine\ORM\Events::'.$type ) );
+                    $metadata->addLifecycleCallback($method, constant('Doctrine\ORM\Events::'.$type));
                 }
             }
         }
@@ -660,14 +641,14 @@ class YamlDriver extends FileDriver
             foreach ($element['entityListeners'] as $className => $entityListener) {
                 // Evaluate the listener using naming convention.
                 if (empty( $entityListener )) {
-                    EntityListenerBuilder::bindEntityListener( $metadata, $className );
+                    EntityListenerBuilder::bindEntityListener($metadata, $className);
 
                     continue;
                 }
 
                 foreach ($entityListener as $eventName => $callbackElement) {
                     foreach ($callbackElement as $methodName) {
-                        $metadata->addEntityListener( $eventName, $className, $methodName );
+                        $metadata->addEntityListener($eventName, $className, $methodName);
                     }
                 }
             }
@@ -681,18 +662,18 @@ class YamlDriver extends FileDriver
      *
      * @return array
      */
-    private function cacheToArray( $cacheMapping )
+    private function cacheToArray($cacheMapping)
     {
 
         $region = isset( $cacheMapping['region'] ) ? (string)$cacheMapping['region'] : null;
-        $usage = isset( $cacheMapping['usage'] ) ? strtoupper( $cacheMapping['usage'] ) : null;
+        $usage = isset( $cacheMapping['usage'] ) ? strtoupper($cacheMapping['usage']) : null;
 
-        if ($usage && !defined( 'Doctrine\ORM\Mapping\ClassMetadata::CACHE_USAGE_'.$usage )) {
-            throw new \InvalidArgumentException( sprintf( 'Invalid cache usage "%s"', $usage ) );
+        if ($usage && !defined('Doctrine\ORM\Mapping\ClassMetadata::CACHE_USAGE_'.$usage)) {
+            throw new \InvalidArgumentException(sprintf('Invalid cache usage "%s"', $usage));
         }
 
         if ($usage) {
-            $usage = constant( 'Doctrine\ORM\Mapping\ClassMetadata::CACHE_USAGE_'.$usage );
+            $usage = constant('Doctrine\ORM\Mapping\ClassMetadata::CACHE_USAGE_'.$usage);
         }
 
         return array(
@@ -709,20 +690,19 @@ class YamlDriver extends FileDriver
      *
      * @return  array
      */
-    private function columnToArray( $fieldName, $column )
+    private function columnToArray($fieldName, $column)
     {
-
         $mapping = array(
             'fieldName' => $fieldName
         );
 
         if (isset( $column['type'] )) {
-            $params = explode( '(', $column['type'] );
+            $params = explode('(', $column['type']);
             $column['type'] = $params[0];
             $mapping['type'] = $column['type'];
 
             if (isset( $params[1] )) {
-                $column['length'] = (integer)substr( $params[1], 0, strlen( $params[1] ) - 1 );
+                $column['length'] = (integer)substr($params[1], 0, strlen($params[1]) - 1);
             }
         }
 
@@ -773,9 +753,8 @@ class YamlDriver extends FileDriver
      *
      * @return array The mapping array.
      */
-    private function joinColumnToArray( $joinColumnElement )
+    private function joinColumnToArray($joinColumnElement)
     {
-
         $joinColumn = array();
         if (isset( $joinColumnElement['referencedColumnName'] )) {
             $joinColumn['referencedColumnName'] = (string)$joinColumnElement['referencedColumnName'];
@@ -811,9 +790,9 @@ class YamlDriver extends FileDriver
     /**
      * {@inheritDoc}
      */
-    protected function loadMappingFile( $file )
+    protected function loadMappingFile($file)
     {
 
-        return Yaml::parse( file_get_contents( $file ) );
+        return Yaml::parse(file_get_contents($file));
     }
 }

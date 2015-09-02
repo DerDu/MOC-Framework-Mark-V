@@ -25,12 +25,11 @@ use Doctrine\ORM\UnitOfWork;
 /**
  * Base class for all collection persisters.
  *
- * @since  2.0
+ * @since 2.0
  * @author Roman Borschel <roman@code-factory.org>
  */
 abstract class AbstractCollectionPersister implements CollectionPersister
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -65,7 +64,7 @@ abstract class AbstractCollectionPersister implements CollectionPersister
      *
      * @param EntityManagerInterface $em
      */
-    public function __construct( EntityManagerInterface $em )
+    public function __construct(EntityManagerInterface $em)
     {
 
         $this->em = $em;
@@ -82,10 +81,10 @@ abstract class AbstractCollectionPersister implements CollectionPersister
      *
      * @return bool
      */
-    protected function isValidEntityState( $entity )
+    protected function isValidEntityState($entity)
     {
 
-        $entityState = $this->uow->getEntityState( $entity, UnitOfWork::STATE_NEW );
+        $entityState = $this->uow->getEntityState($entity, UnitOfWork::STATE_NEW);
 
         if ($entityState === UnitOfWork::STATE_NEW) {
             return false;
@@ -93,7 +92,7 @@ abstract class AbstractCollectionPersister implements CollectionPersister
 
         // If Entity is scheduled for inclusion, it is not in this collection.
         // We can assure that because it would have return true before on array check
-        if ($entityState === UnitOfWork::STATE_MANAGED && $this->uow->isScheduledForInsert( $entity )) {
+        if ($entityState === UnitOfWork::STATE_MANAGED && $this->uow->isScheduledForInsert($entity)) {
             return false;
         }
 

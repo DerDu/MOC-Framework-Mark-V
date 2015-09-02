@@ -9,7 +9,6 @@ namespace Guzzle\Parser\UriTemplate;
  */
 interface UriTemplateInterface
 {
-
     /**
      * Expand the URI template using the supplied variables
      *
@@ -18,5 +17,5 @@ interface UriTemplateInterface
      *
      * @return string Returns the expanded template
      */
-    public function expand( $template, array $variables );
+    public function expand($template, array $variables);
 }

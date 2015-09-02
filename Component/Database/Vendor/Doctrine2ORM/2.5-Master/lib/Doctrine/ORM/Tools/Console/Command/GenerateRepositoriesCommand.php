@@ -39,18 +39,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateRepositoriesCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'orm:generate-repositories' )
-            ->setAliases( array( 'orm:generate:repositories' ) )
-            ->setDescription( 'Generate repository classes from your mapping information.' )
-            ->setDefinition( array(
+            ->setName('orm:generate-repositories')
+            ->setAliases(array('orm:generate:repositories'))
+            ->setDescription('Generate repository classes from your mapping information.')
+            ->setDefinition(array(
                 new InputOption(
                     'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                     'A string pattern used to match entities that should be processed.'
@@ -58,8 +56,8 @@ class GenerateRepositoriesCommand extends Command
                 new InputArgument(
                     'dest-path', InputArgument::REQUIRED, 'The path to generate your repository classes.'
                 )
-            ) )
-            ->setHelp( <<<EOT
+            ))
+            ->setHelp(<<<EOT
 Generate repository classes from your mapping information.
 EOT
             );
@@ -68,46 +66,45 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $em = $this->getHelper( 'em' )->getEntityManager();
+        $em = $this->getHelper('em')->getEntityManager();
 
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
-        $metadatas = MetadataFilter::filter( $metadatas, $input->getOption( 'filter' ) );
+        $metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
 
         $repositoryName = $em->getConfiguration()->getDefaultRepositoryClassName();
 
         // Process destination directory
-        $destPath = realpath( $input->getArgument( 'dest-path' ) );
+        $destPath = realpath($input->getArgument('dest-path'));
 
-        if (!file_exists( $destPath )) {
+        if (!file_exists($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Entities destination directory '<info>%s</info>' does not exist.",
-                    $input->getArgument( 'dest-path' ) )
+                sprintf("Entities destination directory '<info>%s</info>' does not exist.",
+                    $input->getArgument('dest-path'))
             );
         }
 
-        if (!is_writable( $destPath )) {
+        if (!is_writable($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Entities destination directory '<info>%s</info>' does not have write permissions.",
-                    $destPath )
+                sprintf("Entities destination directory '<info>%s</info>' does not have write permissions.", $destPath)
             );
         }
 
-        if (count( $metadatas )) {
+        if (count($metadatas)) {
             $numRepositories = 0;
             $generator = new EntityRepositoryGenerator();
 
-            $generator->setDefaultRepositoryName( $repositoryName );
+            $generator->setDefaultRepositoryName($repositoryName);
 
             foreach ($metadatas as $metadata) {
                 if ($metadata->customRepositoryClassName) {
                     $output->writeln(
-                        sprintf( 'Processing repository "<info>%s</info>"', $metadata->customRepositoryClassName )
+                        sprintf('Processing repository "<info>%s</info>"', $metadata->customRepositoryClassName)
                     );
 
-                    $generator->writeEntityRepositoryClass( $metadata->customRepositoryClassName, $destPath );
+                    $generator->writeEntityRepositoryClass($metadata->customRepositoryClassName, $destPath);
 
                     $numRepositories++;
                 }
@@ -115,12 +112,12 @@ EOT
 
             if ($numRepositories) {
                 // Outputting information message
-                $output->writeln( PHP_EOL.sprintf( 'Repository classes generated to "<info>%s</INFO>"', $destPath ) );
+                $output->writeln(PHP_EOL.sprintf('Repository classes generated to "<info>%s</INFO>"', $destPath));
             } else {
-                $output->writeln( 'No Repository classes were found to be processed.' );
+                $output->writeln('No Repository classes were found to be processed.');
             }
         } else {
-            $output->writeln( 'No Metadata Classes to process.' );
+            $output->writeln('No Metadata Classes to process.');
         }
     }
 }

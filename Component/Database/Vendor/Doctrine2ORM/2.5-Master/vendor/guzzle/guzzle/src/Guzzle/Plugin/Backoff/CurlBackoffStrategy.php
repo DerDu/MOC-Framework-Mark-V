@@ -12,7 +12,6 @@ use Guzzle\Http\Message\Response;
  */
 class CurlBackoffStrategy extends AbstractErrorCodeBackoffStrategy
 {
-
     /** @var array Default cURL errors to retry */
     protected static $defaultErrorCodes = array(
         CURLE_COULDNT_RESOLVE_HOST,
@@ -28,13 +27,8 @@ class CurlBackoffStrategy extends AbstractErrorCodeBackoffStrategy
         CURLE_RECV_ERROR
     );
 
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-
+    protected function getDelay($retries, RequestInterface $request, Response $response = null, HttpException $e = null)
+    {
         if ($e && $e instanceof CurlException) {
             return isset( $this->errorCodes[$e->getErrorNo()] ) ? true : null;
         }

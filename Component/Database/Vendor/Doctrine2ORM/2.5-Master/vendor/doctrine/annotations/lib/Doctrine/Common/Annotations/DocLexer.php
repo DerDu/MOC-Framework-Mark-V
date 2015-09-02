@@ -82,7 +82,6 @@ final class DocLexer extends AbstractLexer
      */
     protected function getCatchablePatterns()
     {
-
         return array(
             '[a-z_\\\][a-z0-9_\:\\\]*[a-z_][a-z0-9_]*',
             '(?:[+-]?[0-9]+(?:[\.][0-9]+)*)(?:[eE][+-]?[0-9]+)?',
@@ -96,19 +95,18 @@ final class DocLexer extends AbstractLexer
     protected function getNonCatchablePatterns()
     {
 
-        return array( '\s+', '\*+', '(.)' );
+        return array('\s+', '\*+', '(.)');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getType( &$value )
+    protected function getType(&$value)
     {
-
         $type = self::T_NONE;
 
         if ($value[0] === '"') {
-            $value = str_replace( '""', '"', substr( $value, 1, strlen( $value ) - 2 ) );
+            $value = str_replace('""', '"', substr($value, 1, strlen($value) - 2));
 
             return self::T_STRING;
         }
@@ -117,19 +115,19 @@ final class DocLexer extends AbstractLexer
             return $this->noCase[$value];
         }
 
-        if ($value[0] === '_' || $value[0] === '\\' || ctype_alpha( $value[0] )) {
+        if ($value[0] === '_' || $value[0] === '\\' || ctype_alpha($value[0])) {
             return self::T_IDENTIFIER;
         }
 
-        $lowerValue = strtolower( $value );
+        $lowerValue = strtolower($value);
 
         if (isset( $this->withCase[$lowerValue] )) {
             return $this->withCase[$lowerValue];
         }
 
         // Checking numeric value
-        if (is_numeric( $value )) {
-            return ( strpos( $value, '.' ) !== false || stripos( $value, 'e' ) !== false )
+        if (is_numeric($value)) {
+            return ( strpos($value, '.') !== false || stripos($value, 'e') !== false )
                 ? self::T_FLOAT : self::T_INTEGER;
         }
 

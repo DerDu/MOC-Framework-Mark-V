@@ -1,8 +1,6 @@
 <?php
-
 class RequirementsTest extends PHPUnit_Framework_TestCase
 {
-
     public function testOne()
     {
     }
@@ -56,7 +54,6 @@ class RequirementsTest extends PHPUnit_Framework_TestCase
     public function testEight()
     {
     }
-
 
     /**
      * @requires function testFunc

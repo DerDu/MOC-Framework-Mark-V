@@ -33,7 +33,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 abstract class Type
 {
-
     const TARRAY = 'array';
     const SIMPLE_ARRAY = 'simple_array';
     const JSON_ARRAY = 'json_array';
@@ -67,25 +66,25 @@ abstract class Type
      * @var array
      */
     private static $_typesMap = array(
-        self::TARRAY     => 'Doctrine\DBAL\Types\ArrayType',
+        self::TARRAY   => 'Doctrine\DBAL\Types\ArrayType',
         self::SIMPLE_ARRAY => 'Doctrine\DBAL\Types\SimpleArrayType',
         self::JSON_ARRAY => 'Doctrine\DBAL\Types\JsonArrayType',
-        self::OBJECT     => 'Doctrine\DBAL\Types\ObjectType',
-        self::BOOLEAN    => 'Doctrine\DBAL\Types\BooleanType',
-        self::INTEGER    => 'Doctrine\DBAL\Types\IntegerType',
-        self::SMALLINT   => 'Doctrine\DBAL\Types\SmallIntType',
-        self::BIGINT     => 'Doctrine\DBAL\Types\BigIntType',
-        self::STRING     => 'Doctrine\DBAL\Types\StringType',
-        self::TEXT       => 'Doctrine\DBAL\Types\TextType',
-        self::DATETIME   => 'Doctrine\DBAL\Types\DateTimeType',
+        self::OBJECT   => 'Doctrine\DBAL\Types\ObjectType',
+        self::BOOLEAN  => 'Doctrine\DBAL\Types\BooleanType',
+        self::INTEGER  => 'Doctrine\DBAL\Types\IntegerType',
+        self::SMALLINT => 'Doctrine\DBAL\Types\SmallIntType',
+        self::BIGINT   => 'Doctrine\DBAL\Types\BigIntType',
+        self::STRING   => 'Doctrine\DBAL\Types\StringType',
+        self::TEXT     => 'Doctrine\DBAL\Types\TextType',
+        self::DATETIME => 'Doctrine\DBAL\Types\DateTimeType',
         self::DATETIMETZ => 'Doctrine\DBAL\Types\DateTimeTzType',
-        self::DATE       => 'Doctrine\DBAL\Types\DateType',
-        self::TIME       => 'Doctrine\DBAL\Types\TimeType',
-        self::DECIMAL    => 'Doctrine\DBAL\Types\DecimalType',
-        self::FLOAT      => 'Doctrine\DBAL\Types\FloatType',
-        self::BINARY     => 'Doctrine\DBAL\Types\BinaryType',
-        self::BLOB       => 'Doctrine\DBAL\Types\BlobType',
-        self::GUID       => 'Doctrine\DBAL\Types\GuidType',
+        self::DATE     => 'Doctrine\DBAL\Types\DateType',
+        self::TIME     => 'Doctrine\DBAL\Types\TimeType',
+        self::DECIMAL  => 'Doctrine\DBAL\Types\DecimalType',
+        self::FLOAT    => 'Doctrine\DBAL\Types\FloatType',
+        self::BINARY   => 'Doctrine\DBAL\Types\BinaryType',
+        self::BLOB     => 'Doctrine\DBAL\Types\BlobType',
+        self::GUID     => 'Doctrine\DBAL\Types\GuidType',
     );
 
     /**
@@ -105,12 +104,12 @@ abstract class Type
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public static function getType( $name )
+    public static function getType($name)
     {
 
         if (!isset( self::$_typeObjects[$name] )) {
             if (!isset( self::$_typesMap[$name] )) {
-                throw DBALException::unknownColumnType( $name );
+                throw DBALException::unknownColumnType($name);
             }
             self::$_typeObjects[$name] = new self::$_typesMap[$name]();
         }
@@ -128,11 +127,11 @@ abstract class Type
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public static function addType( $name, $className )
+    public static function addType($name, $className)
     {
 
         if (isset( self::$_typesMap[$name] )) {
-            throw DBALException::typeExists( $name );
+            throw DBALException::typeExists($name);
         }
 
         self::$_typesMap[$name] = $className;
@@ -145,7 +144,7 @@ abstract class Type
      *
      * @return boolean TRUE if type is supported; FALSE otherwise.
      */
-    public static function hasType( $name )
+    public static function hasType($name)
     {
 
         return isset( self::$_typesMap[$name] );
@@ -161,11 +160,11 @@ abstract class Type
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public static function overrideType( $name, $className )
+    public static function overrideType($name, $className)
     {
 
         if (!isset( self::$_typesMap[$name] )) {
-            throw DBALException::typeNotFound( $name );
+            throw DBALException::typeNotFound($name);
         }
 
         if (isset( self::$_typeObjects[$name] )) {
@@ -183,7 +182,6 @@ abstract class Type
      */
     public static function getTypesMap()
     {
-
         return self::$_typesMap;
     }
 
@@ -196,9 +194,8 @@ abstract class Type
      *
      * @return mixed The database representation of the value.
      */
-    public function convertToDatabaseValue( $value, AbstractPlatform $platform )
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-
         return $value;
     }
 
@@ -211,9 +208,8 @@ abstract class Type
      *
      * @return mixed The PHP representation of the value.
      */
-    public function convertToPHPValue( $value, AbstractPlatform $platform )
+    public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-
         return $value;
     }
 
@@ -226,9 +222,8 @@ abstract class Type
      *
      * @todo Needed?
      */
-    public function getDefaultLength( AbstractPlatform $platform )
+    public function getDefaultLength(AbstractPlatform $platform)
     {
-
         return null;
     }
 
@@ -240,7 +235,7 @@ abstract class Type
      *
      * @return string
      */
-    abstract public function getSQLDeclaration( array $fieldDeclaration, AbstractPlatform $platform );
+    abstract public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform);
 
     /**
      * Gets the name of this type.
@@ -267,7 +262,6 @@ abstract class Type
      */
     public function getBindingType()
     {
-
         return \PDO::PARAM_STR;
     }
 
@@ -277,9 +271,9 @@ abstract class Type
     public function __toString()
     {
 
-        $e = explode( '\\', get_class( $this ) );
+        $e = explode('\\', get_class($this));
 
-        return str_replace( 'Type', '', end( $e ) );
+        return str_replace('Type', '', end($e));
     }
 
     /**
@@ -294,7 +288,6 @@ abstract class Type
      */
     public function canRequireSQLConversion()
     {
-
         return false;
     }
 
@@ -306,9 +299,8 @@ abstract class Type
      *
      * @return string
      */
-    public function convertToDatabaseValueSQL( $sqlExpr, AbstractPlatform $platform )
+    public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
     {
-
         return $sqlExpr;
     }
 
@@ -320,9 +312,8 @@ abstract class Type
      *
      * @return string
      */
-    public function convertToPHPValueSQL( $sqlExpr, $platform )
+    public function convertToPHPValueSQL($sqlExpr, $platform)
     {
-
         return $sqlExpr;
     }
 
@@ -333,9 +324,8 @@ abstract class Type
      *
      * @return array
      */
-    public function getMappedDatabaseTypes( AbstractPlatform $platform )
+    public function getMappedDatabaseTypes(AbstractPlatform $platform)
     {
-
         return array();
     }
 
@@ -349,9 +339,8 @@ abstract class Type
      *
      * @return boolean
      */
-    public function requiresSQLCommentHint( AbstractPlatform $platform )
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
     {
-
         return false;
     }
 }

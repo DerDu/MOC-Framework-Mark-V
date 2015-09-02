@@ -18,7 +18,6 @@ namespace Symfony\Component\Config\Resource;
  */
 interface ResourceInterface
 {
-
     /**
      * Returns a string representation of the Resource.
      *
@@ -33,7 +32,7 @@ interface ResourceInterface
      *
      * @return bool True if the resource has not been updated, false otherwise
      */
-    public function isFresh( $timestamp );
+    public function isFresh($timestamp);
 
     /**
      * Returns the tied resource.

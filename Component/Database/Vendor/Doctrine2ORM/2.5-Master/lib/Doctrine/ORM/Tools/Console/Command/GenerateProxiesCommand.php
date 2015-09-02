@@ -38,18 +38,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateProxiesCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'orm:generate-proxies' )
-            ->setAliases( array( 'orm:generate:proxies' ) )
-            ->setDescription( 'Generates proxy classes for entity classes.' )
-            ->setDefinition( array(
+            ->setName('orm:generate-proxies')
+            ->setAliases(array('orm:generate:proxies'))
+            ->setDescription('Generates proxy classes for entity classes.')
+            ->setDefinition(array(
                 new InputOption(
                     'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                     'A string pattern used to match entities that should be processed.'
@@ -58,8 +56,8 @@ class GenerateProxiesCommand extends Command
                     'dest-path', InputArgument::OPTIONAL,
                     'The path to generate your proxy classes. If none is provided, it will attempt to grab from configuration.'
                 ),
-            ) )
-            ->setHelp( <<<EOT
+            ))
+            ->setHelp(<<<EOT
 Generates proxy classes for entity classes.
 EOT
             );
@@ -68,52 +66,52 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $em = $this->getHelper( 'em' )->getEntityManager();
+        $em = $this->getHelper('em')->getEntityManager();
 
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
-        $metadatas = MetadataFilter::filter( $metadatas, $input->getOption( 'filter' ) );
+        $metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
 
         // Process destination directory
-        if (( $destPath = $input->getArgument( 'dest-path' ) ) === null) {
+        if (( $destPath = $input->getArgument('dest-path') ) === null) {
             $destPath = $em->getConfiguration()->getProxyDir();
         }
 
-        if (!is_dir( $destPath )) {
-            mkdir( $destPath, 0777, true );
+        if (!is_dir($destPath)) {
+            mkdir($destPath, 0777, true);
         }
 
-        $destPath = realpath( $destPath );
+        $destPath = realpath($destPath);
 
-        if (!file_exists( $destPath )) {
+        if (!file_exists($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Proxies destination directory '<info>%s</info>' does not exist.",
-                    $em->getConfiguration()->getProxyDir() )
+                sprintf("Proxies destination directory '<info>%s</info>' does not exist.",
+                    $em->getConfiguration()->getProxyDir())
             );
         }
 
-        if (!is_writable( $destPath )) {
+        if (!is_writable($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Proxies destination directory '<info>%s</info>' does not have write permissions.", $destPath )
+                sprintf("Proxies destination directory '<info>%s</info>' does not have write permissions.", $destPath)
             );
         }
 
-        if (count( $metadatas )) {
+        if (count($metadatas)) {
             foreach ($metadatas as $metadata) {
                 $output->writeln(
-                    sprintf( 'Processing entity "<info>%s</info>"', $metadata->name )
+                    sprintf('Processing entity "<info>%s</info>"', $metadata->name)
                 );
             }
 
             // Generating Proxies
-            $em->getProxyFactory()->generateProxyClasses( $metadatas, $destPath );
+            $em->getProxyFactory()->generateProxyClasses($metadatas, $destPath);
 
             // Outputting information message
-            $output->writeln( PHP_EOL.sprintf( 'Proxy classes generated to "<info>%s</INFO>"', $destPath ) );
+            $output->writeln(PHP_EOL.sprintf('Proxy classes generated to "<info>%s</INFO>"', $destPath));
         } else {
-            $output->writeln( 'No Metadata Classes to process.' );
+            $output->writeln('No Metadata Classes to process.');
         }
     }
 }

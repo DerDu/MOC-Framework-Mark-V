@@ -9,17 +9,9 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  */
 class Util_GlobalStateTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @covers PHPUnit_Util_GlobalState::processIncludedFilesAsString
      */
@@ -40,6 +32,6 @@ class Util_GlobalStateTest extends PHPUnit_Framework_TestCase
             "require_once '".$dir."/ConfigurationTest.php';\n".
             "require_once '".$dir."/GlobalStateTest.php';\n".
             "require_once 'file://".$dir."/XMLTest.php';\n",
-            PHPUnit_Util_GlobalState::processIncludedFilesAsString( $files ) );
+            PHPUnit_Util_GlobalState::processIncludedFilesAsString($files));
     }
 }

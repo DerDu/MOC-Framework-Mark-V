@@ -32,13 +32,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class MsSQLKeywords extends SQLServerKeywords
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'MsSQL';
     }
 }

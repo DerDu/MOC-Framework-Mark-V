@@ -7,7 +7,6 @@ namespace Guzzle\Inflection;
  */
 class PreComputedInflector implements InflectorInterface
 {
-
     /** @var array Array of pre-computed inflections */
     protected $mapping = array(
         'snake' => array(),
@@ -29,10 +28,9 @@ class PreComputedInflector implements InflectorInterface
         array $camel = array(),
         $mirror = false
     ) {
-
         if ($mirror) {
-            $camel = array_merge( array_flip( $snake ), $camel );
-            $snake = array_merge( array_flip( $camel ), $snake );
+            $camel = array_merge(array_flip($snake), $camel);
+            $snake = array_merge(array_flip($camel), $snake);
         }
 
         $this->decoratedInflector = $inflector;
@@ -42,12 +40,12 @@ class PreComputedInflector implements InflectorInterface
         );
     }
 
-    public function snake( $word )
+    public function snake($word)
     {
 
         return isset( $this->mapping['snake'][$word] )
             ? $this->mapping['snake'][$word]
-            : $this->decoratedInflector->snake( $word );
+            : $this->decoratedInflector->snake($word);
     }
 
     /**
@@ -57,11 +55,11 @@ class PreComputedInflector implements InflectorInterface
      *
      * @return string
      */
-    public function camel( $word )
+    public function camel($word)
     {
 
         return isset( $this->mapping['camel'][$word] )
             ? $this->mapping['camel'][$word]
-            : $this->decoratedInflector->camel( $word );
+            : $this->decoratedInflector->camel($word);
     }
 }

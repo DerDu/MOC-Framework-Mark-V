@@ -30,7 +30,6 @@ use Couchbase;
  */
 class CouchbaseCache extends CacheProvider
 {
-
     /**
      * @var Couchbase|null
      */
@@ -43,7 +42,6 @@ class CouchbaseCache extends CacheProvider
      */
     public function getCouchbase()
     {
-
         return $this->couchbase;
     }
 
@@ -54,49 +52,47 @@ class CouchbaseCache extends CacheProvider
      *
      * @return void
      */
-    public function setCouchbase( Couchbase $couchbase )
+    public function setCouchbase(Couchbase $couchbase)
     {
-
         $this->couchbase = $couchbase;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        return $this->couchbase->get( $id ) ?: false;
+        return $this->couchbase->get($id) ?: false;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        return ( null !== $this->couchbase->get( $id ) );
+        return ( null !== $this->couchbase->get($id) );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         if ($lifeTime > 30 * 24 * 3600) {
             $lifeTime = time() + $lifeTime;
         }
-        return $this->couchbase->set( $id, $data, (int)$lifeTime );
+        return $this->couchbase->set($id, $data, (int)$lifeTime);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        return $this->couchbase->delete( $id );
+        return $this->couchbase->delete($id);
     }
 
     /**
@@ -104,7 +100,6 @@ class CouchbaseCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         return $this->couchbase->flush();
     }
 
@@ -116,7 +111,7 @@ class CouchbaseCache extends CacheProvider
 
         $stats = $this->couchbase->getStats();
         $servers = $this->couchbase->getServers();
-        $server = explode( ":", $servers[0] );
+        $server = explode(":", $servers[0]);
         $key = $server[0].":"."11210";
         $stats = $stats[$key];
         return array(

@@ -9,14 +9,13 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity\Git;
  */
 class CommitTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @test
      */
     public function shouldNotHaveIdOnConstruction()
     {
 
-        $this->assertNull( $this->object->getId() );
+        $this->assertNull($this->object->getId());
     }
 
     // getId()
@@ -27,7 +26,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
     public function shouldNotHoveAuthorNameOnConstruction()
     {
 
-        $this->assertNull( $this->object->getAuthorName() );
+        $this->assertNull($this->object->getAuthorName());
     }
 
     // getAuthorName()
@@ -38,7 +37,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
     public function shouldNotHoveAuthorEmailOnConstruction()
     {
 
-        $this->assertNull( $this->object->getAuthorEmail() );
+        $this->assertNull($this->object->getAuthorEmail());
     }
 
     // getAuthorEmail()
@@ -49,7 +48,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
     public function shouldNotHoveCommitterNameOnConstruction()
     {
 
-        $this->assertNull( $this->object->getCommitterName() );
+        $this->assertNull($this->object->getCommitterName());
     }
 
     // getCommitterName()
@@ -60,7 +59,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
     public function shouldNotHoveCommitterEmailOnConstruction()
     {
 
-        $this->assertNull( $this->object->getCommitterEmail() );
+        $this->assertNull($this->object->getCommitterEmail());
     }
 
     // getCommitterEmail()
@@ -71,7 +70,7 @@ class CommitTest extends \PHPUnit_Framework_TestCase
     public function shouldNotHoveMessageOnConstruction()
     {
 
-        $this->assertNull( $this->object->getMessage() );
+        $this->assertNull($this->object->getMessage());
     }
 
     // getMessage()
@@ -81,13 +80,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetId()
     {
-
         $expected = 'id';
 
-        $obj = $this->object->setId( $expected );
+        $obj = $this->object->setId($expected);
 
-        $this->assertEquals( $expected, $this->object->getId() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getId());
+        $this->assertSame($obj, $this->object);
     }
 
 
@@ -98,13 +96,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetAuthorName()
     {
-
         $expected = 'author_name';
 
-        $obj = $this->object->setAuthorName( $expected );
+        $obj = $this->object->setAuthorName($expected);
 
-        $this->assertEquals( $expected, $this->object->getAuthorName() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getAuthorName());
+        $this->assertSame($obj, $this->object);
     }
 
     // setAuthorName()
@@ -114,13 +111,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetAuthorEmail()
     {
-
         $expected = 'author_email';
 
-        $obj = $this->object->setAuthorEmail( $expected );
+        $obj = $this->object->setAuthorEmail($expected);
 
-        $this->assertEquals( $expected, $this->object->getAuthorEmail() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getAuthorEmail());
+        $this->assertSame($obj, $this->object);
     }
 
     // setAuthorEmail()
@@ -130,13 +126,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetCommitterName()
     {
-
         $expected = 'committer_name';
 
-        $obj = $this->object->setCommitterName( $expected );
+        $obj = $this->object->setCommitterName($expected);
 
-        $this->assertEquals( $expected, $this->object->getCommitterName() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getCommitterName());
+        $this->assertSame($obj, $this->object);
     }
 
     // setCommitterName()
@@ -146,13 +141,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetCommitterEmail()
     {
-
         $expected = 'committer_email';
 
-        $obj = $this->object->setCommitterEmail( $expected );
+        $obj = $this->object->setCommitterEmail($expected);
 
-        $this->assertEquals( $expected, $this->object->getCommitterEmail() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getCommitterEmail());
+        $this->assertSame($obj, $this->object);
     }
 
     // setCommitterEmail()
@@ -162,13 +156,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldSetMessage()
     {
-
         $expected = 'message';
 
-        $obj = $this->object->setMessage( $expected );
+        $obj = $this->object->setMessage($expected);
 
-        $this->assertEquals( $expected, $this->object->getMessage() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getMessage());
+        $this->assertSame($obj, $this->object);
     }
 
     // setMessage()
@@ -178,7 +171,6 @@ class CommitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldConvertToArray()
     {
-
         $expected = array(
             'id'              => null,
             'author_name'     => null,
@@ -188,8 +180,8 @@ class CommitTest extends \PHPUnit_Framework_TestCase
             'message'         => null,
         );
 
-        $this->assertSame( $expected, $this->object->toArray() );
-        $this->assertSame( json_encode( $expected ), (string)$this->object );
+        $this->assertSame($expected, $this->object->toArray());
+        $this->assertSame(json_encode($expected), (string)$this->object);
     }
 
     // toArray()
@@ -208,12 +200,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
         $message = 'message';
 
         $this->object
-            ->setId( $id )
-            ->setAuthorName( $authorName )
-            ->setAuthorEmail( $authorEmail )
-            ->setCommitterName( $committerName )
-            ->setCommitterEmail( $committerEmail )
-            ->setMessage( $message );
+            ->setId($id)
+            ->setAuthorName($authorName)
+            ->setAuthorEmail($authorEmail)
+            ->setCommitterName($committerName)
+            ->setCommitterEmail($committerEmail)
+            ->setMessage($message);
 
         $expected = array(
             'id'              => $id,
@@ -224,13 +216,12 @@ class CommitTest extends \PHPUnit_Framework_TestCase
             'message'         => $message,
         );
 
-        $this->assertSame( $expected, $this->object->toArray() );
-        $this->assertSame( json_encode( $expected ), (string)$this->object );
+        $this->assertSame($expected, $this->object->toArray());
+        $this->assertSame(json_encode($expected), (string)$this->object);
     }
 
     protected function setUp()
     {
-
         $this->object = new Commit();
     }
 }

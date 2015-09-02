@@ -55,9 +55,8 @@ class Join extends Node
      * @param int  $joinType
      * @param Node $joinAssociationDeclaration
      */
-    public function __construct( $joinType, $joinAssociationDeclaration )
+    public function __construct($joinType, $joinAssociationDeclaration)
     {
-
         $this->joinType = $joinType;
         $this->joinAssociationDeclaration = $joinAssociationDeclaration;
     }
@@ -65,9 +64,9 @@ class Join extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkJoin( $this );
+        return $sqlWalker->walkJoin($this);
     }
 }

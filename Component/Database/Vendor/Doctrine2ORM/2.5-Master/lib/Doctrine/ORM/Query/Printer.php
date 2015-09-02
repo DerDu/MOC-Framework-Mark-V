@@ -29,7 +29,6 @@ namespace Doctrine\ORM\Query;
  */
 class Printer
 {
-
     /**
      * Current indentation level
      *
@@ -49,9 +48,8 @@ class Printer
      *
      * @param bool $silent Parse tree will not be printed if true.
      */
-    public function __construct( $silent = false )
+    public function __construct($silent = false)
     {
-
         $this->_silent = $silent;
     }
 
@@ -65,10 +63,10 @@ class Printer
      *
      * @return void
      */
-    public function startProduction( $name )
+    public function startProduction($name)
     {
 
-        $this->println( '('.$name );
+        $this->println('('.$name);
         $this->_indent++;
     }
 
@@ -79,11 +77,11 @@ class Printer
      *
      * @return void
      */
-    public function println( $str )
+    public function println($str)
     {
 
         if (!$this->_silent) {
-            echo str_repeat( '    ', $this->_indent ), $str, "\n";
+            echo str_repeat('    ', $this->_indent), $str, "\n";
         }
     }
 
@@ -96,8 +94,7 @@ class Printer
      */
     public function endProduction()
     {
-
         $this->_indent--;
-        $this->println( ')' );
+        $this->println(')');
     }
 }

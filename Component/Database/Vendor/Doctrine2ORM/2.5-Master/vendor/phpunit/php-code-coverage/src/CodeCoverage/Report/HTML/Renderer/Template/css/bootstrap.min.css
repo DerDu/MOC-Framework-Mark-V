@@ -1,5 +1,5 @@
 /*!
- * Bootstrap v3.3.2 (http://getbootstrap.com)
+ * Bootstrap v3.3.4 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */
@@ -1189,11 +1189,27 @@ td, th {
     content: "\e227"
 }
 
+.glyphicon-btc:before {
+    content: "\e227"
+}
+
+.glyphicon-xbt:before {
+    content: "\e227"
+}
+
 .glyphicon-yen:before {
     content: "\00a5"
 }
 
+.glyphicon-jpy:before {
+    content: "\00a5"
+}
+
 .glyphicon-ruble:before {
+    content: "\20bd"
+}
+
+.glyphicon-rub:before {
     content: "\20bd"
 }
 
@@ -1429,6 +1445,10 @@ hr {
     margin: 0;
     overflow: visible;
     clip: auto
+}
+
+[role=button] {
+    cursor: pointer
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -2953,9 +2973,12 @@ output {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-    cursor: not-allowed;
     background-color: #eee;
     opacity: 1
+}
+
+.form-control[disabled], fieldset[disabled] .form-control {
+    cursor: not-allowed
 }
 
 textarea.form-control {
@@ -3010,6 +3033,7 @@ input[type=search] {
 }
 
 .checkbox-inline, .radio-inline {
+    position: relative;
     display: inline-block;
     padding-left: 20px;
     margin-bottom: 0;
@@ -3036,6 +3060,7 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
 }
 
 .form-control-static {
+    min-height: 34px;
     padding-top: 7px;
     padding-bottom: 7px;
     margin-bottom: 0
@@ -3082,6 +3107,7 @@ select[multiple].form-group-sm .form-control, textarea.form-group-sm .form-contr
 
 .form-group-sm .form-control-static {
     height: 30px;
+    min-height: 32px;
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5
@@ -3123,6 +3149,7 @@ select[multiple].form-group-lg .form-control, textarea.form-group-lg .form-contr
 
 .form-group-lg .form-control-static {
     height: 46px;
+    min-height: 38px;
     padding: 10px 16px;
     font-size: 18px;
     line-height: 1.3333333
@@ -3627,13 +3654,11 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 .collapse {
-    display: none;
-    visibility: hidden
+    display: none
 }
 
 .collapse.in {
-    display: block;
-    visibility: visible
+    display: block
 }
 
 tr.collapse.in {
@@ -3665,7 +3690,7 @@ tbody.collapse.in {
     height: 0;
     margin-left: 2px;
     vertical-align: middle;
-    border-top: 4px solid;
+    border-top: 4px dashed;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent
 }
@@ -4337,13 +4362,11 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 }
 
 .tab-content > .tab-pane {
-    display: none;
-    visibility: hidden
+    display: none
 }
 
 .tab-content > .active {
-    display: block;
-    visibility: visible
+    display: block
 }
 
 .nav-tabs .dropdown-menu {
@@ -4397,8 +4420,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
         display: block !important;
         height: auto !important;
         padding-bottom: 0;
-        overflow: visible !important;
-        visibility: visible !important
+        overflow: visible !important
     }
 
     .navbar-collapse.in {
@@ -4415,7 +4437,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
     max-height: 340px
 }
 
-@media (max-device-width: 480px) and (orientation: landscape) {
+@media (max-device-width: 480px)and (orientation: landscape) {
     .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {
         max-height: 200px
     }
@@ -5174,7 +5196,7 @@ a.label:focus, a.label:hover {
     top: -1px
 }
 
-.btn-xs .badge {
+.btn-group-xs > .btn .badge, .btn-xs .badge {
     top: 0;
     padding: 1px 5px
 }
@@ -6032,11 +6054,11 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
     border: 0
 }
 
-.embed-responsive.embed-responsive-16by9 {
+.embed-responsive-16by9 {
     padding-bottom: 56.25%
 }
 
-.embed-responsive.embed-responsive-4by3 {
+.embed-responsive-4by3 {
     padding-bottom: 75%
 }
 
@@ -6103,7 +6125,7 @@ button.close {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 1050;
     display: none;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
@@ -6152,10 +6174,12 @@ button.close {
 }
 
 .modal-backdrop {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
+    bottom: 0;
     left: 0;
+    z-index: 1040;
     background-color: #000
 }
 
@@ -6246,7 +6270,6 @@ button.close {
     font-size: 12px;
     font-weight: 400;
     line-height: 1.4;
-    visibility: visible;
     filter: alpha(opacity=0);
     opacity: 0
 }
@@ -6778,8 +6801,7 @@ button.close {
 }
 
 .hidden {
-    display: none !important;
-    visibility: hidden !important
+    display: none !important
 }
 
 .affix {
@@ -6834,7 +6856,7 @@ button.close {
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px)and (max-width: 991px) {
     .visible-sm {
         display: block !important
     }
@@ -6852,25 +6874,25 @@ button.close {
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px)and (max-width: 991px) {
     .visible-sm-block {
         display: block !important
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px)and (max-width: 991px) {
     .visible-sm-inline {
         display: inline !important
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px)and (max-width: 991px) {
     .visible-sm-inline-block {
         display: inline-block !important
     }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px)and (max-width: 1199px) {
     .visible-md {
         display: block !important
     }
@@ -6888,19 +6910,19 @@ button.close {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px)and (max-width: 1199px) {
     .visible-md-block {
         display: block !important
     }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px)and (max-width: 1199px) {
     .visible-md-inline {
         display: inline !important
     }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px)and (max-width: 1199px) {
     .visible-md-inline-block {
         display: inline-block !important
     }
@@ -6948,13 +6970,13 @@ button.close {
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px)and (max-width: 991px) {
     .hidden-sm {
         display: none !important
     }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (min-width: 992px)and (max-width: 1199px) {
     .hidden-md {
         display: none !important
     }

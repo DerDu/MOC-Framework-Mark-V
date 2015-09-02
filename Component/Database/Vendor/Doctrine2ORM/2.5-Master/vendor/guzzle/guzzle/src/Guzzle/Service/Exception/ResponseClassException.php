@@ -6,5 +6,4 @@ use Guzzle\Common\Exception\RuntimeException;
 
 class ResponseClassException extends RuntimeException
 {
-
 }

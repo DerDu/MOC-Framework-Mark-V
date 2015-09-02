@@ -12,7 +12,6 @@ namespace Psr\Log;
  */
 class NullLogger extends AbstractLogger
 {
-
     /**
      * Logs with an arbitrary level.
      *
@@ -20,9 +19,9 @@ class NullLogger extends AbstractLogger
      * @param string $message
      * @param array  $context
      *
-     * @return null
+*@return null
      */
-    public function log( $level, $message, array $context = array() )
+    public function log($level, $message, array $context = array())
     {
         // noop
     }

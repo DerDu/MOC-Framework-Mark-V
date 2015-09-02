@@ -34,7 +34,6 @@ use Doctrine\ORM\Query\Lexer;
  */
 class ModFunction extends FunctionNode
 {
-
     /**
      * @var \Doctrine\ORM\Query\AST\SimpleArithmeticExpression
      */
@@ -48,30 +47,29 @@ class ModFunction extends FunctionNode
     /**
      * @override
      */
-    public function getSql( \Doctrine\ORM\Query\SqlWalker $sqlWalker )
+    public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
-
         return $sqlWalker->getConnection()->getDatabasePlatform()->getModExpression(
-            $sqlWalker->walkSimpleArithmeticExpression( $this->firstSimpleArithmeticExpression ),
-            $sqlWalker->walkSimpleArithmeticExpression( $this->secondSimpleArithmeticExpression )
+            $sqlWalker->walkSimpleArithmeticExpression($this->firstSimpleArithmeticExpression),
+            $sqlWalker->walkSimpleArithmeticExpression($this->secondSimpleArithmeticExpression)
         );
     }
 
     /**
      * @override
      */
-    public function parse( \Doctrine\ORM\Query\Parser $parser )
+    public function parse(\Doctrine\ORM\Query\Parser $parser)
     {
 
-        $parser->match( Lexer::T_IDENTIFIER );
-        $parser->match( Lexer::T_OPEN_PARENTHESIS );
+        $parser->match(Lexer::T_IDENTIFIER);
+        $parser->match(Lexer::T_OPEN_PARENTHESIS);
 
         $this->firstSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
 
-        $parser->match( Lexer::T_COMMA );
+        $parser->match(Lexer::T_COMMA);
 
         $this->secondSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
 
-        $parser->match( Lexer::T_CLOSE_PARENTHESIS );
+        $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

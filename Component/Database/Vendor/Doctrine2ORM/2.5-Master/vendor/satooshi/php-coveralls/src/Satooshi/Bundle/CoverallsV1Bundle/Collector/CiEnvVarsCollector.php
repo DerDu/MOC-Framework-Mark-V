@@ -10,7 +10,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration;
  */
 class CiEnvVarsCollector
 {
-
     /**
      * Configuration.
      *
@@ -39,9 +38,8 @@ class CiEnvVarsCollector
      *
      * @param Configuration $config Configuration.
      */
-    public function __construct( Configuration $config )
+    public function __construct(Configuration $config)
     {
-
         $this->config = $config;
     }
 
@@ -54,7 +52,7 @@ class CiEnvVarsCollector
      *
      * @return array
      */
-    public function collect( array $env )
+    public function collect(array $env)
     {
 
         $this->env = $env;
@@ -80,7 +78,6 @@ class CiEnvVarsCollector
      */
     protected function fillRepoToken()
     {
-
         if ($this->config->hasRepoToken()) {
             $this->env['COVERALLS_REPO_TOKEN'] = $this->config->getRepoToken();
 
@@ -202,7 +199,6 @@ class CiEnvVarsCollector
      */
     public function getReadEnv()
     {
-
         return $this->readEnv;
     }
 }

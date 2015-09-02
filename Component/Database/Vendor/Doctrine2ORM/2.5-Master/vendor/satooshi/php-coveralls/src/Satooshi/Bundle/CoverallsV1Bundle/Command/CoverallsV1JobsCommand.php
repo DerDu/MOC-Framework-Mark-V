@@ -21,7 +21,6 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 class CoverallsV1JobsCommand extends Command
 {
-
     /**
      * Path to project root directory.
      *
@@ -45,9 +44,8 @@ class CoverallsV1JobsCommand extends Command
      *
      * @return void
      */
-    public function setRootDir( $rootDir )
+    public function setRootDir($rootDir)
     {
-
         $this->rootDir = $rootDir;
     }
 
@@ -58,10 +56,9 @@ class CoverallsV1JobsCommand extends Command
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'coveralls:v1:jobs' )
-            ->setDescription( 'Coveralls Jobs API v1' )
+            ->setName('coveralls:v1:jobs')
+            ->setDescription('Coveralls Jobs API v1')
             ->addOption(
                 'config',
                 '-c',
@@ -97,21 +94,20 @@ class CoverallsV1JobsCommand extends Command
      *
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $stopwatch = new Stopwatch();
-        $stopwatch->start( __CLASS__ );
+        $stopwatch->start(__CLASS__);
 
-        $config = $this->loadConfiguration( $input, $this->rootDir );
-        $this->logger = $config->isVerbose() && !$config->isTestEnv() ? new ConsoleLogger( $output ) : new NullLogger();
+        $config = $this->loadConfiguration($input, $this->rootDir);
+        $this->logger = $config->isVerbose() && !$config->isTestEnv() ? new ConsoleLogger($output) : new NullLogger();
 
-        $this->executeApi( $config );
+        $this->executeApi($config);
 
-        $event = $stopwatch->stop( __CLASS__ );
-        $time = number_format( $event->getDuration() / 1000, 3 );        // sec
-        $mem = number_format( $event->getMemory() / ( 1024 * 1024 ), 2 ); // MB
-        $this->logger->info( sprintf( 'elapsed time: <info>%s</info> sec memory: <info>%s</info> MB', $time, $mem ) );
+        $event = $stopwatch->stop(__CLASS__);
+        $time = number_format($event->getDuration() / 1000, 3);        // sec
+        $mem = number_format($event->getMemory() / ( 1024 * 1024 ), 2); // MB
+        $this->logger->info(sprintf('elapsed time: <info>%s</info> sec memory: <info>%s</info> MB', $time, $mem));
 
         return 0;
     }
@@ -124,20 +120,20 @@ class CoverallsV1JobsCommand extends Command
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    protected function loadConfiguration( InputInterface $input, $rootDir )
+    protected function loadConfiguration(InputInterface $input, $rootDir)
     {
 
-        $coverallsYmlPath = $input->getOption( 'config' );
+        $coverallsYmlPath = $input->getOption('config');
 
         $ymlPath = $this->rootDir.DIRECTORY_SEPARATOR.$coverallsYmlPath;
         $configurator = new Configurator();
 
         return $configurator
-            ->load( $ymlPath, $rootDir )
-            ->setDryRun( $input->getOption( 'dry-run' ) )
-            ->setExcludeNoStatementsUnlessFalse( $input->getOption( 'exclude-no-stmt' ) )
-            ->setVerbose( $input->getOption( 'verbose' ) )
-            ->setEnv( $input->getOption( 'env' ) );
+            ->load($ymlPath, $rootDir)
+            ->setDryRun($input->getOption('dry-run'))
+            ->setExcludeNoStatementsUnlessFalse($input->getOption('exclude-no-stmt'))
+            ->setVerbose($input->getOption('verbose'))
+            ->setEnv($input->getOption('env'));
     }
 
     // accessor
@@ -149,14 +145,14 @@ class CoverallsV1JobsCommand extends Command
      *
      * @return void
      */
-    protected function executeApi( Configuration $config )
+    protected function executeApi(Configuration $config)
     {
 
         $client = new Client();
-        $api = new Jobs( $config, $client );
-        $repository = new JobsRepository( $api, $config );
+        $api = new Jobs($config, $client);
+        $repository = new JobsRepository($api, $config);
 
-        $repository->setLogger( $this->logger );
+        $repository->setLogger($this->logger);
         $repository->persist();
     }
 }

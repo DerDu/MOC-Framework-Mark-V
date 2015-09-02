@@ -26,7 +26,6 @@ namespace Doctrine\DBAL\Sharding;
  */
 class PoolingShardManager implements ShardManager
 {
-
     /**
      * @var \Doctrine\DBAL\Sharding\PoolingShardConnection
      */
@@ -45,7 +44,7 @@ class PoolingShardManager implements ShardManager
     /**
      * @param \Doctrine\DBAL\Sharding\PoolingShardConnection $conn
      */
-    public function __construct( PoolingShardConnection $conn )
+    public function __construct(PoolingShardConnection $conn)
     {
 
         $params = $conn->getParams();
@@ -62,20 +61,19 @@ class PoolingShardManager implements ShardManager
      *
      * @throws \RuntimeException
      */
-    public function queryAll( $sql, array $params, array $types )
+    public function queryAll($sql, array $params, array $types)
     {
-
         $shards = $this->getShards();
         if (!$shards) {
-            throw new \RuntimeException( "No shards found." );
+            throw new \RuntimeException("No shards found.");
         }
 
         $result = array();
         $oldDistribution = $this->getCurrentDistributionValue();
 
         foreach ($shards as $shard) {
-            $this->conn->connect( $shard['id'] );
-            foreach ($this->conn->fetchAll( $sql, $params, $types ) as $row) {
+            $this->conn->connect($shard['id']);
+            foreach ($this->conn->fetchAll($sql, $params, $types) as $row) {
                 $result[] = $row;
             }
         }
@@ -83,7 +81,7 @@ class PoolingShardManager implements ShardManager
         if ($oldDistribution === null) {
             $this->selectGlobal();
         } else {
-            $this->selectShard( $oldDistribution );
+            $this->selectShard($oldDistribution);
         }
 
         return $result;
@@ -94,12 +92,11 @@ class PoolingShardManager implements ShardManager
      */
     public function getShards()
     {
-
         $params = $this->conn->getParams();
         $shards = array();
 
         foreach ($params['shards'] as $shard) {
-            $shards[] = array( 'id' => $shard['id'] );
+            $shards[] = array('id' => $shard['id']);
         }
 
         return $shards;
@@ -110,7 +107,6 @@ class PoolingShardManager implements ShardManager
      */
     public function getCurrentDistributionValue()
     {
-
         return $this->currentDistributionValue;
     }
 
@@ -120,7 +116,7 @@ class PoolingShardManager implements ShardManager
     public function selectGlobal()
     {
 
-        $this->conn->connect( 0 );
+        $this->conn->connect(0);
         $this->currentDistributionValue = null;
     }
 
@@ -129,11 +125,11 @@ class PoolingShardManager implements ShardManager
      *
      * @return void
      */
-    public function selectShard( $distributionValue )
+    public function selectShard($distributionValue)
     {
 
-        $shardId = $this->choser->pickShard( $distributionValue, $this->conn );
-        $this->conn->connect( $shardId );
+        $shardId = $this->choser->pickShard($distributionValue, $this->conn);
+        $this->conn->connect($shardId);
         $this->currentDistributionValue = $distributionValue;
     }
 }

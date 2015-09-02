@@ -30,7 +30,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ConditionalPrimary extends Node
 {
-
     /**
      * @var Node|null
      */
@@ -62,9 +61,9 @@ class ConditionalPrimary extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkConditionalPrimary( $this );
+        return $sqlWalker->walkConditionalPrimary($this);
     }
 }

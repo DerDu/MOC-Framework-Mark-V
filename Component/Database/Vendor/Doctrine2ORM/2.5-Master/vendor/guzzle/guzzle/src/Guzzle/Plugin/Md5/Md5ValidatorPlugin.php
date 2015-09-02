@@ -13,7 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Md5ValidatorPlugin implements EventSubscriberInterface
 {
-
     /** @var int Maximum Content-Length in bytes to validate */
     protected $contentLengthCutoff;
 
@@ -29,9 +28,8 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
      *                                      response with a Content-Length greater than this value will not be validated
      *                                      because it will be deemed too memory intensive.
      */
-    public function __construct( $contentEncoded = true, $contentLengthCutoff = false )
+    public function __construct($contentEncoded = true, $contentLengthCutoff = false)
     {
-
         $this->contentLengthCutoff = $contentLengthCutoff;
         $this->contentEncoded = $contentEncoded;
     }
@@ -39,16 +37,15 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
 
-        return array( 'request.complete' => array( 'onRequestComplete', 255 ) );
+        return array('request.complete' => array('onRequestComplete', 255));
     }
 
     /**
      * {@inheritdoc}
      * @throws UnexpectedValueException
      */
-    public function onRequestComplete( Event $event )
+    public function onRequestComplete(Event $event)
     {
-
         $response = $event['response'];
 
         if (!$contentMd5 = $response->getContentMd5()) {
@@ -71,11 +68,11 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
         if (!$contentEncoding) {
             $hash = $response->getBody()->getContentMd5();
         } elseif ($contentEncoding == 'gzip') {
-            $response->getBody()->compress( 'zlib.deflate' );
+            $response->getBody()->compress('zlib.deflate');
             $hash = $response->getBody()->getContentMd5();
             $response->getBody()->uncompress();
         } elseif ($contentEncoding == 'compress') {
-            $response->getBody()->compress( 'bzip2.compress' );
+            $response->getBody()->compress('bzip2.compress');
             $hash = $response->getBody()->getContentMd5();
             $response->getBody()->uncompress();
         } else {

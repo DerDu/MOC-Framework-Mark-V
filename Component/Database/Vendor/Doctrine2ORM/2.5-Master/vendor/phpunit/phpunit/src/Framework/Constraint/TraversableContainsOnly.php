@@ -12,18 +12,10 @@
  * Constraint that asserts that the Traversable it is applied to contains
  * only values of a given type.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.1.4
+ * @since Class available since Release 3.1.4
  */
 class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Framework_Constraint
 {
-
     /**
      * @var PHPUnit_Framework_Constraint
      */
@@ -35,16 +27,15 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
     protected $type;
 
     /**
-     * @param string  $type
-     * @param boolean $isNativeType
+     * @param string $type
+     * @param bool   $isNativeType
      */
-    public function __construct( $type, $isNativeType = true )
+    public function __construct($type, $isNativeType = true)
     {
-
         parent::__construct();
 
         if ($isNativeType) {
-            $this->constraint = new PHPUnit_Framework_Constraint_IsType( $type );
+            $this->constraint = new PHPUnit_Framework_Constraint_IsType($type);
         } else {
             $this->constraint = new PHPUnit_Framework_Constraint_IsInstanceOf(
                 $type
@@ -68,16 +59,15 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
      * @param  string $description  Additional information about the test
      * @param  bool   $returnResult Whether to return a result or throw an exception
      *
-     * @return mixed
+*@return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-
         $success = true;
 
         foreach ($other as $item) {
-            if (!$this->constraint->evaluate( $item, '', true )) {
+            if (!$this->constraint->evaluate($item, '', true)) {
                 $success = false;
                 break;
             }
@@ -88,7 +78,7 @@ class PHPUnit_Framework_Constraint_TraversableContainsOnly extends PHPUnit_Frame
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 

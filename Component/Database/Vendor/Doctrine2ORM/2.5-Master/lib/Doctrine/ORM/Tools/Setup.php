@@ -34,7 +34,6 @@ use Doctrine\ORM\Mapping\Driver\YamlDriver;
  */
 class Setup
 {
-
     /**
      * Use this method to register all autoloads for a downloaded Doctrine library.
      * Pick the directory the library was uncompressed into.
@@ -43,17 +42,17 @@ class Setup
      *
      * @return void
      */
-    public static function registerAutoloadDirectory( $directory )
+    public static function registerAutoloadDirectory($directory)
     {
 
-        if (!class_exists( 'Doctrine\Common\ClassLoader', false )) {
+        if (!class_exists('Doctrine\Common\ClassLoader', false)) {
             require_once $directory."/Doctrine/Common/ClassLoader.php";
         }
 
-        $loader = new ClassLoader( "Doctrine", $directory );
+        $loader = new ClassLoader("Doctrine", $directory);
         $loader->register();
 
-        $loader = new ClassLoader( "Symfony\Component", $directory."/Doctrine" );
+        $loader = new ClassLoader("Symfony\Component", $directory."/Doctrine");
         $loader->register();
     }
 
@@ -76,8 +75,8 @@ class Setup
         $useSimpleAnnotationReader = true
     ) {
 
-        $config = self::createConfiguration( $isDevMode, $proxyDir, $cache );
-        $config->setMetadataDriverImpl( $config->newDefaultAnnotationDriver( $paths, $useSimpleAnnotationReader ) );
+        $config = self::createConfiguration($isDevMode, $proxyDir, $cache);
+        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver($paths, $useSimpleAnnotationReader));
 
         return $config;
     }
@@ -91,26 +90,25 @@ class Setup
      *
      * @return Configuration
      */
-    public static function createConfiguration( $isDevMode = false, $proxyDir = null, Cache $cache = null )
+    public static function createConfiguration($isDevMode = false, $proxyDir = null, Cache $cache = null)
     {
-
         $proxyDir = $proxyDir ?: sys_get_temp_dir();
 
         if ($isDevMode === false && $cache === null) {
-            if (extension_loaded( 'apc' )) {
+            if (extension_loaded('apc')) {
                 $cache = new \Doctrine\Common\Cache\ApcCache();
-            } elseif (extension_loaded( 'xcache' )) {
+            } elseif (extension_loaded('xcache')) {
                 $cache = new \Doctrine\Common\Cache\XcacheCache();
-            } elseif (extension_loaded( 'memcache' )) {
+            } elseif (extension_loaded('memcache')) {
                 $memcache = new \Memcache();
-                $memcache->connect( '127.0.0.1' );
+                $memcache->connect('127.0.0.1');
                 $cache = new \Doctrine\Common\Cache\MemcacheCache();
-                $cache->setMemcache( $memcache );
-            } elseif (extension_loaded( 'redis' )) {
+                $cache->setMemcache($memcache);
+            } elseif (extension_loaded('redis')) {
                 $redis = new \Redis();
-                $redis->connect( '127.0.0.1' );
+                $redis->connect('127.0.0.1');
                 $cache = new \Doctrine\Common\Cache\RedisCache();
-                $cache->setRedis( $redis );
+                $cache->setRedis($redis);
             } else {
                 $cache = new ArrayCache();
             }
@@ -119,16 +117,16 @@ class Setup
         }
 
         if ($cache instanceof CacheProvider) {
-            $cache->setNamespace( "dc2_".md5( $proxyDir )."_" ); // to avoid collisions
+            $cache->setNamespace("dc2_".md5($proxyDir)."_"); // to avoid collisions
         }
 
         $config = new Configuration();
-        $config->setMetadataCacheImpl( $cache );
-        $config->setQueryCacheImpl( $cache );
-        $config->setResultCacheImpl( $cache );
-        $config->setProxyDir( $proxyDir );
-        $config->setProxyNamespace( 'DoctrineProxies' );
-        $config->setAutoGenerateProxyClasses( $isDevMode );
+        $config->setMetadataCacheImpl($cache);
+        $config->setQueryCacheImpl($cache);
+        $config->setResultCacheImpl($cache);
+        $config->setProxyDir($proxyDir);
+        $config->setProxyNamespace('DoctrineProxies');
+        $config->setAutoGenerateProxyClasses($isDevMode);
 
         return $config;
     }
@@ -150,8 +148,8 @@ class Setup
         Cache $cache = null
     ) {
 
-        $config = self::createConfiguration( $isDevMode, $proxyDir, $cache );
-        $config->setMetadataDriverImpl( new XmlDriver( $paths ) );
+        $config = self::createConfiguration($isDevMode, $proxyDir, $cache);
+        $config->setMetadataDriverImpl(new XmlDriver($paths));
 
         return $config;
     }
@@ -173,8 +171,8 @@ class Setup
         Cache $cache = null
     ) {
 
-        $config = self::createConfiguration( $isDevMode, $proxyDir, $cache );
-        $config->setMetadataDriverImpl( new YamlDriver( $paths ) );
+        $config = self::createConfiguration($isDevMode, $proxyDir, $cache);
+        $config->setMetadataDriverImpl(new YamlDriver($paths));
 
         return $config;
     }

@@ -7,7 +7,6 @@ namespace Guzzle\Service\Description;
  */
 interface ServiceDescriptionInterface extends \Serializable
 {
-
     /**
      * Get the basePath/baseUrl of the description
      *
@@ -29,7 +28,7 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return bool
      */
-    public function hasOperation( $name );
+    public function hasOperation($name);
 
     /**
      * Get an API operation by name
@@ -38,7 +37,7 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return OperationInterface|null
      */
-    public function getOperation( $name );
+    public function getOperation($name);
 
     /**
      * Get a specific model from the description
@@ -47,7 +46,7 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return Parameter|null
      */
-    public function getModel( $id );
+    public function getModel($id);
 
     /**
      * Get all service description models
@@ -63,7 +62,7 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return bool
      */
-    public function hasModel( $id );
+    public function hasModel($id);
 
     /**
      * Get the API version of the service
@@ -93,7 +92,7 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return null|mixed
      */
-    public function getData( $key );
+    public function getData($key);
 
     /**
      * Set arbitrary data on the service description
@@ -103,5 +102,5 @@ interface ServiceDescriptionInterface extends \Serializable
      *
      * @return self
      */
-    public function setData( $key, $value );
+    public function setData($key, $value);
 }

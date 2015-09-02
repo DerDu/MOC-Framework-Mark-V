@@ -34,7 +34,6 @@ use Symfony\Component\Console\Helper\Helper;
  */
 class ConnectionHelper extends Helper
 {
-
     /**
      * The Doctrine database Connection.
      *
@@ -47,9 +46,8 @@ class ConnectionHelper extends Helper
      *
      * @param \Doctrine\DBAL\Connection $connection The Doctrine database Connection.
      */
-    public function __construct( Connection $connection )
+    public function __construct(Connection $connection)
     {
-
         $this->_connection = $connection;
     }
 
@@ -60,7 +58,6 @@ class ConnectionHelper extends Helper
      */
     public function getConnection()
     {
-
         return $this->_connection;
     }
 
@@ -69,7 +66,6 @@ class ConnectionHelper extends Helper
      */
     public function getName()
     {
-
         return 'connection';
     }
 }

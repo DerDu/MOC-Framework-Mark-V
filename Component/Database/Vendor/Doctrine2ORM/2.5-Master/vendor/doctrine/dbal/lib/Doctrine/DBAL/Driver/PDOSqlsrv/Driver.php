@@ -28,15 +28,13 @@ use Doctrine\DBAL\Driver\AbstractSQLServerDriver;
  */
 class Driver extends AbstractSQLServerDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         return new Connection(
-            $this->_constructPdoDsn( $params ),
+            $this->_constructPdoDsn($params),
             $username,
             $password,
             $driverOptions
@@ -50,9 +48,8 @@ class Driver extends AbstractSQLServerDriver
      *
      * @return string The DSN.
      */
-    private function _constructPdoDsn( array $params )
+    private function _constructPdoDsn(array $params)
     {
-
         $dsn = 'sqlsrv:server=';
 
         if (isset( $params['host'] )) {
@@ -79,7 +76,6 @@ class Driver extends AbstractSQLServerDriver
      */
     public function getName()
     {
-
         return 'pdo_sqlsrv';
     }
 }

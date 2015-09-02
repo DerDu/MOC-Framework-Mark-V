@@ -7,7 +7,6 @@ namespace Guzzle\Parser\Message;
  */
 abstract class AbstractMessageParser implements MessageParserInterface
 {
-
     /**
      * Create URL parts from HTTP message parts
      *
@@ -16,9 +15,8 @@ abstract class AbstractMessageParser implements MessageParserInterface
      *
      * @return array
      */
-    protected function getUrlPartsFromMessage( $requestUrl, array $parts )
+    protected function getUrlPartsFromMessage($requestUrl, array $parts)
     {
-
         // Parse the URL information from the message
         $urlParts = array(
             'path'   => $requestUrl,
@@ -34,12 +32,12 @@ abstract class AbstractMessageParser implements MessageParserInterface
             $urlParts['host'] = null;
         }
 
-        if (false === strpos( $urlParts['host'], ':' )) {
+        if (false === strpos($urlParts['host'], ':')) {
             $urlParts['port'] = '';
         } else {
-            $hostParts = explode( ':', $urlParts['host'] );
-            $urlParts['host'] = trim( $hostParts[0] );
-            $urlParts['port'] = (int)trim( $hostParts[1] );
+            $hostParts = explode(':', $urlParts['host']);
+            $urlParts['host'] = trim($hostParts[0]);
+            $urlParts['port'] = (int)trim($hostParts[1]);
             if ($urlParts['port'] == 443) {
                 $urlParts['scheme'] = 'https';
             }
@@ -47,10 +45,10 @@ abstract class AbstractMessageParser implements MessageParserInterface
 
         // Check if a query is present
         $path = $urlParts['path'];
-        $qpos = strpos( $path, '?' );
+        $qpos = strpos($path, '?');
         if ($qpos) {
-            $urlParts['query'] = substr( $path, $qpos + 1 );
-            $urlParts['path'] = substr( $path, 0, $qpos );
+            $urlParts['query'] = substr($path, $qpos + 1);
+            $urlParts['path'] = substr($path, 0, $qpos);
         } else {
             $urlParts['query'] = '';
         }

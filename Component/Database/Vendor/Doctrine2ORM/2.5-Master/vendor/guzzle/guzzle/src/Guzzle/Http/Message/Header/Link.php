@@ -9,7 +9,6 @@ use Guzzle\Http\Message\Header;
  */
 class Link extends Header
 {
-
     /**
      * Add a link to the header
      *
@@ -19,16 +18,16 @@ class Link extends Header
      *
      * @return self
      */
-    public function addLink( $url, $rel, array $params = array() )
+    public function addLink($url, $rel, array $params = array())
     {
 
-        $values = array( "<{$url}>", "rel=\"{$rel}\"" );
+        $values = array("<{$url}>", "rel=\"{$rel}\"");
 
         foreach ($params as $k => $v) {
             $values[] = "{$k}=\"{$v}\"";
         }
 
-        return $this->add( implode( '; ', $values ) );
+        return $this->add(implode('; ', $values));
     }
 
     /**
@@ -38,10 +37,10 @@ class Link extends Header
      *
      * @return bool
      */
-    public function hasLink( $rel )
+    public function hasLink($rel)
     {
 
-        return $this->getLink( $rel ) !== null;
+        return $this->getLink($rel) !== null;
     }
 
     /**
@@ -51,9 +50,8 @@ class Link extends Header
      *
      * @return array|null
      */
-    public function getLink( $rel )
+    public function getLink($rel)
     {
-
         foreach ($this->getLinks() as $link) {
             if (isset( $link['rel'] ) && $link['rel'] == $rel) {
                 return $link;
@@ -84,13 +82,12 @@ class Link extends Header
      */
     public function getLinks()
     {
-
         $links = $this->parseParams();
 
         foreach ($links as &$link) {
-            $key = key( $link );
+            $key = key($link);
             unset( $link[$key] );
-            $link['url'] = trim( $key, '<> ' );
+            $link['url'] = trim($key, '<> ');
         }
 
         return $links;

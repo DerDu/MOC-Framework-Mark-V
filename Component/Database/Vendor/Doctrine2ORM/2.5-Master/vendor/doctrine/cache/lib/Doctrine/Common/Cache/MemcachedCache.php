@@ -34,7 +34,6 @@ use Memcached;
  */
 class MemcachedCache extends CacheProvider
 {
-
     /**
      * @var Memcached|null
      */
@@ -47,7 +46,6 @@ class MemcachedCache extends CacheProvider
      */
     public function getMemcached()
     {
-
         return $this->memcached;
     }
 
@@ -58,58 +56,56 @@ class MemcachedCache extends CacheProvider
      *
      * @return void
      */
-    public function setMemcached( Memcached $memcached )
+    public function setMemcached(Memcached $memcached)
     {
-
         $this->memcached = $memcached;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        return $this->memcached->get( $id );
+        return $this->memcached->get($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetchMultiple( array $keys )
+    protected function doFetchMultiple(array $keys)
     {
 
-        return $this->memcached->getMulti( $keys );
+        return $this->memcached->getMulti($keys);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        return ( false !== $this->memcached->get( $id ) );
+        return ( false !== $this->memcached->get($id) );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         if ($lifeTime > 30 * 24 * 3600) {
             $lifeTime = time() + $lifeTime;
         }
-        return $this->memcached->set( $id, $data, (int)$lifeTime );
+        return $this->memcached->set($id, $data, (int)$lifeTime);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        return $this->memcached->delete( $id );
+        return $this->memcached->delete($id);
     }
 
     /**
@@ -117,7 +113,6 @@ class MemcachedCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         return $this->memcached->flush();
     }
 

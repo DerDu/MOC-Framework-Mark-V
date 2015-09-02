@@ -10,7 +10,6 @@ use Guzzle\Http\Message\Header\HeaderCollection;
  */
 class HeaderComparison
 {
-
     /**
      * Compare HTTP headers and use special markup to filter values
      * A header prefixed with '!' means it must not exist
@@ -22,9 +21,8 @@ class HeaderComparison
      *
      * @return array|bool Returns an array of the differences or FALSE if none
      */
-    public function compare( $filteredHeaders, $actualHeaders )
+    public function compare($filteredHeaders, $actualHeaders)
     {
-
         $expected = array();
         $ignore = array();
         $absent = array();
@@ -36,16 +34,16 @@ class HeaderComparison
         foreach ($filteredHeaders as $k => $v) {
             if ($k[0] == '_') {
                 // This header should be ignored
-                $ignore[] = str_replace( '_', '', $k );
+                $ignore[] = str_replace('_', '', $k);
             } elseif ($k[0] == '!') {
                 // This header must not be present
-                $absent[] = str_replace( '!', '', $k );
+                $absent[] = str_replace('!', '', $k);
             } else {
                 $expected[$k] = $v;
             }
         }
 
-        return $this->compareArray( $expected, $actualHeaders, $ignore, $absent );
+        return $this->compareArray($expected, $actualHeaders, $ignore, $absent);
     }
 
     /**
@@ -58,14 +56,13 @@ class HeaderComparison
      *
      * @return array|bool Returns an array of the differences or FALSE if none
      */
-    public function compareArray( array $expected, $actual, array $ignore = array(), array $absent = array() )
+    public function compareArray(array $expected, $actual, array $ignore = array(), array $absent = array())
     {
-
         $differences = array();
 
         // Add information about headers that were present but weren't supposed to be
         foreach ($absent as $header) {
-            if ($this->hasKey( $header, $actual )) {
+            if ($this->hasKey($header, $actual)) {
                 $differences["++ {$header}"] = $actual[$header];
                 unset( $actual[$header] );
             }
@@ -73,37 +70,37 @@ class HeaderComparison
 
         // Check if expected headers are missing
         foreach ($expected as $header => $value) {
-            if (!$this->hasKey( $header, $actual )) {
+            if (!$this->hasKey($header, $actual)) {
                 $differences["- {$header}"] = $value;
             }
         }
 
         // Flip the ignore array so it works with the case insensitive helper
-        $ignore = array_flip( $ignore );
+        $ignore = array_flip($ignore);
         // Allow case-insensitive comparisons in wildcards
-        $expected = array_change_key_case( $expected );
+        $expected = array_change_key_case($expected);
 
         // Compare the expected and actual HTTP headers in no particular order
         foreach ($actual as $key => $value) {
 
             // If this is to be ignored, the skip it
-            if ($this->hasKey( $key, $ignore )) {
+            if ($this->hasKey($key, $ignore)) {
                 continue;
             }
 
             // If the header was not expected
-            if (!$this->hasKey( $key, $expected )) {
+            if (!$this->hasKey($key, $expected)) {
                 $differences["+ {$key}"] = $value;
                 continue;
             }
 
             // Check values and take wildcards into account
-            $lkey = strtolower( $key );
-            $pos = is_string( $expected[$lkey] ) ? strpos( $expected[$lkey], '*' ) : false;
+            $lkey = strtolower($key);
+            $pos = is_string($expected[$lkey]) ? strpos($expected[$lkey], '*') : false;
 
             foreach ((array)$actual[$key] as $v) {
-                if (( $pos === false && $v != $expected[$lkey] ) || $pos > 0 && substr( $v, 0,
-                        $pos ) != substr( $expected[$lkey], 0, $pos )
+                if (( $pos === false && $v != $expected[$lkey] ) || $pos > 0 && substr($v, 0,
+                        $pos) != substr($expected[$lkey], 0, $pos)
                 ) {
                     $differences[$key] = "{$value} != {$expected[$lkey]}";
                 }
@@ -121,17 +118,16 @@ class HeaderComparison
      *
      * @return bool
      */
-    protected function hasKey( $key, $array )
+    protected function hasKey($key, $array)
     {
-
         if ($array instanceof Collection) {
             $keys = $array->getKeys();
         } else {
-            $keys = array_keys( $array );
+            $keys = array_keys($array);
         }
 
         foreach ($keys as $k) {
-            if (!strcasecmp( $k, $key )) {
+            if (!strcasecmp($k, $key)) {
                 return true;
             }
         }

@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class SeeTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the phpDocumentor_Reflection_DocBlock_Tag_See can create a link
      * for the @see doc block.
@@ -32,7 +31,7 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -45,12 +44,12 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
         $exReference
     ) {
 
-        $tag = new SeeTag( $type, $content );
+        $tag = new SeeTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exReference, $tag->getReference() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**
@@ -60,7 +59,6 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-
         // $type, $content, $exContent, $exDescription, $exReference
         return array(
             array(

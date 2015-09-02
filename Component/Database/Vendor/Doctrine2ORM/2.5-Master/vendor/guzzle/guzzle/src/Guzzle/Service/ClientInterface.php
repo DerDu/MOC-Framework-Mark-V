@@ -15,7 +15,6 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  */
 interface ClientInterface extends HttpClientInterface, FromConfigInterface
 {
-
     /**
      * Get a command by name. First, the client will see if it has a service description and if the service description
      * defines a command by the supplied name. If no dynamic command is found, the client will look for a concrete
@@ -27,7 +26,7 @@ interface ClientInterface extends HttpClientInterface, FromConfigInterface
      * @return CommandInterface
      * @throws InvalidArgumentException if no command can be found by name
      */
-    public function getCommand( $name, array $args = array() );
+    public function getCommand($name, array $args = array());
 
     /**
      * Execute one or more commands
@@ -38,7 +37,7 @@ interface ClientInterface extends HttpClientInterface, FromConfigInterface
      * @throws InvalidArgumentException if an invalid command is passed
      * @throws CommandTransferException if an exception is encountered when transferring multiple commands
      */
-    public function execute( $command );
+    public function execute($command);
 
     /**
      * Set the service description of the client
@@ -47,7 +46,7 @@ interface ClientInterface extends HttpClientInterface, FromConfigInterface
      *
      * @return ClientInterface
      */
-    public function setDescription( ServiceDescriptionInterface $service );
+    public function setDescription(ServiceDescriptionInterface $service);
 
     /**
      * Get the service description of the client
@@ -65,5 +64,5 @@ interface ClientInterface extends HttpClientInterface, FromConfigInterface
      *
      * @return ResourceIteratorInterface
      */
-    public function getIterator( $command, array $commandOptions = null, array $iteratorOptions = array() );
+    public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array());
 }

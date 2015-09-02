@@ -33,17 +33,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InfoCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'orm:info' )
-            ->setDescription( 'Show basic information about all mapped entities' )
-            ->setHelp( <<<EOT
+            ->setName('orm:info')
+            ->setDescription('Show basic information about all mapped entities')
+            ->setHelp(<<<EOT
 The <info>%command.name%</info> shows basic information about which
 entities exist and possibly if their mapping information contains errors or
 not.
@@ -54,11 +52,10 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getHelper( 'em' )->getEntityManager();
+        $entityManager = $this->getHelper('em')->getEntityManager();
 
         $entityClassNames = $entityManager->getConfiguration()
             ->getMetadataDriverImpl()
@@ -71,18 +68,18 @@ EOT
             );
         }
 
-        $output->writeln( sprintf( "Found <info>%d</info> mapped entities:", count( $entityClassNames ) ) );
+        $output->writeln(sprintf("Found <info>%d</info> mapped entities:", count($entityClassNames)));
 
         $failure = false;
 
         foreach ($entityClassNames as $entityClassName) {
             try {
-                $entityManager->getClassMetadata( $entityClassName );
-                $output->writeln( sprintf( "<info>[OK]</info>   %s", $entityClassName ) );
-            } catch( MappingException $e ) {
-                $output->writeln( "<error>[FAIL]</error> ".$entityClassName );
-                $output->writeln( sprintf( "<comment>%s</comment>", $e->getMessage() ) );
-                $output->writeln( '' );
+                $entityManager->getClassMetadata($entityClassName);
+                $output->writeln(sprintf("<info>[OK]</info>   %s", $entityClassName));
+            } catch (MappingException $e) {
+                $output->writeln("<error>[FAIL]</error> ".$entityClassName);
+                $output->writeln(sprintf("<comment>%s</comment>", $e->getMessage()));
+                $output->writeln('');
 
                 $failure = true;
             }

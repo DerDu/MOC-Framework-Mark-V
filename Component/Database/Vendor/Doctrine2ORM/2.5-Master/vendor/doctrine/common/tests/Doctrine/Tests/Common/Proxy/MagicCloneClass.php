@@ -7,7 +7,6 @@ namespace Doctrine\Tests\Common\Proxy;
  */
 class MagicCloneClass
 {
-
     /**
      * @var string
      */
@@ -33,7 +32,6 @@ class MagicCloneClass
      */
     public function __clone()
     {
-
         $this->clonedValue = 'newClonedValue';
     }
 }

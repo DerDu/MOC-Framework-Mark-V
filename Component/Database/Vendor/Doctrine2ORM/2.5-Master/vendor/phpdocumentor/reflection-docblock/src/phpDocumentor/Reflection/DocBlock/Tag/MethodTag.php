@@ -38,7 +38,6 @@ class MethodTag extends ReturnTag
      */
     public function getContent()
     {
-
         if (null === $this->content) {
             $this->content = '';
             if ($this->isStatic) {
@@ -55,10 +54,10 @@ class MethodTag extends ReturnTag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        Tag::setContent( $content );
+        Tag::setContent($content);
         // 1. none or more whitespace
         // 2. optionally the keyword "static" followed by whitespace
         // 3. optionally a word with underscores followed by whitespace : as
@@ -128,7 +127,6 @@ class MethodTag extends ReturnTag
      */
     public function getMethodName()
     {
-
         return $this->method_name;
     }
 
@@ -139,9 +137,8 @@ class MethodTag extends ReturnTag
      *
      * @return $this
      */
-    public function setMethodName( $method_name )
+    public function setMethodName($method_name)
     {
-
         $this->method_name = $method_name;
 
         $this->content = null;
@@ -163,9 +160,9 @@ class MethodTag extends ReturnTag
             return array();
         }
 
-        $arguments = explode( ',', $this->arguments );
+        $arguments = explode(',', $this->arguments);
         foreach ($arguments as $key => $value) {
-            $arguments[$key] = explode( ' ', trim( $value ) );
+            $arguments[$key] = explode(' ', trim($value));
         }
 
         return $arguments;
@@ -178,9 +175,8 @@ class MethodTag extends ReturnTag
      *
      * @return void
      */
-    public function setArguments( $arguments )
+    public function setArguments($arguments)
     {
-
         $this->arguments = $arguments;
 
         $this->content = null;
@@ -195,7 +191,6 @@ class MethodTag extends ReturnTag
      */
     public function isStatic()
     {
-
         return $this->isStatic;
     }
 
@@ -206,9 +201,8 @@ class MethodTag extends ReturnTag
      *
      * @return $this
      */
-    public function setIsStatic( $isStatic )
+    public function setIsStatic($isStatic)
     {
-
         $this->isStatic = $isStatic;
 
         $this->content = null;

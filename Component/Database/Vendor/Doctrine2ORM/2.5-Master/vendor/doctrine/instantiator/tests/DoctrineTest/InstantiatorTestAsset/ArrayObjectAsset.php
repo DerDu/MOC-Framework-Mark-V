@@ -29,7 +29,6 @@ use BadMethodCallException;
  */
 class ArrayObjectAsset extends ArrayObject
 {
-
     /**
      * Constructor - should not be called
      *
@@ -38,6 +37,6 @@ class ArrayObjectAsset extends ArrayObject
     public function __construct()
     {
 
-        throw new BadMethodCallException( 'Not supposed to be called!' );
+        throw new BadMethodCallException('Not supposed to be called!');
     }
 }

@@ -25,11 +25,10 @@ namespace Doctrine\ORM\Query;
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Janne Vanhala <jpvanhal@cc.hut.fi>
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 class Lexer extends \Doctrine\Common\Lexer
 {
-
     // All tokens that are not valid identifiers must be < 100
     const T_NONE = 1;
     const T_INTEGER = 2;
@@ -116,10 +115,10 @@ class Lexer extends \Doctrine\Common\Lexer
      *
      * @param string $input A query string.
      */
-    public function __construct( $input )
+    public function __construct($input)
     {
 
-        $this->setInput( $input );
+        $this->setInput($input);
     }
 
     /**
@@ -127,7 +126,6 @@ class Lexer extends \Doctrine\Common\Lexer
      */
     protected function getCatchablePatterns()
     {
-
         return array(
             '[a-z_\\\][a-z0-9_\:\\\]*[a-z0-9_]{1}',
             '(?:[0-9]+(?:[\.][0-9]+)*)(?:e[+-]?[0-9]+)?',
@@ -142,21 +140,20 @@ class Lexer extends \Doctrine\Common\Lexer
     protected function getNonCatchablePatterns()
     {
 
-        return array( '\s+', '(.)' );
+        return array('\s+', '(.)');
     }
 
     /**
      * @inheritdoc
      */
-    protected function getType( &$value )
+    protected function getType(&$value)
     {
-
         $type = self::T_NONE;
 
         switch (true) {
             // Recognize numeric values
-            case ( is_numeric( $value ) ):
-                if (strpos( $value, '.' ) !== false || stripos( $value, 'e' ) !== false) {
+            case ( is_numeric($value) ):
+                if (strpos($value, '.') !== false || stripos($value, 'e') !== false) {
                     return self::T_FLOAT;
                 }
 
@@ -164,16 +161,16 @@ class Lexer extends \Doctrine\Common\Lexer
 
             // Recognize quoted strings
             case ( $value[0] === "'" ):
-                $value = str_replace( "''", "'", substr( $value, 1, strlen( $value ) - 2 ) );
+                $value = str_replace("''", "'", substr($value, 1, strlen($value) - 2));
 
                 return self::T_STRING;
 
             // Recognize identifiers
-            case ( ctype_alpha( $value[0] ) || $value[0] === '_' ):
-                $name = 'Doctrine\ORM\Query\Lexer::T_'.strtoupper( $value );
+            case ( ctype_alpha($value[0]) || $value[0] === '_' ):
+                $name = 'Doctrine\ORM\Query\Lexer::T_'.strtoupper($value);
 
-                if (defined( $name )) {
-                    $type = constant( $name );
+                if (defined($name)) {
+                    $type = constant($name);
 
                     if ($type > 100) {
                         return $type;

@@ -22,20 +22,19 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class MethodTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @param string $signature       The signature to test.
      * @param bool   $valid           Whether the given signature is expected to
-     *                                be valid.
+     *     be valid.
      * @param string $expected_name   The method name that is expected from this
-     *                                signature.
+     *     signature.
      * @param string $expected_return The return type that is expected from this
-     *                                signature.
+     *     signature.
      * @param bool   $paramCount      Number of parameters in the signature.
      * @param string $description     The short description mentioned in the
-     *                                signature.
+     *     signature.
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
      * @dataProvider getTestSignatures
      *
      * @return void
@@ -49,9 +48,8 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $paramCount,
         $description
     ) {
-
         ob_start();
-        $tag = new MethodTag( 'method', $signature );
+        $tag = new MethodTag('method', $signature);
         $stdout = ob_get_clean();
 
         $this->assertSame(
@@ -64,16 +62,15 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
             return;
         }
 
-        $this->assertEquals( $expected_name, $tag->getMethodName() );
-        $this->assertEquals( $expected_return, $tag->getType() );
-        $this->assertEquals( $description, $tag->getDescription() );
-        $this->assertEquals( $expected_isStatic, $tag->isStatic() );
-        $this->assertCount( $paramCount, $tag->getArguments() );
+        $this->assertEquals($expected_name, $tag->getMethodName());
+        $this->assertEquals($expected_return, $tag->getType());
+        $this->assertEquals($description, $tag->getDescription());
+        $this->assertEquals($expected_isStatic, $tag->isStatic());
+        $this->assertCount($paramCount, $tag->getArguments());
     }
 
     public function getTestSignatures()
     {
-
         return array(
             // TODO: Verify this case
 //            array(

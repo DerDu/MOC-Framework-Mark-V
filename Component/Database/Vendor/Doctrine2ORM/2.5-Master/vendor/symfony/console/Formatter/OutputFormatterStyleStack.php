@@ -16,7 +16,6 @@ namespace Symfony\Component\Console\Formatter;
  */
 class OutputFormatterStyleStack
 {
-
     /**
      * @var OutputFormatterStyleInterface[]
      */
@@ -32,9 +31,8 @@ class OutputFormatterStyleStack
      *
      * @param OutputFormatterStyleInterface|null $emptyStyle
      */
-    public function __construct( OutputFormatterStyleInterface $emptyStyle = null )
+    public function __construct(OutputFormatterStyleInterface $emptyStyle = null)
     {
-
         $this->emptyStyle = $emptyStyle ?: new OutputFormatterStyle();
         $this->reset();
     }
@@ -44,7 +42,6 @@ class OutputFormatterStyleStack
      */
     public function reset()
     {
-
         $this->styles = array();
     }
 
@@ -53,9 +50,8 @@ class OutputFormatterStyleStack
      *
      * @param OutputFormatterStyleInterface $style
      */
-    public function push( OutputFormatterStyleInterface $style )
+    public function push(OutputFormatterStyleInterface $style)
     {
-
         $this->styles[] = $style;
     }
 
@@ -68,7 +64,7 @@ class OutputFormatterStyleStack
      *
      * @throws \InvalidArgumentException When style tags incorrectly nested
      */
-    public function pop( OutputFormatterStyleInterface $style = null )
+    public function pop(OutputFormatterStyleInterface $style = null)
     {
 
         if (empty( $this->styles )) {
@@ -76,18 +72,18 @@ class OutputFormatterStyleStack
         }
 
         if (null === $style) {
-            return array_pop( $this->styles );
+            return array_pop($this->styles);
         }
 
-        foreach (array_reverse( $this->styles, true ) as $index => $stackedStyle) {
-            if ($style->apply( '' ) === $stackedStyle->apply( '' )) {
-                $this->styles = array_slice( $this->styles, 0, $index );
+        foreach (array_reverse($this->styles, true) as $index => $stackedStyle) {
+            if ($style->apply('') === $stackedStyle->apply('')) {
+                $this->styles = array_slice($this->styles, 0, $index);
 
                 return $stackedStyle;
             }
         }
 
-        throw new \InvalidArgumentException( 'Incorrectly nested style tag found.' );
+        throw new \InvalidArgumentException('Incorrectly nested style tag found.');
     }
 
     /**
@@ -102,7 +98,7 @@ class OutputFormatterStyleStack
             return $this->emptyStyle;
         }
 
-        return $this->styles[count( $this->styles ) - 1];
+        return $this->styles[count($this->styles) - 1];
     }
 
     /**
@@ -110,7 +106,6 @@ class OutputFormatterStyleStack
      */
     public function getEmptyStyle()
     {
-
         return $this->emptyStyle;
     }
 
@@ -119,9 +114,8 @@ class OutputFormatterStyleStack
      *
      * @return OutputFormatterStyleStack
      */
-    public function setEmptyStyle( OutputFormatterStyleInterface $emptyStyle )
+    public function setEmptyStyle(OutputFormatterStyleInterface $emptyStyle)
     {
-
         $this->emptyStyle = $emptyStyle;
 
         return $this;

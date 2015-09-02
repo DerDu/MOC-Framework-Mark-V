@@ -26,7 +26,6 @@ namespace Doctrine\Instantiator;
  */
 interface InstantiatorInterface
 {
-
     /**
      * @param string $className
      *
@@ -34,5 +33,5 @@ interface InstantiatorInterface
      *
      * @throws \Doctrine\Instantiator\Exception\ExceptionInterface
      */
-    public function instantiate( $className );
+    public function instantiate($className);
 }

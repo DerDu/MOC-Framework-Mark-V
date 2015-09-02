@@ -27,25 +27,24 @@ namespace Doctrine\Common\Cache;
  */
 class PhpFileCache extends FileCache
 {
-
     const EXTENSION = '.doctrinecache.php';
 
     /**
      * {@inheritdoc}
      */
-    public function __construct( $directory, $extension = self::EXTENSION )
+    public function __construct($directory, $extension = self::EXTENSION)
     {
 
-        parent::__construct( $directory, $extension );
+        parent::__construct($directory, $extension);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        $value = $this->includeFileForId( $id );
+        $value = $this->includeFileForId($id);
 
         if (!$value) {
             return false;
@@ -63,10 +62,10 @@ class PhpFileCache extends FileCache
      *
      * @return array|false
      */
-    private function includeFileForId( $id )
+    private function includeFileForId($id)
     {
 
-        $fileName = $this->getFilename( $id );
+        $fileName = $this->getFilename($id);
 
         // note: error suppression is still faster than `file_exists`, `is_file` and `is_readable`
         $value = @include $fileName;
@@ -81,10 +80,10 @@ class PhpFileCache extends FileCache
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        $value = $this->includeFileForId( $id );
+        $value = $this->includeFileForId($id);
 
         if (!$value) {
             return false;
@@ -96,14 +95,13 @@ class PhpFileCache extends FileCache
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         if ($lifeTime > 0) {
             $lifeTime = time() + $lifeTime;
         }
 
-        if (is_object( $data ) && !method_exists( $data, '__set_state' )) {
+        if (is_object($data) && !method_exists($data, '__set_state')) {
             throw new \InvalidArgumentException(
                 "Invalid argument given, PhpFileCache only allows objects that implement __set_state() ".
                 "and fully support var_export(). You can use the FilesystemCache to save arbitrary object ".
@@ -111,16 +109,16 @@ class PhpFileCache extends FileCache
             );
         }
 
-        $filename = $this->getFilename( $id );
+        $filename = $this->getFilename($id);
 
         $value = array(
             'lifetime' => $lifeTime,
             'data'     => $data
         );
 
-        $value = var_export( $value, true );
-        $code = sprintf( '<?php return %s;', $value );
+        $value = var_export($value, true);
+        $code = sprintf('<?php return %s;', $value);
 
-        return $this->writeFile( $filename, $code );
+        return $this->writeFile($filename, $code);
     }
 }

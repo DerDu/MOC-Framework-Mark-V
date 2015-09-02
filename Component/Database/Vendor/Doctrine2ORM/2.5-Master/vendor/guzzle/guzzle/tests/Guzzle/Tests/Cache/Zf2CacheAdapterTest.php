@@ -10,32 +10,31 @@ use Zend\Cache\StorageFactory;
  */
 class Zf2CacheAdapterTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     private $cache;
     private $adapter;
 
     public function testCachesDataUsingCallables()
     {
 
-        $this->assertTrue( $this->adapter->save( 'test', 'data', 1000 ) );
-        $this->assertEquals( 'data', $this->adapter->fetch( 'test' ) );
+        $this->assertTrue($this->adapter->save('test', 'data', 1000));
+        $this->assertEquals('data', $this->adapter->fetch('test'));
     }
 
     public function testChecksIfCacheContainsKeys()
     {
 
-        $this->adapter->save( 'test', 'data', 1000 );
-        $this->assertTrue( $this->adapter->contains( 'test' ) );
-        $this->assertFalse( $this->adapter->contains( 'foo' ) );
+        $this->adapter->save('test', 'data', 1000);
+        $this->assertTrue($this->adapter->contains('test'));
+        $this->assertFalse($this->adapter->contains('foo'));
     }
 
     public function testDeletesFromCacheByKey()
     {
 
-        $this->adapter->save( 'test', 'data', 1000 );
-        $this->assertTrue( $this->adapter->contains( 'test' ) );
-        $this->adapter->delete( 'test' );
-        $this->assertFalse( $this->adapter->contains( 'test' ) );
+        $this->adapter->save('test', 'data', 1000);
+        $this->assertTrue($this->adapter->contains('test'));
+        $this->adapter->delete('test');
+        $this->assertFalse($this->adapter->contains('test'));
     }
 
     /**
@@ -43,12 +42,11 @@ class Zf2CacheAdapterTest extends \Guzzle\Tests\GuzzleTestCase
      */
     protected function setUp()
     {
-
         parent::setUp();
-        $this->cache = StorageFactory::factory( array(
+        $this->cache = StorageFactory::factory(array(
             'adapter' => 'memory'
-        ) );
-        $this->adapter = new Zf2CacheAdapter( $this->cache );
+        ));
+        $this->adapter = new Zf2CacheAdapter($this->cache);
     }
 
     /**
@@ -56,7 +54,6 @@ class Zf2CacheAdapterTest extends \Guzzle\Tests\GuzzleTestCase
      */
     protected function tearDown()
     {
-
         $this->adapter = null;
         $this->cache = null;
         parent::tearDown();

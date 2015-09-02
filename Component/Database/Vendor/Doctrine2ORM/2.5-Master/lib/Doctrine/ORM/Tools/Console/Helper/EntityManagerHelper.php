@@ -34,7 +34,6 @@ use Symfony\Component\Console\Helper\Helper;
  */
 class EntityManagerHelper extends Helper
 {
-
     /**
      * Doctrine ORM EntityManagerInterface.
      *
@@ -47,9 +46,8 @@ class EntityManagerHelper extends Helper
      *
      * @param EntityManagerInterface $em
      */
-    public function __construct( EntityManagerInterface $em )
+    public function __construct(EntityManagerInterface $em)
     {
-
         $this->_em = $em;
     }
 
@@ -60,7 +58,6 @@ class EntityManagerHelper extends Helper
      */
     public function getEntityManager()
     {
-
         return $this->_em;
     }
 
@@ -69,7 +66,6 @@ class EntityManagerHelper extends Helper
      */
     public function getName()
     {
-
         return 'entityManager';
     }
 }

@@ -28,7 +28,6 @@ namespace Doctrine\Common\Cache;
  */
 interface FlushableCache
 {
-
     /**
      * Flushes all cache entries.
      *

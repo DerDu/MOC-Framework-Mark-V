@@ -23,7 +23,6 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class AuthorTag extends Tag
 {
-
     /**
      * PCRE regular expression matching any valid value for the name component.
      */
@@ -42,7 +41,6 @@ class AuthorTag extends Tag
 
     public function getContent()
     {
-
         if (null === $this->content) {
             $this->content = $this->authorName;
             if ('' != $this->authorEmail) {
@@ -56,10 +54,10 @@ class AuthorTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        parent::setContent( $content );
+        parent::setContent($content);
         if (preg_match(
             '/^('.self::REGEX_AUTHOR_NAME.
             ')(\<('.self::REGEX_AUTHOR_EMAIL.
@@ -67,9 +65,9 @@ class AuthorTag extends Tag
             $this->description,
             $matches
         )) {
-            $this->authorName = trim( $matches[1] );
+            $this->authorName = trim($matches[1]);
             if (isset( $matches[3] )) {
-                $this->authorEmail = trim( $matches[3] );
+                $this->authorEmail = trim($matches[3]);
             }
         }
 
@@ -83,7 +81,6 @@ class AuthorTag extends Tag
      */
     public function getAuthorName()
     {
-
         return $this->authorName;
     }
 
@@ -91,16 +88,15 @@ class AuthorTag extends Tag
      * Sets the author's name.
      *
      * @param string $authorName The new author name.
-     *                           An invalid value will set an empty string.
+     *     An invalid value will set an empty string.
      *
      * @return $this
      */
-    public function setAuthorName( $authorName )
+    public function setAuthorName($authorName)
     {
-
         $this->content = null;
         $this->authorName
-            = preg_match( '/^'.self::REGEX_AUTHOR_NAME.'$/u', $authorName )
+            = preg_match('/^'.self::REGEX_AUTHOR_NAME.'$/u', $authorName)
             ? $authorName : '';
 
         return $this;
@@ -113,7 +109,6 @@ class AuthorTag extends Tag
      */
     public function getAuthorEmail()
     {
-
         return $this->authorEmail;
     }
 
@@ -121,15 +116,14 @@ class AuthorTag extends Tag
      * Sets the author's email.
      *
      * @param string $authorEmail The new author email.
-     *                            An invalid value will set an empty string.
+     *     An invalid value will set an empty string.
      *
      * @return $this
      */
-    public function setAuthorEmail( $authorEmail )
+    public function setAuthorEmail($authorEmail)
     {
-
         $this->authorEmail
-            = preg_match( '/^'.self::REGEX_AUTHOR_EMAIL.'$/u', $authorEmail )
+            = preg_match('/^'.self::REGEX_AUTHOR_EMAIL.'$/u', $authorEmail)
             ? $authorEmail : '';
 
         $this->content = null;

@@ -28,7 +28,6 @@ namespace Doctrine\ORM\Query;
  */
 class Parameter
 {
-
     /**
      * The parameter name.
      *
@@ -57,12 +56,12 @@ class Parameter
      * @param mixed  $value Parameter value
      * @param mixed  $type  Parameter type
      */
-    public function __construct( $name, $value, $type = null )
+    public function __construct($name, $value, $type = null)
     {
 
-        $this->name = trim( $name, ':' );
+        $this->name = trim($name, ':');
 
-        $this->setValue( $value, $type );
+        $this->setValue($value, $type);
     }
 
     /**
@@ -72,7 +71,6 @@ class Parameter
      */
     public function getName()
     {
-
         return $this->name;
     }
 
@@ -83,7 +81,6 @@ class Parameter
      */
     public function getValue()
     {
-
         return $this->value;
     }
 
@@ -93,11 +90,10 @@ class Parameter
      * @param mixed $value Parameter value.
      * @param mixed $type  Parameter type.
      */
-    public function setValue( $value, $type = null )
+    public function setValue($value, $type = null)
     {
-
         $this->value = $value;
-        $this->type = $type ?: ParameterTypeInferer::inferType( $value );
+        $this->type = $type ?: ParameterTypeInferer::inferType($value);
     }
 
     /**
@@ -107,7 +103,6 @@ class Parameter
      */
     public function getType()
     {
-
         return $this->type;
     }
 }

@@ -7,7 +7,6 @@ if ($neverHappens) {
 
 interface Bor
 {
-
     public function foo();
 
 }
@@ -17,7 +16,6 @@ interface Bor
  */
 class Foo
 {
-
     public function bar()
     {
     }
@@ -25,13 +23,11 @@ class Foo
 
 function baz()
 {
-
     print '*'; // @codeCoverageIgnore
 }
 
 class Bar
 {
-
     /**
      * @codeCoverageIgnore
      */

@@ -32,7 +32,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class CoalesceExpression extends Node
 {
-
     /**
      * @var array
      */
@@ -41,7 +40,7 @@ class CoalesceExpression extends Node
     /**
      * @param array $scalarExpressions
      */
-    public function __construct( array $scalarExpressions )
+    public function __construct(array $scalarExpressions)
     {
 
         $this->scalarExpressions = $scalarExpressions;
@@ -50,9 +49,9 @@ class CoalesceExpression extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkCoalesceExpression( $this );
+        return $sqlWalker->walkCoalesceExpression($this);
     }
 }

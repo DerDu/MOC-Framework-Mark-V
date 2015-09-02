@@ -11,7 +11,6 @@ use Guzzle\Common\Exception\GuzzleException;
  */
 class BatchTransferException extends \Exception implements GuzzleException
 {
-
     /** @var array The batch being sent when the exception occurred */
     protected $batch;
 
@@ -38,7 +37,6 @@ class BatchTransferException extends \Exception implements GuzzleException
         TransferStrategy $transferStrategy = null,
         DivisorStrategy $divisorStrategy = null
     ) {
-
         $this->batch = $batch;
         $this->transferredItems = $transferredItems;
         $this->transferStrategy = $transferStrategy;
@@ -57,7 +55,6 @@ class BatchTransferException extends \Exception implements GuzzleException
      */
     public function getBatch()
     {
-
         return $this->batch;
     }
 
@@ -68,7 +65,6 @@ class BatchTransferException extends \Exception implements GuzzleException
      */
     public function getTransferredItems()
     {
-
         return $this->transferredItems;
     }
 
@@ -79,7 +75,6 @@ class BatchTransferException extends \Exception implements GuzzleException
      */
     public function getTransferStrategy()
     {
-
         return $this->transferStrategy;
     }
 
@@ -90,7 +85,6 @@ class BatchTransferException extends \Exception implements GuzzleException
      */
     public function getDivisorStrategy()
     {
-
         return $this->divisorStrategy;
     }
 }

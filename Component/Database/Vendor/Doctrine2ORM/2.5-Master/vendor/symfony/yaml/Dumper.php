@@ -18,7 +18,6 @@ namespace Symfony\Component\Yaml;
  */
 class Dumper
 {
-
     /**
      * The amount of spaces to use for indentation of nested nodes.
      *
@@ -31,7 +30,7 @@ class Dumper
      *
      * @param int $num The amount of spaces to use for indentation of nested nodes.
      */
-    public function setIndentation( $num )
+    public function setIndentation($num)
     {
 
         $this->indentation = (int)$num;
@@ -48,26 +47,25 @@ class Dumper
      *
      * @return string The YAML representation of the PHP value
      */
-    public function dump( $input, $inline = 0, $indent = 0, $exceptionOnInvalidType = false, $objectSupport = false )
+    public function dump($input, $inline = 0, $indent = 0, $exceptionOnInvalidType = false, $objectSupport = false)
     {
-
         $output = '';
-        $prefix = $indent ? str_repeat( ' ', $indent ) : '';
+        $prefix = $indent ? str_repeat(' ', $indent) : '';
 
-        if ($inline <= 0 || !is_array( $input ) || empty( $input )) {
-            $output .= $prefix.Inline::dump( $input, $exceptionOnInvalidType, $objectSupport );
+        if ($inline <= 0 || !is_array($input) || empty( $input )) {
+            $output .= $prefix.Inline::dump($input, $exceptionOnInvalidType, $objectSupport);
         } else {
-            $isAHash = array_keys( $input ) !== range( 0, count( $input ) - 1 );
+            $isAHash = array_keys($input) !== range(0, count($input) - 1);
 
             foreach ($input as $key => $value) {
-                $willBeInlined = $inline - 1 <= 0 || !is_array( $value ) || empty( $value );
+                $willBeInlined = $inline - 1 <= 0 || !is_array($value) || empty( $value );
 
-                $output .= sprintf( '%s%s%s%s',
+                $output .= sprintf('%s%s%s%s',
                         $prefix,
-                        $isAHash ? Inline::dump( $key, $exceptionOnInvalidType, $objectSupport ).':' : '-',
+                        $isAHash ? Inline::dump($key, $exceptionOnInvalidType, $objectSupport).':' : '-',
                         $willBeInlined ? ' ' : "\n",
-                        $this->dump( $value, $inline - 1, $willBeInlined ? 0 : $indent + $this->indentation,
-                            $exceptionOnInvalidType, $objectSupport )
+                        $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + $this->indentation,
+                            $exceptionOnInvalidType, $objectSupport)
                     ).( $willBeInlined ? "\n" : '' );
             }
         }

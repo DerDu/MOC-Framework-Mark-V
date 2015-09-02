@@ -1,5 +1,4 @@
 <?php
-
 class ExceptionInAssertPostConditionsTest extends PHPUnit_Framework_TestCase
 {
 
@@ -11,32 +10,27 @@ class ExceptionInAssertPostConditionsTest extends PHPUnit_Framework_TestCase
 
     public function testSomething()
     {
-
         $this->testSomething = true;
     }
 
     protected function setUp()
     {
-
         $this->setUp = true;
     }
 
     protected function assertPreConditions()
     {
-
         $this->assertPreConditions = true;
     }
 
     protected function assertPostConditions()
     {
-
         $this->assertPostConditions = true;
         throw new Exception;
     }
 
     protected function tearDown()
     {
-
         $this->tearDown = true;
     }
 }

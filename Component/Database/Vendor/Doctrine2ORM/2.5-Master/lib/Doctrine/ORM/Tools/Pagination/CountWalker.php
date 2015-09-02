@@ -30,7 +30,6 @@ use Doctrine\ORM\Query\TreeWalkerAdapter;
  */
 class CountWalker extends TreeWalkerAdapter
 {
-
     /**
      * Distinct mode hint name.
      */
@@ -45,22 +44,21 @@ class CountWalker extends TreeWalkerAdapter
      *
      * @throws \RuntimeException
      */
-    public function walkSelectStatement( SelectStatement $AST )
+    public function walkSelectStatement(SelectStatement $AST)
     {
-
         if ($AST->havingClause) {
-            throw new \RuntimeException( 'Cannot count query that uses a HAVING clause. Use the output walkers for pagination' );
+            throw new \RuntimeException('Cannot count query that uses a HAVING clause. Use the output walkers for pagination');
         }
 
         $queryComponents = $this->_getQueryComponents();
         // Get the root entity and alias from the AST fromClause
         $from = $AST->fromClause->identificationVariableDeclarations;
 
-        if (count( $from ) > 1) {
-            throw new \RuntimeException( "Cannot count query which selects two FROM components, cannot make distinction" );
+        if (count($from) > 1) {
+            throw new \RuntimeException("Cannot count query which selects two FROM components, cannot make distinction");
         }
 
-        $fromRoot = reset( $from );
+        $fromRoot = reset($from);
         $rootAlias = $fromRoot->rangeVariableDeclaration->aliasIdentificationVariable;
         $rootClass = $queryComponents[$rootAlias]['metadata'];
         $identifierFieldName = $rootClass->getSingleIdentifierFieldName();
@@ -76,10 +74,10 @@ class CountWalker extends TreeWalkerAdapter
         );
         $pathExpression->type = $pathType;
 
-        $distinct = $this->_getQuery()->getHint( self::HINT_DISTINCT );
+        $distinct = $this->_getQuery()->getHint(self::HINT_DISTINCT);
         $AST->selectClause->selectExpressions = array(
             new SelectExpression(
-                new AggregateExpression( 'count', $pathExpression, $distinct ), null
+                new AggregateExpression('count', $pathExpression, $distinct), null
             )
         );
 

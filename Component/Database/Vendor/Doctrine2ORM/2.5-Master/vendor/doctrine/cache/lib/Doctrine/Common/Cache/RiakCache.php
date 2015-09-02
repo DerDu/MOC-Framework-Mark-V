@@ -34,7 +34,6 @@ use Riak\Object;
  */
 class RiakCache extends CacheProvider
 {
-
     const EXPIRES_HEADER = 'X-Riak-Meta-Expires';
 
     /**
@@ -47,20 +46,18 @@ class RiakCache extends CacheProvider
      *
      * @param \Riak\Bucket $bucket
      */
-    public function __construct( Bucket $bucket )
+    public function __construct(Bucket $bucket)
     {
-
         $this->bucket = $bucket;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
-
         try {
-            $response = $this->bucket->get( $id );
+            $response = $this->bucket->get($id);
 
             // No objects found
             if (!$response->hasObject()) {
@@ -69,18 +66,18 @@ class RiakCache extends CacheProvider
 
             // Check for attempted siblings
             $object = ( $response->hasSiblings() )
-                ? $this->resolveConflict( $id, $response->getVClock(), $response->getObjectList() )
+                ? $this->resolveConflict($id, $response->getVClock(), $response->getObjectList())
                 : $response->getFirstObject();
 
             // Check for expired object
-            if ($this->isExpired( $object )) {
-                $this->bucket->delete( $object );
+            if ($this->isExpired($object)) {
+                $this->bucket->delete($object);
 
                 return false;
             }
 
-            return unserialize( $object->getContent() );
-        } catch( Exception\RiakException $e ) {
+            return unserialize($object->getContent());
+        } catch (Exception\RiakException $e) {
             // Covers:
             // - Riak\ConnectionException
             // - Riak\CommunicationException
@@ -111,19 +108,18 @@ class RiakCache extends CacheProvider
      *
      * @return \Riak\Object
      */
-    protected function resolveConflict( $id, $vClock, array $objectList )
+    protected function resolveConflict($id, $vClock, array $objectList)
     {
-
         // Our approach here is last-write wins
-        $winner = $objectList[count( $objectList )];
+        $winner = $objectList[count($objectList)];
 
         $putInput = new Input\PutInput();
-        $putInput->setVClock( $vClock );
+        $putInput->setVClock($vClock);
 
-        $mergedObject = new Object( $id );
-        $mergedObject->setContent( $winner->getContent() );
+        $mergedObject = new Object($id);
+        $mergedObject->setContent($winner->getContent());
 
-        $this->bucket->put( $mergedObject, $putInput );
+        $this->bucket->put($mergedObject, $putInput);
 
         return $mergedObject;
     }
@@ -135,9 +131,8 @@ class RiakCache extends CacheProvider
      *
      * @return boolean
      */
-    private function isExpired( Object $object )
+    private function isExpired(Object $object)
     {
-
         $metadataMap = $object->getMetadataMap();
 
         return isset( $metadataMap[self::EXPIRES_HEADER] )
@@ -147,16 +142,15 @@ class RiakCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
-
         try {
             // We only need the HEAD, not the entire object
             $input = new Input\GetInput();
 
-            $input->setReturnHead( true );
+            $input->setReturnHead(true);
 
-            $response = $this->bucket->get( $id, $input );
+            $response = $this->bucket->get($id, $input);
 
             // No objects found
             if (!$response->hasObject()) {
@@ -166,14 +160,14 @@ class RiakCache extends CacheProvider
             $object = $response->getFirstObject();
 
             // Check for expired object
-            if ($this->isExpired( $object )) {
-                $this->bucket->delete( $object );
+            if ($this->isExpired($object)) {
+                $this->bucket->delete($object);
 
                 return false;
             }
 
             return true;
-        } catch( Exception\RiakException $e ) {
+        } catch (Exception\RiakException $e) {
             // Do nothing
         }
 
@@ -183,22 +177,21 @@ class RiakCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         try {
-            $object = new Object( $id );
+            $object = new Object($id);
 
-            $object->setContent( serialize( $data ) );
+            $object->setContent(serialize($data));
 
             if ($lifeTime > 0) {
-                $object->addMetadata( self::EXPIRES_HEADER, (string)( time() + $lifeTime ) );
+                $object->addMetadata(self::EXPIRES_HEADER, (string)( time() + $lifeTime ));
             }
 
-            $this->bucket->put( $object );
+            $this->bucket->put($object);
 
             return true;
-        } catch( Exception\RiakException $e ) {
+        } catch (Exception\RiakException $e) {
             // Do nothing
         }
 
@@ -208,16 +201,15 @@ class RiakCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
-
         try {
-            $this->bucket->delete( $id );
+            $this->bucket->delete($id);
 
             return true;
-        } catch( Exception\BadArgumentsException $e ) {
+        } catch (Exception\BadArgumentsException $e) {
             // Key did not exist on cluster already
-        } catch( Exception\RiakException $e ) {
+        } catch (Exception\RiakException $e) {
             // Covers:
             // - Riak\Exception\ConnectionException
             // - Riak\Exception\CommunicationException
@@ -232,16 +224,15 @@ class RiakCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         try {
             $keyList = $this->bucket->getKeyList();
 
             foreach ($keyList as $key) {
-                $this->bucket->delete( $key );
+                $this->bucket->delete($key);
             }
 
             return true;
-        } catch( Exception\RiakException $e ) {
+        } catch (Exception\RiakException $e) {
             // Do nothing
         }
 
@@ -253,7 +244,6 @@ class RiakCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         // Only exposed through HTTP stats API, not Protocol Buffers API
         return null;
     }

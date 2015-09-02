@@ -15,15 +15,9 @@ use Serializable;
 
 /**
  * A snapshot of global state.
- *
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/global-state
  */
 class Snapshot
 {
-
     /**
      * @var Blacklist
      */
@@ -88,15 +82,15 @@ class Snapshot
      * Creates a snapshot of the current global state.
      *
      * @param Blacklist $blacklist
-     * @param boolean   $includeGlobalVariables
-     * @param boolean   $includeStaticAttributes
-     * @param boolean   $includeConstants
-     * @param boolean   $includeFunctions
-     * @param boolean   $includeClasses
-     * @param boolean   $includeInterfaces
-     * @param boolean   $includeTraits
-     * @param boolean   $includeIniSettings
-     * @param boolean   $includeIncludedFiles
+     * @param bool      $includeGlobalVariables
+     * @param bool      $includeStaticAttributes
+     * @param bool      $includeConstants
+     * @param bool      $includeFunctions
+     * @param bool      $includeClasses
+     * @param bool      $includeInterfaces
+     * @param bool      $includeTraits
+     * @param bool      $includeIniSettings
+     * @param bool      $includeIncludedFiles
      */
     public function __construct(
         Blacklist $blacklist = null,
@@ -110,7 +104,6 @@ class Snapshot
         $includeIniSettings = true,
         $includeIncludedFiles = true
     ) {
-
         if ($blacklist === null) {
             $blacklist = new Blacklist;
         }
@@ -143,14 +136,14 @@ class Snapshot
         }
 
         if ($includeIniSettings) {
-            $this->iniSettings = ini_get_all( null, false );
+            $this->iniSettings = ini_get_all(null, false);
         }
 
         if ($includeIncludedFiles) {
             $this->includedFiles = get_included_files();
         }
 
-        if (function_exists( 'get_declared_traits' )) {
+        if (function_exists('get_declared_traits')) {
             $this->traits = get_declared_traits();
         }
     }
@@ -161,7 +154,7 @@ class Snapshot
     private function snapshotConstants()
     {
 
-        $constants = get_defined_constants( true );
+        $constants = get_defined_constants(true);
 
         if (isset( $constants['user'] )) {
             $this->constants = $constants['user'];
@@ -173,7 +166,6 @@ class Snapshot
      */
     private function snapshotFunctions()
     {
-
         $functions = get_defined_functions();
 
         $this->functions = $functions['user'];
@@ -185,8 +177,8 @@ class Snapshot
     private function snapshotClasses()
     {
 
-        foreach (array_reverse( get_declared_classes() ) as $className) {
-            $class = new ReflectionClass( $className );
+        foreach (array_reverse(get_declared_classes()) as $className) {
+            $class = new ReflectionClass($className);
 
             if (!$class->isUserDefined()) {
                 break;
@@ -195,7 +187,7 @@ class Snapshot
             $this->classes[] = $className;
         }
 
-        $this->classes = array_reverse( $this->classes );
+        $this->classes = array_reverse($this->classes);
     }
 
     /**
@@ -204,8 +196,8 @@ class Snapshot
     private function snapshotInterfaces()
     {
 
-        foreach (array_reverse( get_declared_interfaces() ) as $interfaceName) {
-            $class = new ReflectionClass( $interfaceName );
+        foreach (array_reverse(get_declared_interfaces()) as $interfaceName) {
+            $class = new ReflectionClass($interfaceName);
 
             if (!$class->isUserDefined()) {
                 break;
@@ -214,7 +206,7 @@ class Snapshot
             $this->interfaces[] = $interfaceName;
         }
 
-        $this->interfaces = array_reverse( $this->interfaces );
+        $this->interfaces = array_reverse($this->interfaces);
     }
 
     /**
@@ -224,7 +216,6 @@ class Snapshot
      */
     private function setupSuperGlobalArrays()
     {
-
         $this->superGlobalArrays = array(
             '_ENV',
             '_POST',
@@ -235,7 +226,7 @@ class Snapshot
             '_REQUEST'
         );
 
-        if (ini_get( 'register_long_arrays' ) == '1') {
+        if (ini_get('register_long_arrays') == '1') {
             $this->superGlobalArrays = array_merge(
                 $this->superGlobalArrays,
                 array(
@@ -255,20 +246,19 @@ class Snapshot
      */
     private function snapshotGlobals()
     {
-
         $superGlobalArrays = $this->superGlobalArrays();
 
         foreach ($superGlobalArrays as $superGlobalArray) {
-            $this->snapshotSuperGlobalArray( $superGlobalArray );
+            $this->snapshotSuperGlobalArray($superGlobalArray);
         }
 
-        foreach (array_keys( $GLOBALS ) as $key) {
+        foreach (array_keys($GLOBALS) as $key) {
             if ($key != 'GLOBALS' &&
-                !in_array( $key, $superGlobalArrays ) &&
-                $this->canBeSerialized( $GLOBALS[$key] ) &&
-                !$this->blacklist->isGlobalVariableBlacklisted( $key )
+                !in_array($key, $superGlobalArrays) &&
+                $this->canBeSerialized($GLOBALS[$key]) &&
+                !$this->blacklist->isGlobalVariableBlacklisted($key)
             ) {
-                $this->globalVariables[$key] = unserialize( serialize( $GLOBALS[$key] ) );
+                $this->globalVariables[$key] = unserialize(serialize($GLOBALS[$key]));
             }
         }
     }
@@ -280,7 +270,6 @@ class Snapshot
      */
     public function superGlobalArrays()
     {
-
         return $this->superGlobalArrays;
     }
 
@@ -289,14 +278,13 @@ class Snapshot
      *
      * @param $superGlobalArray
      */
-    private function snapshotSuperGlobalArray( $superGlobalArray )
+    private function snapshotSuperGlobalArray($superGlobalArray)
     {
-
         $this->superGlobalVariables[$superGlobalArray] = array();
 
-        if (isset( $GLOBALS[$superGlobalArray] ) && is_array( $GLOBALS[$superGlobalArray] )) {
+        if (isset( $GLOBALS[$superGlobalArray] ) && is_array($GLOBALS[$superGlobalArray])) {
             foreach ($GLOBALS[$superGlobalArray] as $key => $value) {
-                $this->superGlobalVariables[$superGlobalArray][$key] = unserialize( serialize( $value ) );
+                $this->superGlobalVariables[$superGlobalArray][$key] = unserialize(serialize($value));
             }
         }
     }
@@ -304,17 +292,17 @@ class Snapshot
     /**
      * @param  mixed $variable
      *
-     * @return boolean
+     * @return bool
      * @todo   Implement this properly
      */
-    private function canBeSerialized( $variable )
+    private function canBeSerialized($variable)
     {
 
-        if (!is_object( $variable )) {
-            return !is_resource( $variable );
+        if (!is_object($variable)) {
+            return !is_resource($variable);
         }
 
-        $class = new ReflectionClass( $variable );
+        $class = new ReflectionClass($variable);
 
         do {
             if ($class->isInternal()) {
@@ -330,24 +318,23 @@ class Snapshot
      */
     private function snapshotStaticAttributes()
     {
-
         foreach ($this->classes as $className) {
-            $class = new ReflectionClass( $className );
+            $class = new ReflectionClass($className);
             $snapshot = array();
 
             foreach ($class->getProperties() as $attribute) {
                 if ($attribute->isStatic()) {
                     $name = $attribute->getName();
 
-                    if ($this->blacklist->isStaticAttributeBlacklisted( $className, $name )) {
+                    if ($this->blacklist->isStaticAttributeBlacklisted($className, $name)) {
                         continue;
                     }
 
-                    $attribute->setAccessible( true );
+                    $attribute->setAccessible(true);
                     $value = $attribute->getValue();
 
-                    if ($this->canBeSerialized( $value )) {
-                        $snapshot[$name] = unserialize( serialize( $value ) );
+                    if ($this->canBeSerialized($value)) {
+                        $snapshot[$name] = unserialize(serialize($value));
                     }
                 }
             }
@@ -363,7 +350,6 @@ class Snapshot
      */
     public function blacklist()
     {
-
         return $this->blacklist;
     }
 
@@ -372,7 +358,6 @@ class Snapshot
      */
     public function globalVariables()
     {
-
         return $this->globalVariables;
     }
 
@@ -381,7 +366,6 @@ class Snapshot
      */
     public function superGlobalVariables()
     {
-
         return $this->superGlobalVariables;
     }
 
@@ -390,7 +374,6 @@ class Snapshot
      */
     public function staticAttributes()
     {
-
         return $this->staticAttributes;
     }
 
@@ -399,7 +382,6 @@ class Snapshot
      */
     public function iniSettings()
     {
-
         return $this->iniSettings;
     }
 
@@ -408,7 +390,6 @@ class Snapshot
      */
     public function includedFiles()
     {
-
         return $this->includedFiles;
     }
 
@@ -417,7 +398,6 @@ class Snapshot
      */
     public function constants()
     {
-
         return $this->constants;
     }
 
@@ -426,7 +406,6 @@ class Snapshot
      */
     public function functions()
     {
-
         return $this->functions;
     }
 
@@ -435,7 +414,6 @@ class Snapshot
      */
     public function interfaces()
     {
-
         return $this->interfaces;
     }
 
@@ -444,7 +422,6 @@ class Snapshot
      */
     public function classes()
     {
-
         return $this->classes;
     }
 
@@ -453,7 +430,6 @@ class Snapshot
      */
     public function traits()
     {
-
         return $this->traits;
     }
 }

@@ -32,7 +32,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class WhenClause extends Node
 {
-
     /**
      * @var ConditionalExpression
      */
@@ -47,9 +46,8 @@ class WhenClause extends Node
      * @param ConditionalExpression $caseConditionExpression
      * @param mixed                 $thenScalarExpression
      */
-    public function __construct( $caseConditionExpression, $thenScalarExpression )
+    public function __construct($caseConditionExpression, $thenScalarExpression)
     {
-
         $this->caseConditionExpression = $caseConditionExpression;
         $this->thenScalarExpression = $thenScalarExpression;
     }
@@ -57,9 +55,9 @@ class WhenClause extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkWhenClauseExpression( $this );
+        return $sqlWalker->walkWhenClauseExpression($this);
     }
 }

@@ -15,14 +15,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testParseAndDump()
     {
 
-        $data = array( 'lorem' => 'ipsum', 'dolor' => 'sit' );
-        $yml = Yaml::dump( $data );
-        $parsed = Yaml::parse( $yml );
-        $this->assertEquals( $data, $parsed );
+        $data = array('lorem' => 'ipsum', 'dolor' => 'sit');
+        $yml = Yaml::dump($data);
+        $parsed = Yaml::parse($yml);
+        $this->assertEquals($data, $parsed);
     }
 
     /**
@@ -30,13 +29,10 @@ class YamlTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyParseFromFile()
     {
-
-        $this->iniSet( 'error_reporting', -1 & ~E_USER_DEPRECATED );
-
         $filename = __DIR__.'/Fixtures/index.yml';
-        $contents = file_get_contents( $filename );
-        $parsedByFilename = Yaml::parse( $filename );
-        $parsedByContents = Yaml::parse( $contents );
-        $this->assertEquals( $parsedByFilename, $parsedByContents );
+        $contents = file_get_contents($filename);
+        $parsedByFilename = Yaml::parse($filename);
+        $parsedByContents = Yaml::parse($contents);
+        $this->assertEquals($parsedByFilename, $parsedByContents);
     }
 }

@@ -10,7 +10,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Entity\Coveralls;
  */
 class Commit extends Coveralls
 {
-
     /**
      * Commit ID.
      *
@@ -62,7 +61,6 @@ class Commit extends Coveralls
      */
     public function toArray()
     {
-
         return array(
             'id'              => $this->id,
             'author_name'     => $this->authorName,
@@ -97,9 +95,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setId( $id )
+    public function setId($id)
     {
-
         $this->id = $id;
 
         return $this;
@@ -127,9 +124,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setAuthorName( $authorName )
+    public function setAuthorName($authorName)
     {
-
         $this->authorName = $authorName;
 
         return $this;
@@ -157,9 +153,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setAuthorEmail( $authorEmail )
+    public function setAuthorEmail($authorEmail)
     {
-
         $this->authorEmail = $authorEmail;
 
         return $this;
@@ -187,9 +182,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setCommitterName( $committerName )
+    public function setCommitterName($committerName)
     {
-
         $this->committerName = $committerName;
 
         return $this;
@@ -217,9 +211,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setCommitterEmail( $committerEmail )
+    public function setCommitterEmail($committerEmail)
     {
-
         $this->committerEmail = $committerEmail;
 
         return $this;
@@ -247,9 +240,8 @@ class Commit extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\Git\Commit
      */
-    public function setMessage( $message )
+    public function setMessage($message)
     {
-
         $this->message = $message;
 
         return $this;

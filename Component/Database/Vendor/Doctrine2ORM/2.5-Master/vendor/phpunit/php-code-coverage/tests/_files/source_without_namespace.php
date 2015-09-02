@@ -1,17 +1,15 @@
 <?php
-
 /**
  * Represents foo.
  */
 class Foo
 {
-
 }
 
 /**
  * @param mixed $bar
  */
-function &foo( $bar )
+function &foo($bar)
 {
 
     $baz = function () {

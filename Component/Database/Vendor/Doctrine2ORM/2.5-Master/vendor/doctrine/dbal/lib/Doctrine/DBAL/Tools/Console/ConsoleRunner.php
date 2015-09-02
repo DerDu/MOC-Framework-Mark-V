@@ -33,7 +33,6 @@ use Symfony\Component\Console\Helper\HelperSet;
  */
 class ConsoleRunner
 {
-
     /**
      * Create a Symfony Console HelperSet
      *
@@ -41,12 +40,12 @@ class ConsoleRunner
      *
      * @return HelperSet
      */
-    static public function createHelperSet( Connection $connection )
+    static public function createHelperSet(Connection $connection)
     {
 
-        return new HelperSet( array(
-            'db' => new ConnectionHelper( $connection )
-        ) );
+        return new HelperSet(array(
+            'db' => new ConnectionHelper($connection)
+        ));
     }
 
     /**
@@ -57,17 +56,17 @@ class ConsoleRunner
      *
      * @return void
      */
-    static public function run( HelperSet $helperSet, $commands = array() )
+    static public function run(HelperSet $helperSet, $commands = array())
     {
 
-        $cli = new Application( 'Doctrine Command Line Interface', Version::VERSION );
+        $cli = new Application('Doctrine Command Line Interface', Version::VERSION);
 
-        $cli->setCatchExceptions( true );
-        $cli->setHelperSet( $helperSet );
+        $cli->setCatchExceptions(true);
+        $cli->setHelperSet($helperSet);
 
-        self::addCommands( $cli );
+        self::addCommands($cli);
 
-        $cli->addCommands( $commands );
+        $cli->addCommands($commands);
         $cli->run();
     }
 
@@ -76,14 +75,14 @@ class ConsoleRunner
      *
      * @return void
      */
-    static public function addCommands( Application $cli )
+    static public function addCommands(Application $cli)
     {
 
-        $cli->addCommands( array(
+        $cli->addCommands(array(
             new RunSqlCommand(),
             new ImportCommand(),
             new ReservedWordsCommand(),
-        ) );
+        ));
     }
 
     /**
@@ -91,7 +90,6 @@ class ConsoleRunner
      */
     static public function printCliConfigTemplate()
     {
-
         echo <<<'HELP'
 You are missing a "cli-config.php" or "config/cli-config.php" file in your
 project, which is required to get the Doctrine-DBAL Console working. You can use the

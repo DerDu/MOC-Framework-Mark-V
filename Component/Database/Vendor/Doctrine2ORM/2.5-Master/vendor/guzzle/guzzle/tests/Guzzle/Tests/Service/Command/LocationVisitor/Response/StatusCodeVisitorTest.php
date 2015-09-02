@@ -10,13 +10,11 @@ use Guzzle\Service\Description\Parameter;
  */
 class StatusCodeVisitorTest extends AbstractResponseVisitorTest
 {
-
     public function testVisitsLocation()
     {
-
         $visitor = new Visitor();
-        $param = new Parameter( array( 'location' => 'statusCode', 'name' => 'code' ) );
-        $visitor->visit( $this->command, $this->response, $param, $this->value );
-        $this->assertEquals( 200, $this->value['code'] );
+        $param = new Parameter(array('location' => 'statusCode', 'name' => 'code'));
+        $visitor->visit($this->command, $this->response, $param, $this->value);
+        $this->assertEquals(200, $this->value['code']);
     }
 }

@@ -16,7 +16,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class UnexpectedCallException extends ObjectProphecyException
 {
-
     private $methodName;
     private $arguments;
 
@@ -27,7 +26,7 @@ class UnexpectedCallException extends ObjectProphecyException
         array $arguments
     ) {
 
-        parent::__construct( $message, $objectProphecy );
+        parent::__construct($message, $objectProphecy);
 
         $this->methodName = $methodName;
         $this->arguments = $arguments;
@@ -35,13 +34,11 @@ class UnexpectedCallException extends ObjectProphecyException
 
     public function getMethodName()
     {
-
         return $this->methodName;
     }
 
     public function getArguments()
     {
-
         return $this->arguments;
     }
 }

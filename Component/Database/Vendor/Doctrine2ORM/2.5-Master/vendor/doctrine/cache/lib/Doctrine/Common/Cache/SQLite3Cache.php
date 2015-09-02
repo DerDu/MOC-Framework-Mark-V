@@ -30,7 +30,6 @@ use SQLite3Result;
  */
 class SQLite3Cache extends CacheProvider
 {
-
     /**
      * The ID field will store the cache key.
      */
@@ -66,21 +65,20 @@ class SQLite3Cache extends CacheProvider
      * @param SQLite3 $sqlite
      * @param string  $table
      */
-    public function __construct( SQLite3 $sqlite, $table )
+    public function __construct(SQLite3 $sqlite, $table)
     {
-
         $this->sqlite = $sqlite;
         $this->table = (string)$table;
 
         list( $id, $data, $exp ) = $this->getFields();
 
-        return $this->sqlite->exec( sprintf(
+        return $this->sqlite->exec(sprintf(
             'CREATE TABLE IF NOT EXISTS %s(%s TEXT PRIMARY KEY NOT NULL, %s BLOB, %s INTEGER)',
             $table,
             $id,
             $data,
             $exp
-        ) );
+        ));
     }
 
     /**
@@ -91,17 +89,17 @@ class SQLite3Cache extends CacheProvider
     private function getFields()
     {
 
-        return array( static::ID_FIELD, static::DATA_FIELD, static::EXPIRATION_FIELD );
+        return array(static::ID_FIELD, static::DATA_FIELD, static::EXPIRATION_FIELD);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        if ($item = $this->findById( $id )) {
-            return unserialize( $item[self::DATA_FIELD] );
+        if ($item = $this->findById($id)) {
+            return unserialize($item[self::DATA_FIELD]);
         }
 
         return false;
@@ -110,38 +108,38 @@ class SQLite3Cache extends CacheProvider
     /**
      * Find a single row by ID.
      *
-     * @param mixed   $id
+     * @param mixed $id
      * @param boolean $includeData
      *
      * @return array|null
      */
-    private function findById( $id, $includeData = true )
+    private function findById($id, $includeData = true)
     {
 
         list( $idField ) = $fields = $this->getFields();
 
         if (!$includeData) {
-            $key = array_search( static::DATA_FIELD, $fields );
+            $key = array_search(static::DATA_FIELD, $fields);
             unset( $fields[$key] );
         }
 
-        $statement = $this->sqlite->prepare( sprintf(
+        $statement = $this->sqlite->prepare(sprintf(
             'SELECT %s FROM %s WHERE %s = :id LIMIT 1',
-            implode( ',', $fields ),
+            implode(',', $fields),
             $this->table,
             $idField
-        ) );
+        ));
 
-        $statement->bindValue( ':id', $id, SQLITE3_TEXT );
+        $statement->bindValue(':id', $id, SQLITE3_TEXT);
 
-        $item = $statement->execute()->fetchArray( SQLITE3_ASSOC );
+        $item = $statement->execute()->fetchArray(SQLITE3_ASSOC);
 
         if ($item === false) {
             return null;
         }
 
-        if ($this->isExpired( $item )) {
-            $this->doDelete( $id );
+        if ($this->isExpired($item)) {
+            $this->doDelete($id);
 
             return null;
         }
@@ -153,10 +151,9 @@ class SQLite3Cache extends CacheProvider
      * Check if the item is expired.
      *
      * @param array $item
-     *
      * @return boolean
      */
-    private function isExpired( array $item )
+    private function isExpired(array $item)
     {
 
         return isset( $item[static::EXPIRATION_FIELD] ) &&
@@ -167,18 +164,18 @@ class SQLite3Cache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
         list( $idField ) = $this->getFields();
 
-        $statement = $this->sqlite->prepare( sprintf(
+        $statement = $this->sqlite->prepare(sprintf(
             'DELETE FROM %s WHERE %s = :id',
             $this->table,
             $idField
-        ) );
+        ));
 
-        $statement->bindValue( ':id', $id );
+        $statement->bindValue(':id', $id);
 
         return $statement->execute() instanceof SQLite3Result;
     }
@@ -186,27 +183,27 @@ class SQLite3Cache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        return (boolean)$this->findById( $id, false );
+        return (boolean)$this->findById($id, false);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
 
-        $statement = $this->sqlite->prepare( sprintf(
+        $statement = $this->sqlite->prepare(sprintf(
             'INSERT OR REPLACE INTO %s (%s) VALUES (:id, :data, :expire)',
             $this->table,
-            implode( ',', $this->getFields() )
-        ) );
+            implode(',', $this->getFields())
+        ));
 
-        $statement->bindValue( ':id', $id );
-        $statement->bindValue( ':data', serialize( $data ), SQLITE3_BLOB );
-        $statement->bindValue( ':expire', $lifeTime > 0 ? time() + $lifeTime : null );
+        $statement->bindValue(':id', $id);
+        $statement->bindValue(':data', serialize($data), SQLITE3_BLOB);
+        $statement->bindValue(':expire', $lifeTime > 0 ? time() + $lifeTime : null);
 
         return $statement->execute() instanceof SQLite3Result;
     }
@@ -217,7 +214,7 @@ class SQLite3Cache extends CacheProvider
     protected function doFlush()
     {
 
-        return $this->sqlite->exec( sprintf( 'DELETE FROM %s', $this->table ) );
+        return $this->sqlite->exec(sprintf('DELETE FROM %s', $this->table));
     }
 
     /**

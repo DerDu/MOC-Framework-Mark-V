@@ -13,7 +13,6 @@ use Guzzle\Http\QueryAggregator\QueryAggregatorInterface;
  */
 class QueryString extends Collection
 {
-
     /** @var string Used to URL encode with rawurlencode */
     const RFC_3986 = 'RFC 3986';
 
@@ -40,9 +39,8 @@ class QueryString extends Collection
      *
      * @return self
      */
-    public static function fromString( $query )
+    public static function fromString($query)
     {
-
         $q = new static();
         if ($query === '') {
             return $q;
@@ -50,32 +48,32 @@ class QueryString extends Collection
 
         $foundDuplicates = $foundPhpStyle = false;
 
-        foreach (explode( '&', $query ) as $kvp) {
-            $parts = explode( '=', $kvp, 2 );
-            $key = rawurldecode( $parts[0] );
-            if ($paramIsPhpStyleArray = substr( $key, -2 ) == '[]') {
+        foreach (explode('&', $query) as $kvp) {
+            $parts = explode('=', $kvp, 2);
+            $key = rawurldecode($parts[0]);
+            if ($paramIsPhpStyleArray = substr($key, -2) == '[]') {
                 $foundPhpStyle = true;
-                $key = substr( $key, 0, -2 );
+                $key = substr($key, 0, -2);
             }
             if (isset( $parts[1] )) {
-                $value = rawurldecode( str_replace( '+', '%20', $parts[1] ) );
+                $value = rawurldecode(str_replace('+', '%20', $parts[1]));
                 if (isset( $q[$key] )) {
-                    $q->add( $key, $value );
+                    $q->add($key, $value);
                     $foundDuplicates = true;
                 } elseif ($paramIsPhpStyleArray) {
-                    $q[$key] = array( $value );
+                    $q[$key] = array($value);
                 } else {
                     $q[$key] = $value;
                 }
             } else {
                 // Uses false by default to represent keys with no trailing "=" sign.
-                $q->add( $key, false );
+                $q->add($key, false);
             }
         }
 
         // Use the duplicate aggregator if duplicates were found and not using PHP style arrays
         if ($foundDuplicates && !$foundPhpStyle) {
-            $q->setAggregator( new DuplicateAggregator() );
+            $q->setAggregator(new DuplicateAggregator());
         }
 
         return $q;
@@ -89,13 +87,11 @@ class QueryString extends Collection
      *                                                  Pass null to use the default PHP style aggregator. For legacy
      *                                                  reasons, this function accepts a callable that must accepts a
      *                                                  $key, $value, and query object.
-     *
      * @return self
      * @see \Guzzle\Http\QueryString::aggregateUsingComma()
      */
-    public function setAggregator( QueryAggregatorInterface $aggregator = null )
+    public function setAggregator(QueryAggregatorInterface $aggregator = null)
     {
-
         // Use the default aggregator if none was set
         if (!$aggregator) {
             if (!self::$defaultAggregator) {
@@ -117,17 +113,16 @@ class QueryString extends Collection
      */
     public function __toString()
     {
-
         if (!$this->data) {
             return '';
         }
 
         $queryList = array();
-        foreach ($this->prepareData( $this->data ) as $name => $value) {
-            $queryList[] = $this->convertKvp( $name, $value );
+        foreach ($this->prepareData($this->data) as $name => $value) {
+            $queryList[] = $this->convertKvp($name, $value);
         }
 
-        return implode( $this->fieldSeparator, $queryList );
+        return implode($this->fieldSeparator, $queryList);
     }
 
     /**
@@ -137,23 +132,22 @@ class QueryString extends Collection
      *
      * @return array Returns an array of encoded values and keys
      */
-    protected function prepareData( array $data )
+    protected function prepareData(array $data)
     {
-
         // If no aggregator is present then set the default
         if (!$this->aggregator) {
-            $this->setAggregator( null );
+            $this->setAggregator(null);
         }
 
         $temp = array();
         foreach ($data as $key => $value) {
             if ($value === false || $value === null) {
                 // False and null will not include the "=". Use an empty string to include the "=".
-                $temp[$this->encodeValue( $key )] = $value;
-            } elseif (is_array( $value )) {
-                $temp = array_merge( $temp, $this->aggregator->aggregate( $key, $value, $this ) );
+                $temp[$this->encodeValue($key)] = $value;
+            } elseif (is_array($value)) {
+                $temp = array_merge($temp, $this->aggregator->aggregate($key, $value, $this));
             } else {
-                $temp[$this->encodeValue( $key )] = $this->encodeValue( $value );
+                $temp[$this->encodeValue($key)] = $this->encodeValue($value);
             }
         }
 
@@ -167,13 +161,12 @@ class QueryString extends Collection
      *
      * @return string
      */
-    public function encodeValue( $value )
+    public function encodeValue($value)
     {
-
         if ($this->urlEncode == self::RFC_3986) {
-            return rawurlencode( $value );
+            return rawurlencode($value);
         } elseif ($this->urlEncode == self::FORM_URLENCODED) {
-            return urlencode( $value );
+            return urlencode($value);
         } else {
             return (string)$value;
         }
@@ -185,24 +178,22 @@ class QueryString extends Collection
      *
      * @param string $name  Name of the field
      * @param mixed  $value Value of the field
-     *
      * @return string
      */
-    private function convertKvp( $name, $value )
+    private function convertKvp($name, $value)
     {
-
         if ($value === self::BLANK || $value === null || $value === false) {
             return $name;
-        } elseif (!is_array( $value )) {
+        } elseif (!is_array($value)) {
             return $name.$this->valueSeparator.$value;
         }
 
         $result = '';
         foreach ($value as $v) {
-            $result .= $this->convertKvp( $name, $v ).$this->fieldSeparator;
+            $result .= $this->convertKvp($name, $v).$this->fieldSeparator;
         }
 
-        return rtrim( $result, $this->fieldSeparator );
+        return rtrim($result, $this->fieldSeparator);
     }
 
     /**
@@ -212,7 +203,6 @@ class QueryString extends Collection
      */
     public function getFieldSeparator()
     {
-
         return $this->fieldSeparator;
     }
 
@@ -223,9 +213,8 @@ class QueryString extends Collection
      *
      * @return self
      */
-    public function setFieldSeparator( $separator )
+    public function setFieldSeparator($separator)
     {
-
         $this->fieldSeparator = $separator;
 
         return $this;
@@ -238,7 +227,6 @@ class QueryString extends Collection
      */
     public function getValueSeparator()
     {
-
         return $this->valueSeparator;
     }
 
@@ -249,9 +237,8 @@ class QueryString extends Collection
      *
      * @return self
      */
-    public function setValueSeparator( $separator )
+    public function setValueSeparator($separator)
     {
-
         $this->valueSeparator = $separator;
 
         return $this;
@@ -266,7 +253,6 @@ class QueryString extends Collection
      */
     public function getUrlEncoding()
     {
-
         return $this->urlEncode;
     }
 
@@ -277,7 +263,6 @@ class QueryString extends Collection
      */
     public function isUrlEncoding()
     {
-
         return $this->urlEncode !== false;
     }
 
@@ -286,10 +271,9 @@ class QueryString extends Collection
      *
      * @param bool|string $encode Set to TRUE to use RFC 3986 encoding (rawurlencode), false to disable encoding, or
      *                            form_urlencoding to use application/x-www-form-urlencoded encoding (urlencode)
-     *
      * @return self
      */
-    public function useUrlEncoding( $encode )
+    public function useUrlEncoding($encode)
     {
 
         $this->urlEncode = ( $encode === true ) ? self::RFC_3986 : $encode;
@@ -305,6 +289,6 @@ class QueryString extends Collection
     public function urlEncode()
     {
 
-        return $this->prepareData( $this->data );
+        return $this->prepareData($this->data);
     }
 }

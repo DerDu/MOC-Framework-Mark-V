@@ -29,13 +29,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class SQLServer2005Keywords extends SQLServerKeywords
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'SQLServer2005';
     }
 
@@ -47,13 +45,13 @@ class SQLServer2005Keywords extends SQLServerKeywords
     protected function getKeywords()
     {
 
-        return array_merge( array_diff( parent::getKeywords(), array( 'DUMMY' ) ), array(
+        return array_merge(array_diff(parent::getKeywords(), array('DUMMY')), array(
             'EXTERNAL',
             'PIVOT',
             'REVERT',
             'SECURITYAUDIT',
             'TABLESAMPLE',
             'UNPIVOT'
-        ) );
+        ));
     }
 }

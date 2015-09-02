@@ -18,7 +18,6 @@ namespace Symfony\Component\Console;
  */
 final class ConsoleEvents
 {
-
     /**
      * The COMMAND event allows you to attach listeners before any command is
      * executed by the console. It also allows you to modify the command, input and output

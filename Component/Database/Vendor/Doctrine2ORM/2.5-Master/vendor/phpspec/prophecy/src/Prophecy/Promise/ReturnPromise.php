@@ -21,7 +21,6 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 class ReturnPromise implements PromiseInterface
 {
-
     private $returnValues = array();
 
     /**
@@ -29,9 +28,8 @@ class ReturnPromise implements PromiseInterface
      *
      * @param array $returnValues Array of values
      */
-    public function __construct( array $returnValues )
+    public function __construct(array $returnValues)
     {
-
         $this->returnValues = $returnValues;
     }
 
@@ -44,12 +42,12 @@ class ReturnPromise implements PromiseInterface
      *
      * @return mixed
      */
-    public function execute( array $args, ObjectProphecy $object, MethodProphecy $method )
+    public function execute(array $args, ObjectProphecy $object, MethodProphecy $method)
     {
 
-        $value = array_shift( $this->returnValues );
+        $value = array_shift($this->returnValues);
 
-        if (!count( $this->returnValues )) {
+        if (!count($this->returnValues)) {
             $this->returnValues[] = $value;
         }
 

@@ -10,7 +10,6 @@ use Guzzle\Http\Message\Response;
  */
 interface RevalidationInterface
 {
-
     /**
      * Performs a cache revalidation
      *
@@ -19,7 +18,7 @@ interface RevalidationInterface
      *
      * @return bool Returns true if the request can be cached
      */
-    public function revalidate( RequestInterface $request, Response $response );
+    public function revalidate(RequestInterface $request, Response $response);
 
     /**
      * Returns true if the response should be revalidated
@@ -29,5 +28,5 @@ interface RevalidationInterface
      *
      * @return bool
      */
-    public function shouldRevalidate( RequestInterface $request, Response $response );
+    public function shouldRevalidate(RequestInterface $request, Response $response);
 }

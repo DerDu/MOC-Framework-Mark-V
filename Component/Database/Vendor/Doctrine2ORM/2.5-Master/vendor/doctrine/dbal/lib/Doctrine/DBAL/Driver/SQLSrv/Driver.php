@@ -26,15 +26,14 @@ use Doctrine\DBAL\Driver\AbstractSQLServerDriver;
  */
 class Driver extends AbstractSQLServerDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
 
         if (!isset( $params['host'] )) {
-            throw new SQLSrvException( "Missing 'host' in configuration for sqlsrv driver." );
+            throw new SQLSrvException("Missing 'host' in configuration for sqlsrv driver.");
         }
 
         $serverName = $params['host'];
@@ -57,7 +56,7 @@ class Driver extends AbstractSQLServerDriver
             $driverOptions['ReturnDatesAsStrings'] = 1;
         }
 
-        return new SQLSrvConnection( $serverName, $driverOptions );
+        return new SQLSrvConnection($serverName, $driverOptions);
     }
 
     /**
@@ -65,7 +64,6 @@ class Driver extends AbstractSQLServerDriver
      */
     public function getName()
     {
-
         return 'sqlsrv';
     }
 }

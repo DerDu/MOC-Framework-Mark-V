@@ -9,7 +9,6 @@ use Guzzle\Common\Exception\InvalidArgumentException;
  */
 class SchemaFormatter
 {
-
     /** @var \DateTimeZone */
     protected static $utcTimeZone;
 
@@ -21,22 +20,21 @@ class SchemaFormatter
      *
      * @return mixed
      */
-    public static function format( $format, $value )
+    public static function format($format, $value)
     {
-
         switch ($format) {
             case 'date-time':
-                return self::formatDateTime( $value );
+                return self::formatDateTime($value);
             case 'date-time-http':
-                return self::formatDateTimeHttp( $value );
+                return self::formatDateTimeHttp($value);
             case 'date':
-                return self::formatDate( $value );
+                return self::formatDate($value);
             case 'time':
-                return self::formatTime( $value );
+                return self::formatTime($value);
             case 'timestamp':
-                return self::formatTimestamp( $value );
+                return self::formatTimestamp($value);
             case 'boolean-string':
-                return self::formatBooleanAsString( $value );
+                return self::formatBooleanAsString($value);
             default:
                 return $value;
         }
@@ -49,10 +47,10 @@ class SchemaFormatter
      *
      * @return string
      */
-    public static function formatDateTime( $value )
+    public static function formatDateTime($value)
     {
 
-        return self::dateFormatter( $value, 'Y-m-d\TH:i:s\Z' );
+        return self::dateFormatter($value, 'Y-m-d\TH:i:s\Z');
     }
 
     /**
@@ -64,22 +62,22 @@ class SchemaFormatter
      * @return string
      * @throws InvalidArgumentException
      */
-    protected static function dateFormatter( $dateTime, $format )
+    protected static function dateFormatter($dateTime, $format)
     {
 
-        if (is_numeric( $dateTime )) {
-            return gmdate( $format, (int)$dateTime );
+        if (is_numeric($dateTime)) {
+            return gmdate($format, (int)$dateTime);
         }
 
-        if (is_string( $dateTime )) {
-            $dateTime = new \DateTime( $dateTime );
+        if (is_string($dateTime)) {
+            $dateTime = new \DateTime($dateTime);
         }
 
         if ($dateTime instanceof \DateTime) {
-            return $dateTime->setTimezone( self::getUtcTimeZone() )->format( $format );
+            return $dateTime->setTimezone(self::getUtcTimeZone())->format($format);
         }
 
-        throw new InvalidArgumentException( 'Date/Time values must be either a string, integer, or DateTime object' );
+        throw new InvalidArgumentException('Date/Time values must be either a string, integer, or DateTime object');
     }
 
     /**
@@ -89,10 +87,9 @@ class SchemaFormatter
      */
     protected static function getUtcTimeZone()
     {
-
         // @codeCoverageIgnoreStart
         if (!self::$utcTimeZone) {
-            self::$utcTimeZone = new \DateTimeZone( 'UTC' );
+            self::$utcTimeZone = new \DateTimeZone('UTC');
         }
         // @codeCoverageIgnoreEnd
 
@@ -106,10 +103,10 @@ class SchemaFormatter
      *
      * @return string
      */
-    public static function formatDateTimeHttp( $value )
+    public static function formatDateTimeHttp($value)
     {
 
-        return self::dateFormatter( $value, 'D, d M Y H:i:s \G\M\T' );
+        return self::dateFormatter($value, 'D, d M Y H:i:s \G\M\T');
     }
 
     /**
@@ -119,10 +116,10 @@ class SchemaFormatter
      *
      * @return string
      */
-    public static function formatDate( $value )
+    public static function formatDate($value)
     {
 
-        return self::dateFormatter( $value, 'Y-m-d' );
+        return self::dateFormatter($value, 'Y-m-d');
     }
 
     /**
@@ -132,10 +129,10 @@ class SchemaFormatter
      *
      * @return string
      */
-    public static function formatTime( $value )
+    public static function formatTime($value)
     {
 
-        return self::dateFormatter( $value, 'H:i:s' );
+        return self::dateFormatter($value, 'H:i:s');
     }
 
     /**
@@ -145,10 +142,10 @@ class SchemaFormatter
      *
      * @return int
      */
-    public static function formatTimestamp( $value )
+    public static function formatTimestamp($value)
     {
 
-        return (int)self::dateFormatter( $value, 'U' );
+        return (int)self::dateFormatter($value, 'U');
     }
 
     /**
@@ -158,9 +155,9 @@ class SchemaFormatter
      *
      * @return string
      */
-    public static function formatBooleanAsString( $value )
+    public static function formatBooleanAsString($value)
     {
 
-        return filter_var( $value, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false';
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
     }
 }

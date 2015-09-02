@@ -25,7 +25,6 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class DocBlock implements \Reflector
 {
-
     /** @var string The opening line for this docblock. */
     protected $short_description = '';
 
@@ -58,14 +57,17 @@ class DocBlock implements \Reflector
      *
      * The constructor may also receive namespace information such as the
      * current namespace and aliases. This information is used by some tags
-     * (e.g. return, param, etc.) to turn a relative Type into a FQCN.
+     * (e.g. @return, @param, etc.) to turn a relative Type into a FQCN.
      *
-     * @param \Reflector|string $docblock A docblock comment (including asterisks) or reflector supporting the
-     *                                    getDocComment method.
-     * @param Context           $context  The context in which the DocBlock occurs.
-     * @param Location          $location The location within the file that this DocBlock occurs in.
+     * @param \Reflector|string $docblock A docblock comment (including
+     *                                    asterisks) or reflector supporting the getDocComment method.
+     * @param Context           $context  The context in which the DocBlock
+     *                                    occurs.
+     * @param Location          $location The location within the file that this
+     *                                    DocBlock occurs in.
      *
-     * @throws \InvalidArgumentException if the given argument does not have the getDocComment method.
+     * @throws \InvalidArgumentException if the given argument does not have the
+     *     getDocComment method.
      */
     public function __construct(
         $docblock,
@@ -73,24 +75,25 @@ class DocBlock implements \Reflector
         Location $location = null
     ) {
 
-        if (is_object( $docblock )) {
-            if (!method_exists( $docblock, 'getDocComment' )) {
+        if (is_object($docblock)) {
+            if (!method_exists($docblock, 'getDocComment')) {
                 throw new \InvalidArgumentException(
-                    'Invalid object passed; the given reflector must support the getDocComment method'
+                    'Invalid object passed; the given reflector must support '
+                    .'the getDocComment method'
                 );
             }
 
             $docblock = $docblock->getDocComment();
         }
 
-        $docblock = $this->cleanInput( $docblock );
+        $docblock = $this->cleanInput($docblock);
 
-        list( $templateMarker, $short, $long, $tags ) = $this->splitDocBlock( $docblock );
+        list( $templateMarker, $short, $long, $tags ) = $this->splitDocBlock($docblock);
         $this->isTemplateStart = $templateMarker === '#@+';
         $this->isTemplateEnd = $templateMarker === '#@-';
         $this->short_description = $short;
-        $this->long_description = new DocBlock\Description( $long, $this );
-        $this->parseTags( $tags );
+        $this->long_description = new DocBlock\Description($long, $this);
+        $this->parseTags($tags);
 
         $this->context = $context;
         $this->location = $location;
@@ -103,9 +106,8 @@ class DocBlock implements \Reflector
      *
      * @return string
      */
-    protected function cleanInput( $comment )
+    protected function cleanInput($comment)
     {
-
         $comment = trim(
             preg_replace(
                 '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u',
@@ -115,12 +117,12 @@ class DocBlock implements \Reflector
         );
 
         // reg ex above is not able to remove */ from a single line docblock
-        if (substr( $comment, -2 ) == '*/') {
-            $comment = trim( substr( $comment, 0, -2 ) );
+        if (substr($comment, -2) == '*/') {
+            $comment = trim(substr($comment, 0, -2));
         }
 
         // normalize strings
-        $comment = str_replace( array( "\r\n", "\r" ), "\n", $comment );
+        $comment = str_replace(array("\r\n", "\r"), "\n", $comment);
 
         return $comment;
     }
@@ -135,18 +137,17 @@ class DocBlock implements \Reflector
      *
      * @return string[] containing the template marker (if any), summary, description and a string containing the tags.
      */
-    protected function splitDocBlock( $comment )
+    protected function splitDocBlock($comment)
     {
-
         // Performance improvement cheat: if the first character is an @ then only tags are in this DocBlock. This
         // method does not split tags so we return this verbatim as the fourth result (tags). This saves us the
         // performance impact of running a regular expression
-        if (strpos( $comment, '@' ) === 0) {
-            return array( '', '', '', $comment );
+        if (strpos($comment, '@') === 0) {
+            return array('', '', '', $comment);
         }
 
         // clears all extra horizontal whitespace from the line endings to prevent parsing issues
-        $comment = preg_replace( '/\h*$/Sum', '', $comment );
+        $comment = preg_replace('/\h*$/Sum', '', $comment);
 
         /*
          * Splits the docblock into a template marker, short description, long description and tags section
@@ -201,9 +202,9 @@ class DocBlock implements \Reflector
             $comment,
             $matches
         );
-        array_shift( $matches );
+        array_shift($matches);
 
-        while (count( $matches ) < 4) {
+        while (count($matches) < 4) {
             $matches[] = '';
         }
 
@@ -217,11 +218,10 @@ class DocBlock implements \Reflector
      *
      * @return void
      */
-    protected function parseTags( $tags )
+    protected function parseTags($tags)
     {
-
         $result = array();
-        $tags = trim( $tags );
+        $tags = trim($tags);
         if ('' !== $tags) {
             if ('@' !== $tags[0]) {
                 throw new \LogicException(
@@ -229,17 +229,17 @@ class DocBlock implements \Reflector
                     .' this makes the tag block invalid: '.$tags
                 );
             }
-            foreach (explode( "\n", $tags ) as $tag_line) {
+            foreach (explode("\n", $tags) as $tag_line) {
                 if (isset( $tag_line[0] ) && ( $tag_line[0] === '@' )) {
                     $result[] = $tag_line;
                 } else {
-                    $result[count( $result ) - 1] .= "\n".$tag_line;
+                    $result[count($result) - 1] .= "\n".$tag_line;
                 }
             }
 
             // create proper Tag objects
             foreach ($result as $key => $tag_line) {
-                $result[$key] = Tag::createInstance( trim( $tag_line ), $this );
+                $result[$key] = Tag::createInstance(trim($tag_line), $this);
             }
         }
 
@@ -249,7 +249,7 @@ class DocBlock implements \Reflector
     /**
      * Builds a string representation of this object.
      *
-     * @todo               determine the exact format as used by PHP Reflection and
+     * @todo determine the exact format as used by PHP Reflection and
      *     implement it.
      *
      * @return string
@@ -258,7 +258,7 @@ class DocBlock implements \Reflector
     public static function export()
     {
 
-        throw new \Exception( 'Not yet implemented' );
+        throw new \Exception('Not yet implemented');
     }
 
     /**
@@ -271,7 +271,6 @@ class DocBlock implements \Reflector
      */
     public function getText()
     {
-
         $short = $this->getShortDescription();
         $long = $this->getLongDescription()->getContents();
 
@@ -289,7 +288,6 @@ class DocBlock implements \Reflector
      */
     public function getShortDescription()
     {
-
         return $this->short_description;
     }
 
@@ -300,25 +298,25 @@ class DocBlock implements \Reflector
      */
     public function getLongDescription()
     {
-
         return $this->long_description;
     }
 
     /**
-     * Set the text portion of the DocBlock.
+     * Set the text portion of the doc block.
      *
-     * Sets the text portion (short and long description combined) of the DocBlock.
+     * Sets the text portion (short and long description combined) of the doc
+     * block.
      *
-     * @param string $comment The new text portion of the DocBlock.
+     * @param string $docblock The new text portion of the doc block.
      *
-     * @return $this
+     * @return $this This doc block.
      */
-    public function setText( $comment )
+    public function setText($comment)
     {
 
-        list( , $short, $long ) = $this->splitDocBlock( $comment );
+        list( , $short, $long ) = $this->splitDocBlock($comment);
         $this->short_description = $short;
-        $this->long_description = new DocBlock\Description( $long, $this );
+        $this->long_description = new DocBlock\Description($long, $this);
         return $this;
     }
 
@@ -345,7 +343,6 @@ class DocBlock implements \Reflector
      */
     public function isTemplateStart()
     {
-
         return $this->isTemplateStart;
     }
 
@@ -358,7 +355,6 @@ class DocBlock implements \Reflector
      */
     public function isTemplateEnd()
     {
-
         return $this->isTemplateEnd;
     }
 
@@ -369,7 +365,6 @@ class DocBlock implements \Reflector
      */
     public function getContext()
     {
-
         return $this->context;
     }
 
@@ -380,7 +375,6 @@ class DocBlock implements \Reflector
      */
     public function getLocation()
     {
-
         return $this->location;
     }
 
@@ -392,9 +386,8 @@ class DocBlock implements \Reflector
      *
      * @return Tag[]
      */
-    public function getTagsByName( $name )
+    public function getTagsByName($name)
     {
-
         $result = array();
 
         /** @var Tag $tag */
@@ -416,7 +409,6 @@ class DocBlock implements \Reflector
      */
     public function getTags()
     {
-
         return $this->tags;
     }
 
@@ -427,9 +419,8 @@ class DocBlock implements \Reflector
      *
      * @return bool
      */
-    public function hasTag( $name )
+    public function hasTag($name)
     {
-
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() == $name) {
@@ -449,11 +440,10 @@ class DocBlock implements \Reflector
      *
      * @throws \LogicException When the tag belongs to a different DocBlock.
      */
-    public function appendTag( Tag $tag )
+    public function appendTag(Tag $tag)
     {
-
         if (null === $tag->getDocBlock()) {
-            $tag->setDocBlock( $this );
+            $tag->setDocBlock($this);
         }
 
         if ($tag->getDocBlock() === $this) {
@@ -476,7 +466,6 @@ class DocBlock implements \Reflector
      */
     public function __toString()
     {
-
         return 'Not yet implemented';
     }
 }

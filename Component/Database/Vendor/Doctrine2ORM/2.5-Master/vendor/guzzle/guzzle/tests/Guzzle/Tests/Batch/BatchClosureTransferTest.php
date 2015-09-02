@@ -9,7 +9,6 @@ use Guzzle\Batch\BatchClosureTransfer;
  */
 class BatchClosureTransferTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     /** @var \Guzzle\Batch\BatchClosureTransfer The transfer fixture */
     protected $transferStrategy;
 
@@ -19,19 +18,18 @@ class BatchClosureTransferTest extends \Guzzle\Tests\GuzzleTestCase
     public function testTransfersBatch()
     {
 
-        $batchedItems = array( 'foo', 'bar', 'baz' );
-        $this->transferStrategy->transfer( $batchedItems );
+        $batchedItems = array('foo', 'bar', 'baz');
+        $this->transferStrategy->transfer($batchedItems);
 
-        $this->assertEquals( $batchedItems, $this->itemsTransferred );
+        $this->assertEquals($batchedItems, $this->itemsTransferred);
     }
 
     public function testTransferBailsOnEmptyBatch()
     {
-
         $batchedItems = array();
-        $this->transferStrategy->transfer( $batchedItems );
+        $this->transferStrategy->transfer($batchedItems);
 
-        $this->assertNull( $this->itemsTransferred );
+        $this->assertNull($this->itemsTransferred);
     }
 
     /**
@@ -40,19 +38,17 @@ class BatchClosureTransferTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresCallableIsCallable()
     {
 
-        $foo = new BatchClosureTransfer( 'uh oh!' );
+        $foo = new BatchClosureTransfer('uh oh!');
     }
 
     protected function setUp()
     {
-
         $this->itemsTransferred = null;
         $itemsTransferred =& $this->itemsTransferred;
 
-        $this->transferStrategy = new BatchClosureTransfer( function ( array $batch ) use ( &$itemsTransferred ) {
-
+        $this->transferStrategy = new BatchClosureTransfer(function (array $batch) use (&$itemsTransferred) {
             $itemsTransferred = $batch;
             return;
-        } );
+        });
     }
 }

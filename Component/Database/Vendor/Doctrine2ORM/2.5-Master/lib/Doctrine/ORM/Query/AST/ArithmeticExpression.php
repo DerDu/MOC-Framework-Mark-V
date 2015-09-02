@@ -30,7 +30,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class ArithmeticExpression extends Node
 {
-
     /**
      * @var SimpleArithmeticExpression|null
      */
@@ -62,9 +61,9 @@ class ArithmeticExpression extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $walker )
+    public function dispatch($walker)
     {
 
-        return $walker->walkArithmeticExpression( $this );
+        return $walker->walkArithmeticExpression($this);
     }
 }

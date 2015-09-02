@@ -11,28 +11,19 @@
 /**
  * Provides human readable messages for each JSON error.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Bastian Feder <php@bastian-feder.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.7.0
+ * @since Class available since Release 3.7.0
  */
 class PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider
 {
-
     /**
      * Translates JSON error to a human readable string.
      *
      * @param  string $error
      * @param  string $prefix
-     *
      * @return string
      */
-    public static function determineJsonError( $error, $prefix = '' )
+    public static function determineJsonError($error, $prefix = '')
     {
-
         switch ($error) {
             case JSON_ERROR_NONE:
                 return;
@@ -55,13 +46,12 @@ class PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider
      * Translates a given type to a human readable message prefix.
      *
      * @param  string $type
-     *
      * @return string
      */
-    public static function translateTypeToPrefix( $type )
+    public static function translateTypeToPrefix($type)
     {
 
-        switch (strtolower( $type )) {
+        switch (strtolower($type)) {
             case 'expected':
                 $prefix = 'Expected value JSON decode error - ';
                 break;

@@ -10,7 +10,6 @@ use Guzzle\Common\Exception\RuntimeException;
  */
 class BatchBuilder
 {
-
     /** @var array of Mapped transfer strategies by handle name */
     protected static $mapping = array(
         'request' => 'Guzzle\Batch\BatchRequestTransfer',
@@ -36,7 +35,6 @@ class BatchBuilder
      */
     public static function factory()
     {
-
         return new self();
     }
 
@@ -47,9 +45,8 @@ class BatchBuilder
      *
      * @return BatchBuilder
      */
-    public function autoFlushAt( $threshold )
+    public function autoFlushAt($threshold)
     {
-
         $this->autoFlush = $threshold;
 
         return $this;
@@ -62,7 +59,6 @@ class BatchBuilder
      */
     public function keepHistory()
     {
-
         $this->history = true;
 
         return $this;
@@ -76,7 +72,6 @@ class BatchBuilder
      */
     public function bufferExceptions()
     {
-
         $this->exceptionBuffering = true;
 
         return $this;
@@ -90,9 +85,8 @@ class BatchBuilder
      * @return BatchBuilder
      * @throws InvalidArgumentException if the argument is not callable
      */
-    public function notify( $callable )
+    public function notify($callable)
     {
-
         $this->afterFlush = $callable;
 
         return $this;
@@ -106,11 +100,10 @@ class BatchBuilder
      *
      * @return BatchBuilder
      */
-    public function transferRequests( $batchSize = 50 )
+    public function transferRequests($batchSize = 50)
     {
-
         $className = self::$mapping['request'];
-        $this->transferStrategy = new $className( $batchSize );
+        $this->transferStrategy = new $className($batchSize);
         $this->divisorStrategy = $this->transferStrategy;
 
         return $this;
@@ -124,11 +117,10 @@ class BatchBuilder
      *
      * @return BatchBuilder
      */
-    public function transferCommands( $batchSize = 50 )
+    public function transferCommands($batchSize = 50)
     {
-
         $className = self::$mapping['command'];
-        $this->transferStrategy = new $className( $batchSize );
+        $this->transferStrategy = new $className($batchSize);
         $this->divisorStrategy = $this->transferStrategy;
 
         return $this;
@@ -141,9 +133,8 @@ class BatchBuilder
      *
      * @return BatchBuilder
      */
-    public function createBatchesWith( BatchDivisorInterface $divisorStrategy )
+    public function createBatchesWith(BatchDivisorInterface $divisorStrategy)
     {
-
         $this->divisorStrategy = $divisorStrategy;
 
         return $this;
@@ -156,9 +147,8 @@ class BatchBuilder
      *
      * @return BatchBuilder
      */
-    public function transferWith( BatchTransferInterface $transferStrategy )
+    public function transferWith(BatchTransferInterface $transferStrategy)
     {
-
         $this->transferStrategy = $transferStrategy;
 
         return $this;
@@ -172,31 +162,30 @@ class BatchBuilder
      */
     public function build()
     {
-
         if (!$this->transferStrategy) {
-            throw new RuntimeException( 'No transfer strategy has been specified' );
+            throw new RuntimeException('No transfer strategy has been specified');
         }
 
         if (!$this->divisorStrategy) {
-            throw new RuntimeException( 'No divisor strategy has been specified' );
+            throw new RuntimeException('No divisor strategy has been specified');
         }
 
-        $batch = new Batch( $this->transferStrategy, $this->divisorStrategy );
+        $batch = new Batch($this->transferStrategy, $this->divisorStrategy);
 
         if ($this->exceptionBuffering) {
-            $batch = new ExceptionBufferingBatch( $batch );
+            $batch = new ExceptionBufferingBatch($batch);
         }
 
         if ($this->afterFlush) {
-            $batch = new NotifyingBatch( $batch, $this->afterFlush );
+            $batch = new NotifyingBatch($batch, $this->afterFlush);
         }
 
         if ($this->autoFlush) {
-            $batch = new FlushingBatch( $batch, $this->autoFlush );
+            $batch = new FlushingBatch($batch, $this->autoFlush);
         }
 
         if ($this->history) {
-            $batch = new HistoryBatch( $batch );
+            $batch = new HistoryBatch($batch);
         }
 
         return $batch;

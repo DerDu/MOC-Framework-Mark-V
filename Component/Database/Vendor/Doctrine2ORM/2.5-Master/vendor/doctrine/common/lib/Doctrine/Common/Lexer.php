@@ -34,5 +34,4 @@ use Doctrine\Common\Lexer\AbstractLexer;
  */
 abstract class Lexer extends AbstractLexer
 {
-
 }

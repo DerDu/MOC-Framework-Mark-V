@@ -7,7 +7,6 @@ namespace Guzzle\Http\Message;
  */
 interface MessageInterface
 {
-
     /**
      * Get application and plugin specific parameters set on the message.
      *
@@ -23,7 +22,7 @@ interface MessageInterface
      *
      * @return self
      */
-    public function addHeader( $header, $value );
+    public function addHeader($header, $value);
 
     /**
      * Add and merge in an array of HTTP headers.
@@ -32,7 +31,7 @@ interface MessageInterface
      *
      * @return self
      */
-    public function addHeaders( array $headers );
+    public function addHeaders(array $headers);
 
     /**
      * Retrieve an HTTP header by name. Performs a case-insensitive search of all headers.
@@ -41,7 +40,7 @@ interface MessageInterface
      *
      * @return Header|null
      */
-    public function getHeader( $header );
+    public function getHeader($header);
 
     /**
      * Get all headers as a collection
@@ -57,7 +56,7 @@ interface MessageInterface
      *
      * @return bool
      */
-    public function hasHeader( $header );
+    public function hasHeader($header);
 
     /**
      * Remove a specific HTTP header.
@@ -66,7 +65,7 @@ interface MessageInterface
      *
      * @return self
      */
-    public function removeHeader( $header );
+    public function removeHeader($header);
 
     /**
      * Set an HTTP header and overwrite any existing value for the header
@@ -76,7 +75,7 @@ interface MessageInterface
      *
      * @return self
      */
-    public function setHeader( $header, $value );
+    public function setHeader($header, $value);
 
     /**
      * Overwrite all HTTP headers with the supplied array of headers
@@ -85,7 +84,7 @@ interface MessageInterface
      *
      * @return self
      */
-    public function setHeaders( array $headers );
+    public function setHeaders(array $headers);
 
     /**
      * Get an array of message header lines (e.g. ["Host: example.com", ...])

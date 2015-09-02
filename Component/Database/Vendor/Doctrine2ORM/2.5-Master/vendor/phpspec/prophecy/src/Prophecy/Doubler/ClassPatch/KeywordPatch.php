@@ -20,7 +20,6 @@ use Prophecy\Doubler\Generator\Node\ClassNode;
  */
 class KeywordPatch implements ClassPatchInterface
 {
-
     /**
      * Support any class
      *
@@ -28,9 +27,8 @@ class KeywordPatch implements ClassPatchInterface
      *
      * @return boolean
      */
-    public function supports( ClassNode $node )
+    public function supports(ClassNode $node)
     {
-
         return true;
     }
 
@@ -39,13 +37,13 @@ class KeywordPatch implements ClassPatchInterface
      *
      * @param ClassNode $node
      */
-    public function apply( ClassNode $node )
+    public function apply(ClassNode $node)
     {
 
-        $methodNames = array_keys( $node->getMethods() );
-        $methodsToRemove = array_intersect( $methodNames, $this->getKeywords() );
+        $methodNames = array_keys($node->getMethods());
+        $methodsToRemove = array_intersect($methodNames, $this->getKeywords());
         foreach ($methodsToRemove as $methodName) {
-            $node->removeMethod( $methodName );
+            $node->removeMethod($methodName);
         }
     }
 
@@ -135,7 +133,6 @@ class KeywordPatch implements ClassPatchInterface
      */
     public function getPriority()
     {
-
         return 49;
     }
 }

@@ -13,17 +13,11 @@ use Guzzle\Http\Message\Response;
  */
 class HttpBackoffStrategy extends AbstractErrorCodeBackoffStrategy
 {
-
     /** @var array Default cURL errors to retry */
-    protected static $defaultErrorCodes = array( 500, 503 );
+    protected static $defaultErrorCodes = array(500, 503);
 
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
-
+    protected function getDelay($retries, RequestInterface $request, Response $response = null, HttpException $e = null)
+    {
         if ($response) {
             //Short circuit the rest of the checks if it was successful
             if ($response->isSuccessful()) {

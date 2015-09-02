@@ -12,7 +12,6 @@ use Satooshi\Bundle\CoverallsV1Bundle\Version;
  */
 class JsonFile extends Coveralls
 {
-
     /**
      * Service name.
      *
@@ -108,7 +107,6 @@ class JsonFile extends Coveralls
      */
     public function toArray()
     {
-
         $array = array();
 
         $arrayMap = array(
@@ -128,7 +126,7 @@ class JsonFile extends Coveralls
 
         foreach ($arrayMap as $jsonKey => $propName) {
             if (isset( $this->$propName )) {
-                $array[$jsonKey] = $this->toJsonProperty( $this->$propName );
+                $array[$jsonKey] = $this->toJsonProperty($this->$propName);
             }
         }
 
@@ -146,13 +144,12 @@ class JsonFile extends Coveralls
      *
      * @return mixed
      */
-    protected function toJsonProperty( $prop )
+    protected function toJsonProperty($prop)
     {
-
         if ($prop instanceof Coveralls) {
             return $prop->toArray();
-        } elseif (is_array( $prop )) {
-            return $this->toJsonPropertyArray( $prop );
+        } elseif (is_array($prop)) {
+            return $this->toJsonPropertyArray($prop);
         }
 
         return $prop;
@@ -165,13 +162,12 @@ class JsonFile extends Coveralls
      *
      * @return array
      */
-    protected function toJsonPropertyArray( array $propArray )
+    protected function toJsonPropertyArray(array $propArray)
     {
-
         $array = array();
 
         foreach ($propArray as $prop) {
-            $array[] = $this->toJsonProperty( $prop );
+            $array[] = $this->toJsonProperty($prop);
         }
 
         return $array;
@@ -186,11 +182,10 @@ class JsonFile extends Coveralls
      *
      * @throws \RuntimeException
      */
-    public function fillJobs( array $env )
+    public function fillJobs(array $env)
     {
-
         return $this
-            ->fillStandardizedEnvVars( $env )
+            ->fillStandardizedEnvVars($env)
             ->ensureJobs();
     }
 
@@ -203,9 +198,8 @@ class JsonFile extends Coveralls
      */
     protected function ensureJobs()
     {
-
         if (!$this->hasSourceFiles()) {
-            throw new \RuntimeException( 'source_files must be set' );
+            throw new \RuntimeException('source_files must be set');
         }
 
         if ($this->requireServiceJobId()) {
@@ -241,7 +235,7 @@ class JsonFile extends Coveralls
     public function hasSourceFiles()
     {
 
-        return count( $this->sourceFiles ) > 0;
+        return count($this->sourceFiles) > 0;
     }
 
     /**
@@ -318,9 +312,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    protected function fillStandardizedEnvVars( array $env )
+    protected function fillStandardizedEnvVars(array $env)
     {
-
         $map = array(
             // defined in Ruby lib
             'serviceName'        => 'CI_NAME',
@@ -328,6 +321,7 @@ class JsonFile extends Coveralls
             'serviceBuildUrl'    => 'CI_BUILD_URL',
             'serviceBranch'      => 'CI_BRANCH',
             'servicePullRequest' => 'CI_PULL_REQUEST',
+
             // extends by php-coveralls
             'serviceJobId'       => 'CI_JOB_ID',
             'serviceEventType'   => 'COVERALLS_EVENT_TYPE',
@@ -350,11 +344,9 @@ class JsonFile extends Coveralls
      */
     public function excludeNoStatementsFiles()
     {
-
         $this->sourceFiles = array_filter(
             $this->sourceFiles,
-            function ( SourceFile $sourceFile ) {
-
+            function (SourceFile $sourceFile) {
                 return $sourceFile->getMetrics()->hasStatements();
             }
         );
@@ -368,7 +360,7 @@ class JsonFile extends Coveralls
     public function sortSourceFiles()
     {
 
-        ksort( $this->sourceFiles );
+        ksort($this->sourceFiles);
     }
 
     // accessor
@@ -380,12 +372,11 @@ class JsonFile extends Coveralls
      */
     public function reportLineCoverage()
     {
-
         $metrics = $this->getMetrics();
 
         foreach ($this->sourceFiles as $sourceFile) {
             /* @var $sourceFile \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile */
-            $metrics->merge( $sourceFile->getMetrics() );
+            $metrics->merge($sourceFile->getMetrics());
         }
 
         return $metrics->getLineCoverage();
@@ -413,10 +404,10 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\SourceFile|null
      */
-    public function getSourceFile( $path )
+    public function getSourceFile($path)
     {
 
-        if ($this->hasSourceFile( $path )) {
+        if ($this->hasSourceFile($path)) {
             return $this->sourceFiles[$path];
         }
 
@@ -430,7 +421,7 @@ class JsonFile extends Coveralls
      *
      * @return boolean
      */
-    public function hasSourceFile( $path )
+    public function hasSourceFile($path)
     {
 
         return isset( $this->sourceFiles[$path] );
@@ -443,9 +434,8 @@ class JsonFile extends Coveralls
      *
      * @return void
      */
-    public function addSourceFile( SourceFile $sourceFile )
+    public function addSourceFile(SourceFile $sourceFile)
     {
-
         $this->sourceFiles[$sourceFile->getPath()] = $sourceFile;
     }
 
@@ -456,7 +446,6 @@ class JsonFile extends Coveralls
      */
     public function getSourceFiles()
     {
-
         return $this->sourceFiles;
     }
 
@@ -482,9 +471,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setServiceName( $serviceName )
+    public function setServiceName($serviceName)
     {
-
         $this->serviceName = $serviceName;
 
         return $this;
@@ -512,9 +500,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setRepoToken( $repoToken )
+    public function setRepoToken($repoToken)
     {
-
         $this->repoToken = $repoToken;
 
         return $this;
@@ -542,9 +529,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setServiceJobId( $serviceJobId )
+    public function setServiceJobId($serviceJobId)
     {
-
         $this->serviceJobId = $serviceJobId;
 
         return $this;
@@ -557,7 +543,6 @@ class JsonFile extends Coveralls
      */
     public function getServiceNumber()
     {
-
         return $this->serviceNumber;
     }
 
@@ -568,7 +553,6 @@ class JsonFile extends Coveralls
      */
     public function getServiceEventType()
     {
-
         return $this->serviceEventType;
     }
 
@@ -579,7 +563,6 @@ class JsonFile extends Coveralls
      */
     public function getServiceBuildUrl()
     {
-
         return $this->serviceBuildUrl;
     }
 
@@ -590,7 +573,6 @@ class JsonFile extends Coveralls
      */
     public function getServiceBranch()
     {
-
         return $this->serviceBranch;
     }
 
@@ -601,7 +583,6 @@ class JsonFile extends Coveralls
      */
     public function getServicePullRequest()
     {
-
         return $this->servicePullRequest;
     }
 
@@ -627,9 +608,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setGit( Git $git )
+    public function setGit(Git $git)
     {
-
         $this->git = $git;
 
         return $this;
@@ -657,9 +637,8 @@ class JsonFile extends Coveralls
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Entity\JsonFile
      */
-    public function setRunAt( $runAt )
+    public function setRunAt($runAt)
     {
-
         $this->runAt = $runAt;
 
         return $this;

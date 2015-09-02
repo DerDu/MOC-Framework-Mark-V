@@ -11,7 +11,6 @@ use Guzzle\Service\Description\Parameter;
  */
 class BodyVisitor extends AbstractResponseVisitor
 {
-
     public function visit(
         CommandInterface $command,
         Response $response,
@@ -20,6 +19,6 @@ class BodyVisitor extends AbstractResponseVisitor
         $context = null
     ) {
 
-        $value[$param->getName()] = $param->filter( $response->getBody() );
+        $value[$param->getName()] = $param->filter($response->getBody());
     }
 }

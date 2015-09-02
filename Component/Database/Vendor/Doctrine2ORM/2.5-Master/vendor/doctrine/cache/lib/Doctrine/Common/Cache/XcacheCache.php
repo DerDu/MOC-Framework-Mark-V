@@ -32,41 +32,40 @@ namespace Doctrine\Common\Cache;
  */
 class XcacheCache extends CacheProvider
 {
-
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        return $this->doContains( $id ) ? unserialize( xcache_get( $id ) ) : false;
+        return $this->doContains($id) ? unserialize(xcache_get($id)) : false;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        return xcache_isset( $id );
+        return xcache_isset($id);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
 
-        return xcache_set( $id, serialize( $data ), (int)$lifeTime );
+        return xcache_set($id, serialize($data), (int)$lifeTime);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        return xcache_unset( $id );
+        return xcache_unset($id);
     }
 
     /**
@@ -74,10 +73,9 @@ class XcacheCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         $this->checkAuthorization();
 
-        xcache_clear_cache( XC_TYPE_VAR );
+        xcache_clear_cache(XC_TYPE_VAR);
 
         return true;
     }
@@ -92,7 +90,7 @@ class XcacheCache extends CacheProvider
     protected function checkAuthorization()
     {
 
-        if (ini_get( 'xcache.admin.enable_auth' )) {
+        if (ini_get('xcache.admin.enable_auth')) {
             throw new \BadMethodCallException(
                 'To use all features of \Doctrine\Common\Cache\XcacheCache, '
                 .'you must set "xcache.admin.enable_auth" to "Off" in your php.ini.'
@@ -105,10 +103,9 @@ class XcacheCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         $this->checkAuthorization();
 
-        $info = xcache_info( XC_TYPE_VAR, 0 );
+        $info = xcache_info(XC_TYPE_VAR, 0);
         return array(
             Cache::STATS_HITS             => $info['hits'],
             Cache::STATS_MISSES           => $info['misses'],

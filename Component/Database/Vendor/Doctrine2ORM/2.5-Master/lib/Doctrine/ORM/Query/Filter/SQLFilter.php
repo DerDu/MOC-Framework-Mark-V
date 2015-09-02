@@ -34,7 +34,6 @@ use Doctrine\ORM\Query\ParameterTypeInferer;
  */
 abstract class SQLFilter
 {
-
     /**
      * The entity manager.
      *
@@ -47,16 +46,15 @@ abstract class SQLFilter
      *
      * @var array
      */
-    private $parameters = [ ];
+    private $parameters = [];
 
     /**
      * Constructs the SQLFilter object.
      *
      * @param EntityManagerInterface $em The entity manager.
      */
-    final public function __construct( EntityManagerInterface $em )
+    final public function __construct(EntityManagerInterface $em)
     {
-
         $this->em = $em;
     }
 
@@ -71,17 +69,16 @@ abstract class SQLFilter
      *
      * @return SQLFilter The current SQL filter.
      */
-    final public function setParameter( $name, $value, $type = null )
+    final public function setParameter($name, $value, $type = null)
     {
-
         if (null === $type) {
-            $type = ParameterTypeInferer::inferType( $value );
+            $type = ParameterTypeInferer::inferType($value);
         }
 
-        $this->parameters[$name] = array( 'value' => $value, 'type' => $type );
+        $this->parameters[$name] = array('value' => $value, 'type' => $type);
 
         // Keep the parameters sorted for the hash
-        ksort( $this->parameters );
+        ksort($this->parameters);
 
         // The filter collection of the EM is now dirty
         $this->em->getFilters()->setFiltersStateDirty();
@@ -101,14 +98,14 @@ abstract class SQLFilter
      *
      * @throws \InvalidArgumentException
      */
-    final public function getParameter( $name )
+    final public function getParameter($name)
     {
 
         if (!isset( $this->parameters[$name] )) {
-            throw new \InvalidArgumentException( "Parameter '".$name."' does not exist." );
+            throw new \InvalidArgumentException("Parameter '".$name."' does not exist.");
         }
 
-        return $this->em->getConnection()->quote( $this->parameters[$name]['value'], $this->parameters[$name]['type'] );
+        return $this->em->getConnection()->quote($this->parameters[$name]['value'], $this->parameters[$name]['type']);
     }
 
     /**
@@ -118,7 +115,7 @@ abstract class SQLFilter
      *
      * @return boolean
      */
-    final public function hasParameter( $name )
+    final public function hasParameter($name)
     {
 
         if (!isset( $this->parameters[$name] )) {
@@ -136,7 +133,7 @@ abstract class SQLFilter
     final public function __toString()
     {
 
-        return serialize( $this->parameters );
+        return serialize($this->parameters);
     }
 
     /**
@@ -147,7 +144,7 @@ abstract class SQLFilter
      *
      * @return string The constraint SQL if there is available, empty string otherwise.
      */
-    abstract public function addFilterConstraint( ClassMetadata $targetEntity, $targetTableAlias );
+    abstract public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias);
 
     /**
      * Returns the database connection used by the entity manager
@@ -156,7 +153,6 @@ abstract class SQLFilter
      */
     final protected function getConnection()
     {
-
         return $this->em->getConnection();
     }
 }

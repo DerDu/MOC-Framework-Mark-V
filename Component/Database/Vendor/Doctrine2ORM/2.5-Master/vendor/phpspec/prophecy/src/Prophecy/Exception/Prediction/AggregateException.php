@@ -15,17 +15,15 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class AggregateException extends \RuntimeException implements PredictionException
 {
-
     private $exceptions = array();
     private $objectProphecy;
 
-    public function append( PredictionException $exception )
+    public function append(PredictionException $exception)
     {
-
         $message = $exception->getMessage();
-        $message = '  '.strtr( $message, array( "\n" => "\n  " ) )."\n";
+        $message = '  '.strtr($message, array("\n" => "\n  "))."\n";
 
-        $this->message = rtrim( $this->message.$message );
+        $this->message = rtrim($this->message.$message);
         $this->exceptions[] = $exception;
     }
 
@@ -34,7 +32,6 @@ class AggregateException extends \RuntimeException implements PredictionExceptio
      */
     public function getExceptions()
     {
-
         return $this->exceptions;
     }
 
@@ -43,13 +40,11 @@ class AggregateException extends \RuntimeException implements PredictionExceptio
      */
     public function getObjectProphecy()
     {
-
         return $this->objectProphecy;
     }
 
-    public function setObjectProphecy( ObjectProphecy $objectProphecy )
+    public function setObjectProphecy(ObjectProphecy $objectProphecy)
     {
-
         $this->objectProphecy = $objectProphecy;
     }
 }

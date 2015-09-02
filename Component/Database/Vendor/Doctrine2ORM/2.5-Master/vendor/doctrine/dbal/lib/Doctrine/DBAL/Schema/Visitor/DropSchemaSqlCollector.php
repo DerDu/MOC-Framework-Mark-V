@@ -34,7 +34,6 @@ use Doctrine\DBAL\Schema\Table;
  */
 class DropSchemaSqlCollector extends AbstractVisitor
 {
-
     /**
      * @var \SplObjectStorage
      */
@@ -58,9 +57,8 @@ class DropSchemaSqlCollector extends AbstractVisitor
     /**
      * @param AbstractPlatform $platform
      */
-    public function __construct( AbstractPlatform $platform )
+    public function __construct(AbstractPlatform $platform)
     {
-
         $this->platform = $platform;
         $this->clearQueries();
     }
@@ -70,7 +68,6 @@ class DropSchemaSqlCollector extends AbstractVisitor
      */
     public function clearQueries()
     {
-
         $this->constraints = new \SplObjectStorage();
         $this->sequences = new \SplObjectStorage();
         $this->tables = new \SplObjectStorage();
@@ -79,32 +76,32 @@ class DropSchemaSqlCollector extends AbstractVisitor
     /**
      * {@inheritdoc}
      */
-    public function acceptTable( Table $table )
+    public function acceptTable(Table $table)
     {
 
-        $this->tables->attach( $table );
+        $this->tables->attach($table);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptForeignKey( Table $localTable, ForeignKeyConstraint $fkConstraint )
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
 
-        if (strlen( $fkConstraint->getName() ) == 0) {
-            throw SchemaException::namedForeignKeyRequired( $localTable, $fkConstraint );
+        if (strlen($fkConstraint->getName()) == 0) {
+            throw SchemaException::namedForeignKeyRequired($localTable, $fkConstraint);
         }
 
-        $this->constraints->attach( $fkConstraint, $localTable );
+        $this->constraints->attach($fkConstraint, $localTable);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSequence( Sequence $sequence )
+    public function acceptSequence(Sequence $sequence)
     {
 
-        $this->sequences->attach( $sequence );
+        $this->sequences->attach($sequence);
     }
 
     /**
@@ -112,20 +109,19 @@ class DropSchemaSqlCollector extends AbstractVisitor
      */
     public function getQueries()
     {
-
         $sql = array();
 
         foreach ($this->constraints as $fkConstraint) {
             $localTable = $this->constraints[$fkConstraint];
-            $sql[] = $this->platform->getDropForeignKeySQL( $fkConstraint, $localTable );
+            $sql[] = $this->platform->getDropForeignKeySQL($fkConstraint, $localTable);
         }
 
         foreach ($this->sequences as $sequence) {
-            $sql[] = $this->platform->getDropSequenceSQL( $sequence );
+            $sql[] = $this->platform->getDropSequenceSQL($sequence);
         }
 
         foreach ($this->tables as $table) {
-            $sql[] = $this->platform->getDropTableSQL( $table );
+            $sql[] = $this->platform->getDropTableSQL($table);
         }
 
         return $sql;

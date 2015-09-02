@@ -32,7 +32,6 @@ use Doctrine\DBAL\Schema\TableDiff;
  */
 class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
 {
-
     /**
      * @var string
      */
@@ -64,9 +63,8 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      * @param \Doctrine\DBAL\Schema\TableDiff           $tableDiff
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      */
-    public function __construct( $oldColumnName, Column $column, TableDiff $tableDiff, AbstractPlatform $platform )
+    public function __construct($oldColumnName, Column $column, TableDiff $tableDiff, AbstractPlatform $platform)
     {
-
         $this->_oldColumnName = $oldColumnName;
         $this->_column = $column;
         $this->_tableDiff = $tableDiff;
@@ -78,7 +76,6 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      */
     public function getOldColumnName()
     {
-
         return $this->_oldColumnName;
     }
 
@@ -87,7 +84,6 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      */
     public function getColumn()
     {
-
         return $this->_column;
     }
 
@@ -96,7 +92,6 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      */
     public function getTableDiff()
     {
-
         return $this->_tableDiff;
     }
 
@@ -105,7 +100,6 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
-
         return $this->_platform;
     }
 
@@ -114,11 +108,11 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      *
      * @return \Doctrine\DBAL\Event\SchemaAlterTableRenameColumnEventArgs
      */
-    public function addSql( $sql )
+    public function addSql($sql)
     {
 
-        if (is_array( $sql )) {
-            $this->_sql = array_merge( $this->_sql, $sql );
+        if (is_array($sql)) {
+            $this->_sql = array_merge($this->_sql, $sql);
         } else {
             $this->_sql[] = $sql;
         }
@@ -131,7 +125,6 @@ class SchemaAlterTableRenameColumnEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
-
         return $this->_sql;
     }
 }

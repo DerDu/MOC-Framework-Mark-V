@@ -25,7 +25,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DescriptorHelper extends Helper
 {
-
     /**
      * @var DescriptorInterface[]
      */
@@ -36,12 +35,11 @@ class DescriptorHelper extends Helper
      */
     public function __construct()
     {
-
         $this
-            ->register( 'txt', new TextDescriptor() )
-            ->register( 'xml', new XmlDescriptor() )
-            ->register( 'json', new JsonDescriptor() )
-            ->register( 'md', new MarkdownDescriptor() );
+            ->register('txt', new TextDescriptor())
+            ->register('xml', new XmlDescriptor())
+            ->register('json', new JsonDescriptor())
+            ->register('md', new MarkdownDescriptor());
     }
 
     /**
@@ -52,9 +50,8 @@ class DescriptorHelper extends Helper
      *
      * @return DescriptorHelper
      */
-    public function register( $format, DescriptorInterface $descriptor )
+    public function register($format, DescriptorInterface $descriptor)
     {
-
         $this->descriptors[$format] = $descriptor;
 
         return $this;
@@ -73,20 +70,20 @@ class DescriptorHelper extends Helper
      *
      * @throws \InvalidArgumentException when the given format is not supported
      */
-    public function describe( OutputInterface $output, $object, array $options = array() )
+    public function describe(OutputInterface $output, $object, array $options = array())
     {
 
-        $options = array_merge( array(
+        $options = array_merge(array(
             'raw_text' => false,
             'format' => 'txt',
-        ), $options );
+        ), $options);
 
         if (!isset( $this->descriptors[$options['format']] )) {
-            throw new \InvalidArgumentException( sprintf( 'Unsupported format "%s".', $options['format'] ) );
+            throw new \InvalidArgumentException(sprintf('Unsupported format "%s".', $options['format']));
         }
 
         $descriptor = $this->descriptors[$options['format']];
-        $descriptor->describe( $output, $object, $options );
+        $descriptor->describe($output, $object, $options);
     }
 
     /**
@@ -94,7 +91,6 @@ class DescriptorHelper extends Helper
      */
     public function getName()
     {
-
         return 'descriptor';
     }
 }

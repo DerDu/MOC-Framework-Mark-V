@@ -12,24 +12,23 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CoverallsV1JobsCommandTest extends ProjectTestCase
 {
-
     /**
      * @test
      */
     public function shouldExecuteCoverallsV1JobsCommand()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
         $this->dumpCloverXml();
 
         $command = new CoverallsV1JobsCommand();
-        $command->setRootDir( $this->rootDir );
+        $command->setRootDir($this->rootDir);
 
         $app = new Application();
-        $app->add( $command );
+        $app->add($command);
 
-        $command = $app->find( 'coveralls:v1:jobs' );
-        $commandTester = new CommandTester( $command );
+        $command = $app->find('coveralls:v1:jobs');
+        $commandTester = new CommandTester($command);
 
         $_SERVER['TRAVIS'] = true;
         $_SERVER['TRAVIS_JOB_ID'] = 'command_test';
@@ -43,18 +42,17 @@ class CoverallsV1JobsCommandTest extends ProjectTestCase
             )
         );
 
-        $this->assertEquals( 0, $actual );
+        $this->assertEquals(0, $actual);
     }
 
     protected function dumpCloverXml()
     {
 
-        file_put_contents( $this->cloverXmlPath, $this->getCloverXml() );
+        file_put_contents($this->cloverXmlPath, $this->getCloverXml());
     }
 
     protected function getCloverXml()
     {
-
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -78,23 +76,23 @@ class CoverallsV1JobsCommandTest extends ProjectTestCase
   </project>
 </coverage>
 XML;
-        return sprintf( $xml, $this->srcDir, $this->srcDir );
+        return sprintf($xml, $this->srcDir, $this->srcDir);
     }
 
     protected function setUp()
     {
 
-        $this->projectDir = realpath( __DIR__.'/../../../..' );
+        $this->projectDir = realpath(__DIR__.'/../../../..');
 
-        $this->setUpDir( $this->projectDir );
+        $this->setUpDir($this->projectDir);
     }
 
     protected function tearDown()
     {
 
-        $this->rmFile( $this->cloverXmlPath );
-        $this->rmFile( $this->jsonPath );
-        $this->rmDir( $this->logsDir );
-        $this->rmDir( $this->buildDir );
+        $this->rmFile($this->cloverXmlPath);
+        $this->rmFile($this->jsonPath);
+        $this->rmDir($this->logsDir);
+        $this->rmDir($this->buildDir);
     }
 }

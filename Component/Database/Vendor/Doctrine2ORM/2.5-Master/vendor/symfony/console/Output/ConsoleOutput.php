@@ -31,6 +31,9 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
 {
 
+    /**
+     * @var StreamOutput
+     */
     private $stderr;
 
     /**
@@ -48,60 +51,97 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
         OutputFormatterInterface $formatter = null
     ) {
 
-        $outputStream = 'php://stdout';
-        if (!$this->hasStdoutSupport()) {
-            $outputStream = 'php://output';
-        }
+        parent::__construct($this->openOutputStream(), $verbosity, $decorated, $formatter);
 
-        parent::__construct( fopen( $outputStream, 'w' ), $verbosity, $decorated, $formatter );
+        $this->stderr = new StreamOutput($this->openErrorStream(), $verbosity, $decorated, $this->getFormatter());
+    }
 
-        $this->stderr = new StreamOutput( fopen( 'php://stderr', 'w' ), $verbosity, $decorated, $this->getFormatter() );
+    /**
+     * @return resource
+     */
+    private function openOutputStream()
+    {
+
+        $outputStream = $this->hasStdoutSupport() ? 'php://stdout' : 'php://output';
+
+        return @fopen($outputStream, 'w') ?: fopen('php://output', 'w');
     }
 
     /**
      * Returns true if current environment supports writing console output to
      * STDOUT.
      *
-     * IBM iSeries (OS400) exhibits character-encoding issues when writing to
-     * STDOUT and doesn't properly convert ASCII to EBCDIC, resulting in garbage
-     * output.
-     *
      * @return bool
      */
     protected function hasStdoutSupport()
     {
 
-        return ( 'OS400' != php_uname( 's' ) );
+        return false === $this->isRunningOS400();
+    }
+
+    /**
+     * Checks if current executing environment is IBM iSeries (OS400), which
+     * doesn't properly convert character-encodings between ASCII to EBCDIC.
+     *
+     * @return bool
+     */
+    private function isRunningOS400()
+    {
+
+        return 'OS400' === php_uname('s');
+    }
+
+    /**
+     * @return resource
+     */
+    private function openErrorStream()
+    {
+
+        $errorStream = $this->hasStderrSupport() ? 'php://stderr' : 'php://output';
+
+        return fopen($errorStream, 'w');
+    }
+
+    /**
+     * Returns true if current environment supports writing console output to
+     * STDERR.
+     *
+     * @return bool
+     */
+    protected function hasStderrSupport()
+    {
+
+        return false === $this->isRunningOS400();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDecorated( $decorated )
+    public function setDecorated($decorated)
     {
 
-        parent::setDecorated( $decorated );
-        $this->stderr->setDecorated( $decorated );
+        parent::setDecorated($decorated);
+        $this->stderr->setDecorated($decorated);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setFormatter( OutputFormatterInterface $formatter )
+    public function setFormatter(OutputFormatterInterface $formatter)
     {
 
-        parent::setFormatter( $formatter );
-        $this->stderr->setFormatter( $formatter );
+        parent::setFormatter($formatter);
+        $this->stderr->setFormatter($formatter);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity( $level )
+    public function setVerbosity($level)
     {
 
-        parent::setVerbosity( $level );
-        $this->stderr->setVerbosity( $level );
+        parent::setVerbosity($level);
+        $this->stderr->setVerbosity($level);
     }
 
     /**
@@ -109,16 +149,14 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
      */
     public function getErrorOutput()
     {
-
         return $this->stderr;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setErrorOutput( OutputInterface $error )
+    public function setErrorOutput(OutputInterface $error)
     {
-
         $this->stderr = $error;
     }
 }

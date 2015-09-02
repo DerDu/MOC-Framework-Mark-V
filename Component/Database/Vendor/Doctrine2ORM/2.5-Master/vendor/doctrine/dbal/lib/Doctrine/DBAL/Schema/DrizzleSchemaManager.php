@@ -28,21 +28,19 @@ use Doctrine\DBAL\Types\Type;
  */
 class DrizzleSchemaManager extends AbstractSchemaManager
 {
-
     /**
      * {@inheritdoc}
      */
-    public function _getPortableTableForeignKeyDefinition( $tableForeignKey )
+    public function _getPortableTableForeignKeyDefinition($tableForeignKey)
     {
-
         $columns = array();
-        foreach (explode( ',', $tableForeignKey['CONSTRAINT_COLUMNS'] ) as $value) {
-            $columns[] = trim( $value, ' `' );
+        foreach (explode(',', $tableForeignKey['CONSTRAINT_COLUMNS']) as $value) {
+            $columns[] = trim($value, ' `');
         }
 
         $refColumns = array();
-        foreach (explode( ',', $tableForeignKey['REFERENCED_TABLE_COLUMNS'] ) as $value) {
-            $refColumns[] = trim( $value, ' `' );
+        foreach (explode(',', $tableForeignKey['REFERENCED_TABLE_COLUMNS']) as $value) {
+            $refColumns[] = trim($value, ' `');
         }
 
         return new ForeignKeyConstraint(
@@ -60,14 +58,14 @@ class DrizzleSchemaManager extends AbstractSchemaManager
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableColumnDefinition( $tableColumn )
+    protected function _getPortableTableColumnDefinition($tableColumn)
     {
 
-        $dbType = strtolower( $tableColumn['DATA_TYPE'] );
+        $dbType = strtolower($tableColumn['DATA_TYPE']);
 
-        $type = $this->_platform->getDoctrineTypeMapping( $dbType );
-        $type = $this->extractDoctrineTypeFromComment( $tableColumn['COLUMN_COMMENT'], $type );
-        $tableColumn['COLUMN_COMMENT'] = $this->removeDoctrineTypeFromComment( $tableColumn['COLUMN_COMMENT'], $type );
+        $type = $this->_platform->getDoctrineTypeMapping($dbType);
+        $type = $this->extractDoctrineTypeFromComment($tableColumn['COLUMN_COMMENT'], $type);
+        $tableColumn['COLUMN_COMMENT'] = $this->removeDoctrineTypeFromComment($tableColumn['COLUMN_COMMENT'], $type);
 
         $options = array(
             'notnull'       => !(bool)$tableColumn['IS_NULLABLE'],
@@ -81,10 +79,10 @@ class DrizzleSchemaManager extends AbstractSchemaManager
                 : null,
         );
 
-        $column = new Column( $tableColumn['COLUMN_NAME'], Type::getType( $type ), $options );
+        $column = new Column($tableColumn['COLUMN_NAME'], Type::getType($type), $options);
 
         if (!empty( $tableColumn['COLLATION_NAME'] )) {
-            $column->setPlatformOption( 'collation', $tableColumn['COLLATION_NAME'] );
+            $column->setPlatformOption('collation', $tableColumn['COLLATION_NAME']);
         }
 
         return $column;
@@ -93,33 +91,30 @@ class DrizzleSchemaManager extends AbstractSchemaManager
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableDatabaseDefinition( $database )
+    protected function _getPortableDatabaseDefinition($database)
     {
-
         return $database['SCHEMA_NAME'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableDefinition( $table )
+    protected function _getPortableTableDefinition($table)
     {
-
         return $table['TABLE_NAME'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableIndexesList( $tableIndexes, $tableName = null )
+    protected function _getPortableTableIndexesList($tableIndexes, $tableName = null)
     {
-
         $indexes = array();
         foreach ($tableIndexes as $k) {
             $k['primary'] = (boolean)$k['primary'];
             $indexes[] = $k;
         }
 
-        return parent::_getPortableTableIndexesList( $indexes, $tableName );
+        return parent::_getPortableTableIndexesList($indexes, $tableName);
     }
 }

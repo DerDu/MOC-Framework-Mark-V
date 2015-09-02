@@ -9,7 +9,6 @@ use Guzzle\Http\Message\RequestInterface;
  */
 interface RequestSerializerInterface
 {
-
     /**
      * Create a request for a command
      *
@@ -17,5 +16,5 @@ interface RequestSerializerInterface
      *
      * @return RequestInterface
      */
-    public function prepare( CommandInterface $command );
+    public function prepare(CommandInterface $command);
 }

@@ -11,9 +11,8 @@ use Guzzle\Service\Exception\ServiceNotFoundException;
 class ServiceBuilderLoader extends AbstractConfigLoader
 {
 
-    protected function build( $config, array $options )
+    protected function build($config, array $options)
     {
-
         // A service builder class can be specified in the class field
         $class = !empty( $config['class'] ) ? $config['class'] : __NAMESPACE__.'\\ServiceBuilder';
 
@@ -54,12 +53,11 @@ class ServiceBuilderLoader extends AbstractConfigLoader
             $service['class'] = isset( $service['class'] ) ? $service['class'] : '';
         }
 
-        return new $class( $services );
+        return new $class($services);
     }
 
-    protected function mergeData( array $a, array $b )
+    protected function mergeData(array $a, array $b)
     {
-
         $result = $b + $a;
 
         // Merge services using a recursive union of arrays

@@ -16,20 +16,18 @@ use Prophecy\Prophecy\MethodProphecy;
 
 class UnexpectedCallsException extends MethodProphecyException implements PredictionException
 {
-
     private $calls = array();
 
-    public function __construct( $message, MethodProphecy $methodProphecy, array $calls )
+    public function __construct($message, MethodProphecy $methodProphecy, array $calls)
     {
 
-        parent::__construct( $message, $methodProphecy );
+        parent::__construct($message, $methodProphecy);
 
         $this->calls = $calls;
     }
 
     public function getCalls()
     {
-
         return $this->calls;
     }
 }

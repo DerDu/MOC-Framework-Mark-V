@@ -42,18 +42,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConvertMappingCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'orm:convert-mapping' )
-            ->setAliases( array( 'orm:convert:mapping' ) )
-            ->setDescription( 'Convert mapping information between supported formats.' )
-            ->setDefinition( array(
+            ->setName('orm:convert-mapping')
+            ->setAliases(array('orm:convert:mapping'))
+            ->setDescription('Convert mapping information between supported formats.')
+            ->setDefinition(array(
                 new InputOption(
                     'filter', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                     'A string pattern used to match entities that should be processed.'
@@ -84,8 +82,8 @@ class ConvertMappingCommand extends Command
                     'namespace', null, InputOption::VALUE_OPTIONAL,
                     'Defines a namespace for the generated entity classes, if converted from database.'
                 ),
-            ) )
-            ->setHelp( <<<EOT
+            ))
+            ->setHelp(<<<EOT
 Convert mapping information between supported formats.
 
 This is an execute <info>one-time</info> command. It should not be necessary for
@@ -114,12 +112,12 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $em = $this->getHelper( 'em' )->getEntityManager();
+        $em = $this->getHelper('em')->getEntityManager();
 
-        if ($input->getOption( 'from-database' ) === true) {
+        if ($input->getOption('from-database') === true) {
             $databaseDriver = new DatabaseDriver(
                 $em->getConnection()->getSchemaManager()
             );
@@ -128,64 +126,64 @@ EOT
                 $databaseDriver
             );
 
-            if (( $namespace = $input->getOption( 'namespace' ) ) !== null) {
-                $databaseDriver->setNamespace( $namespace );
+            if (( $namespace = $input->getOption('namespace') ) !== null) {
+                $databaseDriver->setNamespace($namespace);
             }
         }
 
         $cmf = new DisconnectedClassMetadataFactory();
-        $cmf->setEntityManager( $em );
+        $cmf->setEntityManager($em);
         $metadata = $cmf->getAllMetadata();
-        $metadata = MetadataFilter::filter( $metadata, $input->getOption( 'filter' ) );
+        $metadata = MetadataFilter::filter($metadata, $input->getOption('filter'));
 
         // Process destination directory
-        if (!is_dir( $destPath = $input->getArgument( 'dest-path' ) )) {
-            mkdir( $destPath, 0777, true );
+        if (!is_dir($destPath = $input->getArgument('dest-path'))) {
+            mkdir($destPath, 0777, true);
         }
-        $destPath = realpath( $destPath );
+        $destPath = realpath($destPath);
 
-        if (!file_exists( $destPath )) {
+        if (!file_exists($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Mapping destination directory '<info>%s</info>' does not exist.",
-                    $input->getArgument( 'dest-path' ) )
+                sprintf("Mapping destination directory '<info>%s</info>' does not exist.",
+                    $input->getArgument('dest-path'))
             );
         }
 
-        if (!is_writable( $destPath )) {
+        if (!is_writable($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf( "Mapping destination directory '<info>%s</info>' does not have write permissions.", $destPath )
+                sprintf("Mapping destination directory '<info>%s</info>' does not have write permissions.", $destPath)
             );
         }
 
-        $toType = strtolower( $input->getArgument( 'to-type' ) );
+        $toType = strtolower($input->getArgument('to-type'));
 
-        $exporter = $this->getExporter( $toType, $destPath );
-        $exporter->setOverwriteExistingFiles( $input->getOption( 'force' ) );
+        $exporter = $this->getExporter($toType, $destPath);
+        $exporter->setOverwriteExistingFiles($input->getOption('force'));
 
         if ($toType == 'annotation') {
             $entityGenerator = new EntityGenerator();
-            $exporter->setEntityGenerator( $entityGenerator );
+            $exporter->setEntityGenerator($entityGenerator);
 
-            $entityGenerator->setNumSpaces( $input->getOption( 'num-spaces' ) );
+            $entityGenerator->setNumSpaces($input->getOption('num-spaces'));
 
-            if (( $extend = $input->getOption( 'extend' ) ) !== null) {
-                $entityGenerator->setClassToExtend( $extend );
+            if (( $extend = $input->getOption('extend') ) !== null) {
+                $entityGenerator->setClassToExtend($extend);
             }
         }
 
-        if (count( $metadata )) {
+        if (count($metadata)) {
             foreach ($metadata as $class) {
-                $output->writeln( sprintf( 'Processing entity "<info>%s</info>"', $class->name ) );
+                $output->writeln(sprintf('Processing entity "<info>%s</info>"', $class->name));
             }
 
-            $exporter->setMetadata( $metadata );
+            $exporter->setMetadata($metadata);
             $exporter->export();
 
-            $output->writeln( PHP_EOL.sprintf(
+            $output->writeln(PHP_EOL.sprintf(
                     'Exporting "<info>%s</info>" mapping information to "<info>%s</info>"', $toType, $destPath
-                ) );
+                ));
         } else {
-            $output->writeln( 'No Metadata Classes to process.' );
+            $output->writeln('No Metadata Classes to process.');
         }
     }
 
@@ -195,11 +193,10 @@ EOT
      *
      * @return \Doctrine\ORM\Tools\Export\Driver\AbstractExporter
      */
-    protected function getExporter( $toType, $destPath )
+    protected function getExporter($toType, $destPath)
     {
-
         $cme = new ClassMetadataExporter();
 
-        return $cme->getExporter( $toType, $destPath );
+        return $cme->getExporter($toType, $destPath);
     }
 }

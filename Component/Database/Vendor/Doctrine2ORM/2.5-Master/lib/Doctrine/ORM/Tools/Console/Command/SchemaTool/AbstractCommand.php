@@ -36,14 +36,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $emHelper = $this->getHelper( 'em' );
+        $emHelper = $this->getHelper('em');
 
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $emHelper->getEntityManager();
@@ -52,11 +51,11 @@ abstract class AbstractCommand extends Command
 
         if (!empty( $metadatas )) {
             // Create SchemaTool
-            $tool = new SchemaTool( $em );
+            $tool = new SchemaTool($em);
 
-            return $this->executeSchemaCommand( $input, $output, $tool, $metadatas );
+            return $this->executeSchemaCommand($input, $output, $tool, $metadatas);
         } else {
-            $output->writeln( 'No Metadata Classes to process.' );
+            $output->writeln('No Metadata Classes to process.');
             return 0;
         }
     }

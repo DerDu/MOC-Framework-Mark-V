@@ -24,16 +24,15 @@ use Doctrine\DBAL\Driver\AbstractDB2Driver;
 /**
  * IBM DB2 Driver.
  *
- * @since  2.0
+ * @since 2.0
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  */
 class DB2Driver extends AbstractDB2Driver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
 
         if (!isset( $params['protocol'] )) {
@@ -56,7 +55,7 @@ class DB2Driver extends AbstractDB2Driver
             $password = null;
         }
 
-        return new DB2Connection( $params, $username, $password, $driverOptions );
+        return new DB2Connection($params, $username, $password, $driverOptions);
     }
 
     /**
@@ -64,7 +63,6 @@ class DB2Driver extends AbstractDB2Driver
      */
     public function getName()
     {
-
         return 'ibm_db2';
     }
 }

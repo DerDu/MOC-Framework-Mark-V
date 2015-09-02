@@ -23,11 +23,10 @@ use phpDocumentor\Reflection\DocBlock;
  */
 class Description implements \Reflector
 {
-
     /** @var string */
     protected $contents = '';
 
-    /** @var array|null The contents, as an array of strings and Tag objects or null if it is not parsed yet. */
+    /** @var array The contents, as an array of strings and Tag objects. */
     protected $parsedContents = null;
 
     /** @var DocBlock The DocBlock which this description belongs to. */
@@ -36,13 +35,13 @@ class Description implements \Reflector
     /**
      * Populates the fields of a description.
      *
-     * @param string   $content  The description's content.
+     * @param string $content The description's conetnts.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
-    public function __construct( $content, DocBlock $docblock = null )
+    public function __construct($content, DocBlock $docblock = null)
     {
 
-        $this->setContent( $content )->setDocBlock( $docblock );
+        $this->setContent($content)->setDocBlock($docblock);
     }
 
     /**
@@ -52,10 +51,10 @@ class Description implements \Reflector
      *
      * @return $this
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        $this->contents = trim( $content );
+        $this->contents = trim($content);
 
         $this->parsedContents = null;
         return $this;
@@ -64,7 +63,7 @@ class Description implements \Reflector
     /**
      * Builds a string representation of this object.
      *
-     * @todo               determine the exact format as used by PHP Reflection
+     * @todo determine the exact format as used by PHP Reflection
      *     and implement it.
      *
      * @return void
@@ -73,7 +72,7 @@ class Description implements \Reflector
     public static function export()
     {
 
-        throw new \Exception( 'Not yet implemented' );
+        throw new \Exception('Not yet implemented');
     }
 
     /**
@@ -84,7 +83,6 @@ class Description implements \Reflector
      */
     public function getParsedContents()
     {
-
         if (null === $this->parsedContents) {
             $this->parsedContents = preg_split(
                 '/\{
@@ -122,7 +120,7 @@ class Description implements \Reflector
                 PREG_SPLIT_DELIM_CAPTURE
             );
 
-            $count = count( $this->parsedContents );
+            $count = count($this->parsedContents);
             for ($i = 1; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
                     $this->parsedContents[$i],
@@ -135,8 +133,8 @@ class Description implements \Reflector
             //See unit tests for examples.
             for ($i = 0; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = str_replace(
-                    array( '{@}', '{}' ),
-                    array( '@', '}' ),
+                    array('{@}', '{}'),
+                    array('@', '}'),
                     $this->parsedContents[$i]
                 );
             }
@@ -147,7 +145,7 @@ class Description implements \Reflector
     /**
      * Return a formatted variant of the Long Description using MarkDown.
      *
-     * @todo               this should become a more intelligent piece of code where the
+     * @todo this should become a more intelligent piece of code where the
      *     configuration contains a setting what format long descriptions are.
      *
      * @codeCoverageIgnore Will be removed soon, in favor of adapters at
@@ -157,32 +155,28 @@ class Description implements \Reflector
      */
     public function getFormattedContents()
     {
-
         $result = $this->contents;
 
         // if the long description contains a plain HTML <code> element, surround
         // it with a pre element. Please note that we explicitly used str_replace
         // and not preg_replace to gain performance
-        if (strpos( $result, '<code>' ) !== false) {
+        if (strpos($result, '<code>') !== false) {
             $result = str_replace(
-                array( '<code>', "<code>\r\n", "<code>\n", "<code>\r", '</code>' ),
-                array( '<pre><code>', '<code>', '<code>', '<code>', '</code></pre>' ),
+                array('<code>', "<code>\r\n", "<code>\n", "<code>\r", '</code>'),
+                array('<pre><code>', '<code>', '<code>', '<code>', '</code></pre>'),
                 $result
             );
         }
 
-        if (class_exists( 'Parsedown' )) {
+        if (class_exists('Parsedown')) {
             $markdown = \Parsedown::instance();
-            $result = $markdown->parse( $result );
-        } elseif (class_exists( 'dflydev\markdown\MarkdownExtraParser' )) {
+            $result = $markdown->parse($result);
+        } elseif (class_exists('dflydev\markdown\MarkdownExtraParser')) {
             $markdown = new \dflydev\markdown\MarkdownExtraParser();
-            $result = $markdown->transformMarkdown( $result );
-        } elseif (class_exists( 'League\CommonMark\CommonMarkConverter' )) {
-            $markdown = new \League\CommonMark\CommonMarkConverter();
-            $result = $markdown->convertToHtml( $result );
+            $result = $markdown->transformMarkdown($result);
         }
 
-        return trim( $result );
+        return trim($result);
     }
 
     /**
@@ -192,7 +186,6 @@ class Description implements \Reflector
      */
     public function getDocBlock()
     {
-
         return $this->docblock;
     }
 
@@ -200,13 +193,12 @@ class Description implements \Reflector
      * Sets the docblock this tag belongs to.
      *
      * @param DocBlock $docblock The new docblock this description belongs to.
-     *                           Setting NULL removes any association.
+     *     Setting NULL removes any association.
      *
      * @return $this
      */
-    public function setDocBlock( DocBlock $docblock = null )
+    public function setDocBlock(DocBlock $docblock = null)
     {
-
         $this->docblock = $docblock;
 
         return $this;
@@ -219,7 +211,6 @@ class Description implements \Reflector
      */
     public function __toString()
     {
-
         return $this->getContents();
     }
 
@@ -230,7 +221,6 @@ class Description implements \Reflector
      */
     public function getContents()
     {
-
         return $this->contents;
     }
 }

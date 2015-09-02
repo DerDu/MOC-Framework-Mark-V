@@ -25,7 +25,6 @@ use ReflectionParameter;
  */
 class ClassMirror
 {
-
     private static $reflectableMethods = array(
         '__construct',
         '__destruct',
@@ -45,69 +44,67 @@ class ClassMirror
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
-    public function reflect( ReflectionClass $class = null, array $interfaces )
+    public function reflect(ReflectionClass $class = null, array $interfaces)
     {
-
         $node = new Node\ClassNode;
 
         if (null !== $class) {
             if (true === $class->isInterface()) {
-                throw new InvalidArgumentException( sprintf(
+                throw new InvalidArgumentException(sprintf(
                     "Could not reflect %s as a class, because it\n".
                     "is interface - use the second argument instead.",
                     $class->getName()
-                ) );
+                ));
             }
 
-            $this->reflectClassToNode( $class, $node );
+            $this->reflectClassToNode($class, $node);
         }
 
         foreach ($interfaces as $interface) {
             if (!$interface instanceof ReflectionClass) {
-                throw new InvalidArgumentException( sprintf(
+                throw new InvalidArgumentException(sprintf(
                     "[ReflectionClass \$interface1 [, ReflectionClass \$interface2]] array expected as\n".
                     "a second argument to `ClassMirror::reflect(...)`, but got %s.",
-                    is_object( $interface ) ? get_class( $interface ).' class' : gettype( $interface )
-                ) );
+                    is_object($interface) ? get_class($interface).' class' : gettype($interface)
+                ));
             }
             if (false === $interface->isInterface()) {
-                throw new InvalidArgumentException( sprintf(
+                throw new InvalidArgumentException(sprintf(
                     "Could not reflect %s as an interface, because it\n".
                     "is class - use the first argument instead.",
                     $interface->getName()
-                ) );
+                ));
             }
 
-            $this->reflectInterfaceToNode( $interface, $node );
+            $this->reflectInterfaceToNode($interface, $node);
         }
 
-        $node->addInterface( 'Prophecy\Doubler\Generator\ReflectionInterface' );
+        $node->addInterface('Prophecy\Doubler\Generator\ReflectionInterface');
 
         return $node;
     }
 
-    private function reflectClassToNode( ReflectionClass $class, Node\ClassNode $node )
+    private function reflectClassToNode(ReflectionClass $class, Node\ClassNode $node)
     {
-
         if (true === $class->isFinal()) {
-            throw new ClassMirrorException( sprintf(
+            throw new ClassMirrorException(sprintf(
                 'Could not reflect class %s as it is marked final.', $class->getName()
-            ), $class );
+            ), $class);
         }
 
-        $node->setParentClass( $class->getName() );
+        $node->setParentClass($class->getName());
 
-        foreach ($class->getMethods( ReflectionMethod::IS_ABSTRACT ) as $method) {
+        foreach ($class->getMethods(ReflectionMethod::IS_ABSTRACT) as $method) {
             if (false === $method->isProtected()) {
                 continue;
             }
 
-            $this->reflectMethodToNode( $method, $node );
+            $this->reflectMethodToNode($method, $node);
         }
 
-        foreach ($class->getMethods( ReflectionMethod::IS_PUBLIC ) as $method) {
-            if (0 === strpos( $method->getName(), '_' )
-                && !in_array( $method->getName(), self::$reflectableMethods )
+        foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            if (0 === strpos($method->getName(), '_')
+                && !in_array($method->getName(), self::$reflectableMethods)
             ) {
                 continue;
             }
@@ -116,17 +113,17 @@ class ClassMirror
                 continue;
             }
 
-            $this->reflectMethodToNode( $method, $node );
+            $this->reflectMethodToNode($method, $node);
         }
     }
 
-    private function reflectMethodToNode( ReflectionMethod $method, Node\ClassNode $classNode )
+    private function reflectMethodToNode(ReflectionMethod $method, Node\ClassNode $classNode)
     {
 
-        $node = new Node\MethodNode( $method->getName() );
+        $node = new Node\MethodNode($method->getName());
 
         if (true === $method->isProtected()) {
-            $node->setVisibility( 'protected' );
+            $node->setVisibility('protected');
         }
 
         if (true === $method->isStatic()) {
@@ -137,43 +134,42 @@ class ClassMirror
             $node->setReturnsReference();
         }
 
-        if (is_array( $params = $method->getParameters() ) && count( $params )) {
+        if (is_array($params = $method->getParameters()) && count($params)) {
             foreach ($params as $param) {
-                $this->reflectArgumentToNode( $param, $node );
+                $this->reflectArgumentToNode($param, $node);
             }
         }
 
-        $classNode->addMethod( $node );
+        $classNode->addMethod($node);
     }
 
-    private function reflectArgumentToNode( ReflectionParameter $parameter, Node\MethodNode $methodNode )
+    private function reflectArgumentToNode(ReflectionParameter $parameter, Node\MethodNode $methodNode)
     {
-
         $name = $parameter->getName() == '...' ? '__dot_dot_dot__' : $parameter->getName();
-        $node = new Node\ArgumentNode( $name );
+        $node = new Node\ArgumentNode($name);
 
-        $typeHint = $this->getTypeHint( $parameter );
-        $node->setTypeHint( $typeHint );
+        $typeHint = $this->getTypeHint($parameter);
+        $node->setTypeHint($typeHint);
 
         if (true === $parameter->isDefaultValueAvailable()) {
-            $node->setDefault( $parameter->getDefaultValue() );
+            $node->setDefault($parameter->getDefaultValue());
         } elseif (true === $parameter->isOptional()
             || ( true === $parameter->allowsNull() && $typeHint )
         ) {
-            $node->setDefault( null );
+            $node->setDefault(null);
         }
 
         if (true === $parameter->isPassedByReference()) {
             $node->setAsPassedByReference();
         }
 
-        $methodNode->addArgument( $node );
+        $methodNode->addArgument($node);
     }
 
-    private function getTypeHint( ReflectionParameter $parameter )
+    private function getTypeHint(ReflectionParameter $parameter)
     {
 
-        if (null !== $className = $this->getParameterClassName( $parameter )) {
+        if (null !== $className = $this->getParameterClassName($parameter)) {
             return $className;
         }
 
@@ -181,32 +177,31 @@ class ClassMirror
             return 'array';
         }
 
-        if (version_compare( PHP_VERSION, '5.4', '>=' ) && true === $parameter->isCallable()) {
+        if (version_compare(PHP_VERSION, '5.4', '>=') && true === $parameter->isCallable()) {
             return 'callable';
         }
 
         return null;
     }
 
-    private function getParameterClassName( ReflectionParameter $parameter )
+    private function getParameterClassName(ReflectionParameter $parameter)
     {
-
         try {
             return $parameter->getClass() ? $parameter->getClass()->getName() : null;
-        } catch( \ReflectionException $e ) {
-            preg_match( '/\[\s\<\w+?>\s([\w,\\\]+)/s', $parameter, $matches );
+        } catch (\ReflectionException $e) {
+            preg_match('/\[\s\<\w+?>\s([\w,\\\]+)/s', $parameter, $matches);
 
             return isset( $matches[1] ) ? $matches[1] : null;
         }
     }
 
-    private function reflectInterfaceToNode( ReflectionClass $interface, Node\ClassNode $node )
+    private function reflectInterfaceToNode(ReflectionClass $interface, Node\ClassNode $node)
     {
 
-        $node->addInterface( $interface->getName() );
+        $node->addInterface($interface->getName());
 
         foreach ($interface->getMethods() as $method) {
-            $this->reflectMethodToNode( $method, $node );
+            $this->reflectMethodToNode($method, $node);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ParamTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ParamTag can
      * understand the @param DocBlock .
@@ -34,7 +33,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedVarName
      * @param string $extractedDescription
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\ParamTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag
      * @dataProvider provideDataForConstructor
      *
      * @return void
@@ -48,13 +47,13 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
         $extractedDescription
     ) {
 
-        $tag = new ParamTag( $type, $content );
+        $tag = new ParamTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $extractedType, $tag->getType() );
-        $this->assertEquals( $extractedTypes, $tag->getTypes() );
-        $this->assertEquals( $extractedVarName, $tag->getVariableName() );
-        $this->assertEquals( $extractedDescription, $tag->getDescription() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($extractedType, $tag->getType());
+        $this->assertEquals($extractedTypes, $tag->getTypes());
+        $this->assertEquals($extractedVarName, $tag->getVariableName());
+        $this->assertEquals($extractedDescription, $tag->getDescription());
     }
 
     /**
@@ -64,15 +63,14 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstructor()
     {
-
         return array(
-            array( 'param', 'int', 'int', array( 'int' ), '', '' ),
-            array( 'param', '$bob', '', array(), '$bob', '' ),
+            array('param', 'int', 'int', array('int'), '', ''),
+            array('param', '$bob', '', array(), '$bob', ''),
             array(
                 'param',
                 'int Number of bobs',
                 'int',
-                array( 'int' ),
+                array('int'),
                 '',
                 'Number of bobs'
             ),
@@ -80,7 +78,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param',
                 'int $bob',
                 'int',
-                array( 'int' ),
+                array('int'),
                 '$bob',
                 ''
             ),
@@ -88,7 +86,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param',
                 'int $bob Number of bobs',
                 'int',
-                array( 'int' ),
+                array('int'),
                 '$bob',
                 'Number of bobs'
             ),
@@ -96,7 +94,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param',
                 "int Description \n on multiple lines",
                 'int',
-                array( 'int' ),
+                array('int'),
                 '',
                 "Description \n on multiple lines"
             ),
@@ -104,7 +102,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param',
                 "int \n\$bob Variable name on a new line",
                 'int',
-                array( 'int' ),
+                array('int'),
                 '$bob',
                 "Variable name on a new line"
             ),
@@ -112,7 +110,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param',
                 "\nint \$bob Type on a new line",
                 'int',
-                array( 'int' ),
+                array('int'),
                 '$bob',
                 "Type on a new line"
             )

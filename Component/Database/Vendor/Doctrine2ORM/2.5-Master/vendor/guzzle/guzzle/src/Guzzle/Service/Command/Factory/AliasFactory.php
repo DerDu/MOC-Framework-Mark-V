@@ -10,7 +10,6 @@ use Guzzle\Service\ClientInterface;
  */
 class AliasFactory implements FactoryInterface
 {
-
     /** @var array Associative array mapping command aliases to the aliased command */
     protected $aliases;
 
@@ -21,20 +20,19 @@ class AliasFactory implements FactoryInterface
      * @param ClientInterface $client  Client used to retry with the alias
      * @param array           $aliases Associative array mapping aliases to the alias
      */
-    public function __construct( ClientInterface $client, array $aliases )
+    public function __construct(ClientInterface $client, array $aliases)
     {
-
         $this->client = $client;
         $this->aliases = $aliases;
     }
 
-    public function factory( $name, array $args = array() )
+    public function factory($name, array $args = array())
     {
 
         if (isset( $this->aliases[$name] )) {
             try {
-                return $this->client->getCommand( $this->aliases[$name], $args );
-            } catch( InvalidArgumentException $e ) {
+                return $this->client->getCommand($this->aliases[$name], $args);
+            } catch (InvalidArgumentException $e) {
                 return null;
             }
         }

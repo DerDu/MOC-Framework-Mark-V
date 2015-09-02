@@ -29,15 +29,13 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class DefaultQuoteStrategy implements QuoteStrategy
 {
-
     /**
      * {@inheritdoc}
      *
      * @todo Table names should be computed in DBAL depending on the platform
      */
-    public function getTableName( ClassMetadata $class, AbstractPlatform $platform )
+    public function getTableName(ClassMetadata $class, AbstractPlatform $platform)
     {
-
         $tableName = $class->table['name'];
 
         if (!empty( $class->table['schema'] )) {
@@ -49,49 +47,48 @@ class DefaultQuoteStrategy implements QuoteStrategy
         }
 
         return isset( $class->table['quoted'] )
-            ? $platform->quoteIdentifier( $tableName )
+            ? $platform->quoteIdentifier($tableName)
             : $tableName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getSequenceName( array $definition, ClassMetadata $class, AbstractPlatform $platform )
+    public function getSequenceName(array $definition, ClassMetadata $class, AbstractPlatform $platform)
     {
 
         return isset( $definition['quoted'] )
-            ? $platform->quoteIdentifier( $definition['sequenceName'] )
+            ? $platform->quoteIdentifier($definition['sequenceName'])
             : $definition['sequenceName'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getJoinColumnName( array $joinColumn, ClassMetadata $class, AbstractPlatform $platform )
+    public function getJoinColumnName(array $joinColumn, ClassMetadata $class, AbstractPlatform $platform)
     {
 
         return isset( $joinColumn['quoted'] )
-            ? $platform->quoteIdentifier( $joinColumn['name'] )
+            ? $platform->quoteIdentifier($joinColumn['name'])
             : $joinColumn['name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getReferencedJoinColumnName( array $joinColumn, ClassMetadata $class, AbstractPlatform $platform )
+    public function getReferencedJoinColumnName(array $joinColumn, ClassMetadata $class, AbstractPlatform $platform)
     {
 
         return isset( $joinColumn['quoted'] )
-            ? $platform->quoteIdentifier( $joinColumn['referencedColumnName'] )
+            ? $platform->quoteIdentifier($joinColumn['referencedColumnName'])
             : $joinColumn['referencedColumnName'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getJoinTableName( array $association, ClassMetadata $class, AbstractPlatform $platform )
+    public function getJoinTableName(array $association, ClassMetadata $class, AbstractPlatform $platform)
     {
-
         $schema = '';
 
         if (isset( $association['joinTable']['schema'] )) {
@@ -101,7 +98,7 @@ class DefaultQuoteStrategy implements QuoteStrategy
         $tableName = $association['joinTable']['name'];
 
         if (isset( $association['joinTable']['quoted'] )) {
-            $tableName = $platform->quoteIdentifier( $tableName );
+            $tableName = $platform->quoteIdentifier($tableName);
         }
 
         return $schema.$tableName;
@@ -110,14 +107,13 @@ class DefaultQuoteStrategy implements QuoteStrategy
     /**
      * {@inheritdoc}
      */
-    public function getIdentifierColumnNames( ClassMetadata $class, AbstractPlatform $platform )
+    public function getIdentifierColumnNames(ClassMetadata $class, AbstractPlatform $platform)
     {
-
         $quotedColumnNames = array();
 
         foreach ($class->identifier as $fieldName) {
             if (isset( $class->fieldMappings[$fieldName] )) {
-                $quotedColumnNames[] = $this->getColumnName( $fieldName, $class, $platform );
+                $quotedColumnNames[] = $this->getColumnName($fieldName, $class, $platform);
 
                 continue;
             }
@@ -125,16 +121,16 @@ class DefaultQuoteStrategy implements QuoteStrategy
             // Association defined as Id field
             $joinColumns = $class->associationMappings[$fieldName]['joinColumns'];
             $assocQuotedColumnNames = array_map(
-                function ( $joinColumn ) use ( $platform ) {
+                function ($joinColumn) use ($platform) {
 
                     return isset( $joinColumn['quoted'] )
-                        ? $platform->quoteIdentifier( $joinColumn['name'] )
+                        ? $platform->quoteIdentifier($joinColumn['name'])
                         : $joinColumn['name'];
                 },
                 $joinColumns
             );
 
-            $quotedColumnNames = array_merge( $quotedColumnNames, $assocQuotedColumnNames );
+            $quotedColumnNames = array_merge($quotedColumnNames, $assocQuotedColumnNames);
         }
 
         return $quotedColumnNames;
@@ -143,30 +139,29 @@ class DefaultQuoteStrategy implements QuoteStrategy
     /**
      * {@inheritdoc}
      */
-    public function getColumnName( $fieldName, ClassMetadata $class, AbstractPlatform $platform )
+    public function getColumnName($fieldName, ClassMetadata $class, AbstractPlatform $platform)
     {
 
         return isset( $class->fieldMappings[$fieldName]['quoted'] )
-            ? $platform->quoteIdentifier( $class->fieldMappings[$fieldName]['columnName'] )
+            ? $platform->quoteIdentifier($class->fieldMappings[$fieldName]['columnName'])
             : $class->fieldMappings[$fieldName]['columnName'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getColumnAlias( $columnName, $counter, AbstractPlatform $platform, ClassMetadata $class = null )
+    public function getColumnAlias($columnName, $counter, AbstractPlatform $platform, ClassMetadata $class = null)
     {
-
         // 1 ) Concatenate column name and counter
         // 2 ) Trim the column alias to the maximum identifier length of the platform.
         //     If the alias is to long, characters are cut off from the beginning.
         // 3 ) Strip non alphanumeric characters
         // 4 ) Prefix with "_" if the result its numeric
         $columnName = $columnName.'_'.$counter;
-        $columnName = substr( $columnName, -$platform->getMaxIdentifierLength() );
-        $columnName = preg_replace( '/[^A-Za-z0-9_]/', '', $columnName );
-        $columnName = is_numeric( $columnName ) ? '_'.$columnName : $columnName;
+        $columnName = substr($columnName, -$platform->getMaxIdentifierLength());
+        $columnName = preg_replace('/[^A-Za-z0-9_]/', '', $columnName);
+        $columnName = is_numeric($columnName) ? '_'.$columnName : $columnName;
 
-        return $platform->getSQLResultCasing( $columnName );
+        return $platform->getSQLResultCasing($columnName);
     }
 }

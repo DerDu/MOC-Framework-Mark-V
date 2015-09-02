@@ -31,10 +31,10 @@
                 xpointer="xpointer(/phpunit/testsuites)"/>
 
     <groups>
-        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-                    href="configuration.xml"
-                    parse="xml"
-                    xpointer="xpointer(/phpunit/groups/*)"/>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                href="configuration.xml"
+                parse="xml"
+                xpointer="xpointer(/phpunit/groups/*)"/>
     </groups>
 
 

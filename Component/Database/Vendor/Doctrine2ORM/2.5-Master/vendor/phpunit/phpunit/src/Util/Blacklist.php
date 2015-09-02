@@ -11,17 +11,10 @@
 /**
  * Utility class for blacklisting PHPUnit's own source code files.
  *
- * @package    PHPUnit
- * @subpackage Util
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 4.0.0
+ * @since Class available since Release 4.0.0
  */
 class PHPUnit_Util_Blacklist
 {
-
     /**
      * @var array
      */
@@ -62,7 +55,6 @@ class PHPUnit_Util_Blacklist
      */
     public function getBlacklistedDirectories()
     {
-
         $this->initialize();
 
         return self::$directories;
@@ -70,20 +62,19 @@ class PHPUnit_Util_Blacklist
 
     private function initialize()
     {
-
         if (self::$directories === null) {
             self::$directories = array();
 
             foreach (self::$blacklistedClassNames as $className => $parent) {
-                if (!class_exists( $className )) {
+                if (!class_exists($className)) {
                     continue;
                 }
 
-                $reflector = new ReflectionClass( $className );
+                $reflector = new ReflectionClass($className);
                 $directory = $reflector->getFileName();
 
                 for ($i = 0; $i < $parent; $i++) {
-                    $directory = dirname( $directory );
+                    $directory = dirname($directory);
                 }
 
                 self::$directories[] = $directory;
@@ -103,19 +94,19 @@ class PHPUnit_Util_Blacklist
     /**
      * @param  string $file
      *
-     * @return boolean
+     * @return bool
      */
-    public function isBlacklisted( $file )
+    public function isBlacklisted($file)
     {
 
-        if (defined( 'PHPUNIT_TESTSUITE' )) {
+        if (defined('PHPUNIT_TESTSUITE')) {
             return false;
         }
 
         $this->initialize();
 
         foreach (self::$directories as $directory) {
-            if (strpos( $file, $directory ) === 0) {
+            if (strpos($file, $directory) === 0) {
                 return true;
             }
         }

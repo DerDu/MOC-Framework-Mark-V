@@ -11,7 +11,6 @@ use Guzzle\Http\Message\Response;
  */
 interface BackoffStrategyInterface
 {
-
     /**
      * Get the amount of time to delay in seconds before retrying a request
      *

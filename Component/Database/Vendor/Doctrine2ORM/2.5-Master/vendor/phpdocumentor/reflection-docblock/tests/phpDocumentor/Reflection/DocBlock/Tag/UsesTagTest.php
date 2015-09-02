@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class UsesTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\UsesTag can create
      * a link for the @uses doc block.
@@ -32,7 +31,7 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\UsesTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -45,12 +44,12 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
         $exReference
     ) {
 
-        $tag = new UsesTag( $type, $content );
+        $tag = new UsesTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $exContent, $tag->getContent() );
-        $this->assertEquals( $exDescription, $tag->getDescription() );
-        $this->assertEquals( $exReference, $tag->getReference() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**
@@ -60,7 +59,6 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-
         // $type, $content, $exContent, $exDescription, $exReference
         return array(
             array(

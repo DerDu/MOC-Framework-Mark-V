@@ -15,5 +15,4 @@ use Symfony\Component\Config\Definition\Builder\VariableNodeDefinition as BaseVa
 
 class VariableNodeDefinition extends BaseVariableNodeDefinition
 {
-
 }

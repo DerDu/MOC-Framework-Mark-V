@@ -20,7 +20,6 @@ namespace Symfony\Component\Config;
  */
 interface ConfigCacheFactoryInterface
 {
-
     /**
      * Creates a cache instance and (re-)initializes it if necessary.
      *
@@ -29,5 +28,5 @@ interface ConfigCacheFactoryInterface
      *
      * @return ConfigCacheInterface $configCache The cache instance
      */
-    public function cache( $file, $callable );
+    public function cache($file, $callable);
 }

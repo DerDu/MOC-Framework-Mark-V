@@ -24,7 +24,6 @@ use phpDocumentor\Reflection\DocBlock\Type\Collection;
  */
 class ReturnTag extends Tag
 {
-
     /** @var string The raw type component. */
     protected $type = '';
 
@@ -36,7 +35,6 @@ class ReturnTag extends Tag
      */
     public function getContent()
     {
-
         if (null === $this->content) {
             $this->content = "{$this->type} {$this->description}";
         }
@@ -47,18 +45,18 @@ class ReturnTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function setContent( $content )
+    public function setContent($content)
     {
 
-        parent::setContent( $content );
+        parent::setContent($content);
 
-        $parts = preg_split( '/\s+/Su', $this->description, 2 );
+        $parts = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
         $this->type = $parts[0];
         $this->types = null;
 
-        $this->setDescription( isset( $parts[1] ) ? $parts[1] : '' );
+        $this->setDescription(isset( $parts[1] ) ? $parts[1] : '');
 
         $this->content = $content;
         return $this;
@@ -71,7 +69,6 @@ class ReturnTag extends Tag
      */
     public function getTypes()
     {
-
         return $this->getTypesCollection()->getArrayCopy();
     }
 
@@ -82,10 +79,9 @@ class ReturnTag extends Tag
      */
     protected function getTypesCollection()
     {
-
         if (null === $this->types) {
             $this->types = new Collection(
-                array( $this->type ),
+                array($this->type),
                 $this->docblock ? $this->docblock->getContext() : null
             );
         }

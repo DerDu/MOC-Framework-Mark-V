@@ -12,7 +12,6 @@ use Psr\Log\LogLevel;
  */
 class PsrLogAdapter extends AbstractLogAdapter
 {
-
     /**
      * syslog to PSR-3 mappings
      */
@@ -25,15 +24,14 @@ class PsrLogAdapter extends AbstractLogAdapter
         LOG_ALERT   => LogLevel::ALERT
     );
 
-    public function __construct( LoggerInterface $logObject )
+    public function __construct(LoggerInterface $logObject)
     {
-
         $this->log = $logObject;
     }
 
-    public function log( $message, $priority = LOG_INFO, $extras = array() )
+    public function log($message, $priority = LOG_INFO, $extras = array())
     {
 
-        $this->log->log( self::$mapping[$priority], $message, $extras );
+        $this->log->log(self::$mapping[$priority], $message, $extras);
     }
 }

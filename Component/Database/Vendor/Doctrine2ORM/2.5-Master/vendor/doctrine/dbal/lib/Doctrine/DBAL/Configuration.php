@@ -34,7 +34,6 @@ use Doctrine\DBAL\Logging\SQLLogger;
  */
 class Configuration
 {
-
     /**
      * The attributes that are contained in the configuration.
      * Values are default values.
@@ -50,9 +49,8 @@ class Configuration
      *
      * @return void
      */
-    public function setSQLLogger( SQLLogger $logger = null )
+    public function setSQLLogger(SQLLogger $logger = null)
     {
-
         $this->_attributes['sqlLogger'] = $logger;
     }
 
@@ -87,9 +85,8 @@ class Configuration
      *
      * @return void
      */
-    public function setResultCacheImpl( Cache $cacheImpl )
+    public function setResultCacheImpl(Cache $cacheImpl)
     {
-
         $this->_attributes['resultCacheImpl'] = $cacheImpl;
     }
 
@@ -104,9 +101,8 @@ class Configuration
      *
      * @return void
      */
-    public function setFilterSchemaAssetsExpression( $filterExpression )
+    public function setFilterSchemaAssetsExpression($filterExpression)
     {
-
         $this->_attributes['filterSchemaAssetsExpression'] = $filterExpression;
     }
 
@@ -136,7 +132,7 @@ class Configuration
      *
      * @see   getAutoCommit
      */
-    public function setAutoCommit( $autoCommit )
+    public function setAutoCommit($autoCommit)
     {
 
         $this->_attributes['autoCommit'] = (boolean)$autoCommit;

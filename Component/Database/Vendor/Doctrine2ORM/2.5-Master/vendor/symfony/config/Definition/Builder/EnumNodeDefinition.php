@@ -20,7 +20,6 @@ use Symfony\Component\Config\Definition\EnumNode;
  */
 class EnumNodeDefinition extends ScalarNodeDefinition
 {
-
     private $values;
 
     /**
@@ -28,13 +27,13 @@ class EnumNodeDefinition extends ScalarNodeDefinition
      *
      * @return EnumNodeDefinition|$this
      */
-    public function values( array $values )
+    public function values(array $values)
     {
 
-        $values = array_unique( $values );
+        $values = array_unique($values);
 
-        if (count( $values ) <= 1) {
-            throw new \InvalidArgumentException( '->values() must be called with at least two distinct values.' );
+        if (count($values) <= 1) {
+            throw new \InvalidArgumentException('->values() must be called with at least two distinct values.');
         }
 
         $this->values = $values;
@@ -51,11 +50,10 @@ class EnumNodeDefinition extends ScalarNodeDefinition
      */
     protected function instantiateNode()
     {
-
         if (null === $this->values) {
-            throw new \RuntimeException( 'You must call ->values() on enum nodes.' );
+            throw new \RuntimeException('You must call ->values() on enum nodes.');
         }
 
-        return new EnumNode( $this->name, $this->parent, $this->values );
+        return new EnumNode($this->name, $this->parent, $this->values);
     }
 }

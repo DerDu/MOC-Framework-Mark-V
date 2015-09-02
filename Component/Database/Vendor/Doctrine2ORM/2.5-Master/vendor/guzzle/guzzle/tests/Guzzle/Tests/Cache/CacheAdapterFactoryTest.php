@@ -12,7 +12,6 @@ use Zend\Cache\StorageFactory;
  */
 class CacheAdapterFactoryTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     /** @var ArrayCache */
     private $cache;
 
@@ -25,7 +24,7 @@ class CacheAdapterFactoryTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresConfigIsObject()
     {
 
-        CacheAdapterFactory::fromCache( array() );
+        CacheAdapterFactory::fromCache(array());
     }
 
     /**
@@ -34,27 +33,26 @@ class CacheAdapterFactoryTest extends \Guzzle\Tests\GuzzleTestCase
     public function testEnsuresKnownType()
     {
 
-        CacheAdapterFactory::fromCache( new \stdClass() );
+        CacheAdapterFactory::fromCache(new \stdClass());
     }
 
     public function cacheProvider()
     {
-
         return array(
-            array( new DoctrineCacheAdapter( new ArrayCache() ), 'Guzzle\Cache\DoctrineCacheAdapter' ),
-            array( new ArrayCache(), 'Guzzle\Cache\DoctrineCacheAdapter' ),
-            array( StorageFactory::factory( array( 'adapter' => 'memory' ) ), 'Guzzle\Cache\Zf2CacheAdapter' ),
+            array(new DoctrineCacheAdapter(new ArrayCache()), 'Guzzle\Cache\DoctrineCacheAdapter'),
+            array(new ArrayCache(), 'Guzzle\Cache\DoctrineCacheAdapter'),
+            array(StorageFactory::factory(array('adapter' => 'memory')), 'Guzzle\Cache\Zf2CacheAdapter'),
         );
     }
 
     /**
      * @dataProvider cacheProvider
      */
-    public function testCreatesNullCacheAdapterByDefault( $cache, $type )
+    public function testCreatesNullCacheAdapterByDefault($cache, $type)
     {
 
-        $adapter = CacheAdapterFactory::fromCache( $cache );
-        $this->assertInstanceOf( $type, $adapter );
+        $adapter = CacheAdapterFactory::fromCache($cache);
+        $this->assertInstanceOf($type, $adapter);
     }
 
     /**
@@ -62,9 +60,8 @@ class CacheAdapterFactoryTest extends \Guzzle\Tests\GuzzleTestCase
      */
     protected function setup()
     {
-
         parent::setUp();
         $this->cache = new ArrayCache();
-        $this->adapter = new DoctrineCacheAdapter( $this->cache );
+        $this->adapter = new DoctrineCacheAdapter($this->cache);
     }
 }

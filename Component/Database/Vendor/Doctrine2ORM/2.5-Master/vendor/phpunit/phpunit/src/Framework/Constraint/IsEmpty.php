@@ -11,31 +11,21 @@
 /**
  * Constraint that checks whether a variable is empty().
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.5.0
+ * @since Class available since Release 3.5.0
  */
 class PHPUnit_Framework_Constraint_IsEmpty extends PHPUnit_Framework_Constraint
 {
-
     /**
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
      * @param  mixed $other Value or object to evaluate.
-     *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
-
         if ($other instanceof Countable) {
-            return count( $other ) === 0;
+            return count($other) === 0;
         }
 
         return empty( $other );
@@ -51,10 +41,10 @@ class PHPUnit_Framework_Constraint_IsEmpty extends PHPUnit_Framework_Constraint
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        $type = gettype( $other );
+        $type = gettype($other);
 
         return sprintf(
             '%s %s %s',
@@ -71,7 +61,6 @@ class PHPUnit_Framework_Constraint_IsEmpty extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-
         return 'is empty';
     }
 }

@@ -31,21 +31,19 @@ use Symfony\Component\Console\Helper\HelperSet;
  */
 class ConsoleRunner
 {
-
     /**
      * Create a Symfony Console HelperSet
      *
      * @param EntityManagerInterface $entityManager
-     *
      * @return HelperSet
      */
-    public static function createHelperSet( EntityManagerInterface $entityManager )
+    public static function createHelperSet(EntityManagerInterface $entityManager)
     {
 
-        return new HelperSet( array(
-            'db' => new ConnectionHelper( $entityManager->getConnection() ),
-            'em' => new EntityManagerHelper( $entityManager )
-        ) );
+        return new HelperSet(array(
+            'db' => new ConnectionHelper($entityManager->getConnection()),
+            'em' => new EntityManagerHelper($entityManager)
+        ));
     }
 
     /**
@@ -56,10 +54,10 @@ class ConsoleRunner
      *
      * @return void
      */
-    static public function run( HelperSet $helperSet, $commands = array() )
+    static public function run(HelperSet $helperSet, $commands = array())
     {
 
-        $cli = self::createApplication( $helperSet, $commands );
+        $cli = self::createApplication($helperSet, $commands);
         $cli->run();
     }
 
@@ -72,14 +70,14 @@ class ConsoleRunner
      *
      * @return \Symfony\Component\Console\Application
      */
-    static public function createApplication( HelperSet $helperSet, $commands = array() )
+    static public function createApplication(HelperSet $helperSet, $commands = array())
     {
 
-        $cli = new Application( 'Doctrine Command Line Interface', Version::VERSION );
-        $cli->setCatchExceptions( true );
-        $cli->setHelperSet( $helperSet );
-        self::addCommands( $cli );
-        $cli->addCommands( $commands );
+        $cli = new Application('Doctrine Command Line Interface', Version::VERSION);
+        $cli->setCatchExceptions(true);
+        $cli->setHelperSet($helperSet);
+        self::addCommands($cli);
+        $cli->addCommands($commands);
 
         return $cli;
     }
@@ -89,13 +87,14 @@ class ConsoleRunner
      *
      * @return void
      */
-    static public function addCommands( Application $cli )
+    static public function addCommands(Application $cli)
     {
 
-        $cli->addCommands( array(
+        $cli->addCommands(array(
             // DBAL Commands
             new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
             new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
+
             // ORM Commands
             new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
             new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
@@ -113,12 +112,11 @@ class ConsoleRunner
             new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
             new \Doctrine\ORM\Tools\Console\Command\InfoCommand(),
             new \Doctrine\ORM\Tools\Console\Command\MappingDescribeCommand(),
-        ) );
+        ));
     }
 
     static public function printCliConfigTemplate()
     {
-
         echo <<<'HELP'
 You are missing a "cli-config.php" or "config/cli-config.php" file in your
 project, which is required to get the Doctrine Console working. You can use the

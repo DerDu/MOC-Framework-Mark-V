@@ -8,7 +8,6 @@ namespace Satooshi\Component\System;
  */
 abstract class SystemCommand
 {
-
     /**
      * Command name or path.
      *
@@ -25,10 +24,9 @@ abstract class SystemCommand
      */
     public function execute()
     {
-
         $command = $this->createCommand();
 
-        return $this->executeCommand( $command );
+        return $this->executeCommand($command);
     }
 
     // internal method
@@ -40,15 +38,14 @@ abstract class SystemCommand
      *
      * @return string
      */
-    protected function createCommand( $args = null )
+    protected function createCommand($args = null)
     {
-
         if ($args === null) {
             return $this->commandPath;
         }
 
         // escapeshellarg($args) ?
-        return sprintf( '%s %s', $this->commandPath, $args );
+        return sprintf('%s %s', $this->commandPath, $args);
     }
 
     /**
@@ -60,16 +57,16 @@ abstract class SystemCommand
      *
      * @throws \RuntimeException
      */
-    protected function executeCommand( $command )
+    protected function executeCommand($command)
     {
 
-        exec( $command, $result, $returnValue );
+        exec($command, $result, $returnValue);
 
         if ($returnValue === 0) {
             return $result;
         }
 
-        throw new \RuntimeException( sprintf( 'Failed to execute command: %s', $command ), $returnValue );
+        throw new \RuntimeException(sprintf('Failed to execute command: %s', $command), $returnValue);
     }
 
     // accessor
@@ -81,7 +78,6 @@ abstract class SystemCommand
      */
     public function getCommandPath()
     {
-
         return $this->commandPath;
     }
 
@@ -92,9 +88,8 @@ abstract class SystemCommand
      *
      * @return void
      */
-    public function setCommandPath( $commandPath )
+    public function setCommandPath($commandPath)
     {
-
         $this->commandPath = $commandPath;
     }
 }

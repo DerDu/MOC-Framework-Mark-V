@@ -1,6 +1,6 @@
 <?php
 
-if (extension_loaded( 'xdebug' )) {
+if (extension_loaded('xdebug')) {
     xdebug_disable();
 }
 

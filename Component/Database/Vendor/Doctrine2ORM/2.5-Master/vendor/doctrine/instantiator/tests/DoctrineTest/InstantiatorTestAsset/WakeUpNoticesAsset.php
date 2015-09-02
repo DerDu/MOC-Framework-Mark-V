@@ -28,13 +28,12 @@ use ArrayObject;
  */
 class WakeUpNoticesAsset extends ArrayObject
 {
-
     /**
      * Wakeup method called after un-serialization
      */
     public function __wakeup()
     {
 
-        trigger_error( 'Something went bananas while un-serializing this instance' );
+        trigger_error('Something went bananas while un-serializing this instance');
     }
 }

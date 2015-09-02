@@ -15,9 +15,8 @@ class SkipRevalidation extends DefaultRevalidation
     {
     }
 
-    public function revalidate( RequestInterface $request, Response $response )
+    public function revalidate(RequestInterface $request, Response $response)
     {
-
         return true;
     }
 }

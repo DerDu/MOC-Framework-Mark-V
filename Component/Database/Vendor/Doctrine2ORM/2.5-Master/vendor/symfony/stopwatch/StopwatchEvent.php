@@ -18,7 +18,6 @@ namespace Symfony\Component\Stopwatch;
  */
 class StopwatchEvent
 {
-
     /**
      * @var StopwatchPeriod[]
      */
@@ -47,11 +46,11 @@ class StopwatchEvent
      *
      * @throws \InvalidArgumentException When the raw time is not valid
      */
-    public function __construct( $origin, $category = null )
+    public function __construct($origin, $category = null)
     {
 
-        $this->origin = $this->formatTime( $origin );
-        $this->category = is_string( $category ) ? $category : 'default';
+        $this->origin = $this->formatTime($origin);
+        $this->category = is_string($category) ? $category : 'default';
     }
 
     /**
@@ -63,14 +62,14 @@ class StopwatchEvent
      *
      * @throws \InvalidArgumentException When the raw time is not valid
      */
-    private function formatTime( $time )
+    private function formatTime($time)
     {
 
-        if (!is_numeric( $time )) {
-            throw new \InvalidArgumentException( 'The time must be a numerical value' );
+        if (!is_numeric($time)) {
+            throw new \InvalidArgumentException('The time must be a numerical value');
         }
 
-        return round( $time, 1 );
+        return round($time, 1);
     }
 
     /**
@@ -80,7 +79,6 @@ class StopwatchEvent
      */
     public function getOrigin()
     {
-
         return $this->origin;
     }
 
@@ -102,7 +100,6 @@ class StopwatchEvent
      */
     public function lap()
     {
-
         return $this->stop()->start();
     }
 
@@ -113,7 +110,6 @@ class StopwatchEvent
      */
     public function start()
     {
-
         $this->started[] = $this->getNow();
 
         return $this;
@@ -127,7 +123,7 @@ class StopwatchEvent
     protected function getNow()
     {
 
-        return $this->formatTime( microtime( true ) * 1000 - $this->origin );
+        return $this->formatTime(microtime(true) * 1000 - $this->origin);
     }
 
     /**
@@ -142,11 +138,11 @@ class StopwatchEvent
     public function stop()
     {
 
-        if (!count( $this->started )) {
-            throw new \LogicException( 'stop() called but start() has not been called before.' );
+        if (!count($this->started)) {
+            throw new \LogicException('stop() called but start() has not been called before.');
         }
 
-        $this->periods[] = new StopwatchPeriod( array_pop( $this->started ), $this->getNow() );
+        $this->periods[] = new StopwatchPeriod(array_pop($this->started), $this->getNow());
 
         return $this;
     }
@@ -157,7 +153,7 @@ class StopwatchEvent
     public function ensureStopped()
     {
 
-        while (count( $this->started )) {
+        while (count($this->started)) {
             $this->stop();
         }
     }
@@ -169,7 +165,6 @@ class StopwatchEvent
      */
     public function getPeriods()
     {
-
         return $this->periods;
     }
 
@@ -192,7 +187,7 @@ class StopwatchEvent
     public function getEndTime()
     {
 
-        $count = count( $this->periods );
+        $count = count($this->periods);
 
         return $count ? $this->periods[$count - 1]->getEndTime() : 0;
     }
@@ -203,8 +198,8 @@ class StopwatchEvent
     public function __toString()
     {
 
-        return sprintf( '%s: %.2F MiB - %d ms', $this->getCategory(), $this->getMemory() / 1024 / 1024,
-            $this->getDuration() );
+        return sprintf('%s: %.2F MiB - %d ms', $this->getCategory(), $this->getMemory() / 1024 / 1024,
+            $this->getDuration());
     }
 
     /**
@@ -214,7 +209,6 @@ class StopwatchEvent
      */
     public function getCategory()
     {
-
         return $this->category;
     }
 
@@ -225,7 +219,6 @@ class StopwatchEvent
      */
     public function getMemory()
     {
-
         $memory = 0;
         foreach ($this->periods as $period) {
             if ($period->getMemory() > $memory) {
@@ -243,14 +236,13 @@ class StopwatchEvent
      */
     public function getDuration()
     {
-
         $periods = $this->periods;
-        $stopped = count( $periods );
-        $left = count( $this->started ) - $stopped;
+        $stopped = count($periods);
+        $left = count($this->started) - $stopped;
 
         for ($i = 0; $i < $left; $i++) {
             $index = $stopped + $i;
-            $periods[] = new StopwatchPeriod( $this->started[$index], $this->getNow() );
+            $periods[] = new StopwatchPeriod($this->started[$index], $this->getNow());
         }
 
         $total = 0;

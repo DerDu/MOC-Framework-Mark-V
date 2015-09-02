@@ -33,11 +33,10 @@ use Doctrine\ORM\Query;
  */
 class DefaultCollectionHydrator implements CollectionHydrator
 {
-
     /**
      * @var array
      */
-    private static $hints = array( Query::HINT_CACHE_ENABLED => true );
+    private static $hints = array(Query::HINT_CACHE_ENABLED => true);
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -50,7 +49,7 @@ class DefaultCollectionHydrator implements CollectionHydrator
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em The entity manager.
      */
-    public function __construct( EntityManagerInterface $em )
+    public function __construct(EntityManagerInterface $em)
     {
 
         $this->em = $em;
@@ -60,15 +59,14 @@ class DefaultCollectionHydrator implements CollectionHydrator
     /**
      * {@inheritdoc}
      */
-    public function buildCacheEntry( ClassMetadata $metadata, CollectionCacheKey $key, $collection )
+    public function buildCacheEntry(ClassMetadata $metadata, CollectionCacheKey $key, $collection)
     {
-
         $data = array();
 
         foreach ($collection as $index => $entity) {
-            $data[$index] = new EntityCacheKey( $metadata->name, $this->uow->getEntityIdentifier( $entity ) );
+            $data[$index] = new EntityCacheKey($metadata->name, $this->uow->getEntityIdentifier($entity));
         }
-        return new CollectionCacheEntry( $data );
+        return new CollectionCacheEntry($data);
     }
 
     /**
@@ -83,11 +81,11 @@ class DefaultCollectionHydrator implements CollectionHydrator
 
         $assoc = $metadata->associationMappings[$key->association];
         /* @var $targetPersister \Doctrine\ORM\Cache\Persister\CachedPersister */
-        $targetPersister = $this->uow->getEntityPersister( $assoc['targetEntity'] );
+        $targetPersister = $this->uow->getEntityPersister($assoc['targetEntity']);
         $targetRegion = $targetPersister->getCacheRegion();
         $list = array();
 
-        $entityEntries = $targetRegion->getMultiple( $entry );
+        $entityEntries = $targetRegion->getMultiple($entry);
 
         if ($entityEntries === null) {
             return null;
@@ -95,14 +93,14 @@ class DefaultCollectionHydrator implements CollectionHydrator
 
         /* @var $entityEntries \Doctrine\ORM\Cache\EntityCacheEntry[] */
         foreach ($entityEntries as $index => $entityEntry) {
-            $list[$index] = $this->uow->createEntity( $entityEntry->class,
-                $entityEntry->resolveAssociationEntries( $this->em ), self::$hints );
+            $list[$index] = $this->uow->createEntity($entityEntry->class,
+                $entityEntry->resolveAssociationEntries($this->em), self::$hints);
         }
 
-        array_walk( $list, function ( $entity, $index ) use ( $collection ) {
+        array_walk($list, function ($entity, $index) use ($collection) {
 
-            $collection->hydrateSet( $index, $entity );
-        } );
+            $collection->hydrateSet($index, $entity);
+        });
 
         $this->uow->hydrationComplete();
 

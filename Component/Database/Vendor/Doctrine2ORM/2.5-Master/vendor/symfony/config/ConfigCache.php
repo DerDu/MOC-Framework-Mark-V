@@ -25,7 +25,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ConfigCache implements ConfigCacheInterface
 {
-
     private $debug;
     private $file;
 
@@ -33,9 +32,8 @@ class ConfigCache implements ConfigCacheInterface
      * @param string $file  The absolute cache path
      * @param bool   $debug Whether debugging is enabled or not
      */
-    public function __construct( $file, $debug )
+    public function __construct($file, $debug)
     {
-
         $this->file = $file;
         $this->debug = (bool)$debug;
     }
@@ -49,8 +47,8 @@ class ConfigCache implements ConfigCacheInterface
     public function __toString()
     {
 
-        trigger_error( 'ConfigCache::__toString() is deprecated since version 2.7 and will be removed in 3.0. Use the getPath() method instead.',
-            E_USER_DEPRECATED );
+        @trigger_error('ConfigCache::__toString() is deprecated since version 2.7 and will be removed in 3.0. Use the getPath() method instead.',
+            E_USER_DEPRECATED);
 
         return $this->file;
     }
@@ -62,7 +60,6 @@ class ConfigCache implements ConfigCacheInterface
      */
     public function getPath()
     {
-
         return $this->file;
     }
 
@@ -77,7 +74,7 @@ class ConfigCache implements ConfigCacheInterface
     public function isFresh()
     {
 
-        if (!is_file( $this->file )) {
+        if (!is_file($this->file)) {
             return false;
         }
 
@@ -86,14 +83,14 @@ class ConfigCache implements ConfigCacheInterface
         }
 
         $metadata = $this->getMetaFile();
-        if (!is_file( $metadata )) {
+        if (!is_file($metadata)) {
             return false;
         }
 
-        $time = filemtime( $this->file );
-        $meta = unserialize( file_get_contents( $metadata ) );
+        $time = filemtime($this->file);
+        $meta = unserialize(file_get_contents($metadata));
         foreach ($meta as $resource) {
-            if (!$resource->isFresh( $time )) {
+            if (!$resource->isFresh($time)) {
                 return false;
             }
         }
@@ -108,7 +105,6 @@ class ConfigCache implements ConfigCacheInterface
      */
     private function getMetaFile()
     {
-
         return $this->file.'.meta';
     }
 
@@ -120,24 +116,23 @@ class ConfigCache implements ConfigCacheInterface
      *
      * @throws \RuntimeException When cache file can't be written
      */
-    public function write( $content, array $metadata = null )
+    public function write($content, array $metadata = null)
     {
-
         $mode = 0666;
         $umask = umask();
         $filesystem = new Filesystem();
-        $filesystem->dumpFile( $this->file, $content, null );
+        $filesystem->dumpFile($this->file, $content, null);
         try {
-            $filesystem->chmod( $this->file, $mode, $umask );
-        } catch( IOException $e ) {
+            $filesystem->chmod($this->file, $mode, $umask);
+        } catch (IOException $e) {
             // discard chmod failure (some filesystem may not support it)
         }
 
         if (null !== $metadata && true === $this->debug) {
-            $filesystem->dumpFile( $this->getMetaFile(), serialize( $metadata ), null );
+            $filesystem->dumpFile($this->getMetaFile(), serialize($metadata), null);
             try {
-                $filesystem->chmod( $this->getMetaFile(), $mode, $umask );
-            } catch( IOException $e ) {
+                $filesystem->chmod($this->getMetaFile(), $mode, $umask);
+            } catch (IOException $e) {
                 // discard chmod failure (some filesystem may not support it)
             }
         }

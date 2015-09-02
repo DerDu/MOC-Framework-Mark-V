@@ -12,16 +12,14 @@ use Guzzle\Service\Exception\InconsistentClientTransferException;
  */
 class BatchCommandTransfer implements BatchTransferInterface, BatchDivisorInterface
 {
-
     /** @var int Size of each command batch */
     protected $batchSize;
 
     /**
      * @param int $batchSize Size of each batch
      */
-    public function __construct( $batchSize = 50 )
+    public function __construct($batchSize = 50)
     {
-
         $this->batchSize = $batchSize;
     }
 
@@ -29,31 +27,30 @@ class BatchCommandTransfer implements BatchTransferInterface, BatchDivisorInterf
      * Creates batches by grouping commands by their associated client
      * {@inheritdoc}
      */
-    public function createBatches( \SplQueue $queue )
+    public function createBatches(\SplQueue $queue)
     {
-
         $groups = new \SplObjectStorage();
         foreach ($queue as $item) {
             if (!$item instanceof CommandInterface) {
-                throw new InvalidArgumentException( 'All items must implement Guzzle\Service\Command\CommandInterface' );
+                throw new InvalidArgumentException('All items must implement Guzzle\Service\Command\CommandInterface');
             }
             $client = $item->getClient();
-            if (!$groups->contains( $client )) {
-                $groups->attach( $client, new \ArrayObject( array( $item ) ) );
+            if (!$groups->contains($client)) {
+                $groups->attach($client, new \ArrayObject(array($item)));
             } else {
-                $groups[$client]->append( $item );
+                $groups[$client]->append($item);
             }
         }
 
         $batches = array();
         foreach ($groups as $batch) {
-            $batches = array_merge( $batches, array_chunk( $groups[$batch]->getArrayCopy(), $this->batchSize ) );
+            $batches = array_merge($batches, array_chunk($groups[$batch]->getArrayCopy(), $this->batchSize));
         }
 
         return $batches;
     }
 
-    public function transfer( array $batch )
+    public function transfer(array $batch)
     {
 
         if (empty( $batch )) {
@@ -61,18 +58,17 @@ class BatchCommandTransfer implements BatchTransferInterface, BatchDivisorInterf
         }
 
         // Get the client of the first found command
-        $client = reset( $batch )->getClient();
+        $client = reset($batch)->getClient();
 
         // Keep a list of all commands with invalid clients
-        $invalid = array_filter( $batch, function ( $command ) use ( $client ) {
-
+        $invalid = array_filter($batch, function ($command) use ($client) {
             return $command->getClient() !== $client;
-        } );
+        });
 
         if (!empty( $invalid )) {
-            throw new InconsistentClientTransferException( $invalid );
+            throw new InconsistentClientTransferException($invalid);
         }
 
-        $client->execute( $batch );
+        $client->execute($batch);
     }
 }

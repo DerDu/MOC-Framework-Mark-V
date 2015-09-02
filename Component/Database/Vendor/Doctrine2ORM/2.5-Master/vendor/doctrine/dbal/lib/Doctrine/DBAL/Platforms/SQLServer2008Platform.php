@@ -27,13 +27,11 @@ namespace Doctrine\DBAL\Platforms;
  */
 class SQLServer2008Platform extends SQLServer2005Platform
 {
-
     /**
      * {@inheritDoc}
      */
-    public function getDateTimeTypeDeclarationSQL( array $fieldDeclaration )
+    public function getDateTimeTypeDeclarationSQL(array $fieldDeclaration)
     {
-
         // 3 - microseconds precision length
         // http://msdn.microsoft.com/en-us/library/ms187819.aspx
         return 'DATETIME2(6)';
@@ -42,27 +40,24 @@ class SQLServer2008Platform extends SQLServer2005Platform
     /**
      * {@inheritDoc}
      */
-    public function getDateTypeDeclarationSQL( array $fieldDeclaration )
+    public function getDateTypeDeclarationSQL(array $fieldDeclaration)
     {
-
         return 'DATE';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getTimeTypeDeclarationSQL( array $fieldDeclaration )
+    public function getTimeTypeDeclarationSQL(array $fieldDeclaration)
     {
-
         return 'TIME(0)';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDateTimeTzTypeDeclarationSQL( array $fieldDeclaration )
+    public function getDateTimeTzTypeDeclarationSQL(array $fieldDeclaration)
     {
-
         return 'DATETIMEOFFSET(6)';
     }
 
@@ -71,7 +66,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     public function getDateTimeFormatString()
     {
-
         return 'Y-m-d H:i:s.u';
     }
 
@@ -80,7 +74,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     public function getDateTimeTzFormatString()
     {
-
         return 'Y-m-d H:i:s.u P';
     }
 
@@ -89,7 +82,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     public function getDateFormatString()
     {
-
         return 'Y-m-d';
     }
 
@@ -98,7 +90,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     public function getTimeFormatString()
     {
-
         return 'H:i:s';
     }
 
@@ -109,7 +100,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     protected function initializeDoctrineTypeMappings()
     {
-
         parent::initializeDoctrineTypeMappings();
         $this->doctrineTypeMapping['datetime2'] = 'datetime';
         $this->doctrineTypeMapping['date'] = 'date';
@@ -124,7 +114,6 @@ class SQLServer2008Platform extends SQLServer2005Platform
      */
     protected function getReservedKeywordsClass()
     {
-
         return 'Doctrine\DBAL\Platforms\Keywords\SQLServer2008Keywords';
     }
 }

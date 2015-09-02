@@ -11,14 +11,13 @@ use Guzzle\Service\Description\Parameter;
  */
 interface RequestVisitorInterface
 {
-
     /**
      * Called after visiting all parameters
      *
      * @param CommandInterface $command Command being visited
      * @param RequestInterface $request Request being visited
      */
-    public function after( CommandInterface $command, RequestInterface $request );
+    public function after(CommandInterface $command, RequestInterface $request);
 
     /**
      * Called once for each parameter being visited that matches the location type
@@ -28,5 +27,5 @@ interface RequestVisitorInterface
      * @param Parameter        $param   Parameter being visited
      * @param mixed            $value   Value to set
      */
-    public function visit( CommandInterface $command, RequestInterface $request, Parameter $param, $value );
+    public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value);
 }

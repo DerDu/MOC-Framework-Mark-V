@@ -12,16 +12,15 @@ use Monolog\Logger;
  */
 class PsrLogAdapterTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     public function testLogsMessagesToAdaptedObject()
     {
 
-        $log = new Logger( 'test' );
+        $log = new Logger('test');
         $handler = new TestHandler();
-        $log->pushHandler( $handler );
-        $adapter = new PsrLogAdapter( $log );
-        $adapter->log( 'test!', LOG_INFO );
-        $this->assertTrue( $handler->hasInfoRecords() );
-        $this->assertSame( $log, $adapter->getLogObject() );
+        $log->pushHandler($handler);
+        $adapter = new PsrLogAdapter($log);
+        $adapter->log('test!', LOG_INFO);
+        $this->assertTrue($handler->hasInfoRecords());
+        $this->assertSame($log, $adapter->getLogObject());
     }
 }

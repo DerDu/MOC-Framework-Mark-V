@@ -18,7 +18,6 @@ namespace Prophecy\Argument\Token;
  */
 class StringContainsToken implements TokenInterface
 {
-
     private $value;
 
     /**
@@ -26,16 +25,15 @@ class StringContainsToken implements TokenInterface
      *
      * @param string $value
      */
-    public function __construct( $value )
+    public function __construct($value)
     {
-
         $this->value = $value;
     }
 
-    public function scoreArgument( $argument )
+    public function scoreArgument($argument)
     {
 
-        return strpos( $argument, $this->value ) !== false ? 6 : false;
+        return strpos($argument, $this->value) !== false ? 6 : false;
     }
 
     /**
@@ -45,7 +43,6 @@ class StringContainsToken implements TokenInterface
      */
     public function getValue()
     {
-
         return $this->value;
     }
 
@@ -56,7 +53,6 @@ class StringContainsToken implements TokenInterface
      */
     public function isLast()
     {
-
         return false;
     }
 
@@ -68,6 +64,6 @@ class StringContainsToken implements TokenInterface
     public function __toString()
     {
 
-        return sprintf( 'contains("%s")', $this->value );
+        return sprintf('contains("%s")', $this->value);
     }
 }

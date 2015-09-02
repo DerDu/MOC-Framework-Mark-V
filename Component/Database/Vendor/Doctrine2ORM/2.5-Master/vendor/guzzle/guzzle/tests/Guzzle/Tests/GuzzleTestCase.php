@@ -21,7 +21,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
 {
-
     public static $serviceBuilder;
     public static $server;
     protected static $mockBasePath;
@@ -35,7 +34,6 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function getServer()
     {
-
         if (!self::$server) {
             self::$server = new Server();
             if (self::$server->isRunning()) {
@@ -55,9 +53,8 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      */
     public static function getServiceBuilder()
     {
-
         if (!self::$serviceBuilder) {
-            throw new RuntimeException( 'No service builder has been set via setServiceBuilder()' );
+            throw new RuntimeException('No service builder has been set via setServiceBuilder()');
         }
 
         return self::$serviceBuilder;
@@ -68,9 +65,8 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @param ServiceBuilderInterface $builder Service builder
      */
-    public static function setServiceBuilder( ServiceBuilderInterface $builder )
+    public static function setServiceBuilder(ServiceBuilderInterface $builder)
     {
-
         self::$serviceBuilder = $builder;
     }
 
@@ -81,9 +77,8 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return GuzzleTestCase
      */
-    public static function setMockBasePath( $path )
+    public static function setMockBasePath($path)
     {
-
         self::$mockBasePath = $path;
     }
 
@@ -94,14 +89,14 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return MockObserver
      */
-    public function getWildcardObserver( HasDispatcherInterface $hasDispatcher )
+    public function getWildcardObserver(HasDispatcherInterface $hasDispatcher)
     {
 
-        $class = get_class( $hasDispatcher );
+        $class = get_class($hasDispatcher);
         $o = new MockObserver();
-        $events = call_user_func( array( $class, 'getAllEvents' ) );
+        $events = call_user_func(array($class, 'getAllEvents'));
         foreach ($events as $event) {
-            $hasDispatcher->getEventDispatcher()->addListener( $event, array( $o, 'update' ) );
+            $hasDispatcher->getEventDispatcher()->addListener($event, array($o, 'update'));
         }
 
         return $o;
@@ -114,7 +109,6 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      */
     public function getMockedRequests()
     {
-
         return $this->requests;
     }
 
@@ -131,29 +125,28 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return MockPlugin returns the created mock plugin
      */
-    public function setMockResponse( Client $client, $paths )
+    public function setMockResponse(Client $client, $paths)
     {
-
         $this->requests = array();
         $that = $this;
-        $mock = new MockPlugin( null, true );
-        $client->getEventDispatcher()->removeSubscriber( $mock );
-        $mock->getEventDispatcher()->addListener( 'mock.request', function ( Event $event ) use ( $that ) {
+        $mock = new MockPlugin(null, true);
+        $client->getEventDispatcher()->removeSubscriber($mock);
+        $mock->getEventDispatcher()->addListener('mock.request', function (Event $event) use ($that) {
 
-            $that->addMockedRequest( $event['request'] );
-        } );
+            $that->addMockedRequest($event['request']);
+        });
 
         if ($paths instanceof Response) {
             // A single response instance has been specified, create an array with that instance
             // as the only element for the following loop to work as expected
-            $paths = array( $paths );
+            $paths = array($paths);
         }
 
         foreach ((array)$paths as $path) {
-            $mock->addResponse( $this->getMockResponse( $path ) );
+            $mock->addResponse($this->getMockResponse($path));
         }
 
-        $client->getEventDispatcher()->addSubscriber( $mock );
+        $client->getEventDispatcher()->addSubscriber($mock);
 
         return $mock;
     }
@@ -165,9 +158,8 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return self
      */
-    public function addMockedRequest( RequestInterface $request )
+    public function addMockedRequest(RequestInterface $request)
     {
-
         $this->requests[] = $request;
 
         return $this;
@@ -180,12 +172,11 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return Response
      */
-    public function getMockResponse( $path )
+    public function getMockResponse($path)
     {
-
         return $path instanceof Response
             ? $path
-            : MockPlugin::getMockFile( self::$mockBasePath.DIRECTORY_SEPARATOR.$path );
+            : MockPlugin::getMockFile(self::$mockBasePath.DIRECTORY_SEPARATOR.$path);
     }
 
     /**
@@ -199,43 +190,42 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return array|bool Returns an array of the differences or FALSE if none
      */
-    public function compareHeaders( $filteredHeaders, $actualHeaders )
+    public function compareHeaders($filteredHeaders, $actualHeaders)
     {
-
         $comparison = new HeaderComparison();
 
-        return $comparison->compare( $filteredHeaders, $actualHeaders );
+        return $comparison->compare($filteredHeaders, $actualHeaders);
     }
 
     /**
      * Case insensitive assertContains
      *
-     * @param string $needle  Search string
+     * @param string $needle Search string
      * @param string $haystack Search this
      * @param string $message Optional failure message
      */
-    public function assertContainsIns( $needle, $haystack, $message = null )
+    public function assertContainsIns($needle, $haystack, $message = null)
     {
 
-        $this->assertContains( strtolower( $needle ), strtolower( $haystack ), $message );
+        $this->assertContains(strtolower($needle), strtolower($haystack), $message);
     }
 
     /**
      * Check if an event dispatcher has a subscriber
      *
-     * @param HasDispatcherInterface   $dispatcher
+     * @param HasDispatcherInterface $dispatcher
      * @param EventSubscriberInterface $subscriber
      *
      * @return bool
      */
-    protected function hasSubscriber( HasDispatcherInterface $dispatcher, EventSubscriberInterface $subscriber )
+    protected function hasSubscriber(HasDispatcherInterface $dispatcher, EventSubscriberInterface $subscriber)
     {
 
-        $class = get_class( $subscriber );
-        $all = array_keys( call_user_func( array( $class, 'getSubscribedEvents' ) ) );
+        $class = get_class($subscriber);
+        $all = array_keys(call_user_func(array($class, 'getSubscribedEvents')));
 
         foreach ($all as $i => $event) {
-            foreach ($dispatcher->getEventDispatcher()->getListeners( $event ) as $e) {
+            foreach ($dispatcher->getEventDispatcher()->getListeners($event) as $e) {
                 if ($e[0] === $subscriber) {
                     unset( $all[$i] );
                     break;
@@ -243,6 +233,6 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
             }
         }
 
-        return count( $all ) == 0;
+        return count($all) == 0;
     }
 }

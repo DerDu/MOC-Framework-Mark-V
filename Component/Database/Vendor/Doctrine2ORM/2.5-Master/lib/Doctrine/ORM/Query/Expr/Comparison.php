@@ -60,7 +60,7 @@ class Comparison
      * @param string $operator
      * @param mixed  $rightExpr
      */
-    public function __construct( $leftExpr, $operator, $rightExpr )
+    public function __construct($leftExpr, $operator, $rightExpr)
     {
 
         $this->leftExpr = $leftExpr;
@@ -73,7 +73,6 @@ class Comparison
      */
     public function getLeftExpr()
     {
-
         return $this->leftExpr;
     }
 
@@ -82,7 +81,6 @@ class Comparison
      */
     public function getOperator()
     {
-
         return $this->operator;
     }
 
@@ -91,7 +89,6 @@ class Comparison
      */
     public function getRightExpr()
     {
-
         return $this->rightExpr;
     }
 

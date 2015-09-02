@@ -28,7 +28,6 @@ use Doctrine\DBAL\Schema\Table;
 
 class TableGeneratorSchemaVisitor implements \Doctrine\DBAL\Schema\Visitor\Visitor
 {
-
     /**
      * @var string
      */
@@ -37,56 +36,55 @@ class TableGeneratorSchemaVisitor implements \Doctrine\DBAL\Schema\Visitor\Visit
     /**
      * @param string $generatorTableName
      */
-    public function __construct( $generatorTableName = 'sequences' )
+    public function __construct($generatorTableName = 'sequences')
     {
-
         $this->generatorTableName = $generatorTableName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSchema( Schema $schema )
+    public function acceptSchema(Schema $schema)
     {
 
-        $table = $schema->createTable( $this->generatorTableName );
-        $table->addColumn( 'sequence_name', 'string' );
-        $table->addColumn( 'sequence_value', 'integer', array( 'default' => 1 ) );
-        $table->addColumn( 'sequence_increment_by', 'integer', array( 'default' => 1 ) );
+        $table = $schema->createTable($this->generatorTableName);
+        $table->addColumn('sequence_name', 'string');
+        $table->addColumn('sequence_value', 'integer', array('default' => 1));
+        $table->addColumn('sequence_increment_by', 'integer', array('default' => 1));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptTable( Table $table )
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptColumn( Table $table, Column $column )
+    public function acceptTable(Table $table)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptForeignKey( Table $localTable, ForeignKeyConstraint $fkConstraint )
+    public function acceptColumn(Table $table, Column $column)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptIndex( Table $table, Index $index )
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptSequence( Sequence $sequence )
+    public function acceptIndex(Table $table, Index $index)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function acceptSequence(Sequence $sequence)
     {
     }
 }

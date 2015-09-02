@@ -7,7 +7,6 @@ namespace Guzzle\Parser;
  */
 class ParserRegistry
 {
-
     /** @var ParserRegistry Singleton instance */
     protected static $instance;
 
@@ -24,9 +23,8 @@ class ParserRegistry
 
     public function __construct()
     {
-
         // Use the PECL URI template parser if available
-        if (extension_loaded( 'uri_template' )) {
+        if (extension_loaded('uri_template')) {
             $this->mapping['uri_template'] = 'Guzzle\\Parser\\UriTemplate\\PeclUriTemplate';
         }
     }
@@ -37,7 +35,6 @@ class ParserRegistry
      */
     public static function getInstance()
     {
-
         if (!self::$instance) {
             self::$instance = new static;
         }
@@ -52,7 +49,7 @@ class ParserRegistry
      *
      * @return mixed|null
      */
-    public function getParser( $name )
+    public function getParser($name)
     {
 
         if (!isset( $this->instances[$name] )) {
@@ -72,9 +69,8 @@ class ParserRegistry
      * @param string $name   Name or handle of the parser to register
      * @param mixed  $parser Instantiated parser to register
      */
-    public function registerParser( $name, $parser )
+    public function registerParser($name, $parser)
     {
-
         $this->instances[$name] = $parser;
     }
 }

@@ -24,7 +24,6 @@ use Guzzle\Http\Message\Response;
  */
 class Server
 {
-
     const DEFAULT_PORT = 8124;
     const REQUEST_DELIMITER = "\n----[request]\n";
 
@@ -42,12 +41,11 @@ class Server
      *
      * @param int $port Port to listen on (defaults to 8124)
      */
-    public function __construct( $port = null )
+    public function __construct($port = null)
     {
-
         $this->port = $port ?: self::DEFAULT_PORT;
-        $this->client = new Client( $this->getUrl() );
-        register_shutdown_function( array( $this, 'stop' ) );
+        $this->client = new Client($this->getUrl());
+        register_shutdown_function(array($this, 'stop'));
     }
 
     /**
@@ -68,19 +66,17 @@ class Server
      */
     public function getPort()
     {
-
         return $this->port;
     }
 
     /**
      * Flush the received requests from the server
-     *
      * @throws RuntimeException
      */
     public function flush()
     {
 
-        $this->client->delete( 'guzzle-server/requests' )->send();
+        $this->client->delete('guzzle-server/requests')->send();
     }
 
     /**
@@ -90,31 +86,29 @@ class Server
      * on the server will return queued responses in FIFO order.
      *
      * @param array|Response $responses A single or array of Responses to queue
-     *
      * @throws BadResponseException
      */
-    public function enqueue( $responses )
+    public function enqueue($responses)
     {
-
         $data = array();
         foreach ((array)$responses as $response) {
 
             // Create the response object from a string
-            if (is_string( $response )) {
-                $response = Response::fromMessage( $response );
+            if (is_string($response)) {
+                $response = Response::fromMessage($response);
             } elseif (!( $response instanceof Response )) {
-                throw new BadResponseException( 'Responses must be strings or implement Response' );
+                throw new BadResponseException('Responses must be strings or implement Response');
             }
 
             $data[] = array(
                 'statusCode'   => $response->getStatusCode(),
                 'reasonPhrase' => $response->getReasonPhrase(),
                 'headers'      => $response->getHeaders()->toArray(),
-                'body' => $response->getBody( true )
+                'body' => $response->getBody(true)
             );
         }
 
-        $request = $this->client->put( 'guzzle-server/responses', null, json_encode( $data ) );
+        $request = $this->client->put('guzzle-server/responses', null, json_encode($data));
         $request->send();
     }
 
@@ -122,22 +116,22 @@ class Server
      * Get all of the received requests
      *
      * @param bool $hydrate Set to TRUE to turn the messages into
-     *                      actual {@see RequestInterface} objects.  If $hydrate is FALSE,
-     *                      requests will be returned as strings.
+     *      actual {@see RequestInterface} objects.  If $hydrate is FALSE,
+     *      requests will be returned as strings.
      *
      * @return array
      * @throws RuntimeException
      */
-    public function getReceivedRequests( $hydrate = false )
+    public function getReceivedRequests($hydrate = false)
     {
 
-        $response = $this->client->get( 'guzzle-server/requests' )->send();
-        $data = array_filter( explode( self::REQUEST_DELIMITER, $response->getBody( true ) ) );
+        $response = $this->client->get('guzzle-server/requests')->send();
+        $data = array_filter(explode(self::REQUEST_DELIMITER, $response->getBody(true)));
         if ($hydrate) {
-            $data = array_map( function ( $message ) {
+            $data = array_map(function ($message) {
 
-                return RequestFactory::getInstance()->fromMessage( $message );
-            }, $data );
+                return RequestFactory::getInstance()->fromMessage($message);
+            }, $data);
         }
 
         return $data;
@@ -148,11 +142,10 @@ class Server
      */
     public function start()
     {
-
         if (!$this->isRunning()) {
-            exec( 'node '.__DIR__.\DIRECTORY_SEPARATOR
+            exec('node '.__DIR__.\DIRECTORY_SEPARATOR
                 .'server.js '.$this->port
-                .' >> /tmp/server.log 2>&1 &' );
+                .' >> /tmp/server.log 2>&1 &');
             // Wait at most 5 seconds for the server the setup before
             // proceeding.
             $start = time();
@@ -174,16 +167,15 @@ class Server
      */
     public function isRunning()
     {
-
         if ($this->running) {
             return true;
         }
 
         try {
-            $this->client->get( 'guzzle-server/perf', array(), array( 'timeout' => 5 ) )->send();
+            $this->client->get('guzzle-server/perf', array(), array('timeout' => 5))->send();
             $this->running = true;
             return true;
-        } catch( \Exception $e ) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -193,12 +185,11 @@ class Server
      */
     public function stop()
     {
-
         if (!$this->isRunning()) {
             return false;
         }
 
         $this->running = false;
-        $this->client->delete( 'guzzle-server' )->send();
+        $this->client->delete('guzzle-server')->send();
     }
 }

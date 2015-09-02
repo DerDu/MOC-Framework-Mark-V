@@ -38,18 +38,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RunDqlCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
-            ->setName( 'orm:run-dql' )
-            ->setDescription( 'Executes arbitrary DQL directly from the command line.' )
-            ->setDefinition( array(
-                new InputArgument( 'dql', InputArgument::REQUIRED, 'The DQL to execute.' ),
+            ->setName('orm:run-dql')
+            ->setDescription('Executes arbitrary DQL directly from the command line.')
+            ->setDefinition(array(
+                new InputArgument('dql', InputArgument::REQUIRED, 'The DQL to execute.'),
                 new InputOption(
                     'hydrate', null, InputOption::VALUE_REQUIRED,
                     'Hydration mode of result set. Should be either: object, array, scalar or single-scalar.',
@@ -71,8 +69,8 @@ class RunDqlCommand extends Command
                     'show-sql', null, InputOption::VALUE_NONE,
                     'Dump generated SQL instead of executing query'
                 )
-            ) )
-            ->setHelp( <<<EOT
+            ))
+            ->setHelp(<<<EOT
 Executes arbitrary DQL directly from the command line.
 EOT
             );
@@ -81,56 +79,55 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute( InputInterface $input, OutputInterface $output )
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         /* @var $em \Doctrine\ORM\EntityManagerInterface */
-        $em = $this->getHelper( 'em' )->getEntityManager();
+        $em = $this->getHelper('em')->getEntityManager();
 
-        if (( $dql = $input->getArgument( 'dql' ) ) === null) {
-            throw new \RuntimeException( "Argument 'DQL' is required in order to execute this command correctly." );
+        if (( $dql = $input->getArgument('dql') ) === null) {
+            throw new \RuntimeException("Argument 'DQL' is required in order to execute this command correctly.");
         }
 
-        $depth = $input->getOption( 'depth' );
+        $depth = $input->getOption('depth');
 
-        if (!is_numeric( $depth )) {
-            throw new \LogicException( "Option 'depth' must contains an integer value" );
+        if (!is_numeric($depth)) {
+            throw new \LogicException("Option 'depth' must contains an integer value");
         }
 
-        $hydrationModeName = $input->getOption( 'hydrate' );
-        $hydrationMode = 'Doctrine\ORM\Query::HYDRATE_'.strtoupper( str_replace( '-', '_', $hydrationModeName ) );
+        $hydrationModeName = $input->getOption('hydrate');
+        $hydrationMode = 'Doctrine\ORM\Query::HYDRATE_'.strtoupper(str_replace('-', '_', $hydrationModeName));
 
-        if (!defined( $hydrationMode )) {
+        if (!defined($hydrationMode)) {
             throw new \RuntimeException(
                 "Hydration mode '$hydrationModeName' does not exist. It should be either: object. array, scalar or single-scalar."
             );
         }
 
-        $query = $em->createQuery( $dql );
+        $query = $em->createQuery($dql);
 
-        if (( $firstResult = $input->getOption( 'first-result' ) ) !== null) {
-            if (!is_numeric( $firstResult )) {
-                throw new \LogicException( "Option 'first-result' must contains an integer value" );
+        if (( $firstResult = $input->getOption('first-result') ) !== null) {
+            if (!is_numeric($firstResult)) {
+                throw new \LogicException("Option 'first-result' must contains an integer value");
             }
 
-            $query->setFirstResult( (int)$firstResult );
+            $query->setFirstResult((int)$firstResult);
         }
 
-        if (( $maxResult = $input->getOption( 'max-result' ) ) !== null) {
-            if (!is_numeric( $maxResult )) {
-                throw new \LogicException( "Option 'max-result' must contains an integer value" );
+        if (( $maxResult = $input->getOption('max-result') ) !== null) {
+            if (!is_numeric($maxResult)) {
+                throw new \LogicException("Option 'max-result' must contains an integer value");
             }
 
-            $query->setMaxResults( (int)$maxResult );
+            $query->setMaxResults((int)$maxResult);
         }
 
-        if ($input->getOption( 'show-sql' )) {
-            $output->writeln( Debug::dump( $query->getSQL(), 2, true, false ) );
+        if ($input->getOption('show-sql')) {
+            $output->writeln(Debug::dump($query->getSQL(), 2, true, false));
             return;
         }
 
-        $resultSet = $query->execute( array(), constant( $hydrationMode ) );
+        $resultSet = $query->execute(array(), constant($hydrationMode));
 
-        $output->writeln( Debug::dump( $resultSet, $input->getOption( 'depth' ), true, false ) );
+        $output->writeln(Debug::dump($resultSet, $input->getOption('depth'), true, false));
     }
 }

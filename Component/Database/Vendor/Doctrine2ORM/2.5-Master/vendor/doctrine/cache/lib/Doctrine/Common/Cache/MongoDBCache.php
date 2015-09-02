@@ -31,7 +31,6 @@ use MongoDate;
  */
 class MongoDBCache extends CacheProvider
 {
-
     /**
      * The data field will store the serialized PHP value.
      */
@@ -70,44 +69,40 @@ class MongoDBCache extends CacheProvider
      *
      * @see http://www.php.net/manual/en/mongo.readpreferences.php
      * @see http://www.php.net/manual/en/mongo.writeconcerns.php
-     *
      * @param MongoCollection $collection
      */
-    public function __construct( MongoCollection $collection )
+    public function __construct(MongoCollection $collection)
     {
-
         $this->collection = $collection;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doFetch( $id )
+    protected function doFetch($id)
     {
 
-        $document = $this->collection->findOne( array( '_id' => $id ),
-            array( self::DATA_FIELD, self::EXPIRATION_FIELD ) );
+        $document = $this->collection->findOne(array('_id' => $id), array(self::DATA_FIELD, self::EXPIRATION_FIELD));
 
         if ($document === null) {
             return false;
         }
 
-        if ($this->isExpired( $document )) {
-            $this->doDelete( $id );
+        if ($this->isExpired($document)) {
+            $this->doDelete($id);
             return false;
         }
 
-        return unserialize( $document[self::DATA_FIELD]->bin );
+        return unserialize($document[self::DATA_FIELD]->bin);
     }
 
     /**
      * Check if the document is expired.
      *
      * @param array $document
-     *
      * @return boolean
      */
-    private function isExpired( array $document )
+    private function isExpired(array $document)
     {
 
         return isset( $document[self::EXPIRATION_FIELD] ) &&
@@ -118,10 +113,10 @@ class MongoDBCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        $result = $this->collection->remove( array( '_id' => $id ) );
+        $result = $this->collection->remove(array('_id' => $id));
 
         return isset( $result['n'] ) ? $result['n'] == 1 : true;
     }
@@ -129,17 +124,17 @@ class MongoDBCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doContains( $id )
+    protected function doContains($id)
     {
 
-        $document = $this->collection->findOne( array( '_id' => $id ), array( self::EXPIRATION_FIELD ) );
+        $document = $this->collection->findOne(array('_id' => $id), array(self::EXPIRATION_FIELD));
 
         if ($document === null) {
             return false;
         }
 
-        if ($this->isExpired( $document )) {
-            $this->doDelete( $id );
+        if ($this->isExpired($document)) {
+            $this->doDelete($id);
             return false;
         }
 
@@ -149,18 +144,17 @@ class MongoDBCache extends CacheProvider
     /**
      * {@inheritdoc}
      */
-    protected function doSave( $id, $data, $lifeTime = 0 )
+    protected function doSave($id, $data, $lifeTime = 0)
     {
-
         $result = $this->collection->update(
-            array( '_id' => $id ),
+            array('_id' => $id),
             array(
                 '$set' => array(
-                    self::EXPIRATION_FIELD => ( $lifeTime > 0 ? new MongoDate( time() + $lifeTime ) : null ),
-                    self::DATA_FIELD       => new MongoBinData( serialize( $data ), MongoBinData::BYTE_ARRAY ),
+                    self::EXPIRATION_FIELD => ( $lifeTime > 0 ? new MongoDate(time() + $lifeTime) : null ),
+                    self::DATA_FIELD       => new MongoBinData(serialize($data), MongoBinData::BYTE_ARRAY),
                 )
             ),
-            array( 'upsert' => true, 'multiple' => false )
+            array('upsert' => true, 'multiple' => false)
         );
 
         return isset( $result['ok'] ) ? $result['ok'] == 1 : true;
@@ -171,7 +165,6 @@ class MongoDBCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         // Use remove() in lieu of drop() to maintain any collection indexes
         $result = $this->collection->remove();
 
@@ -184,15 +177,15 @@ class MongoDBCache extends CacheProvider
     protected function doGetStats()
     {
 
-        $serverStatus = $this->collection->db->command( array(
+        $serverStatus = $this->collection->db->command(array(
             'serverStatus' => 1,
-            'locks'       => 0,
-            'metrics'     => 0,
+            'locks'   => 0,
+            'metrics' => 0,
             'recordStats' => 0,
-            'repl'        => 0,
-        ) );
+            'repl'    => 0,
+        ));
 
-        $collStats = $this->collection->db->command( array( 'collStats' => 1 ) );
+        $collStats = $this->collection->db->command(array('collStats' => 1));
 
         return array(
             Cache::STATS_HITS             => null,

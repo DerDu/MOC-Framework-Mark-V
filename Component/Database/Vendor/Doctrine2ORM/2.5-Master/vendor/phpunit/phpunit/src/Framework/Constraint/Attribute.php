@@ -9,18 +9,10 @@
  */
 
 /**
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.1.0
+ * @since Class available since Release 3.1.0
  */
 class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constraint_Composite
 {
-
     /**
      * @var string
      */
@@ -30,10 +22,10 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
      * @param PHPUnit_Framework_Constraint $constraint
      * @param string                       $attributeName
      */
-    public function __construct( PHPUnit_Framework_Constraint $constraint, $attributeName )
+    public function __construct(PHPUnit_Framework_Constraint $constraint, $attributeName)
     {
 
-        parent::__construct( $constraint );
+        parent::__construct($constraint);
 
         $this->attributeName = $attributeName;
     }
@@ -52,12 +44,11 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
      * @param  string $description  Additional information about the test
      * @param  bool   $returnResult Whether to return a result or throw an exception
      *
-     * @return mixed
+*@return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-
         return parent::evaluate(
             PHPUnit_Framework_Assert::readAttribute(
                 $other,
@@ -76,11 +67,10 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
      *
      * @param  mixed $other Evaluated value or object.
      *
-     * @return string
+*@return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
-
         return $this->toString();
     }
 

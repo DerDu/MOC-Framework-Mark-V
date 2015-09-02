@@ -31,7 +31,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 abstract class Output implements OutputInterface
 {
-
     private $verbosity;
     private $formatter;
 
@@ -49,10 +48,9 @@ abstract class Output implements OutputInterface
         $decorated = false,
         OutputFormatterInterface $formatter = null
     ) {
-
         $this->verbosity = null === $verbosity ? self::VERBOSITY_NORMAL : $verbosity;
         $this->formatter = $formatter ?: new OutputFormatter();
-        $this->formatter->setDecorated( $decorated );
+        $this->formatter->setDecorated($decorated);
     }
 
     /**
@@ -60,26 +58,24 @@ abstract class Output implements OutputInterface
      */
     public function getFormatter()
     {
-
         return $this->formatter;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setFormatter( OutputFormatterInterface $formatter )
+    public function setFormatter(OutputFormatterInterface $formatter)
     {
-
         $this->formatter = $formatter;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDecorated( $decorated )
+    public function setDecorated($decorated)
     {
 
-        $this->formatter->setDecorated( $decorated );
+        $this->formatter->setDecorated($decorated);
     }
 
     /**
@@ -87,7 +83,6 @@ abstract class Output implements OutputInterface
      */
     public function isDecorated()
     {
-
         return $this->formatter->isDecorated();
     }
 
@@ -96,14 +91,13 @@ abstract class Output implements OutputInterface
      */
     public function getVerbosity()
     {
-
         return $this->verbosity;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity( $level )
+    public function setVerbosity($level)
     {
 
         $this->verbosity = (int)$level;
@@ -111,43 +105,38 @@ abstract class Output implements OutputInterface
 
     public function isQuiet()
     {
-
         return self::VERBOSITY_QUIET === $this->verbosity;
     }
 
     public function isVerbose()
     {
-
         return self::VERBOSITY_VERBOSE <= $this->verbosity;
     }
 
     public function isVeryVerbose()
     {
-
         return self::VERBOSITY_VERY_VERBOSE <= $this->verbosity;
     }
 
     public function isDebug()
     {
-
         return self::VERBOSITY_DEBUG <= $this->verbosity;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function writeln( $messages, $type = self::OUTPUT_NORMAL )
+    public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
 
-        $this->write( $messages, true, $type );
+        $this->write($messages, true, $type);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function write( $messages, $newline = false, $type = self::OUTPUT_NORMAL )
+    public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
-
         if (self::VERBOSITY_QUIET === $this->verbosity) {
             return;
         }
@@ -157,18 +146,18 @@ abstract class Output implements OutputInterface
         foreach ($messages as $message) {
             switch ($type) {
                 case OutputInterface::OUTPUT_NORMAL:
-                    $message = $this->formatter->format( $message );
+                    $message = $this->formatter->format($message);
                     break;
                 case OutputInterface::OUTPUT_RAW:
                     break;
                 case OutputInterface::OUTPUT_PLAIN:
-                    $message = strip_tags( $this->formatter->format( $message ) );
+                    $message = strip_tags($this->formatter->format($message));
                     break;
                 default:
-                    throw new \InvalidArgumentException( sprintf( 'Unknown output type given (%s)', $type ) );
+                    throw new \InvalidArgumentException(sprintf('Unknown output type given (%s)', $type));
             }
 
-            $this->doWrite( $message, $newline );
+            $this->doWrite($message, $newline);
         }
     }
 
@@ -178,5 +167,5 @@ abstract class Output implements OutputInterface
      * @param string $message A message to write to the output
      * @param bool   $newline Whether to add a newline or not
      */
-    abstract protected function doWrite( $message, $newline );
+    abstract protected function doWrite($message, $newline);
 }

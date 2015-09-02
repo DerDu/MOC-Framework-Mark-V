@@ -15,5 +15,4 @@ use Prophecy\Exception\Exception;
 
 interface DoublerException extends Exception
 {
-
 }

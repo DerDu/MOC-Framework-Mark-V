@@ -22,7 +22,6 @@ use Prophecy\Doubler\Generator\Node\MethodNode;
  */
 class TraversablePatch implements ClassPatchInterface
 {
-
     /**
      * Supports nodetree, that implement Traversable, but not Iterator or IteratorAggregate.
      *
@@ -30,24 +29,24 @@ class TraversablePatch implements ClassPatchInterface
      *
      * @return bool
      */
-    public function supports( ClassNode $node )
+    public function supports(ClassNode $node)
     {
 
-        if (in_array( 'Iterator', $node->getInterfaces() )) {
+        if (in_array('Iterator', $node->getInterfaces())) {
             return false;
         }
-        if (in_array( 'IteratorAggregate', $node->getInterfaces() )) {
+        if (in_array('IteratorAggregate', $node->getInterfaces())) {
             return false;
         }
 
         foreach ($node->getInterfaces() as $interface) {
-            if ('Traversable' !== $interface && !is_subclass_of( $interface, 'Traversable' )) {
+            if ('Traversable' !== $interface && !is_subclass_of($interface, 'Traversable')) {
                 continue;
             }
-            if ('Iterator' === $interface || is_subclass_of( $interface, 'Iterator' )) {
+            if ('Iterator' === $interface || is_subclass_of($interface, 'Iterator')) {
                 continue;
             }
-            if ('IteratorAggregate' === $interface || is_subclass_of( $interface, 'IteratorAggregate' )) {
+            if ('IteratorAggregate' === $interface || is_subclass_of($interface, 'IteratorAggregate')) {
                 continue;
             }
 
@@ -62,16 +61,16 @@ class TraversablePatch implements ClassPatchInterface
      *
      * @param ClassNode $node
      */
-    public function apply( ClassNode $node )
+    public function apply(ClassNode $node)
     {
 
-        $node->addInterface( 'Iterator' );
+        $node->addInterface('Iterator');
 
-        $node->addMethod( new MethodNode( 'current' ) );
-        $node->addMethod( new MethodNode( 'key' ) );
-        $node->addMethod( new MethodNode( 'next' ) );
-        $node->addMethod( new MethodNode( 'rewind' ) );
-        $node->addMethod( new MethodNode( 'valid' ) );
+        $node->addMethod(new MethodNode('current'));
+        $node->addMethod(new MethodNode('key'));
+        $node->addMethod(new MethodNode('next'));
+        $node->addMethod(new MethodNode('rewind'));
+        $node->addMethod(new MethodNode('valid'));
     }
 
     /**
@@ -81,7 +80,6 @@ class TraversablePatch implements ClassPatchInterface
      */
     public function getPriority()
     {
-
         return 100;
     }
 }

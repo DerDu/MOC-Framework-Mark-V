@@ -13,16 +13,14 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class ClosureCommand extends AbstractCommand
 {
-
     /**
      * {@inheritdoc}
      * @throws InvalidArgumentException if a closure was not passed
      */
     protected function init()
     {
-
         if (!$this['closure']) {
-            throw new InvalidArgumentException( 'A closure must be passed in the parameters array' );
+            throw new InvalidArgumentException('A closure must be passed in the parameters array');
         }
     }
 
@@ -32,13 +30,12 @@ class ClosureCommand extends AbstractCommand
      */
     protected function build()
     {
-
         $closure = $this['closure'];
         /** @var $closure \Closure */
-        $this->request = $closure( $this, $this->operation );
+        $this->request = $closure($this, $this->operation);
 
         if (!$this->request || !$this->request instanceof RequestInterface) {
-            throw new UnexpectedValueException( 'Closure command did not return a RequestInterface object' );
+            throw new UnexpectedValueException('Closure command did not return a RequestInterface object');
         }
     }
 }

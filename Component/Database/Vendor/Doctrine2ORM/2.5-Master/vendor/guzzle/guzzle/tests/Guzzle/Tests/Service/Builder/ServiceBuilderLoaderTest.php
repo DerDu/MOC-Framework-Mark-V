@@ -9,10 +9,8 @@ use Guzzle\Service\Builder\ServiceBuilderLoader;
  */
 class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     public function testBuildsServiceBuilders()
     {
-
         $arrayFactory = new ServiceBuilderLoader();
 
         $data = array(
@@ -23,13 +21,13 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
                         'secret' => 'abc',
                     ),
                 ),
-                'foo'      => array(
+                'foo'  => array(
                     'extends' => 'abstract',
                     'params' => array(
                         'baz' => 'bar',
                     ),
                 ),
-                'mock'     => array(
+                'mock' => array(
                     'extends' => 'abstract',
                     'params' => array(
                         'username' => 'foo',
@@ -40,13 +38,13 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
             )
         );
 
-        $builder = $arrayFactory->load( $data );
+        $builder = $arrayFactory->load($data);
 
         // Ensure that services were parsed
-        $this->assertTrue( isset( $builder['mock'] ) );
-        $this->assertTrue( isset( $builder['abstract'] ) );
-        $this->assertTrue( isset( $builder['foo'] ) );
-        $this->assertFalse( isset( $builder['jimmy'] ) );
+        $this->assertTrue(isset( $builder['mock'] ));
+        $this->assertTrue(isset( $builder['abstract'] ));
+        $this->assertTrue(isset( $builder['foo'] ));
+        $this->assertFalse(isset( $builder['jimmy'] ));
     }
 
     /**
@@ -55,7 +53,6 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testThrowsExceptionWhenExtendingNonExistentService()
     {
-
         $arrayFactory = new ServiceBuilderLoader();
 
         $data = array(
@@ -66,12 +63,11 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
             )
         );
 
-        $builder = $arrayFactory->load( $data );
+        $builder = $arrayFactory->load($data);
     }
 
     public function testAllowsGlobalParameterOverrides()
     {
-
         $arrayFactory = new ServiceBuilderLoader();
 
         $data = array(
@@ -85,38 +81,36 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
             )
         );
 
-        $builder = $arrayFactory->load( $data, array(
+        $builder = $arrayFactory->load($data, array(
             'bar' => 'jar',
             'far' => 'car'
-        ) );
+        ));
 
-        $compiled = json_decode( $builder->serialize(), true );
-        $this->assertEquals( array(
+        $compiled = json_decode($builder->serialize(), true);
+        $this->assertEquals(array(
             'foo' => 'baz',
             'bar' => 'jar',
             'far' => 'car'
-        ), $compiled['foo']['params'] );
+        ), $compiled['foo']['params']);
     }
 
     public function tstDoesNotErrorOnCircularReferences()
     {
-
         $arrayFactory = new ServiceBuilderLoader();
-        $arrayFactory->load( array(
+        $arrayFactory->load(array(
             'services' => array(
-                'too'  => array( 'extends' => 'ball' ),
-                'ball' => array( 'extends' => 'too' ),
+                'too'  => array('extends' => 'ball'),
+                'ball' => array('extends' => 'too'),
             )
-        ) );
+        ));
     }
 
     public function configProvider()
     {
-
         $foo = array(
             'extends' => 'bar',
             'class'   => 'stdClass',
-            'params' => array( 'a' => 'test', 'b' => '456' )
+            'params' => array('a' => 'test', 'b' => '456')
         );
 
         return array(
@@ -125,18 +119,18 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
                 array(
                     'services' => array(
                         'foo' => $foo,
-                        'bar' => array( 'params' => array( 'baz' => '123' ) )
+                        'bar' => array('params' => array('baz' => '123'))
                     )
                 ),
                 array(
                     'services' => array(
-                        'foo' => array( 'class' => 'Baz' )
+                        'foo' => array('class' => 'Baz')
                     )
                 ),
                 array(
                     'services' => array(
-                        'foo' => array( 'class' => 'Baz' ),
-                        'bar' => array( 'params' => array( 'baz' => '123' ) )
+                        'foo' => array('class' => 'Baz'),
+                        'bar' => array('params' => array('baz' => '123'))
                     )
                 )
             ),
@@ -145,14 +139,14 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
                 array(
                     'services' => array(
                         'foo' => $foo,
-                        'bar' => array( 'params' => array( 'baz' => '123' ) )
+                        'bar' => array('params' => array('baz' => '123'))
                     )
                 ),
                 array(
                     'services' => array(
                         'foo' => array(
                             'extends' => 'foo',
-                            'params' => array( 'b' => '123', 'c' => 'def' )
+                            'params' => array('b' => '123', 'c' => 'def')
                         )
                     )
                 ),
@@ -161,9 +155,9 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
                         'foo' => array(
                             'extends' => 'bar',
                             'class'  => 'stdClass',
-                            'params' => array( 'a' => 'test', 'b' => '123', 'c' => 'def' )
+                            'params' => array('a' => 'test', 'b' => '123', 'c' => 'def')
                         ),
-                        'bar' => array( 'params' => array( 'baz' => '123' ) )
+                        'bar' => array('params' => array('baz' => '123'))
                     )
                 )
             )
@@ -173,12 +167,11 @@ class ServiceBuilderLoaderTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @dataProvider configProvider
      */
-    public function testCombinesConfigs( $a, $b, $c )
+    public function testCombinesConfigs($a, $b, $c)
     {
-
         $l = new ServiceBuilderLoader();
-        $m = new \ReflectionMethod( $l, 'mergeData' );
-        $m->setAccessible( true );
-        $this->assertEquals( $c, $m->invoke( $l, $a, $b ) );
+        $m = new \ReflectionMethod($l, 'mergeData');
+        $m->setAccessible(true);
+        $this->assertEquals($c, $m->invoke($l, $a, $b));
     }
 }

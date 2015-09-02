@@ -17,19 +17,10 @@
  *
  * The expected value is passed in the constructor.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Kore Nordmann <kn@ez.no>
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.0.0
+ * @since Class available since Release 3.0.0
  */
 class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
 {
-
     /**
      * @var mixed
      */
@@ -41,17 +32,17 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
     protected $delta = 0.0;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $maxDepth = 10;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $canonicalize = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $ignoreCase = false;
 
@@ -61,33 +52,32 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
     protected $lastFailure;
 
     /**
-     * @param  mixed   $value
-     * @param  float   $delta
-     * @param  integer $maxDepth
-     * @param  boolean $canonicalize
-     * @param  boolean $ignoreCase
+     * @param  mixed $value
+     * @param  float $delta
+     * @param  int   $maxDepth
+     * @param  bool  $canonicalize
+     * @param  bool  $ignoreCase
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function __construct( $value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false )
+    public function __construct($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
-
         parent::__construct();
 
-        if (!is_numeric( $delta )) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory( 2, 'numeric' );
+        if (!is_numeric($delta)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'numeric');
         }
 
-        if (!is_int( $maxDepth )) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory( 3, 'integer' );
+        if (!is_int($maxDepth)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'integer');
         }
 
-        if (!is_bool( $canonicalize )) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory( 4, 'boolean' );
+        if (!is_bool($canonicalize)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(4, 'boolean');
         }
 
-        if (!is_bool( $ignoreCase )) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory( 5, 'boolean' );
+        if (!is_bool($ignoreCase)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(5, 'boolean');
         }
 
         $this->value = $value;
@@ -114,9 +104,8 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-
         // If $this->value and $other are identical, they are also equal.
         // This is the most common path and will allow us to skip
         // initialization of all the comparators.
@@ -139,13 +128,13 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
                 $this->canonicalize,
                 $this->ignoreCase
             );
-        } catch( SebastianBergmann\Comparator\ComparisonFailure $f ) {
+        } catch (SebastianBergmann\Comparator\ComparisonFailure $f) {
             if ($returnResult) {
                 return false;
             }
 
             throw new PHPUnit_Framework_ExpectationFailedException(
-                trim( $description."\n".$f->getMessage() ),
+                trim($description."\n".$f->getMessage()),
                 $f
             );
         }
@@ -160,11 +149,10 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-
         $delta = '';
 
-        if (is_string( $this->value )) {
-            if (strpos( $this->value, "\n" ) !== false) {
+        if (is_string($this->value)) {
+            if (strpos($this->value, "\n") !== false) {
                 return 'is equal to <text>';
             } else {
                 return sprintf(
@@ -182,7 +170,7 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
 
             return sprintf(
                 'is equal to %s%s',
-                $this->exporter->export( $this->value ),
+                $this->exporter->export($this->value),
                 $delta
             );
         }

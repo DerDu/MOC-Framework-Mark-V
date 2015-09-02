@@ -15,7 +15,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInterface, \ArrayAccess, \Serializable
 {
-
     /** @var ServiceBuilderLoader Cached instance of the service builder loader */
     protected static $cachedFactory;
     /** @var array Service builder configuration data */
@@ -27,13 +26,12 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
 
     /**
      * @param array $serviceBuilderConfig Service configuration settings:
-     *                                    - name: Name of the service
-     *                                    - class: Client class to instantiate using a factory method
-     *                                    - params: array of key value pair configuration settings for the builder
+     *     - name: Name of the service
+     *     - class: Client class to instantiate using a factory method
+     *     - params: array of key value pair configuration settings for the builder
      */
-    public function __construct( array $serviceBuilderConfig = array() )
+    public function __construct(array $serviceBuilderConfig = array())
     {
-
         $this->builderConfig = $serviceBuilderConfig;
     }
 
@@ -48,34 +46,33 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
      * @throws ServiceBuilderException if a file cannot be opened
      * @throws ServiceNotFoundException when trying to extend a missing client
      */
-    public static function factory( $config = null, array $globalParameters = array() )
+    public static function factory($config = null, array $globalParameters = array())
     {
-
         // @codeCoverageIgnoreStart
         if (!static::$cachedFactory) {
             static::$cachedFactory = new ServiceBuilderLoader();
         }
         // @codeCoverageIgnoreEnd
 
-        return self::$cachedFactory->load( $config, $globalParameters );
+        return self::$cachedFactory->load($config, $globalParameters);
     }
 
     public static function getAllEvents()
     {
 
-        return array( 'service_builder.create_client' );
+        return array('service_builder.create_client');
     }
 
-    public function unserialize( $serialized )
+    public function unserialize($serialized)
     {
 
-        $this->builderConfig = json_decode( $serialized, true );
+        $this->builderConfig = json_decode($serialized, true);
     }
 
     public function serialize()
     {
 
-        return json_encode( $this->builderConfig );
+        return json_encode($this->builderConfig);
     }
 
     /**
@@ -85,9 +82,8 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
      *
      * @return self
      */
-    public function addGlobalPlugin( EventSubscriberInterface $plugin )
+    public function addGlobalPlugin(EventSubscriberInterface $plugin)
     {
-
         $this->plugins[] = $plugin;
 
         return $this;
@@ -100,22 +96,22 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
      *
      * @return array|null
      */
-    public function getData( $name )
+    public function getData($name)
     {
 
         return isset( $this->builderConfig[$name] ) ? $this->builderConfig[$name] : null;
     }
 
-    public function offsetSet( $offset, $value )
+    public function offsetSet($offset, $value)
     {
 
-        $this->set( $offset, $value );
+        $this->set($offset, $value);
     }
 
-    public function set( $key, $service )
+    public function set($key, $service)
     {
 
-        if (is_array( $service ) && isset( $service['class'] ) && isset( $service['params'] )) {
+        if (is_array($service) && isset( $service['class'] ) && isset( $service['params'] )) {
             $this->builderConfig[$key] = $service;
         } else {
             $this->clients[$key] = $service;
@@ -124,26 +120,26 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
         return $this;
     }
 
-    public function offsetUnset( $offset )
+    public function offsetUnset($offset)
     {
 
         unset( $this->builderConfig[$offset] );
         unset( $this->clients[$offset] );
     }
 
-    public function offsetExists( $offset )
+    public function offsetExists($offset)
     {
 
         return isset( $this->builderConfig[$offset] ) || isset( $this->clients[$offset] );
     }
 
-    public function offsetGet( $offset )
+    public function offsetGet($offset)
     {
 
-        return $this->get( $offset );
+        return $this->get($offset);
     }
 
-    public function get( $name, $throwAway = false )
+    public function get($name, $throwAway = false)
     {
 
         if (!isset( $this->builderConfig[$name] )) {
@@ -156,10 +152,10 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
             // Check aliases and return a match if found
             foreach ($this->builderConfig as $actualName => $config) {
                 if (isset( $config['alias'] ) && $config['alias'] == $name) {
-                    return $this->get( $actualName, $throwAway );
+                    return $this->get($actualName, $throwAway);
                 }
             }
-            throw new ServiceNotFoundException( 'No service is registered as '.$name );
+            throw new ServiceNotFoundException('No service is registered as '.$name);
         }
 
         if (!$throwAway && isset( $this->clients[$name] )) {
@@ -170,18 +166,18 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
 
         // Convert references to the actual client
         foreach ($builder['params'] as &$v) {
-            if (is_string( $v ) && substr( $v, 0, 1 ) == '{' && substr( $v, -1 ) == '}') {
-                $v = $this->get( trim( $v, '{} ' ) );
+            if (is_string($v) && substr($v, 0, 1) == '{' && substr($v, -1) == '}') {
+                $v = $this->get(trim($v, '{} '));
             }
         }
 
         // Get the configured parameters and merge in any parameters provided for throw-away clients
         $config = $builder['params'];
-        if (is_array( $throwAway )) {
+        if (is_array($throwAway)) {
             $config = $throwAway + $config;
         }
 
-        $client = $builder['class']::factory( $config );
+        $client = $builder['class']::factory($config);
 
         if (!$throwAway) {
             $this->clients[$name] = $client;
@@ -189,10 +185,10 @@ class ServiceBuilder extends AbstractHasDispatcher implements ServiceBuilderInte
 
         if ($client instanceof ClientInterface) {
             foreach ($this->plugins as $plugin) {
-                $client->addSubscriber( $plugin );
+                $client->addSubscriber($plugin);
             }
             // Dispatch an event letting listeners know a client was created
-            $this->dispatch( 'service_builder.create_client', array( 'client' => $client ) );
+            $this->dispatch('service_builder.create_client', array('client' => $client));
         }
 
         return $client;

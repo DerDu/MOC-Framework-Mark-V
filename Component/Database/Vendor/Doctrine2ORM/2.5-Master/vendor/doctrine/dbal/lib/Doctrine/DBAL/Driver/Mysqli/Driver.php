@@ -27,17 +27,15 @@ use Doctrine\DBAL\Driver\AbstractMySQLDriver;
  */
 class Driver extends AbstractMySQLDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         try {
-            return new MysqliConnection( $params, $username, $password, $driverOptions );
-        } catch( MysqliException $e ) {
-            throw DBALException::driverException( $this, $e );
+            return new MysqliConnection($params, $username, $password, $driverOptions);
+        } catch (MysqliException $e) {
+            throw DBALException::driverException($this, $e);
         }
     }
 
@@ -46,7 +44,6 @@ class Driver extends AbstractMySQLDriver
      */
     public function getName()
     {
-
         return 'mysqli';
     }
 }

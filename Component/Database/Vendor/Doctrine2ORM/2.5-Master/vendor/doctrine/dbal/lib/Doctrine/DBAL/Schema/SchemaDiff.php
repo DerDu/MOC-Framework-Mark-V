@@ -32,7 +32,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class SchemaDiff
 {
-
     /**
      * @var \Doctrine\DBAL\Schema\Schema
      */
@@ -127,10 +126,10 @@ class SchemaDiff
      *
      * @return array
      */
-    public function toSaveSql( AbstractPlatform $platform )
+    public function toSaveSql(AbstractPlatform $platform)
     {
 
-        return $this->_toSql( $platform, true );
+        return $this->_toSql($platform, true);
     }
 
     /**
@@ -139,37 +138,35 @@ class SchemaDiff
      *
      * @return array
      */
-    protected function _toSql( AbstractPlatform $platform, $saveMode = false )
+    protected function _toSql(AbstractPlatform $platform, $saveMode = false)
     {
-
         $sql = array();
 
         if ($platform->supportsSchemas()) {
             foreach ($this->newNamespaces as $newNamespace) {
-                $sql[] = $platform->getCreateSchemaSQL( $newNamespace );
+                $sql[] = $platform->getCreateSchemaSQL($newNamespace);
             }
         }
 
         if ($platform->supportsForeignKeyConstraints() && $saveMode == false) {
             foreach ($this->orphanedForeignKeys as $orphanedForeignKey) {
-                $sql[] = $platform->getDropForeignKeySQL( $orphanedForeignKey,
-                    $orphanedForeignKey->getLocalTableName() );
+                $sql[] = $platform->getDropForeignKeySQL($orphanedForeignKey, $orphanedForeignKey->getLocalTableName());
             }
         }
 
         if ($platform->supportsSequences() == true) {
             foreach ($this->changedSequences as $sequence) {
-                $sql[] = $platform->getAlterSequenceSQL( $sequence );
+                $sql[] = $platform->getAlterSequenceSQL($sequence);
             }
 
             if ($saveMode === false) {
                 foreach ($this->removedSequences as $sequence) {
-                    $sql[] = $platform->getDropSequenceSQL( $sequence );
+                    $sql[] = $platform->getDropSequenceSQL($sequence);
                 }
             }
 
             foreach ($this->newSequences as $sequence) {
-                $sql[] = $platform->getCreateSequenceSQL( $sequence );
+                $sql[] = $platform->getCreateSequenceSQL($sequence);
             }
         }
 
@@ -177,25 +174,25 @@ class SchemaDiff
         foreach ($this->newTables as $table) {
             $sql = array_merge(
                 $sql,
-                $platform->getCreateTableSQL( $table, AbstractPlatform::CREATE_INDEXES )
+                $platform->getCreateTableSQL($table, AbstractPlatform::CREATE_INDEXES)
             );
 
             if ($platform->supportsForeignKeyConstraints()) {
                 foreach ($table->getForeignKeys() as $foreignKey) {
-                    $foreignKeySql[] = $platform->getCreateForeignKeySQL( $foreignKey, $table );
+                    $foreignKeySql[] = $platform->getCreateForeignKeySQL($foreignKey, $table);
                 }
             }
         }
-        $sql = array_merge( $sql, $foreignKeySql );
+        $sql = array_merge($sql, $foreignKeySql);
 
         if ($saveMode === false) {
             foreach ($this->removedTables as $table) {
-                $sql[] = $platform->getDropTableSQL( $table );
+                $sql[] = $platform->getDropTableSQL($table);
             }
         }
 
         foreach ($this->changedTables as $tableDiff) {
-            $sql = array_merge( $sql, $platform->getAlterTableSQL( $tableDiff ) );
+            $sql = array_merge($sql, $platform->getAlterTableSQL($tableDiff));
         }
 
         return $sql;
@@ -206,9 +203,9 @@ class SchemaDiff
      *
      * @return array
      */
-    public function toSql( AbstractPlatform $platform )
+    public function toSql(AbstractPlatform $platform)
     {
 
-        return $this->_toSql( $platform, false );
+        return $this->_toSql($platform, false);
     }
 }

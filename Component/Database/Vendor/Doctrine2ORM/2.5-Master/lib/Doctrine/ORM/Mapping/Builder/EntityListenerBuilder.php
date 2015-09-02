@@ -31,7 +31,6 @@ use Doctrine\ORM\Mapping\MappingException;
  */
 class EntityListenerBuilder
 {
-
     /**
      * @var array Hash-map to handle event names.
      */
@@ -54,21 +53,21 @@ class EntityListenerBuilder
      *
      * @throws \Doctrine\ORM\Mapping\MappingException           When the listener class not found.
      */
-    static public function bindEntityListener( ClassMetadata $metadata, $className )
+    static public function bindEntityListener(ClassMetadata $metadata, $className)
     {
 
-        $class = $metadata->fullyQualifiedClassName( $className );
+        $class = $metadata->fullyQualifiedClassName($className);
 
-        if (!class_exists( $class )) {
-            throw MappingException::entityListenerClassNotFound( $class, $className );
+        if (!class_exists($class)) {
+            throw MappingException::entityListenerClassNotFound($class, $className);
         }
 
-        foreach (get_class_methods( $class ) as $method) {
+        foreach (get_class_methods($class) as $method) {
             if (!isset( self::$events[$method] )) {
                 continue;
             }
 
-            $metadata->addEntityListener( $method, $class, $method );
+            $metadata->addEntityListener($method, $class, $method);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Doctrine\Tests\Common\Proxy;
  */
 class MagicGetClass
 {
-
     /**
      * @var string
      */
@@ -24,15 +23,14 @@ class MagicGetClass
      * @return string
      * @throws \BadMethodCallException
      */
-    public function __get( $name )
+    public function __get($name)
     {
-
         if ($name === 'test') {
             return 'test';
         }
 
         if ($name === 'publicField' || $name === 'id') {
-            throw new \BadMethodCallException( 'Should never be called for "publicField" or "id"' );
+            throw new \BadMethodCallException('Should never be called for "publicField" or "id"');
         }
 
         return 'not defined';

@@ -16,17 +16,15 @@ use Satooshi\ProjectTestCase;
  */
 class JsonFileTest extends ProjectTestCase
 {
-
     /**
      * @test
      */
     public function shouldNotHaveSourceFileOnConstruction()
     {
-
         $path = 'test.php';
 
-        $this->assertFalse( $this->object->hasSourceFile( $path ) );
-        $this->assertNull( $this->object->getSourceFile( $path ) );
+        $this->assertFalse($this->object->hasSourceFile($path));
+        $this->assertNull($this->object->getSourceFile($path));
     }
 
     /**
@@ -35,8 +33,8 @@ class JsonFileTest extends ProjectTestCase
     public function shouldCountZeroSourceFilesOnConstruction()
     {
 
-        $this->assertFalse( $this->object->hasSourceFiles() );
-        $this->assertEmpty( $this->object->getSourceFiles() );
+        $this->assertFalse($this->object->hasSourceFiles());
+        $this->assertEmpty($this->object->getSourceFiles());
     }
 
     /**
@@ -45,7 +43,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceNameOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceName() );
+        $this->assertNull($this->object->getServiceName());
     }
 
     /**
@@ -54,7 +52,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveRepoTokenOnConstruction()
     {
 
-        $this->assertNull( $this->object->getRepoToken() );
+        $this->assertNull($this->object->getRepoToken());
     }
 
     /**
@@ -63,7 +61,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceJobIdOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceJobId() );
+        $this->assertNull($this->object->getServiceJobId());
     }
 
     /**
@@ -72,7 +70,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceNumberOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceNumber() );
+        $this->assertNull($this->object->getServiceNumber());
     }
 
     /**
@@ -81,7 +79,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceEventTypeOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceEventType() );
+        $this->assertNull($this->object->getServiceEventType());
     }
 
     /**
@@ -90,7 +88,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceBuildUrlOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceBuildUrl() );
+        $this->assertNull($this->object->getServiceBuildUrl());
     }
 
 
@@ -103,7 +101,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServiceBranchOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServiceBranch() );
+        $this->assertNull($this->object->getServiceBranch());
     }
 
     // hasSourceFiles()
@@ -115,7 +113,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveServicePullRequestOnConstruction()
     {
 
-        $this->assertNull( $this->object->getServicePullRequest() );
+        $this->assertNull($this->object->getServicePullRequest());
     }
 
     // getServiceName()
@@ -126,7 +124,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveGitOnConstruction()
     {
 
-        $this->assertNull( $this->object->getGit() );
+        $this->assertNull($this->object->getGit());
     }
 
     // getRepoToken()
@@ -137,7 +135,7 @@ class JsonFileTest extends ProjectTestCase
     public function shouldNotHaveRunAtOnConstruction()
     {
 
-        $this->assertNull( $this->object->getRunAt() );
+        $this->assertNull($this->object->getRunAt());
     }
 
     // getServiceJobId()
@@ -147,12 +145,11 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldHaveEmptyMetrics()
     {
-
         $metrics = $this->object->getMetrics();
 
-        $this->assertEquals( 0, $metrics->getStatements() );
-        $this->assertEquals( 0, $metrics->getCoveredStatements() );
-        $this->assertEquals( 0, $metrics->getLineCoverage() );
+        $this->assertEquals(0, $metrics->getStatements());
+        $this->assertEquals(0, $metrics->getCoveredStatements());
+        $this->assertEquals(0, $metrics->getLineCoverage());
     }
 
     // getServiceNumber()
@@ -162,13 +159,12 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldSetServiceName()
     {
-
         $expected = 'travis-ci';
 
-        $obj = $this->object->setServiceName( $expected );
+        $obj = $this->object->setServiceName($expected);
 
-        $this->assertEquals( $expected, $this->object->getServiceName() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getServiceName());
+        $this->assertSame($obj, $this->object);
 
         return $this->object;
     }
@@ -180,13 +176,12 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldSetRepoToken()
     {
-
         $expected = 'token';
 
-        $obj = $this->object->setRepoToken( $expected );
+        $obj = $this->object->setRepoToken($expected);
 
-        $this->assertEquals( $expected, $this->object->getRepoToken() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getRepoToken());
+        $this->assertSame($obj, $this->object);
 
         return $this->object;
     }
@@ -198,13 +193,12 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldSetServiceJobId()
     {
-
         $expected = 'job_id';
 
-        $obj = $this->object->setServiceJobId( $expected );
+        $obj = $this->object->setServiceJobId($expected);
 
-        $this->assertEquals( $expected, $this->object->getServiceJobId() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getServiceJobId());
+        $this->assertSame($obj, $this->object);
 
         return $this->object;
     }
@@ -217,14 +211,14 @@ class JsonFileTest extends ProjectTestCase
     public function shouldSetGit()
     {
 
-        $remotes = array( new Remote() );
+        $remotes = array(new Remote());
         $head = new Commit();
-        $git = new Git( 'master', $head, $remotes );
+        $git = new Git('master', $head, $remotes);
 
-        $obj = $this->object->setGit( $git );
+        $obj = $this->object->setGit($git);
 
-        $this->assertSame( $git, $this->object->getGit() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertSame($git, $this->object->getGit());
+        $this->assertSame($obj, $this->object);
 
         return $this->object;
     }
@@ -236,13 +230,12 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldSetRunAt()
     {
-
         $expected = '2013-04-04 11:22:33 +0900';
 
-        $obj = $this->object->setRunAt( $expected );
+        $obj = $this->object->setRunAt($expected);
 
-        $this->assertEquals( $expected, $this->object->getRunAt() );
-        $this->assertSame( $obj, $this->object );
+        $this->assertEquals($expected, $this->object->getRunAt());
+        $this->assertSame($obj, $this->object);
 
         return $this->object;
     }
@@ -254,29 +247,27 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldAddSourceFile()
     {
-
         $sourceFile = $this->createSourceFile();
 
-        $this->object->addSourceFile( $sourceFile );
+        $this->object->addSourceFile($sourceFile);
         $this->object->sortSourceFiles();
 
         $path = $sourceFile->getPath();
 
-        $this->assertTrue( $this->object->hasSourceFiles() );
-        $this->assertSame( array( $path => $sourceFile ), $this->object->getSourceFiles() );
-        $this->assertTrue( $this->object->hasSourceFile( $path ) );
-        $this->assertSame( $sourceFile, $this->object->getSourceFile( $path ) );
+        $this->assertTrue($this->object->hasSourceFiles());
+        $this->assertSame(array($path => $sourceFile), $this->object->getSourceFiles());
+        $this->assertTrue($this->object->hasSourceFile($path));
+        $this->assertSame($sourceFile, $this->object->getSourceFile($path));
     }
 
     // getRunAt()
 
     protected function createSourceFile()
     {
-
         $filename = 'test.php';
         $path = $this->srcDir.DIRECTORY_SEPARATOR.$filename;
 
-        return new SourceFile( $path, $filename );
+        return new SourceFile($path, $filename);
     }
 
     // getMetrics()
@@ -286,14 +277,13 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldConvertToArray()
     {
-
         $expected = array(
             'source_files' => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $this->object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$this->object );
+        $this->assertEquals($expected, $this->object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$this->object);
     }
 
     // setServiceName()
@@ -303,18 +293,17 @@ class JsonFileTest extends ProjectTestCase
      */
     public function shouldConvertToArrayWithSourceFiles()
     {
-
         $sourceFile = $this->createSourceFile();
 
-        $this->object->addSourceFile( $sourceFile );
+        $this->object->addSourceFile($sourceFile);
 
         $expected = array(
-            'source_files' => array( $sourceFile->toArray() ),
-            'environment'  => array( 'packagist_version' => Version::VERSION ),
+            'source_files' => array($sourceFile->toArray()),
+            'environment'  => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $this->object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$this->object );
+        $this->assertEquals($expected, $this->object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$this->object);
     }
 
     // setRepoToken()
@@ -323,19 +312,18 @@ class JsonFileTest extends ProjectTestCase
      * @test
      * @depends shouldSetServiceName
      */
-    public function shouldConvertToArrayWithServiceName( $object )
+    public function shouldConvertToArrayWithServiceName($object)
     {
-
         $item = 'travis-ci';
 
         $expected = array(
             'service_name' => $item,
             'source_files' => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$object );
+        $this->assertEquals($expected, $object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$object);
     }
 
     // setServiceJobId()
@@ -344,19 +332,18 @@ class JsonFileTest extends ProjectTestCase
      * @test
      * @depends shouldSetServiceJobId
      */
-    public function shouldConvertToArrayWithServiceJobId( $object )
+    public function shouldConvertToArrayWithServiceJobId($object)
     {
-
         $item = 'job_id';
 
         $expected = array(
             'service_job_id' => $item,
             'source_files'   => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$object );
+        $this->assertEquals($expected, $object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$object);
     }
 
     // setGit()
@@ -365,19 +352,18 @@ class JsonFileTest extends ProjectTestCase
      * @test
      * @depends shouldSetRepoToken
      */
-    public function shouldConvertToArrayWithRepoToken( $object )
+    public function shouldConvertToArrayWithRepoToken($object)
     {
-
         $item = 'token';
 
         $expected = array(
             'repo_token'   => $item,
             'source_files' => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$object );
+        $this->assertEquals($expected, $object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$object);
     }
 
     // setRunAt()
@@ -386,21 +372,21 @@ class JsonFileTest extends ProjectTestCase
      * @test
      * @depends shouldSetGit
      */
-    public function shouldConvertToArrayWithGit( $object )
+    public function shouldConvertToArrayWithGit($object)
     {
 
-        $remotes = array( new Remote() );
+        $remotes = array(new Remote());
         $head = new Commit();
-        $git = new Git( 'master', $head, $remotes );
+        $git = new Git('master', $head, $remotes);
 
         $expected = array(
             'git'          => $git->toArray(),
             'source_files' => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertSame( $expected, $object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$object );
+        $this->assertSame($expected, $object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$object);
     }
 
 
@@ -412,19 +398,18 @@ class JsonFileTest extends ProjectTestCase
      * @test
      * @depends shouldSetRunAt
      */
-    public function shouldConvertToArrayWithRunAt( $object )
+    public function shouldConvertToArrayWithRunAt($object)
     {
-
         $item = '2013-04-04 11:22:33 +0900';
 
         $expected = array(
             'run_at'       => $item,
             'source_files' => array(),
-            'environment' => array( 'packagist_version' => Version::VERSION ),
+            'environment' => array('packagist_version' => Version::VERSION),
         );
 
-        $this->assertEquals( $expected, $object->toArray() );
-        $this->assertEquals( json_encode( $expected ), (string)$object );
+        $this->assertEquals($expected, $object->toArray());
+        $this->assertEquals(json_encode($expected), (string)$object);
     }
 
     // toArray()
@@ -444,11 +429,11 @@ class JsonFileTest extends ProjectTestCase
 
         $object = $this->collectJsonFile();
 
-        $same = $object->fillJobs( $env );
+        $same = $object->fillJobs($env);
 
-        $this->assertSame( $same, $object );
-        $this->assertEquals( $serviceName, $object->getServiceName() );
-        $this->assertEquals( $serviceJobId, $object->getServiceJobId() );
+        $this->assertSame($same, $object);
+        $this->assertEquals($serviceName, $object->getServiceName());
+        $this->assertEquals($serviceJobId, $object->getServiceJobId());
     }
 
     protected function collectJsonFile()
@@ -457,24 +442,22 @@ class JsonFileTest extends ProjectTestCase
         $xml = $this->createCloverXml();
         $collector = new CloverXmlCoverageCollector();
 
-        return $collector->collect( $xml, $this->srcDir );
+        return $collector->collect($xml, $this->srcDir);
     }
 
     // service_name
 
     protected function createCloverXml()
     {
-
         $xml = $this->getCloverXml();
 
-        return simplexml_load_string( $xml );
+        return simplexml_load_string($xml);
     }
 
     // service_job_id
 
     protected function getCloverXml()
     {
-
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -517,7 +500,7 @@ class JsonFileTest extends ProjectTestCase
   </project>
 </coverage>
 XML;
-        return sprintf( $xml, $this->srcDir, $this->srcDir, $this->srcDir, $this->srcDir );
+        return sprintf($xml, $this->srcDir, $this->srcDir, $this->srcDir, $this->srcDir);
     }
 
     // repo_token
@@ -539,12 +522,12 @@ XML;
 
         $object = $this->collectJsonFile();
 
-        $same = $object->fillJobs( $env );
+        $same = $object->fillJobs($env);
 
-        $this->assertSame( $same, $object );
-        $this->assertEquals( $repoToken, $object->getRepoToken() );
-        $this->assertEquals( $serviceName, $object->getServiceName() );
-        $this->assertEquals( $serviceNumber, $object->getServiceNumber() );
+        $this->assertSame($same, $object);
+        $this->assertEquals($repoToken, $object->getRepoToken());
+        $this->assertEquals($serviceName, $object->getServiceName());
+        $this->assertEquals($serviceNumber, $object->getServiceNumber());
     }
 
     // git
@@ -554,7 +537,6 @@ XML;
      */
     public function shouldFillJobsForStandardizedEnvVars()
     {
-
         /*
          * CI_NAME=codeship
          * CI_BUILD_NUMBER=108821
@@ -580,15 +562,15 @@ XML;
 
         $object = $this->collectJsonFile();
 
-        $same = $object->fillJobs( $env );
+        $same = $object->fillJobs($env);
 
-        $this->assertSame( $same, $object );
-        $this->assertEquals( $repoToken, $object->getRepoToken() );
-        $this->assertEquals( $serviceName, $object->getServiceName() );
-        $this->assertEquals( $serviceNumber, $object->getServiceNumber() );
-        $this->assertEquals( $serviceBuildUrl, $object->getServiceBuildUrl() );
-        $this->assertEquals( $serviceBranch, $object->getServiceBranch() );
-        $this->assertEquals( $servicePullRequest, $object->getServicePullRequest() );
+        $this->assertSame($same, $object);
+        $this->assertEquals($repoToken, $object->getRepoToken());
+        $this->assertEquals($serviceName, $object->getServiceName());
+        $this->assertEquals($serviceNumber, $object->getServiceNumber());
+        $this->assertEquals($serviceBuildUrl, $object->getServiceBuildUrl());
+        $this->assertEquals($serviceBranch, $object->getServiceBranch());
+        $this->assertEquals($servicePullRequest, $object->getServicePullRequest());
     }
 
     // run_at
@@ -611,13 +593,13 @@ XML;
 
         $object = $this->collectJsonFile();
 
-        $same = $object->fillJobs( $env );
+        $same = $object->fillJobs($env);
 
-        $this->assertSame( $same, $object );
-        $this->assertEquals( $repoToken, $object->getRepoToken() );
-        $this->assertEquals( $serviceName, $object->getServiceName() );
-        $this->assertNull( $object->getServiceJobId() );
-        $this->assertEquals( $serviceEventType, $object->getServiceEventType() );
+        $this->assertSame($same, $object);
+        $this->assertEquals($repoToken, $object->getRepoToken());
+        $this->assertEquals($serviceName, $object->getServiceName());
+        $this->assertNull($object->getServiceJobId());
+        $this->assertEquals($serviceEventType, $object->getServiceEventType());
     }
 
     // fillJobs()
@@ -627,7 +609,6 @@ XML;
      */
     public function shouldFillJobsForUnsupportedJob()
     {
-
         $repoToken = 'token';
 
         $env = array();
@@ -635,10 +616,10 @@ XML;
 
         $object = $this->collectJsonFile();
 
-        $same = $object->fillJobs( $env );
+        $same = $object->fillJobs($env);
 
-        $this->assertSame( $same, $object );
-        $this->assertEquals( $repoToken, $object->getRepoToken() );
+        $this->assertSame($same, $object);
+        $this->assertEquals($repoToken, $object->getRepoToken());
     }
 
     /**
@@ -647,12 +628,11 @@ XML;
      */
     public function throwRuntimeExceptionOnFillingJobsIfInvalidEnv()
     {
-
         $env = array();
 
         $object = $this->collectJsonFile();
 
-        $object->fillJobs( $env );
+        $object->fillJobs($env);
     }
 
     /**
@@ -661,14 +641,13 @@ XML;
      */
     public function throwRuntimeExceptionOnFillingJobsWithoutSourceFiles()
     {
-
         $env = array();
         $env['TRAVIS'] = true;
         $env['TRAVIS_JOB_ID'] = '1.1';
 
         $object = $this->collectJsonFileWithoutSourceFiles();
 
-        $object->fillJobs( $env );
+        $object->fillJobs($env);
     }
 
     protected function collectJsonFileWithoutSourceFiles()
@@ -677,20 +656,18 @@ XML;
         $xml = $this->createNoSourceCloverXml();
         $collector = new CloverXmlCoverageCollector();
 
-        return $collector->collect( $xml, $this->srcDir );
+        return $collector->collect($xml, $this->srcDir);
     }
 
     protected function createNoSourceCloverXml()
     {
-
         $xml = $this->getNoSourceCloverXml();
 
-        return simplexml_load_string( $xml );
+        return simplexml_load_string($xml);
     }
 
     protected function getNoSourceCloverXml()
     {
-
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -712,16 +689,15 @@ XML;
      */
     public function shouldReportLineCoverage()
     {
-
         $object = $this->collectJsonFile();
 
-        $this->assertEquals( 50, $object->reportLineCoverage() );
+        $this->assertEquals(50, $object->reportLineCoverage());
 
         $metrics = $object->getMetrics();
 
-        $this->assertEquals( 2, $metrics->getStatements() );
-        $this->assertEquals( 1, $metrics->getCoveredStatements() );
-        $this->assertEquals( 50, $metrics->getLineCoverage() );
+        $this->assertEquals(2, $metrics->getStatements());
+        $this->assertEquals(1, $metrics->getCoveredStatements());
+        $this->assertEquals(50, $metrics->getLineCoverage());
     }
 
     // reportLineCoverage()
@@ -738,37 +714,37 @@ XML;
 
         // before excluding
         $sourceFiles = $object->getSourceFiles();
-        $this->assertCount( 4, $sourceFiles );
+        $this->assertCount(4, $sourceFiles);
 
         // filenames
-        $paths = array_keys( $sourceFiles );
-        $filenames = array_map( function ( $path ) use ( $srcDir ) {
+        $paths = array_keys($sourceFiles);
+        $filenames = array_map(function ($path) use ($srcDir) {
 
-            return str_replace( $srcDir, '', $path );
-        }, $paths );
+            return str_replace($srcDir, '', $path);
+        }, $paths);
 
-        $this->assertContains( 'test.php', $filenames );
-        $this->assertContains( 'test2.php', $filenames );
-        $this->assertContains( 'TestInterface.php', $filenames );
-        $this->assertContains( 'AbstractClass.php', $filenames );
+        $this->assertContains('test.php', $filenames);
+        $this->assertContains('test2.php', $filenames);
+        $this->assertContains('TestInterface.php', $filenames);
+        $this->assertContains('AbstractClass.php', $filenames);
 
         // after excluding
         $object->excludeNoStatementsFiles();
 
         $sourceFiles = $object->getSourceFiles();
-        $this->assertCount( 2, $sourceFiles );
+        $this->assertCount(2, $sourceFiles);
 
         // filenames
-        $paths = array_keys( $sourceFiles );
-        $filenames = array_map( function ( $path ) use ( $srcDir ) {
+        $paths = array_keys($sourceFiles);
+        $filenames = array_map(function ($path) use ($srcDir) {
 
-            return str_replace( $srcDir, '', $path );
-        }, $paths );
+            return str_replace($srcDir, '', $path);
+        }, $paths);
 
-        $this->assertContains( 'test.php', $filenames );
-        $this->assertContains( 'test2.php', $filenames );
-        $this->assertNotContains( 'TestInterface.php', $filenames );
-        $this->assertNotContains( 'AbstractClass.php', $filenames );
+        $this->assertContains('test.php', $filenames);
+        $this->assertContains('test2.php', $filenames);
+        $this->assertNotContains('TestInterface.php', $filenames);
+        $this->assertNotContains('AbstractClass.php', $filenames);
     }
 
     // excludeNoStatementsFiles()
@@ -776,9 +752,9 @@ XML;
     protected function setUp()
     {
 
-        $this->projectDir = realpath( __DIR__.'/../../../..' );
+        $this->projectDir = realpath(__DIR__.'/../../../..');
 
-        $this->setUpDir( $this->projectDir );
+        $this->setUpDir($this->projectDir);
 
         $this->object = new JsonFile();
     }

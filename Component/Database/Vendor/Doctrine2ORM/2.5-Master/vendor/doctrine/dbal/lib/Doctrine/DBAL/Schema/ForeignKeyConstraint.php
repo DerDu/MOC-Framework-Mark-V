@@ -31,7 +31,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class ForeignKeyConstraint extends AbstractAsset implements Constraint
 {
-
     /**
      * Instance of the referencing table the foreign key constraint is associated with.
      *
@@ -84,23 +83,23 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
         array $options = array()
     ) {
 
-        $this->_setName( $name );
-        $identifierConstructorCallback = function ( $column ) {
+        $this->_setName($name);
+        $identifierConstructorCallback = function ($column) {
 
-            return new Identifier( $column );
+            return new Identifier($column);
         };
         $this->_localColumnNames = $localColumnNames
-            ? array_combine( $localColumnNames, array_map( $identifierConstructorCallback, $localColumnNames ) )
+            ? array_combine($localColumnNames, array_map($identifierConstructorCallback, $localColumnNames))
             : array();
 
         if ($foreignTableName instanceof Table) {
             $this->_foreignTableName = $foreignTableName;
         } else {
-            $this->_foreignTableName = new Identifier( $foreignTableName );
+            $this->_foreignTableName = new Identifier($foreignTableName);
         }
 
         $this->_foreignColumnNames = $foreignColumnNames
-            ? array_combine( $foreignColumnNames, array_map( $identifierConstructorCallback, $foreignColumnNames ) )
+            ? array_combine($foreignColumnNames, array_map($identifierConstructorCallback, $foreignColumnNames))
             : array();
         $this->_options = $options;
     }
@@ -113,7 +112,6 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      */
     public function getLocalTableName()
     {
-
         return $this->_localTable->getName();
     }
 
@@ -122,7 +120,6 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      */
     public function getLocalTable()
     {
-
         return $this->_localTable;
     }
 
@@ -134,9 +131,8 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return void
      */
-    public function setLocalTable( Table $table )
+    public function setLocalTable(Table $table)
     {
-
         $this->_localTable = $table;
     }
 
@@ -148,7 +144,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getUnquotedLocalColumns()
     {
 
-        return array_map( array( $this, 'trimQuotes' ), $this->getLocalColumns() );
+        return array_map(array($this, 'trimQuotes'), $this->getLocalColumns());
     }
 
     /**
@@ -160,7 +156,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getLocalColumns()
     {
 
-        return array_keys( $this->_localColumnNames );
+        return array_keys($this->_localColumnNames);
     }
 
     /**
@@ -171,7 +167,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getUnquotedForeignColumns()
     {
 
-        return array_map( array( $this, 'trimQuotes' ), $this->getForeignColumns() );
+        return array_map(array($this, 'trimQuotes'), $this->getForeignColumns());
     }
 
     /**
@@ -183,7 +179,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getForeignColumns()
     {
 
-        return array_keys( $this->_foreignColumnNames );
+        return array_keys($this->_foreignColumnNames);
     }
 
     /**
@@ -193,7 +189,6 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      */
     public function getColumns()
     {
-
         return $this->getLocalColumns();
     }
 
@@ -211,10 +206,10 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return array
      */
-    public function getQuotedColumns( AbstractPlatform $platform )
+    public function getQuotedColumns(AbstractPlatform $platform)
     {
 
-        return $this->getQuotedLocalColumns( $platform );
+        return $this->getQuotedLocalColumns($platform);
     }
 
     /**
@@ -229,13 +224,12 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return array
      */
-    public function getQuotedLocalColumns( AbstractPlatform $platform )
+    public function getQuotedLocalColumns(AbstractPlatform $platform)
     {
-
         $columns = array();
 
         foreach ($this->_localColumnNames as $column) {
-            $columns[] = $column->getQuotedName( $platform );
+            $columns[] = $column->getQuotedName($platform);
         }
 
         return $columns;
@@ -249,7 +243,6 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      */
     public function getForeignTableName()
     {
-
         return $this->_foreignTableName->getName();
     }
 
@@ -261,9 +254,9 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getUnqualifiedForeignTableName()
     {
 
-        $parts = explode( ".", $this->_foreignTableName->getName() );
+        $parts = explode(".", $this->_foreignTableName->getName());
 
-        return strtolower( end( $parts ) );
+        return strtolower(end($parts));
     }
 
     /**
@@ -278,10 +271,10 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return string
      */
-    public function getQuotedForeignTableName( AbstractPlatform $platform )
+    public function getQuotedForeignTableName(AbstractPlatform $platform)
     {
 
-        return $this->_foreignTableName->getQuotedName( $platform );
+        return $this->_foreignTableName->getQuotedName($platform);
     }
 
     /**
@@ -296,13 +289,12 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return array
      */
-    public function getQuotedForeignColumns( AbstractPlatform $platform )
+    public function getQuotedForeignColumns(AbstractPlatform $platform)
     {
-
         $columns = array();
 
         foreach ($this->_foreignColumnNames as $column) {
-            $columns[] = $column->getQuotedName( $platform );
+            $columns[] = $column->getQuotedName($platform);
         }
 
         return $columns;
@@ -316,7 +308,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return boolean
      */
-    public function hasOption( $name )
+    public function hasOption($name)
     {
 
         return isset( $this->_options[$name] );
@@ -329,9 +321,8 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return mixed
      */
-    public function getOption( $name )
+    public function getOption($name)
     {
-
         return $this->_options[$name];
     }
 
@@ -342,7 +333,6 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      */
     public function getOptions()
     {
-
         return $this->_options;
     }
 
@@ -355,7 +345,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function onUpdate()
     {
 
-        return $this->onEvent( 'onUpdate' );
+        return $this->onEvent('onUpdate');
     }
 
     /**
@@ -366,13 +356,13 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return string|null
      */
-    private function onEvent( $event )
+    private function onEvent($event)
     {
 
         if (isset( $this->_options[$event] )) {
-            $onEvent = strtoupper( $this->_options[$event] );
+            $onEvent = strtoupper($this->_options[$event]);
 
-            if (!in_array( $onEvent, array( 'NO ACTION', 'RESTRICT' ) )) {
+            if (!in_array($onEvent, array('NO ACTION', 'RESTRICT'))) {
                 return $onEvent;
             }
         }
@@ -389,7 +379,7 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function onDelete()
     {
 
-        return $this->onEvent( 'onDelete' );
+        return $this->onEvent('onDelete');
     }
 
     /**
@@ -402,12 +392,11 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
      *
      * @return boolean
      */
-    public function intersectsIndexColumns( Index $index )
+    public function intersectsIndexColumns(Index $index)
     {
-
         foreach ($index->getColumns() as $indexColumn) {
             foreach ($this->_localColumnNames as $localColumn) {
-                if (strtolower( $indexColumn ) === strtolower( $localColumn->getName() )) {
+                if (strtolower($indexColumn) === strtolower($localColumn->getName())) {
                     return true;
                 }
             }

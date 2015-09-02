@@ -27,7 +27,6 @@ namespace Doctrine\Common\Cache;
  */
 abstract class FileCache extends CacheProvider
 {
-
     /**
      * The cache directory.
      *
@@ -53,7 +52,7 @@ abstract class FileCache extends CacheProvider
     /**
      * @var string[] replacements for disallowed file characters
      */
-    private $replacementCharacters = array( '__', '-' );
+    private $replacementCharacters = array('__', '-');
 
     /**
      * Constructor.
@@ -63,25 +62,43 @@ abstract class FileCache extends CacheProvider
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct( $directory, $extension = '' )
+    public function __construct($directory, $extension = '')
     {
 
-        if (!is_dir( $directory ) && !@mkdir( $directory, 0777, true )) {
-            throw new \InvalidArgumentException( sprintf(
+        if (!$this->createPathIfNeeded($directory)) {
+            throw new \InvalidArgumentException(sprintf(
                 'The directory "%s" does not exist and could not be created.',
                 $directory
-            ) );
+            ));
         }
 
-        if (!is_writable( $directory )) {
-            throw new \InvalidArgumentException( sprintf(
+        if (!is_writable($directory)) {
+            throw new \InvalidArgumentException(sprintf(
                 'The directory "%s" is not writable.',
                 $directory
-            ) );
+            ));
         }
 
-        $this->directory = realpath( $directory );
+        $this->directory = realpath($directory);
         $this->extension = (string)$extension;
+    }
+
+    /**
+     * Create path if needed.
+     *
+     * @param string $path
+     * @return bool TRUE on success or if path already exists, FALSE if path cannot be created.
+     */
+    private function createPathIfNeeded($path)
+    {
+
+        if (!is_dir($path)) {
+            if (false === @mkdir($path, 0777, true) && !is_dir($path)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -91,7 +108,6 @@ abstract class FileCache extends CacheProvider
      */
     public function getDirectory()
     {
-
         return $this->directory;
     }
 
@@ -102,17 +118,16 @@ abstract class FileCache extends CacheProvider
      */
     public function getExtension()
     {
-
         return $this->extension;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doDelete( $id )
+    protected function doDelete($id)
     {
 
-        return @unlink( $this->getFilename( $id ) );
+        return @unlink($this->getFilename($id));
     }
 
     /**
@@ -120,14 +135,13 @@ abstract class FileCache extends CacheProvider
      *
      * @return string
      */
-    protected function getFilename( $id )
+    protected function getFilename($id)
     {
-
         return $this->directory
         .DIRECTORY_SEPARATOR
-        .implode( str_split( hash( 'sha256', $id ), 2 ), DIRECTORY_SEPARATOR )
+        .implode(str_split(hash('sha256', $id), 2), DIRECTORY_SEPARATOR)
         .DIRECTORY_SEPARATOR
-        .preg_replace( $this->disallowedCharacterPatterns, $this->replacementCharacters, $id )
+        .preg_replace($this->disallowedCharacterPatterns, $this->replacementCharacters, $id)
         .$this->extension;
     }
 
@@ -136,9 +150,8 @@ abstract class FileCache extends CacheProvider
      */
     protected function doFlush()
     {
-
         foreach ($this->getIterator() as $name => $file) {
-            @unlink( $name );
+            @unlink($name);
         }
 
         return true;
@@ -149,10 +162,9 @@ abstract class FileCache extends CacheProvider
      */
     private function getIterator()
     {
-
         return new \RegexIterator(
-            new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $this->directory ) ),
-            '/^.+'.preg_quote( $this->extension, '/' ).'$/i'
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->directory)),
+            '/^.+'.preg_quote($this->extension, '/').'$/i'
         );
     }
 
@@ -161,13 +173,12 @@ abstract class FileCache extends CacheProvider
      */
     protected function doGetStats()
     {
-
         $usage = 0;
         foreach ($this->getIterator() as $file) {
             $usage += $file->getSize();
         }
 
-        $free = disk_free_space( $this->directory );
+        $free = disk_free_space($this->directory);
 
         return array(
             Cache::STATS_HITS             => null,
@@ -186,50 +197,31 @@ abstract class FileCache extends CacheProvider
      *
      * @return bool TRUE on success, FALSE if path cannot be created, if path is not writable or an any other error.
      */
-    protected function writeFile( $filename, $content )
+    protected function writeFile($filename, $content)
     {
 
-        $filepath = pathinfo( $filename, PATHINFO_DIRNAME );
+        $filepath = pathinfo($filename, PATHINFO_DIRNAME);
 
-        if (!$this->createPathIfNeeded( $filepath )) {
+        if (!$this->createPathIfNeeded($filepath)) {
             return false;
         }
 
-        if (!is_writable( $filepath )) {
+        if (!is_writable($filepath)) {
             return false;
         }
 
-        $tmpFile = tempnam( $filepath, 'swap' );
+        $tmpFile = tempnam($filepath, 'swap');
 
-        if (file_put_contents( $tmpFile, $content ) !== false) {
-            if (@rename( $tmpFile, $filename )) {
-                @chmod( $filename, 0666 & ~umask() );
+        if (file_put_contents($tmpFile, $content) !== false) {
+            if (@rename($tmpFile, $filename)) {
+                @chmod($filename, 0666 & ~umask());
 
                 return true;
             }
 
-            @unlink( $tmpFile );
+            @unlink($tmpFile);
         }
 
         return false;
-    }
-
-    /**
-     * Create path if needed.
-     *
-     * @param string $path
-     *
-     * @return bool TRUE on success or if path already exists, FALSE if path cannot be created.
-     */
-    private function createPathIfNeeded( $path )
-    {
-
-        if (!is_dir( $path )) {
-            if (false === @mkdir( $path, 0777, true ) && !is_dir( $path )) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

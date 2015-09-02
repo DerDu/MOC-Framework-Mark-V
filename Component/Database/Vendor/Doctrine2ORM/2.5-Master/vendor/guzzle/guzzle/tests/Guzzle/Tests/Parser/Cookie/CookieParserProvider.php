@@ -9,7 +9,6 @@ use Guzzle\Http\Url;
  */
 class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
 {
-
     /**
      * Provides the parsed information from a cookie
      *
@@ -17,32 +16,31 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
      */
     public function cookieParserDataProvider()
     {
-
         return array(
             array(
                 'ASIHTTPRequestTestCookie=This+is+the+value; expires=Sat, 26-Jul-2008 17:00:42 GMT; path=/tests; domain=allseeing-i.com; PHPSESSID=6c951590e7a9359bcedde25cda73e43c; path=/";',
                 array(
-                    'domain'    => 'allseeing-i.com',
-                    'path'      => '/',
-                    'data'      => array(
+                    'domain'  => 'allseeing-i.com',
+                    'path'    => '/',
+                    'data'    => array(
                         'PHPSESSID' => '6c951590e7a9359bcedde25cda73e43c'
                     ),
-                    'max_age'   => null,
-                    'expires'   => 'Sat, 26-Jul-2008 17:00:42 GMT',
-                    'version'   => null,
-                    'secure'    => null,
-                    'discard'   => null,
-                    'port'      => null,
-                    'cookies'   => array(
+                    'max_age' => null,
+                    'expires' => 'Sat, 26-Jul-2008 17:00:42 GMT',
+                    'version' => null,
+                    'secure'  => null,
+                    'discard' => null,
+                    'port'    => null,
+                    'cookies' => array(
                         'ASIHTTPRequestTestCookie' => 'This+is+the+value'
                     ),
-                    'comment'   => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
             ),
-            array( '', false ),
-            array( 'foo', false ),
+            array('', false),
+            array('foo', false),
             // Test setting a blank value for a cookie
             array(
                 array(
@@ -54,19 +52,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     'foo= '
                 ),
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'foo' => ''
                     ),
-                    'data'      => array(),
-                    'discard'   => null,
-                    'domain'    => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'data'    => array(),
+                    'discard' => null,
+                    'domain'  => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -86,19 +84,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     'foo= "1";'
                 ),
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'foo' => '1'
                     ),
-                    'data'      => array(),
-                    'discard'   => null,
-                    'domain'    => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'data'    => array(),
+                    'discard' => null,
+                    'domain'  => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -111,20 +109,20 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     'foo=1;   bar=2'
                 ),
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'foo' => '1',
                         'bar' => '2',
                     ),
-                    'data'      => array(),
-                    'discard'   => null,
-                    'domain'    => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'data'    => array(),
+                    'discard' => null,
+                    'domain'  => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -137,19 +135,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
                     'foo=1; ; domain=www.test.com; path=/path; port="80,8081"; HttpOnly;'
                 ),
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'foo' => 1
                     ),
-                    'data'      => array(),
-                    'discard'   => null,
-                    'domain'    => 'www.test.com',
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/path',
-                    'port'      => array( '80', '8081' ),
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'data'    => array(),
+                    'discard' => null,
+                    'domain'  => 'www.test.com',
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/path',
+                    'port'    => array('80', '8081'),
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => true
                 ),
@@ -159,19 +157,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'justacookie=foo; domain=example.com',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'justacookie' => 'foo'
                     ),
-                    'domain'    => 'example.com',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -179,19 +177,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'expires=tomorrow; secure; path=/Space Out/; expires=Tue, 21-Nov-2006 08:33:44 GMT; domain=.example.com',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'expires' => 'tomorrow'
                     ),
-                    'domain'    => '.example.com',
-                    'path'      => '/Space Out/',
-                    'expires'   => 'Tue, 21-Nov-2006 08:33:44 GMT',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'port'      => null,
-                    'secure'    => true,
-                    'version'   => null,
-                    'max_age'   => null,
-                    'comment'   => null,
+                    'domain'  => '.example.com',
+                    'path'    => '/Space Out/',
+                    'expires' => 'Tue, 21-Nov-2006 08:33:44 GMT',
+                    'data'    => array(),
+                    'discard' => null,
+                    'port'    => null,
+                    'secure'  => true,
+                    'version' => null,
+                    'max_age' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -199,19 +197,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'domain=unittests; expires=Tue, 21-Nov-2006 08:33:44 GMT; domain=example.com; path=/some value/',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'domain' => 'unittests'
                     ),
-                    'domain'    => 'example.com',
-                    'path'      => '/some value/',
-                    'expires'   => 'Tue, 21-Nov-2006 08:33:44 GMT',
-                    'secure'    => false,
-                    'data'      => array(),
-                    'discard'   => null,
-                    'max_age'   => null,
-                    'port'      => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'path'    => '/some value/',
+                    'expires' => 'Tue, 21-Nov-2006 08:33:44 GMT',
+                    'secure'  => false,
+                    'data'    => array(),
+                    'discard' => null,
+                    'max_age' => null,
+                    'port'    => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -219,19 +217,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'path=indexAction; path=/; domain=.foo.com; expires=Tue, 21-Nov-2006 08:33:44 GMT',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'path' => 'indexAction'
                     ),
-                    'domain'    => '.foo.com',
-                    'path'      => '/',
-                    'expires'   => 'Tue, 21-Nov-2006 08:33:44 GMT',
-                    'secure'    => false,
-                    'data'      => array(),
-                    'discard'   => null,
-                    'max_age'   => null,
-                    'port'      => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => '.foo.com',
+                    'path'    => '/',
+                    'expires' => 'Tue, 21-Nov-2006 08:33:44 GMT',
+                    'secure'  => false,
+                    'data'    => array(),
+                    'discard' => null,
+                    'max_age' => null,
+                    'port'    => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -239,19 +237,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'secure=sha1; secure; SECURE; domain=some.really.deep.domain.com; version=1; Max-Age=86400',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'secure' => 'sha1'
                     ),
-                    'domain'    => 'some.really.deep.domain.com',
-                    'path'      => '/',
-                    'secure'    => true,
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => time() + 86400,
-                    'max_age'   => 86400,
-                    'port'      => null,
-                    'version'   => 1,
-                    'comment'   => null,
+                    'domain'  => 'some.really.deep.domain.com',
+                    'path'    => '/',
+                    'secure'  => true,
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => time() + 86400,
+                    'max_age' => 86400,
+                    'port'    => null,
+                    'version' => 1,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -259,19 +257,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'PHPSESSID=123456789+abcd%2Cef; secure; discard; domain=.localdomain; path=/foo/baz; expires=Tue, 21-Nov-2006 08:33:44 GMT;',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'PHPSESSID' => '123456789+abcd%2Cef'
                     ),
-                    'domain'    => '.localdomain',
-                    'path'      => '/foo/baz',
-                    'expires'   => 'Tue, 21-Nov-2006 08:33:44 GMT',
-                    'secure'    => true,
-                    'data'      => array(),
-                    'discard'   => true,
-                    'max_age'   => null,
-                    'port'      => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => '.localdomain',
+                    'path'    => '/foo/baz',
+                    'expires' => 'Tue, 21-Nov-2006 08:33:44 GMT',
+                    'secure'  => true,
+                    'data'    => array(),
+                    'discard' => true,
+                    'max_age' => null,
+                    'port'    => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 )
@@ -280,19 +278,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'cookie=value',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'cookie' => 'value'
                     ),
-                    'domain'    => 'example.com',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/some/path',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/some/path',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 ),
@@ -301,19 +299,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'empty=path',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'empty' => 'path'
                     ),
-                    'domain'    => 'example.com',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 ),
@@ -322,19 +320,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'baz=qux',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'baz' => 'qux'
                     ),
-                    'domain'    => 'example.com',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 ),
@@ -343,19 +341,19 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
             array(
                 'test=noSlashPath; path=someString',
                 array(
-                    'cookies'   => array(
+                    'cookies' => array(
                         'test' => 'noSlashPath'
                     ),
-                    'domain'    => 'example.com',
-                    'data'      => array(),
-                    'discard'   => null,
-                    'expires'   => null,
-                    'max_age'   => null,
-                    'path'      => '/real/path',
-                    'port'      => null,
-                    'secure'    => null,
-                    'version'   => null,
-                    'comment'   => null,
+                    'domain'  => 'example.com',
+                    'data'    => array(),
+                    'discard' => null,
+                    'expires' => null,
+                    'max_age' => null,
+                    'path'    => '/real/path',
+                    'port'    => null,
+                    'secure'  => null,
+                    'version' => null,
+                    'comment' => null,
                     'comment_url' => null,
                     'http_only' => false
                 ),
@@ -367,15 +365,14 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @dataProvider cookieParserDataProvider
      */
-    public function testParseCookie( $cookie, $parsed, $url = null )
+    public function testParseCookie($cookie, $parsed, $url = null)
     {
-
         $c = $this->cookieParserClass;
         $parser = new $c();
 
         $request = null;
         if ($url) {
-            $url = Url::factory( $url );
+            $url = Url::factory($url);
             $host = $url->getHost();
             $path = $url->getPath();
         } else {
@@ -384,30 +381,30 @@ class CookieParserProvider extends \Guzzle\Tests\GuzzleTestCase
         }
 
         foreach ((array)$cookie as $c) {
-            $p = $parser->parseCookie( $c, $host, $path );
+            $p = $parser->parseCookie($c, $host, $path);
 
             // Remove expires values from the assertion if they are relatively equal by allowing a 5 minute difference
             if ($p['expires'] != $parsed['expires']) {
-                if (abs( $p['expires'] - $parsed['expires'] ) < 300) {
+                if (abs($p['expires'] - $parsed['expires']) < 300) {
                     unset( $p['expires'] );
                     unset( $parsed['expires'] );
                 }
             }
 
-            if (is_array( $parsed )) {
+            if (is_array($parsed)) {
                 foreach ($parsed as $key => $value) {
-                    $this->assertEquals( $parsed[$key], $p[$key],
-                        'Comparing '.$key.' '.var_export( $value, true ).' : '.var_export( $parsed,
-                            true ).' | '.var_export( $p, true ) );
+                    $this->assertEquals($parsed[$key], $p[$key],
+                        'Comparing '.$key.' '.var_export($value, true).' : '.var_export($parsed,
+                            true).' | '.var_export($p, true));
                 }
 
                 foreach ($p as $key => $value) {
-                    $this->assertEquals( $p[$key], $parsed[$key],
-                        'Comparing '.$key.' '.var_export( $value, true ).' : '.var_export( $parsed,
-                            true ).' | '.var_export( $p, true ) );
+                    $this->assertEquals($p[$key], $parsed[$key],
+                        'Comparing '.$key.' '.var_export($value, true).' : '.var_export($parsed,
+                            true).' | '.var_export($p, true));
                 }
             } else {
-                $this->assertEquals( $parsed, $p );
+                $this->assertEquals($parsed, $p);
             }
         }
     }

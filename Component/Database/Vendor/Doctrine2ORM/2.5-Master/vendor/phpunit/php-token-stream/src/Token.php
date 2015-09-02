@@ -14,13 +14,11 @@
  * @author    Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright Sebastian Bergmann <sebastian@phpunit.de>
  * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version   Release: @package_version@
  * @link      http://github.com/sebastianbergmann/php-token-stream/tree
  * @since     Class available since Release 1.0.0
  */
 abstract class PHP_Token
 {
-
     /**
      * @var string
      */
@@ -49,7 +47,7 @@ abstract class PHP_Token
      * @param PHP_Token_Stream $tokenStream
      * @param integer          $id
      */
-    public function __construct( $text, $line, PHP_Token_Stream $tokenStream, $id )
+    public function __construct($text, $line, PHP_Token_Stream $tokenStream, $id)
     {
 
         $this->text = $text;
@@ -63,7 +61,6 @@ abstract class PHP_Token
      */
     public function __toString()
     {
-
         return $this->text;
     }
 
@@ -72,7 +69,6 @@ abstract class PHP_Token
      */
     public function getLine()
     {
-
         return $this->line;
     }
 }
@@ -80,6 +76,9 @@ abstract class PHP_Token
 abstract class PHP_TokenWithScope extends PHP_Token
 {
 
+    /**
+     * @var integer
+     */
     protected $endTokenId;
 
     /**
@@ -131,12 +130,17 @@ abstract class PHP_TokenWithScope extends PHP_Token
         }
     }
 
+    /**
+     * @return integer
+     */
     public function getEndLine()
     {
-
         return $this->tokenStream[$this->getEndTokenId()]->getLine();
     }
 
+    /**
+     * @return integer
+     */
     public function getEndTokenId()
     {
 
@@ -149,22 +153,18 @@ abstract class PHP_TokenWithScope extends PHP_Token
                 $tokens[$i] instanceof PHP_Token_CURLY_OPEN
             ) {
                 $block++;
-            } else {
-                if ($tokens[$i] instanceof PHP_Token_CLOSE_CURLY) {
-                    $block--;
+            } elseif ($tokens[$i] instanceof PHP_Token_CLOSE_CURLY) {
+                $block--;
 
-                    if ($block === 0) {
-                        $this->endTokenId = $i;
-                    }
-                } else {
-                    if (( $this instanceof PHP_Token_FUNCTION ||
-                            $this instanceof PHP_Token_NAMESPACE ) &&
-                        $tokens[$i] instanceof PHP_Token_SEMICOLON
-                    ) {
-                        if ($block === 0) {
-                            $this->endTokenId = $i;
-                        }
-                    }
+                if ($block === 0) {
+                    $this->endTokenId = $i;
+                }
+            } elseif (( $this instanceof PHP_Token_FUNCTION ||
+                    $this instanceof PHP_Token_NAMESPACE ) &&
+                $tokens[$i] instanceof PHP_Token_SEMICOLON
+            ) {
+                if ($block === 0) {
+                    $this->endTokenId = $i;
                 }
             }
 
@@ -177,15 +177,16 @@ abstract class PHP_TokenWithScope extends PHP_Token
 
         return $this->endTokenId;
     }
-
 }
 
 abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
 {
 
+    /**
+     * @return string
+     */
     public function getVisibility()
     {
-
         $tokens = $this->tokenStream->tokens();
 
         for ($i = $this->id - 2; $i > $this->id - 7; $i -= 2) {
@@ -195,7 +196,7 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
                     $tokens[$i] instanceof PHP_Token_PUBLIC )
             ) {
                 return strtolower(
-                    str_replace( 'PHP_Token_', '', get_class( $tokens[$i] ) )
+                    str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
             }
             if (isset( $tokens[$i] ) &&
@@ -209,9 +210,11 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
         }
     }
 
+    /**
+     * @return string
+     */
     public function getKeywords()
     {
-
         $keywords = array();
         $tokens = $this->tokenStream->tokens();
 
@@ -230,46 +233,64 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
                     $tokens[$i] instanceof PHP_Token_ABSTRACT )
             ) {
                 $keywords[] = strtolower(
-                    str_replace( 'PHP_Token_', '', get_class( $tokens[$i] ) )
+                    str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
             }
         }
 
-        return implode( ',', $keywords );
+        return implode(',', $keywords);
     }
-
 }
 
 abstract class PHP_Token_Includes extends PHP_Token
 {
 
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @var string
+     */
     protected $type;
 
-    public function getType()
-    {
-
-        $this->getName();
-        return $this->type;
-    }
-
+    /**
+     * @return string
+     */
     public function getName()
     {
 
-        if ($this->name !== null) {
-            return $this->name;
-        }
-
-        $tokens = $this->tokenStream->tokens();
-
-        if ($tokens[$this->id + 2] instanceof PHP_Token_CONSTANT_ENCAPSED_STRING) {
-            $this->name = trim( $tokens[$this->id + 2], "'\"" );
-            $this->type = strtolower(
-                str_replace( 'PHP_Token_', '', get_class( $tokens[$this->id] ) )
-            );
+        if ($this->name === null) {
+            $this->process();
         }
 
         return $this->name;
+    }
+
+    private function process()
+    {
+        $tokens = $this->tokenStream->tokens();
+
+        if ($tokens[$this->id + 2] instanceof PHP_Token_CONSTANT_ENCAPSED_STRING) {
+            $this->name = trim($tokens[$this->id + 2], "'\"");
+            $this->type = strtolower(
+                str_replace('PHP_Token_', '', get_class($tokens[$this->id]))
+            );
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+
+        if ($this->type === null) {
+            $this->process();
+        }
+
+        return $this->type;
     }
 }
 
@@ -277,36 +298,52 @@ abstract class PHP_Token_Includes extends PHP_Token
 class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
 {
 
+    /**
+     * @var array
+     */
     protected $arguments;
+
+    /**
+     * @var integer
+     */
     protected $ccn;
+
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @var string
+     */
     protected $signature;
 
+    /**
+     * @return array
+     */
     public function getArguments()
     {
-
         if ($this->arguments !== null) {
             return $this->arguments;
         }
 
         $this->arguments = array();
         $tokens = $this->tokenStream->tokens();
-        $typeHint = null;
+        $typeDeclaration = null;
 
         // Search for first token inside brackets
         $i = $this->id + 2;
+
         while (!$tokens[$i - 1] instanceof PHP_Token_OPEN_BRACKET) {
             $i++;
         }
 
         while (!$tokens[$i] instanceof PHP_Token_CLOSE_BRACKET) {
             if ($tokens[$i] instanceof PHP_Token_STRING) {
-                $typeHint = (string)$tokens[$i];
-            } else {
-                if ($tokens[$i] instanceof PHP_Token_VARIABLE) {
-                    $this->arguments[(string)$tokens[$i]] = $typeHint;
-                    $typeHint = null;
-                }
+                $typeDeclaration = (string)$tokens[$i];
+            } elseif ($tokens[$i] instanceof PHP_Token_VARIABLE) {
+                $this->arguments[(string)$tokens[$i]] = $typeDeclaration;
+                $typeDeclaration = null;
             }
 
             $i++;
@@ -315,9 +352,11 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
         return $this->arguments;
     }
 
+    /**
+     * @return integer
+     */
     public function getCCN()
     {
-
         if ($this->ccn !== null) {
             return $this->ccn;
         }
@@ -327,7 +366,7 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
         $tokens = $this->tokenStream->tokens();
 
         for ($i = $this->id; $i <= $end; $i++) {
-            switch (get_class( $tokens[$i] )) {
+            switch (get_class($tokens[$i])) {
                 case 'PHP_Token_IF':
                 case 'PHP_Token_ELSEIF':
                 case 'PHP_Token_FOR':
@@ -339,19 +378,20 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
                 case 'PHP_Token_LOGICAL_AND':
                 case 'PHP_Token_BOOLEAN_OR':
                 case 'PHP_Token_LOGICAL_OR':
-                case 'PHP_Token_QUESTION_MARK': {
+                case 'PHP_Token_QUESTION_MARK':
                     $this->ccn++;
-                }
-                break;
+                    break;
             }
         }
 
         return $this->ccn;
     }
 
+    /**
+     * @return string
+     */
     public function getSignature()
     {
-
         if ($this->signature !== null) {
             return $this->signature;
         }
@@ -372,36 +412,34 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
             $this->signature .= $tokens[$i++];
         }
 
-        $this->signature = trim( $this->signature );
+        $this->signature = trim($this->signature);
 
         return $this->signature;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
-
         if ($this->name !== null) {
             return $this->name;
         }
 
         $tokens = $this->tokenStream->tokens();
 
-        for ($i = $this->id + 1; $i < count( $tokens ); $i++) {
+        for ($i = $this->id + 1; $i < count($tokens); $i++) {
             if ($tokens[$i] instanceof PHP_Token_STRING) {
                 $this->name = (string)$tokens[$i];
                 break;
-            } else {
-                if ($tokens[$i] instanceof PHP_Token_AMPERSAND &&
-                    $tokens[$i + 1] instanceof PHP_Token_STRING
-                ) {
-                    $this->name = (string)$tokens[$i + 1];
-                    break;
-                } else {
-                    if ($tokens[$i] instanceof PHP_Token_OPEN_BRACKET) {
-                        $this->name = 'anonymous function';
-                        break;
-                    }
-                }
+            } elseif ($tokens[$i] instanceof PHP_Token_AMPERSAND &&
+                $tokens[$i + 1] instanceof PHP_Token_STRING
+            ) {
+                $this->name = (string)$tokens[$i + 1];
+                break;
+            } elseif ($tokens[$i] instanceof PHP_Token_OPEN_BRACKET) {
+                $this->name = 'anonymous function';
+                break;
             }
         }
 
@@ -425,8 +463,14 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
 class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
 {
 
+    /**
+     * @var array
+     */
     protected $interfaces;
 
+    /**
+     * @return array
+     */
     public function getPackage()
     {
 
@@ -448,52 +492,62 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
             }
         }
 
-        if (preg_match( '/@category[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@category[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['category'] = $matches[1];
         }
 
-        if (preg_match( '/@package[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@package[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['package'] = $matches[1];
             $result['fullPackage'] = $matches[1];
         }
 
-        if (preg_match( '/@subpackage[\s]+([\.\w]+)/', $docComment, $matches )) {
+        if (preg_match('/@subpackage[\s]+([\.\w]+)/', $docComment, $matches)) {
             $result['subpackage'] = $matches[1];
             $result['fullPackage'] .= '.'.$matches[1];
         }
 
         if (empty( $result['fullPackage'] )) {
             $result['fullPackage'] = $this->arrayToName(
-                explode( '_', str_replace( '\\', '_', $className ) ), '.'
+                explode('_', str_replace('\\', '_', $className)),
+                '.'
             );
         }
 
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
-
         return (string)$this->tokenStream[$this->id + 2];
     }
 
-    protected function arrayToName( array $parts, $join = '\\' )
+    /**
+     * @param  array  $parts
+     * @param  string $join
+     *
+     * @return string
+     */
+    protected function arrayToName(array $parts, $join = '\\')
     {
-
         $result = '';
 
-        if (count( $parts ) > 1) {
-            array_pop( $parts );
+        if (count($parts) > 1) {
+            array_pop($parts);
 
-            $result = join( $join, $parts );
+            $result = join($join, $parts);
         }
 
         return $result;
     }
 
+    /**
+     * @return boolean|string
+     */
     public function getParent()
     {
-
         if (!$this->hasParent()) {
             return false;
         }
@@ -510,21 +564,25 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
         return $className;
     }
 
+    /**
+     * @return boolean
+     */
     public function hasParent()
     {
-
         return $this->tokenStream[$this->id + 4] instanceof PHP_Token_EXTENDS;
     }
 
+    /**
+     * @return array|boolean
+     */
     public function getInterfaces()
     {
-
         if ($this->interfaces !== null) {
             return $this->interfaces;
         }
 
         if (!$this->hasInterfaces()) {
-            return ( $this->interfaces = false );
+            return ( $this->interfaces = false);
         }
 
         if ($this->tokenStream[$this->id + 4] instanceof PHP_Token_IMPLEMENTS) {
@@ -546,13 +604,16 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
         return $this->interfaces;
     }
 
+    /**
+     * @return boolean
+     */
     public function hasInterfaces()
     {
 
         return ( isset( $this->tokenStream[$this->id + 4] ) &&
             $this->tokenStream[$this->id + 4] instanceof PHP_Token_IMPLEMENTS ) ||
         ( isset( $this->tokenStream[$this->id + 8] ) &&
-            $this->tokenStream[$this->id + 8] instanceof PHP_Token_IMPLEMENTS );
+            $this->tokenStream[$this->id + 8] instanceof PHP_Token_IMPLEMENTS);
     }
 }
 
@@ -1277,15 +1338,11 @@ class PHP_Token_WHITESPACE extends PHP_Token
 }
 
 class PHP_Token_XOR_EQUAL extends PHP_Token
-{
-
-}
+{}
 
 // Tokens introduced in PHP 5.1
 class PHP_Token_HALT_COMPILER extends PHP_Token
-{
-
-}
+{}
 
 // Tokens introduced in PHP 5.3
 class PHP_Token_DIR extends PHP_Token
@@ -1294,13 +1351,14 @@ class PHP_Token_DIR extends PHP_Token
 }
 
 class PHP_Token_GOTO extends PHP_Token
-{
-
-}
+{}
 
 class PHP_Token_NAMESPACE extends PHP_TokenWithScope
 {
 
+    /**
+     * @return string
+     */
     public function getName()
     {
 
@@ -1327,9 +1385,7 @@ class PHP_Token_NS_C extends PHP_Token
 }
 
 class PHP_Token_NS_SEPARATOR extends PHP_Token
-{
-
-}
+{}
 
 // Tokens introduced in PHP 5.4
 class PHP_Token_CALLABLE extends PHP_Token
@@ -1348,9 +1404,7 @@ class PHP_Token_TRAIT extends PHP_Token_INTERFACE
 }
 
 class PHP_Token_TRAIT_C extends PHP_Token
-{
-
-}
+{}
 
 // Tokens introduced in PHP 5.5
 class PHP_Token_FINALLY extends PHP_Token
@@ -1359,9 +1413,7 @@ class PHP_Token_FINALLY extends PHP_Token
 }
 
 class PHP_Token_YIELD extends PHP_Token
-{
-
-}
+{}
 
 // Tokens introduced in PHP 5.6
 class PHP_Token_ELLIPSIS extends PHP_Token
@@ -1375,43 +1427,29 @@ class PHP_Token_POW extends PHP_Token
 }
 
 class PHP_Token_POW_EQUAL extends PHP_Token
+{}
+
+// Tokens introduced in PHP 7.0
+class PHP_Token_COALESCE extends PHP_Token
 {
 
 }
 
-
-// Tokens introduced in HackLang
-class PHP_Token_TYPELIST_LT extends PHP_Token
+class PHP_Token_SPACESHIP extends PHP_Token
 {
 
 }
 
-class PHP_Token_TYPELIST_GT extends PHP_Token
+class PHP_Token_YIELD_FROM extends PHP_Token
+{}
+
+// Tokens introduced in HackLang / HHVM
+class PHP_Token_COMPILER_HALT_OFFSET extends PHP_Token
 {
 
 }
 
-class PHP_Token_TYPE extends PHP_Token
-{
-
-}
-
-class PHP_Token_SHAPE extends PHP_Token
-{
-
-}
-
-class PHP_Token_LAMBDA_OP extends PHP_Token
-{
-
-}
-
-class PHP_Token_LAMBDA_CP extends PHP_Token
-{
-
-}
-
-class PHP_Token_LAMBDA_ARROW extends PHP_Token
+class PHP_Token_ENUM extends PHP_Token
 {
 
 }
@@ -1425,3 +1463,86 @@ class PHP_Token_JOIN extends PHP_Token
 {
 
 }
+
+class PHP_Token_LAMBDA_ARROW extends PHP_Token
+{
+
+}
+
+class PHP_Token_LAMBDA_CP extends PHP_Token
+{
+
+}
+
+class PHP_Token_LAMBDA_OP extends PHP_Token
+{
+
+}
+
+class PHP_Token_ONUMBER extends PHP_Token
+{
+
+}
+
+class PHP_Token_SHAPE extends PHP_Token
+{
+
+}
+
+class PHP_Token_TYPE extends PHP_Token
+{
+
+}
+
+class PHP_Token_TYPELIST_GT extends PHP_Token
+{
+
+}
+
+class PHP_Token_TYPELIST_LT extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_ATTRIBUTE extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_CATEGORY extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_CATEGORY_LABEL extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_CHILDREN extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_LABEL extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_REQUIRED extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_TAG_GT extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_TAG_LT extends PHP_Token
+{
+
+}
+
+class PHP_Token_XHP_TEXT extends PHP_Token
+{}

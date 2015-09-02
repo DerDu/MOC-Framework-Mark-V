@@ -21,7 +21,6 @@ use Prophecy\Doubler\Generator\Node\ClassNode;
  */
 class ReflectionClassNewInstancePatch implements ClassPatchInterface
 {
-
     /**
      * Supports ReflectionClass
      *
@@ -29,9 +28,8 @@ class ReflectionClassNewInstancePatch implements ClassPatchInterface
      *
      * @return bool
      */
-    public function supports( ClassNode $node )
+    public function supports(ClassNode $node)
     {
-
         return 'ReflectionClass' === $node->getParentClass();
     }
 
@@ -40,11 +38,11 @@ class ReflectionClassNewInstancePatch implements ClassPatchInterface
      *
      * @param ClassNode $node
      */
-    public function apply( ClassNode $node )
+    public function apply(ClassNode $node)
     {
 
-        foreach ($node->getMethod( 'newInstance' )->getArguments() as $argument) {
-            $argument->setDefault( null );
+        foreach ($node->getMethod('newInstance')->getArguments() as $argument) {
+            $argument->setDefault(null);
         }
     }
 
@@ -55,7 +53,6 @@ class ReflectionClassNewInstancePatch implements ClassPatchInterface
      */
     public function getPriority()
     {
-
         return 50;
     }
 }

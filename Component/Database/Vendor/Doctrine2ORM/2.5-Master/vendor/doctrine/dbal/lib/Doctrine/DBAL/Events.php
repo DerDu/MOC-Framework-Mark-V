@@ -25,11 +25,10 @@ namespace Doctrine\DBAL;
  * This class cannot be instantiated.
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 final class Events
 {
-
     const postConnect = 'postConnect';
     const onSchemaCreateTable = 'onSchemaCreateTable';
     const onSchemaCreateTableColumn = 'onSchemaCreateTableColumn';

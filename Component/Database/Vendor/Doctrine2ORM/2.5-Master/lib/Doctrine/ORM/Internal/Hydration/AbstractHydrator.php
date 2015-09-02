@@ -36,7 +36,6 @@ use PDO;
  */
 abstract class AbstractHydrator
 {
-
     /**
      * The ResultSetMapping.
      *
@@ -98,7 +97,7 @@ abstract class AbstractHydrator
      *
      * @param EntityManagerInterface $em The EntityManager to use.
      */
-    public function __construct( EntityManagerInterface $em )
+    public function __construct(EntityManagerInterface $em)
     {
 
         $this->_em = $em;
@@ -115,7 +114,7 @@ abstract class AbstractHydrator
      *
      * @return IterableResult
      */
-    public function iterate( $stmt, $resultSetMapping, array $hints = array() )
+    public function iterate($stmt, $resultSetMapping, array $hints = array())
     {
 
         $this->_stmt = $stmt;
@@ -123,11 +122,11 @@ abstract class AbstractHydrator
         $this->_hints = $hints;
 
         $evm = $this->_em->getEventManager();
-        $evm->addEventListener( array( Events::onClear ), $this );
+        $evm->addEventListener(array(Events::onClear), $this);
 
         $this->prepare();
 
-        return new IterableResult( $this );
+        return new IterableResult($this);
     }
 
     /**
@@ -149,7 +148,7 @@ abstract class AbstractHydrator
      *
      * @return array
      */
-    public function hydrateAll( $stmt, $resultSetMapping, array $hints = array() )
+    public function hydrateAll($stmt, $resultSetMapping, array $hints = array())
     {
 
         $this->_stmt = $stmt;
@@ -180,7 +179,6 @@ abstract class AbstractHydrator
      */
     protected function cleanup()
     {
-
         $this->_stmt->closeCursor();
 
         $this->_stmt = null;
@@ -198,7 +196,7 @@ abstract class AbstractHydrator
     public function hydrateRow()
     {
 
-        $row = $this->_stmt->fetch( PDO::FETCH_ASSOC );
+        $row = $this->_stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) {
             $this->cleanup();
@@ -208,7 +206,7 @@ abstract class AbstractHydrator
 
         $result = array();
 
-        $this->hydrateRowData( $row, $result );
+        $this->hydrateRowData($row, $result);
 
         return $result;
     }
@@ -225,10 +223,10 @@ abstract class AbstractHydrator
      *
      * @throws HydrationException
      */
-    protected function hydrateRowData( array $data, array &$result )
+    protected function hydrateRowData(array $data, array &$result)
     {
 
-        throw new HydrationException( "hydrateRowData() not implemented by this hydrator." );
+        throw new HydrationException("hydrateRowData() not implemented by this hydrator.");
     }
 
     /**
@@ -239,7 +237,7 @@ abstract class AbstractHydrator
      *
      * @return void
      */
-    public function onClear( $eventArgs )
+    public function onClear($eventArgs)
     {
     }
 
@@ -259,13 +257,13 @@ abstract class AbstractHydrator
      * @return array  An array with all the fields (name => value) of the data row,
      *                grouped by their component alias.
      */
-    protected function gatherRowData( array $data, array &$id, array &$nonemptyComponents )
+    protected function gatherRowData(array $data, array &$id, array &$nonemptyComponents)
     {
 
-        $rowData = array( 'data' => array() );
+        $rowData = array('data' => array());
 
         foreach ($data as $key => $value) {
-            if (( $cacheKeyInfo = $this->hydrateColumnInfo( $key ) ) === null) {
+            if (( $cacheKeyInfo = $this->hydrateColumnInfo($key) ) === null) {
                 continue;
             }
 
@@ -276,7 +274,7 @@ abstract class AbstractHydrator
                     $argIndex = $cacheKeyInfo['argIndex'];
                     $objIndex = $cacheKeyInfo['objIndex'];
                     $type = $cacheKeyInfo['type'];
-                    $value = $type->convertToPHPValue( $value, $this->_platform );
+                    $value = $type->convertToPHPValue($value, $this->_platform);
 
                     $rowData['newObjects'][$objIndex]['class'] = $cacheKeyInfo['class'];
                     $rowData['newObjects'][$objIndex]['args'][$argIndex] = $value;
@@ -284,7 +282,7 @@ abstract class AbstractHydrator
 
                 case ( isset( $cacheKeyInfo['isScalar'] ) ):
                     $type = $cacheKeyInfo['type'];
-                    $value = $type->convertToPHPValue( $value, $this->_platform );
+                    $value = $type->convertToPHPValue($value, $this->_platform);
 
                     $rowData['scalars'][$fieldName] = $value;
                     break;
@@ -302,7 +300,7 @@ abstract class AbstractHydrator
                     }
 
                     $rowData['data'][$dqlAlias][$fieldName] = $type
-                        ? $type->convertToPHPValue( $value, $this->_platform )
+                        ? $type->convertToPHPValue($value, $this->_platform)
                         : $value;
 
                     if ($cacheKeyInfo['isIdentifier'] && $value !== null) {
@@ -323,7 +321,7 @@ abstract class AbstractHydrator
      *
      * @return array|null
      */
-    protected function hydrateColumnInfo( $key )
+    protected function hydrateColumnInfo($key)
     {
 
         if (isset( $this->_cache[$key] )) {
@@ -333,14 +331,14 @@ abstract class AbstractHydrator
         switch (true) {
             // NOTE: Most of the times it's a field mapping, so keep it first!!!
             case ( isset( $this->_rsm->fieldMappings[$key] ) ):
-                $classMetadata = $this->getClassMetadata( $this->_rsm->declaringClasses[$key] );
+                $classMetadata = $this->getClassMetadata($this->_rsm->declaringClasses[$key]);
                 $fieldName = $this->_rsm->fieldMappings[$key];
                 $fieldMapping = $classMetadata->fieldMappings[$fieldName];
 
                 return $this->_cache[$key] = array(
-                    'isIdentifier' => in_array( $fieldName, $classMetadata->identifier ),
+                    'isIdentifier' => in_array($fieldName, $classMetadata->identifier),
                     'fieldName'    => $fieldName,
-                    'type'         => Type::getType( $fieldMapping['type'] ),
+                    'type'         => Type::getType($fieldMapping['type']),
                     'dqlAlias'     => $this->_rsm->columnOwnerMap[$key],
                 );
 
@@ -352,26 +350,26 @@ abstract class AbstractHydrator
                     'isScalar'             => true,
                     'isNewObjectParameter' => true,
                     'fieldName'            => $this->_rsm->scalarMappings[$key],
-                    'type'  => Type::getType( $this->_rsm->typeMappings[$key] ),
+                    'type'  => Type::getType($this->_rsm->typeMappings[$key]),
                     'argIndex'             => $mapping['argIndex'],
                     'objIndex'             => $mapping['objIndex'],
-                    'class' => new \ReflectionClass( $mapping['className'] ),
+                    'class' => new \ReflectionClass($mapping['className']),
                 );
 
             case ( isset( $this->_rsm->scalarMappings[$key] ) ):
                 return $this->_cache[$key] = array(
                     'isScalar'  => true,
                     'fieldName' => $this->_rsm->scalarMappings[$key],
-                    'type' => Type::getType( $this->_rsm->typeMappings[$key] ),
+                    'type' => Type::getType($this->_rsm->typeMappings[$key]),
                 );
 
             case ( isset( $this->_rsm->metaMappings[$key] ) ):
                 // Meta column (has meaning in relational schema only, i.e. foreign keys or discriminator columns).
                 $fieldName = $this->_rsm->metaMappings[$key];
                 $dqlAlias = $this->_rsm->columnOwnerMap[$key];
-                $classMetadata = $this->getClassMetadata( $this->_rsm->aliasMap[$dqlAlias] );
+                $classMetadata = $this->getClassMetadata($this->_rsm->aliasMap[$dqlAlias]);
                 $type = isset( $this->_rsm->typeMappings[$key] )
-                    ? Type::getType( $this->_rsm->typeMappings[$key] )
+                    ? Type::getType($this->_rsm->typeMappings[$key])
                     : null;
 
                 return $this->_cache[$key] = array(
@@ -395,11 +393,11 @@ abstract class AbstractHydrator
      *
      * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
-    protected function getClassMetadata( $className )
+    protected function getClassMetadata($className)
     {
 
         if (!isset( $this->_metadataCache[$className] )) {
-            $this->_metadataCache[$className] = $this->_em->getClassMetadata( $className );
+            $this->_metadataCache[$className] = $this->_em->getClassMetadata($className);
         }
 
         return $this->_metadataCache[$className];
@@ -417,13 +415,12 @@ abstract class AbstractHydrator
      *
      * @return array The processed row.
      */
-    protected function gatherScalarRowData( &$data )
+    protected function gatherScalarRowData(&$data)
     {
-
         $rowData = array();
 
         foreach ($data as $key => $value) {
-            if (( $cacheKeyInfo = $this->hydrateColumnInfo( $key ) ) === null) {
+            if (( $cacheKeyInfo = $this->hydrateColumnInfo($key) ) === null) {
                 continue;
             }
 
@@ -436,7 +433,7 @@ abstract class AbstractHydrator
                 $type = $cacheKeyInfo['type'];
                 $fieldName = $dqlAlias.'_'.$fieldName;
                 $value = $type
-                    ? $type->convertToPHPValue( $value, $this->_platform )
+                    ? $type->convertToPHPValue($value, $this->_platform)
                     : $value;
             }
 
@@ -457,9 +454,8 @@ abstract class AbstractHydrator
      *
      * @todo The "$id" generation is the same of UnitOfWork#createEntity. Remove this duplication somehow
      */
-    protected function registerManaged( ClassMetadata $class, $entity, array $data )
+    protected function registerManaged(ClassMetadata $class, $entity, array $data)
     {
-
         if ($class->isIdentifierComposite) {
             $id = array();
 
@@ -477,6 +473,6 @@ abstract class AbstractHydrator
             );
         }
 
-        $this->_em->getUnitOfWork()->registerManaged( $entity, $id, $data );
+        $this->_em->getUnitOfWork()->registerManaged($entity, $id, $data);
     }
 }

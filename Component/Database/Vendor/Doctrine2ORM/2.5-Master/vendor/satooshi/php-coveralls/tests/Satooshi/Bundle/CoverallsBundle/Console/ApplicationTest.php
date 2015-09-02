@@ -11,24 +11,23 @@ use Symfony\Component\Console\Tester\ApplicationTester;
  */
 class ApplicationTest extends ProjectTestCase
 {
-
     /**
      * @test
      */
     public function shouldExecuteCoverallsV1JobsCommand()
     {
 
-        $this->makeProjectDir( null, $this->logsDir );
+        $this->makeProjectDir(null, $this->logsDir);
         $this->dumpCloverXml();
 
-        $app = new Application( $this->rootDir, 'Coveralls API client for PHP', '1.0.0' );
-        $app->setAutoExit( false ); // avoid to call exit() in Application
+        $app = new Application($this->rootDir, 'Coveralls API client for PHP', '1.0.0');
+        $app->setAutoExit(false); // avoid to call exit() in Application
 
         // run
         $_SERVER['TRAVIS'] = true;
         $_SERVER['TRAVIS_JOB_ID'] = 'application_test';
 
-        $tester = new ApplicationTester( $app );
+        $tester = new ApplicationTester($app);
         $actual = $tester->run(
             array(
                 '--dry-run' => true,
@@ -36,18 +35,17 @@ class ApplicationTest extends ProjectTestCase
             )
         );
 
-        $this->assertEquals( 0, $actual );
+        $this->assertEquals(0, $actual);
     }
 
     protected function dumpCloverXml()
     {
 
-        file_put_contents( $this->cloverXmlPath, $this->getCloverXml() );
+        file_put_contents($this->cloverXmlPath, $this->getCloverXml());
     }
 
     protected function getCloverXml()
     {
-
         $xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <coverage generated="1365848893">
@@ -71,23 +69,23 @@ class ApplicationTest extends ProjectTestCase
   </project>
 </coverage>
 XML;
-        return sprintf( $xml, $this->srcDir, $this->srcDir );
+        return sprintf($xml, $this->srcDir, $this->srcDir);
     }
 
     protected function setUp()
     {
 
-        $this->projectDir = realpath( __DIR__.'/../../../..' );
+        $this->projectDir = realpath(__DIR__.'/../../../..');
 
-        $this->setUpDir( $this->projectDir );
+        $this->setUpDir($this->projectDir);
     }
 
     protected function tearDown()
     {
 
-        $this->rmFile( $this->cloverXmlPath );
-        $this->rmFile( $this->jsonPath );
-        $this->rmDir( $this->logsDir );
-        $this->rmDir( $this->buildDir );
+        $this->rmFile($this->cloverXmlPath);
+        $this->rmFile($this->jsonPath);
+        $this->rmDir($this->logsDir);
+        $this->rmDir($this->buildDir);
     }
 }

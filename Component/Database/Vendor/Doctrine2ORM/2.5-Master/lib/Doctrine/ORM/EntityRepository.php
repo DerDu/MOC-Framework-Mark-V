@@ -39,7 +39,6 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class EntityRepository implements ObjectRepository, Selectable
 {
-
     /**
      * @var string
      */
@@ -61,9 +60,8 @@ class EntityRepository implements ObjectRepository, Selectable
      * @param EntityManager         $em    The EntityManager to use.
      * @param Mapping\ClassMetadata $class The class descriptor.
      */
-    public function __construct( $em, Mapping\ClassMetadata $class )
+    public function __construct($em, Mapping\ClassMetadata $class)
     {
-
         $this->_entityName = $class->name;
         $this->_em = $em;
         $this->_class = $class;
@@ -77,12 +75,11 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return QueryBuilder
      */
-    public function createQueryBuilder( $alias, $indexBy = null )
+    public function createQueryBuilder($alias, $indexBy = null)
     {
-
         return $this->_em->createQueryBuilder()
-            ->select( $alias )
-            ->from( $this->_entityName, $alias, $indexBy );
+            ->select($alias)
+            ->from($this->_entityName, $alias, $indexBy);
     }
 
     /**
@@ -94,11 +91,11 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return ResultSetMappingBuilder
      */
-    public function createResultSetMappingBuilder( $alias )
+    public function createResultSetMappingBuilder($alias)
     {
 
-        $rsm = new ResultSetMappingBuilder( $this->_em, ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT );
-        $rsm->addRootEntityFromClassMetadata( $this->_entityName, $alias );
+        $rsm = new ResultSetMappingBuilder($this->_em, ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT);
+        $rsm->addRootEntityFromClassMetadata($this->_entityName, $alias);
 
         return $rsm;
     }
@@ -110,10 +107,10 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return Query
      */
-    public function createNamedQuery( $queryName )
+    public function createNamedQuery($queryName)
     {
 
-        return $this->_em->createQuery( $this->_class->getNamedQuery( $queryName ) );
+        return $this->_em->createQuery($this->_class->getNamedQuery($queryName));
     }
 
     /**
@@ -123,14 +120,14 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return NativeQuery
      */
-    public function createNativeNamedQuery( $queryName )
+    public function createNativeNamedQuery($queryName)
     {
 
-        $queryMapping = $this->_class->getNamedNativeQuery( $queryName );
-        $rsm = new Query\ResultSetMappingBuilder( $this->_em );
-        $rsm->addNamedNativeQueryMapping( $this->_class, $queryMapping );
+        $queryMapping = $this->_class->getNamedNativeQuery($queryName);
+        $rsm = new Query\ResultSetMappingBuilder($this->_em);
+        $rsm->addNamedNativeQueryMapping($this->_class, $queryMapping);
 
-        return $this->_em->createNativeQuery( $queryMapping['query'], $rsm );
+        return $this->_em->createNativeQuery($queryMapping['query'], $rsm);
     }
 
     /**
@@ -141,7 +138,7 @@ class EntityRepository implements ObjectRepository, Selectable
     public function clear()
     {
 
-        $this->_em->clear( $this->_class->rootEntityName );
+        $this->_em->clear($this->_class->rootEntityName);
     }
 
     /**
@@ -155,10 +152,10 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return object|null The entity instance or NULL if the entity can not be found.
      */
-    public function find( $id, $lockMode = null, $lockVersion = null )
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
 
-        return $this->_em->find( $this->_entityName, $id, $lockMode, $lockVersion );
+        return $this->_em->find($this->_entityName, $id, $lockMode, $lockVersion);
     }
 
     /**
@@ -169,7 +166,7 @@ class EntityRepository implements ObjectRepository, Selectable
     public function findAll()
     {
 
-        return $this->findBy( array() );
+        return $this->findBy(array());
     }
 
     /**
@@ -182,12 +179,12 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return array The objects.
      */
-    public function findBy( array $criteria, array $orderBy = null, $limit = null, $offset = null )
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
 
-        $persister = $this->_em->getUnitOfWork()->getEntityPersister( $this->_entityName );
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
-        return $persister->loadAll( $criteria, $orderBy, $limit, $offset );
+        return $persister->loadAll($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -198,12 +195,12 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return object|null The entity instance or NULL if the entity can not be found.
      */
-    public function findOneBy( array $criteria, array $orderBy = null )
+    public function findOneBy(array $criteria, array $orderBy = null)
     {
 
-        $persister = $this->_em->getUnitOfWork()->getEntityPersister( $this->_entityName );
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
-        return $persister->load( $criteria, null, null, array(), null, 1, $orderBy );
+        return $persister->load($criteria, null, null, array(), null, 1, $orderBy);
     }
 
     /**
@@ -219,17 +216,16 @@ class EntityRepository implements ObjectRepository, Selectable
      *                                 or no find* method at all and therefore an invalid
      *                                 method call.
      */
-    public function __call( $method, $arguments )
+    public function __call($method, $arguments)
     {
-
         switch (true) {
-            case ( 0 === strpos( $method, 'findBy' ) ):
-                $by = substr( $method, 6 );
+            case ( 0 === strpos($method, 'findBy') ):
+                $by = substr($method, 6);
                 $method = 'findBy';
                 break;
 
-            case ( 0 === strpos( $method, 'findOneBy' ) ):
-                $by = substr( $method, 9 );
+            case ( 0 === strpos($method, 'findOneBy') ):
+                $by = substr($method, 9);
                 $method = 'findOneBy';
                 break;
 
@@ -241,32 +237,32 @@ class EntityRepository implements ObjectRepository, Selectable
         }
 
         if (empty( $arguments )) {
-            throw ORMException::findByRequiresParameter( $method.$by );
+            throw ORMException::findByRequiresParameter($method.$by);
         }
 
-        $fieldName = lcfirst( \Doctrine\Common\Util\Inflector::classify( $by ) );
+        $fieldName = lcfirst(\Doctrine\Common\Util\Inflector::classify($by));
 
-        if ($this->_class->hasField( $fieldName ) || $this->_class->hasAssociation( $fieldName )) {
-            switch (count( $arguments )) {
+        if ($this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)) {
+            switch (count($arguments)) {
                 case 1:
-                    return $this->$method( array( $fieldName => $arguments[0] ) );
+                    return $this->$method(array($fieldName => $arguments[0]));
 
                 case 2:
-                    return $this->$method( array( $fieldName => $arguments[0] ), $arguments[1] );
+                    return $this->$method(array($fieldName => $arguments[0]), $arguments[1]);
 
                 case 3:
-                    return $this->$method( array( $fieldName => $arguments[0] ), $arguments[1], $arguments[2] );
+                    return $this->$method(array($fieldName => $arguments[0]), $arguments[1], $arguments[2]);
 
                 case 4:
-                    return $this->$method( array( $fieldName => $arguments[0] ), $arguments[1], $arguments[2],
-                        $arguments[3] );
+                    return $this->$method(array($fieldName => $arguments[0]), $arguments[1], $arguments[2],
+                        $arguments[3]);
 
                 default:
                     // Do nothing
             }
         }
 
-        throw ORMException::invalidFindByCall( $this->_entityName, $fieldName, $method.$by );
+        throw ORMException::invalidFindByCall($this->_entityName, $fieldName, $method.$by);
     }
 
     /**
@@ -274,7 +270,6 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function getClassName()
     {
-
         return $this->getEntityName();
     }
 
@@ -283,7 +278,6 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getEntityName()
     {
-
         return $this->_entityName;
     }
 
@@ -295,12 +289,12 @@ class EntityRepository implements ObjectRepository, Selectable
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function matching( Criteria $criteria )
+    public function matching(Criteria $criteria)
     {
 
-        $persister = $this->_em->getUnitOfWork()->getEntityPersister( $this->_entityName );
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
-        return new LazyCriteriaCollection( $persister, $criteria );
+        return new LazyCriteriaCollection($persister, $criteria);
     }
 
     /**
@@ -308,7 +302,6 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getEntityManager()
     {
-
         return $this->_em;
     }
 
@@ -317,7 +310,6 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getClassMetadata()
     {
-
         return $this->_class;
     }
 }

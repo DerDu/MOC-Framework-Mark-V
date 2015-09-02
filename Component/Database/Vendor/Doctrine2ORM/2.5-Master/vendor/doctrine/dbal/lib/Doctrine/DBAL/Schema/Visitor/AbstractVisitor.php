@@ -31,25 +31,24 @@ use Doctrine\DBAL\Schema\Table;
  */
 class AbstractVisitor implements Visitor, NamespaceVisitor
 {
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function acceptSchema( Schema $schema )
+    public function acceptSchema(Schema $schema)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acceptNamespace( $namespaceName )
+    public function acceptNamespace($namespaceName)
     {
     }
 
     /**
      * @param \Doctrine\DBAL\Schema\Table $table
      */
-    public function acceptTable( Table $table )
+    public function acceptTable(Table $table)
     {
     }
 
@@ -57,7 +56,7 @@ class AbstractVisitor implements Visitor, NamespaceVisitor
      * @param \Doctrine\DBAL\Schema\Table  $table
      * @param \Doctrine\DBAL\Schema\Column $column
      */
-    public function acceptColumn( Table $table, Column $column )
+    public function acceptColumn(Table $table, Column $column)
     {
     }
 
@@ -65,7 +64,7 @@ class AbstractVisitor implements Visitor, NamespaceVisitor
      * @param \Doctrine\DBAL\Schema\Table                $localTable
      * @param \Doctrine\DBAL\Schema\ForeignKeyConstraint $fkConstraint
      */
-    public function acceptForeignKey( Table $localTable, ForeignKeyConstraint $fkConstraint )
+    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
     {
     }
 
@@ -73,14 +72,14 @@ class AbstractVisitor implements Visitor, NamespaceVisitor
      * @param \Doctrine\DBAL\Schema\Table $table
      * @param \Doctrine\DBAL\Schema\Index $index
      */
-    public function acceptIndex( Table $table, Index $index )
+    public function acceptIndex(Table $table, Index $index)
     {
     }
 
     /**
      * @param \Doctrine\DBAL\Schema\Sequence $sequence
      */
-    public function acceptSequence( Sequence $sequence )
+    public function acceptSequence(Sequence $sequence)
     {
     }
 }

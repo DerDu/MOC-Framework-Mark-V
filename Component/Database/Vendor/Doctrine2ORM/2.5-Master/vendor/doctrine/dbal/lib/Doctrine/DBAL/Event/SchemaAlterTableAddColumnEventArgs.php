@@ -32,7 +32,6 @@ use Doctrine\DBAL\Schema\TableDiff;
  */
 class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
 {
-
     /**
      * @var \Doctrine\DBAL\Schema\Column
      */
@@ -58,7 +57,7 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      * @param \Doctrine\DBAL\Schema\TableDiff           $tableDiff
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      */
-    public function __construct( Column $column, TableDiff $tableDiff, AbstractPlatform $platform )
+    public function __construct(Column $column, TableDiff $tableDiff, AbstractPlatform $platform)
     {
 
         $this->_column = $column;
@@ -71,7 +70,6 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      */
     public function getColumn()
     {
-
         return $this->_column;
     }
 
@@ -80,7 +78,6 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      */
     public function getTableDiff()
     {
-
         return $this->_tableDiff;
     }
 
@@ -89,7 +86,6 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
-
         return $this->_platform;
     }
 
@@ -98,11 +94,11 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      *
      * @return \Doctrine\DBAL\Event\SchemaAlterTableAddColumnEventArgs
      */
-    public function addSql( $sql )
+    public function addSql($sql)
     {
 
-        if (is_array( $sql )) {
-            $this->_sql = array_merge( $this->_sql, $sql );
+        if (is_array($sql)) {
+            $this->_sql = array_merge($this->_sql, $sql);
         } else {
             $this->_sql[] = $sql;
         }
@@ -115,7 +111,6 @@ class SchemaAlterTableAddColumnEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
-
         return $this->_sql;
     }
 }

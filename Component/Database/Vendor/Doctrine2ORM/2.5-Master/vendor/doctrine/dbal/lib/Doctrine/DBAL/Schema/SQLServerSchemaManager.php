@@ -34,65 +34,63 @@ use Doctrine\DBAL\Types\Type;
  */
 class SQLServerSchemaManager extends AbstractSchemaManager
 {
-
     /**
      * {@inheritdoc}
      */
-    public function listTableIndexes( $table )
+    public function listTableIndexes($table)
     {
 
-        $sql = $this->_platform->getListTableIndexesSQL( $table, $this->_conn->getDatabase() );
+        $sql = $this->_platform->getListTableIndexesSQL($table, $this->_conn->getDatabase());
 
         try {
-            $tableIndexes = $this->_conn->fetchAll( $sql );
-        } catch( \PDOException $e ) {
+            $tableIndexes = $this->_conn->fetchAll($sql);
+        } catch (\PDOException $e) {
             if ($e->getCode() == "IMSSP") {
                 return array();
             } else {
                 throw $e;
             }
-        } catch( SQLSrvException $e ) {
-            if (strpos( $e->getMessage(), 'SQLSTATE [01000, 15472]' ) === 0) {
+        } catch (SQLSrvException $e) {
+            if (strpos($e->getMessage(), 'SQLSTATE [01000, 15472]') === 0) {
                 return array();
             } else {
                 throw $e;
             }
         }
 
-        return $this->_getPortableTableIndexesList( $tableIndexes, $table );
+        return $this->_getPortableTableIndexesList($tableIndexes, $table);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableIndexesList( $tableIndexRows, $tableName = null )
+    protected function _getPortableTableIndexesList($tableIndexRows, $tableName = null)
     {
-
         foreach ($tableIndexRows as &$tableIndex) {
             $tableIndex['non_unique'] = (boolean)$tableIndex['non_unique'];
             $tableIndex['primary'] = (boolean)$tableIndex['primary'];
-            $tableIndex['flags'] = $tableIndex['flags'] ? array( $tableIndex['flags'] ) : null;
+            $tableIndex['flags'] = $tableIndex['flags'] ? array($tableIndex['flags']) : null;
         }
 
-        return parent::_getPortableTableIndexesList( $tableIndexRows, $tableName );
+        return parent::_getPortableTableIndexesList($tableIndexRows, $tableName);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function alterTable( TableDiff $tableDiff )
+    public function alterTable(TableDiff $tableDiff)
     {
 
-        if (count( $tableDiff->removedColumns ) > 0) {
+        if (count($tableDiff->removedColumns) > 0) {
             foreach ($tableDiff->removedColumns as $col) {
-                $columnConstraintSql = $this->getColumnConstraintSQL( $tableDiff->name, $col->getName() );
-                foreach ($this->_conn->fetchAll( $columnConstraintSql ) as $constraint) {
-                    $this->_conn->exec( "ALTER TABLE $tableDiff->name DROP CONSTRAINT ".$constraint['Name'] );
+                $columnConstraintSql = $this->getColumnConstraintSQL($tableDiff->name, $col->getName());
+                foreach ($this->_conn->fetchAll($columnConstraintSql) as $constraint) {
+                    $this->_conn->exec("ALTER TABLE $tableDiff->name DROP CONSTRAINT ".$constraint['Name']);
                 }
             }
         }
 
-        parent::alterTable( $tableDiff );
+        parent::alterTable($tableDiff);
     }
 
     /**
@@ -103,34 +101,33 @@ class SQLServerSchemaManager extends AbstractSchemaManager
      *
      * @return string
      */
-    private function getColumnConstraintSQL( $table, $column )
+    private function getColumnConstraintSQL($table, $column)
     {
-
         return "SELECT SysObjects.[Name]
             FROM SysObjects INNER JOIN (SELECT [Name],[ID] FROM SysObjects WHERE XType = 'U') AS Tab
             ON Tab.[ID] = Sysobjects.[Parent_Obj]
             INNER JOIN sys.default_constraints DefCons ON DefCons.[object_id] = Sysobjects.[ID]
             INNER JOIN SysColumns Col ON Col.[ColID] = DefCons.[parent_column_id] AND Col.[ID] = Tab.[ID]
-            WHERE Col.[Name] = ".$this->_conn->quote( $column )." AND Tab.[Name] = ".$this->_conn->quote( $table )."
+            WHERE Col.[Name] = ".$this->_conn->quote($column)." AND Tab.[Name] = ".$this->_conn->quote($table)."
             ORDER BY Col.[Name]";
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableSequenceDefinition( $sequence )
+    protected function _getPortableSequenceDefinition($sequence)
     {
 
-        return new Sequence( $sequence['name'], $sequence['increment'], $sequence['start_value'] );
+        return new Sequence($sequence['name'], $sequence['increment'], $sequence['start_value']);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableColumnDefinition( $tableColumn )
+    protected function _getPortableTableColumnDefinition($tableColumn)
     {
 
-        $dbType = strtok( $tableColumn['type'], '(), ' );
+        $dbType = strtok($tableColumn['type'], '(), ');
         $fixed = null;
         $length = (int)$tableColumn['length'];
         $default = $tableColumn['default'];
@@ -139,8 +136,8 @@ class SQLServerSchemaManager extends AbstractSchemaManager
             $tableColumn['name'] = '';
         }
 
-        while ($default != ( $default2 = preg_replace( "/^\((.*)\)$/", '$1', $default ) )) {
-            $default = trim( $default2, "'" );
+        while ($default != ( $default2 = preg_replace("/^\((.*)\)$/", '$1', $default) )) {
+            $default = trim($default2, "'");
 
             if ($default == 'getdate()') {
                 $default = $this->_platform->getCurrentTimestampSQL();
@@ -166,12 +163,12 @@ class SQLServerSchemaManager extends AbstractSchemaManager
             $fixed = true;
         }
 
-        $type = $this->_platform->getDoctrineTypeMapping( $dbType );
-        $type = $this->extractDoctrineTypeFromComment( $tableColumn['comment'], $type );
-        $tableColumn['comment'] = $this->removeDoctrineTypeFromComment( $tableColumn['comment'], $type );
+        $type = $this->_platform->getDoctrineTypeMapping($dbType);
+        $type = $this->extractDoctrineTypeFromComment($tableColumn['comment'], $type);
+        $tableColumn['comment'] = $this->removeDoctrineTypeFromComment($tableColumn['comment'], $type);
 
         $options = array(
-            'length'        => ( $length == 0 || !in_array( $type, array( 'text', 'string' ) ) ) ? null : $length,
+            'length'        => ( $length == 0 || !in_array($type, array('text', 'string')) ) ? null : $length,
             'unsigned'      => false,
             'fixed'         => (bool)$fixed,
             'default'       => $default !== 'NULL' ? $default : null,
@@ -182,10 +179,10 @@ class SQLServerSchemaManager extends AbstractSchemaManager
             'comment'       => $tableColumn['comment'] !== '' ? $tableColumn['comment'] : null,
         );
 
-        $column = new Column( $tableColumn['name'], Type::getType( $type ), $options );
+        $column = new Column($tableColumn['name'], Type::getType($type), $options);
 
         if (isset( $tableColumn['collation'] ) && $tableColumn['collation'] !== 'NULL') {
-            $column->setPlatformOption( 'collation', $tableColumn['collation'] );
+            $column->setPlatformOption('collation', $tableColumn['collation']);
         }
 
         return $column;
@@ -194,21 +191,20 @@ class SQLServerSchemaManager extends AbstractSchemaManager
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableForeignKeysList( $tableForeignKeys )
+    protected function _getPortableTableForeignKeysList($tableForeignKeys)
     {
-
         $foreignKeys = array();
 
         foreach ($tableForeignKeys as $tableForeignKey) {
             if (!isset( $foreignKeys[$tableForeignKey['ForeignKey']] )) {
                 $foreignKeys[$tableForeignKey['ForeignKey']] = array(
-                    'local_columns'   => array( $tableForeignKey['ColumnName'] ),
+                    'local_columns'   => array($tableForeignKey['ColumnName']),
                     'foreign_table'   => $tableForeignKey['ReferenceTableName'],
-                    'foreign_columns' => array( $tableForeignKey['ReferenceColumnName'] ),
+                    'foreign_columns' => array($tableForeignKey['ReferenceColumnName']),
                     'name'            => $tableForeignKey['ForeignKey'],
                     'options'         => array(
-                        'onUpdate' => str_replace( '_', ' ', $tableForeignKey['update_referential_action_desc'] ),
-                        'onDelete' => str_replace( '_', ' ', $tableForeignKey['delete_referential_action_desc'] )
+                        'onUpdate' => str_replace('_', ' ', $tableForeignKey['update_referential_action_desc']),
+                        'onDelete' => str_replace('_', ' ', $tableForeignKey['delete_referential_action_desc'])
                     )
                 );
             } else {
@@ -217,15 +213,14 @@ class SQLServerSchemaManager extends AbstractSchemaManager
             }
         }
 
-        return parent::_getPortableTableForeignKeysList( $foreignKeys );
+        return parent::_getPortableTableForeignKeysList($foreignKeys);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableForeignKeyDefinition( $tableForeignKey )
+    protected function _getPortableTableForeignKeyDefinition($tableForeignKey)
     {
-
         return new ForeignKeyConstraint(
             $tableForeignKey['local_columns'],
             $tableForeignKey['foreign_table'],
@@ -238,37 +233,33 @@ class SQLServerSchemaManager extends AbstractSchemaManager
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableTableDefinition( $table )
+    protected function _getPortableTableDefinition($table)
     {
-
         return $table['name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableDatabaseDefinition( $database )
+    protected function _getPortableDatabaseDefinition($database)
     {
-
         return $database['name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getPortableNamespaceDefinition( array $namespace )
+    protected function getPortableNamespaceDefinition(array $namespace)
     {
-
         return $namespace['name'];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _getPortableViewDefinition( $view )
+    protected function _getPortableViewDefinition($view)
     {
-
         // @todo
-        return new View( $view['name'], null );
+        return new View($view['name'], null);
     }
 }

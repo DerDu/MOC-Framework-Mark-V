@@ -8,7 +8,6 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Config;
  */
 class Configuration
 {
-
     // same as ruby lib
 
     /**
@@ -105,7 +104,6 @@ class Configuration
      */
     public function getRepoToken()
     {
-
         return $this->repoToken;
     }
 
@@ -116,9 +114,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setRepoToken( $repoToken )
+    public function setRepoToken($repoToken)
     {
-
         $this->repoToken = $repoToken;
 
         return $this;
@@ -142,7 +139,6 @@ class Configuration
      */
     public function getServiceName()
     {
-
         return $this->serviceName;
     }
 
@@ -153,9 +149,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setServiceName( $serviceName )
+    public function setServiceName($serviceName)
     {
-
         $this->serviceName = $serviceName;
 
         return $this;
@@ -168,7 +163,6 @@ class Configuration
      */
     public function getSrcDir()
     {
-
         return $this->srcDir;
     }
 
@@ -179,9 +173,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setSrcDir( $srcDir )
+    public function setSrcDir($srcDir)
     {
-
         $this->srcDir = $srcDir;
 
         return $this;
@@ -189,13 +182,11 @@ class Configuration
 
     public function getRootDir()
     {
-
         return $this->rootDir;
     }
 
-    public function setRootDir( $rootDir )
+    public function setRootDir($rootDir)
     {
-
         $this->rootDir = $rootDir;
 
         return $this;
@@ -208,9 +199,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function addCloverXmlPath( $cloverXmlPath )
+    public function addCloverXmlPath($cloverXmlPath)
     {
-
         $this->cloverXmlPaths[] = $cloverXmlPath;
 
         return $this;
@@ -223,7 +213,6 @@ class Configuration
      */
     public function getCloverXmlPaths()
     {
-
         return $this->cloverXmlPaths;
     }
 
@@ -234,9 +223,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setCloverXmlPaths( array $cloverXmlPaths )
+    public function setCloverXmlPaths(array $cloverXmlPaths)
     {
-
         $this->cloverXmlPaths = $cloverXmlPaths;
 
         return $this;
@@ -249,7 +237,6 @@ class Configuration
      */
     public function getJsonPath()
     {
-
         return $this->jsonPath;
     }
 
@@ -260,9 +247,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setJsonPath( $jsonPath )
+    public function setJsonPath($jsonPath)
     {
-
         $this->jsonPath = $jsonPath;
 
         return $this;
@@ -275,7 +261,6 @@ class Configuration
      */
     public function isDryRun()
     {
-
         return $this->dryRun;
     }
 
@@ -286,9 +271,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setDryRun( $dryRun )
+    public function setDryRun($dryRun)
     {
-
         $this->dryRun = $dryRun;
 
         return $this;
@@ -301,9 +285,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setExcludeNoStatementsUnlessFalse( $excludeNoStatements )
+    public function setExcludeNoStatementsUnlessFalse($excludeNoStatements)
     {
-
         if ($excludeNoStatements) {
             $this->excludeNoStatements = true;
         }
@@ -318,7 +301,6 @@ class Configuration
      */
     public function isExcludeNoStatements()
     {
-
         return $this->excludeNoStatements;
     }
 
@@ -329,9 +311,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setExcludeNoStatements( $excludeNoStatements )
+    public function setExcludeNoStatements($excludeNoStatements)
     {
-
         $this->excludeNoStatements = $excludeNoStatements;
 
         return $this;
@@ -344,7 +325,6 @@ class Configuration
      */
     public function isVerbose()
     {
-
         return $this->verbose;
     }
 
@@ -355,9 +335,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setVerbose( $verbose )
+    public function setVerbose($verbose)
     {
-
         $this->verbose = $verbose;
 
         return $this;
@@ -370,7 +349,6 @@ class Configuration
      */
     public function getEnv()
     {
-
         return $this->env;
     }
 
@@ -381,9 +359,8 @@ class Configuration
      *
      * @return \Satooshi\Bundle\CoverallsV1Bundle\Config\Configuration
      */
-    public function setEnv( $env )
+    public function setEnv($env)
     {
-
         $this->env = $env;
 
         return $this;
@@ -396,7 +373,6 @@ class Configuration
      */
     public function isTestEnv()
     {
-
         return $this->env === 'test';
     }
 
@@ -407,7 +383,6 @@ class Configuration
      */
     public function isDevEnv()
     {
-
         return $this->env === 'dev';
     }
 
@@ -418,7 +393,6 @@ class Configuration
      */
     public function isProdEnv()
     {
-
         return $this->env === 'prod';
     }
 }

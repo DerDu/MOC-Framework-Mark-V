@@ -26,19 +26,18 @@ use Doctrine\DBAL\DBALException;
  */
 class QueryException extends DBALException
 {
-
     /**
      * @param string $alias
      * @param array  $registeredAliases
      *
      * @return \Doctrine\DBAL\Query\QueryException
      */
-    static public function unknownAlias( $alias, $registeredAliases )
+    static public function unknownAlias($alias, $registeredAliases)
     {
 
-        return new self( "The given alias '".$alias."' is not part of ".
+        return new self("The given alias '".$alias."' is not part of ".
             "any FROM or JOIN clause table. The currently registered ".
-            "aliases are: ".implode( ", ", $registeredAliases )."." );
+            "aliases are: ".implode(", ", $registeredAliases).".");
     }
 
     /**
@@ -47,11 +46,11 @@ class QueryException extends DBALException
      *
      * @return \Doctrine\DBAL\Query\QueryException
      */
-    static public function nonUniqueAlias( $alias, $registeredAliases )
+    static public function nonUniqueAlias($alias, $registeredAliases)
     {
 
-        return new self( "The given alias '".$alias."' is not unique ".
+        return new self("The given alias '".$alias."' is not unique ".
             "in FROM and JOIN clause table. The currently registered ".
-            "aliases are: ".implode( ", ", $registeredAliases )."." );
+            "aliases are: ".implode(", ", $registeredAliases).".");
     }
 }

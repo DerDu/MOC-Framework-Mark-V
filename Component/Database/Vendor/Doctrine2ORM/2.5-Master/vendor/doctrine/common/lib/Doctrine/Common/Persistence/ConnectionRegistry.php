@@ -30,7 +30,6 @@ namespace Doctrine\Common\Persistence;
  */
 interface ConnectionRegistry
 {
-
     /**
      * Gets the default connection name.
      *
@@ -45,7 +44,7 @@ interface ConnectionRegistry
      *
      * @return object
      */
-    public function getConnection( $name = null );
+    public function getConnection($name = null);
 
     /**
      * Gets an array of all registered connections.

@@ -37,11 +37,10 @@ use Doctrine\DBAL\VersionAwarePlatformDriver;
  */
 abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function createDatabasePlatformForVersion( $version )
+    public function createDatabasePlatformForVersion($version)
     {
 
         if (!preg_match(
@@ -63,11 +62,11 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
         $version = $majorVersion.'.'.$minorVersion.'.'.$patchVersion.'.'.$buildVersion;
 
         switch (true) {
-            case version_compare( $version, '11.00.2100', '>=' ):
+            case version_compare($version, '11.00.2100', '>='):
                 return new SQLServer2012Platform();
-            case version_compare( $version, '10.00.1600', '>=' ):
+            case version_compare($version, '10.00.1600', '>='):
                 return new SQLServer2008Platform();
-            case version_compare( $version, '9.00.1399', '>=' ):
+            case version_compare($version, '9.00.1399', '>='):
                 return new SQLServer2005Platform();
             default:
                 return new SQLServerPlatform();
@@ -77,9 +76,8 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
     /**
      * {@inheritdoc}
      */
-    public function getDatabase( \Doctrine\DBAL\Connection $conn )
+    public function getDatabase(\Doctrine\DBAL\Connection $conn)
     {
-
         $params = $conn->getParams();
 
         return $params['dbname'];
@@ -90,7 +88,6 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
      */
     public function getDatabasePlatform()
     {
-
         return new SQLServer2008Platform();
     }
 
@@ -98,9 +95,9 @@ abstract class AbstractSQLServerDriver implements Driver, VersionAwarePlatformDr
      * {@inheritdoc}
      */
 
-    public function getSchemaManager( \Doctrine\DBAL\Connection $conn )
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
     {
 
-        return new SQLServerSchemaManager( $conn );
+        return new SQLServerSchemaManager($conn);
     }
 }

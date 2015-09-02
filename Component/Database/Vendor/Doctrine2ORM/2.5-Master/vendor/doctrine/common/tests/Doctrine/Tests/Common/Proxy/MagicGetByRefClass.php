@@ -28,7 +28,6 @@ use InvalidArgumentException;
  */
 class MagicGetByRefClass
 {
-
     /**
      * @var mixed
      */
@@ -41,9 +40,8 @@ class MagicGetByRefClass
      *
      * @throws \InvalidArgumentException
      */
-    public function & __get( $name )
+    public function & __get($name)
     {
-
         if ($name === 'value') {
             return $this->valueField;
         }

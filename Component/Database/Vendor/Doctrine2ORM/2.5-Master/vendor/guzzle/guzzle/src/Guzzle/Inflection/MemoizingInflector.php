@@ -7,7 +7,6 @@ namespace Guzzle\Inflection;
  */
 class MemoizingInflector implements InflectorInterface
 {
-
     /** @var array Array of cached inflections */
     protected $cache = array(
         'snake' => array(),
@@ -24,19 +23,18 @@ class MemoizingInflector implements InflectorInterface
      * @param InflectorInterface $inflector    Inflector being decorated
      * @param int                $maxCacheSize Maximum number of cached items to hold per cache
      */
-    public function __construct( InflectorInterface $inflector, $maxCacheSize = 500 )
+    public function __construct(InflectorInterface $inflector, $maxCacheSize = 500)
     {
-
         $this->decoratedInflector = $inflector;
         $this->maxCacheSize = $maxCacheSize;
     }
 
-    public function snake( $word )
+    public function snake($word)
     {
 
         if (!isset( $this->cache['snake'][$word] )) {
-            $this->pruneCache( 'snake' );
-            $this->cache['snake'][$word] = $this->decoratedInflector->snake( $word );
+            $this->pruneCache('snake');
+            $this->cache['snake'][$word] = $this->decoratedInflector->snake($word);
         }
 
         return $this->cache['snake'][$word];
@@ -47,11 +45,11 @@ class MemoizingInflector implements InflectorInterface
      *
      * @param string $cache Type of cache to prune
      */
-    protected function pruneCache( $cache )
+    protected function pruneCache($cache)
     {
 
-        if (count( $this->cache[$cache] ) == $this->maxCacheSize) {
-            $this->cache[$cache] = array_slice( $this->cache[$cache], $this->maxCacheSize * 0.2 );
+        if (count($this->cache[$cache]) == $this->maxCacheSize) {
+            $this->cache[$cache] = array_slice($this->cache[$cache], $this->maxCacheSize * 0.2);
         }
     }
 
@@ -62,12 +60,12 @@ class MemoizingInflector implements InflectorInterface
      *
      * @return string
      */
-    public function camel( $word )
+    public function camel($word)
     {
 
         if (!isset( $this->cache['camel'][$word] )) {
-            $this->pruneCache( 'camel' );
-            $this->cache['camel'][$word] = $this->decoratedInflector->camel( $word );
+            $this->pruneCache('camel');
+            $this->cache['camel'][$word] = $this->decoratedInflector->camel($word);
         }
 
         return $this->cache['camel'][$word];

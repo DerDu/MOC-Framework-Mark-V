@@ -31,22 +31,20 @@ use PDOException;
  */
 class Driver extends AbstractMySQLDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         try {
             $conn = new PDOConnection(
-                $this->constructPdoDsn( $params ),
+                $this->constructPdoDsn($params),
                 $username,
                 $password,
                 $driverOptions
             );
-        } catch( PDOException $e ) {
-            throw DBALException::driverException( $this, $e );
+        } catch (PDOException $e) {
+            throw DBALException::driverException($this, $e);
         }
 
         return $conn;
@@ -59,9 +57,8 @@ class Driver extends AbstractMySQLDriver
      *
      * @return string The DSN.
      */
-    protected function constructPdoDsn( array $params )
+    protected function constructPdoDsn(array $params)
     {
-
         $dsn = 'mysql:';
         if (isset( $params['host'] ) && $params['host'] != '') {
             $dsn .= 'host='.$params['host'].';';
@@ -87,7 +84,6 @@ class Driver extends AbstractMySQLDriver
      */
     public function getName()
     {
-
         return 'pdo_mysql';
     }
 }

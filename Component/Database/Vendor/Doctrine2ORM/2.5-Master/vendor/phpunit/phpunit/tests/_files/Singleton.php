@@ -1,8 +1,6 @@
 <?php
-
 class Singleton
 {
-
     private static $uniqueInstance = null;
 
     protected function __construct()
@@ -11,9 +9,8 @@ class Singleton
 
     public static function getInstance()
     {
-
         if (self::$uniqueInstance === null) {
-            self::$uniqueInstance = new Singleton;
+            self::$uniqueInstance = new self;
         }
 
         return self::$uniqueInstance;

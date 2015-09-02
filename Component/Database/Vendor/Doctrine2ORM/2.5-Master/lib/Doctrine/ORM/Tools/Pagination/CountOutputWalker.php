@@ -29,7 +29,6 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class CountOutputWalker extends SqlWalker
 {
-
     /**
      * @var \Doctrine\DBAL\Platforms\AbstractPlatform
      */
@@ -56,14 +55,13 @@ class CountOutputWalker extends SqlWalker
      * @param \Doctrine\ORM\Query\ParserResult $parserResult
      * @param array                            $queryComponents
      */
-    public function __construct( $query, $parserResult, array $queryComponents )
+    public function __construct($query, $parserResult, array $queryComponents)
     {
-
         $this->platform = $query->getEntityManager()->getConnection()->getDatabasePlatform();
         $this->rsm = $parserResult->getResultSetMapping();
         $this->queryComponents = $queryComponents;
 
-        parent::__construct( $query, $parserResult, $queryComponents );
+        parent::__construct($query, $parserResult, $queryComponents);
     }
 
     /**
@@ -79,14 +77,13 @@ class CountOutputWalker extends SqlWalker
      *
      * @throws \RuntimeException
      */
-    public function walkSelectStatement( SelectStatement $AST )
+    public function walkSelectStatement(SelectStatement $AST)
     {
-
         if ($this->platform->getName() === "mssql") {
             $AST->orderByClause = null;
         }
 
-        $sql = parent::walkSelectStatement( $AST );
+        $sql = parent::walkSelectStatement($AST);
 
         // Find out the SQL alias of the identifier column of the root entity
         // It may be possible to make this work with multiple root entities but that
@@ -95,11 +92,11 @@ class CountOutputWalker extends SqlWalker
 
         // Get the root entity and alias from the AST fromClause
         $from = $AST->fromClause->identificationVariableDeclarations;
-        if (count( $from ) > 1) {
-            throw new \RuntimeException( "Cannot count query which selects two FROM components, cannot make distinction" );
+        if (count($from) > 1) {
+            throw new \RuntimeException("Cannot count query which selects two FROM components, cannot make distinction");
         }
 
-        $fromRoot = reset( $from );
+        $fromRoot = reset($from);
         $rootAlias = $fromRoot->rangeVariableDeclaration->aliasIdentificationVariable;
         $rootClass = $this->queryComponents[$rootAlias]['metadata'];
         $rootIdentifier = $rootClass->identifier;
@@ -108,7 +105,7 @@ class CountOutputWalker extends SqlWalker
         $sqlIdentifier = array();
         foreach ($rootIdentifier as $property) {
             if (isset( $rootClass->fieldMappings[$property] )) {
-                foreach (array_keys( $this->rsm->fieldMappings, $property ) as $alias) {
+                foreach (array_keys($this->rsm->fieldMappings, $property) as $alias) {
                     if ($this->rsm->columnOwnerMap[$alias] == $rootAlias) {
                         $sqlIdentifier[$property] = $alias;
                     }
@@ -118,7 +115,7 @@ class CountOutputWalker extends SqlWalker
             if (isset( $rootClass->associationMappings[$property] )) {
                 $joinColumn = $rootClass->associationMappings[$property]['joinColumns'][0]['name'];
 
-                foreach (array_keys( $this->rsm->metaMappings, $joinColumn ) as $alias) {
+                foreach (array_keys($this->rsm->metaMappings, $joinColumn) as $alias) {
                     if ($this->rsm->columnOwnerMap[$alias] == $rootAlias) {
                         $sqlIdentifier[$property] = $alias;
                     }
@@ -126,17 +123,17 @@ class CountOutputWalker extends SqlWalker
             }
         }
 
-        if (count( $rootIdentifier ) != count( $sqlIdentifier )) {
-            throw new \RuntimeException( sprintf(
+        if (count($rootIdentifier) != count($sqlIdentifier)) {
+            throw new \RuntimeException(sprintf(
                 'Not all identifier properties can be found in the ResultSetMapping: %s',
-                implode( ', ', array_diff( $rootIdentifier, array_keys( $sqlIdentifier ) ) )
-            ) );
+                implode(', ', array_diff($rootIdentifier, array_keys($sqlIdentifier)))
+            ));
         }
 
         // Build the counter query
-        return sprintf( 'SELECT %s AS dctrn_count FROM (SELECT DISTINCT %s FROM (%s) dctrn_result) dctrn_table',
-            $this->platform->getCountExpression( '*' ),
-            implode( ', ', $sqlIdentifier ),
+        return sprintf('SELECT %s AS dctrn_count FROM (SELECT DISTINCT %s FROM (%s) dctrn_result) dctrn_table',
+            $this->platform->getCountExpression('*'),
+            implode(', ', $sqlIdentifier),
             $sql
         );
     }

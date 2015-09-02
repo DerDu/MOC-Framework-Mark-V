@@ -31,7 +31,6 @@ use Doctrine\ORM\PersistentCollection;
  */
 interface CollectionHydrator
 {
-
     /**
      * @param \Doctrine\ORM\Mapping\ClassMetadata           $metadata   The entity metadata.
      * @param \Doctrine\ORM\Cache\CollectionCacheKey        $key        The cached collection key.
@@ -39,7 +38,7 @@ interface CollectionHydrator
      *
      * @return \Doctrine\ORM\Cache\CollectionCacheEntry
      */
-    public function buildCacheEntry( ClassMetadata $metadata, CollectionCacheKey $key, $collection );
+    public function buildCacheEntry(ClassMetadata $metadata, CollectionCacheKey $key, $collection);
 
     /**
      * @param \Doctrine\ORM\Mapping\ClassMetadata      $metadata   The owning entity metadata.

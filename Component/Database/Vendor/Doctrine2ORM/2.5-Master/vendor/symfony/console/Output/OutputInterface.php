@@ -22,7 +22,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 interface OutputInterface
 {
-
     const VERBOSITY_QUIET = 0;
     const VERBOSITY_NORMAL = 1;
     const VERBOSITY_VERBOSE = 2;
@@ -44,7 +43,7 @@ interface OutputInterface
      *
      * @api
      */
-    public function write( $messages, $newline = false, $type = self::OUTPUT_NORMAL );
+    public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL);
 
     /**
      * Writes a message to the output and adds a newline at the end.
@@ -56,7 +55,7 @@ interface OutputInterface
      *
      * @api
      */
-    public function writeln( $messages, $type = self::OUTPUT_NORMAL );
+    public function writeln($messages, $type = self::OUTPUT_NORMAL);
 
     /**
      * Sets the verbosity of the output.
@@ -65,7 +64,7 @@ interface OutputInterface
      *
      * @api
      */
-    public function setVerbosity( $level );
+    public function setVerbosity($level);
 
     /**
      * Gets the current verbosity of the output.
@@ -83,7 +82,7 @@ interface OutputInterface
      *
      * @api
      */
-    public function setDecorated( $decorated );
+    public function setDecorated($decorated);
 
     /**
      * Gets the decorated flag.
@@ -101,7 +100,7 @@ interface OutputInterface
      *
      * @api
      */
-    public function setFormatter( OutputFormatterInterface $formatter );
+    public function setFormatter(OutputFormatterInterface $formatter);
 
     /**
      * Returns current output formatter instance.

@@ -13,23 +13,14 @@ use SebastianBergmann\Exporter\Exporter;
 /**
  * Abstract base class for constraints. which are placed upon any value.
  *
- * @package    PHPUnit
- * @subpackage Framework
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Interface available since Release 3.0.0
  */
 abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framework_SelfDescribing
 {
-
     protected $exporter;
 
     public function __construct()
     {
-
         $this->exporter = new Exporter;
     }
 
@@ -50,12 +41,11 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
-    public function evaluate( $other, $description = '', $returnResult = false )
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-
         $success = false;
 
-        if ($this->matches( $other )) {
+        if ($this->matches($other)) {
             $success = true;
         }
 
@@ -64,7 +54,7 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
         }
 
         if (!$success) {
-            $this->fail( $other, $description );
+            $this->fail($other, $description);
         }
     }
 
@@ -75,20 +65,18 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * This method can be overridden to implement the evaluation algorithm.
      *
      * @param  mixed $other Value or object to evaluate.
-     *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
-
         return false;
     }
 
     /**
      * Throws an exception for the given compared value and test description
      *
-     * @param  mixed                                          $other       Evaluated value or object.
-     * @param  string                                         $description Additional information about the test
+     * @param  mixed  $other       Evaluated value or object.
+     * @param  string $description Additional information about the test
      * @param  SebastianBergmann\Comparator\ComparisonFailure $comparisonFailure
      *
      * @throws PHPUnit_Framework_ExpectationFailedException
@@ -98,13 +86,12 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
         $description,
         SebastianBergmann\Comparator\ComparisonFailure $comparisonFailure = null
     ) {
-
         $failureDescription = sprintf(
             'Failed asserting that %s.',
-            $this->failureDescription( $other )
+            $this->failureDescription($other)
         );
 
-        $additionalFailureDescription = $this->additionalFailureDescription( $other );
+        $additionalFailureDescription = $this->additionalFailureDescription($other);
 
         if ($additionalFailureDescription) {
             $failureDescription .= "\n".$additionalFailureDescription;
@@ -133,10 +120,10 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      *
      * @return string
      */
-    protected function failureDescription( $other )
+    protected function failureDescription($other)
     {
 
-        return $this->exporter->export( $other ).' '.$this->toString();
+        return $this->exporter->export($other).' '.$this->toString();
     }
 
     /**
@@ -149,21 +136,19 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      *
      * @return string
      */
-    protected function additionalFailureDescription( $other )
+    protected function additionalFailureDescription($other)
     {
-
         return '';
     }
 
     /**
      * Counts the number of constraint elements.
      *
-     * @return integer
+     * @return int
      * @since  Method available since Release 3.4.0
      */
     public function count()
     {
-
         return 1;
     }
 }

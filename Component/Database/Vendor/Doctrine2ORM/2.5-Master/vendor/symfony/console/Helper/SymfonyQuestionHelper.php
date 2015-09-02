@@ -25,87 +25,83 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class SymfonyQuestionHelper extends QuestionHelper
 {
-
     /**
      * {@inheritdoc}
      */
-    public function ask( InputInterface $input, OutputInterface $output, Question $question )
+    public function ask(InputInterface $input, OutputInterface $output, Question $question)
     {
-
         $validator = $question->getValidator();
-        $question->setValidator( function ( $value ) use ( $validator ) {
+        $question->setValidator(function ($value) use ($validator) {
 
-            if (null !== $validator && is_callable( $validator )) {
-                $value = $validator( $value );
+            if (null !== $validator && is_callable($validator)) {
+                $value = $validator($value);
             }
 
             // make required
-            if (!is_array( $value ) && !is_bool( $value ) && 0 === strlen( $value )) {
-                throw new \Exception( 'A value is required.' );
+            if (!is_array($value) && !is_bool($value) && 0 === strlen($value)) {
+                throw new \Exception('A value is required.');
             }
 
             return $value;
-        } );
+        });
 
-        return parent::ask( $input, $output, $question );
+        return parent::ask($input, $output, $question);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function writePrompt( OutputInterface $output, Question $question )
+    protected function writePrompt(OutputInterface $output, Question $question)
     {
-
         $text = $question->getQuestion();
         $default = $question->getDefault();
 
         switch (true) {
             case null === $default:
-                $text = sprintf( ' <info>%s</info>:', $text );
+                $text = sprintf(' <info>%s</info>:', $text);
 
                 break;
 
             case $question instanceof ConfirmationQuestion:
-                $text = sprintf( ' <info>%s (yes/no)</info> [<comment>%s</comment>]:', $text, $default ? 'yes' : 'no' );
+                $text = sprintf(' <info>%s (yes/no)</info> [<comment>%s</comment>]:', $text, $default ? 'yes' : 'no');
 
                 break;
 
             case $question instanceof ChoiceQuestion:
                 $choices = $question->getChoices();
-                $text = sprintf( ' <info>%s</info> [<comment>%s</comment>]:', $text, $choices[$default] );
+                $text = sprintf(' <info>%s</info> [<comment>%s</comment>]:', $text, $choices[$default]);
 
                 break;
 
             default:
-                $text = sprintf( ' <info>%s</info> [<comment>%s</comment>]:', $text, $default );
+                $text = sprintf(' <info>%s</info> [<comment>%s</comment>]:', $text, $default);
         }
 
-        $output->writeln( $text );
+        $output->writeln($text);
 
         if ($question instanceof ChoiceQuestion) {
-            $width = max( array_map( 'strlen', array_keys( $question->getChoices() ) ) );
+            $width = max(array_map('strlen', array_keys($question->getChoices())));
 
             foreach ($question->getChoices() as $key => $value) {
-                $output->writeln( sprintf( "  [<comment>%-${width}s</comment>] %s", $key, $value ) );
+                $output->writeln(sprintf("  [<comment>%-${width}s</comment>] %s", $key, $value));
             }
         }
 
-        $output->write( ' > ' );
+        $output->write(' > ');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function writeError( OutputInterface $output, \Exception $error )
+    protected function writeError(OutputInterface $output, \Exception $error)
     {
-
         if ($output instanceof SymfonyStyle) {
             $output->newLine();
-            $output->error( $error->getMessage() );
+            $output->error($error->getMessage());
 
             return;
         }
 
-        parent::writeError( $output, $error );
+        parent::writeError($output, $error);
     }
 }

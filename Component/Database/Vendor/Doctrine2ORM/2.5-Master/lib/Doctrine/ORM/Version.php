@@ -33,11 +33,10 @@ namespace Doctrine\ORM;
  */
 class Version
 {
-
     /**
      * Current Doctrine Version
      */
-    const VERSION = '2.6.0-DEV';
+    const VERSION = '2.5.0';
 
     /**
      * Compares a Doctrine version with the current one.
@@ -47,12 +46,12 @@ class Version
      * @return int Returns -1 if older, 0 if it is the same, 1 if version
      *             passed as argument is newer.
      */
-    public static function compare( $version )
+    public static function compare($version)
     {
 
-        $currentVersion = str_replace( ' ', '', strtolower( self::VERSION ) );
-        $version = str_replace( ' ', '', $version );
+        $currentVersion = str_replace(' ', '', strtolower(self::VERSION));
+        $version = str_replace(' ', '', $version);
 
-        return version_compare( $version, $currentVersion );
+        return version_compare($version, $currentVersion);
     }
 }

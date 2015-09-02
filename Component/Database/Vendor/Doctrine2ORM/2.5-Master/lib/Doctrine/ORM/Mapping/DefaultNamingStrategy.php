@@ -30,13 +30,11 @@ namespace Doctrine\ORM\Mapping;
  */
 class DefaultNamingStrategy implements NamingStrategy
 {
-
     /**
      * {@inheritdoc}
      */
-    public function propertyToColumnName( $propertyName, $className = null )
+    public function propertyToColumnName($propertyName, $className = null)
     {
-
         return $propertyName;
     }
 
@@ -49,14 +47,13 @@ class DefaultNamingStrategy implements NamingStrategy
         $className = null,
         $embeddedClassName = null
     ) {
-
         return $propertyName.'_'.$embeddedColumnName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function joinColumnName( $propertyName, $className = null )
+    public function joinColumnName($propertyName, $className = null)
     {
 
         return $propertyName.'_'.$this->referenceColumnName();
@@ -67,28 +64,27 @@ class DefaultNamingStrategy implements NamingStrategy
      */
     public function referenceColumnName()
     {
-
         return 'id';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function joinTableName( $sourceEntity, $targetEntity, $propertyName = null )
+    public function joinTableName($sourceEntity, $targetEntity, $propertyName = null)
     {
 
-        return strtolower( $this->classToTableName( $sourceEntity ).'_'.
-            $this->classToTableName( $targetEntity ) );
+        return strtolower($this->classToTableName($sourceEntity).'_'.
+            $this->classToTableName($targetEntity));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function classToTableName( $className )
+    public function classToTableName($className)
     {
 
-        if (strpos( $className, '\\' ) !== false) {
-            return substr( $className, strrpos( $className, '\\' ) + 1 );
+        if (strpos($className, '\\') !== false) {
+            return substr($className, strrpos($className, '\\') + 1);
         }
 
         return $className;
@@ -97,10 +93,10 @@ class DefaultNamingStrategy implements NamingStrategy
     /**
      * {@inheritdoc}
      */
-    public function joinKeyColumnName( $entityName, $referencedColumnName = null )
+    public function joinKeyColumnName($entityName, $referencedColumnName = null)
     {
 
-        return strtolower( $this->classToTableName( $entityName ).'_'.
-            ( $referencedColumnName ?: $this->referenceColumnName() ) );
+        return strtolower($this->classToTableName($entityName).'_'.
+            ( $referencedColumnName ?: $this->referenceColumnName() ));
     }
 }

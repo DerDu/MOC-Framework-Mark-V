@@ -31,7 +31,6 @@ use Doctrine\DBAL\Schema\Table;
  */
 class SchemaCreateTableEventArgs extends SchemaEventArgs
 {
-
     /**
      * @var \Doctrine\DBAL\Schema\Table
      */
@@ -63,7 +62,7 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      * @param array                                     $options
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      */
-    public function __construct( Table $table, array $columns, array $options, AbstractPlatform $platform )
+    public function __construct(Table $table, array $columns, array $options, AbstractPlatform $platform)
     {
 
         $this->_table = $table;
@@ -77,7 +76,6 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      */
     public function getTable()
     {
-
         return $this->_table;
     }
 
@@ -86,7 +84,6 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      */
     public function getColumns()
     {
-
         return $this->_columns;
     }
 
@@ -95,7 +92,6 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      */
     public function getOptions()
     {
-
         return $this->_options;
     }
 
@@ -104,7 +100,6 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      */
     public function getPlatform()
     {
-
         return $this->_platform;
     }
 
@@ -113,11 +108,11 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      *
      * @return \Doctrine\DBAL\Event\SchemaCreateTableEventArgs
      */
-    public function addSql( $sql )
+    public function addSql($sql)
     {
 
-        if (is_array( $sql )) {
-            $this->_sql = array_merge( $this->_sql, $sql );
+        if (is_array($sql)) {
+            $this->_sql = array_merge($this->_sql, $sql);
         } else {
             $this->_sql[] = $sql;
         }
@@ -130,7 +125,6 @@ class SchemaCreateTableEventArgs extends SchemaEventArgs
      */
     public function getSql()
     {
-
         return $this->_sql;
     }
 }

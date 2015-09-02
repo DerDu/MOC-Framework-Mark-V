@@ -11,17 +11,10 @@
 /**
  * Represents a file in the code coverage information tree.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.1.0
+ * @since Class available since Release 1.1.0
  */
 class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
 {
-
     /**
      * @var array
      */
@@ -33,12 +26,12 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     protected $testData;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numExecutableLines = 0;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numExecutedLines = 0;
 
@@ -63,27 +56,27 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     protected $linesOfCode = array();
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numTestedTraits = 0;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numTestedClasses = 0;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numMethods = null;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numTestedMethods = null;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $numTestedFunctions = null;
 
@@ -98,7 +91,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     protected $endLines = array();
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $cacheTokens;
 
@@ -109,7 +102,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      * @param  PHP_CodeCoverage_Report_Node $parent
      * @param  array                        $coverageData
      * @param  array                        $testData
-     * @param  boolean                      $cacheTokens
+     * @param  bool                         $cacheTokens
      *
      * @throws PHP_CodeCoverage_Exception
      */
@@ -121,14 +114,14 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
         $cacheTokens
     ) {
 
-        if (!is_bool( $cacheTokens )) {
+        if (!is_bool($cacheTokens)) {
             throw PHP_CodeCoverage_Util_InvalidArgumentHelper::factory(
                 1,
                 'boolean'
             );
         }
 
-        parent::__construct( $name, $parent );
+        parent::__construct($name, $parent);
 
         $this->coverageData = $coverageData;
         $this->testData = $testData;
@@ -142,16 +135,15 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     protected function calculateStatistics()
     {
-
         if ($this->cacheTokens) {
-            $tokens = PHP_Token_Stream_CachingFactory::get( $this->getPath() );
+            $tokens = PHP_Token_Stream_CachingFactory::get($this->getPath());
         } else {
-            $tokens = new PHP_Token_Stream( $this->getPath() );
+            $tokens = new PHP_Token_Stream($this->getPath());
         }
 
-        $this->processClasses( $tokens );
-        $this->processTraits( $tokens );
-        $this->processFunctions( $tokens );
+        $this->processClasses($tokens);
+        $this->processTraits($tokens);
+        $this->processFunctions($tokens);
         $this->linesOfCode = $tokens->getLinesOfCode();
         unset( $tokens );
 
@@ -193,7 +185,7 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
 
                 $this->numExecutableLines++;
 
-                if (count( $this->coverageData[$lineNumber] ) > 0) {
+                if (count($this->coverageData[$lineNumber]) > 0) {
                     if (isset( $currentClass )) {
                         $currentClass['executedLines']++;
                     }
@@ -303,9 +295,8 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processClasses( PHP_Token_Stream $tokens )
+    protected function processClasses(PHP_Token_Stream $tokens)
     {
-
         $classes = $tokens->getClasses();
         unset( $tokens );
 
@@ -351,9 +342,8 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processTraits( PHP_Token_Stream $tokens )
+    protected function processTraits(PHP_Token_Stream $tokens)
     {
-
         $traits = $tokens->getTraits();
         unset( $tokens );
 
@@ -399,9 +389,8 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * @param PHP_Token_Stream $tokens
      */
-    protected function processFunctions( PHP_Token_Stream $tokens )
+    protected function processFunctions(PHP_Token_Stream $tokens)
     {
-
         $functions = $tokens->getFunctions();
         unset( $tokens );
 
@@ -429,17 +418,16 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      * Calculates the Change Risk Anti-Patterns (CRAP) index for a unit of code
      * based on its cyclomatic complexity and percentage of code coverage.
      *
-     * @param  integer $ccn
-     * @param  float   $coverage
+     * @param  int   $ccn
+     * @param  float $coverage
      *
      * @return string
      * @since  Method available since Release 1.2.0
      */
-    protected function crap( $ccn, $coverage )
+    protected function crap($ccn, $coverage)
     {
-
         if ($coverage == 0) {
-            return (string)( pow( $ccn, 2 ) + $ccn );
+            return (string)( pow($ccn, 2) + $ccn );
         }
 
         if ($coverage >= 95) {
@@ -448,18 +436,17 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
 
         return sprintf(
             '%01.2F',
-            pow( $ccn, 2 ) * pow( 1 - $coverage / 100, 3 ) + $ccn
+            pow($ccn, 2) * pow(1 - $coverage / 100, 3) + $ccn
         );
     }
 
     /**
      * Returns the number of files in/under this node.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
-
         return 1;
     }
 
@@ -470,7 +457,6 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getCoverageData()
     {
-
         return $this->coverageData;
     }
 
@@ -481,7 +467,6 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getTestData()
     {
-
         return $this->testData;
     }
 
@@ -492,7 +477,6 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getClasses()
     {
-
         return $this->classes;
     }
 
@@ -503,7 +487,6 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getTraits()
     {
-
         return $this->traits;
     }
 
@@ -514,7 +497,6 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getFunctions()
     {
-
         return $this->functions;
     }
 
@@ -525,84 +507,78 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
      */
     public function getLinesOfCode()
     {
-
         return $this->linesOfCode;
     }
 
     /**
      * Returns the number of executable lines.
      *
-     * @return integer
+     * @return int
      */
     public function getNumExecutableLines()
     {
-
         return $this->numExecutableLines;
     }
 
     /**
      * Returns the number of executed lines.
      *
-     * @return integer
+     * @return int
      */
     public function getNumExecutedLines()
     {
-
         return $this->numExecutedLines;
     }
 
     /**
      * Returns the number of classes.
      *
-     * @return integer
+     * @return int
      */
     public function getNumClasses()
     {
 
-        return count( $this->classes );
+        return count($this->classes);
     }
 
     /**
      * Returns the number of tested classes.
      *
-     * @return integer
+     * @return int
      */
     public function getNumTestedClasses()
     {
-
         return $this->numTestedClasses;
     }
 
     /**
      * Returns the number of traits.
      *
-     * @return integer
+     * @return int
      */
     public function getNumTraits()
     {
 
-        return count( $this->traits );
+        return count($this->traits);
     }
 
     /**
      * Returns the number of tested traits.
      *
-     * @return integer
+     * @return int
      */
     public function getNumTestedTraits()
     {
-
         return $this->numTestedTraits;
     }
 
     /**
      * Returns the number of methods.
      *
-     * @return integer
+     * @return int
      */
     public function getNumMethods()
     {
-
         if ($this->numMethods === null) {
             $this->numMethods = 0;
 
@@ -629,11 +605,10 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * Returns the number of tested methods.
      *
-     * @return integer
+     * @return int
      */
     public function getNumTestedMethods()
     {
-
         if ($this->numTestedMethods === null) {
             $this->numTestedMethods = 0;
 
@@ -664,22 +639,21 @@ class PHP_CodeCoverage_Report_Node_File extends PHP_CodeCoverage_Report_Node
     /**
      * Returns the number of functions.
      *
-     * @return integer
+     * @return int
      */
     public function getNumFunctions()
     {
 
-        return count( $this->functions );
+        return count($this->functions);
     }
 
     /**
      * Returns the number of tested functions.
      *
-     * @return integer
+     * @return int
      */
     public function getNumTestedFunctions()
     {
-
         if ($this->numTestedFunctions === null) {
             $this->numTestedFunctions = 0;
 

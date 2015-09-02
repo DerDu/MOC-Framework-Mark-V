@@ -11,13 +11,7 @@
 /**
  * Base class for all test runners.
  *
- * @package    PHPUnit
- * @subpackage Runner
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 2.0.0
+ * @since Class available since Release 2.0.0
  */
 abstract class PHPUnit_Runner_BaseTestRunner
 {
@@ -39,13 +33,13 @@ abstract class PHPUnit_Runner_BaseTestRunner
      * @param  string $suiteClassFile
      * @param  mixed  $suffixes
      *
-     * @return PHPUnit_Framework_Test
+*@return PHPUnit_Framework_Test
      */
-    public function getTest( $suiteClassName, $suiteClassFile = '', $suffixes = '' )
+    public function getTest($suiteClassName, $suiteClassFile = '', $suffixes = '')
     {
 
-        if (is_dir( $suiteClassName ) &&
-            !is_file( $suiteClassName.'.php' ) && empty( $suiteClassFile )
+        if (is_dir($suiteClassName) &&
+            !is_file($suiteClassName.'.php') && empty( $suiteClassFile )
         ) {
             $facade = new File_Iterator_Facade;
             $files = $facade->getFilesAsArray(
@@ -53,8 +47,8 @@ abstract class PHPUnit_Runner_BaseTestRunner
                 $suffixes
             );
 
-            $suite = new PHPUnit_Framework_TestSuite( $suiteClassName );
-            $suite->addTestFiles( $files );
+            $suite = new PHPUnit_Framework_TestSuite($suiteClassName);
+            $suite->addTestFiles($files);
 
             return $suite;
         }
@@ -64,14 +58,14 @@ abstract class PHPUnit_Runner_BaseTestRunner
                 $suiteClassName,
                 $suiteClassFile
             );
-        } catch( PHPUnit_Framework_Exception $e ) {
-            $this->runFailed( $e->getMessage() );
+        } catch (PHPUnit_Framework_Exception $e) {
+            $this->runFailed($e->getMessage());
 
             return;
         }
 
         try {
-            $suiteMethod = $testClass->getMethod( self::SUITE_METHODNAME );
+            $suiteMethod = $testClass->getMethod(self::SUITE_METHODNAME);
 
             if (!$suiteMethod->isStatic()) {
                 $this->runFailed(
@@ -82,8 +76,8 @@ abstract class PHPUnit_Runner_BaseTestRunner
             }
 
             try {
-                $test = $suiteMethod->invoke( null, $testClass->getName() );
-            } catch( ReflectionException $e ) {
+                $test = $suiteMethod->invoke(null, $testClass->getName());
+            } catch (ReflectionException $e) {
                 $this->runFailed(
                     sprintf(
                         "Failed to invoke suite() method.\n%s",
@@ -93,12 +87,12 @@ abstract class PHPUnit_Runner_BaseTestRunner
 
                 return;
             }
-        } catch( ReflectionException $e ) {
+        } catch (ReflectionException $e) {
             try {
-                $test = new PHPUnit_Framework_TestSuite( $testClass );
-            } catch( PHPUnit_Framework_Exception $e ) {
+                $test = new PHPUnit_Framework_TestSuite($testClass);
+            } catch (PHPUnit_Framework_Exception $e) {
                 $test = new PHPUnit_Framework_TestSuite;
-                $test->setName( $suiteClassName );
+                $test->setName($suiteClassName);
             }
         }
 
@@ -113,14 +107,13 @@ abstract class PHPUnit_Runner_BaseTestRunner
      * @param  string $suiteClassName
      * @param  string $suiteClassFile
      *
-     * @return ReflectionClass
+*@return ReflectionClass
      */
-    protected function loadSuiteClass( $suiteClassName, $suiteClassFile = '' )
+    protected function loadSuiteClass($suiteClassName, $suiteClassFile = '')
     {
-
         $loader = $this->getLoader();
 
-        return $loader->load( $suiteClassName, $suiteClassFile );
+        return $loader->load($suiteClassName, $suiteClassFile);
     }
 
     /**
@@ -130,7 +123,6 @@ abstract class PHPUnit_Runner_BaseTestRunner
      */
     public function getLoader()
     {
-
         return new PHPUnit_Runner_StandardTestSuiteLoader;
     }
 
@@ -140,11 +132,10 @@ abstract class PHPUnit_Runner_BaseTestRunner
      *
      * @param string $message
      */
-    abstract protected function runFailed( $message );
+    abstract protected function runFailed($message);
 
     /**
      * Clears the status message.
-     *
      */
     protected function clearStatus()
     {

@@ -24,11 +24,10 @@ namespace Doctrine\ORM\Query;
  * are empty. ﻿This class exists as convenience for creating tree walkers.
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 abstract class TreeWalkerAdapter implements TreeWalker
 {
-
     /**
      * The original Query.
      *
@@ -53,9 +52,8 @@ abstract class TreeWalkerAdapter implements TreeWalker
     /**
      * {@inheritdoc}
      */
-    public function __construct( $query, $parserResult, array $queryComponents )
+    public function __construct($query, $parserResult, array $queryComponents)
     {
-
         $this->_query = $query;
         $this->_parserResult = $parserResult;
         $this->_queryComponents = $queryComponents;
@@ -66,7 +64,6 @@ abstract class TreeWalkerAdapter implements TreeWalker
      */
     public function getQueryComponents()
     {
-
         return $this->_queryComponents;
     }
 
@@ -75,20 +72,19 @@ abstract class TreeWalkerAdapter implements TreeWalker
      */
     protected function _getQueryComponents()
     {
-
         return $this->_queryComponents;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setQueryComponent( $dqlAlias, array $queryComponent )
+    public function setQueryComponent($dqlAlias, array $queryComponent)
     {
 
-        $requiredKeys = array( 'metadata', 'parent', 'relation', 'map', 'nestingLevel', 'token' );
+        $requiredKeys = array('metadata', 'parent', 'relation', 'map', 'nestingLevel', 'token');
 
-        if (array_diff( $requiredKeys, array_keys( $queryComponent ) )) {
-            throw QueryException::invalidQueryComponent( $dqlAlias );
+        if (array_diff($requiredKeys, array_keys($queryComponent))) {
+            throw QueryException::invalidQueryComponent($dqlAlias);
         }
 
         $this->_queryComponents[$dqlAlias] = $queryComponent;
@@ -97,329 +93,329 @@ abstract class TreeWalkerAdapter implements TreeWalker
     /**
      * {@inheritdoc}
      */
-    public function walkSelectStatement( AST\SelectStatement $AST )
+    public function walkSelectStatement(AST\SelectStatement $AST)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSelectClause( $selectClause )
+    public function walkSelectClause($selectClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkFromClause( $fromClause )
+    public function walkFromClause($fromClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkFunction( $function )
+    public function walkFunction($function)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkOrderByClause( $orderByClause )
+    public function walkOrderByClause($orderByClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkOrderByItem( $orderByItem )
+    public function walkOrderByItem($orderByItem)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkHavingClause( $havingClause )
+    public function walkHavingClause($havingClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkJoin( $join )
+    public function walkJoin($join)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSelectExpression( $selectExpression )
+    public function walkSelectExpression($selectExpression)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkQuantifiedExpression( $qExpr )
+    public function walkQuantifiedExpression($qExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSubselect( $subselect )
+    public function walkSubselect($subselect)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSubselectFromClause( $subselectFromClause )
+    public function walkSubselectFromClause($subselectFromClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSimpleSelectClause( $simpleSelectClause )
+    public function walkSimpleSelectClause($simpleSelectClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSimpleSelectExpression( $simpleSelectExpression )
+    public function walkSimpleSelectExpression($simpleSelectExpression)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkAggregateExpression( $aggExpression )
+    public function walkAggregateExpression($aggExpression)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkGroupByClause( $groupByClause )
+    public function walkGroupByClause($groupByClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkGroupByItem( $groupByItem )
+    public function walkGroupByItem($groupByItem)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkUpdateStatement( AST\UpdateStatement $AST )
+    public function walkUpdateStatement(AST\UpdateStatement $AST)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkDeleteStatement( AST\DeleteStatement $AST )
+    public function walkDeleteStatement(AST\DeleteStatement $AST)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkDeleteClause( AST\DeleteClause $deleteClause )
+    public function walkDeleteClause(AST\DeleteClause $deleteClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkUpdateClause( $updateClause )
+    public function walkUpdateClause($updateClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkUpdateItem( $updateItem )
+    public function walkUpdateItem($updateItem)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkWhereClause( $whereClause )
+    public function walkWhereClause($whereClause)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkConditionalExpression( $condExpr )
+    public function walkConditionalExpression($condExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkConditionalTerm( $condTerm )
+    public function walkConditionalTerm($condTerm)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkConditionalFactor( $factor )
+    public function walkConditionalFactor($factor)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkConditionalPrimary( $primary )
+    public function walkConditionalPrimary($primary)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkExistsExpression( $existsExpr )
+    public function walkExistsExpression($existsExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkCollectionMemberExpression( $collMemberExpr )
+    public function walkCollectionMemberExpression($collMemberExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkEmptyCollectionComparisonExpression( $emptyCollCompExpr )
+    public function walkEmptyCollectionComparisonExpression($emptyCollCompExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkNullComparisonExpression( $nullCompExpr )
+    public function walkNullComparisonExpression($nullCompExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkInExpression( $inExpr )
+    public function walkInExpression($inExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    function walkInstanceOfExpression( $instanceOfExpr )
+    function walkInstanceOfExpression($instanceOfExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkLiteral( $literal )
+    public function walkLiteral($literal)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkBetweenExpression( $betweenExpr )
+    public function walkBetweenExpression($betweenExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkLikeExpression( $likeExpr )
+    public function walkLikeExpression($likeExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkStateFieldPathExpression( $stateFieldPathExpression )
+    public function walkStateFieldPathExpression($stateFieldPathExpression)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkComparisonExpression( $compExpr )
+    public function walkComparisonExpression($compExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkInputParameter( $inputParam )
+    public function walkInputParameter($inputParam)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkArithmeticExpression( $arithmeticExpr )
+    public function walkArithmeticExpression($arithmeticExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkArithmeticTerm( $term )
+    public function walkArithmeticTerm($term)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkStringPrimary( $stringPrimary )
+    public function walkStringPrimary($stringPrimary)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkArithmeticFactor( $factor )
+    public function walkArithmeticFactor($factor)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkSimpleArithmeticExpression( $simpleArithmeticExpr )
+    public function walkSimpleArithmeticExpression($simpleArithmeticExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkPathExpression( $pathExpr )
+    public function walkPathExpression($pathExpr)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function walkResultVariable( $resultVariable )
+    public function walkResultVariable($resultVariable)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getExecutor( $AST )
+    public function getExecutor($AST)
     {
     }
 
@@ -430,7 +426,6 @@ abstract class TreeWalkerAdapter implements TreeWalker
      */
     protected function _getQuery()
     {
-
         return $this->_query;
     }
 
@@ -441,7 +436,6 @@ abstract class TreeWalkerAdapter implements TreeWalker
      */
     protected function _getParserResult()
     {
-
         return $this->_parserResult;
     }
 }

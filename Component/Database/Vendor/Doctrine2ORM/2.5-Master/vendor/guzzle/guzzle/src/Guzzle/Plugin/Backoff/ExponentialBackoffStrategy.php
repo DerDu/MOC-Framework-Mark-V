@@ -13,20 +13,14 @@ use Guzzle\Http\Message\Response;
  */
 class ExponentialBackoffStrategy extends AbstractBackoffStrategy
 {
-
     public function makesDecision()
     {
-
         return false;
     }
 
-    protected function getDelay(
-        $retries,
-        RequestInterface $request,
-        Response $response = null,
-        HttpException $e = null
-    ) {
+    protected function getDelay($retries, RequestInterface $request, Response $response = null, HttpException $e = null)
+    {
 
-        return (int)pow( 2, $retries );
+        return (int)pow(2, $retries);
     }
 }

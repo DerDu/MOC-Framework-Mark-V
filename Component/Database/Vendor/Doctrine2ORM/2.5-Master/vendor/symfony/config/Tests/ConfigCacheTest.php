@@ -16,110 +16,107 @@ use Symfony\Component\Config\Resource\FileResource;
 
 class ConfigCacheTest extends \PHPUnit_Framework_TestCase
 {
-
     private $resourceFile = null;
 
     private $cacheFile = null;
 
     private $metaFile = null;
 
-    public function testToString()
+    public function testGetPath()
     {
 
-        $cache = new ConfigCache( $this->cacheFile, true );
+        $cache = new ConfigCache($this->cacheFile, true);
 
-        $this->assertSame( $this->cacheFile, $cache->getPath() );
+        $this->assertSame($this->cacheFile, $cache->getPath());
     }
 
     public function testCacheIsNotFreshIfFileDoesNotExist()
     {
 
-        unlink( $this->cacheFile );
+        unlink($this->cacheFile);
 
-        $cache = new ConfigCache( $this->cacheFile, false );
+        $cache = new ConfigCache($this->cacheFile, false);
 
-        $this->assertFalse( $cache->isFresh() );
+        $this->assertFalse($cache->isFresh());
     }
 
     public function testCacheIsAlwaysFreshIfFileExistsWithDebugDisabled()
     {
-
         $this->makeCacheStale();
 
-        $cache = new ConfigCache( $this->cacheFile, false );
+        $cache = new ConfigCache($this->cacheFile, false);
 
-        $this->assertTrue( $cache->isFresh() );
+        $this->assertTrue($cache->isFresh());
     }
 
     private function makeCacheStale()
     {
 
-        touch( $this->cacheFile, filemtime( $this->resourceFile ) - 3600 );
+        touch($this->cacheFile, filemtime($this->resourceFile) - 3600);
     }
 
     public function testCacheIsNotFreshWithoutMetaFile()
     {
 
-        unlink( $this->metaFile );
+        unlink($this->metaFile);
 
-        $cache = new ConfigCache( $this->cacheFile, true );
+        $cache = new ConfigCache($this->cacheFile, true);
 
-        $this->assertFalse( $cache->isFresh() );
+        $this->assertFalse($cache->isFresh());
     }
 
     public function testCacheIsFreshIfResourceIsFresh()
     {
 
-        $cache = new ConfigCache( $this->cacheFile, true );
+        $cache = new ConfigCache($this->cacheFile, true);
 
-        $this->assertTrue( $cache->isFresh() );
+        $this->assertTrue($cache->isFresh());
     }
 
     public function testCacheIsNotFreshIfOneOfTheResourcesIsNotFresh()
     {
-
         $this->makeCacheStale();
 
-        $cache = new ConfigCache( $this->cacheFile, true );
+        $cache = new ConfigCache($this->cacheFile, true);
 
-        $this->assertFalse( $cache->isFresh() );
+        $this->assertFalse($cache->isFresh());
     }
 
     public function testWriteDumpsFile()
     {
 
-        unlink( $this->cacheFile );
-        unlink( $this->metaFile );
+        unlink($this->cacheFile);
+        unlink($this->metaFile);
 
-        $cache = new ConfigCache( $this->cacheFile, false );
-        $cache->write( 'FOOBAR' );
+        $cache = new ConfigCache($this->cacheFile, false);
+        $cache->write('FOOBAR');
 
-        $this->assertFileExists( $this->cacheFile, 'Cache file is created' );
-        $this->assertSame( 'FOOBAR', file_get_contents( $this->cacheFile ) );
-        $this->assertFileNotExists( $this->metaFile, 'Meta file is not created' );
+        $this->assertFileExists($this->cacheFile, 'Cache file is created');
+        $this->assertSame('FOOBAR', file_get_contents($this->cacheFile));
+        $this->assertFileNotExists($this->metaFile, 'Meta file is not created');
     }
 
     public function testWriteDumpsMetaFileWithDebugEnabled()
     {
 
-        unlink( $this->cacheFile );
-        unlink( $this->metaFile );
+        unlink($this->cacheFile);
+        unlink($this->metaFile);
 
-        $metadata = array( new FileResource( $this->resourceFile ) );
+        $metadata = array(new FileResource($this->resourceFile));
 
-        $cache = new ConfigCache( $this->cacheFile, true );
-        $cache->write( 'FOOBAR', $metadata );
+        $cache = new ConfigCache($this->cacheFile, true);
+        $cache->write('FOOBAR', $metadata);
 
-        $this->assertFileExists( $this->cacheFile, 'Cache file is created' );
-        $this->assertFileExists( $this->metaFile, 'Meta file is created' );
-        $this->assertSame( serialize( $metadata ), file_get_contents( $this->metaFile ) );
+        $this->assertFileExists($this->cacheFile, 'Cache file is created');
+        $this->assertFileExists($this->metaFile, 'Meta file is created');
+        $this->assertSame(serialize($metadata), file_get_contents($this->metaFile));
     }
 
     protected function setUp()
     {
 
-        $this->resourceFile = tempnam( sys_get_temp_dir(), '_resource' );
-        $this->cacheFile = tempnam( sys_get_temp_dir(), 'config_' );
+        $this->resourceFile = tempnam(sys_get_temp_dir(), '_resource');
+        $this->cacheFile = tempnam(sys_get_temp_dir(), 'config_');
         $this->metaFile = $this->cacheFile.'.meta';
 
         $this->makeCacheFresh();
@@ -129,23 +126,23 @@ class ConfigCacheTest extends \PHPUnit_Framework_TestCase
     private function makeCacheFresh()
     {
 
-        touch( $this->resourceFile, filemtime( $this->cacheFile ) - 3600 );
+        touch($this->resourceFile, filemtime($this->cacheFile) - 3600);
     }
 
     private function generateMetaFile()
     {
 
-        file_put_contents( $this->metaFile, serialize( array( new FileResource( $this->resourceFile ) ) ) );
+        file_put_contents($this->metaFile, serialize(array(new FileResource($this->resourceFile))));
     }
 
     protected function tearDown()
     {
 
-        $files = array( $this->cacheFile, $this->metaFile, $this->resourceFile );
+        $files = array($this->cacheFile, $this->metaFile, $this->resourceFile);
 
         foreach ($files as $file) {
-            if (file_exists( $file )) {
-                unlink( $file );
+            if (file_exists($file)) {
+                unlink($file);
             }
         }
     }

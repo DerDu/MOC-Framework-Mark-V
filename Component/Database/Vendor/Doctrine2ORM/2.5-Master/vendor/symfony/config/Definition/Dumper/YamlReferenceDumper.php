@@ -25,20 +25,18 @@ use Symfony\Component\Yaml\Inline;
  */
 class YamlReferenceDumper
 {
-
     private $reference;
 
-    public function dump( ConfigurationInterface $configuration )
+    public function dump(ConfigurationInterface $configuration)
     {
 
-        return $this->dumpNode( $configuration->getConfigTreeBuilder()->buildTree() );
+        return $this->dumpNode($configuration->getConfigTreeBuilder()->buildTree());
     }
 
-    public function dumpNode( NodeInterface $node )
+    public function dumpNode(NodeInterface $node)
     {
-
         $this->reference = '';
-        $this->writeNode( $node );
+        $this->writeNode($node);
         $ref = $this->reference;
         $this->reference = null;
 
@@ -49,9 +47,8 @@ class YamlReferenceDumper
      * @param NodeInterface $node
      * @param int           $depth
      */
-    private function writeNode( NodeInterface $node, $depth = 0 )
+    private function writeNode(NodeInterface $node, $depth = 0)
     {
-
         $comments = array();
         $default = '';
         $defaultArray = null;
@@ -72,26 +69,26 @@ class YamlReferenceDumper
                 // check for attribute as key
                 if ($key = $node->getKeyAttribute()) {
                     $keyNodeClass = 'Symfony\Component\Config\Definition\\'.( $prototype instanceof ArrayNode ? 'ArrayNode' : 'ScalarNode' );
-                    $keyNode = new $keyNodeClass( $key, $node );
-                    $keyNode->setInfo( 'Prototype' );
+                    $keyNode = new $keyNodeClass($key, $node);
+                    $keyNode->setInfo('Prototype');
 
                     // add children
                     foreach ($children as $childNode) {
-                        $keyNode->addChild( $childNode );
+                        $keyNode->addChild($childNode);
                     }
-                    $children = array( $key => $keyNode );
+                    $children = array($key => $keyNode);
                 }
             }
 
             if (!$children) {
-                if ($node->hasDefaultValue() && count( $defaultArray = $node->getDefaultValue() )) {
+                if ($node->hasDefaultValue() && count($defaultArray = $node->getDefaultValue())) {
                     $default = '';
-                } elseif (!is_array( $example )) {
+                } elseif (!is_array($example)) {
                     $default = '[]';
                 }
             }
         } elseif ($node instanceof EnumNode) {
-            $comments[] = 'One of '.implode( '; ', array_map( 'json_encode', $node->getValues() ) );
+            $comments[] = 'One of '.implode('; ', array_map('json_encode', $node->getValues()));
             $default = '~';
         } else {
             $default = '~';
@@ -99,14 +96,14 @@ class YamlReferenceDumper
             if ($node->hasDefaultValue()) {
                 $default = $node->getDefaultValue();
 
-                if (is_array( $default )) {
-                    if (count( $defaultArray = $node->getDefaultValue() )) {
+                if (is_array($default)) {
+                    if (count($defaultArray = $node->getDefaultValue())) {
                         $default = '';
-                    } elseif (!is_array( $example )) {
+                    } elseif (!is_array($example)) {
                         $default = '[]';
                     }
                 } else {
-                    $default = Inline::dump( $default );
+                    $default = Inline::dump($default);
                 }
             }
         }
@@ -117,48 +114,48 @@ class YamlReferenceDumper
         }
 
         // example
-        if ($example && !is_array( $example )) {
+        if ($example && !is_array($example)) {
             $comments[] = 'Example: '.$example;
         }
 
         $default = (string)$default != '' ? ' '.$default : '';
-        $comments = count( $comments ) ? '# '.implode( ', ', $comments ) : '';
+        $comments = count($comments) ? '# '.implode(', ', $comments) : '';
 
-        $text = rtrim( sprintf( '%-20s %s %s', $node->getName().':', $default, $comments ), ' ' );
+        $text = rtrim(sprintf('%-20s %s %s', $node->getName().':', $default, $comments), ' ');
 
         if ($info = $node->getInfo()) {
-            $this->writeLine( '' );
+            $this->writeLine('');
             // indenting multi-line info
-            $info = str_replace( "\n", sprintf( "\n%".( $depth * 4 )."s# ", ' ' ), $info );
-            $this->writeLine( '# '.$info, $depth * 4 );
+            $info = str_replace("\n", sprintf("\n%".( $depth * 4 )."s# ", ' '), $info);
+            $this->writeLine('# '.$info, $depth * 4);
         }
 
-        $this->writeLine( $text, $depth * 4 );
+        $this->writeLine($text, $depth * 4);
 
         // output defaults
         if ($defaultArray) {
-            $this->writeLine( '' );
+            $this->writeLine('');
 
-            $message = count( $defaultArray ) > 1 ? 'Defaults' : 'Default';
+            $message = count($defaultArray) > 1 ? 'Defaults' : 'Default';
 
-            $this->writeLine( '# '.$message.':', $depth * 4 + 4 );
+            $this->writeLine('# '.$message.':', $depth * 4 + 4);
 
-            $this->writeArray( $defaultArray, $depth + 1 );
+            $this->writeArray($defaultArray, $depth + 1);
         }
 
-        if (is_array( $example )) {
-            $this->writeLine( '' );
+        if (is_array($example)) {
+            $this->writeLine('');
 
-            $message = count( $example ) > 1 ? 'Examples' : 'Example';
+            $message = count($example) > 1 ? 'Examples' : 'Example';
 
-            $this->writeLine( '# '.$message.':', $depth * 4 + 4 );
+            $this->writeLine('# '.$message.':', $depth * 4 + 4);
 
-            $this->writeArray( $example, $depth + 1 );
+            $this->writeArray($example, $depth + 1);
         }
 
         if ($children) {
             foreach ($children as $childNode) {
-                $this->writeNode( $childNode, $depth + 1 );
+                $this->writeNode($childNode, $depth + 1);
             }
         }
     }
@@ -169,35 +166,35 @@ class YamlReferenceDumper
      * @param string $text
      * @param int    $indent
      */
-    private function writeLine( $text, $indent = 0 )
+    private function writeLine($text, $indent = 0)
     {
 
-        $indent = strlen( $text ) + $indent;
+        $indent = strlen($text) + $indent;
         $format = '%'.$indent.'s';
 
-        $this->reference .= sprintf( $format, $text )."\n";
+        $this->reference .= sprintf($format, $text)."\n";
     }
 
-    private function writeArray( array $array, $depth )
+    private function writeArray(array $array, $depth)
     {
 
-        $isIndexed = array_values( $array ) === $array;
+        $isIndexed = array_values($array) === $array;
 
         foreach ($array as $key => $value) {
-            if (is_array( $value )) {
+            if (is_array($value)) {
                 $val = '';
             } else {
                 $val = $value;
             }
 
             if ($isIndexed) {
-                $this->writeLine( '- '.$val, $depth * 4 );
+                $this->writeLine('- '.$val, $depth * 4);
             } else {
-                $this->writeLine( sprintf( '%-20s %s', $key.':', $val ), $depth * 4 );
+                $this->writeLine(sprintf('%-20s %s', $key.':', $val), $depth * 4);
             }
 
-            if (is_array( $value )) {
-                $this->writeArray( $value, $depth + 1 );
+            if (is_array($value)) {
+                $this->writeArray($value, $depth + 1);
             }
         }
     }

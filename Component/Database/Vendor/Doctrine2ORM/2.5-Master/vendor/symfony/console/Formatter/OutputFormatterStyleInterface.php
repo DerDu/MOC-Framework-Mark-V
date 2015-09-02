@@ -20,7 +20,6 @@ namespace Symfony\Component\Console\Formatter;
  */
 interface OutputFormatterStyleInterface
 {
-
     /**
      * Sets style foreground color.
      *
@@ -28,7 +27,7 @@ interface OutputFormatterStyleInterface
      *
      * @api
      */
-    public function setForeground( $color = null );
+    public function setForeground($color = null);
 
     /**
      * Sets style background color.
@@ -37,7 +36,7 @@ interface OutputFormatterStyleInterface
      *
      * @api
      */
-    public function setBackground( $color = null );
+    public function setBackground($color = null);
 
     /**
      * Sets some specific style option.
@@ -46,21 +45,21 @@ interface OutputFormatterStyleInterface
      *
      * @api
      */
-    public function setOption( $option );
+    public function setOption($option);
 
     /**
      * Unsets some specific style option.
      *
      * @param string $option The option name
      */
-    public function unsetOption( $option );
+    public function unsetOption($option);
 
     /**
      * Sets multiple style options at once.
      *
      * @param array $options
      */
-    public function setOptions( array $options );
+    public function setOptions(array $options);
 
     /**
      * Applies the style to a given text.
@@ -69,5 +68,5 @@ interface OutputFormatterStyleInterface
      *
      * @return string
      */
-    public function apply( $text );
+    public function apply($text);
 }

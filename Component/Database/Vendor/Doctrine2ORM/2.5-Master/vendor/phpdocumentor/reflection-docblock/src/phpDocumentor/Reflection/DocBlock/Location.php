@@ -21,66 +21,57 @@ namespace phpDocumentor\Reflection\DocBlock;
  */
 class Location
 {
-
     /** @var int Line where the DocBlock text starts. */
     protected $lineNumber = 0;
 
     /** @var int Column where the DocBlock text starts. */
     protected $columnNumber = 0;
 
-    public function __construct( $lineNumber = 0, $columnNumber = 0 )
-    {
+    public function __construct(
+        $lineNumber = 0,
+        $columnNumber = 0
+    ) {
 
-        $this->setLineNumber( $lineNumber )->setColumnNumber( $columnNumber );
+        $this->setLineNumber($lineNumber)->setColumnNumber($columnNumber);
     }
 
     /**
-     * Returns the line number that is covered by this location.
-     *
-     * @return integer
+     * @return int Line where the DocBlock text starts.
      */
     public function getLineNumber()
     {
-
         return $this->lineNumber;
     }
 
     /**
-     * Registers which line number is covered by this location object.
      *
-     * @param integer $lineNumber
+     * @param type $lineNumber
      *
-     * @return $this
+*@return $this
      */
-    public function setLineNumber( $lineNumber )
+    public function setLineNumber($lineNumber)
     {
-
         $this->lineNumber = (int)$lineNumber;
 
         return $this;
     }
 
     /**
-     * Returns the column number (character position on a line) for this location object.
-     *
-     * @return integer
+     * @return int Column where the DocBlock text starts.
      */
     public function getColumnNumber()
     {
-
         return $this->columnNumber;
     }
 
     /**
-     * Registers the column number (character position on a line) for this location object.
      *
-     * @param integer $columnNumber
+     * @param int $columnNumber
      *
-     * @return $this
+*@return $this
      */
-    public function setColumnNumber( $columnNumber )
+    public function setColumnNumber($columnNumber)
     {
-
         $this->columnNumber = (int)$columnNumber;
 
         return $this;

@@ -28,7 +28,6 @@ namespace Doctrine\ORM\Mapping;
  */
 class DefaultEntityListenerResolver implements EntityListenerResolver
 {
-
     /**
      * @var array Map to store entity listener instances.
      */
@@ -37,16 +36,15 @@ class DefaultEntityListenerResolver implements EntityListenerResolver
     /**
      * {@inheritdoc}
      */
-    public function clear( $className = null )
+    public function clear($className = null)
     {
-
         if ($className === null) {
             $this->instances = array();
 
             return;
         }
 
-        if (isset( $this->instances[$className = trim( $className, '\\' )] )) {
+        if (isset( $this->instances[$className = trim($className, '\\')] )) {
             unset( $this->instances[$className] );
         }
     }
@@ -54,24 +52,23 @@ class DefaultEntityListenerResolver implements EntityListenerResolver
     /**
      * {@inheritdoc}
      */
-    public function register( $object )
+    public function register($object)
     {
 
-        if (!is_object( $object )) {
-            throw new \InvalidArgumentException( sprintf( 'An object was expected, but got "%s".',
-                gettype( $object ) ) );
+        if (!is_object($object)) {
+            throw new \InvalidArgumentException(sprintf('An object was expected, but got "%s".', gettype($object)));
         }
 
-        $this->instances[get_class( $object )] = $object;
+        $this->instances[get_class($object)] = $object;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function resolve( $className )
+    public function resolve($className)
     {
 
-        if (isset( $this->instances[$className = trim( $className, '\\' )] )) {
+        if (isset( $this->instances[$className = trim($className, '\\')] )) {
             return $this->instances[$className];
         }
 

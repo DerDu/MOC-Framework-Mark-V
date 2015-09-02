@@ -9,53 +9,51 @@
  */
 
 // @codeCoverageIgnoreStart
-if (!defined( 'T_TRAIT' )) {
-    define( 'T_TRAIT', 1001 );
+if (!defined('T_TRAIT')) {
+    define('T_TRAIT', 1001);
 }
 
-if (!defined( 'T_INSTEADOF' )) {
-    define( 'T_INSTEADOF', 1002 );
+if (!defined('T_INSTEADOF')) {
+    define('T_INSTEADOF', 1002);
 }
 
-if (!defined( 'T_CALLABLE' )) {
-    define( 'T_CALLABLE', 1003 );
+if (!defined('T_CALLABLE')) {
+    define('T_CALLABLE', 1003);
 }
 
-if (!defined( 'T_FINALLY' )) {
-    define( 'T_FINALLY', 1004 );
+if (!defined('T_FINALLY')) {
+    define('T_FINALLY', 1004);
 }
 
-if (!defined( 'T_YIELD' )) {
-    define( 'T_YIELD', 1005 );
+if (!defined('T_YIELD')) {
+    define('T_YIELD', 1005);
 }
 // @codeCoverageIgnoreEnd
 
 /**
  * Renders a PHP_CodeCoverage_Report_Node_File node.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.1.0
+ * @since Class available since Release 1.1.0
  */
 class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report_HTML_Renderer
 {
 
     /**
+     * @var int
+     */
+    private $htmlspecialcharsFlags;
+
+    /**
      * Constructor.
      *
-     * @param string  $templatePath
-     * @param string  $generator
-     * @param string  $date
-     * @param integer $lowUpperBound
-     * @param integer $highLowerBound
+     * @param string $templatePath
+     * @param string $generator
+     * @param string $date
+     * @param int    $lowUpperBound
+     * @param int    $highLowerBound
      */
-    public function __construct( $templatePath, $generator, $date, $lowUpperBound, $highLowerBound )
+    public function __construct($templatePath, $generator, $date, $lowUpperBound, $highLowerBound)
     {
-
         parent::__construct(
             $templatePath,
             $generator,
@@ -63,38 +61,43 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
             $lowUpperBound,
             $highLowerBound
         );
+
+        $this->htmlspecialcharsFlags = ENT_COMPAT;
+
+        if (PHP_VERSION_ID >= 50400 && defined('ENT_SUBSTITUTE')) {
+            $this->htmlspecialcharsFlags = $this->htmlspecialcharsFlags | ENT_HTML401 | ENT_SUBSTITUTE;
+        }
     }
 
     /**
      * @param PHP_CodeCoverage_Report_Node_File $node
      * @param string                            $file
      */
-    public function render( PHP_CodeCoverage_Report_Node_File $node, $file )
+    public function render(PHP_CodeCoverage_Report_Node_File $node, $file)
     {
 
-        $template = new Text_Template( $this->templatePath.'file.html', '{{', '}}' );
+        $template = new Text_Template($this->templatePath.'file.html', '{{', '}}');
 
         $template->setVar(
             array(
-                'items' => $this->renderItems( $node ),
-                'lines' => $this->renderSource( $node )
+                'items' => $this->renderItems($node),
+                'lines' => $this->renderSource($node)
             )
         );
 
-        $this->setCommonTemplateVariables( $template, $node );
+        $this->setCommonTemplateVariables($template, $node);
 
-        $template->renderTo( $file );
+        $template->renderTo($file);
     }
 
     /**
      * @param  PHP_CodeCoverage_Report_Node_File $node
-     *
      * @return string
      */
-    protected function renderItems( PHP_CodeCoverage_Report_Node_File $node )
+    protected function renderItems(PHP_CodeCoverage_Report_Node_File $node)
     {
 
-        $template = new Text_Template( $this->templatePath.'file_item.html', '{{', '}}' );
+        $template = new Text_Template($this->templatePath.'file_item.html', '{{', '}}');
 
         $methodItemTemplate = new Text_Template(
             $this->templatePath.'method_item.html',
@@ -110,13 +113,13 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
                 'numTestedClasses'             => $node->getNumTestedClassesAndTraits(),
                 'numMethods'                   => $node->getNumMethods(),
                 'numTestedMethods'             => $node->getNumTestedMethods(),
-                'linesExecutedPercent' => $node->getLineExecutedPercent( false ),
+                'linesExecutedPercent' => $node->getLineExecutedPercent(false),
                 'linesExecutedPercentAsString' => $node->getLineExecutedPercent(),
                 'numExecutedLines'             => $node->getNumExecutedLines(),
                 'numExecutableLines'           => $node->getNumExecutableLines(),
-                'testedMethodsPercent' => $node->getTestedMethodsPercent( false ),
+                'testedMethodsPercent' => $node->getTestedMethodsPercent(false),
                 'testedMethodsPercentAsString' => $node->getTestedMethodsPercent(),
-                'testedClassesPercent' => $node->getTestedClassesAndTraitsPercent( false ),
+                'testedClassesPercent' => $node->getTestedClassesAndTraitsPercent(false),
                 'testedClassesPercentAsString' => $node->getTestedClassesAndTraitsPercent(),
                 'crap'                         => '<abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr>'
             )
@@ -145,10 +148,9 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
     /**
      * @param  array         $functions
      * @param  Text_Template $template
-     *
      * @return string
      */
-    protected function renderFunctionItems( array $functions, Text_Template $template )
+    protected function renderFunctionItems(array $functions, Text_Template $template)
     {
 
         if (empty( $functions )) {
@@ -169,12 +171,10 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
 
     /**
      * @param  Text_Template $template
-     *
      * @return string
      */
-    protected function renderFunctionOrMethodItem( Text_Template $template, array $item, $indent = '' )
+    protected function renderFunctionOrMethodItem(Text_Template $template, array $item, $indent = '')
     {
-
         $numTestedItems = $item['executedLines'] == $item['executableLines'] ? 1 : 0;
 
         return $this->renderItemTemplate(
@@ -184,7 +184,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
                     '%s<a href="#%d"><abbr title="%s">%s</abbr></a>',
                     $indent,
                     $item['startLine'],
-                    htmlspecialchars( $item['signature'] ),
+                    htmlspecialchars($item['signature']),
                     isset( $item['functionName'] ) ? $item['functionName'] : $item['methodName']
                 ),
                 'numMethods'                   => 1,
@@ -220,14 +220,10 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
      * @param  array         $items
      * @param  Text_Template $template
      * @param  Text_Template $methodItemTemplate
-     *
      * @return string
      */
-    protected function renderTraitOrClassItems(
-        array $items,
-        Text_Template $template,
-        Text_Template $methodItemTemplate
-    ) {
+    protected function renderTraitOrClassItems(array $items, Text_Template $template, Text_Template $methodItemTemplate)
+    {
 
         if (empty( $items )) {
             return '';
@@ -236,7 +232,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
         $buffer = '';
 
         foreach ($items as $name => $item) {
-            $numMethods = count( $item['methods'] );
+            $numMethods = count($item['methods']);
             $numTestedMethods = 0;
 
             foreach ($item['methods'] as $method) {
@@ -303,15 +299,13 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
 
     /**
      * @param  PHP_CodeCoverage_Report_Node_File $node
-     *
      * @return string
      */
-    protected function renderSource( PHP_CodeCoverage_Report_Node_File $node )
+    protected function renderSource(PHP_CodeCoverage_Report_Node_File $node)
     {
-
         $coverageData = $node->getCoverageData();
         $testData = $node->getTestData();
-        $codeLines = $this->loadFile( $node->getPath() );
+        $codeLines = $this->loadFile($node->getPath());
         $lines = '';
         $i = 1;
 
@@ -320,8 +314,8 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
             $popoverContent = '';
             $popoverTitle = '';
 
-            if (array_key_exists( $i, $coverageData )) {
-                $numTests = count( $coverageData[$i] );
+            if (array_key_exists($i, $coverageData)) {
+                $numTests = count($coverageData[$i]);
 
                 if ($coverageData[$i] === null) {
                     $trClass = ' class="warning"';
@@ -381,7 +375,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
                         $popoverContent .= sprintf(
                             '<li%s>%s</li>',
                             $testCSS,
-                            htmlspecialchars( $test )
+                            htmlspecialchars($test)
                         );
                     }
 
@@ -394,7 +388,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
                 $popover = sprintf(
                     ' data-title="%s" data-content="%s" data-placement="bottom" data-html="true"',
                     $popoverTitle,
-                    htmlspecialchars( $popoverContent )
+                    htmlspecialchars($popoverContent)
                 );
             } else {
                 $popover = '';
@@ -418,55 +412,54 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
 
     /**
      * @param  string $file
-     *
      * @return array
      */
-    protected function loadFile( $file )
+    protected function loadFile($file)
     {
 
-        $buffer = file_get_contents( $file );
-        $tokens = token_get_all( $buffer );
-        $result = array( '' );
+        $buffer = file_get_contents($file);
+        $tokens = token_get_all($buffer);
+        $result = array('');
         $i = 0;
         $stringFlag = false;
-        $fileEndsWithNewLine = substr( $buffer, -1 ) == "\n";
+        $fileEndsWithNewLine = substr($buffer, -1) == "\n";
 
         unset( $buffer );
 
         foreach ($tokens as $j => $token) {
-            if (is_string( $token )) {
+            if (is_string($token)) {
                 if ($token === '"' && $tokens[$j - 1] !== '\\') {
                     $result[$i] .= sprintf(
                         '<span class="string">%s</span>',
-                        htmlspecialchars( $token )
+                        htmlspecialchars($token)
                     );
 
                     $stringFlag = !$stringFlag;
                 } else {
                     $result[$i] .= sprintf(
                         '<span class="keyword">%s</span>',
-                        htmlspecialchars( $token )
+                        htmlspecialchars($token)
                     );
                 }
 
                 continue;
             }
 
-            list ( $token, $value ) = $token;
+            list( $token, $value ) = $token;
 
             $value = str_replace(
-                array( "\t", ' ' ),
-                array( '&nbsp;&nbsp;&nbsp;&nbsp;', '&nbsp;' ),
-                htmlspecialchars( $value )
+                array("\t", ' '),
+                array('&nbsp;&nbsp;&nbsp;&nbsp;', '&nbsp;'),
+                htmlspecialchars($value, $this->htmlspecialcharsFlags)
             );
 
             if ($value === "\n") {
                 $result[++$i] = '';
             } else {
-                $lines = explode( "\n", $value );
+                $lines = explode("\n", $value);
 
                 foreach ($lines as $jj => $line) {
-                    $line = trim( $line );
+                    $line = trim($line);
 
                     if ($line !== '') {
                         if ($stringFlag) {
@@ -561,7 +554,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_File extends PHP_CodeCoverage_Report
         }
 
         if ($fileEndsWithNewLine) {
-            unset( $result[count( $result ) - 1] );
+            unset( $result[count($result) - 1] );
         }
 
         return $result;

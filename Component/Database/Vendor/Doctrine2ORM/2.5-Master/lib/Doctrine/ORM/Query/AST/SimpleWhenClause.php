@@ -32,7 +32,6 @@ namespace Doctrine\ORM\Query\AST;
  */
 class SimpleWhenClause extends Node
 {
-
     /**
      * @var mixed
      */
@@ -47,9 +46,8 @@ class SimpleWhenClause extends Node
      * @param mixed $caseScalarExpression
      * @param mixed $thenScalarExpression
      */
-    public function __construct( $caseScalarExpression, $thenScalarExpression )
+    public function __construct($caseScalarExpression, $thenScalarExpression)
     {
-
         $this->caseScalarExpression = $caseScalarExpression;
         $this->thenScalarExpression = $thenScalarExpression;
     }
@@ -57,9 +55,9 @@ class SimpleWhenClause extends Node
     /**
      * {@inheritdoc}
      */
-    public function dispatch( $sqlWalker )
+    public function dispatch($sqlWalker)
     {
 
-        return $sqlWalker->walkWhenClauseExpression( $this );
+        return $sqlWalker->walkWhenClauseExpression($this);
     }
 }

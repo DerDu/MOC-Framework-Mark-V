@@ -31,7 +31,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlExporter extends AbstractExporter
 {
-
     /**
      * @var string
      */
@@ -40,9 +39,8 @@ class YamlExporter extends AbstractExporter
     /**
      * {@inheritdoc}
      */
-    public function exportClassMetadata( ClassMetadataInfo $metadata )
+    public function exportClassMetadata(ClassMetadataInfo $metadata)
     {
-
         $array = array();
 
         if ($metadata->isMappedSuperclass) {
@@ -60,7 +58,7 @@ class YamlExporter extends AbstractExporter
         $inheritanceType = $metadata->inheritanceType;
 
         if ($inheritanceType !== ClassMetadataInfo::INHERITANCE_TYPE_NONE) {
-            $array['inheritanceType'] = $this->_getInheritanceTypeString( $inheritanceType );
+            $array['inheritanceType'] = $this->_getInheritanceTypeString($inheritanceType);
         }
 
         if ($column = $metadata->discriminatorColumn) {
@@ -72,7 +70,7 @@ class YamlExporter extends AbstractExporter
         }
 
         if ($metadata->changeTrackingPolicy !== ClassMetadataInfo::CHANGETRACKING_DEFERRED_IMPLICIT) {
-            $array['changeTrackingPolicy'] = $this->_getChangeTrackingPolicyString( $metadata->changeTrackingPolicy );
+            $array['changeTrackingPolicy'] = $this->_getChangeTrackingPolicyString($metadata->changeTrackingPolicy);
         }
 
         if (isset( $metadata->table['indexes'] )) {
@@ -112,7 +110,7 @@ class YamlExporter extends AbstractExporter
             $fieldMappings[$name] = $fieldMapping;
         }
 
-        if (!$metadata->isIdentifierComposite && $idGeneratorType = $this->_getIdGeneratorTypeString( $metadata->generatorType )) {
+        if (!$metadata->isIdentifierComposite && $idGeneratorType = $this->_getIdGeneratorTypeString($metadata->generatorType)) {
             $ids[$metadata->getSingleIdentifierFieldName()]['generator']['strategy'] = $idGeneratorType;
         }
 
@@ -122,7 +120,7 @@ class YamlExporter extends AbstractExporter
             if (!isset( $array['fields'] )) {
                 $array['fields'] = array();
             }
-            $array['fields'] = array_merge( $array['fields'], $fieldMappings );
+            $array['fields'] = array_merge($array['fields'], $fieldMappings);
         }
 
         foreach ($metadata->associationMappings as $name => $associationMapping) {
@@ -147,8 +145,8 @@ class YamlExporter extends AbstractExporter
             if ($associationMapping['isCascadeDetach']) {
                 $cascade[] = 'detach';
             }
-            if (count( $cascade ) === 5) {
-                $cascade = array( 'all' );
+            if (count($cascade) === 5) {
+                $cascade = array('all');
             }
 
             $associationMappingArray = array(
@@ -157,7 +155,7 @@ class YamlExporter extends AbstractExporter
             );
 
             if (isset( $associationMapping['fetch'] )) {
-                $associationMappingArray['fetch'] = $this->_getFetchModeString( $associationMapping['fetch'] );
+                $associationMappingArray['fetch'] = $this->_getFetchModeString($associationMapping['fetch']);
             }
 
             if (isset( $mapping['id'] ) && $mapping['id'] === true) {
@@ -183,7 +181,7 @@ class YamlExporter extends AbstractExporter
                     'orphanRemoval' => $associationMapping['orphanRemoval'],
                 );
 
-                $associationMappingArray = array_merge( $associationMappingArray, $oneToOneMappingArray );
+                $associationMappingArray = array_merge($associationMappingArray, $oneToOneMappingArray);
 
                 if ($associationMapping['type'] & ClassMetadataInfo::ONE_TO_ONE) {
                     $array['oneToOne'][$name] = $associationMappingArray;
@@ -198,7 +196,7 @@ class YamlExporter extends AbstractExporter
                     'orderBy' => isset( $associationMapping['orderBy'] ) ? $associationMapping['orderBy'] : null
                 );
 
-                $associationMappingArray = array_merge( $associationMappingArray, $oneToManyMappingArray );
+                $associationMappingArray = array_merge($associationMappingArray, $oneToManyMappingArray);
                 $array['oneToMany'][$name] = $associationMappingArray;
             } elseif ($associationMapping['type'] == ClassMetadataInfo::MANY_TO_MANY) {
                 $manyToManyMappingArray = array(
@@ -208,7 +206,7 @@ class YamlExporter extends AbstractExporter
                     'orderBy'   => isset( $associationMapping['orderBy'] ) ? $associationMapping['orderBy'] : null
                 );
 
-                $associationMappingArray = array_merge( $associationMappingArray, $manyToManyMappingArray );
+                $associationMappingArray = array_merge($associationMappingArray, $manyToManyMappingArray);
                 $array['manyToMany'][$name] = $associationMappingArray;
             }
         }
@@ -216,7 +214,7 @@ class YamlExporter extends AbstractExporter
             $array['lifecycleCallbacks'] = $metadata->lifecycleCallbacks;
         }
 
-        return $this->yamlDump( array( $metadata->name => $array ), 10 );
+        return $this->yamlDump(array($metadata->name => $array), 10);
     }
 
     /**
@@ -230,9 +228,9 @@ class YamlExporter extends AbstractExporter
      *
      * @return string A YAML string representing the original PHP array
      */
-    protected function yamlDump( $array, $inline = 2 )
+    protected function yamlDump($array, $inline = 2)
     {
 
-        return Yaml::dump( $array, $inline );
+        return Yaml::dump($array, $inline);
     }
 }

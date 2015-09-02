@@ -28,7 +28,6 @@ namespace Doctrine\ORM\Cache;
  */
 class AssociationCacheEntry implements CacheEntry
 {
-
     /**
      * READ-ONLY: Public only for performance reasons, it should be considered immutable.
      *
@@ -47,7 +46,7 @@ class AssociationCacheEntry implements CacheEntry
      * @param string $class      The entity class.
      * @param array  $identifier The entity identifier.
      */
-    public function __construct( $class, array $identifier )
+    public function __construct($class, array $identifier)
     {
 
         $this->class = $class;
@@ -61,9 +60,9 @@ class AssociationCacheEntry implements CacheEntry
      *
      * @param array $values array containing property values
      */
-    public static function __set_state( array $values )
+    public static function __set_state(array $values)
     {
 
-        return new self( $values['class'], $values['identifier'] );
+        return new self($values['class'], $values['identifier']);
     }
 }

@@ -18,7 +18,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class BackoffLogger implements EventSubscriberInterface
 {
-
     /** @var string Default log message template */
     const DEFAULT_FORMAT = '[{ts}] {method} {url} - {code} {phrase} - Retries: {retries}, Delay: {delay}, Time: {connect_time}, {total_time}, cURL: {curl_code} {curl_error}';
 
@@ -32,17 +31,16 @@ class BackoffLogger implements EventSubscriberInterface
      * @param LogAdapterInterface $logger    Logger used to log the retries
      * @param MessageFormatter    $formatter Formatter used to format log messages
      */
-    public function __construct( LogAdapterInterface $logger, MessageFormatter $formatter = null )
+    public function __construct(LogAdapterInterface $logger, MessageFormatter $formatter = null)
     {
-
         $this->logger = $logger;
-        $this->formatter = $formatter ?: new MessageFormatter( self::DEFAULT_FORMAT );
+        $this->formatter = $formatter ?: new MessageFormatter(self::DEFAULT_FORMAT);
     }
 
     public static function getSubscribedEvents()
     {
 
-        return array( BackoffPlugin::RETRY_EVENT => 'onRequestRetry' );
+        return array(BackoffPlugin::RETRY_EVENT => 'onRequestRetry');
     }
 
     /**
@@ -52,10 +50,10 @@ class BackoffLogger implements EventSubscriberInterface
      *
      * @return self
      */
-    public function setTemplate( $template )
+    public function setTemplate($template)
     {
 
-        $this->formatter->setTemplate( $template );
+        $this->formatter->setTemplate($template);
 
         return $this;
     }
@@ -65,10 +63,10 @@ class BackoffLogger implements EventSubscriberInterface
      *
      * @param Event $event Event emitted
      */
-    public function onRequestRetry( Event $event )
+    public function onRequestRetry(Event $event)
     {
 
-        $this->logger->log( $this->formatter->format(
+        $this->logger->log($this->formatter->format(
             $event['request'],
             $event['response'],
             $event['handle'],
@@ -76,6 +74,6 @@ class BackoffLogger implements EventSubscriberInterface
                 'retries' => $event['retries'],
                 'delay'   => $event['delay']
             )
-        ) );
+        ));
     }
 }

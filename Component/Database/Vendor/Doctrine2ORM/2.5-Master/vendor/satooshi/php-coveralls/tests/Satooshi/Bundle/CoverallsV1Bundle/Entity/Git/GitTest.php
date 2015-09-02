@@ -9,14 +9,13 @@ namespace Satooshi\Bundle\CoverallsV1Bundle\Entity\Git;
  */
 class GitTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @test
      */
     public function shouldHaveBranchNameOnConstruction()
     {
 
-        $this->assertEquals( $this->branchName, $this->object->getBranch() );
+        $this->assertEquals($this->branchName, $this->object->getBranch());
     }
 
     /**
@@ -25,7 +24,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function shouldHaveHeadCommitOnConstruction()
     {
 
-        $this->assertSame( $this->commit, $this->object->getHead() );
+        $this->assertSame($this->commit, $this->object->getHead());
     }
 
     /**
@@ -34,7 +33,7 @@ class GitTest extends \PHPUnit_Framework_TestCase
     public function shouldHaveRemotesOnConstruction()
     {
 
-        $this->assertSame( array( $this->remote ), $this->object->getRemotes() );
+        $this->assertSame(array($this->remote), $this->object->getRemotes());
     }
 
     // getBranch()
@@ -44,27 +43,25 @@ class GitTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldConvertToArray()
     {
-
         $expected = array(
             'branch'  => $this->branchName,
             'head'    => $this->commit->toArray(),
-            'remotes' => array( $this->remote->toArray() ),
+            'remotes' => array($this->remote->toArray()),
         );
 
-        $this->assertSame( $expected, $this->object->toArray() );
-        $this->assertSame( json_encode( $expected ), (string)$this->object );
+        $this->assertSame($expected, $this->object->toArray());
+        $this->assertSame(json_encode($expected), (string)$this->object);
     }
 
     // getHead()
 
     protected function setUp()
     {
-
         $this->branchName = 'branch_name';
         $this->commit = $this->createCommit();
         $this->remote = $this->createRemote();
 
-        $this->object = new Git( $this->branchName, $this->commit, array( $this->remote ) );
+        $this->object = new Git($this->branchName, $this->commit, array($this->remote));
     }
 
     // getRemotes()
@@ -77,27 +74,25 @@ class GitTest extends \PHPUnit_Framework_TestCase
         $committerEmail = 'committer_email',
         $message = 'message'
     ) {
-
         $commit = new Commit();
 
         return $commit
-            ->setId( $id )
-            ->setAuthorName( $authorName )
-            ->setAuthorEmail( $authorEmail )
-            ->setCommitterName( $committerName )
-            ->setCommitterEmail( $committerEmail )
-            ->setMessage( $message );
+            ->setId($id)
+            ->setAuthorName($authorName)
+            ->setAuthorEmail($authorEmail)
+            ->setCommitterName($committerName)
+            ->setCommitterEmail($committerEmail)
+            ->setMessage($message);
     }
 
     // toArray()
 
-    protected function createRemote( $name = 'name', $url = 'url' )
+    protected function createRemote($name = 'name', $url = 'url')
     {
-
         $remote = new Remote();
 
         return $remote
-            ->setName( $name )
-            ->setUrl( $url );
+            ->setName($name)
+            ->setUrl($url);
     }
 }

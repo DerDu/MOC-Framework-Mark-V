@@ -20,7 +20,6 @@ namespace Symfony\Component\Config\Resource;
  */
 class FileResource implements ResourceInterface, \Serializable
 {
-
     /**
      * @var string|false
      */
@@ -31,10 +30,10 @@ class FileResource implements ResourceInterface, \Serializable
      *
      * @param string $resource The file path to the resource
      */
-    public function __construct( $resource )
+    public function __construct($resource)
     {
 
-        $this->resource = realpath( $resource );
+        $this->resource = realpath($resource);
     }
 
     /**
@@ -51,32 +50,31 @@ class FileResource implements ResourceInterface, \Serializable
      */
     public function getResource()
     {
-
         return $this->resource;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFresh( $timestamp )
+    public function isFresh($timestamp)
     {
 
-        if (false === $this->resource || !file_exists( $this->resource )) {
+        if (false === $this->resource || !file_exists($this->resource)) {
             return false;
         }
 
-        return filemtime( $this->resource ) <= $timestamp;
+        return filemtime($this->resource) <= $timestamp;
     }
 
     public function serialize()
     {
 
-        return serialize( $this->resource );
+        return serialize($this->resource);
     }
 
-    public function unserialize( $serialized )
+    public function unserialize($serialized)
     {
 
-        $this->resource = unserialize( $serialized );
+        $this->resource = unserialize($serialized);
     }
 }

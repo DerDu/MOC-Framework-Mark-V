@@ -26,11 +26,10 @@ use Doctrine\Common\Collections\Expr\Expression;
  * Criteria for filtering Selectable collections.
  *
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @since  2.3
+ * @since 2.3
  */
 class Criteria
 {
-
     /**
      * @var string
      */
@@ -80,14 +79,13 @@ class Criteria
         $firstResult = null,
         $maxResults = null
     ) {
-
         $this->expression = $expression;
 
-        $this->setFirstResult( $firstResult );
-        $this->setMaxResults( $maxResults );
+        $this->setFirstResult($firstResult);
+        $this->setMaxResults($maxResults);
 
         if (null !== $orderings) {
-            $this->orderBy( $orderings );
+            $this->orderBy($orderings);
         }
     }
 
@@ -103,13 +101,12 @@ class Criteria
      *
      * @return Criteria
      */
-    public function orderBy( array $orderings )
+    public function orderBy(array $orderings)
     {
-
         $this->orderings = array_map(
-            function ( $ordering ) {
+            function ($ordering) {
 
-                return strtoupper( $ordering ) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
+                return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
             },
             $orderings
         );
@@ -124,7 +121,6 @@ class Criteria
      */
     public static function create()
     {
-
         return new static();
     }
 
@@ -135,7 +131,6 @@ class Criteria
      */
     public static function expr()
     {
-
         if (self::$expressionBuilder === null) {
             self::$expressionBuilder = new ExpressionBuilder();
         }
@@ -151,17 +146,16 @@ class Criteria
      *
      * @return Criteria
      */
-    public function andWhere( Expression $expression )
+    public function andWhere(Expression $expression)
     {
-
         if ($this->expression === null) {
-            return $this->where( $expression );
+            return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression( CompositeExpression::TYPE_AND, array(
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, array(
             $this->expression,
             $expression
-        ) );
+        ));
 
         return $this;
     }
@@ -173,9 +167,8 @@ class Criteria
      *
      * @return Criteria
      */
-    public function where( Expression $expression )
+    public function where(Expression $expression)
     {
-
         $this->expression = $expression;
 
         return $this;
@@ -189,17 +182,16 @@ class Criteria
      *
      * @return Criteria
      */
-    public function orWhere( Expression $expression )
+    public function orWhere(Expression $expression)
     {
-
         if ($this->expression === null) {
-            return $this->where( $expression );
+            return $this->where($expression);
         }
 
-        $this->expression = new CompositeExpression( CompositeExpression::TYPE_OR, array(
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, array(
             $this->expression,
             $expression
-        ) );
+        ));
 
         return $this;
     }
@@ -211,7 +203,6 @@ class Criteria
      */
     public function getWhereExpression()
     {
-
         return $this->expression;
     }
 
@@ -222,7 +213,6 @@ class Criteria
      */
     public function getOrderings()
     {
-
         return $this->orderings;
     }
 
@@ -233,7 +223,6 @@ class Criteria
      */
     public function getFirstResult()
     {
-
         return $this->firstResult;
     }
 
@@ -244,7 +233,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function setFirstResult( $firstResult )
+    public function setFirstResult($firstResult)
     {
 
         $this->firstResult = null === $firstResult ? null : (int)$firstResult;
@@ -259,7 +248,6 @@ class Criteria
      */
     public function getMaxResults()
     {
-
         return $this->maxResults;
     }
 
@@ -270,7 +258,7 @@ class Criteria
      *
      * @return Criteria
      */
-    public function setMaxResults( $maxResults )
+    public function setMaxResults($maxResults)
     {
 
         $this->maxResults = null === $maxResults ? null : (int)$maxResults;

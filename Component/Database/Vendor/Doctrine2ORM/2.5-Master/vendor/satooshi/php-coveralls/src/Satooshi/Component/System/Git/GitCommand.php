@@ -10,7 +10,6 @@ use Satooshi\Component\System\SystemCommand;
  */
 class GitCommand extends SystemCommand
 {
-
     /**
      * Command name or path.
      *
@@ -28,9 +27,9 @@ class GitCommand extends SystemCommand
     public function getBranches()
     {
 
-        $command = $this->createCommand( 'branch' );
+        $command = $this->createCommand('branch');
 
-        return $this->executeCommand( $command );
+        return $this->executeCommand($command);
     }
 
     /**
@@ -41,9 +40,9 @@ class GitCommand extends SystemCommand
     public function getHeadCommit()
     {
 
-        $command = $this->createCommand( "log -1 --pretty=format:'%H\n%aN\n%ae\n%cN\n%ce\n%s'" );
+        $command = $this->createCommand("log -1 --pretty=format:'%H\n%aN\n%ae\n%cN\n%ce\n%s'");
 
-        return $this->executeCommand( $command );
+        return $this->executeCommand($command);
     }
 
     /**
@@ -54,8 +53,8 @@ class GitCommand extends SystemCommand
     public function getRemotes()
     {
 
-        $command = $this->createCommand( 'remote -v' );
+        $command = $this->createCommand('remote -v');
 
-        return $this->executeCommand( $command );
+        return $this->executeCommand($command);
     }
 }

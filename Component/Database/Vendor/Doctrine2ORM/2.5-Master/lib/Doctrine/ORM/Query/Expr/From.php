@@ -30,7 +30,6 @@ namespace Doctrine\ORM\Query\Expr;
  */
 class From
 {
-
     /**
      * @var string
      */
@@ -51,7 +50,7 @@ class From
      * @param string $alias   The alias of the class.
      * @param string $indexBy The index for the from.
      */
-    public function __construct( $from, $alias, $indexBy = null )
+    public function __construct($from, $alias, $indexBy = null)
     {
 
         $this->from = $from;
@@ -64,7 +63,6 @@ class From
      */
     public function getFrom()
     {
-
         return $this->from;
     }
 
@@ -73,7 +71,6 @@ class From
      */
     public function getAlias()
     {
-
         return $this->alias;
     }
 
@@ -82,7 +79,6 @@ class From
      */
     public function getIndexBy()
     {
-
         return $this->indexBy;
     }
 

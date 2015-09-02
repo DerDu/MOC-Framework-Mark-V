@@ -30,7 +30,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  */
 class Sequence extends AbstractAsset
 {
-
     /**
      * @var integer
      */
@@ -52,12 +51,12 @@ class Sequence extends AbstractAsset
      * @param integer      $initialValue
      * @param integer|null $cache
      */
-    public function __construct( $name, $allocationSize = 1, $initialValue = 1, $cache = null )
+    public function __construct($name, $allocationSize = 1, $initialValue = 1, $cache = null)
     {
 
-        $this->_setName( $name );
-        $this->allocationSize = is_numeric( $allocationSize ) ? $allocationSize : 1;
-        $this->initialValue = is_numeric( $initialValue ) ? $initialValue : 1;
+        $this->_setName($name);
+        $this->allocationSize = is_numeric($allocationSize) ? $allocationSize : 1;
+        $this->initialValue = is_numeric($initialValue) ? $initialValue : 1;
         $this->cache = $cache;
     }
 
@@ -66,7 +65,6 @@ class Sequence extends AbstractAsset
      */
     public function getAllocationSize()
     {
-
         return $this->allocationSize;
     }
 
@@ -75,10 +73,10 @@ class Sequence extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Sequence
      */
-    public function setAllocationSize( $allocationSize )
+    public function setAllocationSize($allocationSize)
     {
 
-        $this->allocationSize = is_numeric( $allocationSize ) ? $allocationSize : 1;
+        $this->allocationSize = is_numeric($allocationSize) ? $allocationSize : 1;
 
         return $this;
     }
@@ -88,7 +86,6 @@ class Sequence extends AbstractAsset
      */
     public function getInitialValue()
     {
-
         return $this->initialValue;
     }
 
@@ -97,10 +94,10 @@ class Sequence extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Sequence
      */
-    public function setInitialValue( $initialValue )
+    public function setInitialValue($initialValue)
     {
 
-        $this->initialValue = is_numeric( $initialValue ) ? $initialValue : 1;
+        $this->initialValue = is_numeric($initialValue) ? $initialValue : 1;
 
         return $this;
     }
@@ -110,7 +107,6 @@ class Sequence extends AbstractAsset
      */
     public function getCache()
     {
-
         return $this->cache;
     }
 
@@ -119,9 +115,8 @@ class Sequence extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Sequence
      */
-    public function setCache( $cache )
+    public function setCache($cache)
     {
-
         $this->cache = $cache;
 
         return $this;
@@ -137,7 +132,7 @@ class Sequence extends AbstractAsset
      *
      * @return boolean
      */
-    public function isAutoIncrementsFor( Table $table )
+    public function isAutoIncrementsFor(Table $table)
     {
 
         if (!$table->hasPrimaryKey()) {
@@ -146,19 +141,19 @@ class Sequence extends AbstractAsset
 
         $pkColumns = $table->getPrimaryKey()->getColumns();
 
-        if (count( $pkColumns ) != 1) {
+        if (count($pkColumns) != 1) {
             return false;
         }
 
-        $column = $table->getColumn( $pkColumns[0] );
+        $column = $table->getColumn($pkColumns[0]);
 
         if (!$column->getAutoincrement()) {
             return false;
         }
 
-        $sequenceName = $this->getShortestName( $table->getNamespaceName() );
-        $tableName = $table->getShortestName( $table->getNamespaceName() );
-        $tableSequenceName = sprintf( '%s_%s_seq', $tableName, $pkColumns[0] );
+        $sequenceName = $this->getShortestName($table->getNamespaceName());
+        $tableName = $table->getShortestName($table->getNamespaceName());
+        $tableSequenceName = sprintf('%s_%s_seq', $tableName, $pkColumns[0]);
 
         return $tableSequenceName === $sequenceName;
     }
@@ -168,9 +163,9 @@ class Sequence extends AbstractAsset
      *
      * @return void
      */
-    public function visit( Visitor $visitor )
+    public function visit(Visitor $visitor)
     {
 
-        $visitor->acceptSequence( $this );
+        $visitor->acceptSequence($this);
     }
 }

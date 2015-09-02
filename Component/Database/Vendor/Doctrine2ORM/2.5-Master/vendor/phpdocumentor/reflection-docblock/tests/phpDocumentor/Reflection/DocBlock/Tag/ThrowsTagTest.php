@@ -22,7 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ThrowsTagTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag can
      * understand the @throws DocBlock.
@@ -33,7 +32,7 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedTypes
      * @param string $extractedDescription
      *
-     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag
      * @dataProvider provideDataForConstructor
      *
      * @return void
@@ -46,12 +45,12 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
         $extractedDescription
     ) {
 
-        $tag = new ThrowsTag( $type, $content );
+        $tag = new ThrowsTag($type, $content);
 
-        $this->assertEquals( $type, $tag->getName() );
-        $this->assertEquals( $extractedType, $tag->getType() );
-        $this->assertEquals( $extractedTypes, $tag->getTypes() );
-        $this->assertEquals( $extractedDescription, $tag->getDescription() );
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($extractedType, $tag->getType());
+        $this->assertEquals($extractedTypes, $tag->getTypes());
+        $this->assertEquals($extractedDescription, $tag->getDescription());
     }
 
     /**
@@ -61,43 +60,42 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstructor()
     {
-
         return array(
-            array( 'throws', '', '', array(), '' ),
-            array( 'throws', 'int', 'int', array( 'int' ), '' ),
+            array('throws', '', '', array(), ''),
+            array('throws', 'int', 'int', array('int'), ''),
             array(
                 'throws',
                 'int Number of Bobs',
                 'int',
-                array( 'int' ),
+                array('int'),
                 'Number of Bobs'
             ),
             array(
                 'throws',
                 'int|double Number of Bobs',
                 'int|double',
-                array( 'int', 'double' ),
+                array('int', 'double'),
                 'Number of Bobs'
             ),
             array(
                 'throws',
                 "int Number of \n Bobs",
                 'int',
-                array( 'int' ),
+                array('int'),
                 "Number of \n Bobs"
             ),
             array(
                 'throws',
                 " int Number of Bobs",
                 'int',
-                array( 'int' ),
+                array('int'),
                 "Number of Bobs"
             ),
             array(
                 'throws',
                 "int\nNumber of Bobs",
                 'int',
-                array( 'int' ),
+                array('int'),
                 "Number of Bobs"
             )
         );

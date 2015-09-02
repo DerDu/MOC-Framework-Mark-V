@@ -10,25 +10,23 @@ use Guzzle\Service\Command\CommandInterface;
  */
 class CompositeResourceIteratorFactory implements ResourceIteratorFactoryInterface
 {
-
     /** @var array Array of factories */
     protected $factories;
 
     /** @param array $factories Array of factories used to instantiate iterators */
-    public function __construct( array $factories )
+    public function __construct(array $factories)
     {
-
         $this->factories = $factories;
     }
 
-    public function build( CommandInterface $command, array $options = array() )
+    public function build(CommandInterface $command, array $options = array())
     {
 
-        if (!( $factory = $this->getFactory( $command ) )) {
-            throw new InvalidArgumentException( 'Iterator was not found for '.$command->getName() );
+        if (!( $factory = $this->getFactory($command) )) {
+            throw new InvalidArgumentException('Iterator was not found for '.$command->getName());
         }
 
-        return $factory->build( $command, $options );
+        return $factory->build($command, $options);
     }
 
     /**
@@ -38,11 +36,10 @@ class CompositeResourceIteratorFactory implements ResourceIteratorFactoryInterfa
      *
      * @return ResourceIteratorFactoryInterface|bool
      */
-    protected function getFactory( CommandInterface $command )
+    protected function getFactory(CommandInterface $command)
     {
-
         foreach ($this->factories as $factory) {
-            if ($factory->canBuild( $command )) {
+            if ($factory->canBuild($command)) {
                 return $factory;
             }
         }
@@ -50,10 +47,10 @@ class CompositeResourceIteratorFactory implements ResourceIteratorFactoryInterfa
         return false;
     }
 
-    public function canBuild( CommandInterface $command )
+    public function canBuild(CommandInterface $command)
     {
 
-        return $this->getFactory( $command ) !== false;
+        return $this->getFactory($command) !== false;
     }
 
     /**
@@ -63,9 +60,8 @@ class CompositeResourceIteratorFactory implements ResourceIteratorFactoryInterfa
      *
      * @return self
      */
-    public function addFactory( ResourceIteratorFactoryInterface $factory )
+    public function addFactory(ResourceIteratorFactoryInterface $factory)
     {
-
         $this->factories[] = $factory;
 
         return $this;

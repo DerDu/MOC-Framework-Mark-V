@@ -18,7 +18,6 @@ namespace Symfony\Component\Config\Definition;
  */
 class Processor
 {
-
     /**
      * Normalizes a configuration entry.
      *
@@ -42,9 +41,8 @@ class Processor
      *
      * @return array
      */
-    public static function normalizeConfig( $config, $key, $plural = null )
+    public static function normalizeConfig($config, $key, $plural = null)
     {
-
         if (null === $plural) {
             $plural = $key.'s';
         }
@@ -54,9 +52,9 @@ class Processor
         }
 
         if (isset( $config[$key] )) {
-            if (is_string( $config[$key] ) || !is_int( key( $config[$key] ) )) {
+            if (is_string($config[$key]) || !is_int(key($config[$key]))) {
                 // only one
-                return array( $config[$key] );
+                return array($config[$key]);
             }
 
             return $config[$key];
@@ -73,10 +71,10 @@ class Processor
      *
      * @return array The processed configuration
      */
-    public function processConfiguration( ConfigurationInterface $configuration, array $configs )
+    public function processConfiguration(ConfigurationInterface $configuration, array $configs)
     {
 
-        return $this->process( $configuration->getConfigTreeBuilder()->buildTree(), $configs );
+        return $this->process($configuration->getConfigTreeBuilder()->buildTree(), $configs);
     }
 
     /**
@@ -87,15 +85,14 @@ class Processor
      *
      * @return array The processed configuration
      */
-    public function process( NodeInterface $configTree, array $configs )
+    public function process(NodeInterface $configTree, array $configs)
     {
-
         $currentConfig = array();
         foreach ($configs as $config) {
-            $config = $configTree->normalize( $config );
-            $currentConfig = $configTree->merge( $currentConfig, $config );
+            $config = $configTree->normalize($config);
+            $currentConfig = $configTree->merge($currentConfig, $config);
         }
 
-        return $configTree->finalize( $currentConfig );
+        return $configTree->finalize($currentConfig);
     }
 }

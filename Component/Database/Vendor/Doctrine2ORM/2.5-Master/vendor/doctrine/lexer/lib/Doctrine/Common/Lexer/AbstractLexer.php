@@ -29,7 +29,6 @@ namespace Doctrine\Common\Lexer;
  */
 abstract class AbstractLexer
 {
-
     /**
      * The next token in the input.
      *
@@ -83,14 +82,14 @@ abstract class AbstractLexer
      *
      * @return void
      */
-    public function setInput( $input )
+    public function setInput($input)
     {
 
         $this->input = $input;
         $this->tokens = array();
 
         $this->reset();
-        $this->scan( $input );
+        $this->scan($input);
     }
 
     /**
@@ -100,7 +99,6 @@ abstract class AbstractLexer
      */
     public function reset()
     {
-
         $this->lookahead = null;
         $this->token = null;
         $this->peek = 0;
@@ -114,30 +112,29 @@ abstract class AbstractLexer
      *
      * @return void
      */
-    protected function scan( $input )
+    protected function scan($input)
     {
-
         static $regex;
 
         if (!isset( $regex )) {
             $regex = sprintf(
                 '/(%s)|%s/%s',
-                implode( ')|(', $this->getCatchablePatterns() ),
-                implode( '|', $this->getNonCatchablePatterns() ),
+                implode(')|(', $this->getCatchablePatterns()),
+                implode('|', $this->getNonCatchablePatterns()),
                 $this->getModifiers()
             );
         }
 
         $flags = PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_OFFSET_CAPTURE;
-        $matches = preg_split( $regex, $input, -1, $flags );
+        $matches = preg_split($regex, $input, -1, $flags);
 
         foreach ($matches as $match) {
             // Must remain before 'value' assignment since it can change content
-            $type = $this->getType( $match[0] );
+            $type = $this->getType($match[0]);
 
             $this->tokens[] = array(
-                'value'    => $match[0],
-                'type'     => $type,
+                'value' => $match[0],
+                'type'  => $type,
                 'position' => $match[1],
             );
         }
@@ -164,7 +161,6 @@ abstract class AbstractLexer
      */
     protected function getModifiers()
     {
-
         return 'i';
     }
 
@@ -175,7 +171,7 @@ abstract class AbstractLexer
      *
      * @return integer
      */
-    abstract protected function getType( &$value );
+    abstract protected function getType(&$value);
 
     /**
      * Resets the peek pointer to 0.
@@ -184,7 +180,6 @@ abstract class AbstractLexer
      */
     public function resetPeek()
     {
-
         $this->peek = 0;
     }
 
@@ -195,9 +190,8 @@ abstract class AbstractLexer
      *
      * @return void
      */
-    public function resetPosition( $position = 0 )
+    public function resetPosition($position = 0)
     {
-
         $this->position = $position;
     }
 
@@ -208,10 +202,10 @@ abstract class AbstractLexer
      *
      * @return string
      */
-    public function getInputUntilPosition( $position )
+    public function getInputUntilPosition($position)
     {
 
-        return substr( $this->input, 0, $position );
+        return substr($this->input, 0, $position);
     }
 
     /**
@@ -221,9 +215,8 @@ abstract class AbstractLexer
      *
      * @return boolean
      */
-    public function isNextToken( $token )
+    public function isNextToken($token)
     {
-
         return null !== $this->lookahead && $this->lookahead['type'] === $token;
     }
 
@@ -234,10 +227,10 @@ abstract class AbstractLexer
      *
      * @return boolean
      */
-    public function isNextTokenAny( array $tokens )
+    public function isNextTokenAny(array $tokens)
     {
 
-        return null !== $this->lookahead && in_array( $this->lookahead['type'], $tokens, true );
+        return null !== $this->lookahead && in_array($this->lookahead['type'], $tokens, true);
     }
 
     /**
@@ -247,9 +240,8 @@ abstract class AbstractLexer
      *
      * @return void
      */
-    public function skipUntil( $type )
+    public function skipUntil($type)
     {
-
         while ($this->lookahead !== null && $this->lookahead['type'] !== $type) {
             $this->moveNext();
         }
@@ -262,7 +254,6 @@ abstract class AbstractLexer
      */
     public function moveNext()
     {
-
         $this->peek = 0;
         $this->token = $this->lookahead;
         $this->lookahead = ( isset( $this->tokens[$this->position] ) )
@@ -279,10 +270,10 @@ abstract class AbstractLexer
      *
      * @return boolean
      */
-    public function isA( $value, $token )
+    public function isA($value, $token)
     {
 
-        return $this->getType( $value ) === $token;
+        return $this->getType($value) === $token;
     }
 
     /**
@@ -292,7 +283,6 @@ abstract class AbstractLexer
      */
     public function glimpse()
     {
-
         $peek = $this->peek();
         $this->peek = 0;
         return $peek;
@@ -320,11 +310,11 @@ abstract class AbstractLexer
      *
      * @return string
      */
-    public function getLiteral( $token )
+    public function getLiteral($token)
     {
 
-        $className = get_class( $this );
-        $reflClass = new \ReflectionClass( $className );
+        $className = get_class($this);
+        $reflClass = new \ReflectionClass($className);
         $constants = $reflClass->getConstants();
 
         foreach ($constants as $name => $value) {

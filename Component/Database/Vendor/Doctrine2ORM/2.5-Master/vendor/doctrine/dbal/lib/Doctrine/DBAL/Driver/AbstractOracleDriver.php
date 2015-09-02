@@ -33,57 +33,54 @@ use Doctrine\DBAL\Schema\OracleSchemaManager;
  */
 abstract class AbstractOracleDriver implements Driver, ExceptionConverterDriver
 {
-
     /**
      * {@inheritdoc}
      */
-    public function convertException( $message, DriverException $exception )
+    public function convertException($message, DriverException $exception)
     {
-
         switch ($exception->getErrorCode()) {
             case '1':
             case '2299':
             case '38911':
-            return new Exception\UniqueConstraintViolationException( $message, $exception );
+            return new Exception\UniqueConstraintViolationException($message, $exception);
 
             case '904':
-                return new Exception\InvalidFieldNameException( $message, $exception );
+                return new Exception\InvalidFieldNameException($message, $exception);
 
             case '918':
             case '960':
-            return new Exception\NonUniqueFieldNameException( $message, $exception );
+            return new Exception\NonUniqueFieldNameException($message, $exception);
 
             case '923':
-                return new Exception\SyntaxErrorException( $message, $exception );
+                return new Exception\SyntaxErrorException($message, $exception);
 
             case '942':
-                return new Exception\TableNotFoundException( $message, $exception );
+                return new Exception\TableNotFoundException($message, $exception);
 
             case '955':
-                return new Exception\TableExistsException( $message, $exception );
+                return new Exception\TableExistsException($message, $exception);
 
             case '1017':
             case '12545':
-            return new Exception\ConnectionException( $message, $exception );
+            return new Exception\ConnectionException($message, $exception);
 
             case '1400':
-                return new Exception\NotNullConstraintViolationException( $message, $exception );
+                return new Exception\NotNullConstraintViolationException($message, $exception);
 
             case '2266':
             case '2291':
             case '2292':
-            return new Exception\ForeignKeyConstraintViolationException( $message, $exception );
+            return new Exception\ForeignKeyConstraintViolationException($message, $exception);
         }
 
-        return new Exception\DriverException( $message, $exception );
+        return new Exception\DriverException($message, $exception);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDatabase( \Doctrine\DBAL\Connection $conn )
+    public function getDatabase(\Doctrine\DBAL\Connection $conn)
     {
-
         $params = $conn->getParams();
 
         return $params['user'];
@@ -94,17 +91,16 @@ abstract class AbstractOracleDriver implements Driver, ExceptionConverterDriver
      */
     public function getDatabasePlatform()
     {
-
         return new OraclePlatform();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getSchemaManager( \Doctrine\DBAL\Connection $conn )
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
     {
 
-        return new OracleSchemaManager( $conn );
+        return new OracleSchemaManager($conn);
     }
 
     /**
@@ -116,7 +112,7 @@ abstract class AbstractOracleDriver implements Driver, ExceptionConverterDriver
      *
      * @link http://download.oracle.com/docs/cd/E11882_01/network.112/e10836/naming.htm
      */
-    protected function getEasyConnectString( array $params )
+    protected function getEasyConnectString(array $params)
     {
 
         if (!empty( $params['host'] )) {

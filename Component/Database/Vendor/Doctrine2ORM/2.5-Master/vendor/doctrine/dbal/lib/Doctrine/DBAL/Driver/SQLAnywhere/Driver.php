@@ -31,15 +31,13 @@ use Doctrine\DBAL\Driver\AbstractSQLAnywhereDriver;
  */
 class Driver extends AbstractSQLAnywhereDriver
 {
-
     /**
      * {@inheritdoc}
      *
      * @throws \Doctrine\DBAL\DBALException if there was a problem establishing the connection.
      */
-    public function connect( array $params, $username = null, $password = null, array $driverOptions = array() )
+    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-
         try {
             return new SQLAnywhereConnection(
                 $this->buildDsn(
@@ -53,8 +51,8 @@ class Driver extends AbstractSQLAnywhereDriver
                 ),
                 isset( $params['persistent'] ) ? $params['persistent'] : false
             );
-        } catch( SQLAnywhereException $e ) {
-            throw DBALException::driverException( $this, $e );
+        } catch (SQLAnywhereException $e) {
+            throw DBALException::driverException($this, $e);
         }
     }
 
@@ -82,7 +80,6 @@ class Driver extends AbstractSQLAnywhereDriver
         $password = null,
         array $driverOptions = array()
     ) {
-
         $host = $host ?: 'localhost';
         $port = $port ?: 2638;
 
@@ -98,10 +95,10 @@ class Driver extends AbstractSQLAnywhereDriver
             ';PWD='.$password.
             ';'.implode(
                 ';',
-                array_map( function ( $key, $value ) {
+                array_map(function ($key, $value) {
 
                     return $key.'='.$value;
-                }, array_keys( $driverOptions ), $driverOptions )
+                }, array_keys($driverOptions), $driverOptions)
             );
     }
 
@@ -110,7 +107,6 @@ class Driver extends AbstractSQLAnywhereDriver
      */
     public function getName()
     {
-
         return 'sqlanywhere';
     }
 }

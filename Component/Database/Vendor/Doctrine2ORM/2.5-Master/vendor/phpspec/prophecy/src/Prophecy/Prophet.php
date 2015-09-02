@@ -29,7 +29,6 @@ use Prophecy\Util\StringUtil;
  */
 class Prophet
 {
-
     private $doubler;
     private $revealer;
     private $util;
@@ -51,17 +50,16 @@ class Prophet
         RevealerInterface $revealer = null,
         StringUtil $util = null
     ) {
-
         if (null === $doubler) {
             $doubler = new Doubler;
-            $doubler->registerClassPatch( new ClassPatch\SplFileInfoPatch );
-            $doubler->registerClassPatch( new ClassPatch\TraversablePatch );
-            $doubler->registerClassPatch( new ClassPatch\DisableConstructorPatch );
-            $doubler->registerClassPatch( new ClassPatch\ProphecySubjectPatch );
-            $doubler->registerClassPatch( new ClassPatch\ReflectionClassNewInstancePatch );
-            $doubler->registerClassPatch( new ClassPatch\HhvmExceptionPatch() );
-            $doubler->registerClassPatch( new ClassPatch\MagicCallPatch );
-            $doubler->registerClassPatch( new ClassPatch\KeywordPatch );
+            $doubler->registerClassPatch(new ClassPatch\SplFileInfoPatch);
+            $doubler->registerClassPatch(new ClassPatch\TraversablePatch);
+            $doubler->registerClassPatch(new ClassPatch\DisableConstructorPatch);
+            $doubler->registerClassPatch(new ClassPatch\ProphecySubjectPatch);
+            $doubler->registerClassPatch(new ClassPatch\ReflectionClassNewInstancePatch);
+            $doubler->registerClassPatch(new ClassPatch\HhvmExceptionPatch());
+            $doubler->registerClassPatch(new ClassPatch\MagicCallPatch);
+            $doubler->registerClassPatch(new ClassPatch\KeywordPatch);
         }
 
         $this->doubler = $doubler;
@@ -76,21 +74,20 @@ class Prophet
      *
      * @return ObjectProphecy
      */
-    public function prophesize( $classOrInterface = null )
+    public function prophesize($classOrInterface = null)
     {
-
         $this->prophecies[] = $prophecy = new ObjectProphecy(
-            new LazyDouble( $this->doubler ),
-            new CallCenter( $this->util ),
+            new LazyDouble($this->doubler),
+            new CallCenter($this->util),
             $this->revealer
         );
 
-        if ($classOrInterface && class_exists( $classOrInterface )) {
-            return $prophecy->willExtend( $classOrInterface );
+        if ($classOrInterface && class_exists($classOrInterface)) {
+            return $prophecy->willExtend($classOrInterface);
         }
 
-        if ($classOrInterface && interface_exists( $classOrInterface )) {
-            return $prophecy->willImplement( $classOrInterface );
+        if ($classOrInterface && interface_exists($classOrInterface)) {
+            return $prophecy->willImplement($classOrInterface);
         }
 
         return $prophecy;
@@ -103,7 +100,6 @@ class Prophet
      */
     public function getProphecies()
     {
-
         return $this->prophecies;
     }
 
@@ -114,7 +110,6 @@ class Prophet
      */
     public function getDoubler()
     {
-
         return $this->doubler;
     }
 
@@ -126,16 +121,16 @@ class Prophet
     public function checkPredictions()
     {
 
-        $exception = new AggregateException( "Some predictions failed:\n" );
+        $exception = new AggregateException("Some predictions failed:\n");
         foreach ($this->prophecies as $prophecy) {
             try {
                 $prophecy->checkProphecyMethodsPredictions();
-            } catch( PredictionException $e ) {
-                $exception->append( $e );
+            } catch (PredictionException $e) {
+                $exception->append($e);
             }
         }
 
-        if (count( $exception->getExceptions() )) {
+        if (count($exception->getExceptions())) {
             throw $exception;
         }
     }

@@ -11,7 +11,6 @@ use Guzzle\Service\Description\Parameter;
  */
 class ReasonPhraseVisitor extends AbstractResponseVisitor
 {
-
     public function visit(
         CommandInterface $command,
         Response $response,
@@ -19,7 +18,6 @@ class ReasonPhraseVisitor extends AbstractResponseVisitor
         &$value,
         $context = null
     ) {
-
         $value[$param->getName()] = $response->getReasonPhrase();
     }
 }

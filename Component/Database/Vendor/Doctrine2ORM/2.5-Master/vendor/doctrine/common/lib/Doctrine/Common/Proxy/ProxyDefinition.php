@@ -26,7 +26,6 @@ namespace Doctrine\Common\Proxy;
  */
 class ProxyDefinition
 {
-
     /**
      * @var string
      */

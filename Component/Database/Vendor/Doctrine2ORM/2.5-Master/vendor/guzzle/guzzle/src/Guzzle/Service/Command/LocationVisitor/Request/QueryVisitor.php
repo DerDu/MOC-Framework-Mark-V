@@ -12,9 +12,9 @@ use Guzzle\Service\Description\Parameter;
 class QueryVisitor extends AbstractRequestVisitor
 {
 
-    public function visit( CommandInterface $command, RequestInterface $request, Parameter $param, $value )
+    public function visit(CommandInterface $command, RequestInterface $request, Parameter $param, $value)
     {
 
-        $request->getQuery()->set( $param->getWireName(), $this->prepareValue( $value, $param ) );
+        $request->getQuery()->set($param->getWireName(), $this->prepareValue($value, $param));
     }
 }

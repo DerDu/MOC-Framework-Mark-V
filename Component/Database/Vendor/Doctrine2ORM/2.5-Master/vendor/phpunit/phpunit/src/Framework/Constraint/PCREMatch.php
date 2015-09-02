@@ -17,18 +17,10 @@
  *
  * The pattern string passed in the constructor.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.0.0
+ * @since Class available since Release 3.0.0
  */
 class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constraint
 {
-
     /**
      * @var string
      */
@@ -37,9 +29,8 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
     /**
      * @param string $pattern
      */
-    public function __construct( $pattern )
+    public function __construct($pattern)
     {
-
         parent::__construct();
         $this->pattern = $pattern;
     }
@@ -51,7 +42,6 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
      */
     public function toString()
     {
-
         return sprintf(
             'matches PCRE pattern "%s"',
             $this->pattern
@@ -63,12 +53,11 @@ class PHPUnit_Framework_Constraint_PCREMatch extends PHPUnit_Framework_Constrain
      * constraint is met, false otherwise.
      *
      * @param  mixed $other Value or object to evaluate.
-     *
      * @return bool
      */
-    protected function matches( $other )
+    protected function matches($other)
     {
 
-        return preg_match( $this->pattern, $other ) > 0;
+        return preg_match($this->pattern, $other) > 0;
     }
 }

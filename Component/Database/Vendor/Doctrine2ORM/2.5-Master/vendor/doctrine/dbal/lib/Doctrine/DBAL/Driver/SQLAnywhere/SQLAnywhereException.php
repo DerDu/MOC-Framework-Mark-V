@@ -30,7 +30,6 @@ use Doctrine\DBAL\Driver\AbstractDriverException;
  */
 class SQLAnywhereException extends AbstractDriverException
 {
-
     /**
      * Helper method to turn SQL Anywhere error into exception.
      *
@@ -41,18 +40,18 @@ class SQLAnywhereException extends AbstractDriverException
      *
      * @throws \InvalidArgumentException
      */
-    public static function fromSQLAnywhereError( $conn = null, $stmt = null )
+    public static function fromSQLAnywhereError($conn = null, $stmt = null)
     {
 
-        if (null !== $conn && !( is_resource( $conn ) && get_resource_type( $conn ) === 'SQLAnywhere connection' )) {
-            throw new \InvalidArgumentException( 'Invalid SQL Anywhere connection resource given: '.$conn );
+        if (null !== $conn && !( is_resource($conn) && get_resource_type($conn) === 'SQLAnywhere connection' )) {
+            throw new \InvalidArgumentException('Invalid SQL Anywhere connection resource given: '.$conn);
         }
 
-        if (null !== $stmt && !( is_resource( $stmt ) && get_resource_type( $stmt ) === 'SQLAnywhere statement' )) {
-            throw new \InvalidArgumentException( 'Invalid SQL Anywhere statement resource given: '.$stmt );
+        if (null !== $stmt && !( is_resource($stmt) && get_resource_type($stmt) === 'SQLAnywhere statement' )) {
+            throw new \InvalidArgumentException('Invalid SQL Anywhere statement resource given: '.$stmt);
         }
 
-        $state = $conn ? sasql_sqlstate( $conn ) : sasql_sqlstate();
+        $state = $conn ? sasql_sqlstate($conn) : sasql_sqlstate();
         $code = null;
         $message = null;
 
@@ -60,8 +59,8 @@ class SQLAnywhereException extends AbstractDriverException
          * Try retrieving the last error from statement resource if given
          */
         if ($stmt) {
-            $code = sasql_stmt_errno( $stmt );
-            $message = sasql_stmt_error( $stmt );
+            $code = sasql_stmt_errno($stmt);
+            $message = sasql_stmt_error($stmt);
         }
 
         /**
@@ -73,8 +72,8 @@ class SQLAnywhereException extends AbstractDriverException
          * a prepared statement.
          */
         if ($conn && !$code) {
-            $code = sasql_errorcode( $conn );
-            $message = sasql_error( $conn );
+            $code = sasql_errorcode($conn);
+            $message = sasql_error($conn);
         }
 
         /**
@@ -88,9 +87,9 @@ class SQLAnywhereException extends AbstractDriverException
         }
 
         if ($message) {
-            return new self( 'SQLSTATE ['.$state.'] ['.$code.'] '.$message, $state, $code );
+            return new self('SQLSTATE ['.$state.'] ['.$code.'] '.$message, $state, $code);
         }
 
-        return new self( 'SQL Anywhere error occurred but no error message was retrieved from driver.', $state, $code );
+        return new self('SQL Anywhere error occurred but no error message was retrieved from driver.', $state, $code);
     }
 }

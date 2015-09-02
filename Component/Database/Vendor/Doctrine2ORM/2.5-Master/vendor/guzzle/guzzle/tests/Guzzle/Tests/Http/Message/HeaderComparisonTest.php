@@ -7,10 +7,8 @@ use Guzzle\Tests\Http\Message\HeaderComparison;
 
 class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
 {
-
     public function filterProvider()
     {
-
         return array(
 
             // Headers match
@@ -23,6 +21,7 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
                 ),
                 false
             ),
+
             // Missing header
             array(
                 array(
@@ -33,6 +32,7 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
                     '- X-Foo' => 'Bar'
                 )
             ),
+
             // Extra headers is present
             array(
                 array(
@@ -46,6 +46,7 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
                     '+ X-Baz' => 'Jar'
                 )
             ),
+
             // Header is present but must be absent
             array(
                 array(
@@ -58,6 +59,7 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
                     '++ X-Foo' => 'Bar'
                 )
             ),
+
             // Different values
             array(
                 array(
@@ -131,10 +133,10 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
                     'X-Foo'  => '*',
                     '_X-Bar' => '*',
                 ),
-                new Collection( array(
+                new Collection(array(
                     'x-foo' => 'Baz',
                     'x-BAR' => 'baz'
-                ) ),
+                )),
                 false
             ),
         );
@@ -143,10 +145,9 @@ class HeaderComparisonTest extends \Guzzle\Tests\GuzzleTestCase
     /**
      * @dataProvider filterProvider
      */
-    public function testComparesHeaders( $filters, $headers, $result )
+    public function testComparesHeaders($filters, $headers, $result)
     {
-
         $compare = new HeaderComparison();
-        $this->assertEquals( $result, $compare->compare( $filters, $headers ) );
+        $this->assertEquals($result, $compare->compare($filters, $headers));
     }
 }

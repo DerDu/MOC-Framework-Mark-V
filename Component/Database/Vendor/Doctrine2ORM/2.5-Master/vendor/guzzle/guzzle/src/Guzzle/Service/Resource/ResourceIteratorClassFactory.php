@@ -13,7 +13,6 @@ use Guzzle\Service\Command\CommandInterface;
  */
 class ResourceIteratorClassFactory extends AbstractResourceIteratorFactory
 {
-
     /** @var array List of namespaces used to look for classes */
     protected $namespaces;
 
@@ -24,7 +23,7 @@ class ResourceIteratorClassFactory extends AbstractResourceIteratorFactory
      * @param string|array       $namespaces List of namespaces for iterator objects
      * @param InflectorInterface $inflector  Inflector used to resolve class names
      */
-    public function __construct( $namespaces = array(), InflectorInterface $inflector = null )
+    public function __construct($namespaces = array(), InflectorInterface $inflector = null)
     {
 
         $this->namespaces = (array)$namespaces;
@@ -38,23 +37,23 @@ class ResourceIteratorClassFactory extends AbstractResourceIteratorFactory
      *
      * @return self
      */
-    public function registerNamespace( $namespace )
+    public function registerNamespace($namespace)
     {
 
-        array_unshift( $this->namespaces, $namespace );
+        array_unshift($this->namespaces, $namespace);
 
         return $this;
     }
 
-    protected function getClassName( CommandInterface $command )
+    protected function getClassName(CommandInterface $command)
     {
 
-        $iteratorName = $this->inflector->camel( $command->getName() ).'Iterator';
+        $iteratorName = $this->inflector->camel($command->getName()).'Iterator';
 
         // Determine the name of the class to load
         foreach ($this->namespaces as $namespace) {
             $potentialClassName = $namespace.'\\'.$iteratorName;
-            if (class_exists( $potentialClassName )) {
+            if (class_exists($potentialClassName)) {
                 return $potentialClassName;
             }
         }

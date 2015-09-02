@@ -28,18 +28,17 @@ use Doctrine\DBAL\Driver\PDOConnection;
  */
 class Connection extends PDOConnection implements \Doctrine\DBAL\Driver\Connection
 {
-
     /**
      * @override
      */
-    public function quote( $value, $type = \PDO::PARAM_STR )
+    public function quote($value, $type = \PDO::PARAM_STR)
     {
 
-        $val = parent::quote( $value, $type );
+        $val = parent::quote($value, $type);
 
         // Fix for a driver version terminating all values with null byte
-        if (strpos( $val, "\0" ) !== false) {
-            $val = substr( $val, 0, -1 );
+        if (strpos($val, "\0") !== false) {
+            $val = substr($val, 0, -1);
         }
 
         return $val;

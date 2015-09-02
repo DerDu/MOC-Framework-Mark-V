@@ -26,19 +26,18 @@ use Exception;
  * Base exception class for all ORM exceptions.
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 class ORMException extends Exception
 {
-
     /**
      * @return ORMException
      */
     public static function missingMappingDriverImpl()
     {
 
-        return new self( "It's a requirement to specify a Metadata Driver and pass it ".
-            "to Doctrine\\ORM\\Configuration::setMetadataDriverImpl()." );
+        return new self("It's a requirement to specify a Metadata Driver and pass it ".
+            "to Doctrine\\ORM\\Configuration::setMetadataDriverImpl().");
     }
 
     /**
@@ -46,10 +45,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function namedQueryNotFound( $queryName )
+    public static function namedQueryNotFound($queryName)
     {
 
-        return new self( 'Could not find a named query by the name "'.$queryName.'"' );
+        return new self('Could not find a named query by the name "'.$queryName.'"');
     }
 
     /**
@@ -57,10 +56,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function namedNativeQueryNotFound( $nativeQueryName )
+    public static function namedNativeQueryNotFound($nativeQueryName)
     {
 
-        return new self( 'Could not find a named native query by the name "'.$nativeQueryName.'"' );
+        return new self('Could not find a named native query by the name "'.$nativeQueryName.'"');
     }
 
     /**
@@ -69,13 +68,12 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function entityMissingForeignAssignedId( $entity, $relatedEntity )
+    public static function entityMissingForeignAssignedId($entity, $relatedEntity)
     {
-
         return new self(
-            "Entity of type ".get_class( $entity )." has identity through a foreign entity ".get_class( $relatedEntity ).", ".
+            "Entity of type ".get_class($entity)." has identity through a foreign entity ".get_class($relatedEntity).", ".
             "however this entity has no identity itself. You have to call EntityManager#persist() on the related entity ".
-            "and make sure that an identifier was generated before trying to persist '".get_class( $entity )."'. In case ".
+            "and make sure that an identifier was generated before trying to persist '".get_class($entity)."'. In case ".
             "of Post Insert ID Generation (such as MySQL Auto-Increment) this means you have to call ".
             "EntityManager#flush() between both persist operations."
         );
@@ -87,10 +85,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function entityMissingAssignedIdForField( $entity, $field )
+    public static function entityMissingAssignedIdForField($entity, $field)
     {
 
-        return new self( "Entity of type ".get_class( $entity )." is missing an assigned ID for field  '".$field."'. ".
+        return new self("Entity of type ".get_class($entity)." is missing an assigned ID for field  '".$field."'. ".
             "The identifier generation strategy for this entity requires the ID field to be populated before ".
             "EntityManager#persist() is called. If you want automatically generated identifiers instead ".
             "you need to adjust the metadata mapping accordingly."
@@ -102,10 +100,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function unrecognizedField( $field )
+    public static function unrecognizedField($field)
     {
 
-        return new self( "Unrecognized field: $field" );
+        return new self("Unrecognized field: $field");
     }
 
     /**
@@ -117,11 +115,11 @@ class ORMException extends Exception
      *
      * @return \Doctrine\ORM\ORMInvalidArgumentException
      */
-    public static function unexpectedAssociationValue( $class, $association, $given, $expected )
+    public static function unexpectedAssociationValue($class, $association, $given, $expected)
     {
 
-        return new self( sprintf( 'Found entity of type %s on association %s#%s, but expecting %s', $given, $class,
-            $association, $expected ) );
+        return new self(sprintf('Found entity of type %s on association %s#%s, but expecting %s', $given, $class,
+            $association, $expected));
     }
 
     /**
@@ -130,10 +128,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidOrientation( $className, $field )
+    public static function invalidOrientation($className, $field)
     {
 
-        return new self( "Invalid order by orientation specified for ".$className."#".$field );
+        return new self("Invalid order by orientation specified for ".$className."#".$field);
     }
 
     /**
@@ -141,10 +139,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidFlushMode( $mode )
+    public static function invalidFlushMode($mode)
     {
 
-        return new self( "'$mode' is an invalid flush mode." );
+        return new self("'$mode' is an invalid flush mode.");
     }
 
     /**
@@ -153,7 +151,7 @@ class ORMException extends Exception
     public static function entityManagerClosed()
     {
 
-        return new self( "The EntityManager is closed." );
+        return new self("The EntityManager is closed.");
     }
 
     /**
@@ -161,10 +159,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidHydrationMode( $mode )
+    public static function invalidHydrationMode($mode)
     {
 
-        return new self( "'$mode' is an invalid hydration mode." );
+        return new self("'$mode' is an invalid hydration mode.");
     }
 
     /**
@@ -173,7 +171,7 @@ class ORMException extends Exception
     public static function mismatchedEventManager()
     {
 
-        return new self( "Cannot use different EventManager instances for EntityManager and Connection." );
+        return new self("Cannot use different EventManager instances for EntityManager and Connection.");
     }
 
     /**
@@ -181,10 +179,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function findByRequiresParameter( $methodName )
+    public static function findByRequiresParameter($methodName)
     {
 
-        return new self( "You need to pass a parameter to '".$methodName."'" );
+        return new self("You need to pass a parameter to '".$methodName."'");
     }
 
     /**
@@ -194,9 +192,8 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidFindByCall( $entityName, $fieldName, $method )
+    public static function invalidFindByCall($entityName, $fieldName, $method)
     {
-
         return new self(
             "Entity '".$entityName."' has no field '".$fieldName."'. ".
             "You can therefore not call '".$method."' on the entities' repository"
@@ -209,9 +206,8 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidFindByInverseAssociation( $entityName, $associationFieldName )
+    public static function invalidFindByInverseAssociation($entityName, $associationFieldName)
     {
-
         return new self(
             "You cannot search for the association field '".$entityName."#".$associationFieldName."', ".
             "because it is the inverse side of an association. Find methods only work on owning side associations."
@@ -224,7 +220,7 @@ class ORMException extends Exception
     public static function invalidResultCacheDriver()
     {
 
-        return new self( "Invalid result cache driver; it must implement Doctrine\\Common\\Cache\\Cache." );
+        return new self("Invalid result cache driver; it must implement Doctrine\\Common\\Cache\\Cache.");
     }
 
     /**
@@ -233,7 +229,7 @@ class ORMException extends Exception
     public static function notSupported()
     {
 
-        return new self( "This behaviour is (currently) not supported by Doctrine 2" );
+        return new self("This behaviour is (currently) not supported by Doctrine 2");
     }
 
     /**
@@ -242,7 +238,7 @@ class ORMException extends Exception
     public static function queryCacheNotConfigured()
     {
 
-        return new self( 'Query Cache is not configured.' );
+        return new self('Query Cache is not configured.');
     }
 
     /**
@@ -251,7 +247,7 @@ class ORMException extends Exception
     public static function metadataCacheNotConfigured()
     {
 
-        return new self( 'Class Metadata Cache is not configured.' );
+        return new self('Class Metadata Cache is not configured.');
     }
 
     /**
@@ -259,10 +255,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function queryCacheUsesNonPersistentCache( CacheDriver $cache )
+    public static function queryCacheUsesNonPersistentCache(CacheDriver $cache)
     {
 
-        return new self( 'Query Cache uses a non-persistent cache driver, '.get_class( $cache ).'.' );
+        return new self('Query Cache uses a non-persistent cache driver, '.get_class($cache).'.');
     }
 
     /**
@@ -270,10 +266,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function metadataCacheUsesNonPersistentCache( CacheDriver $cache )
+    public static function metadataCacheUsesNonPersistentCache(CacheDriver $cache)
     {
 
-        return new self( 'Metadata Cache uses a non-persistent cache driver, '.get_class( $cache ).'.' );
+        return new self('Metadata Cache uses a non-persistent cache driver, '.get_class($cache).'.');
     }
 
     /**
@@ -282,7 +278,7 @@ class ORMException extends Exception
     public static function proxyClassesAlwaysRegenerating()
     {
 
-        return new self( 'Proxy Classes are always regenerating.' );
+        return new self('Proxy Classes are always regenerating.');
     }
 
     /**
@@ -290,9 +286,8 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function unknownEntityNamespace( $entityNamespaceAlias )
+    public static function unknownEntityNamespace($entityNamespaceAlias)
     {
-
         return new self(
             "Unknown Entity namespace alias '$entityNamespaceAlias'."
         );
@@ -303,10 +298,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function invalidEntityRepository( $className )
+    public static function invalidEntityRepository($className)
     {
 
-        return new self( "Invalid repository class '".$className."'. It must be a Doctrine\Common\Persistence\ObjectRepository." );
+        return new self("Invalid repository class '".$className."'. It must be a Doctrine\Common\Persistence\ObjectRepository.");
     }
 
     /**
@@ -315,10 +310,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function missingIdentifierField( $className, $fieldName )
+    public static function missingIdentifierField($className, $fieldName)
     {
 
-        return new self( "The identifier $fieldName is missing for a query of ".$className );
+        return new self("The identifier $fieldName is missing for a query of ".$className);
     }
 
     /**
@@ -327,11 +322,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function unrecognizedIdentifierFields( $className, $fieldNames )
+    public static function unrecognizedIdentifierFields($className, $fieldNames)
     {
-
         return new self(
-            "Unrecognized identifier fields: '".implode( "', '", $fieldNames )."' ".
+            "Unrecognized identifier fields: '".implode("', '", $fieldNames)."' ".
             "are not present on class '".$className."'."
         );
     }
@@ -341,10 +335,10 @@ class ORMException extends Exception
      *
      * @return ORMException
      */
-    public static function overwriteInternalDQLFunctionNotAllowed( $functionName )
+    public static function overwriteInternalDQLFunctionNotAllowed($functionName)
     {
 
-        return new self( "It is not allowed to overwrite internal function '$functionName' in the DQL parser through user-defined functions." );
+        return new self("It is not allowed to overwrite internal function '$functionName' in the DQL parser through user-defined functions.");
     }
 
     /**
@@ -353,6 +347,6 @@ class ORMException extends Exception
     public static function cantUseInOperatorOnCompositeKeys()
     {
 
-        return new self( "Can't use IN operator on entities that have composite keys." );
+        return new self("Can't use IN operator on entities that have composite keys.");
     }
 }

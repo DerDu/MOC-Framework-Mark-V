@@ -2,5 +2,4 @@
 
 trait ClassLoaderTest_TraitA
 {
-
 }

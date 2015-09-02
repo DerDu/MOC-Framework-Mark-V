@@ -23,7 +23,6 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 interface PredictionInterface
 {
-
     /**
      * Tests that double fulfilled prediction.
      *
@@ -34,5 +33,5 @@ interface PredictionInterface
      * @throws object
      * @return void
      */
-    public function check( array $calls, ObjectProphecy $object, MethodProphecy $method );
+    public function check(array $calls, ObjectProphecy $object, MethodProphecy $method);
 }

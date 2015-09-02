@@ -59,11 +59,11 @@ class Comparison implements Expression
      * @param string $operator
      * @param mixed  $value
      */
-    public function __construct( $field, $operator, $value )
+    public function __construct($field, $operator, $value)
     {
 
         if (!( $value instanceof Value )) {
-            $value = new Value( $value );
+            $value = new Value($value);
         }
 
         $this->field = $field;
@@ -76,7 +76,6 @@ class Comparison implements Expression
      */
     public function getField()
     {
-
         return $this->field;
     }
 
@@ -85,7 +84,6 @@ class Comparison implements Expression
      */
     public function getValue()
     {
-
         return $this->value;
     }
 
@@ -94,16 +92,15 @@ class Comparison implements Expression
      */
     public function getOperator()
     {
-
         return $this->op;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function visit( ExpressionVisitor $visitor )
+    public function visit(ExpressionVisitor $visitor)
     {
 
-        return $visitor->walkComparison( $this );
+        return $visitor->walkComparison($this);
     }
 }

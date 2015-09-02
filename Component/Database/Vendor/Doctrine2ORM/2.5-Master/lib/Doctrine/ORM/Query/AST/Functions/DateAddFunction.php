@@ -35,7 +35,6 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class DateAddFunction extends FunctionNode
 {
-
     public $firstDateExpression = null;
     public $intervalExpression = null;
     public $unit = null;
@@ -43,31 +42,31 @@ class DateAddFunction extends FunctionNode
     /**
      * @override
      */
-    public function getSql( SqlWalker $sqlWalker )
+    public function getSql(SqlWalker $sqlWalker)
     {
 
-        switch (strtolower( $this->unit->value )) {
+        switch (strtolower($this->unit->value)) {
             case 'second':
                 return $sqlWalker->getConnection()->getDatabasePlatform()->getDateAddSecondsExpression(
-                    $this->firstDateExpression->dispatch( $sqlWalker ),
-                    $this->intervalExpression->dispatch( $sqlWalker )
+                    $this->firstDateExpression->dispatch($sqlWalker),
+                    $this->intervalExpression->dispatch($sqlWalker)
                 );
 
             case 'hour':
                 return $sqlWalker->getConnection()->getDatabasePlatform()->getDateAddHourExpression(
-                    $this->firstDateExpression->dispatch( $sqlWalker ),
-                    $this->intervalExpression->dispatch( $sqlWalker )
+                    $this->firstDateExpression->dispatch($sqlWalker),
+                    $this->intervalExpression->dispatch($sqlWalker)
                 );
             case 'day':
                 return $sqlWalker->getConnection()->getDatabasePlatform()->getDateAddDaysExpression(
-                    $this->firstDateExpression->dispatch( $sqlWalker ),
-                    $this->intervalExpression->dispatch( $sqlWalker )
+                    $this->firstDateExpression->dispatch($sqlWalker),
+                    $this->intervalExpression->dispatch($sqlWalker)
                 );
 
             case 'month':
                 return $sqlWalker->getConnection()->getDatabasePlatform()->getDateAddMonthExpression(
-                    $this->firstDateExpression->dispatch( $sqlWalker ),
-                    $this->intervalExpression->dispatch( $sqlWalker )
+                    $this->firstDateExpression->dispatch($sqlWalker),
+                    $this->intervalExpression->dispatch($sqlWalker)
                 );
 
             default:
@@ -80,18 +79,18 @@ class DateAddFunction extends FunctionNode
     /**
      * @override
      */
-    public function parse( Parser $parser )
+    public function parse(Parser $parser)
     {
 
-        $parser->match( Lexer::T_IDENTIFIER );
-        $parser->match( Lexer::T_OPEN_PARENTHESIS );
+        $parser->match(Lexer::T_IDENTIFIER);
+        $parser->match(Lexer::T_OPEN_PARENTHESIS);
 
         $this->firstDateExpression = $parser->ArithmeticPrimary();
-        $parser->match( Lexer::T_COMMA );
+        $parser->match(Lexer::T_COMMA);
         $this->intervalExpression = $parser->ArithmeticPrimary();
-        $parser->match( Lexer::T_COMMA );
+        $parser->match(Lexer::T_COMMA);
         $this->unit = $parser->StringPrimary();
 
-        $parser->match( Lexer::T_CLOSE_PARENTHESIS );
+        $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

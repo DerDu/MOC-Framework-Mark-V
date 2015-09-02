@@ -61,7 +61,6 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function getPortability()
     {
-
         return $this->portability;
     }
 
@@ -70,18 +69,17 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function getFetchCase()
     {
-
         return $this->case;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function executeQuery( $query, array $params = array(), $types = array(), QueryCacheProfile $qcp = null )
+    public function executeQuery($query, array $params = array(), $types = array(), QueryCacheProfile $qcp = null)
     {
 
-        $stmt = new Statement( parent::executeQuery( $query, $params, $types, $qcp ), $this );
-        $stmt->setFetchMode( $this->defaultFetchMode );
+        $stmt = new Statement(parent::executeQuery($query, $params, $types, $qcp), $this);
+        $stmt->setFetchMode($this->defaultFetchMode);
 
         return $stmt;
     }
@@ -89,11 +87,11 @@ class Connection extends \Doctrine\DBAL\Connection
     /**
      * {@inheritdoc}
      */
-    public function prepare( $statement )
+    public function prepare($statement)
     {
 
-        $stmt = new Statement( parent::prepare( $statement ), $this );
-        $stmt->setFetchMode( $this->defaultFetchMode );
+        $stmt = new Statement(parent::prepare($statement), $this);
+        $stmt->setFetchMode($this->defaultFetchMode);
 
         return $stmt;
     }
@@ -103,12 +101,11 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function query()
     {
-
         $this->connect();
 
-        $stmt = call_user_func_array( array( $this->_conn, 'query' ), func_get_args() );
-        $stmt = new Statement( $stmt, $this );
-        $stmt->setFetchMode( $this->defaultFetchMode );
+        $stmt = call_user_func_array(array($this->_conn, 'query'), func_get_args());
+        $stmt = new Statement($stmt, $this);
+        $stmt->setFetchMode($this->defaultFetchMode);
 
         return $stmt;
     }
@@ -118,7 +115,6 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function connect()
     {
-
         $ret = parent::connect();
         if ($ret) {
             $params = $this->getParams();
@@ -145,7 +141,7 @@ class Connection extends \Doctrine\DBAL\Connection
             if (isset( $params['fetch_case'] ) && $this->portability & self::PORTABILITY_FIX_CASE) {
                 if ($this->_conn instanceof \Doctrine\DBAL\Driver\PDOConnection) {
                     // make use of c-level support for case handling
-                    $this->_conn->setAttribute( \PDO::ATTR_CASE, $params['fetch_case'] );
+                    $this->_conn->setAttribute(\PDO::ATTR_CASE, $params['fetch_case']);
                 } else {
                     $this->case = ( $params['fetch_case'] == \PDO::CASE_LOWER ) ? CASE_LOWER : CASE_UPPER;
                 }

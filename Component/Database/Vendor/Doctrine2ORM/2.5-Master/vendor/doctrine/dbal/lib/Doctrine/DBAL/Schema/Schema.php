@@ -55,7 +55,6 @@ use Doctrine\DBAL\Schema\Visitor\Visitor;
  */
 class Schema extends AbstractAsset
 {
-
     /**
      * @var \Doctrine\DBAL\Schema\Table[]
      */
@@ -87,23 +86,22 @@ class Schema extends AbstractAsset
         SchemaConfig $schemaConfig = null,
         array $namespaces = array()
     ) {
-
         if ($schemaConfig == null) {
             $schemaConfig = new SchemaConfig();
         }
         $this->_schemaConfig = $schemaConfig;
-        $this->_setName( $schemaConfig->getName() ?: 'public' );
+        $this->_setName($schemaConfig->getName() ?: 'public');
 
         foreach ($namespaces as $namespace) {
-            $this->createNamespace( $namespace );
+            $this->createNamespace($namespace);
         }
 
         foreach ($tables as $table) {
-            $this->_addTable( $table );
+            $this->_addTable($table);
         }
 
         foreach ($sequences as $sequence) {
-            $this->_addSequence( $sequence );
+            $this->_addSequence($sequence);
         }
     }
 
@@ -114,13 +112,13 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Schema This schema instance.
      */
-    public function createNamespace( $namespaceName )
+    public function createNamespace($namespaceName)
     {
 
-        $unquotedNamespaceName = strtolower( $this->getUnquotedAssetName( $namespaceName ) );
+        $unquotedNamespaceName = strtolower($this->getUnquotedAssetName($namespaceName));
 
         if (isset( $this->namespaces[$unquotedNamespaceName] )) {
-            throw SchemaException::namespaceAlreadyExists( $unquotedNamespaceName );
+            throw SchemaException::namespaceAlreadyExists($unquotedNamespaceName);
         }
 
         $this->namespaces[$unquotedNamespaceName] = $namespaceName;
@@ -135,11 +133,11 @@ class Schema extends AbstractAsset
      *
      * @return string
      */
-    private function getUnquotedAssetName( $assetName )
+    private function getUnquotedAssetName($assetName)
     {
 
-        if ($this->isIdentifierQuoted( $assetName )) {
-            return $this->trimQuotes( $assetName );
+        if ($this->isIdentifierQuoted($assetName)) {
+            return $this->trimQuotes($assetName);
         }
 
         return $assetName;
@@ -152,22 +150,21 @@ class Schema extends AbstractAsset
      *
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    protected function _addTable( Table $table )
+    protected function _addTable(Table $table)
     {
-
         $namespaceName = $table->getNamespaceName();
-        $tableName = $table->getFullQualifiedName( $this->getName() );
+        $tableName = $table->getFullQualifiedName($this->getName());
 
         if (isset( $this->_tables[$tableName] )) {
-            throw SchemaException::tableAlreadyExists( $tableName );
+            throw SchemaException::tableAlreadyExists($tableName);
         }
 
-        if (!$table->isInDefaultNamespace( $this->getName() ) && !$this->hasNamespace( $namespaceName )) {
-            $this->createNamespace( $namespaceName );
+        if (!$table->isInDefaultNamespace($this->getName()) && !$this->hasNamespace($namespaceName)) {
+            $this->createNamespace($namespaceName);
         }
 
         $this->_tables[$tableName] = $table;
-        $table->setSchemaConfig( $this->_schemaConfig );
+        $table->setSchemaConfig($this->_schemaConfig);
     }
 
     /**
@@ -177,10 +174,10 @@ class Schema extends AbstractAsset
      *
      * @return boolean
      */
-    public function hasNamespace( $namespaceName )
+    public function hasNamespace($namespaceName)
     {
 
-        $namespaceName = strtolower( $this->getUnquotedAssetName( $namespaceName ) );
+        $namespaceName = strtolower($this->getUnquotedAssetName($namespaceName));
 
         return isset( $this->namespaces[$namespaceName] );
     }
@@ -192,18 +189,17 @@ class Schema extends AbstractAsset
      *
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    protected function _addSequence( Sequence $sequence )
+    protected function _addSequence(Sequence $sequence)
     {
-
         $namespaceName = $sequence->getNamespaceName();
-        $seqName = $sequence->getFullQualifiedName( $this->getName() );
+        $seqName = $sequence->getFullQualifiedName($this->getName());
 
         if (isset( $this->_sequences[$seqName] )) {
-            throw SchemaException::sequenceAlreadyExists( $seqName );
+            throw SchemaException::sequenceAlreadyExists($seqName);
         }
 
-        if (!$sequence->isInDefaultNamespace( $this->getName() ) && !$this->hasNamespace( $namespaceName )) {
-            $this->createNamespace( $namespaceName );
+        if (!$sequence->isInDefaultNamespace($this->getName()) && !$this->hasNamespace($namespaceName)) {
+            $this->createNamespace($namespaceName);
         }
 
         $this->_sequences[$seqName] = $sequence;
@@ -214,7 +210,6 @@ class Schema extends AbstractAsset
      */
     public function hasExplicitForeignKeyIndexes()
     {
-
         return $this->_schemaConfig->hasExplicitForeignKeyIndexes();
     }
 
@@ -225,7 +220,6 @@ class Schema extends AbstractAsset
      */
     public function getNamespaces()
     {
-
         return $this->namespaces;
     }
 
@@ -236,7 +230,6 @@ class Schema extends AbstractAsset
      */
     public function getTables()
     {
-
         return $this->_tables;
     }
 
@@ -247,10 +240,10 @@ class Schema extends AbstractAsset
      *
      * @return boolean
      */
-    public function hasTable( $tableName )
+    public function hasTable($tableName)
     {
 
-        $tableName = $this->getFullQualifiedAssetName( $tableName );
+        $tableName = $this->getFullQualifiedAssetName($tableName);
 
         return isset( $this->_tables[$tableName] );
     }
@@ -260,16 +253,16 @@ class Schema extends AbstractAsset
      *
      * @return string
      */
-    private function getFullQualifiedAssetName( $name )
+    private function getFullQualifiedAssetName($name)
     {
 
-        $name = $this->getUnquotedAssetName( $name );
+        $name = $this->getUnquotedAssetName($name);
 
-        if (strpos( $name, "." ) === false) {
+        if (strpos($name, ".") === false) {
             $name = $this->getName().".".$name;
         }
 
-        return strtolower( $name );
+        return strtolower($name);
     }
 
     /**
@@ -280,7 +273,7 @@ class Schema extends AbstractAsset
     public function getTableNames()
     {
 
-        return array_keys( $this->_tables );
+        return array_keys($this->_tables);
     }
 
     /**
@@ -290,12 +283,12 @@ class Schema extends AbstractAsset
      *
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    public function getSequence( $sequenceName )
+    public function getSequence($sequenceName)
     {
 
-        $sequenceName = $this->getFullQualifiedAssetName( $sequenceName );
-        if (!$this->hasSequence( $sequenceName )) {
-            throw SchemaException::sequenceDoesNotExist( $sequenceName );
+        $sequenceName = $this->getFullQualifiedAssetName($sequenceName);
+        if (!$this->hasSequence($sequenceName)) {
+            throw SchemaException::sequenceDoesNotExist($sequenceName);
         }
 
         return $this->_sequences[$sequenceName];
@@ -306,10 +299,10 @@ class Schema extends AbstractAsset
      *
      * @return boolean
      */
-    public function hasSequence( $sequenceName )
+    public function hasSequence($sequenceName)
     {
 
-        $sequenceName = $this->getFullQualifiedAssetName( $sequenceName );
+        $sequenceName = $this->getFullQualifiedAssetName($sequenceName);
 
         return isset( $this->_sequences[$sequenceName] );
     }
@@ -319,7 +312,6 @@ class Schema extends AbstractAsset
      */
     public function getSequences()
     {
-
         return $this->_sequences;
     }
 
@@ -330,14 +322,14 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Table
      */
-    public function createTable( $tableName )
+    public function createTable($tableName)
     {
 
-        $table = new Table( $tableName );
-        $this->_addTable( $table );
+        $table = new Table($tableName);
+        $this->_addTable($table);
 
         foreach ($this->_schemaConfig->getDefaultTableOptions() as $name => $value) {
-            $table->addOption( $name, $value );
+            $table->addOption($name, $value);
         }
 
         return $table;
@@ -351,14 +343,14 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Schema
      */
-    public function renameTable( $oldTableName, $newTableName )
+    public function renameTable($oldTableName, $newTableName)
     {
 
-        $table = $this->getTable( $oldTableName );
-        $table->_setName( $newTableName );
+        $table = $this->getTable($oldTableName);
+        $table->_setName($newTableName);
 
-        $this->dropTable( $oldTableName );
-        $this->_addTable( $table );
+        $this->dropTable($oldTableName);
+        $this->_addTable($table);
 
         return $this;
     }
@@ -370,12 +362,12 @@ class Schema extends AbstractAsset
      *
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    public function getTable( $tableName )
+    public function getTable($tableName)
     {
 
-        $tableName = $this->getFullQualifiedAssetName( $tableName );
+        $tableName = $this->getFullQualifiedAssetName($tableName);
         if (!isset( $this->_tables[$tableName] )) {
-            throw SchemaException::tableDoesNotExist( $tableName );
+            throw SchemaException::tableDoesNotExist($tableName);
         }
 
         return $this->_tables[$tableName];
@@ -388,11 +380,11 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Schema
      */
-    public function dropTable( $tableName )
+    public function dropTable($tableName)
     {
 
-        $tableName = $this->getFullQualifiedAssetName( $tableName );
-        $this->getTable( $tableName );
+        $tableName = $this->getFullQualifiedAssetName($tableName);
+        $this->getTable($tableName);
         unset( $this->_tables[$tableName] );
 
         return $this;
@@ -407,11 +399,11 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Sequence
      */
-    public function createSequence( $sequenceName, $allocationSize = 1, $initialValue = 1 )
+    public function createSequence($sequenceName, $allocationSize = 1, $initialValue = 1)
     {
 
-        $seq = new Sequence( $sequenceName, $allocationSize, $initialValue );
-        $this->_addSequence( $seq );
+        $seq = new Sequence($sequenceName, $allocationSize, $initialValue);
+        $this->_addSequence($seq);
 
         return $seq;
     }
@@ -421,10 +413,10 @@ class Schema extends AbstractAsset
      *
      * @return \Doctrine\DBAL\Schema\Schema
      */
-    public function dropSequence( $sequenceName )
+    public function dropSequence($sequenceName)
     {
 
-        $sequenceName = $this->getFullQualifiedAssetName( $sequenceName );
+        $sequenceName = $this->getFullQualifiedAssetName($sequenceName);
         unset( $this->_sequences[$sequenceName] );
 
         return $this;
@@ -437,11 +429,11 @@ class Schema extends AbstractAsset
      *
      * @return array
      */
-    public function toSql( AbstractPlatform $platform )
+    public function toSql(AbstractPlatform $platform)
     {
 
-        $sqlCollector = new CreateSchemaSqlCollector( $platform );
-        $this->visit( $sqlCollector );
+        $sqlCollector = new CreateSchemaSqlCollector($platform);
+        $this->visit($sqlCollector);
 
         return $sqlCollector->getQueries();
     }
@@ -451,23 +443,23 @@ class Schema extends AbstractAsset
      *
      * @return void
      */
-    public function visit( Visitor $visitor )
+    public function visit(Visitor $visitor)
     {
 
-        $visitor->acceptSchema( $this );
+        $visitor->acceptSchema($this);
 
         if ($visitor instanceof NamespaceVisitor) {
             foreach ($this->namespaces as $namespace) {
-                $visitor->acceptNamespace( $namespace );
+                $visitor->acceptNamespace($namespace);
             }
         }
 
         foreach ($this->_tables as $table) {
-            $table->visit( $visitor );
+            $table->visit($visitor);
         }
 
         foreach ($this->_sequences as $sequence) {
-            $sequence->visit( $visitor );
+            $sequence->visit($visitor);
         }
     }
 
@@ -478,11 +470,11 @@ class Schema extends AbstractAsset
      *
      * @return array
      */
-    public function toDropSql( AbstractPlatform $platform )
+    public function toDropSql(AbstractPlatform $platform)
     {
 
-        $dropSqlCollector = new DropSchemaSqlCollector( $platform );
-        $this->visit( $dropSqlCollector );
+        $dropSqlCollector = new DropSchemaSqlCollector($platform);
+        $this->visit($dropSqlCollector);
 
         return $dropSqlCollector->getQueries();
     }
@@ -493,13 +485,12 @@ class Schema extends AbstractAsset
      *
      * @return array
      */
-    public function getMigrateToSql( Schema $toSchema, AbstractPlatform $platform )
+    public function getMigrateToSql(Schema $toSchema, AbstractPlatform $platform)
     {
-
         $comparator = new Comparator();
-        $schemaDiff = $comparator->compare( $this, $toSchema );
+        $schemaDiff = $comparator->compare($this, $toSchema);
 
-        return $schemaDiff->toSql( $platform );
+        return $schemaDiff->toSql($platform);
     }
 
     /**
@@ -508,13 +499,12 @@ class Schema extends AbstractAsset
      *
      * @return array
      */
-    public function getMigrateFromSql( Schema $fromSchema, AbstractPlatform $platform )
+    public function getMigrateFromSql(Schema $fromSchema, AbstractPlatform $platform)
     {
-
         $comparator = new Comparator();
-        $schemaDiff = $comparator->compare( $fromSchema, $this );
+        $schemaDiff = $comparator->compare($fromSchema, $this);
 
-        return $schemaDiff->toSql( $platform );
+        return $schemaDiff->toSql($platform);
     }
 
     /**
@@ -524,7 +514,6 @@ class Schema extends AbstractAsset
      */
     public function __clone()
     {
-
         foreach ($this->_tables as $k => $table) {
             $this->_tables[$k] = clone $table;
         }

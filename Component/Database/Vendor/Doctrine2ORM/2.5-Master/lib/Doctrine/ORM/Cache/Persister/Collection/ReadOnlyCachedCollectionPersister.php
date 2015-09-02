@@ -26,7 +26,7 @@ use Doctrine\ORM\PersistentCollection;
 
 /**
  * @author Fabio B. Silva <fabio.bat.silva@gmail.com>
- * @since  2.5
+ * @since 2.5
  */
 class ReadOnlyCachedCollectionPersister extends NonStrictReadWriteCachedCollectionPersister
 {
@@ -34,14 +34,14 @@ class ReadOnlyCachedCollectionPersister extends NonStrictReadWriteCachedCollecti
     /**
      * {@inheritdoc}
      */
-    public function update( PersistentCollection $collection )
+    public function update(PersistentCollection $collection)
     {
 
-        if ($collection->isDirty() && count( $collection->getSnapshot() ) > 0) {
-            throw CacheException::updateReadOnlyCollection( ClassUtils::getClass( $collection->getOwner() ),
-                $this->association['fieldName'] );
+        if ($collection->isDirty() && count($collection->getSnapshot()) > 0) {
+            throw CacheException::updateReadOnlyCollection(ClassUtils::getClass($collection->getOwner()),
+                $this->association['fieldName']);
         }
 
-        parent::update( $collection );
+        parent::update($collection);
     }
 }

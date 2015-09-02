@@ -32,7 +32,6 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class ManagerEventArgs extends EventArgs
 {
-
     /**
      * @var ObjectManager
      */
@@ -43,9 +42,8 @@ class ManagerEventArgs extends EventArgs
      *
      * @param ObjectManager $objectManager
      */
-    public function __construct( ObjectManager $objectManager )
+    public function __construct(ObjectManager $objectManager)
     {
-
         $this->objectManager = $objectManager;
     }
 
@@ -56,7 +54,6 @@ class ManagerEventArgs extends EventArgs
      */
     public function getObjectManager()
     {
-
         return $this->objectManager;
     }
 }

@@ -4,10 +4,10 @@ namespace Satooshi;
 class ProjectTestCase extends \PHPUnit_Framework_TestCase
 {
 
-    protected function setUpDir( $projectDir )
+    protected function setUpDir($projectDir)
     {
 
-        $this->rootDir = realpath( $projectDir.'/prj' );
+        $this->rootDir = realpath($projectDir.'/prj');
         $this->srcDir = $this->rootDir.'/files';
 
         $this->url = 'https://coveralls.io/api/v1/jobs';
@@ -32,51 +32,51 @@ class ProjectTestCase extends \PHPUnit_Framework_TestCase
         $jsonPathUnwritable = false
     ) {
 
-        if ($srcDir !== null && !is_dir( $srcDir )) {
-            mkdir( $srcDir, 0777, true );
+        if ($srcDir !== null && !is_dir($srcDir)) {
+            mkdir($srcDir, 0777, true);
         }
 
-        if ($logsDir !== null && !is_dir( $logsDir )) {
-            mkdir( $logsDir, 0777, true );
+        if ($logsDir !== null && !is_dir($logsDir)) {
+            mkdir($logsDir, 0777, true);
         }
 
         if ($cloverXmlPaths !== null) {
-            if (is_array( $cloverXmlPaths )) {
+            if (is_array($cloverXmlPaths)) {
                 foreach ($cloverXmlPaths as $cloverXmlPath) {
-                    touch( $cloverXmlPath );
+                    touch($cloverXmlPath);
                 }
             } else {
-                touch( $cloverXmlPaths );
+                touch($cloverXmlPaths);
             }
         }
 
         if ($logsDirUnwritable) {
-            if (file_exists( $logsDir )) {
-                chmod( $logsDir, 0577 );
+            if (file_exists($logsDir)) {
+                chmod($logsDir, 0577);
             }
         }
 
         if ($jsonPathUnwritable) {
-            touch( $this->jsonPath );
-            chmod( $this->jsonPath, 0577 );
+            touch($this->jsonPath);
+            chmod($this->jsonPath, 0577);
         }
     }
 
-    protected function rmFile( $file )
+    protected function rmFile($file)
     {
 
-        if (is_file( $file )) {
-            chmod( dirname( $file ), 0777 );
-            unlink( $file );
+        if (is_file($file)) {
+            chmod(dirname($file), 0777);
+            unlink($file);
         }
     }
 
-    protected function rmDir( $dir )
+    protected function rmDir($dir)
     {
 
-        if (is_dir( $dir )) {
-            chmod( $dir, 0777 );
-            rmdir( $dir );
+        if (is_dir($dir)) {
+            chmod($dir, 0777);
+            rmdir($dir);
         }
     }
 }

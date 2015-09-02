@@ -28,40 +28,38 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class TimeType extends Type
 {
-
     /**
      * {@inheritdoc}
      */
-    public function getSQLDeclaration( array $fieldDeclaration, AbstractPlatform $platform )
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
 
-        return $platform->getTimeTypeDeclarationSQL( $fieldDeclaration );
+        return $platform->getTimeTypeDeclarationSQL($fieldDeclaration);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function convertToDatabaseValue( $value, AbstractPlatform $platform )
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
 
         return ( $value !== null )
-            ? $value->format( $platform->getTimeFormatString() ) : null;
+            ? $value->format($platform->getTimeFormatString()) : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function convertToPHPValue( $value, AbstractPlatform $platform )
+    public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-
         if ($value === null || $value instanceof \DateTime) {
             return $value;
         }
 
-        $val = \DateTime::createFromFormat( '!'.$platform->getTimeFormatString(), $value );
+        $val = \DateTime::createFromFormat('!'.$platform->getTimeFormatString(), $value);
         if (!$val) {
-            throw ConversionException::conversionFailedFormat( $value, $this->getName(),
-                $platform->getTimeFormatString() );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(),
+                $platform->getTimeFormatString());
         }
 
         return $val;
@@ -72,7 +70,6 @@ class TimeType extends Type
      */
     public function getName()
     {
-
         return Type::TIME;
     }
 }

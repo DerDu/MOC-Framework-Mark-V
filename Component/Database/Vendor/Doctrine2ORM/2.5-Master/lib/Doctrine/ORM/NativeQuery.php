@@ -23,11 +23,10 @@ namespace Doctrine\ORM;
  * Represents a native SQL query.
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 final class NativeQuery extends AbstractQuery
 {
-
     /**
      * @var string
      */
@@ -42,7 +41,6 @@ final class NativeQuery extends AbstractQuery
      */
     public function getSQL()
     {
-
         return $this->_sql;
     }
 
@@ -53,9 +51,8 @@ final class NativeQuery extends AbstractQuery
      *
      * @return NativeQuery This query instance.
      */
-    public function setSQL( $sql )
+    public function setSQL($sql)
     {
-
         $this->_sql = $sql;
 
         return $this;
@@ -66,27 +63,26 @@ final class NativeQuery extends AbstractQuery
      */
     protected function _doExecute()
     {
-
         $parameters = array();
         $types = array();
 
         foreach ($this->getParameters() as $parameter) {
             $name = $parameter->getName();
-            $value = $this->processParameterValue( $parameter->getValue() );
+            $value = $this->processParameterValue($parameter->getValue());
             $type = ( $parameter->getValue() === $value )
                 ? $parameter->getType()
-                : Query\ParameterTypeInferer::inferType( $value );
+                : Query\ParameterTypeInferer::inferType($value);
 
             $parameters[$name] = $value;
             $types[$name] = $type;
         }
 
-        if ($parameters && is_int( key( $parameters ) )) {
-            ksort( $parameters );
-            ksort( $types );
+        if ($parameters && is_int(key($parameters))) {
+            ksort($parameters);
+            ksort($types);
 
-            $parameters = array_values( $parameters );
-            $types = array_values( $types );
+            $parameters = array_values($parameters);
+            $types = array_values($types);
         }
 
         return $this->_em->getConnection()->executeQuery(

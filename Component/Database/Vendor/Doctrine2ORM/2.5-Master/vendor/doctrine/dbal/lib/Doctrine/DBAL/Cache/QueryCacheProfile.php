@@ -30,7 +30,6 @@ use Doctrine\Common\Cache\Cache;
  */
 class QueryCacheProfile
 {
-
     /**
      * @var \Doctrine\Common\Cache\Cache|null
      */
@@ -51,9 +50,8 @@ class QueryCacheProfile
      * @param string|null                       $cacheKey
      * @param \Doctrine\Common\Cache\Cache|null $resultCache
      */
-    public function __construct( $lifetime = 0, $cacheKey = null, Cache $resultCache = null )
+    public function __construct($lifetime = 0, $cacheKey = null, Cache $resultCache = null)
     {
-
         $this->lifetime = $lifetime;
         $this->cacheKey = $cacheKey;
         $this->resultCacheDriver = $resultCache;
@@ -64,7 +62,6 @@ class QueryCacheProfile
      */
     public function getResultCacheDriver()
     {
-
         return $this->resultCacheDriver;
     }
 
@@ -73,10 +70,10 @@ class QueryCacheProfile
      *
      * @return \Doctrine\DBAL\Cache\QueryCacheProfile
      */
-    public function setResultCacheDriver( Cache $cache )
+    public function setResultCacheDriver(Cache $cache)
     {
 
-        return new QueryCacheProfile( $this->lifetime, $this->cacheKey, $cache );
+        return new QueryCacheProfile($this->lifetime, $this->cacheKey, $cache);
     }
 
     /**
@@ -84,7 +81,6 @@ class QueryCacheProfile
      */
     public function getLifetime()
     {
-
         return $this->lifetime;
     }
 
@@ -93,10 +89,10 @@ class QueryCacheProfile
      *
      * @return \Doctrine\DBAL\Cache\QueryCacheProfile
      */
-    public function setLifetime( $lifetime )
+    public function setLifetime($lifetime)
     {
 
-        return new QueryCacheProfile( $lifetime, $this->cacheKey, $this->resultCacheDriver );
+        return new QueryCacheProfile($lifetime, $this->cacheKey, $this->resultCacheDriver);
     }
 
     /**
@@ -106,7 +102,6 @@ class QueryCacheProfile
      */
     public function getCacheKey()
     {
-
         if ($this->cacheKey === null) {
             throw CacheException::noCacheKey();
         }
@@ -119,10 +114,10 @@ class QueryCacheProfile
      *
      * @return \Doctrine\DBAL\Cache\QueryCacheProfile
      */
-    public function setCacheKey( $cacheKey )
+    public function setCacheKey($cacheKey)
     {
 
-        return new QueryCacheProfile( $this->lifetime, $cacheKey, $this->resultCacheDriver );
+        return new QueryCacheProfile($this->lifetime, $cacheKey, $this->resultCacheDriver);
     }
 
     /**
@@ -134,17 +129,17 @@ class QueryCacheProfile
      *
      * @return array
      */
-    public function generateCacheKeys( $query, $params, $types )
+    public function generateCacheKeys($query, $params, $types)
     {
 
-        $realCacheKey = $query."-".serialize( $params )."-".serialize( $types );
+        $realCacheKey = $query."-".serialize($params)."-".serialize($types);
         // should the key be automatically generated using the inputs or is the cache key set?
         if ($this->cacheKey === null) {
-            $cacheKey = sha1( $realCacheKey );
+            $cacheKey = sha1($realCacheKey);
         } else {
             $cacheKey = $this->cacheKey;
         }
 
-        return array( $cacheKey, $realCacheKey );
+        return array($cacheKey, $realCacheKey);
     }
 }

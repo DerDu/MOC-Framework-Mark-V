@@ -9,7 +9,6 @@ use Guzzle\Service\Command\CommandInterface;
  */
 interface ResourceIteratorFactoryInterface
 {
-
     /**
      * Create a resource iterator
      *
@@ -18,7 +17,7 @@ interface ResourceIteratorFactoryInterface
      *
      * @return ResourceIteratorInterface
      */
-    public function build( CommandInterface $command, array $options = array() );
+    public function build(CommandInterface $command, array $options = array());
 
     /**
      * Check if the factory can create an iterator
@@ -27,5 +26,5 @@ interface ResourceIteratorFactoryInterface
      *
      * @return bool
      */
-    public function canBuild( CommandInterface $command );
+    public function canBuild(CommandInterface $command);
 }

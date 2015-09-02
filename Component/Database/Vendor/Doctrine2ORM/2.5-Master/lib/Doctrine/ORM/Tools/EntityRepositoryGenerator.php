@@ -32,7 +32,6 @@ namespace Doctrine\ORM\Tools;
  */
 class EntityRepositoryGenerator
 {
-
     protected static $_template =
         '<?php
 
@@ -56,21 +55,21 @@ class <className> extends <repositoryName>
      *
      * @return void
      */
-    public function writeEntityRepositoryClass( $fullClassName, $outputDirectory )
+    public function writeEntityRepositoryClass($fullClassName, $outputDirectory)
     {
 
-        $code = $this->generateEntityRepositoryClass( $fullClassName );
+        $code = $this->generateEntityRepositoryClass($fullClassName);
 
         $path = $outputDirectory.DIRECTORY_SEPARATOR
-            .str_replace( '\\', \DIRECTORY_SEPARATOR, $fullClassName ).'.php';
-        $dir = dirname( $path );
+            .str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName).'.php';
+        $dir = dirname($path);
 
-        if (!is_dir( $dir )) {
-            mkdir( $dir, 0777, true );
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
         }
 
-        if (!file_exists( $path )) {
-            file_put_contents( $path, $code );
+        if (!file_exists($path)) {
+            file_put_contents($path, $code);
         }
     }
 
@@ -79,16 +78,15 @@ class <className> extends <repositoryName>
      *
      * @return string
      */
-    public function generateEntityRepositoryClass( $fullClassName )
+    public function generateEntityRepositoryClass($fullClassName)
     {
-
         $variables = array(
-            '<namespace>'      => $this->generateEntityRepositoryNamespace( $fullClassName ),
-            '<repositoryName>' => $this->generateEntityRepositoryName( $fullClassName ),
-            '<className>'      => $this->generateClassName( $fullClassName )
+            '<namespace>'      => $this->generateEntityRepositoryNamespace($fullClassName),
+            '<repositoryName>' => $this->generateEntityRepositoryName($fullClassName),
+            '<className>'      => $this->generateClassName($fullClassName)
         );
 
-        return str_replace( array_keys( $variables ), array_values( $variables ), self::$_template );
+        return str_replace(array_keys($variables), array_values($variables), self::$_template);
     }
 
     /**
@@ -98,10 +96,10 @@ class <className> extends <repositoryName>
      *
      * @return string $namespace
      */
-    private function generateEntityRepositoryNamespace( $fullClassName )
+    private function generateEntityRepositoryNamespace($fullClassName)
     {
 
-        $namespace = $this->getClassNamespace( $fullClassName );
+        $namespace = $this->getClassNamespace($fullClassName);
 
         return $namespace ? 'namespace '.$namespace.';' : '';
     }
@@ -113,10 +111,10 @@ class <className> extends <repositoryName>
      *
      * @return string $namespace
      */
-    private function getClassNamespace( $fullClassName )
+    private function getClassNamespace($fullClassName)
     {
 
-        $namespace = substr( $fullClassName, 0, strrpos( $fullClassName, '\\' ) );
+        $namespace = substr($fullClassName, 0, strrpos($fullClassName, '\\'));
 
         return $namespace;
     }
@@ -126,10 +124,10 @@ class <className> extends <repositoryName>
      *
      * @return string $repositoryName
      */
-    private function generateEntityRepositoryName( $fullClassName )
+    private function generateEntityRepositoryName($fullClassName)
     {
 
-        $namespace = $this->getClassNamespace( $fullClassName );
+        $namespace = $this->getClassNamespace($fullClassName);
 
         $repositoryName = $this->repositoryName ?: 'Doctrine\ORM\EntityRepository';
 
@@ -147,15 +145,15 @@ class <className> extends <repositoryName>
      *
      * @return string
      */
-    private function generateClassName( $fullClassName )
+    private function generateClassName($fullClassName)
     {
 
-        $namespace = $this->getClassNamespace( $fullClassName );
+        $namespace = $this->getClassNamespace($fullClassName);
 
         $className = $fullClassName;
 
         if ($namespace) {
-            $className = substr( $fullClassName, strrpos( $fullClassName, '\\' ) + 1, strlen( $fullClassName ) );
+            $className = substr($fullClassName, strrpos($fullClassName, '\\') + 1, strlen($fullClassName));
         }
 
         return $className;
@@ -166,9 +164,8 @@ class <className> extends <repositoryName>
      *
      * @return \Doctrine\ORM\Tools\EntityRepositoryGenerator
      */
-    public function setDefaultRepositoryName( $repositoryName )
+    public function setDefaultRepositoryName($repositoryName)
     {
-
         $this->repositoryName = $repositoryName;
 
         return $this;

@@ -31,7 +31,6 @@ use Doctrine\DBAL\Types\Type;
  */
 class SQLAzureShardManager implements ShardManager
 {
-
     /**
      * @var string
      */
@@ -67,9 +66,8 @@ class SQLAzureShardManager implements ShardManager
      *
      * @throws \Doctrine\DBAL\Sharding\ShardingException
      */
-    public function __construct( Connection $conn )
+    public function __construct(Connection $conn)
     {
-
         $this->conn = $conn;
         $params = $conn->getParams();
 
@@ -98,7 +96,6 @@ class SQLAzureShardManager implements ShardManager
      */
     public function getDistributionType()
     {
-
         return $this->distributionType;
     }
 
@@ -109,7 +106,7 @@ class SQLAzureShardManager implements ShardManager
      *
      * @return void
      */
-    public function setFilteringEnabled( $flag )
+    public function setFilteringEnabled($flag)
     {
 
         $this->filteringEnabled = (bool)$flag;
@@ -118,20 +115,19 @@ class SQLAzureShardManager implements ShardManager
     /**
      * {@inheritDoc}
      */
-    public function queryAll( $sql, array $params = array(), array $types = array() )
+    public function queryAll($sql, array $params = array(), array $types = array())
     {
-
         $shards = $this->getShards();
         if (!$shards) {
-            throw new \RuntimeException( "No shards found for ".$this->federationName );
+            throw new \RuntimeException("No shards found for ".$this->federationName);
         }
 
         $result = array();
         $oldDistribution = $this->getCurrentDistributionValue();
 
         foreach ($shards as $shard) {
-            $this->selectShard( $shard['rangeLow'] );
-            foreach ($this->conn->fetchAll( $sql, $params, $types ) as $row) {
+            $this->selectShard($shard['rangeLow']);
+            foreach ($this->conn->fetchAll($sql, $params, $types) as $row) {
                 $result[] = $row;
             }
         }
@@ -139,7 +135,7 @@ class SQLAzureShardManager implements ShardManager
         if ($oldDistribution === null) {
             $this->selectGlobal();
         } else {
-            $this->selectShard( $oldDistribution );
+            $this->selectShard($oldDistribution);
         }
 
         return $result;
@@ -150,16 +146,15 @@ class SQLAzureShardManager implements ShardManager
      */
     public function getShards()
     {
-
         $sql = "SELECT member_id as id,
                       distribution_name as distribution_key,
                       CAST(range_low AS CHAR) AS rangeLow,
                       CAST(range_high AS CHAR) AS rangeHigh
                       FROM sys.federation_member_distributions d
                       INNER JOIN sys.federations f ON f.federation_id = d.federation_id
-                      WHERE f.name = ".$this->conn->quote( $this->federationName );
+                      WHERE f.name = ".$this->conn->quote($this->federationName);
 
-        return $this->conn->fetchAll( $sql );
+        return $this->conn->fetchAll($sql);
     }
 
     /**
@@ -167,34 +162,32 @@ class SQLAzureShardManager implements ShardManager
      */
     public function getCurrentDistributionValue()
     {
-
         return $this->currentDistributionValue;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function selectShard( $distributionValue )
+    public function selectShard($distributionValue)
     {
-
         if ($this->conn->isTransactionActive()) {
             throw ShardingException::activeTransaction();
         }
 
-        if ($distributionValue === null || is_bool( $distributionValue ) || !is_scalar( $distributionValue )) {
+        if ($distributionValue === null || is_bool($distributionValue) || !is_scalar($distributionValue)) {
             throw ShardingException::noShardDistributionValue();
         }
 
         $platform = $this->conn->getDatabasePlatform();
         $sql = sprintf(
             "USE FEDERATION %s (%s = %s) WITH RESET, FILTERING = %s;",
-            $platform->quoteIdentifier( $this->federationName ),
-            $platform->quoteIdentifier( $this->distributionKey ),
-            $this->conn->quote( $distributionValue ),
+            $platform->quoteIdentifier($this->federationName),
+            $platform->quoteIdentifier($this->distributionKey),
+            $this->conn->quote($distributionValue),
             ( $this->filteringEnabled ? 'ON' : 'OFF' )
         );
 
-        $this->conn->exec( $sql );
+        $this->conn->exec($sql);
         $this->currentDistributionValue = $distributionValue;
     }
 
@@ -203,13 +196,12 @@ class SQLAzureShardManager implements ShardManager
      */
     public function selectGlobal()
     {
-
         if ($this->conn->isTransactionActive()) {
             throw ShardingException::activeTransaction();
         }
 
         $sql = "USE FEDERATION ROOT WITH RESET";
-        $this->conn->exec( $sql );
+        $this->conn->exec($sql);
         $this->currentDistributionValue = null;
     }
 
@@ -220,15 +212,15 @@ class SQLAzureShardManager implements ShardManager
      *
      * @return void
      */
-    public function splitFederation( $splitDistributionValue )
+    public function splitFederation($splitDistributionValue)
     {
 
-        $type = Type::getType( $this->distributionType );
+        $type = Type::getType($this->distributionType);
 
         $sql = "ALTER FEDERATION ".$this->getFederationName()." ".
             "SPLIT AT (".$this->getDistributionKey()." = ".
-            $this->conn->quote( $splitDistributionValue, $type->getBindingType() ).")";
-        $this->conn->exec( $sql );
+            $this->conn->quote($splitDistributionValue, $type->getBindingType()).")";
+        $this->conn->exec($sql);
     }
 
     /**
@@ -238,7 +230,6 @@ class SQLAzureShardManager implements ShardManager
      */
     public function getFederationName()
     {
-
         return $this->federationName;
     }
 
@@ -249,7 +240,6 @@ class SQLAzureShardManager implements ShardManager
      */
     public function getDistributionKey()
     {
-
         return $this->distributionKey;
     }
 }

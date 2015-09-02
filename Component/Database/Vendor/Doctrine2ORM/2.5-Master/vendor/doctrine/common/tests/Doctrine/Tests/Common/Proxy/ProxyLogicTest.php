@@ -32,7 +32,6 @@ use PHPUnit_Framework_TestCase;
  */
 class ProxyLogicTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -64,22 +63,21 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
 
-        $this->proxyLoader = $loader = $this->getMock( 'stdClass', array( 'load' ), array(), '', false );
-        $this->initializerCallbackMock = $this->getMock( 'stdClass', array( '__invoke' ) );
+        $this->proxyLoader = $loader = $this->getMock('stdClass', array('load'), array(), '', false);
+        $this->initializerCallbackMock = $this->getMock('stdClass', array('__invoke'));
         $identifier = $this->identifier;
         $this->lazyLoadableObjectMetadata = $metadata = new LazyLoadableObjectClassMetadata();
 
         // emulating what should happen in a proxy factory
-        $cloner = function ( LazyLoadableObject $proxy ) use ( $loader, $identifier, $metadata ) {
-
+        $cloner = function (LazyLoadableObject $proxy) use ($loader, $identifier, $metadata) {
             /* @var $proxy LazyLoadableObject|Proxy */
             if ($proxy->__isInitialized()) {
                 return;
             }
 
-            $proxy->__setInitialized( true );
-            $proxy->__setInitializer( null );
-            $original = $loader->load( $identifier );
+            $proxy->__setInitialized(true);
+            $proxy->__setInitializer(null);
+            $original = $loader->load($identifier);
 
             if (null === $original) {
                 throw new UnexpectedValueException();
@@ -88,9 +86,9 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             foreach ($metadata->getReflectionClass()->getProperties() as $reflProperty) {
                 $propertyName = $reflProperty->getName();
 
-                if ($metadata->hasField( $propertyName ) || $metadata->hasAssociation( $propertyName )) {
-                    $reflProperty->setAccessible( true );
-                    $reflProperty->setValue( $proxy, $reflProperty->getValue( $original ) );
+                if ($metadata->hasField($propertyName) || $metadata->hasAssociation($propertyName)) {
+                    $reflProperty->setAccessible(true);
+                    $reflProperty->setValue($proxy, $reflProperty->getValue($original));
                 }
             }
         };
@@ -98,46 +96,45 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
         $proxyClassName = 'Doctrine\Tests\Common\ProxyProxy\__CG__\Doctrine\Tests\Common\Proxy\LazyLoadableObject';
 
         // creating the proxy class
-        if (!class_exists( $proxyClassName, false )) {
-            $proxyGenerator = new ProxyGenerator( __DIR__.'/generated', __NAMESPACE__.'Proxy', true );
-            $proxyGenerator->generateProxyClass( $metadata );
-            require_once $proxyGenerator->getProxyFileName( $metadata->getName() );
+        if (!class_exists($proxyClassName, false)) {
+            $proxyGenerator = new ProxyGenerator(__DIR__.'/generated', __NAMESPACE__.'Proxy', true);
+            $proxyGenerator->generateProxyClass($metadata);
+            require_once $proxyGenerator->getProxyFileName($metadata->getName());
         }
 
-        $this->lazyObject = new $proxyClassName( $this->getClosure( $this->initializerCallbackMock ), $cloner );
+        $this->lazyObject = new $proxyClassName($this->getClosure($this->initializerCallbackMock), $cloner);
 
         // setting identifiers in the proxy via reflection
         foreach ($metadata->getIdentifierFieldNames() as $idField) {
-            $prop = $metadata->getReflectionClass()->getProperty( $idField );
-            $prop->setAccessible( true );
-            $prop->setValue( $this->lazyObject, $identifier[$idField] );
+            $prop = $metadata->getReflectionClass()->getProperty($idField);
+            $prop->setAccessible(true);
+            $prop->setValue($this->lazyObject, $identifier[$idField]);
         }
 
-        $this->assertFalse( $this->lazyObject->__isInitialized() );
+        $this->assertFalse($this->lazyObject->__isInitialized());
     }
 
     /**
      * Converts a given callable into a closure
      *
      * @param  callable $callable
-     *
      * @return \Closure
      */
-    public function getClosure( $callable )
+    public function getClosure($callable)
     {
 
-        return function () use ( $callable ) {
+        return function () use ($callable) {
 
-            call_user_func_array( $callable, func_get_args() );
+            call_user_func_array($callable, func_get_args());
         };
     }
 
     public function testFetchingPublicIdentifierDoesNotCauseLazyLoading()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
-        $this->assertSame( 'publicIdentifierFieldValue', $this->lazyObject->publicIdentifierField );
+        $this->assertSame('publicIdentifierFieldValue', $this->lazyObject->publicIdentifierField);
     }
 
     /**
@@ -154,41 +151,39 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
         array $callParamsMatch = null,
         \Closure $callbackClosure = null
     ) {
-
         if (!$expectedCallCount) {
-            $invocationCountMatcher = $this->exactly( (int)$expectedCallCount );
+            $invocationCountMatcher = $this->exactly((int)$expectedCallCount);
         } else {
-            $invocationCountMatcher = $expectedCallCount < 0 ? $this->any() : $this->exactly( $expectedCallCount );
+            $invocationCountMatcher = $expectedCallCount < 0 ? $this->any() : $this->exactly($expectedCallCount);
         }
 
-        $invocationMocker = $this->initializerCallbackMock->expects( $invocationCountMatcher )->method( '__invoke' );
+        $invocationMocker = $this->initializerCallbackMock->expects($invocationCountMatcher)->method('__invoke');
 
         if (null !== $callParamsMatch) {
-            call_user_func_array( array( $invocationMocker, 'with' ), $callParamsMatch );
+            call_user_func_array(array($invocationMocker, 'with'), $callParamsMatch);
         }
 
         if ($callbackClosure) {
-            $invocationMocker->will( $this->returnCallback( $callbackClosure ) );
+            $invocationMocker->will($this->returnCallback($callbackClosure));
         }
     }
 
     public function testFetchingIdentifiersViaPublicGetterDoesNotCauseLazyLoading()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
-        $this->assertSame( 'protectedIdentifierFieldValue', $this->lazyObject->getProtectedIdentifierField() );
+        $this->assertSame('protectedIdentifierFieldValue', $this->lazyObject->getProtectedIdentifierField());
     }
 
     public function testCallingMethodCausesLazyLoading()
     {
-
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, 'testInitializationTriggeringMethod', array() ),
-            function ( Proxy $proxy ) {
+            array($this->lazyObject, 'testInitializationTriggeringMethod', array()),
+            function (Proxy $proxy) {
 
-                $proxy->__setInitializer( null );
+                $proxy->__setInitializer(null);
             }
         );
 
@@ -198,19 +193,18 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
 
     public function testFetchingPublicFieldsCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__get', array( 'publicPersistentField' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__get', array('publicPersistentField')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', 'loadedValue' );
+                $test->setProxyValue('publicPersistentField', 'loadedValue');
             }
         );
 
-        $this->assertSame( 'loadedValue', $this->lazyObject->publicPersistentField );
-        $this->assertSame( 'loadedValue', $this->lazyObject->publicPersistentField );
+        $this->assertSame('loadedValue', $this->lazyObject->publicPersistentField);
+        $this->assertSame('loadedValue', $this->lazyObject->publicPersistentField);
     }
 
     /**
@@ -221,75 +215,72 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
      * @param string $property
      * @param mixed  $value
      */
-    public function setProxyValue( $property, $value )
+    public function setProxyValue($property, $value)
     {
 
-        $reflectionProperty = new \ReflectionProperty( $this->lazyObject, $property );
+        $reflectionProperty = new \ReflectionProperty($this->lazyObject, $property);
         $initializer = $this->lazyObject->__getInitializer();
 
         // disabling initializer since setting `publicPersistentField` triggers `__set`/`__get`
-        $this->lazyObject->__setInitializer( null );
-        $reflectionProperty->setValue( $this->lazyObject, $value );
-        $this->lazyObject->__setInitializer( $initializer );
+        $this->lazyObject->__setInitializer(null);
+        $reflectionProperty->setValue($this->lazyObject, $value);
+        $this->lazyObject->__setInitializer($initializer);
     }
 
     public function testFetchingPublicAssociationCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__get', array( 'publicAssociation' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__get', array('publicAssociation')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicAssociation', 'loadedAssociation' );
+                $test->setProxyValue('publicAssociation', 'loadedAssociation');
             }
         );
 
-        $this->assertSame( 'loadedAssociation', $this->lazyObject->publicAssociation );
-        $this->assertSame( 'loadedAssociation', $this->lazyObject->publicAssociation );
+        $this->assertSame('loadedAssociation', $this->lazyObject->publicAssociation);
+        $this->assertSame('loadedAssociation', $this->lazyObject->publicAssociation);
     }
 
     public function testFetchingProtectedAssociationViaPublicGetterCausesLazyLoading()
     {
-
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, 'getProtectedAssociation', array() ),
-            function ( Proxy $proxy ) {
+            array($this->lazyObject, 'getProtectedAssociation', array()),
+            function (Proxy $proxy) {
 
-                $proxy->__setInitializer( null );
+                $proxy->__setInitializer(null);
             }
         );
 
-        $this->assertSame( 'protectedAssociationValue', $this->lazyObject->getProtectedAssociation() );
-        $this->assertSame( 'protectedAssociationValue', $this->lazyObject->getProtectedAssociation() );
+        $this->assertSame('protectedAssociationValue', $this->lazyObject->getProtectedAssociation());
+        $this->assertSame('protectedAssociationValue', $this->lazyObject->getProtectedAssociation());
     }
 
     public function testLazyLoadingTriggeredOnlyAtFirstPublicPropertyRead()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__get', array( 'publicPersistentField' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__get', array('publicPersistentField')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', 'loadedValue' );
-                $test->setProxyValue( 'publicAssociation', 'publicAssociationValue' );
+                $test->setProxyValue('publicPersistentField', 'loadedValue');
+                $test->setProxyValue('publicAssociation', 'publicAssociationValue');
             }
         );
 
-        $this->assertSame( 'loadedValue', $this->lazyObject->publicPersistentField );
-        $this->assertSame( 'publicAssociationValue', $this->lazyObject->publicAssociation );
+        $this->assertSame('loadedValue', $this->lazyObject->publicPersistentField);
+        $this->assertSame('publicAssociationValue', $this->lazyObject->publicAssociation);
     }
 
     public function testNoticeWhenReadingNonExistentPublicProperties()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
-        $class = get_class( $this->lazyObject );
+        $class = get_class($this->lazyObject);
         $this->setExpectedException(
             'PHPUnit_Framework_Error_Notice',
             'Undefined property: '.$class.'::$non_existing_property'
@@ -301,48 +292,46 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
     public function testFalseWhenCheckingNonExistentProperty()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
-        $this->assertFalse( isset( $this->lazyObject->non_existing_property ) );
+        $this->assertFalse(isset( $this->lazyObject->non_existing_property ));
     }
 
     public function testNoErrorWhenSettingNonExistentProperty()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
         $this->lazyObject->non_existing_property = 'now has a value';
-        $this->assertSame( 'now has a value', $this->lazyObject->non_existing_property );
+        $this->assertSame('now has a value', $this->lazyObject->non_existing_property);
     }
 
     public function testCloningCallsClonerWithClonedObject()
     {
-
         $lazyObject = $this->lazyObject;
         $test = $this;
-        $cb = $this->getMock( 'stdClass', array( 'cb' ) );
+        $cb = $this->getMock('stdClass', array('cb'));
         $cb
-            ->expects( $this->once() )
-            ->method( 'cb' )
-            ->will( $this->returnCallback( function ( LazyLoadableObject $proxy ) use ( $lazyObject, $test ) {
-
+            ->expects($this->once())
+            ->method('cb')
+            ->will($this->returnCallback(function (LazyLoadableObject $proxy) use ($lazyObject, $test) {
                 /* @var $proxy LazyLoadableObject|Proxy */
-                $test->assertNotSame( $proxy, $lazyObject );
-                $proxy->__setInitializer( null );
+                $test->assertNotSame($proxy, $lazyObject);
+                $proxy->__setInitializer(null);
                 $proxy->publicAssociation = 'clonedAssociation';
-            } ) );
+            }));
 
-        $this->lazyObject->__setCloner( $this->getClosure( array( $cb, 'cb' ) ) );
+        $this->lazyObject->__setCloner($this->getClosure(array($cb, 'cb')));
 
         $cloned = clone $this->lazyObject;
-        $this->assertSame( 'clonedAssociation', $cloned->publicAssociation );
-        $this->assertNotSame( $cloned, $lazyObject, 'a clone of the lazy object is retrieved' );
+        $this->assertSame('clonedAssociation', $cloned->publicAssociation);
+        $this->assertNotSame($cloned, $lazyObject, 'a clone of the lazy object is retrieved');
     }
 
     public function testFetchingTransientPropertiesWillNotTriggerLazyLoading()
     {
 
-        $this->configureInitializerMock( 0 );
+        $this->configureInitializerMock(0);
 
         $this->assertSame(
             'publicTransientFieldValue',
@@ -352,11 +341,11 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
         $property = $this
             ->lazyLoadableObjectMetadata
             ->getReflectionClass()
-            ->getProperty( 'protectedTransientField' );
-        $property->setAccessible( true );
+            ->getProperty('protectedTransientField');
+        $property->setAccessible(true);
         $this->assertSame(
             'protectedTransientFieldValue',
-            $property->getValue( $this->lazyObject ),
+            $property->getValue($this->lazyObject),
             'fetching protected transient field via reflection won\'t trigger lazy loading'
         );
     }
@@ -367,7 +356,7 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
     public function testLoadProxyMethod()
     {
 
-        $this->configureInitializerMock( 2, array( $this->lazyObject, '__load', array() ) );
+        $this->configureInitializerMock(2, array($this->lazyObject, '__load', array()));
 
         $this->lazyObject->__load();
         $this->lazyObject->__load();
@@ -375,11 +364,10 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
 
     public function testLoadingWithPersisterWillBeTriggeredOnlyOnce()
     {
-
         $this
             ->proxyLoader
-            ->expects( $this->once() )
-            ->method( 'load' )
+            ->expects($this->once())
+            ->method('load')
             ->with(
                 array(
                     'publicIdentifierField' => 'publicIdentifierFieldValue',
@@ -387,17 +375,16 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
                 ),
                 $this->lazyObject
             )
-            ->will( $this->returnCallback( function ( $id, LazyLoadableObject $lazyObject ) {
-
+            ->will($this->returnCallback(function ($id, LazyLoadableObject $lazyObject) {
                 // setting a value to verify that the persister can actually set something in the object
                 $lazyObject->publicAssociation = $id['publicIdentifierField'].'-test';
                 return true;
-            } ) );
-        $this->lazyObject->__setInitializer( $this->getSuggestedInitializerImplementation() );
+            }));
+        $this->lazyObject->__setInitializer($this->getSuggestedInitializerImplementation());
 
         $this->lazyObject->__load();
         $this->lazyObject->__load();
-        $this->assertSame( 'publicIdentifierFieldValue-test', $this->lazyObject->publicAssociation );
+        $this->assertSame('publicIdentifierFieldValue-test', $this->lazyObject->publicAssociation);
     }
 
     /**
@@ -412,11 +399,11 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
         $loader = $this->proxyLoader;
         $identifier = $this->identifier;
 
-        return function ( LazyLoadableObject $proxy ) use ( $loader, $identifier ) {
-
+        return function (LazyLoadableObject $proxy) use ($loader, $identifier) {
             /* @var $proxy LazyLoadableObject|Proxy */
-            $proxy->__setInitializer( null );
-            $proxy->__setCloner( null );
+            $proxy->__setInitializer(null);
+            $proxy->__setCloner(null);
+
 
             if ($proxy->__isInitialized()) {
                 return;
@@ -430,14 +417,14 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
                 }
             }
 
-            $proxy->__setInitialized( true );
+            $proxy->__setInitialized(true);
 
-            if (method_exists( $proxy, '__wakeup' )) {
+            if (method_exists($proxy, '__wakeup')) {
                 $proxy->__wakeup();
             }
 
-            if (null === $loader->load( $identifier, $proxy )) {
-                throw new \UnexpectedValueException( 'Couldn\'t load' );
+            if (null === $loader->load($identifier, $proxy)) {
+                throw new \UnexpectedValueException('Couldn\'t load');
             }
         };
     }
@@ -445,34 +432,32 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
     public function testFailedLoadingWillThrowException()
     {
 
-        $this->proxyLoader->expects( $this->any() )->method( 'load' )->will( $this->returnValue( null ) );
-        $this->setExpectedException( 'UnexpectedValueException' );
-        $this->lazyObject->__setInitializer( $this->getSuggestedInitializerImplementation() );
+        $this->proxyLoader->expects($this->any())->method('load')->will($this->returnValue(null));
+        $this->setExpectedException('UnexpectedValueException');
+        $this->lazyObject->__setInitializer($this->getSuggestedInitializerImplementation());
 
         $this->lazyObject->__load();
     }
 
     public function testCloningWithPersister()
     {
-
         $this->lazyObject->publicTransientField = 'should-not-change';
         $this
             ->proxyLoader
-            ->expects( $this->exactly( 2 ) )
-            ->method( 'load' )
-            ->with( array(
+            ->expects($this->exactly(2))
+            ->method('load')
+            ->with(array(
                 'publicIdentifierField'    => 'publicIdentifierFieldValue',
                 'protectedIdentifierField' => 'protectedIdentifierFieldValue',
-            ) )
-            ->will( $this->returnCallback( function () {
-
+            ))
+            ->will($this->returnCallback(function () {
                 $blueprint = new LazyLoadableObject();
                 $blueprint->publicPersistentField = 'checked-persistent-field';
                 $blueprint->publicAssociation = 'checked-association-field';
                 $blueprint->publicTransientField = 'checked-transient-field';
 
                 return $blueprint;
-            } ) );
+            }));
 
         $firstClone = clone $this->lazyObject;
         $this->assertSame(
@@ -515,23 +500,22 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
 
     public function testNotInitializedProxyUnserialization()
     {
-
         $this->configureInitializerMock();
 
-        $serialized = serialize( $this->lazyObject );
+        $serialized = serialize($this->lazyObject);
         /* @var $unserialized LazyLoadableObject|Proxy */
-        $unserialized = unserialize( $serialized );
+        $unserialized = unserialize($serialized);
         $reflClass = $this->lazyLoadableObjectMetadata->getReflectionClass();
 
-        $this->assertFalse( $unserialized->__isInitialized(), 'serialization didn\'t cause intialization' );
+        $this->assertFalse($unserialized->__isInitialized(), 'serialization didn\'t cause intialization');
 
         // Checking identifiers
-        $this->assertSame( 'publicIdentifierFieldValue', $unserialized->publicIdentifierField, 'identifiers are kept' );
-        $protectedIdentifierField = $reflClass->getProperty( 'protectedIdentifierField' );
-        $protectedIdentifierField->setAccessible( true );
+        $this->assertSame('publicIdentifierFieldValue', $unserialized->publicIdentifierField, 'identifiers are kept');
+        $protectedIdentifierField = $reflClass->getProperty('protectedIdentifierField');
+        $protectedIdentifierField->setAccessible(true);
         $this->assertSame(
             'protectedIdentifierFieldValue',
-            $protectedIdentifierField->getValue( $unserialized ),
+            $protectedIdentifierField->getValue($unserialized),
             'identifiers are kept'
         );
 
@@ -541,11 +525,11 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             $unserialized->publicTransientField,
             'transient fields are kept'
         );
-        $protectedTransientField = $reflClass->getProperty( 'protectedTransientField' );
-        $protectedTransientField->setAccessible( true );
+        $protectedTransientField = $reflClass->getProperty('protectedTransientField');
+        $protectedTransientField->setAccessible(true);
         $this->assertSame(
             'protectedTransientFieldValue',
-            $protectedTransientField->getValue( $unserialized ),
+            $protectedTransientField->getValue($unserialized),
             'transient fields are kept'
         );
 
@@ -555,39 +539,38 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             $unserialized->publicPersistentField,
             'persistent fields are kept'
         );
-        $protectedPersistentField = $reflClass->getProperty( 'protectedPersistentField' );
-        $protectedPersistentField->setAccessible( true );
+        $protectedPersistentField = $reflClass->getProperty('protectedPersistentField');
+        $protectedPersistentField->setAccessible(true);
         $this->assertSame(
             'protectedPersistentFieldValue',
-            $protectedPersistentField->getValue( $unserialized ),
+            $protectedPersistentField->getValue($unserialized),
             'persistent fields are kept'
         );
 
         // Checking associations
-        $this->assertSame( 'publicAssociationValue', $unserialized->publicAssociation, 'associations are kept' );
-        $protectedAssociationField = $reflClass->getProperty( 'protectedAssociation' );
-        $protectedAssociationField->setAccessible( true );
+        $this->assertSame('publicAssociationValue', $unserialized->publicAssociation, 'associations are kept');
+        $protectedAssociationField = $reflClass->getProperty('protectedAssociation');
+        $protectedAssociationField->setAccessible(true);
         $this->assertSame(
             'protectedAssociationValue',
-            $protectedAssociationField->getValue( $unserialized ),
+            $protectedAssociationField->getValue($unserialized),
             'associations are kept'
         );
     }
 
     public function testInitializedProxyUnserialization()
     {
-
         // persister will retrieve the lazy object itself, so that we don't have to re-define all field values
-        $this->proxyLoader->expects( $this->once() )->method( 'load' )->will( $this->returnValue( $this->lazyObject ) );
-        $this->lazyObject->__setInitializer( $this->getSuggestedInitializerImplementation() );
+        $this->proxyLoader->expects($this->once())->method('load')->will($this->returnValue($this->lazyObject));
+        $this->lazyObject->__setInitializer($this->getSuggestedInitializerImplementation());
         $this->lazyObject->__load();
 
-        $serialized = serialize( $this->lazyObject );
+        $serialized = serialize($this->lazyObject);
         $reflClass = $this->lazyLoadableObjectMetadata->getReflectionClass();
         /* @var $unserialized LazyLoadableObject|Proxy */
-        $unserialized = unserialize( $serialized );
+        $unserialized = unserialize($serialized);
 
-        $this->assertTrue( $unserialized->__isInitialized(), 'serialization didn\'t cause intialization' );
+        $this->assertTrue($unserialized->__isInitialized(), 'serialization didn\'t cause intialization');
 
         // Checking transient fields
         $this->assertSame(
@@ -595,11 +578,11 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             $unserialized->publicTransientField,
             'transient fields are kept'
         );
-        $protectedTransientField = $reflClass->getProperty( 'protectedTransientField' );
-        $protectedTransientField->setAccessible( true );
+        $protectedTransientField = $reflClass->getProperty('protectedTransientField');
+        $protectedTransientField->setAccessible(true);
         $this->assertSame(
             'protectedTransientFieldValue',
-            $protectedTransientField->getValue( $unserialized ),
+            $protectedTransientField->getValue($unserialized),
             'transient fields are kept'
         );
 
@@ -609,11 +592,11 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             $unserialized->publicPersistentField,
             'persistent fields are kept'
         );
-        $protectedPersistentField = $reflClass->getProperty( 'protectedPersistentField' );
-        $protectedPersistentField->setAccessible( true );
+        $protectedPersistentField = $reflClass->getProperty('protectedPersistentField');
+        $protectedPersistentField->setAccessible(true);
         $this->assertSame(
             'protectedPersistentFieldValue',
-            $protectedPersistentField->getValue( $unserialized ),
+            $protectedPersistentField->getValue($unserialized),
             'persistent fields are kept'
         );
 
@@ -623,31 +606,30 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
             $unserialized->publicIdentifierField,
             'identifiers are kept'
         );
-        $protectedIdentifierField = $reflClass->getProperty( 'protectedIdentifierField' );
-        $protectedIdentifierField->setAccessible( true );
+        $protectedIdentifierField = $reflClass->getProperty('protectedIdentifierField');
+        $protectedIdentifierField->setAccessible(true);
         $this->assertSame(
             'protectedIdentifierFieldValue',
-            $protectedIdentifierField->getValue( $unserialized ),
+            $protectedIdentifierField->getValue($unserialized),
             'identifiers are kept'
         );
 
         // Checking associations
-        $this->assertSame( 'publicAssociationValue', $unserialized->publicAssociation, 'associations are kept' );
-        $protectedAssociationField = $reflClass->getProperty( 'protectedAssociation' );
-        $protectedAssociationField->setAccessible( true );
+        $this->assertSame('publicAssociationValue', $unserialized->publicAssociation, 'associations are kept');
+        $protectedAssociationField = $reflClass->getProperty('protectedAssociation');
+        $protectedAssociationField->setAccessible(true);
         $this->assertSame(
             'protectedAssociationValue',
-            $protectedAssociationField->getValue( $unserialized ),
+            $protectedAssociationField->getValue($unserialized),
             'associations are kept'
         );
     }
 
     public function testInitializationRestoresDefaultPublicLazyLoadedFieldValues()
     {
-
         // setting noop persister
-        $this->proxyLoader->expects( $this->once() )->method( 'load' )->will( $this->returnValue( $this->lazyObject ) );
-        $this->lazyObject->__setInitializer( $this->getSuggestedInitializerImplementation() );
+        $this->proxyLoader->expects($this->once())->method('load')->will($this->returnValue($this->lazyObject));
+        $this->lazyObject->__setInitializer($this->getSuggestedInitializerImplementation());
 
         $this->assertSame(
             'publicPersistentFieldValue',
@@ -663,138 +645,133 @@ class ProxyLogicTest extends PHPUnit_Framework_TestCase
 
     public function testSettingPublicFieldsCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__set', array( 'publicPersistentField', 'newPublicPersistentFieldValue' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__set', array('publicPersistentField', 'newPublicPersistentFieldValue')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', 'overrideValue' );
-                $test->setProxyValue( 'publicAssociation', 'newAssociationValue' );
+                $test->setProxyValue('publicPersistentField', 'overrideValue');
+                $test->setProxyValue('publicAssociation', 'newAssociationValue');
             }
         );
 
         $this->lazyObject->publicPersistentField = 'newPublicPersistentFieldValue';
-        $this->assertSame( 'newPublicPersistentFieldValue', $this->lazyObject->publicPersistentField );
-        $this->assertSame( 'newAssociationValue', $this->lazyObject->publicAssociation );
+        $this->assertSame('newPublicPersistentFieldValue', $this->lazyObject->publicPersistentField);
+        $this->assertSame('newAssociationValue', $this->lazyObject->publicAssociation);
     }
 
     public function testSettingPublicAssociationCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__set', array( 'publicAssociation', 'newPublicAssociationValue' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__set', array('publicAssociation', 'newPublicAssociationValue')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', 'newPublicPersistentFieldValue' );
-                $test->setProxyValue( 'publicAssociation', 'overrideValue' );
+                $test->setProxyValue('publicPersistentField', 'newPublicPersistentFieldValue');
+                $test->setProxyValue('publicAssociation', 'overrideValue');
             }
         );
 
         $this->lazyObject->publicAssociation = 'newPublicAssociationValue';
-        $this->assertSame( 'newPublicAssociationValue', $this->lazyObject->publicAssociation );
-        $this->assertSame( 'newPublicPersistentFieldValue', $this->lazyObject->publicPersistentField );
+        $this->assertSame('newPublicAssociationValue', $this->lazyObject->publicAssociation);
+        $this->assertSame('newPublicPersistentFieldValue', $this->lazyObject->publicPersistentField);
     }
 
     public function testCheckingPublicFieldsCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__isset', array( 'publicPersistentField' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__isset', array('publicPersistentField')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', null );
-                $test->setProxyValue( 'publicAssociation', 'setPublicAssociation' );
+                $test->setProxyValue('publicPersistentField', null);
+                $test->setProxyValue('publicAssociation', 'setPublicAssociation');
             }
         );
 
-        $this->assertFalse( isset( $this->lazyObject->publicPersistentField ) );
-        $this->assertNull( $this->lazyObject->publicPersistentField );
-        $this->assertTrue( isset( $this->lazyObject->publicAssociation ) );
-        $this->assertSame( 'setPublicAssociation', $this->lazyObject->publicAssociation );
+        $this->assertFalse(isset( $this->lazyObject->publicPersistentField ));
+        $this->assertNull($this->lazyObject->publicPersistentField);
+        $this->assertTrue(isset( $this->lazyObject->publicAssociation ));
+        $this->assertSame('setPublicAssociation', $this->lazyObject->publicAssociation);
     }
 
     public function testCheckingPublicAssociationCausesLazyLoading()
     {
-
         $test = $this;
         $this->configureInitializerMock(
             1,
-            array( $this->lazyObject, '__isset', array( 'publicAssociation' ) ),
-            function () use ( $test ) {
+            array($this->lazyObject, '__isset', array('publicAssociation')),
+            function () use ($test) {
 
-                $test->setProxyValue( 'publicPersistentField', 'newPersistentFieldValue' );
-                $test->setProxyValue( 'publicAssociation', 'setPublicAssociation' );
+                $test->setProxyValue('publicPersistentField', 'newPersistentFieldValue');
+                $test->setProxyValue('publicAssociation', 'setPublicAssociation');
             }
         );
 
-        $this->assertTrue( isset( $this->lazyObject->publicAssociation ) );
-        $this->assertSame( 'setPublicAssociation', $this->lazyObject->publicAssociation );
-        $this->assertTrue( isset( $this->lazyObject->publicPersistentField ) );
-        $this->assertSame( 'newPersistentFieldValue', $this->lazyObject->publicPersistentField );
+        $this->assertTrue(isset( $this->lazyObject->publicAssociation ));
+        $this->assertSame('setPublicAssociation', $this->lazyObject->publicAssociation);
+        $this->assertTrue(isset( $this->lazyObject->publicPersistentField ));
+        $this->assertSame('newPersistentFieldValue', $this->lazyObject->publicPersistentField);
     }
 
     public function testCallingVariadicMethodCausesLazyLoading()
     {
-
         if (PHP_VERSION_ID < 50600) {
-            $this->markTestSkipped( 'Test applies only to PHP 5.6+' );
+            $this->markTestSkipped('Test applies only to PHP 5.6+');
         }
 
         $proxyClassName = 'Doctrine\Tests\Common\ProxyProxy\__CG__\Doctrine\Tests\Common\Proxy\VariadicTypeHintClass';
 
         /* @var $metadata \Doctrine\Common\Persistence\Mapping\ClassMetadata|\PHPUnit_Framework_MockObject_MockObject */
-        $metadata = $this->getMock( 'Doctrine\Common\Persistence\Mapping\ClassMetadata' );
+        $metadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
 
         $metadata
-            ->expects( $this->any() )
-            ->method( 'getName' )
-            ->will( $this->returnValue( 'Doctrine\Tests\Common\Proxy\VariadicTypeHintClass' ) );
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('Doctrine\Tests\Common\Proxy\VariadicTypeHintClass'));
         $metadata
-            ->expects( $this->any() )
-            ->method( 'getReflectionClass' )
-            ->will( $this->returnValue( new \ReflectionClass( 'Doctrine\Tests\Common\Proxy\VariadicTypeHintClass' ) ) );
+            ->expects($this->any())
+            ->method('getReflectionClass')
+            ->will($this->returnValue(new \ReflectionClass('Doctrine\Tests\Common\Proxy\VariadicTypeHintClass')));
 
         // creating the proxy class
-        if (!class_exists( $proxyClassName, false )) {
-            $proxyGenerator = new ProxyGenerator( __DIR__.'/generated', __NAMESPACE__.'Proxy', true );
-            $proxyGenerator->generateProxyClass( $metadata );
-            require_once $proxyGenerator->getProxyFileName( $metadata->getName() );
+        if (!class_exists($proxyClassName, false)) {
+            $proxyGenerator = new ProxyGenerator(__DIR__.'/generated', __NAMESPACE__.'Proxy', true);
+            $proxyGenerator->generateProxyClass($metadata);
+            require_once $proxyGenerator->getProxyFileName($metadata->getName());
         }
 
         /* @var $invocationMock callable|\PHPUnit_Framework_MockObject_MockObject */
-        $invocationMock = $this->getMock( 'stdClass', array( '__invoke' ) );
+        $invocationMock = $this->getMock('stdClass', array('__invoke'));
 
         /* @var $lazyObject \Doctrine\Tests\Common\Proxy\VariadicTypeHintClass */
         $lazyObject = new $proxyClassName(
-            function ( $proxy, $method, $parameters ) use ( $invocationMock ) {
+            function ($proxy, $method, $parameters) use ($invocationMock) {
 
-                $invocationMock( $proxy, $method, $parameters );
+                $invocationMock($proxy, $method, $parameters);
             },
             function () {
             }
         );
 
         $invocationMock
-            ->expects( $this->at( 0 ) )
-            ->method( '__invoke' )
-            ->with( $lazyObject, 'addType', array( array( 'type1', 'type2' ) ) );
+            ->expects($this->at(0))
+            ->method('__invoke')
+            ->with($lazyObject, 'addType', array(array('type1', 'type2')));
         $invocationMock
-            ->expects( $this->at( 1 ) )
-            ->method( '__invoke' )
-            ->with( $lazyObject, 'addTypeWithMultipleParameters', array( 'foo', 'bar', array( 'baz1', 'baz2' ) ) );
+            ->expects($this->at(1))
+            ->method('__invoke')
+            ->with($lazyObject, 'addTypeWithMultipleParameters', array('foo', 'bar', array('baz1', 'baz2')));
 
-        $lazyObject->addType( 'type1', 'type2' );
-        $this->assertSame( array( 'type1', 'type2' ), $lazyObject->types );
+        $lazyObject->addType('type1', 'type2');
+        $this->assertSame(array('type1', 'type2'), $lazyObject->types);
 
-        $lazyObject->addTypeWithMultipleParameters( 'foo', 'bar', 'baz1', 'baz2' );
-        $this->assertSame( 'foo', $lazyObject->foo );
-        $this->assertSame( 'bar', $lazyObject->bar );
-        $this->assertSame( array( 'baz1', 'baz2' ), $lazyObject->baz );
+        $lazyObject->addTypeWithMultipleParameters('foo', 'bar', 'baz1', 'baz2');
+        $this->assertSame('foo', $lazyObject->foo);
+        $this->assertSame('bar', $lazyObject->bar);
+        $this->assertSame(array('baz1', 'baz2'), $lazyObject->baz);
     }
 }

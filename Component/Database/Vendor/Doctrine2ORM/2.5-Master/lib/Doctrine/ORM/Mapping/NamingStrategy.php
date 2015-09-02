@@ -30,7 +30,6 @@ namespace Doctrine\ORM\Mapping;
  */
 interface NamingStrategy
 {
-
     /**
      * Returns a table name for an entity class.
      *
@@ -38,7 +37,7 @@ interface NamingStrategy
      *
      * @return string A table name.
      */
-    function classToTableName( $className );
+    function classToTableName($className);
 
     /**
      * Returns a column name for a property.
@@ -48,7 +47,7 @@ interface NamingStrategy
      *
      * @return string A column name.
      */
-    function propertyToColumnName( $propertyName, $className = null );
+    function propertyToColumnName($propertyName, $className = null);
 
     /**
      * Returns a column name for an embedded property.
@@ -75,13 +74,13 @@ interface NamingStrategy
     /**
      * Returns a join column name for a property.
      *
-     * @param string $propertyName      A property name.
+     * @param string $propertyName A property name.
      * @param string|null $className    The fully-qualified class name.
      *                                  This parameter is omitted from the signature due to BC
      *
      * @return string A join column name.
      */
-    function joinColumnName( $propertyName/*, $className = null*/ );
+    function joinColumnName($propertyName/*, $className = null*/);
 
     /**
      * Returns a join table name.
@@ -92,7 +91,7 @@ interface NamingStrategy
      *
      * @return string A join table name.
      */
-    function joinTableName( $sourceEntity, $targetEntity, $propertyName = null );
+    function joinTableName($sourceEntity, $targetEntity, $propertyName = null);
 
     /**
      * Returns the foreign key column name for the given parameters.
@@ -102,5 +101,5 @@ interface NamingStrategy
      *
      * @return string A join column name.
      */
-    function joinKeyColumnName( $entityName, $referencedColumnName = null );
+    function joinKeyColumnName($entityName, $referencedColumnName = null);
 }

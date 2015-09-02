@@ -9,17 +9,10 @@
  */
 
 /**
- * @category   PHP
- * @package    CodeCoverage
- * @author     Arne Blankerts <arne@blankerts.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 2.0.0
+ * @since Class available since Release 2.0.0
  */
 class PHP_CodeCoverage_Report_XML
 {
-
     /**
      * @var string
      */
@@ -30,15 +23,15 @@ class PHP_CodeCoverage_Report_XML
      */
     private $project;
 
-    public function process( PHP_CodeCoverage $coverage, $target )
+    public function process(PHP_CodeCoverage $coverage, $target)
     {
 
-        if (substr( $target, -1, 1 ) != DIRECTORY_SEPARATOR) {
+        if (substr($target, -1, 1) != DIRECTORY_SEPARATOR) {
             $target .= DIRECTORY_SEPARATOR;
         }
 
         $this->target = $target;
-        $this->initTargetDirectory( $target );
+        $this->initTargetDirectory($target);
 
         $report = $coverage->getReport();
 
@@ -46,40 +39,39 @@ class PHP_CodeCoverage_Report_XML
             $coverage->getReport()->getName()
         );
 
-        $this->processTests( $coverage->getTests() );
-        $this->processDirectory( $report, $this->project );
+        $this->processTests($coverage->getTests());
+        $this->processDirectory($report, $this->project);
 
         $index = $this->project->asDom();
         $index->formatOutput = true;
         $index->preserveWhiteSpace = false;
-        $index->save( $target.'/index.xml' );
+        $index->save($target.'/index.xml');
     }
 
-    private function initTargetDirectory( $dir )
+    private function initTargetDirectory($dir)
     {
 
-        if (file_exists( $dir )) {
-            if (!is_dir( $dir )) {
+        if (file_exists($dir)) {
+            if (!is_dir($dir)) {
                 throw new PHP_CodeCoverage_Exception(
                     "'$dir' exists but is not a directory."
                 );
             }
 
-            if (!is_writable( $dir )) {
+            if (!is_writable($dir)) {
                 throw new PHP_CodeCoverage_Exception(
                     "'$dir' exists but is not writable."
                 );
             }
-        } elseif (!@mkdir( $dir, 0777, true )) {
+        } elseif (!@mkdir($dir, 0777, true)) {
             throw new PHP_CodeCoverage_Exception(
                 "'$dir' could not be created."
             );
         }
     }
 
-    private function processTests( array $tests )
+    private function processTests(array $tests)
     {
-
         $testsObject = $this->project->getTests();
 
         foreach ($tests as $test => $result) {
@@ -87,7 +79,7 @@ class PHP_CodeCoverage_Report_XML
                 continue;
             }
 
-            $testsObject->addTest( $test, $result );
+            $testsObject->addTest($test, $result);
         }
     }
 
@@ -96,18 +88,18 @@ class PHP_CodeCoverage_Report_XML
         PHP_CodeCoverage_Report_XML_Node $context
     ) {
 
-        $dirObject = $context->addDirectory( $directory->getName() );
+        $dirObject = $context->addDirectory($directory->getName());
 
-        $this->setTotals( $directory, $dirObject->getTotals() );
+        $this->setTotals($directory, $dirObject->getTotals());
 
         foreach ($directory as $node) {
             if ($node instanceof PHP_CodeCoverage_Report_Node_Directory) {
-                $this->processDirectory( $node, $dirObject );
+                $this->processDirectory($node, $dirObject);
                 continue;
             }
 
             if ($node instanceof PHP_CodeCoverage_Report_Node_File) {
-                $this->processFile( $node, $dirObject );
+                $this->processFile($node, $dirObject);
                 continue;
             }
 
@@ -117,9 +109,8 @@ class PHP_CodeCoverage_Report_XML
         }
     }
 
-    private function setTotals( PHP_CodeCoverage_Report_Node $node, PHP_CodeCoverage_Report_XML_Totals $totals )
+    private function setTotals(PHP_CodeCoverage_Report_Node $node, PHP_CodeCoverage_Report_XML_Totals $totals)
     {
-
         $loc = $node->getLinesOfCode();
 
         $totals->setNumLines(
@@ -155,59 +146,58 @@ class PHP_CodeCoverage_Report_XML
         PHP_CodeCoverage_Report_Node_File $file,
         PHP_CodeCoverage_Report_XML_Directory $context
     ) {
-
         $fileObject = $context->addFile(
             $file->getName(),
             $file->getId().'.xml'
         );
 
-        $this->setTotals( $file, $fileObject->getTotals() );
+        $this->setTotals($file, $fileObject->getTotals());
 
         $fileReport = new PHP_CodeCoverage_Report_XML_File_Report(
             $file->getName()
         );
 
-        $this->setTotals( $file, $fileReport->getTotals() );
+        $this->setTotals($file, $fileReport->getTotals());
 
         foreach ($file->getClassesAndTraits() as $unit) {
-            $this->processUnit( $unit, $fileReport );
+            $this->processUnit($unit, $fileReport);
         }
 
         foreach ($file->getFunctions() as $function) {
-            $this->processFunction( $function, $fileReport );
+            $this->processFunction($function, $fileReport);
         }
 
         foreach ($file->getCoverageData() as $line => $tests) {
-            if (!is_array( $tests ) || count( $tests ) == 0) {
+            if (!is_array($tests) || count($tests) == 0) {
                 continue;
             }
 
-            $coverage = $fileReport->getLineCoverage( $line );
+            $coverage = $fileReport->getLineCoverage($line);
 
             foreach ($tests as $test) {
-                $coverage->addTest( $test );
+                $coverage->addTest($test);
             }
 
             $coverage->finalize();
         }
 
         $this->initTargetDirectory(
-            $this->target.dirname( $file->getId() ).'/'
+            $this->target.dirname($file->getId()).'/'
         );
 
         $fileDom = $fileReport->asDom();
         $fileDom->formatOutput = true;
         $fileDom->preserveWhiteSpace = false;
-        $fileDom->save( $this->target.$file->getId().'.xml' );
+        $fileDom->save($this->target.$file->getId().'.xml');
     }
 
-    private function processUnit( $unit, PHP_CodeCoverage_Report_XML_File_Report $report )
+    private function processUnit($unit, PHP_CodeCoverage_Report_XML_File_Report $report)
     {
 
         if (isset( $unit['className'] )) {
-            $unitObject = $report->getClassObject( $unit['className'] );
+            $unitObject = $report->getClassObject($unit['className']);
         } else {
-            $unitObject = $report->getTraitObject( $unit['traitName'] );
+            $unitObject = $report->getTraitObject($unit['traitName']);
         }
 
         $unitObject->setLines(
@@ -216,7 +206,7 @@ class PHP_CodeCoverage_Report_XML
             $unit['executedLines']
         );
 
-        $unitObject->setCrap( $unit['crap'] );
+        $unitObject->setCrap($unit['crap']);
 
         $unitObject->setPackage(
             $unit['package']['fullPackage'],
@@ -225,13 +215,13 @@ class PHP_CodeCoverage_Report_XML
             $unit['package']['category']
         );
 
-        $unitObject->setNamespace( $unit['package']['namespace'] );
+        $unitObject->setNamespace($unit['package']['namespace']);
 
         foreach ($unit['methods'] as $method) {
-            $methodObject = $unitObject->addMethod( $method['methodName'] );
-            $methodObject->setSignature( $method['signature'] );
-            $methodObject->setLines( $method['startLine'], $method['endLine'] );
-            $methodObject->setCrap( $method['crap'] );
+            $methodObject = $unitObject->addMethod($method['methodName']);
+            $methodObject->setSignature($method['signature']);
+            $methodObject->setLines($method['startLine'], $method['endLine']);
+            $methodObject->setCrap($method['crap']);
             $methodObject->setTotals(
                 $method['executableLines'],
                 $method['executedLines'],
@@ -240,14 +230,14 @@ class PHP_CodeCoverage_Report_XML
         }
     }
 
-    private function processFunction( $function, PHP_CodeCoverage_Report_XML_File_Report $report )
+    private function processFunction($function, PHP_CodeCoverage_Report_XML_File_Report $report)
     {
 
-        $functionObject = $report->getFunctionObject( $function['functionName'] );
+        $functionObject = $report->getFunctionObject($function['functionName']);
 
-        $functionObject->setSignature( $function['signature'] );
-        $functionObject->setLines( $function['startLine'] );
-        $functionObject->setCrap( $function['crap'] );
-        $functionObject->setTotals( $function['executableLines'], $function['executedLines'], $function['coverage'] );
+        $functionObject->setSignature($function['signature']);
+        $functionObject->setLines($function['startLine']);
+        $functionObject->setCrap($function['crap']);
+        $functionObject->setTotals($function['executableLines'], $function['executedLines'], $function['coverage']);
     }
 }

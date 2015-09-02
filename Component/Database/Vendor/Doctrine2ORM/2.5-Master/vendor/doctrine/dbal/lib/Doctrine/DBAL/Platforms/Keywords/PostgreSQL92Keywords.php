@@ -28,13 +28,11 @@ namespace Doctrine\DBAL\Platforms\Keywords;
  */
 class PostgreSQL92Keywords extends PostgreSQL91Keywords
 {
-
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-
         return 'PostgreSQL92';
     }
 
@@ -46,8 +44,8 @@ class PostgreSQL92Keywords extends PostgreSQL91Keywords
     protected function getKeywords()
     {
 
-        return array_merge( parent::getKeywords(), array(
+        return array_merge(parent::getKeywords(), array(
             'COLLATION',
-        ) );
+        ));
     }
 }

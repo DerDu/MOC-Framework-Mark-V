@@ -13,7 +13,6 @@ use Guzzle\Http\Message\RequestInterface;
  */
 interface ClientInterface extends HasDispatcherInterface
 {
-
     const CREATE_REQUEST = 'client.create_request';
 
     /** @var string RFC 1123 HTTP-Date */
@@ -26,7 +25,7 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @return self
      */
-    public function setConfig( $config );
+    public function setConfig($config);
 
     /**
      * Get a configuration setting or all of the configuration settings. The Collection result of this method can be
@@ -42,11 +41,10 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @param bool|string $key Configuration value to retrieve. Set to FALSE to retrieve all values of the client.
      *                         The object return can be modified, and modifications will affect the client's config.
-     *
      * @return mixed|Collection
      * @see \Guzzle\Http\Message\RequestFactoryInterface::applyOptions for a full list of request.options options
      */
-    public function getConfig( $key = false );
+    public function getConfig($key = false);
 
     /**
      * Create and return a new {@see RequestInterface} configured for the client.
@@ -81,11 +79,10 @@ interface ClientInterface extends HasDispatcherInterface
      * @param array            $options Options to apply to the request. For BC compatibility, you can also pass a
      *                                  string to tell Guzzle to download the body of the response to a particular
      *                                  location. Use the 'body' option instead for forward compatibility.
-     *
      * @return RequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function get( $uri = null, $headers = null, $options = array() );
+    public function get($uri = null, $headers = null, $options = array());
 
     /**
      * Create a HEAD request for the client
@@ -97,7 +94,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @return RequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function head( $uri = null, $headers = null, array $options = array() );
+    public function head($uri = null, $headers = null, array $options = array());
 
     /**
      * Create a DELETE request for the client
@@ -110,7 +107,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function delete( $uri = null, $headers = null, $body = null, array $options = array() );
+    public function delete($uri = null, $headers = null, $body = null, array $options = array());
 
     /**
      * Create a PUT request for the client
@@ -123,7 +120,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function put( $uri = null, $headers = null, $body = null, array $options = array() );
+    public function put($uri = null, $headers = null, $body = null, array $options = array());
 
     /**
      * Create a PATCH request for the client
@@ -136,7 +133,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function patch( $uri = null, $headers = null, $body = null, array $options = array() );
+    public function patch($uri = null, $headers = null, $body = null, array $options = array());
 
     /**
      * Create a POST request for the client
@@ -144,15 +141,15 @@ interface ClientInterface extends HasDispatcherInterface
      * @param string|array                                $uri      Resource URI
      * @param array|Collection                            $headers  HTTP headers
      * @param array|Collection|string|EntityBodyInterface $postBody POST body. Can be a string, EntityBody, or
-     *                                                              associative array of POST fields to send in the body of the
-     *                                                              request. Prefix a value in the array with the @ symbol to
-     *                                                              reference a file.
-     * @param array $options                                        Options to apply to the request
+     *                                                    associative array of POST fields to send in the body of the
+     *                                                    request. Prefix a value in the array with the @ symbol to
+     *                                                    reference a file.
+     * @param array $options                              Options to apply to the request
      *
      * @return EntityEnclosingRequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function post( $uri = null, $headers = null, $postBody = null, array $options = array() );
+    public function post($uri = null, $headers = null, $postBody = null, array $options = array());
 
     /**
      * Create an OPTIONS request for the client
@@ -163,7 +160,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @return RequestInterface
      * @see    Guzzle\Http\ClientInterface::createRequest()
      */
-    public function options( $uri = null, array $options = array() );
+    public function options($uri = null, array $options = array());
 
     /**
      * Sends a single request or an array of requests in parallel
@@ -172,7 +169,7 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @return \Guzzle\Http\Message\Response|array Returns a single Response or an array of Response objects
      */
-    public function send( $requests );
+    public function send($requests);
 
     /**
      * Get the client's base URL as either an expanded or raw URI template
@@ -181,7 +178,7 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @return string|null
      */
-    public function getBaseUrl( $expand = true );
+    public function getBaseUrl($expand = true);
 
     /**
      * Set the base URL of the client
@@ -190,7 +187,7 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @return self
      */
-    public function setBaseUrl( $url );
+    public function setBaseUrl($url);
 
     /**
      * Set the User-Agent header to be used on all requests from the client
@@ -200,7 +197,7 @@ interface ClientInterface extends HasDispatcherInterface
      *
      * @return self
      */
-    public function setUserAgent( $userAgent, $includeDefault = false );
+    public function setUserAgent($userAgent, $includeDefault = false);
 
     /**
      * Set SSL verification options.
@@ -220,8 +217,7 @@ interface ClientInterface extends HasDispatcherInterface
      * @param int         $verifyHost           Set to 1 to check the existence of a common name in the SSL peer
      *                                          certificate. 2 to check the existence of a common name and also verify
      *                                          that it matches the hostname provided.
-     *
      * @return self
      */
-    public function setSslVerification( $certificateAuthority = true, $verifyPeer = true, $verifyHost = 2 );
+    public function setSslVerification($certificateAuthority = true, $verifyPeer = true, $verifyHost = 2);
 }

@@ -17,25 +17,23 @@ use Symfony\Component\Config\Definition\Processor;
 
 class FinalizationTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testUnsetKeyWithDeepHierarchy()
     {
-
         $tb = new TreeBuilder();
         $tree = $tb
-            ->root( 'config', 'array' )
+            ->root('config', 'array')
             ->children()
-            ->node( 'level1', 'array' )
+            ->node('level1', 'array')
             ->canBeUnset()
             ->children()
-            ->node( 'level2', 'array' )
+            ->node('level2', 'array')
             ->canBeUnset()
             ->children()
-            ->node( 'somevalue', 'scalar' )->end()
-            ->node( 'anothervalue', 'scalar' )->end()
+            ->node('somevalue', 'scalar')->end()
+            ->node('anothervalue', 'scalar')->end()
             ->end()
             ->end()
-            ->node( 'level1_scalar', 'scalar' )->end()
+            ->node('level1_scalar', 'scalar')->end()
             ->end()
             ->end()
             ->end()
@@ -58,18 +56,17 @@ class FinalizationTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertEquals( array(
+        $this->assertEquals(array(
             'level1' => array(
                 'level1_scalar' => 'foo',
             ),
-        ), $this->process( $tree, array( $a, $b ) ) );
+        ), $this->process($tree, array($a, $b)));
     }
 
-    protected function process( NodeInterface $tree, array $configs )
+    protected function process(NodeInterface $tree, array $configs)
     {
-
         $processor = new Processor();
 
-        return $processor->process( $tree, $configs );
+        return $processor->process($tree, $configs);
     }
 }

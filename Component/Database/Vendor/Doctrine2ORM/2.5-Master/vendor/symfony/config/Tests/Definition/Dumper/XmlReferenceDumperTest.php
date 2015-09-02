@@ -16,19 +16,16 @@ use Symfony\Component\Config\Tests\Fixtures\Configuration\ExampleConfiguration;
 
 class XmlReferenceDumperTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testDumper()
     {
-
         $configuration = new ExampleConfiguration();
 
         $dumper = new XmlReferenceDumper();
-        $this->assertEquals( $this->getConfigurationAsString(), $dumper->dump( $configuration ) );
+        $this->assertEquals($this->getConfigurationAsString(), $dumper->dump($configuration));
     }
 
     private function getConfigurationAsString()
     {
-
         return <<<EOL
 <!-- Namespace: http://example.org/schema/dic/acme_root -->
 <!-- scalar-required: Required -->
@@ -75,12 +72,11 @@ EOL;
 
     public function testNamespaceDumper()
     {
-
         $configuration = new ExampleConfiguration();
 
         $dumper = new XmlReferenceDumper();
-        $this->assertEquals( str_replace( 'http://example.org/schema/dic/acme_root',
-            'http://symfony.com/schema/dic/symfony', $this->getConfigurationAsString() ),
-            $dumper->dump( $configuration, 'http://symfony.com/schema/dic/symfony' ) );
+        $this->assertEquals(str_replace('http://example.org/schema/dic/acme_root',
+            'http://symfony.com/schema/dic/symfony', $this->getConfigurationAsString()),
+            $dumper->dump($configuration, 'http://symfony.com/schema/dic/symfony'));
     }
 }
