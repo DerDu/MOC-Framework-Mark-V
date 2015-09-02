@@ -10,7 +10,6 @@ use MOC\V\Component\Database\Component\Parameter\Repository\HostParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\PasswordParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\PortParameter;
 use MOC\V\Component\Database\Component\Parameter\Repository\UsernameParameter;
-use MOC\V\Component\Database\Exception\DatabaseException;
 use MOC\V\Component\Database\Vendor\Vendor;
 
 /**
@@ -41,13 +40,14 @@ class Database implements IVendorInterface
      * @param string $Host
      * @param null   $Port
      *
-     * @throws DatabaseException
+     * @param int $Timeout
+     *
      * @return IBridgeInterface
      */
-    public static function getDatabase( $Username, $Password, $Database, $Driver, $Host, $Port = null )
+    public static function getDatabase($Username, $Password, $Database, $Driver, $Host, $Port = null, $Timeout = 5)
     {
 
-        return self::getDoctrineDatabase( $Username, $Password, $Database, $Driver, $Host, $Port );
+        return self::getDoctrineDatabase($Username, $Password, $Database, $Driver, $Host, $Port, $Timeout);
     }
 
     /**
@@ -58,9 +58,19 @@ class Database implements IVendorInterface
      * @param string $Host
      * @param null   $Port
      *
+     * @param int $Timeout
+     *
      * @return IBridgeInterface
      */
-    public static function getDoctrineDatabase( $Username, $Password, $Database, $Driver, $Host, $Port = null )
+    public static function getDoctrineDatabase(
+        $Username,
+        $Password,
+        $Database,
+        $Driver,
+        $Host,
+        $Port = null,
+        $Timeout = 5
+    )
     {
 
         $Doctrine = new Database(
@@ -75,7 +85,8 @@ class Database implements IVendorInterface
             new DatabaseParameter( $Database ),
             new DriverParameter( $Driver ),
             new HostParameter( $Host ),
-            new PortParameter( $Port )
+            new PortParameter($Port),
+            $Timeout
         );
 
         return $Doctrine->getBridgeInterface();

@@ -35,9 +35,9 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     {
 
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\DBAL',
-            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5-Master/vendor/doctrine/dbal/lib' );
+            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/vendor/doctrine/dbal/lib' );
         AutoLoader::getNamespaceAutoLoader( 'Doctrine\Common',
-            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5-Master/vendor/doctrine/common/lib' );
+            __DIR__.'/../../../Vendor/Doctrine2ORM/2.5.0/vendor/doctrine/common/lib' );
     }
 
     /**
@@ -48,8 +48,10 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
      * @param HostParameter     $Host
      * @param PortParameter     $Port
      *
-     * @throws ComponentException
+     * @param int               $Timeout
+     *
      * @return IBridgeInterface
+     * @throws ComponentException
      */
     public function registerConnection(
         UsernameParameter $Username,
@@ -57,17 +59,22 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
         DatabaseParameter $Database,
         DriverParameter $Driver,
         HostParameter $Host,
-        PortParameter $Port
+        PortParameter $Port,
+        $Timeout = 5
     ) {
 
         try {
             $Connection = DriverManager::getConnection( array(
-                'driver'   => $Driver->getDriver(),
-                'user'     => $Username->getUsername(),
-                'password' => $Password->getPassword(),
-                'host'     => $Host->getHost(),
-                'dbname'   => $Database->getDatabase(),
-                'port'     => $Port->getPort()
+                'driver'        => $Driver->getDriver(),
+                'user'          => $Username->getUsername(),
+                'password'      => $Password->getPassword(),
+                'host'          => $Host->getHost(),
+                'dbname'        => $Database->getDatabase(),
+                'port'          => $Port->getPort(),
+                'driverOptions' => array(
+                    \PDO::ATTR_TIMEOUT => $Timeout,
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                )
             ) );
         } catch
         ( \Exception $E ) {
