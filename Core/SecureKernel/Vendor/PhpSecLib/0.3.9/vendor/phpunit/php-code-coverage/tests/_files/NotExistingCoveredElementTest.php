@@ -1,8 +1,6 @@
 <?php
-
 class NotExistingCoveredElementTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @covers NotExistingClass
      */

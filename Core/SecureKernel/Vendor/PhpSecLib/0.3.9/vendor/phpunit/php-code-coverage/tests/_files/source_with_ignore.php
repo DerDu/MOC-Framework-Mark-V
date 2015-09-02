@@ -17,7 +17,6 @@ interface Bor
  */
 class Foo
 {
-
     public function bar()
     {
     }
@@ -31,7 +30,6 @@ function baz()
 
 class Bar
 {
-
     /**
      * @codeCoverageIgnore
      */

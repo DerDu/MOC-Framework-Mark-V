@@ -5,7 +5,7 @@ if (!isset( $argv[1] )) {
 }
 
 if ($argv[1] == 'alpha' || $argv[1] == 'beta') {
-    $version = sprintf( '%s-%s', $argv[1], date( 'Y-m-d' ) );
+    $version = sprintf('%s-%s', $argv[1], date('Y-m-d'));
 } else {
     $version = $argv[1];
 }
@@ -15,7 +15,7 @@ file_put_contents(
     str_replace(
         'private static $pharVersion;',
         'private static $pharVersion = "'.$version.'";',
-        file_get_contents( __DIR__.'/phar/phpunit/Runner/Version.php' )
+        file_get_contents(__DIR__.'/phar/phpunit/Runner/Version.php')
     )
 );
 

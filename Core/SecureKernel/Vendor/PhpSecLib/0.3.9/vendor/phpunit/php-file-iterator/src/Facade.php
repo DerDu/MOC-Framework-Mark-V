@@ -14,22 +14,16 @@
  * RecursiveDirectoryIterator for each given path. The list of unique
  * files is returned as an array.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version   Release: @package_version@
- * @link      http://github.com/sebastianbergmann/php-file-iterator/tree
  * @since     Class available since Release 1.3.0
  */
 class File_Iterator_Facade
 {
-
     /**
      * @param  array|string $paths
      * @param  array|string $suffixes
      * @param  array|string $prefixes
      * @param  array        $exclude
-     * @param  boolean      $commonPath
+     * @param  bool         $commonPath
      *
      * @return array
      */
@@ -41,8 +35,8 @@ class File_Iterator_Facade
         $commonPath = false
     ) {
 
-        if (is_string( $paths )) {
-            $paths = array( $paths );
+        if (is_string($paths)) {
+            $paths = array($paths);
         }
 
         $factory = new File_Iterator_Factory;
@@ -61,17 +55,17 @@ class File_Iterator_Facade
         }
 
         foreach ($paths as $path) {
-            if (is_file( $path )) {
-                $files[] = realpath( $path );
+            if (is_file($path)) {
+                $files[] = realpath($path);
             }
         }
 
-        $files = array_unique( $files );
-        sort( $files );
+        $files = array_unique($files);
+        sort($files);
 
         if ($commonPath) {
             return array(
-                'commonPath' => $this->getCommonPath( $files ),
+                'commonPath' => $this->getCommonPath($files),
                 'files'      => $files
             );
         } else {
@@ -86,23 +80,23 @@ class File_Iterator_Facade
      *
      * @return string
      */
-    protected function getCommonPath( array $files )
+    protected function getCommonPath(array $files)
     {
 
-        $count = count( $files );
+        $count = count($files);
 
         if ($count == 0) {
             return '';
         }
 
         if ($count == 1) {
-            return dirname( $files[0] ).DIRECTORY_SEPARATOR;
+            return dirname($files[0]).DIRECTORY_SEPARATOR;
         }
 
         $_files = array();
 
         foreach ($files as $file) {
-            $_files[] = $_fileParts = explode( DIRECTORY_SEPARATOR, $file );
+            $_files[] = $_fileParts = explode(DIRECTORY_SEPARATOR, $file);
 
             if (empty( $_fileParts[0] )) {
                 $_fileParts[0] = DIRECTORY_SEPARATOR;

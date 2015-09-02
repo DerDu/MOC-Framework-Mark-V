@@ -1,5 +1,4 @@
 <?php
-
 class DataProviderTest extends PHPUnit_Framework_TestCase
 {
 
@@ -7,19 +6,19 @@ class DataProviderTest extends PHPUnit_Framework_TestCase
     {
 
         return array(
-            array( 0, 0, 0 ),
-            array( 0, 1, 1 ),
-            array( 1, 1, 3 ),
-            array( 1, 0, 1 )
+            array(0, 0, 0),
+            array(0, 1, 1),
+            array(1, 1, 3),
+            array(1, 0, 1)
         );
     }
 
     /**
      * @dataProvider providerMethod
      */
-    public function testAdd( $a, $b, $c )
+    public function testAdd($a, $b, $c)
     {
 
-        $this->assertEquals( $c, $a + $b );
+        $this->assertEquals($c, $a + $b);
     }
 }

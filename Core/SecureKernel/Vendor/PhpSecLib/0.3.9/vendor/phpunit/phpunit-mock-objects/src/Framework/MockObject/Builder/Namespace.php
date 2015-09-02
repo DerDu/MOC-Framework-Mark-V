@@ -13,17 +13,10 @@
  *
  * This interface relates to PHPUnit_Framework_MockObject_Builder_Identity.
  *
- * @package    PHPUnit_MockObject
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
- * @since      Interface available since Release 1.0.0
+ * @since Interface available since Release 1.0.0
  */
 interface PHPUnit_Framework_MockObject_Builder_Namespace
 {
-
     /**
      * Looks up the match builder with identification $id and returns it.
      *
@@ -31,7 +24,7 @@ interface PHPUnit_Framework_MockObject_Builder_Namespace
      *
      * @return PHPUnit_Framework_MockObject_Builder_Match
      */
-    public function lookupId( $id );
+    public function lookupId($id);
 
     /**
      * Registers the match builder $builder with the identification $id. The
@@ -43,5 +36,5 @@ interface PHPUnit_Framework_MockObject_Builder_Namespace
      * @param PHPUnit_Framework_MockObject_Builder_Match $builder
      *                                                            The builder which is being registered.
      */
-    public function registerId( $id, PHPUnit_Framework_MockObject_Builder_Match $builder );
+    public function registerId($id, PHPUnit_Framework_MockObject_Builder_Match $builder);
 }
