@@ -8,6 +8,7 @@ Don't use them in production environments.
 Be also aware that current interfaces may change rapidly
 
 ![Minimal PHP Version](https://img.shields.io/badge/php-5.4.3-ff69b4.svg)
+![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)
 -----
 
 Development:

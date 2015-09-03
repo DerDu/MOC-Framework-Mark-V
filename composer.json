@@ -41,7 +41,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/DerDu/MOC-Framework-Mark-V/issues"
+        "issues": "https://github.com/DerDu/MOC-Framework-Mark-V/issues",
+        "docs": "http://derdu.github.io/MOC-Framework-Mark-V/"
     },
     "require": {
         "php": ">=5.4.0"
