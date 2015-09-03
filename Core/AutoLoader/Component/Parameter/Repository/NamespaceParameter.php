@@ -19,7 +19,7 @@ class NamespaceParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Namespace
      */
-    function __construct($Namespace)
+    public function __construct($Namespace)
     {
 
         $this->setNamespace($Namespace);

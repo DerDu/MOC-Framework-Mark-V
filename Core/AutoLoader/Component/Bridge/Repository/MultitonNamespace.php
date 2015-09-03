@@ -24,7 +24,7 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
      * @param DirectoryParameter $DirectoryParameter
      * @param NamespaceParameter $PrefixParameter
      */
-    function __construct(
+    public function __construct(
         NamespaceParameter $NamespaceParameter,
         DirectoryParameter $DirectoryParameter,
         NamespaceParameter $PrefixParameter = null

@@ -20,7 +20,7 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Size
      */
-    function __construct($Size = 'A4')
+    public function __construct($Size = 'A4')
     {
 
         $this->setSize($Size);
@@ -29,7 +29,7 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
 
         return $this->getSize();

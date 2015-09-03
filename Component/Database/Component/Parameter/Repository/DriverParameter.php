@@ -28,7 +28,7 @@ class DriverParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Driver
      */
-    function __construct($Driver)
+    public function __construct($Driver)
     {
 
         $this->setDriver($Driver);

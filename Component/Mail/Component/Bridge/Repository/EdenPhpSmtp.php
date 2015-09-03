@@ -22,7 +22,7 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         AutoLoader::getNamespaceAutoLoader('Eden\Mail',

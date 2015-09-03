@@ -20,7 +20,7 @@ class SecureKernel implements IVendorInterface
     /**
      * @param IVendorInterface $VendorInterface
      */
-    function __construct(IVendorInterface $VendorInterface)
+    public function __construct(IVendorInterface $VendorInterface)
     {
 
         $this->setVendorInterface($VendorInterface);

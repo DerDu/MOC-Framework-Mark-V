@@ -31,7 +31,7 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         AutoLoader::getNamespaceAutoLoader('Doctrine\DBAL',
@@ -76,8 +76,7 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
                     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
                 )
             ));
-        } catch
-        (\Exception $E) {
+        } catch (\Exception $E) {
             // @codeCoverageIgnoreStart
             throw new ComponentException($E->getMessage(), $E->getCode(), $E);
             // @codeCoverageIgnoreEnd

@@ -20,7 +20,7 @@ class PaperOrientationParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Orientation
      */
-    function __construct($Orientation = 'PORTRAIT')
+    public function __construct($Orientation = 'PORTRAIT')
     {
 
         $this->setOrientation($Orientation);
@@ -29,7 +29,7 @@ class PaperOrientationParameter extends Parameter implements IParameterInterface
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
 
         return $this->getOrientation();

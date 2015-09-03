@@ -20,7 +20,7 @@ class FileParameter extends Parameter implements IParameterInterface
     /**
      * @param string $File
      */
-    function __construct($File)
+    public function __construct($File)
     {
 
         $this->setFile($File);

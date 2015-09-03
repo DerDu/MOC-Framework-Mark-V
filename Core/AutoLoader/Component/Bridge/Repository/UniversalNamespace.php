@@ -21,7 +21,7 @@ class UniversalNamespace extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         $this->Instance = new NamespaceLoader();

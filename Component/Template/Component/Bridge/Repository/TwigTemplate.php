@@ -21,7 +21,7 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         require_once( __DIR__.'/../../../Vendor/Twig/lib/Twig/Autoloader.php' );

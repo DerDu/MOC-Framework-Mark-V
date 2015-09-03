@@ -23,7 +23,7 @@ class PhpExcel extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         require_once( __DIR__.'/../../../Vendor/PhpExcel/1.8.0/Classes/PHPExcel.php' );
@@ -95,44 +95,56 @@ class PhpExcel extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param FileParameter $Location
+     * @param FileParameter               $Location
+     * @param \PHPExcel_Cell_IValueBinder $ValueBinder
      *
      * @return PhpExcel
      */
-    public function newFile(FileParameter $Location)
+    public function newFile(FileParameter $Location, \PHPExcel_Cell_IValueBinder $ValueBinder = null)
     {
 
         $this->setFileParameter($Location);
-        $this->setConfiguration();
+        $this->setConfiguration($ValueBinder);
         $this->Source = new \PHPExcel();
         return $this;
     }
 
     /**
-     * @throws \PHPExcel_Exception
+     * @param \PHPExcel_Cell_IValueBinder $ValueBinder
      */
-    private function setConfiguration()
+    private function setConfiguration(\PHPExcel_Cell_IValueBinder $ValueBinder = null)
     {
 
         \PHPExcel_Settings::setCacheStorageMethod(
-//            \PHPExcel_CachedObjectStorageFactory::cache_to_apc, array( 'cacheTime' => 3600 )
             \PHPExcel_CachedObjectStorageFactory::cache_in_memory, array('cacheTime' => 3600)
         );
-        //\PHPExcel_Cell::setValueBinder( new \PHPExcel_Cell_AdvancedValueBinder() );
+        if (null !== $ValueBinder) {
+            \PHPExcel_Cell::setValueBinder($ValueBinder);
+        }
     }
 
     /**
-     * @param FileParameter $Location
+     * @return \PHPExcel_Cell_AdvancedValueBinder
+     */
+    public function createAdvancedValueBinder()
+    {
+
+        return new \PHPExcel_Cell_AdvancedValueBinder();
+    }
+
+    /**
+     * @param FileParameter               $Location
+     * @param \PHPExcel_Cell_IValueBinder $ValueBinder
      *
      * @return PhpExcel
      * @throws TypeFileException
      * @throws \PHPExcel_Reader_Exception
      */
-    public function loadFile(FileParameter $Location)
+    public function loadFile(FileParameter $Location, \PHPExcel_Cell_IValueBinder $ValueBinder = null)
     {
 
         $this->setFileParameter($Location);
-        $this->setConfiguration();
+        $this->setConfiguration($ValueBinder);
 
         $Info = $Location->getFileInfo();
         switch ($Info->getExtension()) {
@@ -289,7 +301,9 @@ class PhpExcel extends Bridge implements IBridgeInterface
 
         parent::setPaperOrientationParameter($PaperOrientation);
         $this->Source->getActiveSheet()->getPageSetup()
-            ->setOrientation(constant('\PHPExcel_Worksheet_PageSetup::ORIENTATION_'.$this->getPaperOrientationParameter()));
+            ->setOrientation(
+                constant('\PHPExcel_Worksheet_PageSetup::ORIENTATION_'.$this->getPaperOrientationParameter())
+            );
         return $this;
     }
 
@@ -303,7 +317,9 @@ class PhpExcel extends Bridge implements IBridgeInterface
 
         parent::setPaperSizeParameter($PaperSize);
         $this->Source->getActiveSheet()->getPageSetup()
-            ->setPaperSize(constant('\PHPExcel_Worksheet_PageSetup::PAPERSIZE_'.$this->getPaperSizeParameter()));
+            ->setPaperSize(
+                constant('\PHPExcel_Worksheet_PageSetup::PAPERSIZE_'.$this->getPaperSizeParameter())
+            );
         return $this;
     }
 }

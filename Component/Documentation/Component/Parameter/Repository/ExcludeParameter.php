@@ -15,7 +15,7 @@ class ExcludeParameter
     /**
      * @param array $GlobDirectory
      */
-    function __construct($GlobDirectory)
+    public function __construct($GlobDirectory)
     {
 
         $this->setGlobList($GlobDirectory);

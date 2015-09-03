@@ -22,16 +22,16 @@ abstract class Bridge implements IBridgeInterface
          */
         $Loader = spl_autoload_functions();
         if (is_array($Loader)) {
-            array_walk($Loader, function (&$L) {
+            array_walk($Loader, function (&$Loader) {
 
-                if (is_array($L)) {
-                    $Stack = $L[0];
+                if (is_array($Loader)) {
+                    $Stack = $Loader[0];
                 } else {
-                    $Stack = $L;
+                    $Stack = $Loader;
                 }
                 if ($Stack instanceof Bridge) {
                     if ($Stack->getLoaderHash() == $this->getLoaderHash()) {
-                        $L = false;
+                        $Loader = false;
                     }
                 }
             }, $this);

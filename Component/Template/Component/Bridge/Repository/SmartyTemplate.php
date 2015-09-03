@@ -21,7 +21,7 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         if (!defined('SMARTY_DIR')) {

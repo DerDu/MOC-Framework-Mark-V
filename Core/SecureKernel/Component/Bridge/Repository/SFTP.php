@@ -32,7 +32,7 @@ class SFTP extends Bridge implements IBridgeInterface
     /** @var null|string $Key */
     private $Key = null;
 
-    function __construct()
+    public function __construct()
     {
 
         AutoLoader::getNamespaceAutoLoader('phpseclib', __DIR__.'/../../../Vendor/PhpSecLib/2.0.0');

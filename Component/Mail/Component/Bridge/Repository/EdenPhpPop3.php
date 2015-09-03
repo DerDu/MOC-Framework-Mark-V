@@ -21,7 +21,7 @@ class EdenPhpPop3 extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         AutoLoader::getNamespaceAutoLoader('Eden\Mail',

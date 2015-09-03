@@ -20,7 +20,7 @@ class DirectoryParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Directory
      */
-    function __construct($Directory)
+    public function __construct($Directory)
     {
 
         $this->setDirectory($Directory);

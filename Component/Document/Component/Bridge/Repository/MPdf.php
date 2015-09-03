@@ -22,7 +22,7 @@ class MPdf extends Bridge implements IBridgeInterface
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
 
         require_once( __DIR__.'/../../../Vendor/mPdf/6.0.0/mpdf.php' );

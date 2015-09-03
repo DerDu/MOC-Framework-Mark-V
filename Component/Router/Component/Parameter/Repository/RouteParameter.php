@@ -26,7 +26,7 @@ class RouteParameter extends Parameter implements IParameterInterface
      * @param string $Path
      * @param string $Controller
      */
-    function __construct($Path, $Controller)
+    public function __construct($Path, $Controller)
     {
 
         $this->setPath($Path);

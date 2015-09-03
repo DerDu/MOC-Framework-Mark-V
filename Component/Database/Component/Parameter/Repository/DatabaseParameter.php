@@ -18,7 +18,7 @@ class DatabaseParameter extends Parameter implements IParameterInterface
     /**
      * @param string $Database
      */
-    function __construct($Database)
+    public function __construct($Database)
     {
 
         $this->setDatabase($Database);
