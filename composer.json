@@ -45,7 +45,7 @@
         "docs": "http://derdu.github.io/MOC-Framework-Mark-V/"
     },
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.3"
     },
     "require-dev": {
         "codeclimate/php-test-reporter": "dev-master"
