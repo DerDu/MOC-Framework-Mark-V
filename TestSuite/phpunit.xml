@@ -31,8 +31,13 @@
                 <directory>./../Core/HttpKernel/Vendor/Symfony</directory>
                 <directory>./../Core/SecureKernel/Vendor/PhpSecLib</directory>
                 <directory>./../Component/Captcha/Vendor/SimplePhpCaptcha</directory>
+                <directory>./../Component/Database/Vendor/Doctrine2Annotations</directory>
+                <directory>./../Component/Database/Vendor/Doctrine2Cache</directory>
+                <directory>./../Component/Database/Vendor/Doctrine2Collections</directory>
                 <directory>./../Component/Database/Vendor/Doctrine2Common</directory>
                 <directory>./../Component/Database/Vendor/Doctrine2DBAL</directory>
+                <directory>./../Component/Database/Vendor/Doctrine2Instantiator</directory>
+                <directory>./../Component/Database/Vendor/Doctrine2Lexer</directory>
                 <directory>./../Component/Database/Vendor/Doctrine2ORM</directory>
                 <directory>./../Component/Document/Vendor/PhpExcel</directory>
                 <directory>./../Component/Document/Vendor/DomPdf</directory>
