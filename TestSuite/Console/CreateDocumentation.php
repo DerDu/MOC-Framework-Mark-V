@@ -23,28 +23,31 @@ Documentation::getDocumentation(
     'MOC',
     'Mark V',
     new DirectoryParameter( __DIR__.'/../../' ),
-    new DirectoryParameter( __DIR__.'/../../Documentation' ),
+    new DirectoryParameter( __DIR__.'/../../../MOC-Framework-Mark-V-Documentation' ),
     new ExcludeParameter( array(
         '/.idea/*',
         '/.git/*',
-        '/Documentation/*',
         '*/TestSuite/*',
 
         '*/Vendor/Symfony/*',
         '*/Vendor/PhpSecLib/*',
         '*/Vendor/SimplePhpCaptcha/*',
+
         '*/Vendor/Doctrine2DBAL/*',
         '*/Vendor/Doctrine2ORM/*',
+
         '*/Vendor/PhpExcel/*',
         '*/Vendor/DomPdf/*',
         '*/Vendor/mPdf/*',
 
         '*/Vendor/ApiGen/*',
         '*/Vendor/Template/*',
+
         '*/Vendor/Twig/*',
         '*/Repository/TwigTemplate/*',
         '*/Vendor/Smarty/*',
         '*/Repository/SmartyTemplate/*',
+
         '*/Vendor/EdenPhpMail/*'
     ) )
 );
