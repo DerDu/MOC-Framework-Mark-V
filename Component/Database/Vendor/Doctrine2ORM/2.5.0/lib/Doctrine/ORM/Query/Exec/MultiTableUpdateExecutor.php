@@ -29,11 +29,10 @@ use Doctrine\ORM\Query\ParameterTypeInferer;
  * Class Table Inheritance (JOINED).
  *
  * @author Roman Borschel <roman@code-factory.org>
- * @since  2.0
+ * @since 2.0
  */
 class MultiTableUpdateExecutor extends AbstractSqlExecutor
 {
-
     /**
      * @var string
      */
@@ -65,7 +64,7 @@ class MultiTableUpdateExecutor extends AbstractSqlExecutor
      * Internal note: Any SQL construction and preparation takes place in the constructor for
      *                best performance. With a query cache the executor will be cached.
      *
-     * @param \Doctrine\ORM\Query\AST\Node  $AST       The root AST node of the DQL query.
+     * @param \Doctrine\ORM\Query\AST\Node $AST The root AST node of the DQL query.
      * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker The walker used for SQL generation from the AST.
      */
     public function __construct(AST\Node $AST, $sqlWalker)
@@ -150,7 +149,7 @@ class MultiTableUpdateExecutor extends AbstractSqlExecutor
         foreach ($idColumnNames as $idColumnName) {
             $columnDefinitions[$idColumnName] = array(
                 'notnull' => true,
-                'type'    => Type::getType($rootClass->getTypeOfColumn($idColumnName))
+                'type' => Type::getType($rootClass->getTypeOfColumn($idColumnName))
             );
         }
 
@@ -165,7 +164,6 @@ class MultiTableUpdateExecutor extends AbstractSqlExecutor
      */
     public function execute(Connection $conn, array $params, array $types)
     {
-
         $numUpdated = 0;
 
         // Create temporary id table

@@ -35,13 +35,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueryRegionCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
             ->setName('orm:clear-cache:region:query')
             ->setDescription('Clear a second-level cache query region.')
@@ -49,6 +47,7 @@ class QueryRegionCommand extends Command
             ->addOption('all', null, InputOption::VALUE_NONE,
                 'If defined, all query regions will be deleted/invalidated.')
             ->addOption('flush', null, InputOption::VALUE_NONE, 'If defined, all cache entries will be flushed.');
+
 
         $this->setHelp(<<<EOT
 The <info>%command.name%</info> command is meant to clear a second-level cache query region for an associated Entity Manager.

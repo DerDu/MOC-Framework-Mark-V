@@ -17,6 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
+
 namespace Doctrine\ORM\Utility;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
@@ -32,7 +33,6 @@ use Doctrine\ORM\UnitOfWork;
  */
 final class IdentifierFlattener
 {
-
     /**
      * The UnitOfWork used to coordinate object-level transactions.
      *
@@ -55,7 +55,6 @@ final class IdentifierFlattener
      */
     public function __construct(UnitOfWork $unitOfWork, ClassMetadataFactory $metadataFactory)
     {
-
         $this->unitOfWork = $unitOfWork;
         $this->metadataFactory = $metadataFactory;
     }
@@ -70,7 +69,6 @@ final class IdentifierFlattener
      */
     public function flattenIdentifier(ClassMetadata $class, array $id)
     {
-
         $flatId = array();
 
         foreach ($class->identifier as $field) {

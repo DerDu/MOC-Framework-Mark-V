@@ -27,11 +27,10 @@ use Doctrine\ORM\PersistentCollection;
  * Define the behavior that should be implemented by all entity persisters.
  *
  * @author Fabio B. Silva <fabio.bat.silva@gmail.com>
- * @since  2.5
+ * @since 2.5
  */
 interface EntityPersister
 {
-
     /**
      * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
@@ -86,7 +85,6 @@ interface EntityPersister
      * Get the COUNT SQL to count entities (optionally based on a criteria)
      *
      * @param  array|\Doctrine\Common\Collections\Criteria $criteria
-     *
      * @return string
      */
     public function getCountSQL($criteria = array());
@@ -218,8 +216,8 @@ interface EntityPersister
     /**
      * Loads an entity by identifier.
      *
-     * @param array       $identifier The entity identifier.
-     * @param object|null $entity     The entity to load the data into. If not specified, a new entity is created.
+     * @param array $identifier   The entity identifier.
+     * @param object|null $entity The entity to load the data into. If not specified, a new entity is created.
      *
      * @return object The loaded and managed entity instance or NULL if the entity can not be found.
      *
@@ -295,7 +293,7 @@ interface EntityPersister
      *
      * @param array                $assoc        The association mapping of the association being loaded.
      * @param object               $sourceEntity The entity that owns the collection.
-     * @param PersistentCollection $collection   The collection to fill.
+     * @param PersistentCollection $collection The collection to fill.
      *
      * @return array
      */

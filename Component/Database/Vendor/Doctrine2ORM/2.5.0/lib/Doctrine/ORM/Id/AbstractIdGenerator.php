@@ -23,14 +23,13 @@ use Doctrine\ORM\EntityManager;
 
 abstract class AbstractIdGenerator
 {
-
     /**
      * Generates an identifier for an entity.
      *
-     * @param EntityManager|EntityManager  $em
+     * @param EntityManager|EntityManager $em
      * @param \Doctrine\ORM\Mapping\Entity $entity
      *
-     * @return mixed
+*@return mixed
      */
     abstract public function generate(EntityManager $em, $entity);
 
@@ -46,7 +45,6 @@ abstract class AbstractIdGenerator
      */
     public function isPostInsertGenerator()
     {
-
         return false;
     }
 }

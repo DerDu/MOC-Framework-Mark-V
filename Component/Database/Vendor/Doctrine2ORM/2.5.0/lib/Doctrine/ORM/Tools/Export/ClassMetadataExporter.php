@@ -29,15 +29,14 @@ namespace Doctrine\ORM\Tools\Export;
  */
 class ClassMetadataExporter
 {
-
     /**
      * @var array
      */
     private static $_exporterDrivers = array(
-        'xml'        => 'Doctrine\ORM\Tools\Export\Driver\XmlExporter',
-        'yaml'       => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'yml'        => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
-        'php'        => 'Doctrine\ORM\Tools\Export\Driver\PhpExporter',
+        'xml'  => 'Doctrine\ORM\Tools\Export\Driver\XmlExporter',
+        'yaml' => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
+        'yml'  => 'Doctrine\ORM\Tools\Export\Driver\YamlExporter',
+        'php'  => 'Doctrine\ORM\Tools\Export\Driver\PhpExporter',
         'annotation' => 'Doctrine\ORM\Tools\Export\Driver\AnnotationExporter'
     );
 
@@ -51,7 +50,6 @@ class ClassMetadataExporter
      */
     public static function registerExportDriver($name, $class)
     {
-
         self::$_exporterDrivers[$name] = $class;
     }
 

@@ -35,13 +35,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectionRegionCommand extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-
         $this
             ->setName('orm:clear-cache:region:collection')
             ->setDescription('Clear a second-level cache collection region.')
@@ -51,6 +49,7 @@ class CollectionRegionCommand extends Command
             ->addOption('all', null, InputOption::VALUE_NONE,
                 'If defined, all entity regions will be deleted/invalidated.')
             ->addOption('flush', null, InputOption::VALUE_NONE, 'If defined, all cache entries will be flushed.');
+
 
         $this->setHelp(<<<EOT
 The <info>%command.name%</info> command is meant to clear a second-level cache collection regions for an associated Entity Manager.
