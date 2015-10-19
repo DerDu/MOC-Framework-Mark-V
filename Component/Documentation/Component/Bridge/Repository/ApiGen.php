@@ -7,6 +7,7 @@ use MOC\V\Component\Documentation\Component\Parameter\Repository\DirectoryParame
 use MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParameter;
 use MOC\V\Core\AutoLoader\AutoLoader;
 use MOC\V\Core\FileSystem\FileSystem;
+use MOC\V\Core\GlobalsKernel\GlobalsKernel;
 use Nette\Config\Adapters\NeonAdapter;
 
 /**
@@ -63,11 +64,13 @@ class ApiGen extends Bridge implements IBridgeInterface
         $File = FileSystem::getFileWriter(__DIR__.'/ApiGen.config');
         file_put_contents($File->getLocation(), $Neon->dump($Config));
 
-        $_SERVER['argv'] = array(
+        $SERVER = GlobalsKernel::getGlobals()->getSERVER();
+        $SERVER['argv'] = array(
             'DUMMY-SHELL-ARGS',
             '--config',
             $File->getLocation()
         );
+        GlobalsKernel::getGlobals()->setSERVER($SERVER);
 
         include( __DIR__.'/../../../Vendor/ApiGen/apigen.php' );
     }

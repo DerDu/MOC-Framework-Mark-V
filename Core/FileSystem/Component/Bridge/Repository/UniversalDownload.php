@@ -5,6 +5,7 @@ use MOC\V\Core\FileSystem\Component\Bridge\Bridge;
 use MOC\V\Core\FileSystem\Component\IBridgeInterface;
 use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
 use MOC\V\Core\FileSystem\Vendor\Universal\Download;
+use MOC\V\Core\GlobalsKernel\GlobalsKernel;
 
 /**
  * Class UniversalDownload
@@ -41,9 +42,10 @@ class UniversalDownload extends Bridge implements IBridgeInterface
     public function getRealPath()
     {
 
+        $SERVER = GlobalsKernel::getGlobals()->getSERVER();
         $SplFileInfo = (new \SplFileInfo($this->Instance->getLocation()));
         if (!$SplFileInfo->getRealPath()) {
-            $SplFileInfo = (new \SplFileInfo($_SERVER['DOCUMENT_ROOT'].$this->Instance->getLocation()));
+            $SplFileInfo = (new \SplFileInfo($SERVER['DOCUMENT_ROOT'].$this->Instance->getLocation()));
         }
         return $SplFileInfo->getRealPath() ? $SplFileInfo->getRealPath() : '';
     }

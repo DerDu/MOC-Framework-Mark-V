@@ -107,4 +107,17 @@ class Globals
 
         return $this->SERVER;
     }
+
+    /**
+     * @param array $SERVER
+     *
+     * @return Globals
+     */
+    public function setSERVER($SERVER)
+    {
+
+        $this->SERVER = $SERVER;
+        $_SERVER = $this->SERVER;
+        return $this;
+    }
 }

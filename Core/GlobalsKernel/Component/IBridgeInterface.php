@@ -43,4 +43,9 @@ interface IBridgeInterface
      * @return array
      */
     public function getSERVER();
+
+    /**
+     * @param array $SERVER
+     */
+    public function setSERVER($SERVER);
 }

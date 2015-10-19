@@ -89,4 +89,13 @@ class UniversalGlobals extends Bridge implements IBridgeInterface
 
         return self::$Instance->getSERVER();
     }
+
+    /**
+     * @param array $SERVER
+     */
+    public function setSERVER($SERVER)
+    {
+
+        self::$Instance->setSERVER($SERVER);
+    }
 }
