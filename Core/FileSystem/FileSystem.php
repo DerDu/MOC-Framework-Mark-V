@@ -47,7 +47,7 @@ class FileSystem implements IVendorInterface
      *
      * @return IBridgeInterface
      */
-    public static function getUniversalFileLoader($Location)
+    private static function getUniversalFileLoader($Location)
     {
 
         $Loader = new FileSystem(
@@ -74,25 +74,6 @@ class FileSystem implements IVendorInterface
      * @param string $Location
      *
      * @return IBridgeInterface
-     */
-    public static function getSymfonyFinder($Location)
-    {
-
-        $Loader = new FileSystem(
-            new Vendor(
-                new SymfonyFinder(
-                    new FileParameter($Location)
-                )
-            )
-        );
-
-        return $Loader->getBridgeInterface();
-    }
-
-    /**
-     * @param string $Location
-     *
-     * @return IBridgeInterface
      * @throws FileSystemException
      */
     public static function getFileWriter($Location)
@@ -106,12 +87,31 @@ class FileSystem implements IVendorInterface
      *
      * @return IBridgeInterface
      */
-    public static function getUniversalFileWriter($Location)
+    private static function getUniversalFileWriter($Location)
     {
 
         $Loader = new FileSystem(
             new Vendor(
                 new UniversalFileWriter(
+                    new FileParameter($Location)
+                )
+            )
+        );
+
+        return $Loader->getBridgeInterface();
+    }
+
+    /**
+     * @param string $Location
+     *
+     * @return IBridgeInterface
+     */
+    private static function getSymfonyFinder($Location)
+    {
+
+        $Loader = new FileSystem(
+            new Vendor(
+                new SymfonyFinder(
                     new FileParameter($Location)
                 )
             )
