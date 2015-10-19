@@ -77,6 +77,9 @@ class ModuleTest extends AbstractTestCase
         $this->assertEquals(__FILE__, $Loader->getLocation());
         $this->assertEquals(__FILE__, $Loader->getRealPath());
 
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertStringEqualsFile(__FILE__, (string)$Loader);
+
         $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileLoader',
             array(basename(__FILE__))
         );
@@ -84,6 +87,9 @@ class ModuleTest extends AbstractTestCase
 
         $this->assertEquals(basename(__FILE__), $Loader->getLocation());
         $this->assertEquals('', $Loader->getRealPath());
+
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertEquals('', (string)$Loader);
     }
 
     public function testStaticSymfonyFinder()
@@ -101,6 +107,9 @@ class ModuleTest extends AbstractTestCase
         $this->assertEquals(__FILE__, $Loader->getLocation());
         $this->assertEquals(__FILE__, $Loader->getRealPath());
 
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertStringEqualsFile(__FILE__, (string)$Loader);
+
         $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getSymfonyFinder',
             array(basename(__FILE__))
         );
@@ -108,6 +117,9 @@ class ModuleTest extends AbstractTestCase
 
         $this->assertEquals(basename(__FILE__), $Loader->getLocation());
         $this->assertEquals('', $Loader->getRealPath());
+
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertEquals('', (string)$Loader);
     }
 
     public function testStaticUniversalFileWriter()
@@ -127,6 +139,9 @@ class ModuleTest extends AbstractTestCase
         $this->assertEquals(__FILE__, $Writer->getLocation());
         $this->assertEquals(__FILE__, $Writer->getRealPath());
 
+        $this->assertInternalType('string', (string)$Writer);
+        $this->assertStringEqualsFile(__FILE__, (string)$Writer);
+
         $Writer = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileWriter',
             array(basename(__FILE__))
         );
@@ -134,6 +149,9 @@ class ModuleTest extends AbstractTestCase
 
         $this->assertEquals(basename(__FILE__), $Writer->getLocation());
         $this->assertEquals('', $Writer->getRealPath());
+
+        $this->assertInternalType('string', (string)$Writer);
+        $this->assertEquals('', (string)$Writer);
     }
 
     public function testStaticFileWriter()
