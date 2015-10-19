@@ -70,44 +70,48 @@ abstract class File extends Config
      */
     private function getReaderType(\SplFileInfo $Info)
     {
-        switch ($Info->getExtension()) {
-            case 'xlsx':
-            case 'xlsm':
-            case 'xltx':
-            case 'xltm':
-                $ReaderType = 'Excel2007';
-                break;
-            case 'xls':
-            case 'xlt':
-                $ReaderType = 'Excel5';
-                break;
-            // @codeCoverageIgnoreStart
-            case 'ods':
-            case 'ots':
-                $ReaderType = 'OOCalc';
-                break;
-            case 'slk':
-                $ReaderType = 'SYLK';
-                break;
-            case 'xml':
-                $ReaderType = 'Excel2003XML';
-                break;
-            case 'gnumeric':
-                $ReaderType = 'Gnumeric';
-                break;
-            // @codeCoverageIgnoreEnd
-            case 'htm':
-            case 'html':
-                $ReaderType = 'HTML';
-                break;
-            case 'txt':
-            case 'csv':
-                $ReaderType = 'CSV';
-                break;
-            default:
-                $ReaderType = null;
-                break;
-        }
+
+        $ReaderList = array(
+            'Excel2007' => array(
+                'xlsx',
+                'xlsm',
+                'xltx',
+                'xltm'
+            ),
+            'Excel5' => array(
+                'xls',
+                'xlt'
+            ),
+            'OOCalc' => array(
+                'ods',
+                'ots'
+            ),
+            'SYLK' => array(
+                'slk'
+            ),
+            'Excel2003XML' => array(
+                'xml'
+            ),
+            'Gnumeric' => array(
+                'gnumeric'
+            ),
+            'HTML' => array(
+                'htm',
+                'html'
+            ),
+            'CSV' => array(
+                'txt',
+                'csv'
+            )
+        );
+
+        $ReaderType = null;
+        $Extension = $Info->getExtension();
+        array_walk($ReaderList, function ($TypeList, $Reader) use (&$ReaderType, $Extension) {
+            if (in_array($Extension, $TypeList)) {
+                $ReaderType = $Reader;
+            }
+        });
         return $ReaderType;
     }
 
