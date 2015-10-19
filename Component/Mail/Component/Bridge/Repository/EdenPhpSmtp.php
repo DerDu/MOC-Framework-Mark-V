@@ -26,30 +26,30 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
     {
 
         AutoLoader::getNamespaceAutoLoader('Eden\Mail',
-            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master',
+            __DIR__ . '/../../../Vendor/EdenPhpMail/1.0.3-Master',
             'Eden\Mail'
         );
         AutoLoader::getNamespaceAutoLoader('Eden\Core',
-            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/core/Eden/Core',
+            __DIR__ . '/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/core/Eden/Core',
             'Eden\Core'
         );
         AutoLoader::getNamespaceAutoLoader('Eden\System',
-            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/system/Eden/System',
+            __DIR__ . '/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/system/Eden/System',
             'Eden\System'
         );
         AutoLoader::getNamespaceAutoLoader('Eden\Type',
-            __DIR__.'/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/type/Eden/Type',
+            __DIR__ . '/../../../Vendor/EdenPhpMail/1.0.3-Master/vendor/eden/type/Eden/Type',
             'Eden\Type'
         );
     }
 
     /**
-     * @param string   $Host
-     * @param string   $Username
-     * @param string   $Password
+     * @param string $Host
+     * @param string $Username
+     * @param string $Password
      * @param null|int $Port
-     * @param bool     $useSSL
-     * @param bool     $useTLS
+     * @param bool $useSSL
+     * @param bool $useTLS
      *
      * @return EdenPhpSmtp
      * @throws MailException
@@ -116,7 +116,7 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
 
     /**
      * @param string $Content
-     * @param bool   $useHtml
+     * @param bool $useHtml
      *
      * @return EdenPhpSmtp
      * @throws MailException
@@ -133,7 +133,7 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param string      $Address
+     * @param string $Address
      * @param null|string $Name
      *
      * @return EdenPhpSmtp
@@ -151,7 +151,7 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param string      $Address
+     * @param string $Address
      * @param null|string $Name
      *
      * @return EdenPhpSmtp
@@ -169,7 +169,7 @@ class EdenPhpSmtp extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param string      $Address
+     * @param string $Address
      * @param null|string $Name
      *
      * @return EdenPhpSmtp

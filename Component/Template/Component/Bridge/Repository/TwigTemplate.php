@@ -26,34 +26,34 @@ class TwigTemplate extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once( __DIR__.'/../../../Vendor/Twig/lib/Twig/Autoloader.php' );
+        require_once(__DIR__ . '/../../../Vendor/Twig/lib/Twig/Autoloader.php');
         \Twig_Autoloader::register();
 
         AutoLoader::getNamespaceAutoLoader(
             'Umpirsky\Twig\Extension',
-            __DIR__.'/../../../Vendor/TwigExtension/TwigPHPFunction/0.0.0/src'
+            __DIR__ . '/../../../Vendor/TwigExtension/TwigPHPFunction/0.0.0/src'
         );
     }
 
     /**
      * @param string $String
-     * @param bool   $Reload
+     * @param bool $Reload
      *
      * @return IBridgeInterface
      */
     public function loadString($String, $Reload = false)
     {
 
-        $TemplateName = 'Source'.sha1($String).'.twig';
-        if (!file_exists(__DIR__.'/TwigTemplate/'.$TemplateName)) {
-            file_put_contents(__DIR__.'/TwigTemplate/'.$TemplateName, $String);
+        $TemplateName = 'Source' . sha1($String) . '.twig';
+        if (!file_exists(__DIR__ . '/TwigTemplate/' . $TemplateName)) {
+            file_put_contents(__DIR__ . '/TwigTemplate/' . $TemplateName, $String);
         }
-        return $this->loadFile(new FileParameter(__DIR__.'/TwigTemplate/'.$TemplateName), $Reload);
+        return $this->loadFile(new FileParameter(__DIR__ . '/TwigTemplate/' . $TemplateName), $Reload);
     }
 
     /**
      * @param FileParameter $Location
-     * @param bool          $Reload
+     * @param bool $Reload
      *
      * @return IBridgeInterface
      */
@@ -62,7 +62,7 @@ class TwigTemplate extends Bridge implements IBridgeInterface
 
         $this->Instance = new \Twig_Environment(
             new \Twig_Loader_Filesystem(array(dirname($Location->getFile()))),
-            array('auto_reload' => $Reload, 'autoescape' => false, 'cache' => realpath(__DIR__.'/TwigTemplate'))
+            array('auto_reload' => $Reload, 'autoescape' => false, 'cache' => realpath(__DIR__ . '/TwigTemplate'))
         );
         $this->Instance->addFilter(new \Twig_SimpleFilter('utf8_encode', 'utf8_encode'));
         $this->Instance->addFilter(new \Twig_SimpleFilter('utf8_decode', 'utf8_decode'));

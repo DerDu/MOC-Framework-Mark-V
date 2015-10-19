@@ -1,30 +1,30 @@
 <?php
 namespace MOC\V\Core\AutoLoader;
 
-require_once( __DIR__.'/Exception/AutoLoaderException.php' );
+require_once(__DIR__ . '/Exception/AutoLoaderException.php');
 
-require_once( __DIR__.'/Component/Exception/ComponentException.php' );
-require_once( __DIR__.'/Component/Exception/Repository/DirectoryNotFoundException.php' );
-require_once( __DIR__.'/Component/Exception/Repository/EmptyDirectoryException.php' );
-require_once( __DIR__.'/Component/Exception/Repository/EmptyNamespaceException.php' );
+require_once(__DIR__ . '/Component/Exception/ComponentException.php');
+require_once(__DIR__ . '/Component/Exception/Repository/DirectoryNotFoundException.php');
+require_once(__DIR__ . '/Component/Exception/Repository/EmptyDirectoryException.php');
+require_once(__DIR__ . '/Component/Exception/Repository/EmptyNamespaceException.php');
 
-require_once( __DIR__.'/Component/IVendorInterface.php' );
-require_once( __DIR__.'/Vendor/Vendor.php' );
+require_once(__DIR__ . '/Component/IVendorInterface.php');
+require_once(__DIR__ . '/Vendor/Vendor.php');
 
-require_once( __DIR__.'/Component/IParameterInterface.php' );
-require_once( __DIR__.'/Component/Parameter/Parameter.php' );
-require_once( __DIR__.'/Component/Parameter/Repository/NamespaceParameter.php' );
-require_once( __DIR__.'/Component/Parameter/Repository/DirectoryParameter.php' );
+require_once(__DIR__ . '/Component/IParameterInterface.php');
+require_once(__DIR__ . '/Component/Parameter/Parameter.php');
+require_once(__DIR__ . '/Component/Parameter/Repository/NamespaceParameter.php');
+require_once(__DIR__ . '/Component/Parameter/Repository/DirectoryParameter.php');
 
-require_once( __DIR__.'/Component/IBridgeInterface.php' );
-require_once( __DIR__.'/Component/Bridge/Bridge.php' );
-require_once( __DIR__.'/Component/Bridge/Repository/MultitonNamespace.php' );
-require_once( __DIR__.'/Component/Bridge/Repository/UniversalNamespace.php' );
+require_once(__DIR__ . '/Component/IBridgeInterface.php');
+require_once(__DIR__ . '/Component/Bridge/Bridge.php');
+require_once(__DIR__ . '/Component/Bridge/Repository/MultitonNamespace.php');
+require_once(__DIR__ . '/Component/Bridge/Repository/UniversalNamespace.php');
 
-require_once( __DIR__.'/Vendor/Multiton/NamespaceLoader.php' );
-require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceMapping.php' );
-require_once( __DIR__.'/Vendor/Universal/NamespaceLoader/NamespaceSearch.php' );
-require_once( __DIR__.'/Vendor/Universal/NamespaceLoader.php' );
+require_once(__DIR__ . '/Vendor/Multiton/NamespaceLoader.php');
+require_once(__DIR__ . '/Vendor/Universal/NamespaceLoader/NamespaceMapping.php');
+require_once(__DIR__ . '/Vendor/Universal/NamespaceLoader/NamespaceSearch.php');
+require_once(__DIR__ . '/Vendor/Universal/NamespaceLoader.php');
 
 use MOC\V\Core\AutoLoader\Component\Bridge\Repository\MultitonNamespace;
 use MOC\V\Core\AutoLoader\Component\Bridge\Repository\UniversalNamespace;
@@ -55,8 +55,8 @@ class AutoLoader implements IVendorInterface
     }
 
     /**
-     * @param string      $Namespace
-     * @param string      $Directory
+     * @param string $Namespace
+     * @param string $Directory
      * @param null|string $Prefix
      *
      * @return IBridgeInterface
@@ -68,8 +68,8 @@ class AutoLoader implements IVendorInterface
     }
 
     /**
-     * @param string      $Namespace
-     * @param string      $Directory
+     * @param string $Namespace
+     * @param string $Directory
      * @param null|string $Prefix
      *
      * @return IBridgeInterface

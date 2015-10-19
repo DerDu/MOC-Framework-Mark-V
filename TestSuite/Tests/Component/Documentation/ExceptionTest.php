@@ -7,6 +7,11 @@ use MOC\V\Component\Documentation\Component\Exception\Repository\TypeDirectoryEx
 use MOC\V\Component\Documentation\Exception\DocumentationException;
 use MOC\V\TestSuite\AbstractTestCase;
 
+/**
+ * Class ExceptionTest
+ *
+ * @package MOC\V\TestSuite\Tests\Component\Documentation
+ */
 class ExceptionTest extends AbstractTestCase
 {
 

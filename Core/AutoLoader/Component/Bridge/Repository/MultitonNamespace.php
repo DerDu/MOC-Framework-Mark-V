@@ -33,7 +33,7 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
         $this->Instance = new NamespaceLoader(
             $NamespaceParameter->getNamespace(),
             $DirectoryParameter->getDirectory(),
-            ( null === $PrefixParameter ? null : $PrefixParameter->getNamespace() )
+            (null === $PrefixParameter ? null : $PrefixParameter->getNamespace())
         );
     }
 
@@ -59,7 +59,7 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
     public function addNamespaceDirectoryMapping(NamespaceParameter $Namespace, DirectoryParameter $Directory)
     {
 
-        throw new AutoLoaderException(__METHOD__.' MUST NOT be used!');
+        throw new AutoLoaderException(__METHOD__.' MUST NOT be used! NS:'.$Namespace.', DIR:'.$Directory);
     }
 
     /**

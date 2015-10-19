@@ -20,7 +20,7 @@ class BridgeTest extends AbstractTestCase
     public function tearDown()
     {
 
-        if (false !== ( $Path = realpath(__DIR__.'/../../../../Component/Template/Component/Bridge/Repository/SmartyTemplate') )) {
+        if (false !== ($Path = realpath(__DIR__ . '/../../../../Component/Template/Component/Bridge/Repository/SmartyTemplate'))) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -33,7 +33,7 @@ class BridgeTest extends AbstractTestCase
             }
         }
 
-        if (false !== ( $Path = realpath(__DIR__.'/../../../../Component/Template/Component/Bridge/Repository/TwigTemplate') )) {
+        if (false !== ($Path = realpath(__DIR__ . '/../../../../Component/Template/Component/Bridge/Repository/TwigTemplate'))) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST

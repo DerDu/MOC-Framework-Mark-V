@@ -19,7 +19,7 @@ class BridgeTest extends AbstractTestCase
     public function tearDown()
     {
 
-        if (false !== ( $Path = realpath(__DIR__.'/Content') )) {
+        if (false !== ($Path = realpath(__DIR__ . '/Content'))) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -45,7 +45,7 @@ class BridgeTest extends AbstractTestCase
             'MOC',
             'Test',
             new DirectoryParameter(__DIR__),
-            new DirectoryParameter(__DIR__.'/Content/')
+            new DirectoryParameter(__DIR__ . '/Content/')
         ));
     }
 

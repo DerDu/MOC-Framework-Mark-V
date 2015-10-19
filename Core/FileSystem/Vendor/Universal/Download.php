@@ -44,13 +44,13 @@ class Download
 
             // Set headers.
             header('Content-Description: Download');
-            header('Content-Type: '.$Type);
-            header('Content-Disposition: attachment; filename="'.basename($this->getRealPath()).'"');
+            header('Content-Type: ' . $Type);
+            header('Content-Disposition: attachment; filename="' . basename($this->getRealPath()) . '"');
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header('Cache-Control: public, must-revalidate, post-check=0, pre-check=0');
             header('Pragma: public');
-            header('Content-Length: '.filesize($this->getRealPath()));
+            header('Content-Length: ' . filesize($this->getRealPath()));
             header('Connection: close');
 
             // Erase and flush the output buffer

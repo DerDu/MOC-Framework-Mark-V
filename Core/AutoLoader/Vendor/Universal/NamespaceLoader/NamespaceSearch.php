@@ -10,7 +10,7 @@ abstract class NamespaceSearch extends NamespaceMapping
 {
 
     /**
-     * @param array  $DirectoryList
+     * @param array $DirectoryList
      * @param string $ClassName
      * @param string $Namespace
      *
@@ -20,12 +20,12 @@ abstract class NamespaceSearch extends NamespaceMapping
     {
 
         return $this->searchForInterface($DirectoryList,
-            trim(preg_replace('!^'.preg_quote($Namespace).'!is', '', $ClassName), '\\')
+            trim(preg_replace('!^' . preg_quote($Namespace) . '!is', '', $ClassName), '\\')
         );
     }
 
     /**
-     * @param array  $DirectoryList
+     * @param array $DirectoryList
      * @param string $ClassName
      *
      * @return bool
@@ -34,11 +34,11 @@ abstract class NamespaceSearch extends NamespaceMapping
     {
 
         return $this->searchForClass($DirectoryList,
-            preg_replace('!(.*?)I([^'.preg_quote('\\').']*?)Interface$!is', '$1$2', $ClassName));
+            preg_replace('!(.*?)I([^' . preg_quote('\\') . ']*?)Interface$!is', '$1$2', $ClassName));
     }
 
     /**
-     * @param array  $DirectoryList
+     * @param array $DirectoryList
      * @param string $ClassName
      *
      * @return bool
@@ -47,11 +47,11 @@ abstract class NamespaceSearch extends NamespaceMapping
     {
 
         foreach ((array)$DirectoryList as $Directory) {
-            $File = $Directory.DIRECTORY_SEPARATOR.str_replace(array('_', '\\', '/'), DIRECTORY_SEPARATOR,
-                    $ClassName).'.php';
+            $File = $Directory . DIRECTORY_SEPARATOR . str_replace(array('_', '\\', '/'), DIRECTORY_SEPARATOR,
+                    $ClassName) . '.php';
             if (is_file($File)) {
                 /** @noinspection PhpIncludeInspection */
-                require_once( $File );
+                require_once($File);
                 return true;
             }
         }
@@ -59,7 +59,7 @@ abstract class NamespaceSearch extends NamespaceMapping
     }
 
     /**
-     * @param array  $DirectoryList
+     * @param array $DirectoryList
      * @param string $ClassName
      * @param string $Namespace
      *
@@ -69,7 +69,7 @@ abstract class NamespaceSearch extends NamespaceMapping
     {
 
         return $this->searchForClass($DirectoryList,
-            trim(preg_replace('!^'.preg_quote($Namespace).'!is', '', $ClassName), '\\')
+            trim(preg_replace('!^' . preg_quote($Namespace) . '!is', '', $ClassName), '\\')
         );
     }
 }

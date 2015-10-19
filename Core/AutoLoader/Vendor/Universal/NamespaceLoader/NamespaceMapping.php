@@ -22,7 +22,7 @@ abstract class NamespaceMapping
     {
 
         $Directory = realpath($Directory);
-        if (!isset( $this->NamespaceMapping[$Namespace] )) {
+        if (!isset($this->NamespaceMapping[$Namespace])) {
             $this->NamespaceMapping[$Namespace] = array();
         }
         $Directory = rtrim(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $Directory), DIRECTORY_SEPARATOR);
@@ -39,7 +39,7 @@ abstract class NamespaceMapping
     final public function getNamespaceMapping($Namespace)
     {
 
-        return isset( $this->NamespaceMapping[$Namespace] ) ? $this->NamespaceMapping[$Namespace] : array();
+        return isset($this->NamespaceMapping[$Namespace]) ? $this->NamespaceMapping[$Namespace] : array();
     }
 
     /**

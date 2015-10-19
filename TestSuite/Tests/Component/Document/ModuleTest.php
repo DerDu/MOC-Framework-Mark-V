@@ -19,7 +19,7 @@ class ModuleTest extends AbstractTestCase
     public function tearDown()
     {
 
-        if (false !== ( $Path = realpath(__DIR__.'/Content') )) {
+        if (false !== ($Path = realpath(__DIR__ . '/Content'))) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -68,16 +68,16 @@ class ModuleTest extends AbstractTestCase
     public function testStaticExcelDocument()
     {
 
-        $Document = Document::getExcelDocument(__DIR__.'/Content/test.xls');
+        $Document = Document::getExcelDocument(__DIR__ . '/Content/test.xls');
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface', $Document);
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Document->saveFile()
         );
-        $Document = Document::getExcelDocument(__DIR__.'/Content/test.xls');
+        $Document = Document::getExcelDocument(__DIR__ . '/Content/test.xls');
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface', $Document);
-        $Document = Document::getExcelDocument(__DIR__.'/Content/test.xlsx');
+        $Document = Document::getExcelDocument(__DIR__ . '/Content/test.xlsx');
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface', $Document);
-        $Document = Document::getExcelDocument(__DIR__.'/Content/test.csv');
+        $Document = Document::getExcelDocument(__DIR__ . '/Content/test.csv');
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface', $Document);
     }
 

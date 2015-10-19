@@ -7,6 +7,11 @@ use MOC\V\Core\AutoLoader\Component\Parameter\Repository\DirectoryParameter;
 use MOC\V\Core\AutoLoader\Component\Parameter\Repository\NamespaceParameter;
 use MOC\V\TestSuite\AbstractTestCase;
 
+/**
+ * Class BridgeTest
+ *
+ * @package MOC\V\TestSuite\Tests\Core\AutoLoader
+ */
 class BridgeTest extends AbstractTestCase
 {
 
@@ -21,7 +26,7 @@ class BridgeTest extends AbstractTestCase
         );
         $this->assertInstanceOf('MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->addNamespaceDirectoryMapping(
-                new NamespaceParameter('\MOC\V'), new DirectoryParameter(__DIR__.'/../../../../'))
+                new NamespaceParameter('\MOC\V'), new DirectoryParameter(__DIR__ . '/../../../../'))
         );
         $this->assertInstanceOf('MOC\V\Core\AutoLoader\Component\IBridgeInterface',
             $Bridge->registerLoader()
@@ -89,7 +94,7 @@ class BridgeTest extends AbstractTestCase
         );
 
         $Bridge = new MultitonNamespace(new NamespaceParameter('\MOC\V'),
-            new DirectoryParameter(__DIR__.'/../../../../'), new NamespaceParameter('MOC\V'));
+            new DirectoryParameter(__DIR__ . '/../../../../'), new NamespaceParameter('MOC\V'));
 
         $this->assertFalse(
             $Bridge->loadSourceFile('Error')

@@ -29,6 +29,15 @@ class DirectoryParameter extends Parameter implements IParameterInterface
     /**
      * @return string
      */
+    public function __toString()
+    {
+
+        return (string)$this->getDirectory();
+    }
+
+    /**
+     * @return string
+     */
     public function getDirectory()
     {
 
@@ -44,7 +53,7 @@ class DirectoryParameter extends Parameter implements IParameterInterface
     public function setDirectory($Directory)
     {
 
-        if (empty( $Directory )) {
+        if (empty($Directory)) {
             throw new EmptyDirectoryException();
         }
         $Directory = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $Directory);
@@ -54,5 +63,4 @@ class DirectoryParameter extends Parameter implements IParameterInterface
             throw new DirectoryNotFoundException($Directory);
         }
     }
-
 }

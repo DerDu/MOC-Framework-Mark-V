@@ -53,13 +53,13 @@ class FileParameter extends Parameter implements IParameterInterface
     public function setFile($File)
     {
 
-        if (empty( $File )) {
+        if (empty($File)) {
             throw new EmptyFileException();
         } else {
             if (!is_dir($File)) {
                 $this->File = $File;
             } else {
-                throw new TypeFileException($File.' is a directory!');
+                throw new TypeFileException($File . ' is a directory!');
             }
         }
     }

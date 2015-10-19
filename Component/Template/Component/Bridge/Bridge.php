@@ -16,7 +16,7 @@ abstract class Bridge implements IBridgeInterface
 
     /**
      * @param string $Identifier
-     * @param mixed  $Value
+     * @param mixed $Value
      *
      * @return IBridgeInterface
      */

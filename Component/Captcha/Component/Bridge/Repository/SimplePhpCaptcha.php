@@ -22,7 +22,7 @@ class SimplePhpCaptcha extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once( __DIR__.'/../../../Vendor/SimplePhpCaptcha/0.0-Master/simple-php-captcha.php' );
+        require_once(__DIR__ . '/../../../Vendor/SimplePhpCaptcha/0.0-Master/simple-php-captcha.php');
         $this->SessionKey = sha1(__CLASS__);
     }
 

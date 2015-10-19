@@ -59,7 +59,7 @@ class PaperSizeParameter extends Parameter implements IParameterInterface
                 return $this;
             }
             default:
-                throw new ComponentException('Size '.$Size.' not supported');
+                throw new ComponentException('Size ' . $Size . ' not supported');
         }
 
     }

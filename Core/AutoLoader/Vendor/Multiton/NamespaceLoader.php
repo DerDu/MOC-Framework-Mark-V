@@ -21,8 +21,8 @@ class NamespaceLoader
     private $Prefix = 'MOC\V';
 
     /**
-     * @param string      $Namespace
-     * @param string      $Path
+     * @param string $Namespace
+     * @param string $Path
      * @param string|null $Prefix
      */
     public function __construct($Namespace, $Path, $Prefix = null)
@@ -48,11 +48,11 @@ class NamespaceLoader
         }
 
         if (function_exists('apc_fetch')) {
-            $Hash = sha1($this->Namespace.$this->Path.$this->Separator.$this->Extension.$this->Prefix);
+            $Hash = sha1($this->Namespace . $this->Path . $this->Separator . $this->Extension . $this->Prefix);
             // @codeCoverageIgnoreStart
-            if (false === ( $Result = apc_fetch($Hash.'#'.$ClassName) )) {
+            if (false === ($Result = apc_fetch($Hash . '#' . $ClassName))) {
                 $Result = $this->checkCanLoadClass($ClassName);
-                apc_store($Hash.'#'.$ClassName, ( $Result ? 1 : 0 ));
+                apc_store($Hash . '#' . $ClassName, ($Result ? 1 : 0));
             }
             if (!$Result) {
                 return false;
@@ -65,17 +65,17 @@ class NamespaceLoader
         }
 
         /** @noinspection PhpIncludeInspection */
-        require( $this->Path.DIRECTORY_SEPARATOR
-            .trim(str_replace(array($this->Prefix.$this->Separator, $this->Separator),
+        require($this->Path . DIRECTORY_SEPARATOR
+            . trim(str_replace(array($this->Prefix . $this->Separator, $this->Separator),
                 array('', DIRECTORY_SEPARATOR), $ClassName), DIRECTORY_SEPARATOR)
-            .$this->Extension
+            . $this->Extension
         );
         return $this->checkExists($ClassName);
     }
 
     /**
      * @param string $Name
-     * @param bool   $Load
+     * @param bool $Load
      *
      * @return bool
      */
@@ -95,16 +95,16 @@ class NamespaceLoader
     public function checkCanLoadClass($ClassName)
     {
 
-        if ($this->Namespace !== null && strpos($ClassName, $this->Namespace.$this->Separator) !== 0) {
+        if ($this->Namespace !== null && strpos($ClassName, $this->Namespace . $this->Separator) !== 0) {
             return false;
         }
         $File = str_replace(
-                array($this->Prefix.$this->Separator, $this->Separator),
+                array($this->Prefix . $this->Separator, $this->Separator),
                 array('', DIRECTORY_SEPARATOR),
                 $ClassName
-            ).$this->Extension;
+            ) . $this->Extension;
         if ($this->Path !== null) {
-            return is_file($this->Path.DIRECTORY_SEPARATOR.$File);
+            return is_file($this->Path . DIRECTORY_SEPARATOR . $File);
         }
         // @codeCoverageIgnoreStart
         return false;

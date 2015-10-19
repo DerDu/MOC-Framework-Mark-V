@@ -36,9 +36,9 @@ class Database implements IVendorInterface
      * @param string $Username
      * @param string $Password
      * @param string $Database
-     * @param int    $Driver
+     * @param int $Driver
      * @param string $Host
-     * @param null   $Port
+     * @param null $Port
      *
      * @param int $Timeout
      *
@@ -54,9 +54,9 @@ class Database implements IVendorInterface
      * @param string $Username
      * @param string $Password
      * @param string $Database
-     * @param int    $Driver
+     * @param int $Driver
      * @param string $Host
-     * @param null   $Port
+     * @param null $Port
      *
      * @param int $Timeout
      *
@@ -70,8 +70,7 @@ class Database implements IVendorInterface
         $Host,
         $Port = null,
         $Timeout = 5
-    )
-    {
+    ) {
 
         $Doctrine = new Database(
             new Vendor(

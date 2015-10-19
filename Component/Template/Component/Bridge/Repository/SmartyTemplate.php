@@ -25,15 +25,15 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
     {
 
         if (!defined('SMARTY_DIR')) {
-            define('SMARTY_DIR', realpath(__DIR__.'/../../../Vendor/Smarty/').DIRECTORY_SEPARATOR);
+            define('SMARTY_DIR', realpath(__DIR__ . '/../../../Vendor/Smarty/') . DIRECTORY_SEPARATOR);
         }
         /** @noinspection PhpIncludeInspection */
-        require_once( SMARTY_DIR.'Smarty.class.php' );
+        require_once(SMARTY_DIR . 'Smarty.class.php');
     }
 
     /**
      * @param FileParameter $Location
-     * @param bool          $Reload
+     * @param bool $Reload
      *
      * @return IBridgeInterface
      */
@@ -42,8 +42,8 @@ class SmartyTemplate extends Bridge implements IBridgeInterface
 
         $this->Instance = new \Smarty();
         $this->Instance->caching = !$Reload;
-        $this->Instance->compile_dir = __DIR__.'/SmartyTemplate';
-        $this->Instance->cache_dir = __DIR__.'/SmartyTemplate';
+        $this->Instance->compile_dir = __DIR__ . '/SmartyTemplate';
+        $this->Instance->cache_dir = __DIR__ . '/SmartyTemplate';
         $this->Template = $Location->getFile();
         return $this;
     }
