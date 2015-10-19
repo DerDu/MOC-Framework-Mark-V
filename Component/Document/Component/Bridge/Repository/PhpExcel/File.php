@@ -196,30 +196,34 @@ abstract class File extends Config
      */
     private function getWriterType(\SplFileInfo $Info)
     {
-        switch ($Info->getExtension()) {
-            case 'xlsx':
-            case 'xlsm':
-            case 'xltx':
-            case 'xltm':
-                $WriterType = 'Excel2007';
-                break;
-            case 'xls':
-            case 'xlt':
-                $WriterType = 'Excel5';
-                break;
-            case 'htm':
-            case 'html':
-                $WriterType = 'HTML';
-                break;
-            case 'csv':
-                $WriterType = 'CSV';
-                break;
-            // @codeCoverageIgnoreStart
-            default:
-                $WriterType = null;
-                break;
-            // @codeCoverageIgnoreEnd
-        }
+
+        $WriterList = array(
+            'Excel2007' => array(
+                'xlsx',
+                'xlsm',
+                'xltx',
+                'xltm'
+            ),
+            'Excel5' => array(
+                'xls',
+                'xlt'
+            ),
+            'HTML' => array(
+                'htm',
+                'html'
+            ),
+            'CSV' => array(
+                'csv'
+            )
+        );
+
+        $WriterType = null;
+        $Extension = $Info->getExtension();
+        array_walk($WriterList, function ($TypeList, $Writer) use (&$WriterType, $Extension) {
+            if (in_array($Extension, $TypeList)) {
+                $WriterType = $Writer;
+            }
+        });
         return $WriterType;
     }
 }
