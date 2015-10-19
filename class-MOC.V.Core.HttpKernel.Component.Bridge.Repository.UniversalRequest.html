@@ -7,8 +7,8 @@
 
     <title>Class MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest | Mark V</title>
 
-    <script type="text/javascript" src="resources/combined.js?3455835695"></script>
-    <script type="text/javascript" src="elementlist.js?2688914743"></script>
+    <script type="text/javascript" src="resources/combined.js?8371714"></script>
+    <script type="text/javascript" src="elementlist.js?2039816632"></script>
     <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3639401462" />
 
 
@@ -420,7 +420,7 @@
 		<b>Namespace:</b> <a href="namespace-MOC.html">MOC</a>\<a href="namespace-MOC.V.html">V</a>\<a href="namespace-MOC.V.Core.html">Core</a>\<a href="namespace-MOC.V.Core.HttpKernel.html">HttpKernel</a>\<a href="namespace-MOC.V.Core.HttpKernel.Component.html">Component</a>\<a href="namespace-MOC.V.Core.HttpKernel.Component.Bridge.html">Bridge</a>\<a href="namespace-MOC.V.Core.HttpKernel.Component.Bridge.Repository.html">Repository</a><br />
 		<b>Package:</b> MOC\V\Core\HttpKernel\Component\Bridge<br />
 
-		<b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#8-163" title="Go to source code">Core/HttpKernel/Component/Bridge/Repository/UniversalRequest.php</a><br />
+		<b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#8-168" title="Go to source code">Core/HttpKernel/Component/Bridge/Repository/UniversalRequest.php</a><br />
 	</div>
 
 
@@ -583,7 +583,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getUrlBase">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#70-83" title="Go to source code">getUrlBase</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#70-84" title="Go to source code">getUrlBase</a>( )</code>
 
 		<div class="description short">
 			
@@ -627,7 +627,7 @@ filename (e.g. index.php) if one exists.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getUrl">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#85-94" title="Go to source code">getUrl</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#86-95" title="Go to source code">getUrl</a>( )</code>
 
 		<div class="description short">
 			
@@ -666,7 +666,7 @@ filename (e.g. index.php) if one exists.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getPort">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#96-109" title="Go to source code">getPort</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#97-114" title="Go to source code">getPort</a>( )</code>
 
 		<div class="description short">
 			
@@ -678,11 +678,13 @@ filename (e.g. index.php) if one exists.</p>
 			
 <p>Returns the port on which the request is made.</p>
 
-<p>This method can read the client port from the "X-Forwarded-Port" header when
-trusted proxies were set via "setTrustedProxies()". The "X-Forwarded-Port"
-header must contain the client port. If your reverse proxy uses a different
-header name than "X-Forwarded-Port", configure it via "setTrustedHeaderName()"
-with the "client-port" key.</p>
+<p>This method can read the client port from the "X-Forwarded-Port" header, when
+trusted proxies were set via "setTrustedProxies()".</p>
+
+<p>The "X-Forwarded-Port" header must contain the client port.</p>
+
+<p>If your reverse proxy uses a different header name than "X-Forwarded-Port",
+configure it via "setTrustedHeaderName()" with the "client-port" key.</p>
 
 
 
@@ -711,7 +713,7 @@ with the "client-port" key.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getParameterArray">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#111-126" title="Go to source code">getParameterArray</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#116-131" title="Go to source code">getParameterArray</a>( )</code>
 
 		<div class="description short">
 			
@@ -746,7 +748,7 @@ with the "client-port" key.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRequestGETArray">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#128-135" title="Go to source code">getRequestGETArray</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#133-140" title="Go to source code">getRequestGETArray</a>( )</code>
 
 		<div class="description short">
 			
@@ -779,7 +781,7 @@ with the "client-port" key.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRequestFILESArray">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#137-144" title="Go to source code">getRequestFILESArray</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#142-149" title="Go to source code">getRequestFILESArray</a>( )</code>
 
 		<div class="description short">
 			
@@ -812,7 +814,7 @@ with the "client-port" key.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRequestPOSTArray">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#146-153" title="Go to source code">getRequestPOSTArray</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#151-158" title="Go to source code">getRequestPOSTArray</a>( )</code>
 
 		<div class="description short">
 			
@@ -845,7 +847,7 @@ with the "client-port" key.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRequestCUSTOMArray">#</a>
-		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#155-162" title="Go to source code">getRequestCUSTOMArray</a>( )</code>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.Bridge.Repository.UniversalRequest.html#160-167" title="Go to source code">getRequestCUSTOMArray</a>( )</code>
 
 		<div class="description short">
 			
