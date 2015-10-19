@@ -17,37 +17,31 @@ use MOC\V\Component\Documentation\Component\Parameter\Repository\ExcludeParamete
 use MOC\V\Component\Documentation\Documentation;
 use MOC\V\Core\AutoLoader\AutoLoader;
 
-AutoLoader::getNamespaceAutoLoader( '\MOC\V', __DIR__.'/../../' );
+AutoLoader::getNamespaceAutoLoader('\MOC\V', __DIR__.'/../../');
 
 Documentation::getDocumentation(
     'MOC',
     'Mark V',
-    new DirectoryParameter( __DIR__.'/../../' ),
-    new DirectoryParameter( __DIR__.'/../../../MOC-Framework-Mark-V-Documentation' ),
-    new ExcludeParameter( array(
+    new DirectoryParameter(__DIR__.'/../../'),
+    new DirectoryParameter(__DIR__.'/../../../MOC-Framework-Mark-V-Documentation'),
+    new ExcludeParameter(array(
         '/.idea/*',
         '/.git/*',
         '*/TestSuite/*',
-
         '*/Vendor/Symfony/*',
         '*/Vendor/PhpSecLib/*',
         '*/Vendor/SimplePhpCaptcha/*',
-
         '*/Vendor/Doctrine2DBAL/*',
         '*/Vendor/Doctrine2ORM/*',
-
         '*/Vendor/PhpExcel/*',
         '*/Vendor/DomPdf/*',
         '*/Vendor/mPdf/*',
-
         '*/Vendor/ApiGen/*',
         '*/Vendor/Template/*',
-
         '*/Vendor/Twig/*',
         '*/Repository/TwigTemplate/*',
         '*/Vendor/Smarty/*',
         '*/Repository/SmartyTemplate/*',
-
         '*/Vendor/EdenPhpMail/*'
-    ) )
+    ))
 );
