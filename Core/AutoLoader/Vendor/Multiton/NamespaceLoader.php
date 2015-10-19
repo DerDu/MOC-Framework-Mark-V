@@ -25,7 +25,7 @@ class NamespaceLoader
      * @param string      $Path
      * @param string|null $Prefix
      */
-    function __construct($Namespace, $Path, $Prefix = null)
+    public function __construct($Namespace, $Path, $Prefix = null)
     {
 
         $this->Namespace = $Namespace;
