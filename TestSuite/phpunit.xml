@@ -8,6 +8,7 @@
         <testsuite name="MOC\V">
             <directory suffix=".php">./Tests/Core/AutoLoader</directory>
             <directory suffix=".php">./Tests/Core/FileSystem</directory>
+            <directory suffix=".php">./Tests/Core/GlobalsKernel</directory>
             <directory suffix=".php">./Tests/Core/HttpKernel</directory>
             <directory suffix=".php">./Tests/Core/SecureKernel</directory>
             <directory suffix=".php">./Tests/Component/Captcha</directory>
