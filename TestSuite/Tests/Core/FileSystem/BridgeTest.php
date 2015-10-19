@@ -5,8 +5,9 @@ use MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder;
 use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter;
 use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
+use MOC\V\TestSuite\AbstractTestCase;
 
-class BridgeTest extends \PHPUnit_Framework_TestCase
+class BridgeTest extends AbstractTestCase
 {
 
     public function testSymfonyFinder()

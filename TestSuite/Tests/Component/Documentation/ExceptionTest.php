@@ -5,8 +5,9 @@ use MOC\V\Component\Documentation\Component\Exception\ComponentException;
 use MOC\V\Component\Documentation\Component\Exception\Repository\EmptyDirectoryException;
 use MOC\V\Component\Documentation\Component\Exception\Repository\TypeDirectoryException;
 use MOC\V\Component\Documentation\Exception\DocumentationException;
+use MOC\V\TestSuite\AbstractTestCase;
 
-class ExceptionTest extends \PHPUnit_Framework_TestCase
+class ExceptionTest extends AbstractTestCase
 {
 
     public function testDocumentationException()

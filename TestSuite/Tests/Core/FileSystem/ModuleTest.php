@@ -3,8 +3,9 @@ namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
 use MOC\V\Core\FileSystem\FileSystem;
 use MOC\V\Core\FileSystem\Vendor\Vendor;
+use MOC\V\TestSuite\AbstractTestCase;
 
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class ModuleTest extends AbstractTestCase
 {
 
     public function testModule()
@@ -31,14 +32,24 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         try {
-            FileSystem::getUniversalFileLoader(__DIR__);
+            $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileLoader', array(__DIR__));
         } catch (\Exception $E) {
             $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E);
         }
 
-        $Loader = FileSystem::getUniversalFileLoader(__FILE__);
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileLoader',
+            array(__FILE__)
+        );
 
         $this->assertEquals(__FILE__, $Loader->getLocation());
+        $this->assertEquals(__FILE__, $Loader->getRealPath());
+
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileLoader',
+            array(basename(__FILE__))
+        );
+
+        $this->assertEquals(basename(__FILE__), $Loader->getLocation());
+        $this->assertEquals('', $Loader->getRealPath());
 
         $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader);
     }
@@ -47,14 +58,22 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         try {
-            FileSystem::getSymfonyFinder(__DIR__);
+            $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getSymfonyFinder', array(__DIR__));
         } catch (\Exception $E) {
             $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E);
         }
 
-        $Loader = FileSystem::getSymfonyFinder(__FILE__);
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getSymfonyFinder', array(__FILE__));
 
         $this->assertEquals(__FILE__, $Loader->getLocation());
+        $this->assertEquals(__FILE__, $Loader->getRealPath());
+
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getSymfonyFinder',
+            array(basename(__FILE__))
+        );
+
+        $this->assertEquals(basename(__FILE__), $Loader->getLocation());
+        $this->assertEquals('', $Loader->getRealPath());
 
         $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader);
     }
@@ -63,14 +82,24 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     {
 
         try {
-            FileSystem::getUniversalFileWriter(__DIR__);
+            $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileWriter', array(__DIR__));
         } catch (\Exception $E) {
             $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E);
         }
 
-        $Writer = FileSystem::getUniversalFileWriter(__FILE__);
+        $Writer = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileWriter',
+            array(__FILE__)
+        );
 
         $this->assertEquals(__FILE__, $Writer->getLocation());
+        $this->assertEquals(__FILE__, $Writer->getRealPath());
+
+        $Writer = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalFileWriter',
+            array(basename(__FILE__))
+        );
+
+        $this->assertEquals(basename(__FILE__), $Writer->getLocation());
+        $this->assertEquals('', $Writer->getRealPath());
 
         $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\IBridgeInterface', $Writer);
     }

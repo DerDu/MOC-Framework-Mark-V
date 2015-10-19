@@ -2,13 +2,14 @@
 namespace MOC\V\TestSuite\Tests\Core\SecureKernel;
 
 use MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
+use MOC\V\TestSuite\AbstractTestCase;
 
 /**
  * Class BridgeTest
  *
  * @package MOC\V\TestSuite\Tests\Core\SecureKernel
  */
-class BridgeTest extends \PHPUnit_Framework_TestCase
+class BridgeTest extends AbstractTestCase
 {
 
     /**
