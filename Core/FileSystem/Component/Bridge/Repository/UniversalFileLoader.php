@@ -29,15 +29,6 @@ class UniversalFileLoader extends Bridge implements IBridgeInterface
     /**
      * @return string
      */
-    public function getLocation()
-    {
-
-        return $this->Instance->getLocation();
-    }
-
-    /**
-     * @return string
-     */
     public function getRealPath()
     {
 
@@ -46,5 +37,23 @@ class UniversalFileLoader extends Bridge implements IBridgeInterface
             $SplFileInfo = (new \SplFileInfo($_SERVER['DOCUMENT_ROOT'].$this->Instance->getLocation()));
         }
         return $SplFileInfo->getRealPath() ? $SplFileInfo->getRealPath() : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+
+        return (string)$this->getLocation();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+
+        return $this->Instance->getLocation();
     }
 }

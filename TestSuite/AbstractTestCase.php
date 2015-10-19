@@ -10,6 +10,24 @@ abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Runs the test case and collects the results in a TestResult object.
+     * If no TestResult object is passed a new one will be created.
+     *
+     * @param  \PHPUnit_Framework_TestResult $result
+     *
+     * @return \PHPUnit_Framework_TestResult
+     */
+    public function run(\PHPUnit_Framework_TestResult $result = null)
+    {
+
+//        $this->setBackupGlobals(false);
+//        $this->setPreserveGlobalState(false);
+//        $this->setRunTestInSeparateProcess(true);
+
+        parent::run($result);
+    }
+
+    /**
      * Call protected/private method of a object.
      *
      * @param object &$object    Instantiated object that we will run method on.

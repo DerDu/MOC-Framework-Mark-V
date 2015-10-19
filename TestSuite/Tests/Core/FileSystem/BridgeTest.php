@@ -2,6 +2,7 @@
 namespace MOC\V\TestSuite\Tests\Core\FileSystem;
 
 use MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder;
+use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload;
 use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader;
 use MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter;
 use MOC\V\Core\FileSystem\Component\Parameter\Repository\FileParameter;
@@ -30,6 +31,14 @@ class BridgeTest extends AbstractTestCase
     {
 
         new UniversalFileWriter(
+            new FileParameter(__FILE__)
+        );
+    }
+
+    public function testUniversalDownload()
+    {
+
+        new UniversalDownload(
             new FileParameter(__FILE__)
         );
     }

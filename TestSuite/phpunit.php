@@ -10,7 +10,7 @@ namespace MOC\V\TestSuite;
  * Setup: Php
  */
 header('Content-type: text/html; charset=utf-8');
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_WARNING);
 ini_set('display_errors', 1);
 date_default_timezone_set('Europe/Berlin');
 session_write_close();

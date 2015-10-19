@@ -44,15 +44,6 @@ class SymfonyFinder extends Bridge implements IBridgeInterface
     /**
      * @return string
      */
-    public function getLocation()
-    {
-
-        return $this->FileOption->getFile();
-    }
-
-    /**
-     * @return string
-     */
     public function getRealPath()
     {
 
@@ -73,5 +64,23 @@ class SymfonyFinder extends Bridge implements IBridgeInterface
         } catch (\Exception $Exception) {
             return '';
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+
+        return (string)$this->getLocation();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+
+        return $this->FileOption->getFile();
     }
 }
