@@ -48,7 +48,6 @@ class TwigTemplate extends Bridge implements IBridgeInterface
             new \Twig_Loader_String(),
             array('auto_reload' => $Reload, 'autoescape' => false, 'cache' => realpath(__DIR__.'/TwigTemplate'))
         );
-        $this->Instance->enableDebug();
         $this->Instance->addFilter(new \Twig_SimpleFilter('utf8_encode', 'utf8_encode'));
         $this->Instance->addFilter(new \Twig_SimpleFilter('utf8_decode', 'utf8_decode'));
         $this->Instance->addExtension(new PhpFunctionExtension());
