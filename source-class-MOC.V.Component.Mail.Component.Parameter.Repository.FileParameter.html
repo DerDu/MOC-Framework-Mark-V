@@ -456,13 +456,13 @@
 </span><span id="53" class="l"><a class="l" href="#53">53: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_setFile" href="#_setFile">setFile</a>(<span class="php-var">$File</span>)
 </span><span id="54" class="l"><a class="l" href="#54">54: </a>    {
 </span><span id="55" class="l"><a class="l" href="#55">55: </a>
-</span><span id="56" class="l"><a class="l" href="#56">56: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>( <span class="php-var">$File</span> )) {
+</span><span id="56" class="l"><a class="l" href="#56">56: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$File</span>)) {
 </span><span id="57" class="l"><a class="l" href="#57">57: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> EmptyFileException();
 </span><span id="58" class="l"><a class="l" href="#58">58: </a>        } <span class="php-keyword1">else</span> {
 </span><span id="59" class="l"><a class="l" href="#59">59: </a>            <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_dir</span>(<span class="php-var">$File</span>)) {
 </span><span id="60" class="l"><a class="l" href="#60">60: </a>                <span class="php-var">$this</span>-&gt;<span class="php-keyword2">File</span> = <span class="php-var">$File</span>;
 </span><span id="61" class="l"><a class="l" href="#61">61: </a>            } <span class="php-keyword1">else</span> {
-</span><span id="62" class="l"><a class="l" href="#62">62: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> TypeFileException(<span class="php-var">$File</span>.<span class="php-quote">' is a directory!'</span>);
+</span><span id="62" class="l"><a class="l" href="#62">62: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> TypeFileException(<span class="php-var">$File</span> . <span class="php-quote">' is a directory!'</span>);
 </span><span id="63" class="l"><a class="l" href="#63">63: </a>            }
 </span><span id="64" class="l"><a class="l" href="#64">64: </a>        }
 </span><span id="65" class="l"><a class="l" href="#65">65: </a>    }

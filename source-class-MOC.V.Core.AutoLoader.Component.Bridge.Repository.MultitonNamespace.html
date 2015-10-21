@@ -437,7 +437,7 @@
 </span><span id="33" class="l"><a class="l" href="#33">33: </a>        <span class="php-var">$this</span>-&gt;Instance = <span class="php-keyword1">new</span> NamespaceLoader(
 </span><span id="34" class="l"><a class="l" href="#34">34: </a>            <span class="php-var">$NamespaceParameter</span>-&gt;getNamespace(),
 </span><span id="35" class="l"><a class="l" href="#35">35: </a>            <span class="php-var">$DirectoryParameter</span>-&gt;getDirectory(),
-</span><span id="36" class="l"><a class="l" href="#36">36: </a>            ( <span class="php-keyword1">null</span> === <span class="php-var">$PrefixParameter</span> ? <span class="php-keyword1">null</span> : <span class="php-var">$PrefixParameter</span>-&gt;getNamespace() )
+</span><span id="36" class="l"><a class="l" href="#36">36: </a>            (<span class="php-keyword1">null</span> === <span class="php-var">$PrefixParameter</span> ? <span class="php-keyword1">null</span> : <span class="php-var">$PrefixParameter</span>-&gt;getNamespace())
 </span><span id="37" class="l"><a class="l" href="#37">37: </a>        );
 </span><span id="38" class="l"><a class="l" href="#38">38: </a>    }
 </span><span id="39" class="l"><a class="l" href="#39">39: </a>
@@ -463,7 +463,7 @@
 </span><span id="59" class="l"><a class="l" href="#59">59: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_addNamespaceDirectoryMapping" href="#_addNamespaceDirectoryMapping">addNamespaceDirectoryMapping</a>(NamespaceParameter <span class="php-var">$Namespace</span>, DirectoryParameter <span class="php-var">$Directory</span>)
 </span><span id="60" class="l"><a class="l" href="#60">60: </a>    {
 </span><span id="61" class="l"><a class="l" href="#61">61: </a>
-</span><span id="62" class="l"><a class="l" href="#62">62: </a>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> AutoLoaderException(__METHOD__.<span class="php-quote">' MUST NOT be used!'</span>);
+</span><span id="62" class="l"><a class="l" href="#62">62: </a>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> AutoLoaderException(__METHOD__.<span class="php-quote">' MUST NOT be used! NS:'</span>.<span class="php-var">$Namespace</span>.<span class="php-quote">', DIR:'</span>.<span class="php-var">$Directory</span>);
 </span><span id="63" class="l"><a class="l" href="#63">63: </a>    }
 </span><span id="64" class="l"><a class="l" href="#64">64: </a>
 </span><span id="65" class="l"><a class="l" href="#65">65: </a>    <span class="php-comment">/**

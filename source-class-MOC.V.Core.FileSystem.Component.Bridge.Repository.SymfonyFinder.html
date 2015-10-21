@@ -433,7 +433,7 @@
 </span><span id="27" class="l"><a class="l" href="#27">27: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="___construct" href="#___construct">__construct</a>(FileParameter <span class="php-var">$FileOption</span>)
 </span><span id="28" class="l"><a class="l" href="#28">28: </a>    {
 </span><span id="29" class="l"><a class="l" href="#29">29: </a>
-</span><span id="30" class="l"><a class="l" href="#30">30: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'Symfony\Component'</span>, __DIR__.<span class="php-quote">'/../../../Vendor/'</span>);
+</span><span id="30" class="l"><a class="l" href="#30">30: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'Symfony\Component'</span>, __DIR__ . <span class="php-quote">'/../../../Vendor/'</span>);
 </span><span id="31" class="l"><a class="l" href="#31">31: </a>
 </span><span id="32" class="l"><a class="l" href="#32">32: </a>        <span class="php-var">$this</span>-&gt;FileOption = <span class="php-var">$FileOption</span>;
 </span><span id="33" class="l"><a class="l" href="#33">33: </a>
@@ -474,7 +474,7 @@
 </span><span id="68" class="l"><a class="l" href="#68">68: </a>            }
 </span><span id="69" class="l"><a class="l" href="#69">69: </a>
 </span><span id="70" class="l"><a class="l" href="#70">70: </a>            <span class="php-keyword1">if</span> (<span class="php-keyword2">count</span>(<span class="php-var">$Result</span>) &gt; <span class="php-num">1</span>) {
-</span><span id="71" class="l"><a class="l" href="#71">71: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">count</span>(<span class="php-var">$Result</span>).<span class="php-quote">' matches.'</span>);
+</span><span id="71" class="l"><a class="l" href="#71">71: </a>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">count</span>(<span class="php-var">$Result</span>) . <span class="php-quote">' matches.'</span>);
 </span><span id="72" class="l"><a class="l" href="#72">72: </a>            } <span class="php-keyword1">elseif</span> (<span class="php-keyword2">count</span>(<span class="php-var">$Result</span>) == <span class="php-num">1</span>) {
 </span><span id="73" class="l"><a class="l" href="#73">73: </a>                <span class="php-keyword1">return</span> <span class="php-keyword2">current</span>(<span class="php-var">$Result</span>);
 </span><span id="74" class="l"><a class="l" href="#74">74: </a>            } <span class="php-keyword1">else</span> {

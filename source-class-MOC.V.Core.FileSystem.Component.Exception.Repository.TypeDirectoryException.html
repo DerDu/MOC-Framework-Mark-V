@@ -421,13 +421,13 @@
 </span><span id="13" class="l"><a class="l" href="#13">13: </a>
 </span><span id="14" class="l"><a class="l" href="#14">14: </a>    <span class="php-comment">/**
 </span></span><span id="15" class="l"><a class="l" href="#15">15: </a><span class="php-comment">     * @param string $Message
-</span></span><span id="16" class="l"><a class="l" href="#16">16: </a><span class="php-comment">     * @param int    $Code
-</span></span><span id="17" class="l"><a class="l" href="#17">17: </a><span class="php-comment">     * @param null   $Previous
+</span></span><span id="16" class="l"><a class="l" href="#16">16: </a><span class="php-comment">     * @param int $Code
+</span></span><span id="17" class="l"><a class="l" href="#17">17: </a><span class="php-comment">     * @param null $Previous
 </span></span><span id="18" class="l"><a class="l" href="#18">18: </a><span class="php-comment">     */</span>
 </span><span id="19" class="l"><a class="l" href="#19">19: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="___construct" href="#___construct">__construct</a>(<span class="php-var">$Message</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$Code</span> = <span class="php-num">0</span>, <span class="php-var">$Previous</span> = <span class="php-keyword1">null</span>)
 </span><span id="20" class="l"><a class="l" href="#20">20: </a>    {
 </span><span id="21" class="l"><a class="l" href="#21">21: </a>
-</span><span id="22" class="l"><a class="l" href="#22">22: </a>        <span class="php-var">$Message</span> = <span class="php-var">$Message</span>.<span class="php-quote">' is not a directory!'</span>;
+</span><span id="22" class="l"><a class="l" href="#22">22: </a>        <span class="php-var">$Message</span> = <span class="php-var">$Message</span> . <span class="php-quote">' is not a directory!'</span>;
 </span><span id="23" class="l"><a class="l" href="#23">23: </a>
 </span><span id="24" class="l"><a class="l" href="#24">24: </a>        parent::__construct(<span class="php-var">$Message</span>, <span class="php-var">$Code</span>, <span class="php-var">$Previous</span>);
 </span><span id="25" class="l"><a class="l" href="#25">25: </a>    }

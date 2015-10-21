@@ -451,7 +451,7 @@
 </span><span id="45" class="l"><a class="l" href="#45">45: </a>        <span class="php-var">$SERVER</span> = GlobalsKernel::getGlobals()-&gt;getSERVER();
 </span><span id="46" class="l"><a class="l" href="#46">46: </a>        <span class="php-var">$SplFileInfo</span> = (<span class="php-keyword1">new</span> \SplFileInfo(<span class="php-var">$this</span>-&gt;Instance-&gt;getLocation()));
 </span><span id="47" class="l"><a class="l" href="#47">47: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$SplFileInfo</span>-&gt;getRealPath()) {
-</span><span id="48" class="l"><a class="l" href="#48">48: </a>            <span class="php-var">$SplFileInfo</span> = (<span class="php-keyword1">new</span> \SplFileInfo(<span class="php-var">$SERVER</span>[<span class="php-quote">'DOCUMENT_ROOT'</span>].<span class="php-var">$this</span>-&gt;Instance-&gt;getLocation()));
+</span><span id="48" class="l"><a class="l" href="#48">48: </a>            <span class="php-var">$SplFileInfo</span> = (<span class="php-keyword1">new</span> \SplFileInfo(<span class="php-var">$SERVER</span>[<span class="php-quote">'DOCUMENT_ROOT'</span>] . <span class="php-var">$this</span>-&gt;Instance-&gt;getLocation()));
 </span><span id="49" class="l"><a class="l" href="#49">49: </a>        }
 </span><span id="50" class="l"><a class="l" href="#50">50: </a>        <span class="php-keyword1">return</span> <span class="php-var">$SplFileInfo</span>-&gt;getRealPath() ? <span class="php-var">$SplFileInfo</span>-&gt;getRealPath() : <span class="php-quote">''</span>;
 </span><span id="51" class="l"><a class="l" href="#51">51: </a>    }

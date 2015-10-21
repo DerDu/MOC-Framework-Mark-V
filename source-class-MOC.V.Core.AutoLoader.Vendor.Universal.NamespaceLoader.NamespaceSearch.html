@@ -414,7 +414,7 @@
 </span><span id="10" class="l"><a class="l" href="#10">10: </a>{
 </span><span id="11" class="l"><a class="l" href="#11">11: </a>
 </span><span id="12" class="l"><a class="l" href="#12">12: </a>    <span class="php-comment">/**
-</span></span><span id="13" class="l"><a class="l" href="#13">13: </a><span class="php-comment">     * @param array  $DirectoryList
+</span></span><span id="13" class="l"><a class="l" href="#13">13: </a><span class="php-comment">     * @param array $DirectoryList
 </span></span><span id="14" class="l"><a class="l" href="#14">14: </a><span class="php-comment">     * @param string $ClassName
 </span></span><span id="15" class="l"><a class="l" href="#15">15: </a><span class="php-comment">     * @param string $Namespace
 </span></span><span id="16" class="l"><a class="l" href="#16">16: </a><span class="php-comment">     *
@@ -424,12 +424,12 @@
 </span><span id="20" class="l"><a class="l" href="#20">20: </a>    {
 </span><span id="21" class="l"><a class="l" href="#21">21: </a>
 </span><span id="22" class="l"><a class="l" href="#22">22: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;searchForInterface(<span class="php-var">$DirectoryList</span>,
-</span><span id="23" class="l"><a class="l" href="#23">23: </a>            <span class="php-keyword2">trim</span>(<span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!^'</span>.<span class="php-keyword2">preg_quote</span>(<span class="php-var">$Namespace</span>).<span class="php-quote">'!is'</span>, <span class="php-quote">''</span>, <span class="php-var">$ClassName</span>), <span class="php-quote">'\\'</span>)
+</span><span id="23" class="l"><a class="l" href="#23">23: </a>            <span class="php-keyword2">trim</span>(<span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!^'</span> . <span class="php-keyword2">preg_quote</span>(<span class="php-var">$Namespace</span>) . <span class="php-quote">'!is'</span>, <span class="php-quote">''</span>, <span class="php-var">$ClassName</span>), <span class="php-quote">'\\'</span>)
 </span><span id="24" class="l"><a class="l" href="#24">24: </a>        );
 </span><span id="25" class="l"><a class="l" href="#25">25: </a>    }
 </span><span id="26" class="l"><a class="l" href="#26">26: </a>
 </span><span id="27" class="l"><a class="l" href="#27">27: </a>    <span class="php-comment">/**
-</span></span><span id="28" class="l"><a class="l" href="#28">28: </a><span class="php-comment">     * @param array  $DirectoryList
+</span></span><span id="28" class="l"><a class="l" href="#28">28: </a><span class="php-comment">     * @param array $DirectoryList
 </span></span><span id="29" class="l"><a class="l" href="#29">29: </a><span class="php-comment">     * @param string $ClassName
 </span></span><span id="30" class="l"><a class="l" href="#30">30: </a><span class="php-comment">     *
 </span></span><span id="31" class="l"><a class="l" href="#31">31: </a><span class="php-comment">     * @return bool
@@ -438,11 +438,11 @@
 </span><span id="34" class="l"><a class="l" href="#34">34: </a>    {
 </span><span id="35" class="l"><a class="l" href="#35">35: </a>
 </span><span id="36" class="l"><a class="l" href="#36">36: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;searchForClass(<span class="php-var">$DirectoryList</span>,
-</span><span id="37" class="l"><a class="l" href="#37">37: </a>            <span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!(.*?)I([^'</span>.<span class="php-keyword2">preg_quote</span>(<span class="php-quote">'\\'</span>).<span class="php-quote">']*?)Interface$!is'</span>, <span class="php-quote">'$1$2'</span>, <span class="php-var">$ClassName</span>));
+</span><span id="37" class="l"><a class="l" href="#37">37: </a>            <span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!(.*?)I([^'</span> . <span class="php-keyword2">preg_quote</span>(<span class="php-quote">'\\'</span>) . <span class="php-quote">']*?)Interface$!is'</span>, <span class="php-quote">'$1$2'</span>, <span class="php-var">$ClassName</span>));
 </span><span id="38" class="l"><a class="l" href="#38">38: </a>    }
 </span><span id="39" class="l"><a class="l" href="#39">39: </a>
 </span><span id="40" class="l"><a class="l" href="#40">40: </a>    <span class="php-comment">/**
-</span></span><span id="41" class="l"><a class="l" href="#41">41: </a><span class="php-comment">     * @param array  $DirectoryList
+</span></span><span id="41" class="l"><a class="l" href="#41">41: </a><span class="php-comment">     * @param array $DirectoryList
 </span></span><span id="42" class="l"><a class="l" href="#42">42: </a><span class="php-comment">     * @param string $ClassName
 </span></span><span id="43" class="l"><a class="l" href="#43">43: </a><span class="php-comment">     *
 </span></span><span id="44" class="l"><a class="l" href="#44">44: </a><span class="php-comment">     * @return bool
@@ -451,11 +451,11 @@
 </span><span id="47" class="l"><a class="l" href="#47">47: </a>    {
 </span><span id="48" class="l"><a class="l" href="#48">48: </a>
 </span><span id="49" class="l"><a class="l" href="#49">49: </a>        <span class="php-keyword1">foreach</span> ((<span class="php-keyword1">array</span>)<span class="php-var">$DirectoryList</span> <span class="php-keyword1">as</span> <span class="php-var">$Directory</span>) {
-</span><span id="50" class="l"><a class="l" href="#50">50: </a>            <span class="php-var">$File</span> = <span class="php-var">$Directory</span>.DIRECTORY_SEPARATOR.<span class="php-keyword2">str_replace</span>(<span class="php-keyword1">array</span>(<span class="php-quote">'_'</span>, <span class="php-quote">'\\'</span>, <span class="php-quote">'/'</span>), DIRECTORY_SEPARATOR,
-</span><span id="51" class="l"><a class="l" href="#51">51: </a>                    <span class="php-var">$ClassName</span>).<span class="php-quote">'.php'</span>;
+</span><span id="50" class="l"><a class="l" href="#50">50: </a>            <span class="php-var">$File</span> = <span class="php-var">$Directory</span> . DIRECTORY_SEPARATOR . <span class="php-keyword2">str_replace</span>(<span class="php-keyword1">array</span>(<span class="php-quote">'_'</span>, <span class="php-quote">'\\'</span>, <span class="php-quote">'/'</span>), DIRECTORY_SEPARATOR,
+</span><span id="51" class="l"><a class="l" href="#51">51: </a>                    <span class="php-var">$ClassName</span>) . <span class="php-quote">'.php'</span>;
 </span><span id="52" class="l"><a class="l" href="#52">52: </a>            <span class="php-keyword1">if</span> (<span class="php-keyword2">is_file</span>(<span class="php-var">$File</span>)) {
 </span><span id="53" class="l"><a class="l" href="#53">53: </a>                <span class="php-comment">/** @noinspection PhpIncludeInspection */</span>
-</span><span id="54" class="l"><a class="l" href="#54">54: </a>                <span class="php-keyword1">require_once</span>( <span class="php-var">$File</span> );
+</span><span id="54" class="l"><a class="l" href="#54">54: </a>                <span class="php-keyword1">require_once</span>(<span class="php-var">$File</span>);
 </span><span id="55" class="l"><a class="l" href="#55">55: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
 </span><span id="56" class="l"><a class="l" href="#56">56: </a>            }
 </span><span id="57" class="l"><a class="l" href="#57">57: </a>        }
@@ -463,7 +463,7 @@
 </span><span id="59" class="l"><a class="l" href="#59">59: </a>    }
 </span><span id="60" class="l"><a class="l" href="#60">60: </a>
 </span><span id="61" class="l"><a class="l" href="#61">61: </a>    <span class="php-comment">/**
-</span></span><span id="62" class="l"><a class="l" href="#62">62: </a><span class="php-comment">     * @param array  $DirectoryList
+</span></span><span id="62" class="l"><a class="l" href="#62">62: </a><span class="php-comment">     * @param array $DirectoryList
 </span></span><span id="63" class="l"><a class="l" href="#63">63: </a><span class="php-comment">     * @param string $ClassName
 </span></span><span id="64" class="l"><a class="l" href="#64">64: </a><span class="php-comment">     * @param string $Namespace
 </span></span><span id="65" class="l"><a class="l" href="#65">65: </a><span class="php-comment">     *
@@ -473,7 +473,7 @@
 </span><span id="69" class="l"><a class="l" href="#69">69: </a>    {
 </span><span id="70" class="l"><a class="l" href="#70">70: </a>
 </span><span id="71" class="l"><a class="l" href="#71">71: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;searchForClass(<span class="php-var">$DirectoryList</span>,
-</span><span id="72" class="l"><a class="l" href="#72">72: </a>            <span class="php-keyword2">trim</span>(<span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!^'</span>.<span class="php-keyword2">preg_quote</span>(<span class="php-var">$Namespace</span>).<span class="php-quote">'!is'</span>, <span class="php-quote">''</span>, <span class="php-var">$ClassName</span>), <span class="php-quote">'\\'</span>)
+</span><span id="72" class="l"><a class="l" href="#72">72: </a>            <span class="php-keyword2">trim</span>(<span class="php-keyword2">preg_replace</span>(<span class="php-quote">'!^'</span> . <span class="php-keyword2">preg_quote</span>(<span class="php-var">$Namespace</span>) . <span class="php-quote">'!is'</span>, <span class="php-quote">''</span>, <span class="php-var">$ClassName</span>), <span class="php-quote">'\\'</span>)
 </span><span id="73" class="l"><a class="l" href="#73">73: </a>        );
 </span><span id="74" class="l"><a class="l" href="#74">74: </a>    }
 </span><span id="75" class="l"><a class="l" href="#75">75: </a>}

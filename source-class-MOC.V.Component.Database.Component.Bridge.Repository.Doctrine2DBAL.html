@@ -439,20 +439,20 @@
 </span><span id="35" class="l"><a class="l" href="#35"> 35: </a>    {
 </span><span id="36" class="l"><a class="l" href="#36"> 36: </a>
 </span><span id="37" class="l"><a class="l" href="#37"> 37: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'Doctrine\DBAL'</span>,
-</span><span id="38" class="l"><a class="l" href="#38"> 38: </a>            __DIR__.<span class="php-quote">'/../../../Vendor/Doctrine2DBAL/2.5.0/lib'</span>);
+</span><span id="38" class="l"><a class="l" href="#38"> 38: </a>            __DIR__ . <span class="php-quote">'/../../../Vendor/Doctrine2DBAL/2.5.0/lib'</span>);
 </span><span id="39" class="l"><a class="l" href="#39"> 39: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'Doctrine\Common'</span>,
-</span><span id="40" class="l"><a class="l" href="#40"> 40: </a>            __DIR__.<span class="php-quote">'/../../../Vendor/Doctrine2Common/2.5.0/lib'</span>);
+</span><span id="40" class="l"><a class="l" href="#40"> 40: </a>            __DIR__ . <span class="php-quote">'/../../../Vendor/Doctrine2Common/2.5.0/lib'</span>);
 </span><span id="41" class="l"><a class="l" href="#41"> 41: </a>    }
 </span><span id="42" class="l"><a class="l" href="#42"> 42: </a>
 </span><span id="43" class="l"><a class="l" href="#43"> 43: </a>    <span class="php-comment">/**
 </span></span><span id="44" class="l"><a class="l" href="#44"> 44: </a><span class="php-comment">     * @param UsernameParameter $Username
 </span></span><span id="45" class="l"><a class="l" href="#45"> 45: </a><span class="php-comment">     * @param PasswordParameter $Password
 </span></span><span id="46" class="l"><a class="l" href="#46"> 46: </a><span class="php-comment">     * @param DatabaseParameter $Database
-</span></span><span id="47" class="l"><a class="l" href="#47"> 47: </a><span class="php-comment">     * @param DriverParameter   $Driver
-</span></span><span id="48" class="l"><a class="l" href="#48"> 48: </a><span class="php-comment">     * @param HostParameter     $Host
-</span></span><span id="49" class="l"><a class="l" href="#49"> 49: </a><span class="php-comment">     * @param PortParameter     $Port
+</span></span><span id="47" class="l"><a class="l" href="#47"> 47: </a><span class="php-comment">     * @param DriverParameter $Driver
+</span></span><span id="48" class="l"><a class="l" href="#48"> 48: </a><span class="php-comment">     * @param HostParameter $Host
+</span></span><span id="49" class="l"><a class="l" href="#49"> 49: </a><span class="php-comment">     * @param PortParameter $Port
 </span></span><span id="50" class="l"><a class="l" href="#50"> 50: </a><span class="php-comment">     *
-</span></span><span id="51" class="l"><a class="l" href="#51"> 51: </a><span class="php-comment">     * @param int               $Timeout
+</span></span><span id="51" class="l"><a class="l" href="#51"> 51: </a><span class="php-comment">     * @param int $Timeout
 </span></span><span id="52" class="l"><a class="l" href="#52"> 52: </a><span class="php-comment">     *
 </span></span><span id="53" class="l"><a class="l" href="#53"> 53: </a><span class="php-comment">     * @return IBridgeInterface
 </span></span><span id="54" class="l"><a class="l" href="#54"> 54: </a><span class="php-comment">     * @throws ComponentException
@@ -469,12 +469,12 @@
 </span><span id="65" class="l"><a class="l" href="#65"> 65: </a>
 </span><span id="66" class="l"><a class="l" href="#66"> 66: </a>        <span class="php-keyword1">try</span> {
 </span><span id="67" class="l"><a class="l" href="#67"> 67: </a>            <span class="php-var">$Connection</span> = DriverManager::getConnection(<span class="php-keyword1">array</span>(
-</span><span id="68" class="l"><a class="l" href="#68"> 68: </a>                <span class="php-quote">'driver'</span>        =&gt; <span class="php-var">$Driver</span>-&gt;getDriver(),
-</span><span id="69" class="l"><a class="l" href="#69"> 69: </a>                <span class="php-quote">'user'</span>          =&gt; <span class="php-var">$Username</span>-&gt;getUsername(),
-</span><span id="70" class="l"><a class="l" href="#70"> 70: </a>                <span class="php-quote">'password'</span>      =&gt; <span class="php-var">$Password</span>-&gt;getPassword(),
-</span><span id="71" class="l"><a class="l" href="#71"> 71: </a>                <span class="php-quote">'host'</span>          =&gt; <span class="php-var">$Host</span>-&gt;getHost(),
-</span><span id="72" class="l"><a class="l" href="#72"> 72: </a>                <span class="php-quote">'dbname'</span>        =&gt; <span class="php-var">$Database</span>-&gt;getDatabase(),
-</span><span id="73" class="l"><a class="l" href="#73"> 73: </a>                <span class="php-quote">'port'</span>          =&gt; <span class="php-var">$Port</span>-&gt;getPort(),
+</span><span id="68" class="l"><a class="l" href="#68"> 68: </a>                <span class="php-quote">'driver'</span> =&gt; <span class="php-var">$Driver</span>-&gt;getDriver(),
+</span><span id="69" class="l"><a class="l" href="#69"> 69: </a>                <span class="php-quote">'user'</span> =&gt; <span class="php-var">$Username</span>-&gt;getUsername(),
+</span><span id="70" class="l"><a class="l" href="#70"> 70: </a>                <span class="php-quote">'password'</span> =&gt; <span class="php-var">$Password</span>-&gt;getPassword(),
+</span><span id="71" class="l"><a class="l" href="#71"> 71: </a>                <span class="php-quote">'host'</span> =&gt; <span class="php-var">$Host</span>-&gt;getHost(),
+</span><span id="72" class="l"><a class="l" href="#72"> 72: </a>                <span class="php-quote">'dbname'</span> =&gt; <span class="php-var">$Database</span>-&gt;getDatabase(),
+</span><span id="73" class="l"><a class="l" href="#73"> 73: </a>                <span class="php-quote">'port'</span> =&gt; <span class="php-var">$Port</span>-&gt;getPort(),
 </span><span id="74" class="l"><a class="l" href="#74"> 74: </a>                <span class="php-quote">'driverOptions'</span> =&gt; <span class="php-keyword1">array</span>(
 </span><span id="75" class="l"><a class="l" href="#75"> 75: </a>                    \PDO::ATTR_TIMEOUT =&gt; <span class="php-var">$Timeout</span>,
 </span><span id="76" class="l"><a class="l" href="#76"> 76: </a>                    \PDO::ATTR_ERRMODE =&gt; \PDO::ERRMODE_EXCEPTION

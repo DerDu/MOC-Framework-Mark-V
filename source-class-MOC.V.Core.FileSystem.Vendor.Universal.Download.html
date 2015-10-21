@@ -449,13 +449,13 @@
 </span><span id="44" class="l"><a class="l" href="#44">44: </a>
 </span><span id="45" class="l"><a class="l" href="#45">45: </a>            <span class="php-comment">// Set headers.</span>
 </span><span id="46" class="l"><a class="l" href="#46">46: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Description: Download'</span>);
-</span><span id="47" class="l"><a class="l" href="#47">47: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Type: '</span>.<span class="php-var">$Type</span>);
-</span><span id="48" class="l"><a class="l" href="#48">48: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Disposition: attachment; filename=&quot;'</span>.<span class="php-keyword2">basename</span>(<span class="php-var">$this</span>-&gt;getRealPath()).<span class="php-quote">'&quot;'</span>);
+</span><span id="47" class="l"><a class="l" href="#47">47: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Type: '</span> . <span class="php-var">$Type</span>);
+</span><span id="48" class="l"><a class="l" href="#48">48: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Disposition: attachment; filename=&quot;'</span> . <span class="php-keyword2">basename</span>(<span class="php-var">$this</span>-&gt;getRealPath()) . <span class="php-quote">'&quot;'</span>);
 </span><span id="49" class="l"><a class="l" href="#49">49: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Transfer-Encoding: binary'</span>);
 </span><span id="50" class="l"><a class="l" href="#50">50: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Expires: 0'</span>);
 </span><span id="51" class="l"><a class="l" href="#51">51: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Cache-Control: public, must-revalidate, post-check=0, pre-check=0'</span>);
 </span><span id="52" class="l"><a class="l" href="#52">52: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Pragma: public'</span>);
-</span><span id="53" class="l"><a class="l" href="#53">53: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Length: '</span>.<span class="php-keyword2">filesize</span>(<span class="php-var">$this</span>-&gt;getRealPath()));
+</span><span id="53" class="l"><a class="l" href="#53">53: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Content-Length: '</span> . <span class="php-keyword2">filesize</span>(<span class="php-var">$this</span>-&gt;getRealPath()));
 </span><span id="54" class="l"><a class="l" href="#54">54: </a>            <span class="php-keyword2">header</span>(<span class="php-quote">'Connection: close'</span>);
 </span><span id="55" class="l"><a class="l" href="#55">55: </a>
 </span><span id="56" class="l"><a class="l" href="#56">56: </a>            <span class="php-comment">// Erase and flush the output buffer</span>
