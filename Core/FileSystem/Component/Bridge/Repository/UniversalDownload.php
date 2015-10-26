@@ -19,12 +19,13 @@ class UniversalDownload extends Bridge implements IBridgeInterface
     private $Instance = null;
 
     /**
-     * @param FileParameter $FileOption
+     * @param FileParameter $FileLocation
+     * @param FileParameter $FileName
      */
-    public function __construct(FileParameter $FileOption)
+    public function __construct(FileParameter $FileLocation, FileParameter $FileName = null)
     {
 
-        $this->Instance = new Download($FileOption->getFile());
+        $this->Instance = new Download($FileLocation->getFile(), ( $FileName ? $FileName->getFile() : null ));
     }
 
     /**
@@ -45,7 +46,7 @@ class UniversalDownload extends Bridge implements IBridgeInterface
         $SERVER = GlobalsKernel::getGlobals()->getSERVER();
         $SplFileInfo = (new \SplFileInfo($this->Instance->getLocation()));
         if (!$SplFileInfo->getRealPath()) {
-            $SplFileInfo = (new \SplFileInfo($SERVER['DOCUMENT_ROOT'] . $this->Instance->getLocation()));
+            $SplFileInfo = (new \SplFileInfo($SERVER['DOCUMENT_ROOT'].$this->Instance->getLocation()));
         }
         return $SplFileInfo->getRealPath() ? $SplFileInfo->getRealPath() : '';
     }
