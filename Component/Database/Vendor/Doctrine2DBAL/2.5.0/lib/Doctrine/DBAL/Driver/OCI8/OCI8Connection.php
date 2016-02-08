@@ -44,12 +44,12 @@ class OCI8Connection implements Connection, ServerInfoAwareConnection
     /**
      * Creates a Connection to an Oracle Database using oci8 extension.
      *
-     * @param string $username
-     * @param string $password
-     * @param string $db
+     * @param string      $username
+     * @param string      $password
+     * @param string      $db
      * @param string|null $charset
-     * @param integer $sessionMode
-     * @param boolean $persistent
+     * @param integer     $sessionMode
+     * @param boolean     $persistent
      *
      * @throws OCI8Exception
      */

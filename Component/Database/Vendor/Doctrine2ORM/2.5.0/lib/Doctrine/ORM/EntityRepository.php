@@ -19,7 +19,6 @@
 
 namespace Doctrine\ORM;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -40,6 +39,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class EntityRepository implements ObjectRepository, Selectable
 {
+
     /**
      * @var string
      */
@@ -63,6 +63,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function __construct($em, Mapping\ClassMetadata $class)
     {
+
         $this->_entityName = $class->name;
         $this->_em = $em;
         $this->_class = $class;
@@ -78,6 +79,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function createQueryBuilder($alias, $indexBy = null)
     {
+
         return $this->_em->createQueryBuilder()
             ->select($alias)
             ->from($this->_entityName, $alias, $indexBy);
@@ -94,6 +96,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function createResultSetMappingBuilder($alias)
     {
+
         $rsm = new ResultSetMappingBuilder($this->_em, ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT);
         $rsm->addRootEntityFromClassMetadata($this->_entityName, $alias);
 
@@ -109,6 +112,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function createNamedQuery($queryName)
     {
+
         return $this->_em->createQuery($this->_class->getNamedQuery($queryName));
     }
 
@@ -136,6 +140,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function clear()
     {
+
         $this->_em->clear($this->_class->rootEntityName);
     }
 
@@ -152,6 +157,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function find($id, $lockMode = null, $lockVersion = null)
     {
+
         return $this->_em->find($this->_entityName, $id, $lockMode, $lockVersion);
     }
 
@@ -162,6 +168,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function findAll()
     {
+
         return $this->findBy(array());
     }
 
@@ -177,6 +184,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
+
         $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
         return $persister->loadAll($criteria, $orderBy, $limit, $offset);
@@ -185,13 +193,14 @@ class EntityRepository implements ObjectRepository, Selectable
     /**
      * Finds a single entity by a set of criteria.
      *
-     * @param array $criteria
+     * @param array      $criteria
      * @param array|null $orderBy
      *
      * @return object|null The entity instance or NULL if the entity can not be found.
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
+
         $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
         return $persister->load($criteria, null, null, array(), null, 1, $orderBy);
@@ -212,6 +221,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function __call($method, $arguments)
     {
+
         switch (true) {
             case ( 0 === strpos($method, 'findBy') ):
                 $by = substr($method, 6);
@@ -264,6 +274,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function getClassName()
     {
+
         return $this->getEntityName();
     }
 
@@ -272,6 +283,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getEntityName()
     {
+
         return $this->_entityName;
     }
 
@@ -285,6 +297,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     public function matching(Criteria $criteria)
     {
+
         $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
         return new LazyCriteriaCollection($persister, $criteria);
@@ -295,6 +308,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getEntityManager()
     {
+
         return $this->_em;
     }
 
@@ -303,6 +317,7 @@ class EntityRepository implements ObjectRepository, Selectable
      */
     protected function getClassMetadata()
     {
+
         return $this->_class;
     }
 }

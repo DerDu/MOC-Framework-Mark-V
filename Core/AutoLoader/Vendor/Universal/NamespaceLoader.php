@@ -49,10 +49,10 @@ class NamespaceLoader extends NamespaceSearch
         $LoadNamespace = $this->getClassNamespace($ClassName);
         /**
          * @var string $Namespace
-         * @var array $DirectoryList
+         * @var array  $DirectoryList
          */
         foreach ((array)$this->getNamespaceList() as $Namespace) {
-            if (empty($LoadNamespace) || empty($Namespace) || 0 !== strpos($LoadNamespace, $Namespace)) {
+            if (empty( $LoadNamespace ) || empty( $Namespace ) || 0 !== strpos($LoadNamespace, $Namespace)) {
                 continue;
             }
             $DirectoryList = $this->getNamespaceMapping($Namespace);

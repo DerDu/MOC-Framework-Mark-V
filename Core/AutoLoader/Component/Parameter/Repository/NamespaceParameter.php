@@ -55,7 +55,7 @@ class NamespaceParameter extends Parameter implements IParameterInterface
             $this->Namespace = null;
         } else {
             $Namespace = trim($Namespace, '\\');
-            if (empty($Namespace)) {
+            if (empty( $Namespace )) {
                 throw new EmptyNamespaceException();
             } else {
                 $this->Namespace = $Namespace;

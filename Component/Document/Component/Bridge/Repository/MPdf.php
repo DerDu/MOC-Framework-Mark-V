@@ -25,7 +25,7 @@ class MPdf extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once(__DIR__ . '/../../../Vendor/mPdf/6.0.0/mpdf.php');
+        require_once( __DIR__.'/../../../Vendor/mPdf/6.0.0/mpdf.php' );
 
         $this->setPaperSizeParameter(new PaperSizeParameter());
         $this->setPaperOrientationParameter(new PaperOrientationParameter());

@@ -18,12 +18,12 @@ class PhpExcel extends File
     public function __construct()
     {
 
-        require_once(__DIR__ . '/../../../Vendor/PhpExcel/1.8.0/Classes/PHPExcel.php');
+        require_once( __DIR__.'/../../../Vendor/PhpExcel/1.8.0/Classes/PHPExcel.php' );
     }
 
     /**
      * @param string|int $Column Name or Index
-     * @param null|int $Row Index
+     * @param null|int   $Row    Index
      *
      * @return Cell
      */
@@ -41,7 +41,7 @@ class PhpExcel extends File
     }
 
     /**
-     * @param Cell $Cell
+     * @param Cell  $Cell
      * @param mixed $Value
      *
      * @return $this

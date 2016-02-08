@@ -37,7 +37,7 @@ class BridgeTest extends AbstractTestCase
         try {
             $Bridge->loginCredential('user');
         } catch (\Exception $Exception) {
-            if( !$Exception instanceof \PHPUnit_Framework_Error_Notice ) {
+            if (!$Exception instanceof \PHPUnit_Framework_Error_Notice) {
                 $this->assertInstanceOf('\MOC\V\Core\SecureKernel\Component\Exception\ComponentException', $Exception);
             }
         }
@@ -52,7 +52,7 @@ class BridgeTest extends AbstractTestCase
         try {
             $Bridge->loginCredential('user', 'password');
         } catch (\Exception $Exception) {
-            if( !$Exception instanceof \PHPUnit_Framework_Error_Notice ) {
+            if (!$Exception instanceof \PHPUnit_Framework_Error_Notice) {
                 $this->assertInstanceOf('\MOC\V\Core\SecureKernel\Component\Exception\ComponentException', $Exception);
             }
         }

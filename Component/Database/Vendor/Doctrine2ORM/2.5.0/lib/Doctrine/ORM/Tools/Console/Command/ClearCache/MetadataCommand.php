@@ -38,11 +38,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MetadataCommand extends Command
 {
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
+
         $this
             ->setName('orm:clear-cache:metadata')
             ->setDescription('Clear all metadata cache of the various cache drivers.')
@@ -78,6 +80,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         $em = $this->getHelper('em')->getEntityManager();
         $cacheDriver = $em->getConfiguration()->getMetadataCacheImpl();
 
@@ -92,7 +95,6 @@ EOT
         if ($cacheDriver instanceof XcacheCache) {
             throw new \LogicException("Cannot clear XCache Cache from Console, its shared in the Webserver memory and not accessible from the CLI.");
         }
-
 
         $output->writeln('Clearing ALL Metadata cache entries');
 

@@ -14,7 +14,7 @@ abstract class File extends Config
 {
 
     /**
-     * @param FileParameter $Location
+     * @param FileParameter               $Location
      * @param \PHPExcel_Cell_IValueBinder $ValueBinder
      *
      * @return PhpExcel
@@ -29,7 +29,7 @@ abstract class File extends Config
     }
 
     /**
-     * @param FileParameter $Location
+     * @param FileParameter               $Location
      * @param \PHPExcel_Cell_IValueBinder $ValueBinder
      *
      * @return PhpExcel
@@ -59,47 +59,48 @@ abstract class File extends Config
             }
             $this->Source = $Reader->load($Location->getFile());
         } else {
-            throw new TypeFileException('No Reader for ' . $Info->getExtension() . ' available!');
+            throw new TypeFileException('No Reader for '.$Info->getExtension().' available!');
         }
         return $this;
     }
 
     /**
      * @param \SplFileInfo $Info
+     *
      * @return string
      */
     private function getReaderType(\SplFileInfo $Info)
     {
 
         $ReaderList = array(
-            'Excel2007' => array(
+            'Excel2007'    => array(
                 'xlsx',
                 'xlsm',
                 'xltx',
                 'xltm'
             ),
-            'Excel5' => array(
+            'Excel5'       => array(
                 'xls',
                 'xlt'
             ),
-            'OOCalc' => array(
+            'OOCalc'       => array(
                 'ods',
                 'ots'
             ),
-            'SYLK' => array(
+            'SYLK'         => array(
                 'slk'
             ),
             'Excel2003XML' => array(
                 'xml'
             ),
-            'Gnumeric' => array(
+            'Gnumeric'     => array(
                 'gnumeric'
             ),
-            'HTML' => array(
+            'HTML'         => array(
                 'htm',
                 'html'
             ),
-            'CSV' => array(
+            'CSV'          => array(
                 'txt',
                 'csv'
             )
@@ -108,6 +109,7 @@ abstract class File extends Config
         $ReaderType = null;
         $Extension = $Info->getExtension();
         array_walk($ReaderList, function ($TypeList, $Reader) use (&$ReaderType, $Extension) {
+
             if (in_array($Extension, $TypeList)) {
                 $ReaderType = $Reader;
             }
@@ -120,6 +122,7 @@ abstract class File extends Config
      */
     private function getDelimiterType()
     {
+
         $Delimiter = array(
             ',',
             ';',
@@ -128,13 +131,14 @@ abstract class File extends Config
         $Result = array();
         $Content = file($this->getFileParameter());
         for ($Line = 0; $Line < 5; $Line++) {
-            if (isset($Content[$Line])) {
+            if (isset( $Content[$Line] )) {
                 foreach ($Delimiter as $Char) {
                     $Result[$Char][$Line] = substr_count($Content[$Line], $Char);
                 }
             }
         }
         array_walk($Result, function ($Count, $Delimiter) use (&$Result) {
+
             if (0 == array_sum($Count)) {
                 $Result[$Delimiter] = false;
             } else {
@@ -183,7 +187,7 @@ abstract class File extends Config
             $Writer->save($Location);
         } else {
             // @codeCoverageIgnoreStart
-            throw new TypeFileException('No Writer for ' . $Info->getExtension() . ' available!');
+            throw new TypeFileException('No Writer for '.$Info->getExtension().' available!');
             // @codeCoverageIgnoreEnd
         }
 
@@ -192,6 +196,7 @@ abstract class File extends Config
 
     /**
      * @param \SplFileInfo $Info
+     *
      * @return null|string
      */
     private function getWriterType(\SplFileInfo $Info)
@@ -204,15 +209,15 @@ abstract class File extends Config
                 'xltx',
                 'xltm'
             ),
-            'Excel5' => array(
+            'Excel5'    => array(
                 'xls',
                 'xlt'
             ),
-            'HTML' => array(
+            'HTML'      => array(
                 'htm',
                 'html'
             ),
-            'CSV' => array(
+            'CSV'       => array(
                 'csv'
             )
         );
@@ -220,6 +225,7 @@ abstract class File extends Config
         $WriterType = null;
         $Extension = $Info->getExtension();
         array_walk($WriterList, function ($TypeList, $Writer) use (&$WriterType, $Extension) {
+
             if (in_array($Extension, $TypeList)) {
                 $WriterType = $Writer;
             }

@@ -35,20 +35,20 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
     {
 
         AutoLoader::getNamespaceAutoLoader('Doctrine\DBAL',
-            __DIR__ . '/../../../Vendor/Doctrine2DBAL/2.5.0/lib');
+            __DIR__.'/../../../Vendor/Doctrine2DBAL/2.5.0/lib');
         AutoLoader::getNamespaceAutoLoader('Doctrine\Common',
-            __DIR__ . '/../../../Vendor/Doctrine2Common/2.5.0/lib');
+            __DIR__.'/../../../Vendor/Doctrine2Common/2.5.0/lib');
     }
 
     /**
      * @param UsernameParameter $Username
      * @param PasswordParameter $Password
      * @param DatabaseParameter $Database
-     * @param DriverParameter $Driver
-     * @param HostParameter $Host
-     * @param PortParameter $Port
+     * @param DriverParameter   $Driver
+     * @param HostParameter     $Host
+     * @param PortParameter     $Port
      *
-     * @param int $Timeout
+     * @param int               $Timeout
      *
      * @return IBridgeInterface
      * @throws ComponentException
@@ -65,12 +65,12 @@ class Doctrine2DBAL extends Bridge implements IBridgeInterface
 
         try {
             $Connection = DriverManager::getConnection(array(
-                'driver' => $Driver->getDriver(),
-                'user' => $Username->getUsername(),
-                'password' => $Password->getPassword(),
-                'host' => $Host->getHost(),
-                'dbname' => $Database->getDatabase(),
-                'port' => $Port->getPort(),
+                'driver'        => $Driver->getDriver(),
+                'user'          => $Username->getUsername(),
+                'password'      => $Password->getPassword(),
+                'host'          => $Host->getHost(),
+                'dbname'        => $Database->getDatabase(),
+                'port'          => $Port->getPort(),
                 'driverOptions' => array(
                     \PDO::ATTR_TIMEOUT => $Timeout,
                     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION

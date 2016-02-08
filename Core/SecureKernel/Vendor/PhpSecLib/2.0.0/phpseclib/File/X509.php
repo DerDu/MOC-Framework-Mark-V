@@ -4313,8 +4313,9 @@ class X509
                 $attributes[$last]['value'][] = $value;
                 break;
             default:
-                $attributes[] = array('type'  => $id,
-                                      'value' => $disposition == self::ATTR_ALL ? $value : array($value)
+                $attributes[] = array(
+                    'type'  => $id,
+                    'value' => $disposition == self::ATTR_ALL ? $value : array($value)
                 );
                 break;
         }

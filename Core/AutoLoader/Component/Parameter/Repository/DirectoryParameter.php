@@ -53,7 +53,7 @@ class DirectoryParameter extends Parameter implements IParameterInterface
     public function setDirectory($Directory)
     {
 
-        if (empty($Directory)) {
+        if (empty( $Directory )) {
             throw new EmptyDirectoryException();
         }
         $Directory = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $Directory);

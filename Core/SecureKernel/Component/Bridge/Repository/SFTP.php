@@ -21,7 +21,7 @@ class SFTP extends Connection
     public function __construct()
     {
 
-        AutoLoader::getNamespaceAutoLoader('phpseclib', __DIR__ . '/../../../Vendor/PhpSecLib/2.0.0');
+        AutoLoader::getNamespaceAutoLoader('phpseclib', __DIR__.'/../../../Vendor/PhpSecLib/2.0.0');
     }
 
     /**
@@ -99,7 +99,7 @@ class SFTP extends Connection
         $this->persistConnection();
 
         if (!$this->Connection->chdir($Name)) {
-            throw new ComponentException(__METHOD__ . ': Failed');
+            throw new ComponentException(__METHOD__.': Failed');
         }
         return $this;
     }
@@ -116,13 +116,14 @@ class SFTP extends Connection
         $this->persistConnection();
 
         if (!$this->Connection->mkdir($Name)) {
-            throw new ComponentException(__METHOD__ . ': Failed');
+            throw new ComponentException(__METHOD__.': Failed');
         }
         return $this;
     }
 
     /**
      * @param $File
+     *
      * @return SFTP
      * @throws ComponentException
      */
@@ -132,13 +133,14 @@ class SFTP extends Connection
         $this->persistConnection();
 
         if (!$this->Connection->put(basename($File), file_get_contents($File))) {
-            throw new ComponentException(__METHOD__ . ': Failed');
+            throw new ComponentException(__METHOD__.': Failed');
         }
         return $this;
     }
 
     /**
      * @param $File
+     *
      * @return SFTP
      * @throws ComponentException
      */
@@ -148,7 +150,7 @@ class SFTP extends Connection
         $this->persistConnection();
 
         if (!$this->Connection->get($File, $File)) {
-            throw new ComponentException(__METHOD__ . ': Failed');
+            throw new ComponentException(__METHOD__.': Failed');
         }
         return $this;
     }

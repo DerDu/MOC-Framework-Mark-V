@@ -13,7 +13,7 @@ interface IBridgeInterface
 
     /**
      * @param FileParameter $Location
-     * @param bool $Reload
+     * @param bool          $Reload
      *
      * @return IBridgeInterface
      */
@@ -21,7 +21,7 @@ interface IBridgeInterface
 
     /**
      * @param string $Identifier
-     * @param mixed $Value
+     * @param mixed  $Value
      *
      * @return IBridgeInterface
      */

@@ -33,7 +33,7 @@ class MultitonNamespace extends Bridge implements IBridgeInterface
         $this->Instance = new NamespaceLoader(
             $NamespaceParameter->getNamespace(),
             $DirectoryParameter->getDirectory(),
-            (null === $PrefixParameter ? null : $PrefixParameter->getNamespace())
+            ( null === $PrefixParameter ? null : $PrefixParameter->getNamespace() )
         );
     }
 

@@ -111,6 +111,22 @@ class ClassLoader
     }
 
     /**
+     * Checks whether a given type exists
+     *
+     * @param string $type
+     * @param bool   $autoload
+     *
+     * @return bool
+     */
+    private static function typeExists($type, $autoload = false)
+    {
+
+        return class_exists($type, $autoload)
+        || interface_exists($type, $autoload)
+        || ( function_exists('trait_exists') && trait_exists($type, $autoload) );
+    }
+
+    /**
      * Gets the <tt>ClassLoader</tt> from the SPL autoload stack that is responsible
      * for (and is able to load) the class with the given name.
      *
@@ -132,6 +148,30 @@ class ClassLoader
         }
 
         return null;
+    }
+
+    /**
+     * Asks this ClassLoader whether it can potentially load the class (file) with
+     * the given name.
+     *
+     * @param string $className The fully-qualified name of the class.
+     *
+     * @return boolean TRUE if this ClassLoader can load the class, FALSE otherwise.
+     */
+    public function canLoadClass($className)
+    {
+
+        if ($this->namespace !== null && strpos($className, $this->namespace.$this->namespaceSeparator) !== 0) {
+            return false;
+        }
+
+        $file = str_replace($this->namespaceSeparator, DIRECTORY_SEPARATOR, $className).$this->fileExtension;
+
+        if ($this->includePath !== null) {
+            return is_file($this->includePath.DIRECTORY_SEPARATOR.$file);
+        }
+
+        return ( false !== stream_resolve_include_path($file) );
     }
 
     /**
@@ -251,45 +291,5 @@ class ClassLoader
             .$this->fileExtension;
 
         return self::typeExists($className);
-    }
-
-    /**
-     * Checks whether a given type exists
-     *
-     * @param string $type
-     * @param bool   $autoload
-     *
-     * @return bool
-     */
-    private static function typeExists($type, $autoload = false)
-    {
-
-        return class_exists($type, $autoload)
-        || interface_exists($type, $autoload)
-        || ( function_exists('trait_exists') && trait_exists($type, $autoload) );
-    }
-
-    /**
-     * Asks this ClassLoader whether it can potentially load the class (file) with
-     * the given name.
-     *
-     * @param string $className The fully-qualified name of the class.
-     *
-     * @return boolean TRUE if this ClassLoader can load the class, FALSE otherwise.
-     */
-    public function canLoadClass($className)
-    {
-
-        if ($this->namespace !== null && strpos($className, $this->namespace.$this->namespaceSeparator) !== 0) {
-            return false;
-        }
-
-        $file = str_replace($this->namespaceSeparator, DIRECTORY_SEPARATOR, $className).$this->fileExtension;
-
-        if ($this->includePath !== null) {
-            return is_file($this->includePath.DIRECTORY_SEPARATOR.$file);
-        }
-
-        return ( false !== stream_resolve_include_path($file) );
     }
 }

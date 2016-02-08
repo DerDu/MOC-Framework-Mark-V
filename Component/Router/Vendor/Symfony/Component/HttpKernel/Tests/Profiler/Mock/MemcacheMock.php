@@ -67,15 +67,15 @@ class MemcacheMock
     /**
      * Add a memcached server to connection pool
      *
-     * @param string $host
-     * @param int $port
-     * @param bool $persistent
-     * @param int $weight
-     * @param int $timeout
-     * @param int $retry_interval
-     * @param bool $status
+     * @param string   $host
+     * @param int      $port
+     * @param bool     $persistent
+     * @param int      $weight
+     * @param int      $timeout
+     * @param int      $retry_interval
+     * @param bool     $status
      * @param callable $failure_callback
-     * @param int $timeoutms
+     * @param int      $timeoutms
      *
      * @return bool
      */

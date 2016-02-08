@@ -13,13 +13,13 @@ class NoConnectionException extends ComponentException
 
     /**
      * @param string $Message
-     * @param int $Code
-     * @param null $Previous
+     * @param int    $Code
+     * @param null   $Previous
      */
     public function __construct($Message = "", $Code = 0, $Previous = null)
     {
 
-        $Message = 'Connection ' . $Message . ' not found!';
+        $Message = 'Connection '.$Message.' not found!';
 
         parent::__construct($Message, $Code, $Previous);
     }

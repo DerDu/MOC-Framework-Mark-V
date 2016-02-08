@@ -31,10 +31,10 @@ class ApiGen extends Bridge implements IBridgeInterface
 
 
     /**
-     * @param string $Project
-     * @param string $Title
-     * @param DirectoryParameter $Source
-     * @param DirectoryParameter $Destination
+     * @param string                $Project
+     * @param string                $Title
+     * @param DirectoryParameter    $Source
+     * @param DirectoryParameter    $Destination
      * @param null|ExcludeParameter $Exclude
      */
     public function __construct(
@@ -45,9 +45,9 @@ class ApiGen extends Bridge implements IBridgeInterface
         ExcludeParameter $Exclude = null
     ) {
 
-        AutoLoader::getNamespaceAutoLoader('ApiGen', __DIR__ . '/../../../Vendor/ApiGen');
-        AutoLoader::getNamespaceAutoLoader('TokenReflection', __DIR__ . '/../../../Vendor/ApiGen/libs/TokenReflection');
-        AutoLoader::getNamespaceAutoLoader('FSHL', __DIR__ . '/../../../Vendor/ApiGen/libs/FSHL');
+        AutoLoader::getNamespaceAutoLoader('ApiGen', __DIR__.'/../../../Vendor/ApiGen');
+        AutoLoader::getNamespaceAutoLoader('TokenReflection', __DIR__.'/../../../Vendor/ApiGen/libs/TokenReflection');
+        AutoLoader::getNamespaceAutoLoader('FSHL', __DIR__.'/../../../Vendor/ApiGen/libs/FSHL');
 
         $this->Project = $Project;
         $this->Title = $Title;
@@ -58,10 +58,10 @@ class ApiGen extends Bridge implements IBridgeInterface
         set_time_limit(0);
         $Config = $this->getConfig();
 
-        require_once(__DIR__ . '/../../../Vendor/ApiGen/libs/Nette/Nette/loader.php');
+        require_once( __DIR__.'/../../../Vendor/ApiGen/libs/Nette/Nette/loader.php' );
         $Neon = new NeonAdapter();
 
-        $File = FileSystem::getFileWriter(__DIR__ . '/ApiGen.config');
+        $File = FileSystem::getFileWriter(__DIR__.'/ApiGen.config');
         file_put_contents($File->getLocation(), $Neon->dump($Config));
 
         $SERVER = GlobalsKernel::getGlobals()->getSERVER();
@@ -72,7 +72,7 @@ class ApiGen extends Bridge implements IBridgeInterface
         );
         GlobalsKernel::getGlobals()->setSERVER($SERVER);
 
-        include(__DIR__ . '/../../../Vendor/ApiGen/apigen.php');
+        include( __DIR__.'/../../../Vendor/ApiGen/apigen.php' );
     }
 
     /** @codeCoverageIgnore */
@@ -81,11 +81,11 @@ class ApiGen extends Bridge implements IBridgeInterface
 
         $Default = array(
             // Source file or directory to parse
-            'source' => $this->Source->getDirectory(),
+            'source'         => $this->Source->getDirectory(),
             // Directory where to save the generated documentation
-            'destination' => $this->Destination->getDirectory(),
+            'destination'    => $this->Destination->getDirectory(),
             // List of allowed file extensions
-            'extensions' => array('php'),
+            'extensions'     => array('php'),
             // Mask to exclude file or directory from processing
             // 'exclude'        => "'".$this->Exclude->getGlobList()."'",
             // Don't generate documentation for classes from file or directory with this mask
@@ -93,11 +93,11 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Don't generate documentation for classes with this name prefix
             //'skipDocPrefix' => '',
             // Character set of source files
-            'charset' => 'auto',
+            'charset'        => 'auto',
             // Main project name prefix
-            'main' => $this->Project,
+            'main'           => $this->Project,
             // Title of generated documentation
-            'title' => $this->Title,
+            'title'          => $this->Title,
             // Documentation base URL
             //'baseUrl' => '',
             // Google Custom Search ID
@@ -107,43 +107,43 @@ class ApiGen extends Bridge implements IBridgeInterface
             // Google Analytics tracking code
             //'googleAnalytics' => '',
             // Template config file
-            'templateConfig' => __DIR__ . '/../../../Vendor/Template/config.neon',
+            'templateConfig' => __DIR__.'/../../../Vendor/Template/config.neon',
             // Grouping of classes
-            'groups' => 'auto',
+            'groups'         => 'auto',
             // List of allowed HTML tags in documentation
-            'allowedHtml' => array('b', 'i', 'a', 'ul', 'ol', 'li', 'p', 'br', 'var', 'samp', 'kbd', 'tt'),
+            'allowedHtml'    => array('b', 'i', 'a', 'ul', 'ol', 'li', 'p', 'br', 'var', 'samp', 'kbd', 'tt'),
             // Element types for search input autocomplete
-            'autocomplete' => array('classes', 'constants', 'functions'),
+            'autocomplete'   => array('classes', 'constants', 'functions'),
             // Generate documentation for methods and properties with given access level
-            'accessLevels' => array('public', 'protected', 'private'),
+            'accessLevels'   => array('public', 'protected', 'private'),
             // Generate documentation for elements marked as internal and display internal documentation parts
-            'internal' => true,
+            'internal'       => true,
             // Generate documentation for PHP internal classes
-            'php' => true,
+            'php'            => true,
             // Generate tree view of classes, interfaces and exceptions
-            'tree' => true,
+            'tree'           => true,
             // Generate documentation for deprecated classes, methods, properties and constants
-            'deprecated' => true,
+            'deprecated'     => true,
             // Generate documentation of tasks
-            'todo' => true,
+            'todo'           => true,
             // Generate highlighted source code files
-            'sourceCode' => true,
+            'sourceCode'     => true,
             // Add a link to download documentation as a ZIP archive
-            'download' => false,
+            'download'       => false,
             // Save a check style report of poorly documented elements into a file
-            'report' => $this->Destination->getDirectory() . DIRECTORY_SEPARATOR . '_improve.xml',
+            'report'         => $this->Destination->getDirectory().DIRECTORY_SEPARATOR.'_improve.xml',
             // Wipe out the destination directory first
-            'wipeout' => false,
+            'wipeout'        => false,
             // Don't display scanning and generating messages
-            'quiet' => false,
+            'quiet'          => false,
             // Display progressbar
-            'progressbar' => false,
+            'progressbar'    => false,
             // Use colors
-            'colors' => false,
+            'colors'         => false,
             // Check for update
-            'updateCheck' => false,
+            'updateCheck'    => false,
             // Display additional information in case of an error
-            'debug' => false
+            'debug'          => false
         );
         if (null === $this->Exclude) {
             return $Default;

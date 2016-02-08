@@ -47,17 +47,32 @@ class Download
             }
 
             // Set headers.
-            $this->setDownloadHeader($Type);
+            header('Content-Description: Download');
+            header('Content-Type: '.$Type);
+            header('Content-Disposition: attachment; filename="'.( $this->Name ? $this->Name : basename($this->getRealPath()) ).'"');
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: public, must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: '.filesize($this->getRealPath()));
+            header('Connection: close');
+
             // Erase and flush the output buffer
-            $this->eraseOutputBuffer();
+            if (ob_get_level()) {
+                ob_clean();
+                flush();
+            }
 
             return file_get_contents($this->getRealPath());
-
         } else {
             // Set headers.
-            $this->setNotFoundHeader();
+            header('HTTP/1.0 404 Not Found');
+
             // Erase and flush the output buffer
-            $this->eraseOutputBuffer();
+            if (ob_get_level()) {
+                ob_clean();
+                flush();
+            }
 
             return '';
         }
@@ -70,44 +85,6 @@ class Download
     {
 
         return $this->Location->getRealPath();
-    }
-
-    /**
-     * @param $Type
-     */
-    private function setDownloadHeader($Type)
-    {
-
-        header('Content-Description: Download');
-        header('Content-Type: '.$Type);
-        header('Content-Disposition: attachment; filename="'.( $this->Name ? $this->Name : basename($this->getRealPath()) ).'"');
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: public, must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: '.filesize($this->getRealPath()));
-        header('Connection: close');
-    }
-
-    /**
-     *
-     */
-    private function eraseOutputBuffer()
-    {
-
-        if (ob_get_level()) {
-            ob_clean();
-            flush();
-        }
-    }
-
-    /**
-     *
-     */
-    private function setNotFoundHeader()
-    {
-
-        header('HTTP/1.0 404 Not Found');
     }
 
     /**

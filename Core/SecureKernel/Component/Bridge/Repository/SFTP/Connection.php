@@ -64,8 +64,8 @@ abstract class Connection extends Bridge implements IBridgeInterface
 
     /**
      * @param string $Host
-     * @param int $Port
-     * @param int $Timeout
+     * @param int    $Port
+     * @param int    $Timeout
      *
      * @return SFTP
      */
@@ -80,7 +80,7 @@ abstract class Connection extends Bridge implements IBridgeInterface
     }
 
     /**
-     * @param string $Username
+     * @param string      $Username
      * @param null|string $Password
      *
      * @return SFTP
@@ -93,19 +93,19 @@ abstract class Connection extends Bridge implements IBridgeInterface
         $this->Password = $Password;
         if (null === $Password) {
             if (!$this->Connection->login($Username)) {
-                throw new ComponentException(__METHOD__ . ': Login failed');
+                throw new ComponentException(__METHOD__.': Login failed');
             }
         } else {
             if (!$this->Connection->login($Username, $Password)) {
-                throw new ComponentException(__METHOD__ . ': Login failed');
+                throw new ComponentException(__METHOD__.': Login failed');
             }
         }
         return $this;
     }
 
     /**
-     * @param string $Username
-     * @param string $File
+     * @param string      $Username
+     * @param string      $File
      * @param null|string $Password
      *
      * @return SFTP
@@ -123,10 +123,10 @@ abstract class Connection extends Bridge implements IBridgeInterface
             $Key->setPassword($Password);
         }
         if (!$Key->loadKey(file_get_contents($File))) {
-            throw new ComponentException(__METHOD__ . ': Key failed');
+            throw new ComponentException(__METHOD__.': Key failed');
         }
         if (!$this->Connection->login($Username, $Key)) {
-            throw new ComponentException(__METHOD__ . ': Login failed');
+            throw new ComponentException(__METHOD__.': Login failed');
         }
         return $this;
     }

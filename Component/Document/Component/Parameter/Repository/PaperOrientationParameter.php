@@ -60,7 +60,7 @@ class PaperOrientationParameter extends Parameter implements IParameterInterface
                 return $this;
             }
             default:
-                throw new ComponentException('Orientation ' . $Orientation . ' not supported');
+                throw new ComponentException('Orientation '.$Orientation.' not supported');
         }
 
     }

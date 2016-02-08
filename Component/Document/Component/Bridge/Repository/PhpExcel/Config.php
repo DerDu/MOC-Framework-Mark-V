@@ -38,7 +38,7 @@ abstract class Config extends Bridge implements IBridgeInterface
         parent::setPaperOrientationParameter($PaperOrientation);
         $this->Source->getActiveSheet()->getPageSetup()
             ->setOrientation(
-                constant('\PHPExcel_Worksheet_PageSetup::ORIENTATION_' . $this->getPaperOrientationParameter())
+                constant('\PHPExcel_Worksheet_PageSetup::ORIENTATION_'.$this->getPaperOrientationParameter())
             );
         return $this;
     }
@@ -54,7 +54,7 @@ abstract class Config extends Bridge implements IBridgeInterface
         parent::setPaperSizeParameter($PaperSize);
         $this->Source->getActiveSheet()->getPageSetup()
             ->setPaperSize(
-                constant('\PHPExcel_Worksheet_PageSetup::PAPERSIZE_' . $this->getPaperSizeParameter())
+                constant('\PHPExcel_Worksheet_PageSetup::PAPERSIZE_'.$this->getPaperSizeParameter())
             );
         return $this;
     }

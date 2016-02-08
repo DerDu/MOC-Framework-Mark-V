@@ -10,12 +10,12 @@ interface IBridgeInterface
 {
 
     /**
-     * @param string $Host
-     * @param string $Username
-     * @param string $Password
+     * @param string   $Host
+     * @param string   $Username
+     * @param string   $Password
      * @param null|int $Port
-     * @param bool $useSSL
-     * @param bool $useTLS
+     * @param bool     $useSSL
+     * @param bool     $useTLS
      *
      * @return IBridgeInterface
      */

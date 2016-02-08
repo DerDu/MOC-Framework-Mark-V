@@ -36,11 +36,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CreateCommand extends AbstractCommand
 {
+
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
+
         $this
             ->setName('orm:schema-tool:create')
             ->setDescription(
@@ -50,7 +52,7 @@ class CreateCommand extends AbstractCommand
                 new InputOption(
                     'dump-sql', null, InputOption::VALUE_NONE,
                     'Instead of trying to apply generated SQLs into EntityManager Storage Connection, output them.'
-            )
+                )
             ))
             ->setHelp(<<<EOT
 Processes the schema and either create it directly on EntityManager Storage Connection or generate the SQL output.
@@ -73,6 +75,7 @@ EOT
         SchemaTool $schemaTool,
         array $metadatas
     ) {
+
         if ($input->getOption('dump-sql')) {
             $sqls = $schemaTool->getCreateSchemaSql($metadatas);
             $output->writeln(implode(';'.PHP_EOL, $sqls).';');

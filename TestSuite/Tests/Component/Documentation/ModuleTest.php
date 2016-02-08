@@ -20,7 +20,7 @@ class ModuleTest extends AbstractTestCase
     public function tearDown()
     {
 
-        if (false !== ($Path = realpath(__DIR__ . '/Content'))) {
+        if (false !== ( $Path = realpath(__DIR__.'/Content') )) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -63,7 +63,7 @@ class ModuleTest extends AbstractTestCase
 
         $Documentation = Documentation::getApiGenDocumentation('MOC', 'Test',
             new DirectoryParameter(__DIR__),
-            new DirectoryParameter(__DIR__ . '/Content/')
+            new DirectoryParameter(__DIR__.'/Content/')
         );
         $this->assertInstanceOf('MOC\V\Component\Documentation\Component\IBridgeInterface', $Documentation);
     }
@@ -73,7 +73,7 @@ class ModuleTest extends AbstractTestCase
 
         $Documentation = Documentation::getDocumentation('MOC', 'Test',
             new DirectoryParameter(__DIR__),
-            new DirectoryParameter(__DIR__ . '/Content/')
+            new DirectoryParameter(__DIR__.'/Content/')
         );
         $this->assertInstanceOf('MOC\V\Component\Documentation\Component\IBridgeInterface', $Documentation);
     }

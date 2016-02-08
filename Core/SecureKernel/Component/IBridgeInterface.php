@@ -11,8 +11,8 @@ interface IBridgeInterface
 
     /**
      * @param string $Host
-     * @param int $Port
-     * @param int $Timeout
+     * @param int    $Port
+     * @param int    $Timeout
      *
      * @return IBridgeInterface
      */

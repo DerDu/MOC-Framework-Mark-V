@@ -16,7 +16,7 @@ abstract class Bridge implements IBridgeInterface
 
     /**
      * @param string $Identifier
-     * @param mixed $Value
+     * @param mixed  $Value
      *
      * @return IBridgeInterface
      */
@@ -26,4 +26,11 @@ abstract class Bridge implements IBridgeInterface
         $this->VariableList[$Identifier] = $Value;
         return $this;
     }
+
+    /**
+     * @param bool|false $Reload
+     *
+     * @return object
+     */
+    abstract public function createInstance($Reload = false);
 }

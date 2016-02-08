@@ -17,12 +17,12 @@ session_write_close();
 set_time_limit(240);
 ob_implicit_flush();
 ini_set('memory_limit', '1024M');
-set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/../');
+set_include_path(get_include_path().PATH_SEPARATOR.__DIR__.'/../');
 
 /**
  * Setup: Loader
  */
 use MOC\V\Core\AutoLoader\AutoLoader;
 
-require_once(__DIR__ . '/../Core/AutoLoader/AutoLoader.php');
-AutoLoader::getNamespaceAutoLoader('\MOC\V', __DIR__ . '/../');
+require_once( __DIR__.'/../Core/AutoLoader/AutoLoader.php' );
+AutoLoader::getNamespaceAutoLoader('\MOC\V', __DIR__.'/../');

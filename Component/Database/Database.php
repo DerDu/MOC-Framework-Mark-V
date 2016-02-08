@@ -36,11 +36,11 @@ class Database implements IVendorInterface
      * @param string $Username
      * @param string $Password
      * @param string $Database
-     * @param int $Driver
+     * @param int    $Driver
      * @param string $Host
-     * @param null $Port
+     * @param null   $Port
      *
-     * @param int $Timeout
+     * @param int    $Timeout
      *
      * @return IBridgeInterface
      */
@@ -54,11 +54,11 @@ class Database implements IVendorInterface
      * @param string $Username
      * @param string $Password
      * @param string $Database
-     * @param int $Driver
+     * @param int    $Driver
      * @param string $Host
-     * @param null $Port
+     * @param null   $Port
      *
-     * @param int $Timeout
+     * @param int    $Timeout
      *
      * @return IBridgeInterface
      */

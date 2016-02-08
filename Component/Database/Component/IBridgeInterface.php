@@ -24,10 +24,10 @@ interface IBridgeInterface
      * @param UsernameParameter $Username
      * @param PasswordParameter $Password
      * @param DatabaseParameter $Database
-     * @param DriverParameter $Driver
-     * @param HostParameter $Host
-     * @param PortParameter $Port
-     * @param int $Timeout
+     * @param DriverParameter   $Driver
+     * @param HostParameter     $Host
+     * @param PortParameter     $Port
+     * @param int               $Timeout
      *
      * @return IBridgeInterface
      */
@@ -51,7 +51,7 @@ interface IBridgeInterface
     public function prepareStatement($Sql);
 
     /**
-     * @param mixed $Value
+     * @param mixed    $Value
      * @param null|int $Type
      *
      * @return IBridgeInterface
