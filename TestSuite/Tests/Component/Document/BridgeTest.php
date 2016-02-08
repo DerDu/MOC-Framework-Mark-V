@@ -4,6 +4,7 @@ namespace MOC\V\TestSuite\Tests\Component\Document;
 use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\MPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
+use MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter;
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter;
@@ -24,7 +25,7 @@ class BridgeTest extends AbstractTestCase
     public function tearDown()
     {
 
-        if (false !== ($Path = realpath(__DIR__ . '/Content'))) {
+        if (false !== ( $Path = realpath(__DIR__.'/Content') )) {
             $Iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($Path, \RecursiveDirectoryIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
@@ -35,6 +36,7 @@ class BridgeTest extends AbstractTestCase
                     $FileInfo->getBasename() != 'README.md'
                     && $FileInfo->getBasename() != 'BridgeTest.tpl'
                     && $FileInfo->getBasename() != 'BridgeTest.twig'
+                    && $FileInfo->getBasename() != 'BridgeTest.xml'
                 ) {
                     if ($FileInfo->isFile()) {
                         unlink($FileInfo->getPathname());
@@ -61,7 +63,7 @@ class BridgeTest extends AbstractTestCase
             $this->assertInstanceOf('MOC\V\Component\Document\Component\Exception\Repository\TypeFileException',
                 $Exception);
         }
-        $Bridge->newFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel.xlsx'));
+        $Bridge->newFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel.xlsx'));
 
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter(new PaperSizeParameter('A4'))
@@ -120,31 +122,31 @@ class BridgeTest extends AbstractTestCase
             $Bridge->saveFile()
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel.xlsx'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel.xlsx'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.csv'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.csv'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.csv'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.csv'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.xls'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.xls'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.xls'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.xls'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.xlsx'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.xlsx'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.xlsx'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.xlsx'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.html'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.html'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Excel-As.html'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Excel-As.html'))
         );
 
     }
@@ -155,7 +157,7 @@ class BridgeTest extends AbstractTestCase
         $Bridge = new DomPdf();
 
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Twig.pdf'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Twig.pdf'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter(new PaperSizeParameter('A4'))
@@ -164,7 +166,7 @@ class BridgeTest extends AbstractTestCase
             $Bridge->setPaperOrientationParameter(new PaperOrientationParameter('PORTRAIT'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->setContent(Template::getTemplate(__DIR__ . '/Content/BridgeTest.twig'))
+            $Bridge->setContent(Template::getTemplate(__DIR__.'/Content/BridgeTest.twig'))
         );
 
         $this->assertStringStartsWith('%PDF-', $Bridge->getContent());
@@ -173,11 +175,11 @@ class BridgeTest extends AbstractTestCase
             $Bridge->saveFile()
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Twig-As.pdf'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Twig-As.pdf'))
         );
 
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Tpl.pdf'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Tpl.pdf'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter(new PaperSizeParameter('A4'))
@@ -186,7 +188,7 @@ class BridgeTest extends AbstractTestCase
             $Bridge->setPaperOrientationParameter(new PaperOrientationParameter('PORTRAIT'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->setContent(Template::getTemplate(__DIR__ . '/Content/BridgeTest.tpl'))
+            $Bridge->setContent(Template::getTemplate(__DIR__.'/Content/BridgeTest.tpl'))
         );
 
         $this->assertStringStartsWith('%PDF-', $Bridge->getContent());
@@ -195,7 +197,7 @@ class BridgeTest extends AbstractTestCase
             $Bridge->saveFile()
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->saveFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Tpl-As.pdf'))
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Tpl-As.pdf'))
         );
     }
 
@@ -205,7 +207,7 @@ class BridgeTest extends AbstractTestCase
         $Bridge = new MPdf();
 
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Twig.pdf'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Twig.pdf'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter(new PaperSizeParameter('A4'))
@@ -214,7 +216,7 @@ class BridgeTest extends AbstractTestCase
             $Bridge->setPaperOrientationParameter(new PaperOrientationParameter('PORTRAIT'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->setContent(Template::getTwigTemplate(__DIR__ . '/Content/BridgeTest.twig'))
+            $Bridge->setContent(Template::getTwigTemplate(__DIR__.'/Content/BridgeTest.twig'))
         );
 //
 //        $this->assertStringStartsWith( '%PDF-', $Bridge->getContent() );
@@ -227,7 +229,7 @@ class BridgeTest extends AbstractTestCase
 //        );
 //
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->loadFile(new FileParameter(__DIR__ . '/Content/BridgeTest-Tpl.pdf'))
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Tpl.pdf'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
             $Bridge->setPaperSizeParameter(new PaperSizeParameter('A4'))
@@ -236,7 +238,7 @@ class BridgeTest extends AbstractTestCase
             $Bridge->setPaperOrientationParameter(new PaperOrientationParameter('PORTRAIT'))
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
-            $Bridge->setContent(Template::getSmartyTemplate(__DIR__ . '/Content/BridgeTest.tpl'))
+            $Bridge->setContent(Template::getSmartyTemplate(__DIR__.'/Content/BridgeTest.tpl'))
         );
 //
 //        $this->assertStringStartsWith( '%PDF-', $Bridge->getContent() );
@@ -247,5 +249,18 @@ class BridgeTest extends AbstractTestCase
 //        $this->assertInstanceOf( 'MOC\V\Component\Document\Component\IBridgeInterface',
 //            $Bridge->saveFile( new FileParameter( __DIR__.'/Content/BridgeTest-Tpl-As.pdf' ) )
 //        );
+    }
+
+    public function testUniversalXmlDocument()
+    {
+
+        $Bridge = new UniversalXml();
+
+        $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest.xml'))
+        );
+        $this->assertInstanceOf('MOC\V\Component\Document\Vendor\UniversalXml\Source\Node',
+            $Bridge->getContent()
+        );
     }
 }
