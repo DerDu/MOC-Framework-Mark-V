@@ -158,9 +158,18 @@ class BridgeTest extends AbstractTestCase
         $Style->setBorderRight();
         $Style->setBorderBottom();
         $Style->setBorderLeft();
+        $Style->setBorderOutline();
         $Style->setBorderVertical();
         $Style->setBorderHorizontal();
         $Style->setBorderAll();
+
+        // Alignment
+        $Style->setAlignmentLeft();
+        $Style->setAlignmentCenter();
+        $Style->setAlignmentRight();
+        $Style->setAlignmentTop();
+        $Style->setAlignmentMiddle();
+        $Style->setAlignmentBottom();
 
         // Merge
         $Style->mergeCells();
@@ -198,10 +207,19 @@ class BridgeTest extends AbstractTestCase
         $Style->setBorderRight();
         $Style->setBorderBottom();
         $Style->setBorderLeft();
+        $Style->setBorderOutline();
         $Style->setBorderVertical();
         $Style->setBorderHorizontal();
         $Style->setBorderAll();
-        
+
+        // Alignment
+        $Style->setAlignmentLeft();
+        $Style->setAlignmentCenter();
+        $Style->setAlignmentRight();
+        $Style->setAlignmentTop();
+        $Style->setAlignmentMiddle();
+        $Style->setAlignmentBottom();
+
         // Merge
         $Style->mergeCells();
 
