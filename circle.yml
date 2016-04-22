@@ -19,7 +19,7 @@ test:
     - phpunit --configuration TestSuite/phpunit.xml --coverage-text --debug
     - phpunit --configuration TestSuite/phpunit.xml --coverage-clover build/logs/clover.xml
     - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
-    - phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml tests
+    - phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
 
 ## Specifying branches to build
 general:
