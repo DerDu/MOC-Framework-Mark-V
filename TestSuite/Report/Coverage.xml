@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1460045169">
-  <project timestamp="1460045169">
+<coverage generated="1461142542">
+  <project timestamp="1461142542">
     <package name="MOC\V\Component\Captcha">
       <file name="D:\WebProject\MOC-Framework-Mark-V/Component/Captcha/Captcha.php">
         <class name="Captcha" namespace="MOC\V\Component\Captcha" fullPackage="MOC" package="MOC">
