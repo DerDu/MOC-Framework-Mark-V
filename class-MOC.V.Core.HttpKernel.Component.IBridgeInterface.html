@@ -8,7 +8,7 @@
     <title>Interface MOC\V\Core\HttpKernel\Component\IBridgeInterface | Mark V</title>
 
     <script type="text/javascript" src="resources/combined.js?3455835695"></script>
-    <script type="text/javascript" src="elementlist.js?2089431332"></script>
+    <script type="text/javascript" src="elementlist.js?2034064533"></script>
     <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3639401462" />
 
 
@@ -120,9 +120,13 @@
 							</ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Component.Document.Exception.html">Exception</a>
 						</li>
-				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.html">Vendor</a>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.html">Vendor<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.UniversalXml.html">UniversalXml<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.UniversalXml.Source.html">Source</a>
 						</li>
-							</ul></li>
+							</ul></li></ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Component.Documentation.html">Documentation<span></span></a>
 						<ul>
 				<li class="main"><a href="namespace-MOC.V.Component.Documentation.Component.html">Component<span></span></a>
@@ -430,7 +434,7 @@
 		<b>Namespace:</b> <a href="namespace-MOC.html">MOC</a>\<a href="namespace-MOC.V.html">V</a>\<a href="namespace-MOC.V.Core.html">Core</a>\<a href="namespace-MOC.V.Core.HttpKernel.html">HttpKernel</a>\<a href="namespace-MOC.V.Core.HttpKernel.Component.html">Component</a><br />
 		<b>Package:</b> MOC\V\Core\HttpKernel\Component<br />
 
-		<b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#4-86" title="Go to source code">Core/HttpKernel/Component/IBridgeInterface.php</a><br />
+		<b>Located at</b> <a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#4-100" title="Go to source code">Core/HttpKernel/Component/IBridgeInterface.php</a><br />
 	</div>
 
 
@@ -698,6 +702,51 @@ configure it via "setTrustedHeaderName()" with the "client-port" key.</p>
 				<h4>Returns</h4>
 				<div class="list">
 					<code>array</code><br />
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getHost" id="_getHost">
+
+		<td class="attributes"><code>
+			 public 
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getHost">#</a>
+		<code><a href="source-class-MOC.V.Core.HttpKernel.Component.IBridgeInterface.html#81-94" title="Go to source code">getHost</a>( )</code>
+
+		<div class="description short">
+			
+<p>Returns the host name.</p>
+
+		</div>
+
+		<div class="description detailed hidden">
+			
+<p>Returns the host name.</p>
+
+<p>This method can read the client port from the "X-Forwarded-Host" header when
+trusted proxies were set via "setTrustedProxies()".</p>
+
+<p>The "X-Forwarded-Host" header must contain the client host name.</p>
+
+<p>If your reverse proxy uses a different header name than "X-Forwarded-Host",
+configure it via "setTrustedHeaderName()" with the "client-host" key.</p>
+
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string</code><br />
 				</div>
 
 

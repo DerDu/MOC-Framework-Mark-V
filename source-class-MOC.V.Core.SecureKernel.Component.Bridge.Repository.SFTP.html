@@ -9,7 +9,7 @@
     <title>File Core/SecureKernel/Component/Bridge/Repository/SFTP.php | Mark V</title>
 
     <script type="text/javascript" src="resources/combined.js?3455835695"></script>
-    <script type="text/javascript" src="elementlist.js?2089431332"></script>
+    <script type="text/javascript" src="elementlist.js?2034064533"></script>
     <link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3639401462" />
 
 
@@ -121,9 +121,13 @@
 							</ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Component.Document.Exception.html">Exception</a>
 						</li>
-				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.html">Vendor</a>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.html">Vendor<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.UniversalXml.html">UniversalXml<span></span></a>
+						<ul>
+				<li class="main"><a href="namespace-MOC.V.Component.Document.Vendor.UniversalXml.Source.html">Source</a>
 						</li>
-							</ul></li>
+							</ul></li></ul></li></ul></li>
 				<li class="main"><a href="namespace-MOC.V.Component.Documentation.html">Documentation<span></span></a>
 						<ul>
 				<li class="main"><a href="namespace-MOC.V.Component.Documentation.Component.html">Component<span></span></a>
@@ -424,7 +428,7 @@
 </span><span id="21" class="l"><a class="l" href="#21"> 21: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="___construct" href="#___construct">__construct</a>()
 </span><span id="22" class="l"><a class="l" href="#22"> 22: </a>    {
 </span><span id="23" class="l"><a class="l" href="#23"> 23: </a>
-</span><span id="24" class="l"><a class="l" href="#24"> 24: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'phpseclib'</span>, __DIR__ . <span class="php-quote">'/../../../Vendor/PhpSecLib/2.0.0'</span>);
+</span><span id="24" class="l"><a class="l" href="#24"> 24: </a>        AutoLoader::getNamespaceAutoLoader(<span class="php-quote">'phpseclib'</span>, __DIR__.<span class="php-quote">'/../../../Vendor/PhpSecLib/2.0.0'</span>);
 </span><span id="25" class="l"><a class="l" href="#25"> 25: </a>    }
 </span><span id="26" class="l"><a class="l" href="#26"> 26: </a>
 </span><span id="27" class="l"><a class="l" href="#27"> 27: </a>    <span class="php-comment">/**
@@ -502,7 +506,7 @@
 </span><span id="99" class="l"><a class="l" href="#99"> 99: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
 </span><span id="100" class="l"><a class="l" href="#100">100: </a>
 </span><span id="101" class="l"><a class="l" href="#101">101: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;<span class="php-keyword2">chdir</span>(<span class="php-var">$Name</span>)) {
-</span><span id="102" class="l"><a class="l" href="#102">102: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__ . <span class="php-quote">': Failed'</span>);
+</span><span id="102" class="l"><a class="l" href="#102">102: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__.<span class="php-quote">': Failed'</span>);
 </span><span id="103" class="l"><a class="l" href="#103">103: </a>        }
 </span><span id="104" class="l"><a class="l" href="#104">104: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
 </span><span id="105" class="l"><a class="l" href="#105">105: </a>    }
@@ -519,44 +523,46 @@
 </span><span id="116" class="l"><a class="l" href="#116">116: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
 </span><span id="117" class="l"><a class="l" href="#117">117: </a>
 </span><span id="118" class="l"><a class="l" href="#118">118: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;<span class="php-keyword2">mkdir</span>(<span class="php-var">$Name</span>)) {
-</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__ . <span class="php-quote">': Failed'</span>);
+</span><span id="119" class="l"><a class="l" href="#119">119: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__.<span class="php-quote">': Failed'</span>);
 </span><span id="120" class="l"><a class="l" href="#120">120: </a>        }
 </span><span id="121" class="l"><a class="l" href="#121">121: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
 </span><span id="122" class="l"><a class="l" href="#122">122: </a>    }
 </span><span id="123" class="l"><a class="l" href="#123">123: </a>
 </span><span id="124" class="l"><a class="l" href="#124">124: </a>    <span class="php-comment">/**
 </span></span><span id="125" class="l"><a class="l" href="#125">125: </a><span class="php-comment">     * @param $File
-</span></span><span id="126" class="l"><a class="l" href="#126">126: </a><span class="php-comment">     * @return SFTP
-</span></span><span id="127" class="l"><a class="l" href="#127">127: </a><span class="php-comment">     * @throws ComponentException
-</span></span><span id="128" class="l"><a class="l" href="#128">128: </a><span class="php-comment">     */</span>
-</span><span id="129" class="l"><a class="l" href="#129">129: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_uploadFile" href="#_uploadFile">uploadFile</a>(<span class="php-var">$File</span>)
-</span><span id="130" class="l"><a class="l" href="#130">130: </a>    {
-</span><span id="131" class="l"><a class="l" href="#131">131: </a>
-</span><span id="132" class="l"><a class="l" href="#132">132: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
-</span><span id="133" class="l"><a class="l" href="#133">133: </a>
-</span><span id="134" class="l"><a class="l" href="#134">134: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;put(<span class="php-keyword2">basename</span>(<span class="php-var">$File</span>), <span class="php-keyword2">file_get_contents</span>(<span class="php-var">$File</span>))) {
-</span><span id="135" class="l"><a class="l" href="#135">135: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__ . <span class="php-quote">': Failed'</span>);
-</span><span id="136" class="l"><a class="l" href="#136">136: </a>        }
-</span><span id="137" class="l"><a class="l" href="#137">137: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
-</span><span id="138" class="l"><a class="l" href="#138">138: </a>    }
-</span><span id="139" class="l"><a class="l" href="#139">139: </a>
-</span><span id="140" class="l"><a class="l" href="#140">140: </a>    <span class="php-comment">/**
-</span></span><span id="141" class="l"><a class="l" href="#141">141: </a><span class="php-comment">     * @param $File
-</span></span><span id="142" class="l"><a class="l" href="#142">142: </a><span class="php-comment">     * @return SFTP
-</span></span><span id="143" class="l"><a class="l" href="#143">143: </a><span class="php-comment">     * @throws ComponentException
-</span></span><span id="144" class="l"><a class="l" href="#144">144: </a><span class="php-comment">     */</span>
-</span><span id="145" class="l"><a class="l" href="#145">145: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_downloadFile" href="#_downloadFile">downloadFile</a>(<span class="php-var">$File</span>)
-</span><span id="146" class="l"><a class="l" href="#146">146: </a>    {
-</span><span id="147" class="l"><a class="l" href="#147">147: </a>
-</span><span id="148" class="l"><a class="l" href="#148">148: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
+</span></span><span id="126" class="l"><a class="l" href="#126">126: </a><span class="php-comment">     *
+</span></span><span id="127" class="l"><a class="l" href="#127">127: </a><span class="php-comment">     * @return SFTP
+</span></span><span id="128" class="l"><a class="l" href="#128">128: </a><span class="php-comment">     * @throws ComponentException
+</span></span><span id="129" class="l"><a class="l" href="#129">129: </a><span class="php-comment">     */</span>
+</span><span id="130" class="l"><a class="l" href="#130">130: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_uploadFile" href="#_uploadFile">uploadFile</a>(<span class="php-var">$File</span>)
+</span><span id="131" class="l"><a class="l" href="#131">131: </a>    {
+</span><span id="132" class="l"><a class="l" href="#132">132: </a>
+</span><span id="133" class="l"><a class="l" href="#133">133: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
+</span><span id="134" class="l"><a class="l" href="#134">134: </a>
+</span><span id="135" class="l"><a class="l" href="#135">135: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;put(<span class="php-keyword2">basename</span>(<span class="php-var">$File</span>), <span class="php-keyword2">file_get_contents</span>(<span class="php-var">$File</span>))) {
+</span><span id="136" class="l"><a class="l" href="#136">136: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__.<span class="php-quote">': Failed'</span>);
+</span><span id="137" class="l"><a class="l" href="#137">137: </a>        }
+</span><span id="138" class="l"><a class="l" href="#138">138: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
+</span><span id="139" class="l"><a class="l" href="#139">139: </a>    }
+</span><span id="140" class="l"><a class="l" href="#140">140: </a>
+</span><span id="141" class="l"><a class="l" href="#141">141: </a>    <span class="php-comment">/**
+</span></span><span id="142" class="l"><a class="l" href="#142">142: </a><span class="php-comment">     * @param $File
+</span></span><span id="143" class="l"><a class="l" href="#143">143: </a><span class="php-comment">     *
+</span></span><span id="144" class="l"><a class="l" href="#144">144: </a><span class="php-comment">     * @return SFTP
+</span></span><span id="145" class="l"><a class="l" href="#145">145: </a><span class="php-comment">     * @throws ComponentException
+</span></span><span id="146" class="l"><a class="l" href="#146">146: </a><span class="php-comment">     */</span>
+</span><span id="147" class="l"><a class="l" href="#147">147: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_downloadFile" href="#_downloadFile">downloadFile</a>(<span class="php-var">$File</span>)
+</span><span id="148" class="l"><a class="l" href="#148">148: </a>    {
 </span><span id="149" class="l"><a class="l" href="#149">149: </a>
-</span><span id="150" class="l"><a class="l" href="#150">150: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;get(<span class="php-var">$File</span>, <span class="php-var">$File</span>)) {
-</span><span id="151" class="l"><a class="l" href="#151">151: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__ . <span class="php-quote">': Failed'</span>);
-</span><span id="152" class="l"><a class="l" href="#152">152: </a>        }
-</span><span id="153" class="l"><a class="l" href="#153">153: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
-</span><span id="154" class="l"><a class="l" href="#154">154: </a>    }
-</span><span id="155" class="l"><a class="l" href="#155">155: </a>}
-</span><span id="156" class="l"><a class="l" href="#156">156: </a></span></code></pre>
+</span><span id="150" class="l"><a class="l" href="#150">150: </a>        <span class="php-var">$this</span>-&gt;persistConnection();
+</span><span id="151" class="l"><a class="l" href="#151">151: </a>
+</span><span id="152" class="l"><a class="l" href="#152">152: </a>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;Connection-&gt;get(<span class="php-var">$File</span>, <span class="php-var">$File</span>)) {
+</span><span id="153" class="l"><a class="l" href="#153">153: </a>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ComponentException(__METHOD__.<span class="php-quote">': Failed'</span>);
+</span><span id="154" class="l"><a class="l" href="#154">154: </a>        }
+</span><span id="155" class="l"><a class="l" href="#155">155: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
+</span><span id="156" class="l"><a class="l" href="#156">156: </a>    }
+</span><span id="157" class="l"><a class="l" href="#157">157: </a>}
+</span><span id="158" class="l"><a class="l" href="#158">158: </a></span></code></pre>
 
 	<div id="footer">
 		Mark V API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>

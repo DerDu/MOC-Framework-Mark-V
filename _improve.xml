@@ -143,18 +143,21 @@
 		<error severity="error" line="97" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\MPdf::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\PhpExcel.php">
-		<error severity="error" line="15" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="24" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getCell()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="warning" line="43" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setValue()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="43" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setValue()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="57" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getValue()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="69" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getSheetColumnCount()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="80" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getSheetRowCount()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="16" message="Missing documentation of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="25" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getCell()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="44" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setValue()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="44" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setValue()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="58" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getValue()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="70" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::setStyle()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="82" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getSheetColumnCount()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="93" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel::getSheetRowCount()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell.php">
 		<error severity="error" line="17" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="28" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getColumn()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="37" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getRow()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="28" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getCellName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="37" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getColumnName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="46" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getColumn()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="55" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Cell::getRow()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\PhpExcel\Config.php">
 		<error severity="error" line="21" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Config::createAdvancedValueBinder()" source="ApiGen.Documentation.Documentation"/>
@@ -166,9 +169,62 @@
 		<error severity="error" line="16" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::newFile()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="31" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::loadFile()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="67" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::getReaderType()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="118" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::getDelimiterType()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="157" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::saveFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="193" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::getWriterType()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="120" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::getDelimiterType()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="161" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="197" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\File::getWriterType()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\PhpExcel\Style.php">
+		<error severity="warning" line="36" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setColumnWidth()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="36" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setColumnWidth()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="56" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getRangeColumnNameList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="69" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getColumnWidth()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="87" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setFontBold()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="87" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setFontBold()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="99" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getRangeName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="112" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setFontSize()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="112" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setFontSize()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="124" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getFontBold()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="142" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getRangeCellList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="163" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getRangeRowList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="176" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getFontSize()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="194" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::mergeCells()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="194" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::mergeCells()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="211" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentLeft()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="211" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentLeft()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="221" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentCenter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="221" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentCenter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="231" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentRight()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="231" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentRight()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="241" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentTop()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="241" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentTop()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="251" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentMiddle()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="251" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentMiddle()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="261" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentBottom()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="261" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setAlignmentBottom()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="271" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderAll()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="271" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderAll()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="285" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getBorderSize()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="285" message="Invalid documentation &quot;$Value&quot; of parameter MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::getBorderSize($Value)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="307" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderVertical()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="307" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderVertical()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="320" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderHorizontal()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="320" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderHorizontal()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="333" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderOutline()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="333" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderOutline()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="348" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderTop()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="348" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderTop()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="361" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderRight()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="361" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderRight()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="374" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderBottom()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="374" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderBottom()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="387" message="Invalid documentation &quot;$this&quot; of return value of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderLeft()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="387" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel\Style::setBorderLeft()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Bridge\Repository\UniversalXml.php">
+		<error severity="error" line="18" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml::loadFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="30" message="Existing documentation &quot;IBridgeInterface&quot; of nonexistent return value of method MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="30" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml::saveFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="43" message="Missing description of method MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Document\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -207,21 +263,124 @@
 		<error severity="error" line="47" message="Missing description of method MOC\V\Component\Document\Component\Parameter\Repository\PaperSizeParameter::setSize()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Document.php">
-		<error severity="error" line="24" message="Missing description of method MOC\V\Component\Document\Document::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="33" message="Missing description of method MOC\V\Component\Document\Document::getDocument()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="57" message="Missing description of method MOC\V\Component\Document\Document::getPdfDocument()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="78" message="Missing description of method MOC\V\Component\Document\Document::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="87" message="Missing description of method MOC\V\Component\Document\Document::getExcelDocument()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="111" message="Missing description of method MOC\V\Component\Document\Document::getPdfCreator()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="132" message="Missing description of method MOC\V\Component\Document\Document::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="141" message="Missing description of method MOC\V\Component\Document\Document::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="153" message="Missing description of method MOC\V\Component\Document\Document::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="25" message="Missing description of method MOC\V\Component\Document\Document::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="34" message="Missing description of method MOC\V\Component\Document\Document::getDocument()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="61" message="Missing description of method MOC\V\Component\Document\Document::getPdfDocument()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="82" message="Missing description of method MOC\V\Component\Document\Document::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="91" message="Missing description of method MOC\V\Component\Document\Document::getExcelDocument()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="115" message="Missing description of method MOC\V\Component\Document\Document::getXmlDocument()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="136" message="Missing description of method MOC\V\Component\Document\Document::getPdfCreator()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="157" message="Missing description of method MOC\V\Component\Document\Document::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="166" message="Missing description of method MOC\V\Component\Document\Document::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="178" message="Missing description of method MOC\V\Component\Document\Document::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Exception\DocumentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Document\Exception\DocumentException::__construct()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Exception\DocumentTypeException.php">
 		<error severity="error" line="12" message="Missing description of method MOC\V\Component\Document\Exception\DocumentTypeException::__construct()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Api.php">
+		<error severity="error" line="19" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Api::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Api::parseContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="40" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Api::parseSimpleXml()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\Mask.php">
+		<error severity="error" line="12" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::PATTERN_COMMENT" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::PATTERN_CDATA" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="15" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::encodePayload()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="31" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::decodePayload()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="43" message="Invalid documentation &quot;$Payload&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::decodeMethod($Payload)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="43" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::decodeMethod()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="54" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::encodeMethod()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="54" message="Invalid documentation &quot;$Payload&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\Mask::encodeMethod($Payload)" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\Node.php">
+		<error severity="error" line="19" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::$Name" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="20" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::$Content" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="21" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::$AttributeList" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="23" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="37" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getPosition()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="46" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getParent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="55" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setParent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="68" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getChild()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="68" message="Invalid documentation &quot;$Name&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getChild($Name)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="146" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="155" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="155" message="Invalid documentation &quot;$Value&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setName($Value)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="168" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getAttributeList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="177" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getChildListCount()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="186" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getChildList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="195" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setChildList()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="212" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::addChild()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="233" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::injectChild()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="246" message="Invalid documentation &quot;$Name&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getAttribute($Name)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="246" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getAttribute()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="261" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setAttribute()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="279" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getCode()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="324" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="333" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::setContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="356" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::getAttributeString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="368" message="Missing documentation of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Node::__destruct()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\NodeType.php">
+		<error severity="error" line="12" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::TYPE_STRUCTURE" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::TYPE_CONTENT" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::TYPE_CDATA" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="15" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::TYPE_COMMENT" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="20" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::getType()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="29" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\NodeType::setType()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\Parser.php">
+		<error severity="error" line="17" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="61" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processOpen()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="77" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processCloseContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="108" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processCloseStructure()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="127" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processCloseCDATA()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="141" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processShort()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="156" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processCDATA()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="172" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::processComment()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="190" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Parser::getResult()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\Token.php">
+		<error severity="error" line="12" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::$Name" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::$AttributeList" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::$Position" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="16" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="39" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::getName()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="48" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::getPosition()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="57" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Token::getAttributeList()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\Tokenizer.php">
+		<error severity="error" line="12" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::$Content" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::$PatternToken" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::$Result" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="16" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="30" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::getResult()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="39" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::getContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="48" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\Tokenizer::buildToken()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\TokenPattern.php">
+		<error severity="error" line="12" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::$PatternTagOpen" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::$PatternTagClose" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::$PatternTagShort" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="15" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::$PatternTagCDATA" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="16" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::$PatternTagComment" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="18" message="Invalid documentation &quot;$Content&quot; of parameter MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::determineType($Content)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="18" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenPattern::determineType()" source="ApiGen.Documentation.Documentation"/>
+	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\UniversalXml\Source\TokenType.php">
+		<error severity="error" line="12" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::TYPE_OPEN" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="13" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::TYPE_CLOSE" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="14" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::TYPE_SHORT" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="15" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::TYPE_CDATA" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="16" message="Missing documentation of constant MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::TYPE_COMMENT" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="17" message="Missing documentation of property MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::$Type" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="19" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::isOpenTag()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="28" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::isCloseTag()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="37" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::isShortTag()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="46" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::isCDATATag()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="55" message="Missing description of method MOC\V\Component\Document\Vendor\UniversalXml\Source\TokenType::isCommentTag()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Document\Vendor\Vendor.php">
 		<error severity="error" line="18" message="Missing description of method MOC\V\Component\Document\Vendor\Vendor::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -284,16 +443,20 @@
 		<error severity="error" line="68" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpPop3::disconnectServer()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp.php">
-		<error severity="error" line="22" message="Missing documentation of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="46" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::connectServer()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="69" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::disconnectServer()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="85" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::sendMail()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="100" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setMailSubject()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="117" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setMailBody()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="135" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientTO()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="153" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientCC()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="171" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientBCC()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="189" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addAttachment()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="24" message="Missing documentation of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="48" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::connectServer()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="71" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::disconnectServer()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="87" message="Invalid documentation &quot;$Address&quot; of parameter MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setFromHeader($Address)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="87" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setFromHeader()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="99" message="Invalid documentation &quot;$Address&quot; of parameter MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setReplyHeader($Address)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="99" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setReplyHeader()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="111" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::sendMail()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="126" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setMailSubject()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="143" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::setMailBody()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="161" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientTO()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="179" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientCC()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="197" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addRecipientBCC()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="215" message="Missing description of method MOC\V\Component\Mail\Component\Bridge\Repository\EdenPhpSmtp::addAttachment()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Mail\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Mail\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -400,17 +563,21 @@
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Bridge\Bridge.php">
 		<error severity="error" line="17" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Bridge::setVariable()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="30" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Bridge::createInstance()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Bridge\Repository\SmartyTemplate.php">
 		<error severity="error" line="21" message="Missing documentation of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::__construct()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="34" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="51" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="48" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::createInstance()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="63" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\SmartyTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Bridge\Repository\TwigTemplate.php">
-		<error severity="error" line="23" message="Missing documentation of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="38" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::loadString()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="54" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::loadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="74" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="22" message="Missing description of property MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::$Loader" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="25" message="Missing documentation of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="42" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::loadString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="57" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::createInstance()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="75" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::loadFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="90" message="Missing description of method MOC\V\Component\Template\Component\Bridge\Repository\TwigTemplate::getContent()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Component\Template\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Component\Template\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -469,7 +636,7 @@
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Component\Bridge\Bridge.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\AutoLoader\Component\Bridge\Bridge::registerLoader()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="53" message="Missing description of method MOC\V\Core\AutoLoader\Component\Bridge\Bridge::unregisterLoader()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="24" message="Missing description of method MOC\V\Core\AutoLoader\Component\Bridge\Bridge::unregisterLoader()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Component\Bridge\Repository\MultitonNamespace.php">
 		<error severity="error" line="22" message="Missing description of method MOC\V\Core\AutoLoader\Component\Bridge\Repository\MultitonNamespace::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -523,11 +690,11 @@
 		<error severity="error" line="14" message="Missing documentation of method MOC\V\Core\AutoLoader\Exception\AutoLoaderException::__construct()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader.php">
-		<error severity="error" line="23" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="38" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::loadClass()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="76" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::checkExists()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="90" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::checkCanLoadClass()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="114" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::getLoaderHash()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="28" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="51" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::getLoaderHash()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="68" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::loadClass()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="106" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::checkExists()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="120" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Multiton\NamespaceLoader::checkCanLoadClass()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\AutoLoader\Vendor\Universal\NamespaceLoader.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Universal\NamespaceLoader::getLoaderHash()" source="ApiGen.Documentation.Documentation"/>
@@ -551,29 +718,32 @@
 		<error severity="error" line="27" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Vendor::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="36" message="Missing description of method MOC\V\Core\AutoLoader\Vendor\Vendor::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
+	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Bridge\Bridge.php">
+		<error severity="error" line="27" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Bridge::getMimeType()" source="ApiGen.Documentation.Documentation"/>
+	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder.php">
 		<error severity="error" line="24" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="44" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::__toString()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="57" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="82" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="45" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="58" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="83" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\SymfonyFinder::getLocation()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload.php">
 		<error severity="error" line="21" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="30" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::getLocation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="39" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="53" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="32" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="46" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="55" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalDownload::__toString()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader.php">
 		<error severity="error" line="21" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="30" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::__toString()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="43" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="57" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="31" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="44" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="58" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileLoader::getLocation()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter.php">
 		<error severity="error" line="21" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="30" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::__toString()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="43" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="57" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="31" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="44" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="58" message="Missing description of method MOC\V\Core\FileSystem\Component\Bridge\Repository\UniversalFileWriter::getLocation()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\FileSystem\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -597,9 +767,10 @@
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException::__construct()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\IBridgeInterface.php">
-		<error severity="error" line="12" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::getLocation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="17" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="22" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="12" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::getMimeType()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="17" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="22" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="27" message="Missing description of method MOC\V\Core\FileSystem\Component\IBridgeInterface::__toString()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Component\IVendorInterface.php">
 		<error severity="error" line="12" message="Missing description of method MOC\V\Core\FileSystem\Component\IVendorInterface::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
@@ -625,19 +796,19 @@
 		<error severity="error" line="69" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="78" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getSymfonyFinder()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="97" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getDownload()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="109" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getUniversalDownload()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="128" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getFileWriter()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="140" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getUniversalFileWriter()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="159" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="168" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="180" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="110" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getUniversalDownload()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="131" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getFileWriter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="143" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getUniversalFileWriter()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="162" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::getVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="171" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::setVendorInterface()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="183" message="Missing description of method MOC\V\Core\FileSystem\FileSystem::setBridgeInterface()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Vendor\Universal\Download.php">
-		<error severity="error" line="17" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="26" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::__toString()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="68" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::getRealPath()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="77" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::getLocation()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="86" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::setLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="19" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::__construct()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="30" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::__toString()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="81" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::getRealPath()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="90" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::getLocation()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="99" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\Download::setLocation()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\FileSystem\Vendor\Universal\FileLoader.php">
 		<error severity="error" line="15" message="Missing description of method MOC\V\Core\FileSystem\Vendor\Universal\FileLoader::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -712,11 +883,11 @@
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest.php">
 		<error severity="error" line="21" message="Missing documentation of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::__construct()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="116" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getParameterArray()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="133" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestGETArray()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="142" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestFILESArray()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="151" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestPOSTArray()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="160" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestCUSTOMArray()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="135" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getParameterArray()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="152" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestGETArray()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="161" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestFILESArray()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="170" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestPOSTArray()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="179" message="Missing description of method MOC\V\Core\HttpKernel\Component\Bridge\Repository\UniversalRequest::getRequestCUSTOMArray()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\HttpKernel\Component\Exception\ComponentException.php">
 		<error severity="error" line="14" message="Missing description of method MOC\V\Core\HttpKernel\Component\Exception\ComponentException::__construct()" source="ApiGen.Documentation.Documentation"/>
@@ -758,8 +929,8 @@
 		<error severity="error" line="107" message="Missing description of method MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::createDirectory()" source="ApiGen.Documentation.Documentation"/>
 		<error severity="warning" line="124" message="Invalid documentation &quot;$File&quot; of parameter MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::uploadFile($File)" source="ApiGen.Documentation.Documentation"/>
 		<error severity="error" line="124" message="Missing description of method MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::uploadFile()" source="ApiGen.Documentation.Documentation"/>
-		<error severity="warning" line="140" message="Invalid documentation &quot;$File&quot; of parameter MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::downloadFile($File)" source="ApiGen.Documentation.Documentation"/>
-		<error severity="error" line="140" message="Missing description of method MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::downloadFile()" source="ApiGen.Documentation.Documentation"/>
+		<error severity="warning" line="141" message="Invalid documentation &quot;$File&quot; of parameter MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::downloadFile($File)" source="ApiGen.Documentation.Documentation"/>
+		<error severity="error" line="141" message="Missing description of method MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP::downloadFile()" source="ApiGen.Documentation.Documentation"/>
 	</file>
 	<file name="D:\WebProject\MOC-Framework-Mark-V\Core\SecureKernel\Component\Bridge\Repository\SFTP\Connection.php">
 		<error severity="error" line="18" message="Missing description of property MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP\Connection::$Connection" source="ApiGen.Documentation.Documentation"/>
