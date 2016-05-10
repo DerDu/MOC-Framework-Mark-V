@@ -116,6 +116,12 @@ class ModuleTest extends AbstractTestCase
     public function testStaticSymfonyFinder()
     {
 
+        if (isset( $_ENV['CI'] )) {
+            $this->markTestSkipped(
+                'Finder is not available on CircleCI'
+            );
+        }
+        
         try {
             $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getSymfonyFinder', array(__DIR__));
         } catch (\Exception $E) {
