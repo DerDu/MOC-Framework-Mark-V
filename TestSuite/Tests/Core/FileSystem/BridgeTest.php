@@ -19,7 +19,7 @@ class BridgeTest extends AbstractTestCase
     public function testSymfonyFinder()
     {
 
-        if (isset( $_ENV['CI'] )) {
+        if (isset( $_ENV['CI'] ) || isset( $CI )) {
             $this->markTestSkipped(
                 'Finder is not available on CircleCI'
             );
