@@ -11,6 +11,7 @@ dependencies:
   pre:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar install --no-interaction
+    - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
 
 ## Customize test commands
 test:
