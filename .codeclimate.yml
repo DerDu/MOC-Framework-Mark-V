@@ -13,6 +13,7 @@ exclude_paths:
 - "Component/Database/Vendor/Doctrine2Lexer/*"
 - "Component/Database/Vendor/Doctrine2ORM/*"
 - "Component/Document/Vendor/PhpExcel/*"
+- "Component/Document/Vendor/PhpWord/*"
 - "Component/Document/Vendor/DomPdf/*"
 - "Component/Document/Vendor/mPdf/*"
 - "Component/Documentation/Vendor/ApiGen/*"
