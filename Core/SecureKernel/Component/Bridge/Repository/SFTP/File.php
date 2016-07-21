@@ -8,22 +8,8 @@ use MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
  *
  * @package MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP
  */
-class File
+class File extends Attributes
 {
-
-    /** @var string $Name */
-    private $Name = '';
-    /** @var string $Permission */
-    private $Permission = '';
-    /** @var string $Mode */
-    private $Mode = '';
-    /** @var int $LastAccess */
-    private $LastAccess = 0;
-    /** @var int $LastChange */
-    private $LastChange = 0;
-
-    /** @var null|SFTP $Connection */
-    private $Connection = null;
 
     /**
      * @param SFTP  $Connection
@@ -32,12 +18,12 @@ class File
     public function __construct(SFTP $Connection, $Attributes)
     {
 
-        $this->Name = $Attributes['filename'];
-        $this->Permission = substr(decoct($Attributes['permissions']), -4);
-        $this->Mode = substr(decoct($Attributes['mode']), -4);
-        $this->LastAccess = $Attributes['atime'];
-        $this->LastChange = $Attributes['mtime'];
-        $this->Connection = $Connection;
+        $this->setName($Attributes['filename']);
+        $this->setPermission(substr(decoct($Attributes['permissions']), -4));
+        $this->setMode(substr(decoct($Attributes['mode']), -4));
+        $this->setLastAccess($Attributes['atime']);
+        $this->setLastChange($Attributes['mtime']);
+        $this->setConnection($Connection);
     }
 
     /**
@@ -46,7 +32,7 @@ class File
     public function getPermission()
     {
 
-        return $this->Permission;
+        return $this->getPermission();
     }
 
     /**
@@ -55,7 +41,7 @@ class File
     public function getMode()
     {
 
-        return $this->Mode;
+        return $this->getMode();
     }
 
     /**
@@ -64,7 +50,7 @@ class File
     public function getLastAccess()
     {
 
-        return $this->LastAccess;
+        return $this->getLastAccess();
     }
 
     /**
@@ -73,7 +59,7 @@ class File
     public function getLastChange()
     {
 
-        return $this->LastChange;
+        return $this->getLastChange();
     }
 
     /**
@@ -82,7 +68,7 @@ class File
     public function existsFile()
     {
 
-        return $this->Connection->existsFile($this->getName());
+        return $this->getConnection()->existsFile($this->getName());
     }
 
     /**
@@ -91,6 +77,6 @@ class File
     public function getName()
     {
 
-        return $this->Name;
+        return $this->getName();
     }
 }
