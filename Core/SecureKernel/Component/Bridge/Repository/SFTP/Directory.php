@@ -12,21 +12,6 @@ class Directory extends Attributes
 {
 
     /**
-     * @param SFTP  $Connection
-     * @param array $Attributes
-     */
-    public function __construct(SFTP $Connection, $Attributes)
-    {
-
-        $this->setName($Attributes['filename']);
-        $this->setPermission(substr(decoct($Attributes['permissions']), -4));
-        $this->setMode(substr(decoct($Attributes['mode']), -4));
-        $this->setLastAccess($Attributes['atime']);
-        $this->setLastChange($Attributes['mtime']);
-        $this->setConnection($Connection);
-    }
-
-    /**
      * @return string
      */
     public function getPermission()

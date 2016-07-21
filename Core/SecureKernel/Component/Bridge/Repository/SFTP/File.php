@@ -1,8 +1,6 @@
 <?php
 namespace MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
 
-use MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
-
 /**
  * Class File
  *
@@ -10,21 +8,6 @@ use MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
  */
 class File extends Attributes
 {
-
-    /**
-     * @param SFTP  $Connection
-     * @param array $Attributes
-     */
-    public function __construct(SFTP $Connection, $Attributes)
-    {
-
-        $this->setName($Attributes['filename']);
-        $this->setPermission(substr(decoct($Attributes['permissions']), -4));
-        $this->setMode(substr(decoct($Attributes['mode']), -4));
-        $this->setLastAccess($Attributes['atime']);
-        $this->setLastChange($Attributes['mtime']);
-        $this->setConnection($Connection);
-    }
 
     /**
      * @return string
