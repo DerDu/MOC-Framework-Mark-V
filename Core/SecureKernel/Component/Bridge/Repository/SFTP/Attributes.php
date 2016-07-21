@@ -8,7 +8,7 @@ use MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP;
  *
  * @package MOC\V\Core\SecureKernel\Component\Bridge\Repository\SFTP
  */
-class Attributes
+abstract class Attributes
 {
 
     /** @var string $Name */
