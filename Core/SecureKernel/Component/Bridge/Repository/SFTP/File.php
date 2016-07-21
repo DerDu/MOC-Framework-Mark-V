@@ -43,15 +43,6 @@ class File
     /**
      * @return string
      */
-    public function getName()
-    {
-
-        return $this->Name;
-    }
-
-    /**
-     * @return string
-     */
     public function getPermission()
     {
 
@@ -83,5 +74,23 @@ class File
     {
 
         return $this->LastChange;
+    }
+
+    /**
+     * @return bool
+     */
+    public function existsFile()
+    {
+
+        return $this->Connection->existsFile($this->getName());
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+
+        return $this->Name;
     }
 }

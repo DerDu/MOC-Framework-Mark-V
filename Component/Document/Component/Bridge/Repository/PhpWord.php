@@ -13,7 +13,7 @@ class PhpWord extends File
 {
 
     /**
-     *
+     * PhpWord constructor.
      */
     public function __construct()
     {
@@ -22,7 +22,5 @@ class PhpWord extends File
             __DIR__.'/../../../Vendor/PhpWord/0.12.1/src/PhpWord',
             'PhpOffice\PhpWord'
         );
-
-//        require_once( __DIR__.'/../../../Vendor/PhpWord/0.12.1/src/PhpWord/PhpWord.php' );
     }
 }

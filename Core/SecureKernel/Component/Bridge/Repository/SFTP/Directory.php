@@ -93,4 +93,13 @@ class Directory
 
         return $this->Name;
     }
+
+    /**
+     * @return bool
+     */
+    public function existsDirectory()
+    {
+
+        return $this->Connection->existsDirectory($this->getName());
+    }
 }
