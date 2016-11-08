@@ -13,7 +13,6 @@ use MOC\V\TestSuite\AbstractTestCase;
  */
 class ModuleTest extends AbstractTestCase
 {
-
     public function testModule()
     {
 
@@ -53,6 +52,19 @@ class ModuleTest extends AbstractTestCase
             Database::getDatabase('', '', '', 0, 'Wrong');
         } catch (\Exception $E) {
             $this->assertInstanceOf('MOC\V\Component\Database\Exception\DatabaseException', $E);
+        }
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected function setUp()
+    {
+
+        if (!extension_loaded('pdo_sqlite')) {
+            $this->markTestSkipped(
+                'PDO SqLite Library required'
+            );
         }
     }
 }

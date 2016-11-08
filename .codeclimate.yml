@@ -19,6 +19,7 @@ exclude_paths:
 - "Component/Documentation/Vendor/ApiGen/*"
 - "Component/Documentation/Vendor/Template/*"
 - "Component/Mail/Vendor/EdenPhpMail/*"
+- "Component/Packer/Vendor/PclZip/*"
 - "Component/Router/Vendor/Symfony/*"
 - "Component/Template/Vendor/Twig/*"
 - "Component/Template/Vendor/TwigExtension/*"
