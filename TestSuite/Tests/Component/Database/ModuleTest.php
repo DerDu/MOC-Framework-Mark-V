@@ -13,6 +13,7 @@ use MOC\V\TestSuite\AbstractTestCase;
  */
 class ModuleTest extends AbstractTestCase
 {
+
     public function testModule()
     {
 
