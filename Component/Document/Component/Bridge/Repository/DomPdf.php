@@ -76,6 +76,8 @@ class DomPdf extends Bridge implements IBridgeInterface
     {
 
         $Renderer = new DOMPDFParser();
+        $Renderer->set_option('defaultFont', 'Arial');
+        $Renderer->set_option('isHtml5ParserEnabled', true);
         $Renderer->load_html($this->Source);
         $Renderer->set_paper(
             $this->getPaperSizeParameter()->getSize(),
