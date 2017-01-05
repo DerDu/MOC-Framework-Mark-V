@@ -42,7 +42,7 @@ var cssSandpaper = new function()
 
     var reAtRule = /@[^\{\};]*;|@[^\{\};]*\{[^\}]*\}/g;
 
-    var reFunctionSpaces = /\(\s*/g
+    var reFunctionSpaces = /\(\s*/g;
 
     var ruleLists = new Array();
     var styleNode;
@@ -75,7 +75,7 @@ var cssSandpaper = new function()
         setClasses();
         //fixBorderRadius();
 
-    }
+    };
 
     me.setOpacity = function(obj, value)
     {
@@ -97,7 +97,7 @@ var cssSandpaper = new function()
                 obj.style[property] = value;
             }
         }
-    }
+    };
 
     function fixOpacity()
     {
@@ -128,7 +128,7 @@ var cssSandpaper = new function()
                 obj.style[property] = transformString;
             }
         }
-    }
+    };
 
     function fixTransforms()
     {
@@ -166,7 +166,7 @@ var cssSandpaper = new function()
                 obj.style[property] = value;
             }
         }
-    }
+    };
 
     function fixBoxShadow()
     {
@@ -248,7 +248,7 @@ var cssSandpaper = new function()
                 }
             }
         }
-    }
+    };
 
     me.setRGBABackground = function(node, value)
     {
@@ -276,7 +276,7 @@ var cssSandpaper = new function()
                 break;
         }
 
-    }
+    };
 
     me.setHSLABackground = function(node, value)
     {
@@ -308,7 +308,7 @@ var cssSandpaper = new function()
                 }
                 break;
         }
-    }
+    };
 
     /**
      * Convert a hyphenated string to camelized text.  For example, the string "font-type" will be converted
@@ -331,7 +331,7 @@ var cssSandpaper = new function()
         }
 
         return r;
-    }
+    };
 
     me.setHSLColor = function(node, property, value)
     {
@@ -344,7 +344,7 @@ var cssSandpaper = new function()
             case implementation.HEX_WORKAROUND:
 
                 var hslColor = value.match(reHSL)[0];
-                var hexColor = new RGBColor(hslColor).toHex()
+                var hexColor = new RGBColor(hslColor).toHex();
                 var newPropertyValue = value.replace(reHSL, hexColor);
 
                 node.style[me.camelize(property)] = newPropertyValue;
@@ -352,7 +352,7 @@ var cssSandpaper = new function()
                 break;
         }
 
-    }
+    };
 
     function fixLinearGradients()
     {
@@ -396,7 +396,7 @@ var cssSandpaper = new function()
 
     me.getProperties = function(obj, objName)
     {
-        var result = ""
+        var result = "";
 
         if (!obj) {
             return result;
@@ -410,7 +410,7 @@ var cssSandpaper = new function()
             }
         }
         return result
-    }
+    };
 
     function fixColors()
     {
@@ -517,7 +517,7 @@ var cssSandpaper = new function()
                     var properties = propertiesStr.split(';');
                     for (var k = 0; k < properties.length; k++) {
                         if (properties[k].trim() != '') {
-                            var splitProperty = properties[k].split(':')
+                            var splitProperty = properties[k].split(':');
                             var name = splitProperty[0].trim().toLowerCase();
                             var value = splitProperty[1];
                             if (!ruleLists[name]) {
@@ -564,7 +564,7 @@ var cssSandpaper = new function()
             CSSHelpers.removeClass(hiddenNodes[i], 'cssSandpaper-initiallyHidden');
         }
     }
-}
+};
 
 function RuleList(propertyName)
 {
@@ -636,17 +636,17 @@ var MatrixGenerator = new function()
     {
         return StringHelpers.sprintf('| %s %s %s | - | %s %s %s | - |%s %s %s|', m.e(1, 1), m.e(1, 2), m.e(1, 3),
             m.e(2, 1), m.e(2, 2), m.e(2, 3), m.e(3, 1), m.e(3, 2), m.e(3, 3))
-    }
+    };
 
     me.rotate = function(angleStr)
     {
         var num = getRadianScalar(angleStr);
         return Matrix.RotationZ(num);
-    }
+    };
 
     me.scale = function(sx, sy)
     {
-        sx = parseFloat(sx)
+        sx = parseFloat(sx);
 
         if (!sy) {
             sy = sx;
@@ -655,17 +655,17 @@ var MatrixGenerator = new function()
         }
 
         return $M([[sx, 0, 0], [0, sy, 0], [0, 0, 1]]);
-    }
+    };
 
     me.scaleX = function(sx)
     {
         return me.scale(sx, 1);
-    }
+    };
 
     me.scaleY = function(sy)
     {
         return me.scale(1, sy);
-    }
+    };
 
     me.skew = function(ax, ay)
     {
@@ -684,39 +684,39 @@ var MatrixGenerator = new function()
         } else {
             return null;
         }
-    }
+    };
 
     me.skewX = function(ax)
     {
 
         return me.skew(ax, "0");
-    }
+    };
 
     me.skewY = function(ay)
     {
         return me.skew("0", ay);
-    }
+    };
 
     me.translate = function(tx, ty)
     {
 
         var TX = parseInt(tx);
-        var TY = parseInt(ty)
+        var TY = parseInt(ty);
 
         //jslog.debug(StringHelpers.sprintf('translate %f %f', TX, TY));
 
         return $M([[1, 0, TX], [0, 1, TY], [0, 0, 1]]);
-    }
+    };
 
     me.translateX = function(tx)
     {
         return me.translate(tx, 0);
-    }
+    };
 
     me.translateY = function(ty)
     {
         return me.translate(0, ty);
-    }
+    };
 
     me.matrix = function(a, b, c, d, e, f)
     {
@@ -724,7 +724,7 @@ var MatrixGenerator = new function()
         // for now, e and f are ignored
         return $M([[a, c, parseInt(e)], [b, d, parseInt(f)], [0, 0, 1]])
     }
-}
+};
 
 var CSS3Helpers = new function()
 {
@@ -736,11 +736,11 @@ var CSS3Helpers = new function()
     var reRightBracket = /\)/g;
     var reComma = /,/g;
 
-    var reSpaces = /\s+/g
+    var reSpaces = /\s+/g;
 
     var reFilterNameSplitter = /progid:([^\(]*)/g;
 
-    var reLinearGradient
+    var reLinearGradient;
 
     var canvas;
 
@@ -753,7 +753,7 @@ var CSS3Helpers = new function()
         } else {
             return false;
         }
-    }
+    };
 
     me.getCanvas = function()
     {
@@ -764,7 +764,7 @@ var CSS3Helpers = new function()
             canvas = document.createElement('canvas');
             return canvas;
         }
-    }
+    };
 
     me.getTransformationMatrix = function(CSS3TransformProperty, doThrowIfError)
     {
@@ -818,7 +818,7 @@ var CSS3Helpers = new function()
 
         return resultantMatrix;
 
-    }
+    };
 
     me.getBoxShadowValues = function(propertyValue)
     {
@@ -847,7 +847,7 @@ var CSS3Helpers = new function()
         r.color = values[values.length - 1];
 
         return r;
-    }
+    };
 
     me.getGradient = function(propertyValue)
     {
@@ -931,7 +931,7 @@ var CSS3Helpers = new function()
         r.y1 = endCoord[1];
 
         return r;
-    }
+    };
 
     function swapIndices(array, index1, index2)
     {
@@ -949,7 +949,7 @@ var CSS3Helpers = new function()
 
         if (substring) {
             //color-stop
-            var parameters = substring.split(',')
+            var parameters = substring.split(',');
             r.stop = normalizePercentage(parameters[0].trim());
             r.color = parameters[1].trim();
         } else {
@@ -1020,7 +1020,7 @@ var CSS3Helpers = new function()
             cache["gradientSupport"] = r;
         }
         return cache["gradientSupport"];
-    }
+    };
 
     me.reportColorSpaceSupport = function(colorSpace, type)
     {
@@ -1093,11 +1093,11 @@ var CSS3Helpers = new function()
             cache[colorSpace] = r;
         }
         return cache[colorSpace];
-    }
+    };
 
     me.getBracketedSubstring = function(s, header)
     {
-        var gradientIndex = s.indexOf(header + '(')
+        var gradientIndex = s.indexOf(header + '(');
 
         if (gradientIndex != -1) {
             var substring = s.substring(gradientIndex);
@@ -1123,7 +1123,7 @@ var CSS3Helpers = new function()
             return substring.substring(gradientIndex + header.length + 1, i);
         }
 
-    }
+    };
 
     me.setMatrixFilter = function(obj, matrix)
     {
@@ -1148,7 +1148,7 @@ var CSS3Helpers = new function()
         container.style.marginTop = offsets.y;
         container.style.marginRight = 0;
         container.style.marginBottom = 0;
-    }
+    };
 
     me.getTransformedDimensions = function(obj, matrix)
     {
@@ -1181,7 +1181,7 @@ var CSS3Helpers = new function()
         }
 
         return r;
-    }
+    };
 
     me.getIEMatrixOffsets = function(obj, matrix, width, height)
     {
@@ -1202,7 +1202,7 @@ var CSS3Helpers = new function()
         r.y = (((originalHeight - transformedDimensions.height) / 2) - offset + matrix.e(2, 3)) + 'px';
 
         return r;
-    }
+    };
 
     function hasIETransformWorkaround(obj)
     {
@@ -1225,7 +1225,7 @@ var CSS3Helpers = new function()
 
             container.xOriginalWidth = obj.offsetWidth;
             container.xOriginalHeight = obj.offsetHeight;
-            container.style.position = 'absolute'
+            container.style.position = 'absolute';
             container.style.zIndex = obj.currentStyle.zIndex;
 
             var horizPaddingFactor = 0; //parseInt(obj.currentStyle.paddingLeft); 
@@ -1241,7 +1241,7 @@ var CSS3Helpers = new function()
             //container.style.float = obj.currentStyle.float;
 
             obj.style.top = "auto";
-            obj.style.left = "auto"
+            obj.style.left = "auto";
             obj.style.bottom = "auto";
             obj.style.right = "auto";
             // This is what we need in order to insert to keep the document
@@ -1261,7 +1261,7 @@ var CSS3Helpers = new function()
             container.style.padding = '0';
 
             filter = me.addFilter(obj, 'DXImageTransform.Microsoft.Matrix',
-                "M11=1, M12=0, M21=0, M22=1, sizingMethod='auto expand'")
+                "M11=1, M12=0, M21=0, M22=1, sizingMethod='auto expand'");
             var bgImage = obj.currentStyle.backgroundImage.split("\"")[1];
             /*
 
@@ -1317,7 +1317,7 @@ var CSS3Helpers = new function()
             // dang! We have to go through all of them and make sure filter
             // is set right before we add the new one.
 
-            var filterList = new MSFilterList(obj)
+            var filterList = new MSFilterList(obj);
 
             filterList.fixFilterStyle();
 
@@ -1334,7 +1334,7 @@ var CSS3Helpers = new function()
         }
 
         return filter;
-    }
+    };
 
     function degreesToRadians(degrees)
     {
@@ -1345,7 +1345,7 @@ var CSS3Helpers = new function()
     {
         capType = type.capitalize();
 
-        var r = cache[type]
+        var r = cache[type];
         if (!r) {
 
             var style = obj.style;
@@ -1364,7 +1364,7 @@ var CSS3Helpers = new function()
             cache[type] = r;
         }
         return r;
-    }
+    };
 
     /*
      * "A point is a pair of space-separated values. The syntax supports numbers,
@@ -1396,7 +1396,7 @@ var CSS3Helpers = new function()
             throw Error("Unable to parse coordinate: " + value);
         }
         return value;
-    }
+    };
 
     me.applyCanvasGradient = function(el, gradient)
     {
@@ -1433,7 +1433,6 @@ var CSS3Helpers = new function()
 
             canvasGradient.addColorStop(cs.stop, cs.color);
         }
-        ;
 
         //Paint the gradient
         ctx.fillStyle = canvasGradient;
@@ -1444,7 +1443,7 @@ var CSS3Helpers = new function()
 
     }
 
-}
+};
 
 function MSFilterList(node)
 {
@@ -1486,7 +1485,7 @@ function MSFilterList(node)
             }
         }
         return sb.toString();
-    }
+    };
 
     me.fixFilterStyle = function()
     {
@@ -1498,7 +1497,7 @@ function MSFilterList(node)
             // do nothing.
         }
 
-    }
+    };
 
     init();
 }
@@ -1551,7 +1550,7 @@ function MSFilter(node, filterCall)
         sb.append(')');
 
         return sb.toString();
-    }
+    };
 
     init();
 }
@@ -1573,13 +1572,13 @@ var implementation = new function()
     this.CANVAS_WORKAROUND = 6;
     this.FILTER_WORKAROUND = 7;
     this.HEX_WORKAROUND = 8;
-}
+};
 
 var colorType = new function()
 {
     this.BACKGROUND = 0;
     this.FOREGROUND = 1;
-}
+};
 
 /*
  * Extra helper routines
@@ -1617,7 +1616,7 @@ if (!window.StringHelpers) {
                     ps += ch;
                 }
                 return len > 0 ? str + ps : ps + str;
-            }
+            };
             var processFlags = function(flags, width, rs, arg)
             {
                 var pn = function(flags, arg, rs)
@@ -1634,7 +1633,7 @@ if (!window.StringHelpers) {
                         rs = '-' + rs;
                     }
                     return rs;
-                }
+                };
                 var iWidth = parseInt(width, 10);
                 if (width.charAt(0) == '0') {
                     var ec = 0;
@@ -1655,7 +1654,7 @@ if (!window.StringHelpers) {
                     }
                 }
                 return rs;
-            }
+            };
             var converters = new Array();
             converters['c'] = function(flags, width, precision, arg)
             {
@@ -1666,15 +1665,15 @@ if (!window.StringHelpers) {
                     return arg.charAt(0);
                 }
                 return '';
-            }
+            };
             converters['d'] = function(flags, width, precision, arg)
             {
                 return converters['i'](flags, width, precision, arg);
-            }
+            };
             converters['u'] = function(flags, width, precision, arg)
             {
                 return converters['i'](flags, width, precision, Math.abs(arg));
-            }
+            };
             converters['i'] = function(flags, width, precision, arg)
             {
                 var iPrecision = parseInt(precision);
@@ -1683,11 +1682,11 @@ if (!window.StringHelpers) {
                     rs = pad(rs, ' ', iPrecision - rs.length);
                 }
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['E'] = function(flags, width, precision, arg)
             {
                 return (converters['e'](flags, width, precision, arg)).toUpperCase();
-            }
+            };
             converters['e'] = function(flags, width, precision, arg)
             {
                 iPrecision = parseInt(precision);
@@ -1699,7 +1698,7 @@ if (!window.StringHelpers) {
                     rs = rs.replace(/^(.*)(e.*)$/, '$1.$2');
                 }
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['f'] = function(flags, width, precision, arg)
             {
                 iPrecision = parseInt(precision);
@@ -1711,11 +1710,11 @@ if (!window.StringHelpers) {
                     rs = rs + '.';
                 }
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['G'] = function(flags, width, precision, arg)
             {
                 return (converters['g'](flags, width, precision, arg)).toUpperCase();
-            }
+            };
             converters['g'] = function(flags, width, precision, arg)
             {
                 iPrecision = parseInt(precision);
@@ -1736,7 +1735,7 @@ if (!window.StringHelpers) {
                 }
                 rs = rse.length < rsf.length ? rse : rsf;
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['o'] = function(flags, width, precision, arg)
             {
                 var iPrecision = parseInt(precision);
@@ -1748,11 +1747,11 @@ if (!window.StringHelpers) {
                     rs = '0' + rs;
                 }
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['X'] = function(flags, width, precision, arg)
             {
                 return (converters['x'](flags, width, precision, arg)).toUpperCase();
-            }
+            };
             converters['x'] = function(flags, width, precision, arg)
             {
                 var iPrecision = parseInt(precision);
@@ -1765,7 +1764,7 @@ if (!window.StringHelpers) {
                     rs = '0x' + rs;
                 }
                 return processFlags(flags, width, rs, arg);
-            }
+            };
             converters['s'] = function(flags, width, precision, arg)
             {
                 var iPrecision = parseInt(precision);
@@ -1774,7 +1773,7 @@ if (!window.StringHelpers) {
                     rs = rs.substring(0, iPrecision);
                 }
                 return processFlags(flags, width, rs, 0);
-            }
+            };
             farr = fstring.split('%');
             retstr = farr[0];
             fpRE = /^([-+ #]*)(\d*)\.?(\d*)([cdieEfFgGosuxX])(.*)$/;
@@ -1789,7 +1788,7 @@ if (!window.StringHelpers) {
                 retstr += fps[5];
             }
             return retstr;
-        }
+        };
 
         /**
          * Take out the first comment inside a block of HTML
@@ -1805,7 +1804,7 @@ if (!window.StringHelpers) {
                 return s;
             }
         }
-    }
+    };
 }
 
 if (!window.XMLHelpers) {
@@ -1873,7 +1872,7 @@ if (!window.XMLHelpers) {
 
             return req;
         }
-    }
+    };
 }
 
 if (!window.CSSHelpers) {
@@ -1897,7 +1896,7 @@ if (!window.CSSHelpers) {
             }
 
             return computedStyle[style];
-        }
+        };
 
         /**
          * Determines if an HTML object is a member of a specific class.
@@ -1915,7 +1914,7 @@ if (!window.CSSHelpers) {
 
             return (re.test(obj.className));
 
-        }
+        };
 
         /**
          * Make an HTML object be a member of a certain class.
@@ -1933,7 +1932,7 @@ if (!window.CSSHelpers) {
             if (!me.isMemberOfClass(obj, className)) {
                 obj.className += " " + className;
             }
-        }
+        };
 
         /**
          * Make an HTML object *not* be a member of a certain class.
@@ -1956,7 +1955,7 @@ if (!window.CSSHelpers) {
                 obj.className = oldClassName.replace(re, '');
             }
 
-        }
+        };
 
         function getClassReString(className)
         {
@@ -1993,7 +1992,7 @@ if (!window.CSSHelpers) {
                 }
                 return a;
             }
-        }
+        };
 
         /**
          * Generates a regular expression string that can be used to detect a class name
@@ -2007,7 +2006,7 @@ if (!window.CSSHelpers) {
             return '\\s' + className + '\\s|^' + className + '\\s|\\s' + className + '$|' + '^' + className + '$';
         }
 
-    }
+    };
 }
 
 /* 
@@ -2049,7 +2048,7 @@ if (!window.DOMHelpers) {
         me.getAllDescendants = function(obj)
         {
             return obj.all ? obj.all : obj.getElementsByTagName('*');
-        }
+        };
 
         /******
          * Converts a DOM live node list to a static/dead array.  Good when you don't
@@ -2067,7 +2066,7 @@ if (!window.DOMHelpers) {
             }
             return ary;
         }
-    }
+    };
 }
 
 //+ Jonas Raoni Soares Silva
@@ -2093,22 +2092,22 @@ function StringBuffer()
     {
         buffer.push(string);
         return me;
-    }
+    };
 
     me.appendBuffer = function(bufferToAppend)
     {
         buffer = buffer.concat(bufferToAppend);
-    }
+    };
 
     me.toString = function()
     {
         return buffer.join("");
-    }
+    };
 
     me.getLength = function()
     {
         return buffer.length;
-    }
+    };
 
     me.flush = function()
     {
@@ -2376,13 +2375,13 @@ function RGBColor(color_string)
     me.toRGB = function()
     {
         return 'rgb(' + me.r + ', ' + me.g + ', ' + me.b + ')';
-    }
+    };
 
     // some getters
     me.toRGBA = function()
     {
         return 'rgba(' + me.r + ', ' + me.g + ', ' + me.b + ', ' + me.a + ')';
-    }
+    };
 
     /**
      * Converts an RGB color value to HSV. Conversion formula
@@ -2429,7 +2428,7 @@ function RGBColor(color_string)
             s: s,
             v: v
         };
-    }
+    };
 
     /*
      * hsl2rgb from http://codingforums.com/showthread.php?t=11156 
@@ -2438,7 +2437,7 @@ function RGBColor(color_string)
     function hsl2rgb(h, s, l)
     {
         var m1, m2, hue;
-        var r, g, b
+        var r, g, b;
         s /= 100;
         l /= 100;
         if (s == 0) {
@@ -2518,5 +2517,5 @@ function RGBColor(color_string)
 
 document.write('<style type="text/css">.cssSandpaper-initiallyHidden { visibility: hidden;} </style>');
 
-EventHelpers.addPageLoadEvent('cssSandpaper.init')
+EventHelpers.addPageLoadEvent('cssSandpaper.init');
 
