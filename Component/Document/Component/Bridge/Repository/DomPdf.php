@@ -6,7 +6,8 @@ use MOC\V\Component\Document\Component\IBridgeInterface;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Template\Component\IBridgeInterface as IBridgeInterface_Template;
 
-use Dompdf\Dompdf as DOMPDFParser;
+//use Dompdf\Dompdf as DOMPDFParser;
+use \DOMPDF as DOMPDFParser;
 
 /**
  * Class DomPdf
@@ -25,7 +26,7 @@ class DomPdf extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once( __DIR__.'/../../../Vendor/DomPdf/0.7.0/autoload.inc.php' );
+        require_once( __DIR__.'/../../../Vendor/DomPdf/0.6.2/dompdf_config.inc.php' );
     }
 
     /**
@@ -76,8 +77,8 @@ class DomPdf extends Bridge implements IBridgeInterface
     {
 
         $Renderer = new DOMPDFParser();
-        $Renderer->set_option('defaultFont', 'Arial');
-        $Renderer->set_option('isHtml5ParserEnabled', true);
+//        $Renderer->set_option('defaultFont', 'Arial');
+//        $Renderer->set_option('isHtml5ParserEnabled', true);
         $Renderer->load_html($this->Source);
         $Renderer->set_paper(
             $this->getPaperSizeParameter()->getSize(),
