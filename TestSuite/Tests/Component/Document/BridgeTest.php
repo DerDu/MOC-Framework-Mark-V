@@ -5,6 +5,7 @@ use MOC\V\Component\Document\Component\Bridge\Repository\DomPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\MPdf;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpExcel;
 use MOC\V\Component\Document\Component\Bridge\Repository\PhpWord;
+use MOC\V\Component\Document\Component\Bridge\Repository\SymfonyYaml;
 use MOC\V\Component\Document\Component\Bridge\Repository\UniversalXml;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Document\Component\Parameter\Repository\PaperOrientationParameter;
@@ -417,6 +418,35 @@ class BridgeTest extends AbstractTestCase
         );
         $this->assertInstanceOf('MOC\V\Component\Document\Vendor\UniversalXml\Source\Node',
             $Bridge->getContent()
+        );
+    }
+
+    public function testSymfonyYamlDocument()
+    {
+
+        $Bridge = new SymfonyYaml();
+
+        try {
+            $Bridge->loadFile(new FileParameter(__FILE__));
+        } catch (\Exception $Exception) {
+            $this->assertInstanceOf('MOC\V\Component\Document\Component\Exception\Repository\TypeFileException',
+                $Exception);
+        }
+
+        /**
+         * Save/Load File
+         */
+        $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Yaml.yaml'))
+        );
+        $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Yaml.yaml'))
+        );
+        $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->saveFile(new FileParameter(__DIR__.'/Content/BridgeTest-Yaml-As.yaml'))
+        );
+        $this->assertInstanceOf('MOC\V\Component\Document\Component\IBridgeInterface',
+            $Bridge->loadFile(new FileParameter(__DIR__.'/Content/BridgeTest-Yaml-As.yaml'))
         );
     }
 }
