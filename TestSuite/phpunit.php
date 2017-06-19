@@ -45,3 +45,9 @@ if (
 ) {
     class_alias('\PHPUnit\Framework\TestCase', '\PHPUnit_Framework_TestCase', true);
 }
+if (
+    class_exists('\PHPUnit\Framework\TestResult', true)
+    && !class_exists('\PHPUnit_Framework_TestResult', true)
+) {
+    class_alias('\PHPUnit\Framework\TestResult', '\PHPUnit_Framework_TestResult', true);
+}
