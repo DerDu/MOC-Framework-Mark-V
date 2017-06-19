@@ -29,11 +29,19 @@ require_once( __DIR__.'/../Core/AutoLoader/AutoLoader.php' );
 AutoLoader::getNamespaceAutoLoader('\MOC\V', __DIR__.'/../');
 
 // Compatibility PhpUnit vs. PhpVersion
+// Backward PHP < 7.0 (PhpUnit < 6)
 if (
     !class_exists('\PHPUnit\Framework\TestCase', true)
     && class_exists('\PHPUnit_Framework_TestCase', true)
 ) {
-    class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');
+    class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase', true);
     // PHP 5.3
-    class_alias('\PHPUnit_Framework_TestCase', 'PHPUnit\Framework\TestCase');
+//    class_alias('\PHPUnit_Framework_TestCase', 'PHPUnit\Framework\TestCase', true);
+}
+// Forward PHP 7.0 (PhpUnit 6)
+if (
+    class_exists('\PHPUnit\Framework\TestCase', true)
+    && !class_exists('\PHPUnit_Framework_TestCase', true)
+) {
+    class_alias('\PHPUnit\Framework\TestCase', '\PHPUnit_Framework_TestCase', true);
 }

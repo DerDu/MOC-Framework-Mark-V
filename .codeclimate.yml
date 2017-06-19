@@ -16,6 +16,7 @@ exclude_paths:
 - "Component/Document/Vendor/PhpWord/*"
 - "Component/Document/Vendor/DomPdf/*"
 - "Component/Document/Vendor/mPdf/*"
+- "Component/Document/Vendor/SymfonyYaml/*"
 - "Component/Documentation/Vendor/ApiGen/*"
 - "Component/Documentation/Vendor/Template/*"
 - "Component/Mail/Vendor/EdenPhpMail/*"
