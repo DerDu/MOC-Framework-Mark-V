@@ -92,6 +92,13 @@ interface IBridgeInterface
      * @return string
      */
     public function getHost();
+
+    /**
+     * Gets a list of languages acceptable by the client browser.
+     *
+     * @return array Languages ordered in the user browser preferences
+     */
+    public function getLanguageList();
     /*
       *   * getRequestUri
       *   * getUri
