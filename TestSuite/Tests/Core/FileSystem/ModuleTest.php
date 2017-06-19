@@ -78,6 +78,51 @@ class ModuleTest extends AbstractTestCase
         $this->assertEquals('', (string)$Loader);
     }
 
+    public function testStaticUniversalStream()
+    {
+
+        if (getenv('CI')) {
+            $this->markTestSkipped(
+                'Finder is not available on CircleCI'
+            );
+        }
+        try {
+            $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalStream', array(__DIR__));
+        } catch (\Exception $E) {
+            $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E);
+        }
+
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalStream',
+            array(__FILE__)
+        );
+        $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader);
+
+        $this->assertEquals(__FILE__, $Loader->getLocation());
+        $this->assertEquals(__FILE__, $Loader->getRealPath());
+        if (( $MimeType = $Loader->getMimeType() )) {
+            $this->assertEquals('text/x-php', $MimeType);
+        } else {
+            $this->assertEquals(false, $MimeType);
+        }
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertStringEqualsFile(__FILE__, (string)$Loader);
+
+        $Loader = $this->invokeClassMethod('MOC\V\Core\FileSystem\FileSystem', 'getUniversalStream',
+            array(basename(__FILE__))
+        );
+        $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\IBridgeInterface', $Loader);
+
+        $this->assertEquals(basename(__FILE__), $Loader->getLocation());
+        $this->assertEquals('', $Loader->getRealPath());
+        if (( $MimeType = $Loader->getMimeType() )) {
+            $this->assertEquals('text/x-php', $MimeType);
+        } else {
+            $this->assertEquals(false, $MimeType);
+        }
+        $this->assertInternalType('string', (string)$Loader);
+        $this->assertEquals('', (string)$Loader);
+    }
+
     public function testStaticUniversalFileLoader()
     {
 
@@ -242,6 +287,21 @@ class ModuleTest extends AbstractTestCase
         }
         try {
             FileSystem::getDownload(__FILE__);
+        } catch (\Exception $E) {
+
+        }
+    }
+
+    public function testStaticStream()
+    {
+
+        try {
+            FileSystem::getStream(__DIR__);
+        } catch (\Exception $E) {
+            $this->assertInstanceOf('MOC\V\Core\FileSystem\Component\Exception\Repository\TypeFileException', $E);
+        }
+        try {
+            FileSystem::getStream(__FILE__);
         } catch (\Exception $E) {
 
         }
