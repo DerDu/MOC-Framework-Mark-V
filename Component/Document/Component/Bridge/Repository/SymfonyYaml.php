@@ -42,6 +42,7 @@ class SymfonyYaml extends Bridge implements IBridgeInterface
         if( $Info->getExtension() != 'yaml' ) {
             throw new TypeFileException('No Reader for '.$Location->getFile().' available!');
         }
+        $this->setFileParameter($Location);
         $Yaml = file_get_contents($Location->getFile());
         $this->Content = Yaml::parse($Yaml);
         return $this;
@@ -49,13 +50,20 @@ class SymfonyYaml extends Bridge implements IBridgeInterface
 
     /**
      * @param null|FileParameter $Location
+     * @param int $InlineDepth
+     * @param int $IndentDepth
      *
      * @return IBridgeInterface
      */
-    public function saveFile(FileParameter $Location = null)
+    public function saveFile(FileParameter $Location = null, $InlineDepth = 2, $IndentDepth = 4 )
     {
-        $Yaml = Yaml::dump($this->Content);
-        file_put_contents($Location->getFile(), $Yaml);
+        if (null === $Location) {
+            $Location = $this->getFileParameter();
+        } else {
+            $Location = $Location->getFile();
+        }
+        $Yaml = Yaml::dump($this->Content, $InlineDepth, $IndentDepth);
+        file_put_contents($Location, $Yaml);
         return $this;
     }
 
