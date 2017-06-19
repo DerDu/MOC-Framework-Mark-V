@@ -27,3 +27,11 @@ use MOC\V\Core\AutoLoader\AutoLoader;
 
 require_once( __DIR__.'/../Core/AutoLoader/AutoLoader.php' );
 AutoLoader::getNamespaceAutoLoader('\MOC\V', __DIR__.'/../');
+
+// Compatibility PhpUnit vs. PhpVersion
+if (
+    !class_exists('\PHPUnit\Framework\TestCase', true)
+    && class_exists('\PHPUnit_Framework_TestCase', true)
+) {
+    class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');
+}
