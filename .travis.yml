@@ -18,6 +18,7 @@ before_script:
 
 script:
  - mkdir -p build/logs
+ - phpunit --version
  - phpunit --configuration TestSuite/phpunit.xml --coverage-text --debug
  - phpunit --configuration TestSuite/phpunit.xml --coverage-clover build/logs/clover.xml
 
