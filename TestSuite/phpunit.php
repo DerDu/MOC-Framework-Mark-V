@@ -34,4 +34,6 @@ if (
     && class_exists('\PHPUnit_Framework_TestCase', true)
 ) {
     class_alias('\PHPUnit_Framework_TestCase', '\PHPUnit\Framework\TestCase');
+    // PHP 5.3
+    class_alias('\PHPUnit_Framework_TestCase', 'PHPUnit\Framework\TestCase');
 }
