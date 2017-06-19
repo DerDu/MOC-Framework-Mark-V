@@ -55,7 +55,7 @@ class NamespaceLoader
     {
 
         if (empty( $this->Hash )) {
-            return sha1(
+            return crc32(
                 serialize(
                     get_object_vars($this)
                 )
@@ -78,7 +78,7 @@ class NamespaceLoader
         }
 
         if (self::$Cacheable) {
-            $Hash = md5($this->Namespace.$this->Path.$this->Separator.$this->Extension.$this->Prefix);
+            $Hash = crc32($this->Namespace.$this->Path.$this->Separator.$this->Extension.$this->Prefix);
             // @codeCoverageIgnoreStart
             if (false === ( $Result = apc_fetch($Hash.'#'.$ClassName) )) {
                 $Result = $this->checkCanLoadClass($ClassName);
