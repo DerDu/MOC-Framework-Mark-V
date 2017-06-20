@@ -48,6 +48,7 @@
                 <directory>./../Component/Document/Vendor/PhpWord</directory>
                 <directory>./../Component/Document/Vendor/DomPdf</directory>
                 <directory>./../Component/Document/Vendor/mPdf</directory>
+                <directory>./../Component/Document/Vendor/SymfonyYaml</directory>
                 <directory>./../Component/Documentation/Vendor/ApiGen</directory>
                 <directory>./../Component/Documentation/Vendor/Template</directory>
                 <directory>./../Component/Mail/Vendor/EdenPhpMail</directory>

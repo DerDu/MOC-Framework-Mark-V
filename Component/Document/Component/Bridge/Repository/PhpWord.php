@@ -18,8 +18,12 @@ class PhpWord extends File
     public function __construct()
     {
 
+        AutoLoader::getNamespaceAutoLoader('PhpOffice\Common',
+            __DIR__.'/../../../Vendor/PhpOfficeCommon/0.2.6/src/Common',
+            'PhpOffice\Common'
+        );
         AutoLoader::getNamespaceAutoLoader('PhpOffice\PhpWord',
-            __DIR__.'/../../../Vendor/PhpWord/0.12.1/src/PhpWord',
+            __DIR__.'/../../../Vendor/PhpWord/0.13.0/src/PhpWord',
             'PhpOffice\PhpWord'
         );
     }
