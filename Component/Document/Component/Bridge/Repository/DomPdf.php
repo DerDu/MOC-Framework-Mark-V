@@ -26,7 +26,7 @@ class DomPdf extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once( __DIR__.'/../../../Vendor/DomPdf/0.6.2/dompdf_config.inc.php' );
+        require_once( __DIR__.'/../../../Vendor/DomPdf/0.8.0/dompdf_config.inc.php' );
     }
 
     /**
