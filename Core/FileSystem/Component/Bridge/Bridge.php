@@ -19,9 +19,14 @@ abstract class Bridge implements IBridgeInterface
     public function __construct()
     {
 
+        // PHP 7+
         AutoLoader::getNamespaceAutoLoader(
-            'Symfony\Component\HttpFoundation\File', __DIR__.'/../../../HttpKernel/Vendor/'
+            'Symfony\Component\HttpFoundation\File', __DIR__.'/../../../HttpKernel/Vendor/Symfony/Component/HttpFoundation/3.3.2'
         );
+        // PHP 5.x
+        // AutoLoader::getNamespaceAutoLoader(
+        //     'Symfony\Component\HttpFoundation\File', __DIR__.'/../../../HttpKernel/Vendor/Symfony/Component/HttpFoundation/2.5.0'
+        // );
     }
 
     /**

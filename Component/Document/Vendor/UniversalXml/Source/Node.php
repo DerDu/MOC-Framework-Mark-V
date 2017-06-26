@@ -374,6 +374,5 @@ class Node extends NodeType
 
             $Node->__destruct();
         });
-        unset( $this );
     }
 }

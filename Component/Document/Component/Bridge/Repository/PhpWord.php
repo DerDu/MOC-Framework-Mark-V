@@ -23,7 +23,7 @@ class PhpWord extends File
             'PhpOffice\Common'
         );
         AutoLoader::getNamespaceAutoLoader('PhpOffice\PhpWord',
-            __DIR__.'/../../../Vendor/PhpWord/0.13.0/src/PhpWord',
+            __DIR__.'/../../../Vendor/PhpWord/0.13.0 fix-PHP7.1/src/PhpWord',
             'PhpOffice\PhpWord'
         );
     }
