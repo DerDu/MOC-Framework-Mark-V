@@ -21,7 +21,10 @@ class Request
     public function __construct()
     {
 
-        AutoLoader::getNamespaceAutoLoader('Symfony\Component', __DIR__.'/../');
+        // PHP 7+
+        AutoLoader::getNamespaceAutoLoader('Symfony\Component', __DIR__.'/../Symfony/Component/HttpFoundation/3.3.2');
+        // PHP 5.x
+        // AutoLoader::getNamespaceAutoLoader('Symfony\Component', __DIR__.'/../Symfony/Component/HttpFoundation/2.5.0');
 
         $this->SymfonyRequest = SymfonyRequest::createFromGlobals();
     }

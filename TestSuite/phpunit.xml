@@ -2,7 +2,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./phpunit.php" colors="true"
          verbose="true" backupGlobals="true" backupStaticAttributes="false" stopOnError="false" stopOnFailure="false"
          stopOnIncomplete="false" stopOnSkipped="false" timeoutForLargeTests="120" timeoutForMediumTests="30"
-         timeoutForSmallTests="10" xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.2/phpunit.xsd"
+         timeoutForSmallTests="10" xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
          processIsolation="false" stderr="false">
     <testsuites>
         <testsuite name="MOC\V">

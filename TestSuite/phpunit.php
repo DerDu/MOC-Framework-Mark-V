@@ -51,3 +51,9 @@ if (
 ) {
     class_alias('\PHPUnit\Framework\TestResult', '\PHPUnit_Framework_TestResult', true);
 }
+if (
+    class_exists('\PHPUnit\Framework\Error\Notice', true)
+    && !class_exists('\PHPUnit_Framework_Error_Notice', true)
+) {
+    class_alias('\PHPUnit\Framework\Error\Notice', '\PHPUnit_Framework_Error_Notice', true);
+}

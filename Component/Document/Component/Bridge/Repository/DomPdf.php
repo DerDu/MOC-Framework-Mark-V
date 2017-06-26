@@ -6,8 +6,8 @@ use MOC\V\Component\Document\Component\IBridgeInterface;
 use MOC\V\Component\Document\Component\Parameter\Repository\FileParameter;
 use MOC\V\Component\Template\Component\IBridgeInterface as IBridgeInterface_Template;
 
-//use Dompdf\Dompdf as DOMPDFParser;
-use \DOMPDF as DOMPDFParser;
+use Dompdf\Dompdf as DOMPDFParser;
+//use \DOMPDF as DOMPDFParser;
 
 /**
  * Class DomPdf
@@ -26,7 +26,7 @@ class DomPdf extends Bridge implements IBridgeInterface
     public function __construct()
     {
 
-        require_once( __DIR__.'/../../../Vendor/DomPdf/0.6.2/dompdf_config.inc.php' );
+        require_once( __DIR__.'/../../../Vendor/DomPdf/0.8.0/autoload.inc.php' );
     }
 
     /**

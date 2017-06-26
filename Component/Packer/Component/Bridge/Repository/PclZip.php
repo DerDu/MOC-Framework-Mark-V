@@ -22,7 +22,7 @@ class PclZip extends Bridge implements IBridgeInterface
      */
     public function __construct()
     {
-        require_once(__DIR__ . '/../../../Vendor/PclZip/2.8.2/pclzip.lib.php');
+        require_once(__DIR__ . '/../../../Vendor/PclZip/2.8.2 fix-PHP7.x/pclzip.lib.php');
         $this->Instance = new \PclZip('');
     }
 
